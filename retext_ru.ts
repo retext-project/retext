@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<!DOCTYPE TS><TS version="1.1" language="ru_RU">
 <context>
-    <name>MainWindow</name>
+    <name>ReTextWindow</name>
     <message>
-        <location filename="retext.py" line="176"/>
+        <location filename="retext.py" line="177"/>
         <source>Open file</source>
         <translation>Открыть файл</translation>
     </message>
     <message>
-        <location filename="retext.py" line="236"/>
+        <location filename="retext.py" line="242"/>
         <source>Print Document</source>
         <translation>Распечатать документ</translation>
     </message>
@@ -44,12 +43,12 @@
         <translation>Символы</translation>
     </message>
     <message>
-        <location filename="retext.py" line="210"/>
+        <location filename="retext.py" line="216"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Файлы HTML (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="210"/>
+        <location filename="retext.py" line="216"/>
         <source>Save file</source>
         <translation>Сохранить файл</translation>
     </message>
@@ -99,17 +98,17 @@
         <translation>Панель редактирования</translation>
     </message>
     <message>
-        <location filename="retext.py" line="220"/>
+        <location filename="retext.py" line="226"/>
         <source>Export document to PDF</source>
         <translation>Экспортировать документ как PDF</translation>
     </message>
     <message>
-        <location filename="retext.py" line="220"/>
+        <location filename="retext.py" line="226"/>
         <source>PDF files (*.pdf)</source>
         <translation>Файлы PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="286"/>
+        <location filename="retext.py" line="292"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Документ был изменён.
@@ -141,24 +140,24 @@ Do you want to save your changes?</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="retext.py" line="246"/>
+        <location filename="retext.py" line="252"/>
         <source>New document</source>
         <translation>Новый документ</translation>
     </message>
     <message>
-        <location filename="retext.py" line="302"/>
+        <location filename="retext.py" line="308"/>
         <source>About %1</source>
         <translation>О %1</translation>
     </message>
     <message>
-        <location filename="retext.py" line="302"/>
+        <location filename="retext.py" line="308"/>
         <source>This is %1, version %2
 Author: Dmitry Shachnev, 2011</source>
         <translation>Это %1, версия %2
 Автор: Дмитрий Шачнев, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="197"/>
+        <location filename="retext.py" line="203"/>
         <source>ReText files (*.re *.txt)</source>
         <translation>Файлы ReText (*.re *.txt)</translation>
     </message>
@@ -168,7 +167,7 @@ Author: Dmitry Shachnev, 2011</source>
         <translation>Авто-форматирование</translation>
     </message>
     <message>
-        <location filename="retext.py" line="176"/>
+        <location filename="retext.py" line="177"/>
         <source>All files (*)</source>
         <translation>Все файлы (*)</translation>
     </message>
