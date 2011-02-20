@@ -7,7 +7,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "0.1.0 alpha"
+app_version = "0.2.0 alpha"
 
 class HtmlHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
@@ -27,7 +27,7 @@ class HtmlHighlighter(QSyntaxHighlighter):
 				self.setFormat(index, length, charFormat)
 				index = expression.indexIn(text, index + length)
 
-class MainWindow(QMainWindow):
+class ReTextWindow(QMainWindow):
 	def __init__(self):
 		QMainWindow.__init__(self)
 		self.resize(800, 600)
@@ -173,16 +173,22 @@ class MainWindow(QMainWindow):
 			self.previewBox.setHtml(self.parseText())
 	
 	def openFile(self):
-		filename = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", \
-		self.tr("ReText files (*.re *.txt)")+";;"+self.tr("All files (*)"))
-		if QFile.exists(filename):
-			openfile = QFile(filename)
+		if self.maybeSave():
+			self.fileName = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", \
+			self.tr("ReText files (*.re *.txt)")+";;"+self.tr("All files (*)"))
+			self.openFileMain()
+	
+	def openFileMain(self):
+		if QFile.exists(self.fileName):
+			openfile = QFile(self.fileName)
 			openfile.open(QIODevice.ReadOnly)
 			openstream = QTextStream(openfile)
 			html = openstream.readAll()
-			openfile.close
+			openfile.close()
 			self.editBox.setPlainText(html)
-			if QFileInfo(filename).suffix().startsWith("htm"):
+			self.editBox.document().setModified(False)
+			self.modificationChanged(False)
+			if QFileInfo(self.fileName).suffix().startsWith("htm"):
 				self.useAutoFormatting = False
 				self.actionAutoFormatting.setChecked(False)
 	
@@ -355,7 +361,7 @@ class MainWindow(QMainWindow):
 			toinsert = htmltext
 		return toinsert
 
-def main():
+def main(fileName):
 	app = QApplication(sys.argv)
 	RtTranslator = QTranslator()
 	RtTranslator.load("retext_"+QLocale.system().name())
@@ -363,9 +369,16 @@ def main():
 	QtTranslator.load("qt_"+QLocale.system().name(), QLibraryInfo.location(QLibraryInfo.TranslationsPath))
 	app.installTranslator(RtTranslator)
 	app.installTranslator(QtTranslator)
-	main = MainWindow()
-	main.show()
+	window = ReTextWindow()
+	if QFile.exists(fileName):
+		window.fileName = fileName
+		window.openFileMain()
+	window.show()
 	sys.exit(app.exec_())
 
 if __name__ == '__main__':
-	main()
+	if len(sys.argv) > 1:
+		fileName = sys.argv[1]
+	else:
+		fileName = ""
+	main(fileName)
