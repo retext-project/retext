@@ -44,6 +44,9 @@ class MainWindow(QMainWindow):
 		self.verticalLayout.addWidget(self.previewBox)
 		self.editBox = QTextEdit(self.centralwidget)
 		self.editBox.setAcceptRichText(False)
+		monofont = QFont()
+		monofont.setFamily('monospace')
+		self.editBox.setFont(monofont)
 		self.verticalLayout.addWidget(self.editBox)
 		self.setCentralWidget(self.centralwidget)
 		self.syntaxHighlighter = HtmlHighlighter(self.editBox.document())
@@ -98,10 +101,10 @@ class MainWindow(QMainWindow):
 		self.connect(self.actionPaste, SIGNAL('triggered()'), self.editBox, SLOT('paste()'))
 		self.connect(qApp.clipboard(), SIGNAL('dataChanged()'), self.clipboardDataChanged)
 		self.clipboardDataChanged()
-		self.actionEnableMarkup = QAction(self.tr('Enable markup'), self)
-		self.actionEnableMarkup.setCheckable(True)
-		self.actionEnableMarkup.setChecked(True)
-		self.connect(self.actionEnableMarkup, SIGNAL('triggered(bool)'), self.enableMarkup)
+		self.actionAutoFormatting = QAction(self.tr('Auto-formatting'), self)
+		self.actionAutoFormatting.setCheckable(True)
+		self.actionAutoFormatting.setChecked(True)
+		self.connect(self.actionAutoFormatting, SIGNAL('triggered(bool)'), self.enableAutoFormatting)
 		self.actionAbout = QAction(QIcon.fromTheme('help-about'), self.tr('About %1').arg(app_name), self)
 		self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutDialog)
 		self.actionAboutQt = QAction(self.tr('About Qt'), self)
@@ -139,7 +142,7 @@ class MainWindow(QMainWindow):
 		self.menuEdit.addAction(self.actionCopy)
 		self.menuEdit.addAction(self.actionPaste)
 		self.menuEdit.addSeparator()
-		self.menuEdit.addAction(self.actionEnableMarkup)
+		self.menuEdit.addAction(self.actionAutoFormatting)
 		self.menuEdit.addAction(self.actionPreview)
 		self.menuHelp.addAction(self.actionAbout)
 		self.menuHelp.addAction(self.actionAboutQt)
@@ -159,7 +162,7 @@ class MainWindow(QMainWindow):
 		self.editBar.addAction(self.actionPaste)
 		self.editBar.addWidget(self.tagsBox)
 		self.editBar.addWidget(self.symbolBox)
-		self.useMarkup = True
+		self.useAutoFormatting = True
 		self.fileName = None
 	
 	def preview(self, viewmode):
@@ -170,14 +173,18 @@ class MainWindow(QMainWindow):
 			self.previewBox.setHtml(self.parseText())
 	
 	def openFile(self):
-		filename = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", self.tr("ReText files (*.re *.txt)"))
-		if filename:
+		filename = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", \
+		self.tr("ReText files (*.re *.txt)")+";;"+self.tr("All files (*)"))
+		if QFile.exists(filename):
 			openfile = QFile(filename)
 			openfile.open(QIODevice.ReadOnly)
 			openstream = QTextStream(openfile)
 			html = openstream.readAll()
 			openfile.close
 			self.editBox.setPlainText(html)
+			if QFileInfo(filename).suffix().startsWith("htm"):
+				self.useAutoFormatting = False
+				self.actionAutoFormatting.setChecked(False)
 	
 	def saveFile(self):
 		self.saveFileMain(False)
@@ -294,14 +301,14 @@ class MainWindow(QMainWindow):
 	def aboutDialog(self):
 		QMessageBox.about(self, self.tr('About %1').arg(app_name), self.tr('This is %1, version %2\nAuthor: Dmitry Shachnev, 2011').arg(app_name, app_version))
 	
-	def enableMarkup(self, markup):
-		self.useMarkup = markup
+	def enableAutoFormatting(self, yes):
+		self.useAutoFormatting = yes
 	
 	def parseText(self):
 		htmltext = self.editBox.toPlainText()
 		document = self.editBox.document()
 		linecount = document.lineCount()
-		if self.useMarkup:
+		if self.useAutoFormatting:
 			toinsert = ""
 			ptagopened = False
 			prevnotempty = False
