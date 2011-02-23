@@ -114,7 +114,7 @@ class ReTextWindow(QMainWindow):
 		self.actionAutoFormatting.setCheckable(True)
 		self.actionAutoFormatting.setChecked(True)
 		self.connect(self.actionAutoFormatting, SIGNAL('triggered(bool)'), self.enableAutoFormatting)
-		self.actionRecentFiles = QAction(QIcon.fromTheme('document-open-recent'), self.tr('Open recent file'), self)
+		self.actionRecentFiles = QAction(QIcon.fromTheme('document-open-recent'), self.tr('Open recent'), self)
 		self.connect(self.actionRecentFiles, SIGNAL('triggered()'), self.openRecent)
 		self.actionAbout = QAction(QIcon.fromTheme('help-about'), self.tr('About %1').arg(app_name), self)
 		self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutDialog)
@@ -210,7 +210,7 @@ class ReTextWindow(QMainWindow):
 	def openRecent(self):
 		settings = QSettings()
 		files = settings.value("recentFileList").toStringList()
-		(item, ok) = QInputDialog.getItem(self, app_name, self.tr("Open recent file"), files, 0, False)
+		(item, ok) = QInputDialog.getItem(self, app_name, self.tr("Open recent"), files, 0, False)
 		if ok and not item.isEmpty():
 			if QFile.exists(item):
 				self.fileName = item
@@ -237,6 +237,7 @@ class ReTextWindow(QMainWindow):
 			if QFileInfo(self.fileName).suffix().startsWith("htm"):
 				self.useAutoFormatting = False
 				self.actionAutoFormatting.setChecked(False)
+			self.setWindowTitle("")
 			self.setWindowFilePath(self.fileName)
 			self.setCurrentFile()
 	
