@@ -6,8 +6,11 @@ from PyQt4.Qt import *
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
+import markdown
+md = markdown.Markdown()
+
 app_name = "ReText"
-app_version = "0.2.0 alpha"
+app_version = "0.2.4 alpha"
 
 class HtmlHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
@@ -15,12 +18,15 @@ class HtmlHighlighter(QSyntaxHighlighter):
 	
 	def highlightBlock(self, text):
 		charFormat = QTextCharFormat()
-		charFormat.setFontWeight(QFont.Bold)
-		patterns = ("<[^>]*>", "&[^;]*;", "\"[^\"]*\"")
-		foregrounds = [Qt.darkMagenta, Qt.darkCyan, Qt.darkYellow]
-		for i in range(3):
+		patterns = ("<[^>]*>", "&[^;]*;", "\"[^\"]*\"", "<!--[^-->]*-->")
+		foregrounds = [Qt.darkMagenta, Qt.darkCyan, Qt.darkYellow, Qt.gray]
+		for i in range(len(patterns)):
 			expression = QRegExp(patterns[i])
 			index = expression.indexIn(text)
+			if i == 3:
+				charFormat.setFontWeight(QFont.Normal)
+			else:
+				charFormat.setFontWeight(QFont.Bold)
 			charFormat.setForeground(foregrounds[i]);
 			while (index >= 0):
 				length = expression.matchedLength()
@@ -109,8 +115,8 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutDialog)
 		self.actionAboutQt = QAction(self.tr('About Qt'), self)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
-		self.usefulTags = ('a', 'b', 'center', 'h1', 'h2', 'h3', 'i', 'img', 's', 'span', 'table', 'td', 'tr', 'u')
-		self.usefulChars = ('amp', 'gt', 'laquo', 'lt', 'minus', 'mdash', 'nbsp', 'ndash', 'quot', 'raquo')
+		self.usefulTags = ('a', 'center', 'i', 'img', 's', 'span', 'table', 'td', 'tr', 'u')
+		self.usefulChars = ('laquo', 'minus', 'mdash', 'nbsp', 'ndash', 'raquo')
 		self.tagsBox = QComboBox(self.editBar)
 		self.tagsBox.addItem(self.tr('Tags'))
 		self.tagsBox.addItems(self.usefulTags)
@@ -175,9 +181,9 @@ class ReTextWindow(QMainWindow):
 	def openFile(self):
 		if self.maybeSave():
 			self.fileName = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", \
-			self.tr("ReText files (*.re *.txt)")+";;"+self.tr("All files (*)"))
+			self.tr("ReText files (*.re *.mdml *.txt)")+";;"+self.tr("All files (*)"))
 			self.openFileMain()
-	
+		
 	def openFileMain(self):
 		if QFile.exists(self.fileName):
 			openfile = QFile(self.fileName)
@@ -200,7 +206,7 @@ class ReTextWindow(QMainWindow):
 	
 	def saveFileMain(self, dlg):
 		if (not self.fileName) or dlg:
-			self.fileName = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", self.tr("ReText files (*.re *.txt)"))
+			self.fileName = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", self.tr("ReText files (*.re *.mdml *.txt)"))
 		if self.fileName:
 			if QFileInfo(self.fileName).suffix().isEmpty():
 				self.fileName.append(".re")
@@ -305,58 +311,15 @@ class ReTextWindow(QMainWindow):
 			closeevent.ignore()
 	
 	def aboutDialog(self):
-		QMessageBox.about(self, self.tr('About %1').arg(app_name), self.tr('This is %1, version %2\nAuthor: Dmitry Shachnev, 2011').arg(app_name, app_version))
+		QMessageBox.about(self, self.tr('About %1').arg(app_name), self.tr('This is <b>%1</b>, version %2<br>Author: Dmitry Shachnev, 2011').arg(app_name, app_version))
 	
 	def enableAutoFormatting(self, yes):
 		self.useAutoFormatting = yes
 	
 	def parseText(self):
 		htmltext = self.editBox.toPlainText()
-		document = self.editBox.document()
-		linecount = document.lineCount()
 		if self.useAutoFormatting:
-			toinsert = ""
-			ptagopened = False
-			prevnotempty = False
-			currentlist = 0
-			for i in range(linecount):
-				islist = 0
-				line = document.findBlockByLineNumber(i).text()
-				header = line.startsWith("<h")
-				if not (line.isEmpty() or ptagopened or header):
-					toinsert += "<p>"
-					ptagopened = True
-				if line.startsWith("* "):
-					islist=1
-				if line.startsWith("# "):
-					islist=2
-				if currentlist != islist:
-					if currentlist == 1:
-						toinsert += "</ul>"
-					if currentlist == 2:
-						toinsert += "</ol>"
-					if islist == 1:
-						toinsert += "<ul>"
-					if islist == 2:
-						toinsert += "<ol>"
-				if line.isEmpty():
-					if (ptagopened):
-						toinsert += "</p>"
-						ptagopened = False
-				elif (currentlist==0 and islist==0 and prevnotempty and not header):
-					toinsert += "<br>"
-				currentlist = islist
-				prevnotempty = not (line.isEmpty() or header)
-				if islist:
-					toinsert += QString("<li>%1</li>").arg(line.right(line.length()-2))
-				else:
-					toinsert += line
-			if (currentlist==1):
-				toinsert+="</ul>"
-			if (currentlist==2):
-				toinsert+="</ul>"
-			if ptagopened:
-				toinsert += "</p>"
+			toinsert = md.convert(unicode(htmltext))
 		else:
 			toinsert = htmltext
 		return toinsert
@@ -364,7 +327,8 @@ class ReTextWindow(QMainWindow):
 def main(fileName):
 	app = QApplication(sys.argv)
 	RtTranslator = QTranslator()
-	RtTranslator.load("retext_"+QLocale.system().name())
+	if not RtTranslator.load("retext_"+QLocale.system().name(), app.applicationDirPath()):
+		RtTranslator.load("retext_"+QLocale.system().name())
 	QtTranslator = QTranslator()
 	QtTranslator.load("qt_"+QLocale.system().name(), QLibraryInfo.location(QLibraryInfo.TranslationsPath))
 	app.installTranslator(RtTranslator)
