@@ -10,7 +10,7 @@ import markdown
 md = markdown.Markdown()
 
 app_name = "ReText"
-app_version = "0.2.4 alpha"
+app_version = "0.3.0 alpha"
 
 class HtmlHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
@@ -40,7 +40,7 @@ class ReTextWindow(QMainWindow):
 		screen = QDesktopWidget().screenGeometry()
 		size = self.geometry()
 		self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
-		self.setWindowTitle(self.tr('New document') + ' - '+app_name)
+		self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
 		self.setWindowIcon(QIcon.fromTheme('accessories-text-editor'))
 		self.centralwidget = QWidget(self)
 		self.verticalLayout = QVBoxLayout(self.centralwidget)
@@ -60,6 +60,9 @@ class ReTextWindow(QMainWindow):
 		self.addToolBar(Qt.TopToolBarArea, self.toolBar)
 		self.editBar = QToolBar(self.tr('Edit toolbar'), self)
 		self.addToolBar(Qt.TopToolBarArea, self.editBar)
+		self.actionNew = QAction(QIcon.fromTheme('document-new'), self.tr('New'), self)
+		self.actionNew.setShortcut(QKeySequence.New)
+		self.connect(self.actionNew, SIGNAL('triggered()'), self.createNew)
 		self.actionOpen = QAction(QIcon.fromTheme('document-open'), self.tr('Open'), self)
 		self.actionOpen.setShortcut(QKeySequence.Open)
 		self.connect(self.actionOpen, SIGNAL('triggered()'), self.openFile)
@@ -111,6 +114,8 @@ class ReTextWindow(QMainWindow):
 		self.actionAutoFormatting.setCheckable(True)
 		self.actionAutoFormatting.setChecked(True)
 		self.connect(self.actionAutoFormatting, SIGNAL('triggered(bool)'), self.enableAutoFormatting)
+		self.actionRecentFiles = QAction(QIcon.fromTheme('document-open-recent'), self.tr('Open recent file'), self)
+		self.connect(self.actionRecentFiles, SIGNAL('triggered()'), self.openRecent)
 		self.actionAbout = QAction(QIcon.fromTheme('help-about'), self.tr('About %1').arg(app_name), self)
 		self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutDialog)
 		self.actionAboutQt = QAction(self.tr('About Qt'), self)
@@ -131,7 +136,10 @@ class ReTextWindow(QMainWindow):
 		self.menuFile = self.menubar.addMenu(self.tr('File'))
 		self.menuEdit = self.menubar.addMenu(self.tr('Edit'))
 		self.menuHelp = self.menubar.addMenu(self.tr('Help'))
+		self.menuFile.addAction(self.actionNew)
 		self.menuFile.addAction(self.actionOpen)
+		self.menuFile.addAction(self.actionRecentFiles)
+		self.menuFile.addSeparator()
 		self.menuFile.addAction(self.actionSave)
 		self.menuFile.addAction(self.actionSaveAs)
 		self.menuFile.addSeparator()
@@ -178,6 +186,36 @@ class ReTextWindow(QMainWindow):
 		if viewmode:
 			self.previewBox.setHtml(self.parseText())
 	
+	def setCurrentFile(self):	
+		curFile = self.fileName
+		self.setWindowFilePath(curFile);
+		settings = QSettings()
+		files = settings.value("recentFileList").toStringList()
+		files.removeAll(self.fileName)
+		files.prepend(self.fileName)
+		while len(files) > 10:
+			files.removeLast()
+		settings.setValue("recentFileList", files)
+	
+	def createNew(self):
+		if self.maybeSave():
+			self.fileName = ""
+			self.editBox.clear()
+			self.actionPreview.setChecked(False)
+			self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
+			self.editBox.document().setModified(False)
+			self.modificationChanged(False)
+			self.preview(False)
+	
+	def openRecent(self):
+		settings = QSettings()
+		files = settings.value("recentFileList").toStringList()
+		(item, ok) = QInputDialog.getItem(self, app_name, self.tr("Open recent file"), files, 0, False)
+		if ok and not item.isEmpty():
+			if QFile.exists(item):
+				self.fileName = item
+				self.openFileMain()
+    
 	def openFile(self):
 		if self.maybeSave():
 			self.fileName = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", \
@@ -191,12 +229,16 @@ class ReTextWindow(QMainWindow):
 			openstream = QTextStream(openfile)
 			html = openstream.readAll()
 			openfile.close()
+			self.actionPreview.setChecked(False)
 			self.editBox.setPlainText(html)
 			self.editBox.document().setModified(False)
 			self.modificationChanged(False)
+			self.preview(False)
 			if QFileInfo(self.fileName).suffix().startsWith("htm"):
 				self.useAutoFormatting = False
 				self.actionAutoFormatting.setChecked(False)
+			self.setWindowFilePath(self.fileName)
+			self.setCurrentFile()
 	
 	def saveFile(self):
 		self.saveFileMain(False)
@@ -213,9 +255,10 @@ class ReTextWindow(QMainWindow):
 			savefile = QFile(self.fileName)
 			savefile.open(QIODevice.WriteOnly)
 			savestream = QTextStream(savefile)
-			savestream.__lshift__(self.parseText())
+			savestream.__lshift__(self.editBox.toPlainText())
 			savefile.close()
 		self.editBox.document().setModified(False)
+		self.setCurrentFile()
 	
 	def saveFilePerfect(self):
 		if not self.fileName:
@@ -259,10 +302,7 @@ class ReTextWindow(QMainWindow):
 	
 	def modificationChanged(self, changed):
 		self.actionSave.setEnabled(changed)
-		if changed:
-			self.setWindowTitle(self.getDocumentTitle()+"* - "+app_name)
-		else:
-			self.setWindowTitle(self.getDocumentTitle()+" - "+app_name)
+		self.setWindowModified(changed)
 	
 	def clipboardDataChanged(self):
 		self.actionPaste.setEnabled(qApp.clipboard().mimeData().hasText())
@@ -326,6 +366,8 @@ class ReTextWindow(QMainWindow):
 
 def main(fileName):
 	app = QApplication(sys.argv)
+	app.setOrganizationName("ReText project")
+	app.setApplicationName("ReText")
 	RtTranslator = QTranslator()
 	if not RtTranslator.load("retext_"+QLocale.system().name(), app.applicationDirPath()):
 		RtTranslator.load("retext_"+QLocale.system().name())
