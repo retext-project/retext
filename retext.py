@@ -10,7 +10,7 @@ import markdown
 md = markdown.Markdown()
 
 app_name = "ReText"
-app_version = "0.3.0 alpha"
+app_version = "0.3.1 alpha"
 
 class HtmlHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
@@ -86,6 +86,7 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionPdf, SIGNAL('triggered()'), self.savePdf)
 		self.actionQuit = QAction(QIcon.fromTheme('application-exit'), self.tr('Quit'), self)
 		self.actionQuit.setShortcut(QKeySequence.Quit)
+		self.actionQuit.setMenuRole(QAction.QuitRole)
 		self.connect(self.actionQuit, SIGNAL('triggered()'), qApp, SLOT('quit()'))
 		self.actionUndo = QAction(QIcon.fromTheme('edit-undo'), self.tr('Undo'), self)
 		self.actionUndo.setShortcut(QKeySequence.Undo)
@@ -117,8 +118,10 @@ class ReTextWindow(QMainWindow):
 		self.actionRecentFiles = QAction(QIcon.fromTheme('document-open-recent'), self.tr('Open recent'), self)
 		self.connect(self.actionRecentFiles, SIGNAL('triggered()'), self.openRecent)
 		self.actionAbout = QAction(QIcon.fromTheme('help-about'), self.tr('About %1').arg(app_name), self)
+		self.actionAbout.setMenuRole(QAction.AboutRole)
 		self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutDialog)
 		self.actionAboutQt = QAction(self.tr('About Qt'), self)
+		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
 		self.usefulTags = ('a', 'center', 'i', 'img', 's', 'span', 'table', 'td', 'tr', 'u')
 		self.usefulChars = ('laquo', 'minus', 'mdash', 'nbsp', 'ndash', 'raquo')
@@ -203,6 +206,7 @@ class ReTextWindow(QMainWindow):
 			self.editBox.clear()
 			self.actionPreview.setChecked(False)
 			self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
+			self.setWindowFilePath("")
 			self.editBox.document().setModified(False)
 			self.modificationChanged(False)
 			self.preview(False)
