@@ -10,7 +10,7 @@ import markdown
 md = markdown.Markdown()
 
 app_name = "ReText"
-app_version = "0.3.1 alpha"
+app_version = "0.3.2 alpha"
 
 class HtmlHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
@@ -214,11 +214,14 @@ class ReTextWindow(QMainWindow):
 	def openRecent(self):
 		settings = QSettings()
 		files = settings.value("recentFileList").toStringList()
+		for i in files:
+			if not QFile.exists(i):
+				files.removeAll(i)
+		settings.setValue("recentFileList", files)
 		(item, ok) = QInputDialog.getItem(self, app_name, self.tr("Open recent"), files, 0, False)
 		if ok and not item.isEmpty():
-			if QFile.exists(item):
-				self.fileName = item
-				self.openFileMain()
+			self.fileName = item
+			self.openFileMain()
     
 	def openFile(self):
 		if self.maybeSave():
@@ -299,12 +302,6 @@ class ReTextWindow(QMainWindow):
 			td.setHtml(self.parseText())
 			td.print_(printer)
 	
-	def getDocumentTitle(self):
-		if self.fileName:
-			return QFileInfo(self.fileName).fileName()
-		else:
-			return self.tr("New document")
-	
 	def modificationChanged(self, changed):
 		self.actionSave.setEnabled(changed)
 		self.setWindowModified(changed)
@@ -374,8 +371,9 @@ def main(fileName):
 	app.setOrganizationName("ReText project")
 	app.setApplicationName("ReText")
 	RtTranslator = QTranslator()
-	if not RtTranslator.load("retext_"+QLocale.system().name(), app.applicationDirPath()):
-		RtTranslator.load("retext_"+QLocale.system().name())
+	if not RtTranslator.load("retext_"+QLocale.system().name()):
+		if sys.platform == "linux2":
+			RtTranslator.load("retext_"+QLocale.system().name(), "/usr/lib/retext")
 	QtTranslator = QTranslator()
 	QtTranslator.load("qt_"+QLocale.system().name(), QLibraryInfo.location(QLibraryInfo.TranslationsPath))
 	app.installTranslator(RtTranslator)
@@ -389,7 +387,6 @@ def main(fileName):
 
 if __name__ == '__main__':
 	if len(sys.argv) > 1:
-		fileName = sys.argv[1]
+		main(sys.argv[1])
 	else:
-		fileName = ""
-	main(fileName)
+		main("")
