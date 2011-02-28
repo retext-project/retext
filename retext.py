@@ -422,6 +422,8 @@ class ReTextWindow(QMainWindow):
 	def enablePlainText(self, value):
 		self.actionAutoFormatting.setDisabled(value)
 		self.actionPerfectHtml.setDisabled(value)
+		self.tagsBox.setVisible(value)
+		self.symbolBox.setVisible(value)
 	
 	def parseText(self):
 		htmltext = self.editBox.toPlainText()
