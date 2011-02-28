@@ -9,8 +9,17 @@ from PyQt4.QtGui import *
 import markdown
 md = markdown.Markdown()
 
+try:
+	import gdata.docs
+	import gdata.docs.service
+	from gdata import MediaSource
+except:
+	use_gdocs = False
+else:
+	use_gdocs = True
+
 app_name = "ReText"
-app_version = "0.3.3 alpha"
+app_version = "0.3.4 alpha"
 
 class HtmlHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
@@ -124,9 +133,12 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutDialog)
 		self.actionAboutQt = QAction(self.tr('About Qt'), self)
 		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
+		if use_gdocs:
+			self.actionGDocsExport = QAction(QIcon.fromTheme('web-browser'), self.tr('Save to Google Docs'), self)
+			self.connect(self.actionGDocsExport, SIGNAL('triggered()'), self.GDocsExport)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
 		self.usefulTags = ('a', 'center', 'i', 'img', 's', 'span', 'table', 'td', 'tr', 'u')
-		self.usefulChars = ('laquo', 'minus', 'mdash', 'nbsp', 'ndash', 'raquo')
+		self.usefulChars = ('hellip', 'laquo', 'minus', 'mdash', 'nbsp', 'ndash', 'raquo')
 		self.tagsBox = QComboBox(self.editBar)
 		self.tagsBox.addItem(self.tr('Tags'))
 		self.tagsBox.addItems(self.usefulTags)
@@ -151,6 +163,8 @@ class ReTextWindow(QMainWindow):
 		self.menuExport = self.menuFile.addMenu(self.tr('Export'))
 		self.menuExport.addAction(self.actionPerfectHtml)
 		self.menuExport.addAction(self.actionPdf)
+		if use_gdocs:
+			self.menuExport.addAction(self.actionGDocsExport)
 		self.menuFile.addAction(self.actionPrint)
 		self.menuFile.addSeparator()
 		self.menuFile.addAction(self.actionQuit)
@@ -318,6 +332,39 @@ class ReTextWindow(QMainWindow):
 				td.setHtml(self.parseText())
 			td.print_(printer)
 	
+	def GDocsExport(self):
+		settings = QSettings()
+		login = settings.value("GDocsLogin").toString()
+		passwd = settings.value("GDocsPasswd").toString()
+		(login, ok) = QInputDialog.getText(self, app_name, self.tr("User name:"), QLineEdit.Normal, login)
+		if ok and login:	
+			(passwd, ok) = QInputDialog.getText(self, app_name, self.tr("Password:"), QLineEdit.Password, passwd)
+		if ok and login:
+			td = QTextDocument()
+			if self.actionPlainText.isChecked():
+				td.setPlainText(self.editBox.toPlainText())
+			else:
+				td.setHtml(self.parseText())
+			writer = QTextDocumentWriter('temp.html')
+			writer.write(td)
+			gdClient = gdata.docs.service.DocsService()
+			try:
+				gdClient.ClientLogin(unicode(login), unicode(passwd))
+			except gdata.service.BadAuthentication:
+				QMessageBox.warning (self, app_name, self.tr("Incorrect user name or password!"))
+			else:
+				settings.setValue("GDocsLogin", login)
+				settings.setValue("GDocsPasswd", passwd)
+				ms = MediaSource(file_path='temp.html', content_type='text/html')
+				if self.fileName:
+					title = self.fileName
+				else:
+					title = self.tr("New document")
+				entry = gdClient.Upload(ms, unicode(title))
+				link = entry.GetAlternateLink().href
+				QFile('temp.html').remove()
+				QDesktopServices.openUrl(QUrl(link))
+	
 	def modificationChanged(self, changed):
 		self.actionSave.setEnabled(changed)
 		self.setWindowModified(changed)
@@ -369,7 +416,8 @@ class ReTextWindow(QMainWindow):
 			closeevent.ignore()
 	
 	def aboutDialog(self):
-		QMessageBox.about(self, self.tr('About %1').arg(app_name), self.tr('This is <b>%1</b>, version %2<br>Author: Dmitry Shachnev, 2011').arg(app_name, app_version))
+		QMessageBox.about(self, self.tr('About %1').arg(app_name), \
+		self.tr('This is <b>%1</b>, version %2<br>Author: Dmitry Shachnev, 2011<br>Website: <a href="http://sourceforge.net/p/retext/">sf.net/p/retext</a>').arg(app_name, app_version))
 	
 	def enablePlainText(self, value):
 		self.actionAutoFormatting.setDisabled(value)
