@@ -19,7 +19,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.3.4 alpha"
+app_version = "0.3.5 alpha"
 
 class HtmlHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
@@ -134,8 +134,8 @@ class ReTextWindow(QMainWindow):
 		self.actionAboutQt = QAction(self.tr('About Qt'), self)
 		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
 		if use_gdocs:
-			self.actionGDocsExport = QAction(QIcon.fromTheme('web-browser'), self.tr('Save to Google Docs'), self)
-			self.connect(self.actionGDocsExport, SIGNAL('triggered()'), self.GDocsExport)
+			self.actionsaveGDocs = QAction(QIcon.fromTheme('web-browser'), self.tr('Save to Google Docs'), self)
+			self.connect(self.actionsaveGDocs, SIGNAL('triggered()'), self.saveGDocs)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
 		self.usefulTags = ('a', 'center', 'i', 'img', 's', 'span', 'table', 'td', 'tr', 'u')
 		self.usefulChars = ('hellip', 'laquo', 'minus', 'mdash', 'nbsp', 'ndash', 'raquo')
@@ -164,7 +164,7 @@ class ReTextWindow(QMainWindow):
 		self.menuExport.addAction(self.actionPerfectHtml)
 		self.menuExport.addAction(self.actionPdf)
 		if use_gdocs:
-			self.menuExport.addAction(self.actionGDocsExport)
+			self.menuExport.addAction(self.actionsaveGDocs)
 		self.menuFile.addAction(self.actionPrint)
 		self.menuFile.addSeparator()
 		self.menuFile.addAction(self.actionQuit)
@@ -332,12 +332,14 @@ class ReTextWindow(QMainWindow):
 				td.setHtml(self.parseText())
 			td.print_(printer)
 	
-	def GDocsExport(self):
+	def saveGDocs(self):
 		settings = QSettings()
 		login = settings.value("GDocsLogin").toString()
 		passwd = settings.value("GDocsPasswd").toString()
 		(login, ok) = QInputDialog.getText(self, app_name, self.tr("User name:"), QLineEdit.Normal, login)
-		if ok and login:	
+		if ok and login:
+			if login != settings.value("GDocsLogin").toString():
+				passwd = ""
 			(passwd, ok) = QInputDialog.getText(self, app_name, self.tr("Password:"), QLineEdit.Password, passwd)
 		if ok and login:
 			td = QTextDocument()
