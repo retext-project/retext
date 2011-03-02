@@ -27,7 +27,7 @@ class HtmlHighlighter(QSyntaxHighlighter):
 	
 	def highlightBlock(self, text):
 		charFormat = QTextCharFormat()
-		patterns = ("<[^>]*>", "&[^;]*;", "\"[^\"]*\"", "<!--[^-->]*-->")
+		patterns = ("<[^>]*>", "&[^; ]*;", "\"[^\"]*\"", "<!--[^-->]*-->")
 		foregrounds = [Qt.darkMagenta, Qt.darkCyan, Qt.darkYellow, Qt.gray]
 		for i in range(len(patterns)):
 			expression = QRegExp(patterns[i])

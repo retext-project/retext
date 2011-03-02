@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<!DOCTYPE TS><TS version="1.1" language="ru_RU">
 <context>
     <name>ReTextWindow</name>
     <message>
@@ -109,7 +108,7 @@
         <translation>Файлы PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="403"/>
+        <location filename="retext.py" line="405"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Документ был изменён.
@@ -141,12 +140,12 @@ Do you want to save your changes?</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="retext.py" line="362"/>
+        <location filename="retext.py" line="364"/>
         <source>New document</source>
         <translation>Новый документ</translation>
     </message>
     <message>
-        <location filename="retext.py" line="419"/>
+        <location filename="retext.py" line="421"/>
         <source>About %1</source>
         <translation>О %1</translation>
     </message>
@@ -191,17 +190,17 @@ Do you want to save your changes?</source>
         <translation>Имя пользователя:</translation>
     </message>
     <message>
-        <location filename="retext.py" line="341"/>
+        <location filename="retext.py" line="343"/>
         <source>Password:</source>
         <translation>Пароль:</translation>
     </message>
     <message>
-        <location filename="retext.py" line="419"/>
+        <location filename="retext.py" line="421"/>
         <source>This is &lt;b&gt;%1&lt;/b&gt;, version %2&lt;br&gt;Author: Dmitry Shachnev, 2011&lt;br&gt;Website: &lt;a href=&quot;http://sourceforge.net/p/retext/&quot;&gt;sf.net/p/retext&lt;/a&gt;</source>
         <translation>Это &lt;b&gt;%1&lt;/b&gt;, версия %2&lt;br&gt;Автор: Дмитрий Шачнев, 2011&lt;br&gt;Веб-сайт: &lt;a href=&quot;http://sourceforge.net/p/retext/&quot;&gt;sf.net/p/retext&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="retext.py" line="354"/>
+        <location filename="retext.py" line="356"/>
         <source>Incorrect user name or password!</source>
         <translation>Неверное имя пользователя или пароль!</translation>
     </message>
