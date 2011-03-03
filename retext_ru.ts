@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="ru_RU">
+<!DOCTYPE TS>
+<TS version="2.0" language="ru_RU">
 <context>
     <name>ReTextWindow</name>
     <message>
@@ -8,7 +9,7 @@
         <translation>Открыть файл</translation>
     </message>
     <message>
-        <location filename="retext.py" line="326"/>
+        <location filename="retext.py" line="344"/>
         <source>Print Document</source>
         <translation>Распечатать документ</translation>
     </message>
@@ -43,12 +44,12 @@
         <translation>Символы</translation>
     </message>
     <message>
-        <location filename="retext.py" line="297"/>
+        <location filename="retext.py" line="319"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Файлы HTML (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="297"/>
+        <location filename="retext.py" line="319"/>
         <source>Save file</source>
         <translation>Сохранить файл</translation>
     </message>
@@ -98,17 +99,17 @@
         <translation>Панель редактирования</translation>
     </message>
     <message>
-        <location filename="retext.py" line="307"/>
+        <location filename="retext.py" line="324"/>
         <source>Export document to PDF</source>
         <translation>Экспортировать документ как PDF</translation>
     </message>
     <message>
-        <location filename="retext.py" line="307"/>
+        <location filename="retext.py" line="324"/>
         <source>PDF files (*.pdf)</source>
         <translation>Файлы PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="405"/>
+        <location filename="retext.py" line="419"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Документ был изменён.
@@ -140,12 +141,12 @@ Do you want to save your changes?</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="retext.py" line="364"/>
+        <location filename="retext.py" line="357"/>
         <source>New document</source>
         <translation>Новый документ</translation>
     </message>
     <message>
-        <location filename="retext.py" line="421"/>
+        <location filename="retext.py" line="435"/>
         <source>About %1</source>
         <translation>О %1</translation>
     </message>
@@ -185,24 +186,34 @@ Do you want to save your changes?</source>
         <translation>Сохранить в Google Docs</translation>
     </message>
     <message>
-        <location filename="retext.py" line="339"/>
+        <location filename="retext.py" line="363"/>
         <source>User name:</source>
         <translation>Имя пользователя:</translation>
     </message>
     <message>
-        <location filename="retext.py" line="343"/>
+        <location filename="retext.py" line="367"/>
         <source>Password:</source>
         <translation>Пароль:</translation>
     </message>
     <message>
-        <location filename="retext.py" line="421"/>
-        <source>This is &lt;b&gt;%1&lt;/b&gt;, version %2&lt;br&gt;Author: Dmitry Shachnev, 2011&lt;br&gt;Website: &lt;a href=&quot;http://sourceforge.net/p/retext/&quot;&gt;sf.net/p/retext&lt;/a&gt;</source>
-        <translation>Это &lt;b&gt;%1&lt;/b&gt;, версия %2&lt;br&gt;Автор: Дмитрий Шачнев, 2011&lt;br&gt;Веб-сайт: &lt;a href=&quot;http://sourceforge.net/p/retext/&quot;&gt;sf.net/p/retext&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="356"/>
+        <location filename="retext.py" line="374"/>
         <source>Incorrect user name or password!</source>
         <translation>Неверное имя пользователя или пароль!</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="435"/>
+        <source>This is &lt;b&gt;%1&lt;/b&gt;, version %2&lt;br&gt;Author: Dmitry Shachnev, 2011</source>
+        <translation>Это &lt;b&gt;%1&lt;/b&gt;, версия %2&lt;br&gt;Автор: Дмитрий Шачнев, 2011</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="435"/>
+        <source>Website: &lt;a href=&quot;http://sourceforge.net/p/retext/&quot;&gt;sf.net/p/retext&lt;/a&gt;</source>
+        <translation>Веб-сайт: &lt;a href=&quot;http://sourceforge.net/p/retext/&quot;&gt;sf.net/p/retext&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="435"/>
+        <source>MarkDown syntax documentation: &lt;a href=&quot;http://daringfireball.net/projects/markdown/syntax&quot;&gt;daringfireball.net/projects/markdown/syntax&lt;/a&gt;</source>
+        <translation>Описание синтаксиса MarkDown: &lt;a href=&quot;http://daringfireball.net/projects/markdown/syntax&quot;&gt;daringfireball.net/projects/markdown/syntax&lt;/a&gt;</translation>
     </message>
 </context>
 </TS>

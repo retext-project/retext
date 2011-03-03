@@ -19,7 +19,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.3.5 alpha"
+app_version = "0.3.6 alpha"
 
 class HtmlHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
@@ -292,16 +292,33 @@ class ReTextWindow(QMainWindow):
 		self.editBox.document().setModified(False)
 		self.setCurrentFile()
 	
-	def saveFilePerfect(self):
-		if not self.fileName:
-			self.fileName = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", self.tr("HTML files (*.html *.htm)"))
-		if self.fileName:
-			if QFileInfo(self.fileName).suffix().isEmpty():
-				self.fileName.append(".html")
+	def saveHtml(self, fileName):
+		if QFileInfo(fileName).suffix().isEmpty():
+			fileName.append(".html")
+		if self.actionPlainText.isChecked():
 			td = QTextDocument()
-			td.setHtml(self.parseText())
-			writer = QTextDocumentWriter(self.fileName)
+			td.setPlainText(self.editBox.toPlainText())
+			writer = QTextDocumentWriter(fileName)
 			writer.write(td)
+		else:
+			htmlFile = QFile(fileName)
+			htmlFile.open(QIODevice.WriteOnly)
+			html = QTextStream(htmlFile)
+			html.__lshift__("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n")
+			html.__lshift__("<html>\n<head>\n")
+			html.__lshift__("  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n")
+			html.__lshift__(QString("  <meta name=\"generator\" content=\"%1 %2\">\n").arg(app_name, app_version))
+			html.__lshift__("  <title>" + self.getDocumentTitle() + "</title>\n")
+			html.__lshift__("</head>\n<body>\n")
+			html.__lshift__(self.parseText())
+			html.__lshift__("</body>\n</html>\n")
+			htmlFile.close()
+	
+	def saveFilePerfect(self):
+		fileName = None
+		fileName = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", self.tr("HTML files (*.html *.htm)"))
+		if fileName:
+			self.saveHtml(fileName)
 	
 	def savePdf(self):
 		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to PDF"), "", self.tr("PDF files (*.pdf)"));
@@ -311,6 +328,7 @@ class ReTextWindow(QMainWindow):
 			printer = QPrinter(QPrinter.HighResolution)
 			printer.setOutputFormat(QPrinter.PdfFormat)
 			printer.setOutputFileName(fileName)
+			printer.setDocName(self.getDocumentTitle())
 			printer.setCreator(app_name+" "+app_version)
 			td = QTextDocument()
 			if self.actionPlainText.isChecked():
@@ -332,6 +350,12 @@ class ReTextWindow(QMainWindow):
 				td.setHtml(self.parseText())
 			td.print_(printer)
 	
+	def getDocumentTitle(self):
+		if self.fileName:
+			return QFileInfo(self.fileName).completeBaseName()
+		else:
+			return self.tr("New document")
+	
 	def saveGDocs(self):
 		settings = QSettings()
 		login = settings.value("GDocsLogin").toString()
@@ -342,13 +366,7 @@ class ReTextWindow(QMainWindow):
 				passwd = ""
 			(passwd, ok) = QInputDialog.getText(self, app_name, self.tr("Password:"), QLineEdit.Password, passwd)
 		if ok and login:
-			td = QTextDocument()
-			if self.actionPlainText.isChecked():
-				td.setPlainText(self.editBox.toPlainText())
-			else:
-				td.setHtml(self.parseText())
-			writer = QTextDocumentWriter('temp.html')
-			writer.write(td)
+			self.saveHtml('temp.html')
 			gdClient = gdata.docs.service.DocsService()
 			try:
 				gdClient.ClientLogin(unicode(login), unicode(passwd))
@@ -358,11 +376,7 @@ class ReTextWindow(QMainWindow):
 				settings.setValue("GDocsLogin", login)
 				settings.setValue("GDocsPasswd", passwd)
 				ms = MediaSource(file_path='temp.html', content_type='text/html')
-				if self.fileName:
-					title = self.fileName
-				else:
-					title = self.tr("New document")
-				entry = gdClient.Upload(ms, unicode(title))
+				entry = gdClient.Upload(ms, unicode(self.getDocumentTitle()))
 				link = entry.GetAlternateLink().href
 				QFile('temp.html').remove()
 				QDesktopServices.openUrl(QUrl(link))
@@ -419,7 +433,9 @@ class ReTextWindow(QMainWindow):
 	
 	def aboutDialog(self):
 		QMessageBox.about(self, self.tr('About %1').arg(app_name), \
-		self.tr('This is <b>%1</b>, version %2<br>Author: Dmitry Shachnev, 2011<br>Website: <a href="http://sourceforge.net/p/retext/">sf.net/p/retext</a>').arg(app_name, app_version))
+		self.tr('This is <b>%1</b>, version %2<br>Author: Dmitry Shachnev, 2011').arg(app_name, app_version) \
+		+ '<br><br>' + self.tr('Website: <a href="http://sourceforge.net/p/retext/">sf.net/p/retext</a>') \
+		+ '<br>' + self.tr('MarkDown syntax documentation: <a href="http://daringfireball.net/projects/markdown/syntax">daringfireball.net/projects/markdown/syntax</a>'))
 	
 	def enablePlainText(self, value):
 		self.actionAutoFormatting.setDisabled(value)
