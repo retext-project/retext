@@ -18,7 +18,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.3.6 alpha"
+app_version = "0.3.7 alpha"
 
 class HtmlHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
