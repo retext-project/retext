@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from PyQt4.Qt import *
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
@@ -41,6 +40,29 @@ class HtmlHighlighter(QSyntaxHighlighter):
 				length = expression.matchedLength()
 				self.setFormat(index, length, charFormat)
 				index = expression.indexIn(text, index + length)
+
+class LogPassDialog(QDialog):
+	def __init__(self, defaultLogin="", defaultPass=""):
+		QDialog.__init__(self)
+		self.setWindowTitle(app_name)
+		self.verticalLayout = QVBoxLayout(self)
+		self.label = QLabel(self)
+		self.label.setText(self.tr("Enter your Google account data"))
+		self.verticalLayout.addWidget(self.label)
+		self.loginEdit = QLineEdit(self)
+		self.loginEdit.setText(defaultLogin)
+		self.loginEdit.setPlaceholderText(self.tr("Username"))
+		self.verticalLayout.addWidget(self.loginEdit)
+		self.passEdit = QLineEdit(self)
+		self.passEdit.setText(defaultPass)
+		self.passEdit.setPlaceholderText(self.tr("Password"))
+		self.passEdit.setEchoMode(QLineEdit.Password)
+		self.verticalLayout.addWidget(self.passEdit)
+		self.buttonBox = QDialogButtonBox(self)
+		self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
+		self.verticalLayout.addWidget(self.buttonBox)
+		self.connect(self.buttonBox, SIGNAL("accepted()"), self.accept)
+		self.connect(self.buttonBox, SIGNAL("rejected()"), self.reject)
 
 class ReTextWindow(QMainWindow):
 	def __init__(self):
@@ -360,12 +382,10 @@ class ReTextWindow(QMainWindow):
 		settings = QSettings()
 		login = settings.value("GDocsLogin").toString()
 		passwd = settings.value("GDocsPasswd").toString()
-		(login, ok) = QInputDialog.getText(self, app_name, self.tr("User name:"), QLineEdit.Normal, login)
-		if ok and login:
-			if login != settings.value("GDocsLogin").toString():
-				passwd = ""
-			(passwd, ok) = QInputDialog.getText(self, app_name, self.tr("Password:"), QLineEdit.Password, passwd)
-		if ok and login:
+		loginDialog = LogPassDialog(login, passwd)
+		if loginDialog.exec_() == QDialog.Accepted:
+			login = loginDialog.loginEdit.text()
+			passwd = loginDialog.passEdit.text()
 			self.saveHtml('temp.html')
 			gdClient = gdata.docs.service.DocsService()
 			try:
@@ -432,10 +452,10 @@ class ReTextWindow(QMainWindow):
 			closeevent.ignore()
 	
 	def aboutDialog(self):
-		QMessageBox.about(self, self.tr('About %1').arg(app_name), \
-		self.tr('This is <b>%1</b>, version %2<br>Author: Dmitry Shachnev, 2011').arg(app_name, app_version) \
-		+ '<br><br>' + self.tr('Website: <a href="http://sourceforge.net/p/retext/">sf.net/p/retext</a>') \
-		+ '<br>' + self.tr('MarkDown syntax documentation: <a href="http://daringfireball.net/projects/markdown/syntax">daringfireball.net/projects/markdown/syntax</a>'))
+		QMessageBox.about(self, self.tr('About %1').arg(app_name), '<p>' \
+		+ self.tr('This is <b>%1</b>, version %2<br>Author: Dmitry Shachnev, 2011').arg(app_name, app_version) \
+		+ '</p><p>'+ self.tr('Website: <a href="http://sourceforge.net/p/retext/">sf.net/p/retext</a>') + '<br>' \
+		+ self.tr('MarkDown syntax documentation: <a href="http://daringfireball.net/projects/markdown/syntax">daringfireball.net/projects/markdown/syntax</a>') + '</p>')
 	
 	def enablePlainText(self, value):
 		self.actionAutoFormatting.setDisabled(value)
