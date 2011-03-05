@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
+import sys, time
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
@@ -18,7 +18,9 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.3.7 alpha"
+app_version = "0.3.8 alpha"
+
+icon_path = "icons/"
 
 class HtmlHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
@@ -91,37 +93,37 @@ class ReTextWindow(QMainWindow):
 		self.addToolBar(Qt.TopToolBarArea, self.toolBar)
 		self.editBar = QToolBar(self.tr('Edit toolbar'), self)
 		self.addToolBar(Qt.TopToolBarArea, self.editBar)
-		self.actionNew = QAction(QIcon.fromTheme('document-new'), self.tr('New'), self)
+		self.actionNew = QAction(QIcon.fromTheme('document-new', QIcon(icon_path+'document-new.png')), self.tr('New'), self)
 		self.actionNew.setShortcut(QKeySequence.New)
 		self.connect(self.actionNew, SIGNAL('triggered()'), self.createNew)
-		self.actionOpen = QAction(QIcon.fromTheme('document-open'), self.tr('Open'), self)
+		self.actionOpen = QAction(QIcon.fromTheme('document-open', QIcon(icon_path+'document-open.png')), self.tr('Open'), self)
 		self.actionOpen.setShortcut(QKeySequence.Open)
 		self.connect(self.actionOpen, SIGNAL('triggered()'), self.openFile)
-		self.actionSave = QAction(QIcon.fromTheme('document-save'), self.tr('Save'), self)
+		self.actionSave = QAction(QIcon.fromTheme('document-save', QIcon(icon_path+'document-save.png')), self.tr('Save'), self)
 		self.actionSave.setEnabled(False)
 		self.actionSave.setShortcut(QKeySequence.Save)
 		self.connect(self.editBox.document(), SIGNAL('modificationChanged(bool)'), self.modificationChanged)
 		self.connect(self.actionSave, SIGNAL('triggered()'), self.saveFile)
-		self.actionSaveAs = QAction(QIcon.fromTheme('document-save-as'), self.tr('Save as'), self)
+		self.actionSaveAs = QAction(QIcon.fromTheme('document-save-as', QIcon(icon_path+'document-save-as.png')), self.tr('Save as'), self)
 		self.actionSaveAs.setShortcut(QKeySequence.SaveAs)
 		self.connect(self.actionSaveAs, SIGNAL('triggered()'), self.saveFileAs)
-		self.actionPrint = QAction(QIcon.fromTheme('document-print'), self.tr('Print'), self)
+		self.actionPrint = QAction(QIcon.fromTheme('document-print', QIcon(icon_path+'document-print.png')), self.tr('Print'), self)
 		self.actionPrint.setShortcut(QKeySequence.Print)
 		self.connect(self.actionPrint, SIGNAL('triggered()'), self.printFile)
-		self.actionPreview = QAction(QIcon.fromTheme('x-office-document'), self.tr('Preview'), self)
+		self.actionPreview = QAction(QIcon.fromTheme('x-office-document', QIcon(icon_path+'x-office-document.png')), self.tr('Preview'), self)
 		self.actionPreview.setCheckable(True)
 		self.connect(self.actionPreview, SIGNAL('triggered(bool)'), self.preview)
-		self.actionPerfectHtml = QAction(QIcon.fromTheme('text-html'), 'HTML', self)
+		self.actionPerfectHtml = QAction(QIcon.fromTheme('text-html', QIcon(icon_path+'text-html.png')), 'HTML', self)
 		self.connect(self.actionPerfectHtml, SIGNAL('triggered()'), self.saveFilePerfect)
-		self.actionPdf = QAction(QIcon.fromTheme('application-pdf'), 'PDF', self)
+		self.actionPdf = QAction(QIcon.fromTheme('application-pdf', QIcon(icon_path+'application-pdf.png')), 'PDF', self)
 		self.connect(self.actionPdf, SIGNAL('triggered()'), self.savePdf)
-		self.actionQuit = QAction(QIcon.fromTheme('application-exit'), self.tr('Quit'), self)
+		self.actionQuit = QAction(QIcon.fromTheme('application-exit', QIcon(icon_path+'application-exit.png')), self.tr('Quit'), self)
 		self.actionQuit.setShortcut(QKeySequence.Quit)
 		self.actionQuit.setMenuRole(QAction.QuitRole)
 		self.connect(self.actionQuit, SIGNAL('triggered()'), qApp, SLOT('quit()'))
-		self.actionUndo = QAction(QIcon.fromTheme('edit-undo'), self.tr('Undo'), self)
+		self.actionUndo = QAction(QIcon.fromTheme('edit-undo', QIcon(icon_path+'edit-undo.png')), self.tr('Undo'), self)
 		self.actionUndo.setShortcut(QKeySequence.Undo)
-		self.actionRedo = QAction(QIcon.fromTheme('edit-redo'), self.tr('Redo'), self)
+		self.actionRedo = QAction(QIcon.fromTheme('edit-redo', QIcon(icon_path+'edit-redo.png')), self.tr('Redo'), self)
 		self.actionRedo.setShortcut(QKeySequence.Redo)
 		self.connect(self.actionUndo, SIGNAL('triggered()'), self.editBox, SLOT('undo()'))
 		self.connect(self.actionRedo, SIGNAL('triggered()'), self.editBox, SLOT('redo()'))
@@ -129,13 +131,13 @@ class ReTextWindow(QMainWindow):
 		self.actionRedo.setEnabled(False)
 		self.connect(self.editBox.document(), SIGNAL('undoAvailable(bool)'), self.actionUndo, SLOT('setEnabled(bool)'))
 		self.connect(self.editBox.document(), SIGNAL('redoAvailable(bool)'), self.actionRedo, SLOT('setEnabled(bool)'))
-		self.actionCopy = QAction(QIcon.fromTheme('edit-copy'), self.tr('Copy'), self)
+		self.actionCopy = QAction(QIcon.fromTheme('edit-copy', QIcon(icon_path+'edit-copy.png')), self.tr('Copy'), self)
 		self.actionCopy.setShortcut(QKeySequence.Copy)
 		self.actionCopy.setEnabled(False)
-		self.actionCut = QAction(QIcon.fromTheme('edit-cut'), self.tr('Cut'), self)
+		self.actionCut = QAction(QIcon.fromTheme('edit-cut', QIcon(icon_path+'edit-cut.png')), self.tr('Cut'), self)
 		self.actionCut.setShortcut(QKeySequence.Cut)
 		self.actionCut.setEnabled(False)
-		self.actionPaste = QAction(QIcon.fromTheme('edit-paste'), self.tr('Paste'), self)
+		self.actionPaste = QAction(QIcon.fromTheme('edit-paste', QIcon(icon_path+'edit-paste.png')), self.tr('Paste'), self)
 		self.actionPaste.setShortcut(QKeySequence.Paste)
 		self.connect(self.actionCut, SIGNAL('triggered()'), self.editBox, SLOT('cut()'))
 		self.connect(self.actionCopy, SIGNAL('triggered()'), self.editBox, SLOT('copy()'))
@@ -148,15 +150,15 @@ class ReTextWindow(QMainWindow):
 		self.actionAutoFormatting = QAction(self.tr('Auto-formatting'), self)
 		self.actionAutoFormatting.setCheckable(True)
 		self.actionAutoFormatting.setChecked(True)
-		self.actionRecentFiles = QAction(QIcon.fromTheme('document-open-recent'), self.tr('Open recent'), self)
+		self.actionRecentFiles = QAction(QIcon.fromTheme('document-open-recent', QIcon(icon_path+'document-open-recent.png')), self.tr('Open recent'), self)
 		self.connect(self.actionRecentFiles, SIGNAL('triggered()'), self.openRecent)
-		self.actionAbout = QAction(QIcon.fromTheme('help-about'), self.tr('About %1').arg(app_name), self)
+		self.actionAbout = QAction(QIcon.fromTheme('help-about', QIcon(icon_path+'help-about.png')), self.tr('About %1').arg(app_name), self)
 		self.actionAbout.setMenuRole(QAction.AboutRole)
 		self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutDialog)
 		self.actionAboutQt = QAction(self.tr('About Qt'), self)
 		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
 		if use_gdocs:
-			self.actionsaveGDocs = QAction(QIcon.fromTheme('web-browser'), self.tr('Save to Google Docs'), self)
+			self.actionsaveGDocs = QAction(QIcon.fromTheme('web-browser', QIcon(icon_path+'web-browser.png')), self.tr('Save to Google Docs'), self)
 			self.connect(self.actionsaveGDocs, SIGNAL('triggered()'), self.saveGDocs)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
 		self.usefulTags = ('a', 'center', 'i', 'img', 's', 'span', 'table', 'td', 'tr', 'u')
@@ -232,6 +234,7 @@ class ReTextWindow(QMainWindow):
 	
 	def setCurrentFile(self):	
 		curFile = self.fileName
+		self.setWindowTitle("")
 		self.setWindowFilePath(curFile);
 		settings = QSettings()
 		files = settings.value("recentFileList").toStringList()
@@ -387,7 +390,7 @@ class ReTextWindow(QMainWindow):
 			login = loginDialog.loginEdit.text()
 			passwd = loginDialog.passEdit.text()
 			self.saveHtml('temp.html')
-			gdClient = gdata.docs.service.DocsService()
+			gdClient = gdata.docs.service.DocsService(source=app_name)
 			try:
 				gdClient.ClientLogin(unicode(login), unicode(passwd))
 			except gdata.service.BadAuthentication:
