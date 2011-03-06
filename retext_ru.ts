@@ -181,7 +181,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="retext.py" line="305"/>
         <source>ReText files (*.re *.mdml *.txt)</source>
-        <translation>Файлы ReYext (*.re *.mdml *.txt)</translation>
+        <translation>Файлы ReText (*.re *.mdml *.txt)</translation>
     </message>
     <message>
         <location filename="retext.py" line="94"/>

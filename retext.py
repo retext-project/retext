@@ -18,7 +18,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.3.8 alpha"
+app_version = "0.3.9 alpha"
 
 icon_path = "icons/"
 
@@ -233,9 +233,8 @@ class ReTextWindow(QMainWindow):
 				self.previewBox.setHtml(self.parseText())
 	
 	def setCurrentFile(self):	
-		curFile = self.fileName
 		self.setWindowTitle("")
-		self.setWindowFilePath(curFile);
+		self.setWindowFilePath(self.fileName);
 		settings = QSettings()
 		files = settings.value("recentFileList").toStringList()
 		files.removeAll(self.fileName)
@@ -293,8 +292,6 @@ class ReTextWindow(QMainWindow):
 			if not suffix == "txt":
 				self.actionPlainText.setChecked(False)
 				self.enablePlainText(False)
-			self.setWindowTitle("")
-			self.setWindowFilePath(self.fileName)
 			self.setCurrentFile()
 	
 	def saveFile(self):
