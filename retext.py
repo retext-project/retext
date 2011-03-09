@@ -118,7 +118,7 @@ class ReTextWindow(QMainWindow):
 		self.actionPdf = QAction(QIcon.fromTheme('application-pdf', QIcon(icon_path+'application-pdf.png')), 'PDF', self)
 		self.connect(self.actionPdf, SIGNAL('triggered()'), self.savePdf)
 		self.actionOdf = QAction(QIcon.fromTheme('x-office-document', QIcon(icon_path+'x-office-document.png')), 'ODT', self)
-		self.connect(self.actionPdf, SIGNAL('triggered()'), self.saveOdf)
+		self.connect(self.actionOdf, SIGNAL('triggered()'), self.saveOdf)
 		self.actionQuit = QAction(QIcon.fromTheme('application-exit', QIcon(icon_path+'application-exit.png')), self.tr('Quit'), self)
 		self.actionQuit.setShortcut(QKeySequence.Quit)
 		self.actionQuit.setMenuRole(QAction.QuitRole)
@@ -355,7 +355,7 @@ class ReTextWindow(QMainWindow):
 			fileName.append(".odt")
 		writer = QTextDocumentWriter(fileName)
 		writer.setFormat("odf")
-		writer.write(td)
+		writer.write(self.textDocument())
 	
 	def saveFilePerfect(self):
 		fileName = None
