@@ -18,7 +18,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.3.9 alpha"
+app_version = "0.3.10 alpha"
 
 icon_path = "icons/"
 
@@ -117,6 +117,8 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionPerfectHtml, SIGNAL('triggered()'), self.saveFilePerfect)
 		self.actionPdf = QAction(QIcon.fromTheme('application-pdf', QIcon(icon_path+'application-pdf.png')), 'PDF', self)
 		self.connect(self.actionPdf, SIGNAL('triggered()'), self.savePdf)
+		self.actionOdf = QAction(QIcon.fromTheme('x-office-document', QIcon(icon_path+'x-office-document.png')), 'ODT', self)
+		self.connect(self.actionPdf, SIGNAL('triggered()'), self.saveOdf)
 		self.actionQuit = QAction(QIcon.fromTheme('application-exit', QIcon(icon_path+'application-exit.png')), self.tr('Quit'), self)
 		self.actionQuit.setShortcut(QKeySequence.Quit)
 		self.actionQuit.setMenuRole(QAction.QuitRole)
@@ -186,8 +188,10 @@ class ReTextWindow(QMainWindow):
 		self.menuFile.addSeparator()
 		self.menuExport = self.menuFile.addMenu(self.tr('Export'))
 		self.menuExport.addAction(self.actionPerfectHtml)
+		self.menuExport.addAction(self.actionOdf)
 		self.menuExport.addAction(self.actionPdf)
 		if use_gdocs:
+			self.menuExport.addSeparator()
 			self.menuExport.addAction(self.actionsaveGDocs)
 		self.menuFile.addAction(self.actionPrint)
 		self.menuFile.addSeparator()
@@ -336,6 +340,22 @@ class ReTextWindow(QMainWindow):
 			html.__lshift__("</body>\n</html>\n")
 			htmlFile.close()
 	
+	def textDocument(self):
+		td = QTextDocument()
+		if self.actionPlainText.isChecked():
+			td.setPlainText(self.editBox.toPlainText())
+		else:
+			td.setHtml(self.parseText())
+		return td
+	
+	def saveOdf(self):
+		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to ODT"), "", self.tr("OpenDocument text files (*.odt)"))
+		if QFileInfo(fileName).suffix().isEmpty():
+			fileName.append(".odt")
+		writer = QTextDocumentWriter(fileName)
+		writer.setFormat("odf")
+		writer.write(td)
+	
 	def saveFilePerfect(self):
 		fileName = None
 		fileName = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", self.tr("HTML files (*.html *.htm)"))
@@ -352,12 +372,7 @@ class ReTextWindow(QMainWindow):
 			printer.setOutputFileName(fileName)
 			printer.setDocName(self.getDocumentTitle())
 			printer.setCreator(app_name+" "+app_version)
-			td = QTextDocument()
-			if self.actionPlainText.isChecked():
-				td.setPlainText(self.editBox.toPlainText())
-			else:
-				td.setHtml(self.parseText())
-			td.print_(printer)
+			self.textDocument().print_(printer)
 	
 	def printFile(self):
 		printer = QPrinter(QPrinter.HighResolution)
@@ -365,12 +380,7 @@ class ReTextWindow(QMainWindow):
 		dlg = QPrintDialog(printer, self)
 		dlg.setWindowTitle(self.tr("Print Document"))
 		if (dlg.exec_() == QDialog.Accepted):
-			td = QTextDocument()
-			if self.actionPlainText.isChecked():
-				td.setPlainText(self.editBox.toPlainText())
-			else:
-				td.setHtml(self.parseText())
-			td.print_(printer)
+			self.textDocument().print_(printer)
 	
 	def getDocumentTitle(self):
 		if self.fileName:
