@@ -37,7 +37,7 @@ class HtmlHighlighter(QSyntaxHighlighter):
 				charFormat.setFontWeight(QFont.Normal)
 			else:
 				charFormat.setFontWeight(QFont.Bold)
-			charFormat.setForeground(foregrounds[i]);
+			charFormat.setForeground(foregrounds[i])
 			while (index >= 0):
 				length = expression.matchedLength()
 				self.setFormat(index, length, charFormat)
@@ -238,7 +238,7 @@ class ReTextWindow(QMainWindow):
 	
 	def setCurrentFile(self):	
 		self.setWindowTitle("")
-		self.setWindowFilePath(self.fileName);
+		self.setWindowFilePath(self.fileName)
 		settings = QSettings()
 		files = settings.value("recentFileList").toStringList()
 		files.removeAll(self.fileName)
@@ -315,8 +315,9 @@ class ReTextWindow(QMainWindow):
 			savestream = QTextStream(savefile)
 			savestream.__lshift__(self.editBox.toPlainText())
 			savefile.close()
-		self.editBox.document().setModified(False)
+		self.editBox.document().setModified(False)	
 		self.setCurrentFile()
+		self.setWindowModified(False)
 	
 	def saveHtml(self, fileName):
 		if QFileInfo(fileName).suffix().isEmpty():
@@ -363,7 +364,7 @@ class ReTextWindow(QMainWindow):
 			self.saveHtml(fileName)
 	
 	def savePdf(self):
-		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to PDF"), "", self.tr("PDF files (*.pdf)"));
+		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to PDF"), "", self.tr("PDF files (*.pdf)"))
 		if fileName:
 			if QFileInfo(fileName).suffix().isEmpty():
 				fileName.append(".pdf")
