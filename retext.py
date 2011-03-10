@@ -1,6 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# Copyright 2011 Dmitry Shachnev
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+# MA 02110-1301, USA.
+
 import sys
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -18,7 +35,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.3.10 alpha"
+app_version = "0.4.0 beta"
 
 icon_path = "icons/"
 
@@ -66,9 +83,29 @@ class LogPassDialog(QDialog):
 		self.connect(self.buttonBox, SIGNAL("accepted()"), self.accept)
 		self.connect(self.buttonBox, SIGNAL("rejected()"), self.reject)
 
+class HtmlDialog(QDialog):
+	def __init__(self, parent=None):
+		QDialog.__init__(self)
+		super(HtmlDialog, self).__init__(parent)
+		self.resize(600, 500)
+		self.verticalLayout = QVBoxLayout(self)
+		self.textEdit = QTextEdit(self)
+		self.textEdit.setReadOnly(True)
+		self.syntaxHighlighter = HtmlHighlighter(self.textEdit.document())
+		self.verticalLayout.addWidget(self.textEdit)
+		self.buttonBox = QDialogButtonBox(self)
+		self.buttonBox.setOrientation(Qt.Horizontal)
+		self.buttonBox.setStandardButtons(QDialogButtonBox.Close)
+		self.connect(self.buttonBox, SIGNAL("clicked(QAbstractButton*)"), self.doClose)
+		self.verticalLayout.addWidget(self.buttonBox)
+	
+	def doClose(self):
+		self.close()
+
 class ReTextWindow(QMainWindow):
-	def __init__(self):
+	def __init__(self, parent=None):
 		QMainWindow.__init__(self)
+		#super(ReTextWindow, self).__init__(parent)
 		self.resize(800, 600)
 		screen = QDesktopWidget().screenGeometry()
 		size = self.geometry()
@@ -110,6 +147,8 @@ class ReTextWindow(QMainWindow):
 		self.actionPrint = QAction(QIcon.fromTheme('document-print', QIcon(icon_path+'document-print.png')), self.tr('Print'), self)
 		self.actionPrint.setShortcut(QKeySequence.Print)
 		self.connect(self.actionPrint, SIGNAL('triggered()'), self.printFile)
+		self.actionViewHtml = QAction(QIcon.fromTheme('text-html', QIcon(icon_path+'text-html.png')), self.tr('View HTML code'), self)
+		self.connect(self.actionViewHtml, SIGNAL('triggered()'), self.viewHtml)
 		self.actionPreview = QAction(QIcon.fromTheme('x-office-document', QIcon(icon_path+'x-office-document.png')), self.tr('Preview'), self)
 		self.actionPreview.setCheckable(True)
 		self.connect(self.actionPreview, SIGNAL('triggered(bool)'), self.preview)
@@ -205,6 +244,8 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addSeparator()
 		self.menuEdit.addAction(self.actionPlainText)
 		self.menuEdit.addAction(self.actionAutoFormatting)
+		self.menuEdit.addSeparator()
+		self.menuEdit.addAction(self.actionViewHtml)
 		self.menuEdit.addAction(self.actionPreview)
 		self.menuHelp.addAction(self.actionAbout)
 		self.menuHelp.addAction(self.actionAboutQt)
@@ -462,6 +503,14 @@ class ReTextWindow(QMainWindow):
 		else:
 			closeevent.ignore()
 	
+	def viewHtml(self):
+		HtmlDlg = HtmlDialog(self)
+		HtmlDlg.setWindowTitle(self.getDocumentTitle()+" ("+self.tr("HTML code")+") "+QChar(0x2014)+" "+app_name)
+		HtmlDlg.textEdit.setPlainText(self.parseText())
+		HtmlDlg.show()
+		HtmlDlg.raise_()
+		HtmlDlg.activateWindow()
+		
 	def aboutDialog(self):
 		QMessageBox.about(self, self.tr('About %1').arg(app_name), '<p>' \
 		+ self.tr('This is <b>%1</b>, version %2<br>Author: Dmitry Shachnev, 2011').arg(app_name, app_version) \
@@ -471,6 +520,7 @@ class ReTextWindow(QMainWindow):
 	def enablePlainText(self, value):
 		self.actionAutoFormatting.setDisabled(value)
 		self.actionPerfectHtml.setDisabled(value)
+		self.actionViewHtml.setDisabled(value)
 		self.tagsBox.setVisible(value)
 		self.symbolBox.setVisible(value)
 	
