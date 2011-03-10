@@ -85,8 +85,7 @@ class LogPassDialog(QDialog):
 
 class HtmlDialog(QDialog):
 	def __init__(self, parent=None):
-		QDialog.__init__(self)
-		super(HtmlDialog, self).__init__(parent)
+		QDialog.__init__(self, parent)
 		self.resize(600, 500)
 		self.verticalLayout = QVBoxLayout(self)
 		self.textEdit = QTextEdit(self)
@@ -104,8 +103,7 @@ class HtmlDialog(QDialog):
 
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
-		QMainWindow.__init__(self)
-		#super(ReTextWindow, self).__init__(parent)
+		QMainWindow.__init__(self, parent)
 		self.resize(800, 600)
 		screen = QDesktopWidget().screenGeometry()
 		size = self.geometry()
