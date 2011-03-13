@@ -35,7 +35,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.4.0 beta"
+app_version = "0.4.1 beta"
 
 icon_path = "icons/"
 
@@ -90,6 +90,9 @@ class HtmlDialog(QDialog):
 		self.verticalLayout = QVBoxLayout(self)
 		self.textEdit = QTextEdit(self)
 		self.textEdit.setReadOnly(True)
+		monofont = QFont()
+		monofont.setFamily('monospace')
+		self.textEdit.setFont(monofont)
 		self.syntaxHighlighter = HtmlHighlighter(self.textEdit.document())
 		self.verticalLayout.addWidget(self.textEdit)
 		self.buttonBox = QDialogButtonBox(self)
