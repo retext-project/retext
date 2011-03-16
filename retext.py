@@ -395,7 +395,7 @@ class ReTextWindow(QMainWindow):
 			html.__lshift__("  <title>" + self.getDocumentTitle() + "</title>\n")
 			html.__lshift__("</head>\n<body>\n")
 			html.__lshift__(self.parseText())
-			html.__lshift__("</body>\n</html>\n")
+			html.__lshift__("\n</body>\n</html>\n")
 			htmlFile.close()
 		else:
 			td = QTextDocument()
