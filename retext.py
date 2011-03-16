@@ -35,7 +35,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.4.1 beta"
+app_version = "0.5.0 beta"
 
 icon_path = "icons/"
 
@@ -112,7 +112,10 @@ class ReTextWindow(QMainWindow):
 		size = self.geometry()
 		self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
 		self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
-		self.setWindowIcon(QIcon.fromTheme('retext', QIcon.fromTheme('accessories-text-editor')))
+		if QFile.exists(icon_path+'retext.png'):
+			self.setWindowIcon(QIcon(icon_path+'retext.png'))
+		else:
+			self.setWindowIcon(QIcon.fromTheme('retext', QIcon.fromTheme('accessories-text-editor')))
 		self.centralwidget = QWidget(self)
 		self.verticalLayout = QVBoxLayout(self.centralwidget)
 		self.previewBox = QTextEdit(self.centralwidget)
@@ -136,10 +139,12 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionNew, SIGNAL('triggered()'), self.createNew)
 		self.actionOpen = QAction(QIcon.fromTheme('document-open', QIcon(icon_path+'document-open.png')), self.tr('Open'), self)
 		self.actionOpen.setShortcut(QKeySequence.Open)
+		self.actionOpen.setPriority(QAction.LowPriority)
 		self.connect(self.actionOpen, SIGNAL('triggered()'), self.openFile)
 		self.actionSave = QAction(QIcon.fromTheme('document-save', QIcon(icon_path+'document-save.png')), self.tr('Save'), self)
 		self.actionSave.setEnabled(False)
 		self.actionSave.setShortcut(QKeySequence.Save)
+		self.actionSave.setPriority(QAction.LowPriority)
 		self.connect(self.editBox.document(), SIGNAL('modificationChanged(bool)'), self.modificationChanged)
 		self.connect(self.actionSave, SIGNAL('triggered()'), self.saveFile)
 		self.actionSaveAs = QAction(QIcon.fromTheme('document-save-as', QIcon(icon_path+'document-save-as.png')), self.tr('Save as'), self)
@@ -147,7 +152,10 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionSaveAs, SIGNAL('triggered()'), self.saveFileAs)
 		self.actionPrint = QAction(QIcon.fromTheme('document-print', QIcon(icon_path+'document-print.png')), self.tr('Print'), self)
 		self.actionPrint.setShortcut(QKeySequence.Print)
+		self.actionPrint.setPriority(QAction.LowPriority)
 		self.connect(self.actionPrint, SIGNAL('triggered()'), self.printFile)
+		self.actionPrintPreview = QAction(QIcon.fromTheme('document-print-preview', QIcon(icon_path+'document-print-preview.png')), self.tr('Print preview'), self)
+		self.connect(self.actionPrintPreview, SIGNAL('triggered()'), self.printPreview)
 		self.actionViewHtml = QAction(QIcon.fromTheme('text-html', QIcon(icon_path+'text-html.png')), self.tr('View HTML code'), self)
 		self.connect(self.actionViewHtml, SIGNAL('triggered()'), self.viewHtml)
 		self.actionPreview = QAction(QIcon.fromTheme('x-office-document', QIcon(icon_path+'x-office-document.png')), self.tr('Preview'), self)
@@ -234,6 +242,7 @@ class ReTextWindow(QMainWindow):
 			self.menuExport.addSeparator()
 			self.menuExport.addAction(self.actionsaveGDocs)
 		self.menuFile.addAction(self.actionPrint)
+		self.menuFile.addAction(self.actionPrintPreview)
 		self.menuFile.addSeparator()
 		self.menuFile.addAction(self.actionQuit)
 		self.menuEdit.addAction(self.actionUndo)
@@ -253,6 +262,7 @@ class ReTextWindow(QMainWindow):
 		self.menubar.addMenu(self.menuFile)
 		self.menubar.addMenu(self.menuEdit)
 		self.menubar.addMenu(self.menuHelp)
+		self.toolBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 		self.toolBar.addAction(self.actionOpen)
 		self.toolBar.addAction(self.actionSave)
 		self.toolBar.addAction(self.actionPrint)
@@ -283,10 +293,10 @@ class ReTextWindow(QMainWindow):
 		self.setWindowFilePath(self.fileName)
 		settings = QSettings()
 		files = settings.value("recentFileList").toStringList()
-		files.removeAll(self.fileName)
 		files.prepend(self.fileName)
-		while len(files) > 10:
-			files.removeLast()
+		files.removeDuplicates()
+		if len(files) > 10:
+			del files[10:]
 		settings.setValue("recentFileList", files)
 	
 	def createNew(self):
@@ -304,12 +314,13 @@ class ReTextWindow(QMainWindow):
 	
 	def openRecent(self):
 		settings = QSettings()
-		files = settings.value("recentFileList").toStringList()
-		for i in files:
-			if not QFile.exists(i):
-				files.removeAll(i)
+		filesOld = settings.value("recentFileList").toStringList()
+		files = QStringList()
+		for i in filesOld:
+			if QFile.exists(i):
+				files.append(i)
 		settings.setValue("recentFileList", files)
-		(item, ok) = QInputDialog.getItem(self, app_name, self.tr("Open recent"), files, 0, False)
+		item, ok = QInputDialog.getItem(self, app_name, self.tr("Open recent"), files, 0, False)
 		if ok and not item.isEmpty():
 			self.fileName = item
 			self.openFileMain()
@@ -317,7 +328,7 @@ class ReTextWindow(QMainWindow):
 	def openFile(self):
 		if self.maybeSave():
 			self.fileName = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", \
-			self.tr("ReText files (*.re *.mdml *.txt)")+";;"+self.tr("All files (*)"))
+			self.tr("ReText files (*.re *.md *.txt)")+";;"+self.tr("All files (*)"))
 			self.openFileMain()
 		
 	def openFileMain(self):
@@ -348,7 +359,11 @@ class ReTextWindow(QMainWindow):
 	
 	def saveFileMain(self, dlg):
 		if (not self.fileName) or dlg:
-			self.fileName = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", self.tr("ReText files (*.re *.mdml *.txt)"))
+			if self.actionPlainText.isChecked() or self.actionAutoFormatting.isChecked():
+				defaultExt = self.tr("ReText files (*.re *.md *.txt)")
+			else:
+				defaultExt = self.tr("HTML files (*.html *.htm)")
+			self.fileName = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 		if self.fileName:
 			if QFileInfo(self.fileName).suffix().isEmpty():
 				self.fileName.append(".re")
@@ -369,7 +384,7 @@ class ReTextWindow(QMainWindow):
 			td.setPlainText(self.editBox.toPlainText())
 			writer = QTextDocumentWriter(fileName)
 			writer.write(td)
-		else:
+		elif self.actionAutoFormatting.isChecked():
 			htmlFile = QFile(fileName)
 			htmlFile.open(QIODevice.WriteOnly)
 			html = QTextStream(htmlFile)
@@ -382,6 +397,11 @@ class ReTextWindow(QMainWindow):
 			html.__lshift__(self.parseText())
 			html.__lshift__("</body>\n</html>\n")
 			htmlFile.close()
+		else:
+			td = QTextDocument()
+			td.setHtml(self.editBox.toPlainText())
+			writer = QTextDocumentWriter(fileName)
+			writer.write(td)
 	
 	def textDocument(self):
 		td = QTextDocument()
@@ -421,9 +441,19 @@ class ReTextWindow(QMainWindow):
 		printer = QPrinter(QPrinter.HighResolution)
 		printer.setCreator(app_name+" "+app_version)
 		dlg = QPrintDialog(printer, self)
-		dlg.setWindowTitle(self.tr("Print Document"))
+		dlg.setWindowTitle(self.tr("Print document"))
 		if (dlg.exec_() == QDialog.Accepted):
 			self.textDocument().print_(printer)
+	
+	def printFileMain(self, printer):
+		self.textDocument().print_(printer)
+	
+	def printPreview(self):
+		printer = QPrinter(QPrinter.HighResolution)
+		printer.setCreator(app_name+" "+app_version)
+		preview = QPrintPreviewDialog(printer, self)
+		self.connect(preview, SIGNAL("paintRequested(QPrinter*)"), self.printFileMain)
+		preview.exec_()
 	
 	def getDocumentTitle(self):
 		if self.fileName:
