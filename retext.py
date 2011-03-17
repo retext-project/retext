@@ -35,7 +35,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.5.0 beta"
+app_version = "0.5.1 beta"
 
 icon_path = "icons/"
 
@@ -70,12 +70,15 @@ class LogPassDialog(QDialog):
 		self.verticalLayout.addWidget(self.label)
 		self.loginEdit = QLineEdit(self)
 		self.loginEdit.setText(defaultLogin)
-		self.loginEdit.setPlaceholderText(self.tr("Username"))
 		self.verticalLayout.addWidget(self.loginEdit)
 		self.passEdit = QLineEdit(self)
 		self.passEdit.setText(defaultPass)
-		self.passEdit.setPlaceholderText(self.tr("Password"))
 		self.passEdit.setEchoMode(QLineEdit.Password)
+		try:
+			self.loginEdit.setPlaceholderText(self.tr("Username"))
+			self.passEdit.setPlaceholderText(self.tr("Password"))
+		except:
+			pass
 		self.verticalLayout.addWidget(self.passEdit)
 		self.buttonBox = QDialogButtonBox(self)
 		self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
