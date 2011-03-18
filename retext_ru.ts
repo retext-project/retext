@@ -231,7 +231,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="retext.py" line="539"/>
         <source>HTML code</source>
-        <translation>Код HTML</translation>
+        <translation>код HTML</translation>
     </message>
     <message>
         <location filename="retext.py" line="157"/>

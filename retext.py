@@ -23,7 +23,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 import markdown
-md = markdown.Markdown()
+md = markdown.Markdown(['footnotes', 'tables'])
 
 try:
 	import gdata.docs
@@ -35,7 +35,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.5.1 beta"
+app_version = "0.5.2 beta"
 
 icon_path = "icons/"
 
@@ -301,6 +301,7 @@ class ReTextWindow(QMainWindow):
 		if len(files) > 10:
 			del files[10:]
 		settings.setValue("recentFileList", files)
+		QDir.setCurrent(QFileInfo(self.fileName).dir().path())
 	
 	def createNew(self):
 		if self.maybeSave():
