@@ -214,7 +214,7 @@ class ReTextWindow(QMainWindow):
 			self.actionsaveGDocs = QAction(QIcon.fromTheme('web-browser', QIcon(icon_path+'web-browser.png')), self.tr('Save to Google Docs'), self)
 			self.connect(self.actionsaveGDocs, SIGNAL('triggered()'), self.saveGDocs)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
-		self.usefulTags = ('a', 'center', 'i', 'img', 's', 'span', 'table', 'td', 'tr', 'u')
+		self.usefulTags = ('center', 's', 'span', 'table', 'td', 'tr', 'u')
 		self.usefulChars = ('hellip', 'laquo', 'minus', 'mdash', 'nbsp', 'ndash', 'raquo')
 		self.tagsBox = QComboBox(self.editBar)
 		self.tagsBox.addItem(self.tr('Tags'))
@@ -500,8 +500,6 @@ class ReTextWindow(QMainWindow):
 			ut = self.usefulTags[num-1]
 			hc = not ut in ('img', 'td', 'tr')
 			arg = ''
-			if ut == 'a':
-				arg = ' href=""'
 			if ut == 'img':
 				arg = ' src=""'
 			if ut == 'span':
