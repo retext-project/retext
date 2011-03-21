@@ -374,7 +374,7 @@ class ReTextWindow(QMainWindow):
 			savefile = QFile(self.fileName)
 			savefile.open(QIODevice.WriteOnly)
 			savestream = QTextStream(savefile)
-			savestream.__lshift__(self.editBox.toPlainText())
+			savestream << (self.editBox.toPlainText())
 			savefile.close()
 		self.editBox.document().setModified(False)	
 		self.setCurrentFile()
@@ -392,14 +392,14 @@ class ReTextWindow(QMainWindow):
 			htmlFile = QFile(fileName)
 			htmlFile.open(QIODevice.WriteOnly)
 			html = QTextStream(htmlFile)
-			html.__lshift__("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n")
-			html.__lshift__("<html>\n<head>\n")
-			html.__lshift__("  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n")
-			html.__lshift__(QString("  <meta name=\"generator\" content=\"%1 %2\">\n").arg(app_name, app_version))
-			html.__lshift__("  <title>" + self.getDocumentTitle() + "</title>\n")
-			html.__lshift__("</head>\n<body>\n")
-			html.__lshift__(self.parseText())
-			html.__lshift__("\n</body>\n</html>\n")
+			html << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
+			html << "<html>\n<head>\n"
+			html << "  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n"
+			html << QString("  <meta name=\"generator\" content=\"%1 %2\">\n").arg(app_name, app_version)
+			html << "  <title>" + self.getDocumentTitle() + "</title>\n"
+			html << "</head>\n<body>\n"
+			html << self.parseText()
+			html << "\n</body>\n</html>\n"
 			htmlFile.close()
 		else:
 			td = QTextDocument()
