@@ -108,12 +108,15 @@ class HtmlDialog(QDialog):
 		self.close()
 
 class ReTextWindow(QMainWindow):
-	def __init__(self, parent=None):
+	def __init__(self, parent=None):		
 		QMainWindow.__init__(self, parent)
 		self.resize(800, 600)
 		screen = QDesktopWidget().screenGeometry()
 		size = self.geometry()
 		self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
+		settings = QSettings()
+		if settings.contains('iconTheme'):
+			QIcon.setThemeName(settings.value('iconTheme').toString())
 		self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
