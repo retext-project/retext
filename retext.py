@@ -35,7 +35,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.5.3 beta"
+app_version = "0.5.4 beta"
 
 icon_path = "icons/"
 
