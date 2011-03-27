@@ -394,9 +394,9 @@ class ReTextWindow(QMainWindow):
 			else:
 				defaultExt = self.tr("HTML files (*.html *.htm)")
 			self.fileName = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
-		if self.fileName:
 			if QFileInfo(self.fileName).suffix().isEmpty():
 				self.fileName.append(".re")
+		if self.fileName:
 			savefile = QFile(self.fileName)
 			savefile.open(QIODevice.WriteOnly)
 			savestream = QTextStream(savefile)
