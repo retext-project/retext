@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# ReText
 # Copyright 2011 Dmitry Shachnev
 
 # This program is free software; you can redistribute it and/or modify
@@ -35,7 +36,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.5.4 beta"
+app_version = "0.6.0 beta"
 
 icon_path = "icons/"
 
@@ -123,17 +124,17 @@ class ReTextWindow(QMainWindow):
 		else:
 			self.setWindowIcon(QIcon.fromTheme('retext', QIcon.fromTheme('accessories-text-editor')))
 		self.centralwidget = QWidget(self)
-		self.verticalLayout = QVBoxLayout(self.centralwidget)
-		self.previewBox = QTextEdit(self.centralwidget)
-		self.previewBox.setVisible(False)
-		self.previewBox.setReadOnly(True)
-		self.verticalLayout.addWidget(self.previewBox)
+		self.layout = QHBoxLayout(self.centralwidget)
 		self.editBox = QTextEdit(self.centralwidget)
 		self.editBox.setAcceptRichText(False)
 		monofont = QFont()
 		monofont.setFamily('monospace')
 		self.editBox.setFont(monofont)
-		self.verticalLayout.addWidget(self.editBox)
+		self.layout.addWidget(self.editBox)
+		self.previewBox = QTextEdit(self.centralwidget)
+		self.previewBox.setVisible(False)
+		self.previewBox.setReadOnly(True)
+		self.layout.addWidget(self.previewBox)
 		self.setCentralWidget(self.centralwidget)
 		self.syntaxHighlighter = HtmlHighlighter(self.editBox.document())
 		self.toolBar = QToolBar(self.tr('File toolbar'), self)
@@ -167,6 +168,9 @@ class ReTextWindow(QMainWindow):
 		self.actionPreview = QAction(QIcon.fromTheme('document-preview', QIcon.fromTheme('x-office-document', QIcon(icon_path+'document-preview.png'))), self.tr('Preview'), self)
 		self.actionPreview.setCheckable(True)
 		self.connect(self.actionPreview, SIGNAL('triggered(bool)'), self.preview)
+		self.actionLivePreview = QAction(self.tr('Live preview'), self)
+		self.actionLivePreview.setCheckable(True)
+		self.connect(self.actionLivePreview, SIGNAL('triggered(bool)'), self.enableLivePreview)
 		self.actionPerfectHtml = QAction(QIcon.fromTheme('text-html', QIcon(icon_path+'text-html.png')), 'HTML', self)
 		self.connect(self.actionPerfectHtml, SIGNAL('triggered()'), self.saveFilePerfect)
 		self.actionPdf = QAction(QIcon.fromTheme('application-pdf', QIcon(icon_path+'application-pdf.png')), 'PDF', self)
@@ -262,6 +266,7 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addAction(self.actionAutoFormatting)
 		self.menuEdit.addSeparator()
 		self.menuEdit.addAction(self.actionViewHtml)
+		self.menuEdit.addAction(self.actionLivePreview)
 		self.menuEdit.addAction(self.actionPreview)
 		self.menuHelp.addAction(self.actionAbout)
 		self.menuHelp.addAction(self.actionAboutQt)
@@ -285,14 +290,32 @@ class ReTextWindow(QMainWindow):
 		self.fileName = ""
 	
 	def preview(self, viewmode):
-		self.editBar.setEnabled(not viewmode)
+		if self.actionLivePreview.isChecked:
+			self.actionLivePreview.setChecked(False)
+		self.editBar.setDisabled(viewmode)
 		self.editBox.setVisible(not viewmode)
 		self.previewBox.setVisible(viewmode)
 		if viewmode:
-			if self.actionPlainText.isChecked():
-				self.previewBox.setPlainText(self.editBox.toPlainText())
-			else:
-				self.previewBox.setHtml(self.parseText())
+			self.updatePreviewBox()
+	
+	def enableLivePreview(self, livemode):
+		self.actionPreview.setChecked(livemode)
+		self.previewBox.setVisible(livemode)
+		self.editBox.setVisible(True)
+		if livemode:
+			self.updatePreviewBox()
+			self.timer = self.startTimer(1000)
+		else:
+			self.killTimer(self.timer)
+	
+	def timerEvent(self, event):
+		self.updatePreviewBox()
+	
+	def updatePreviewBox(self):
+		if self.actionPlainText.isChecked():
+			self.previewBox.setPlainText(self.editBox.toPlainText())
+		else:
+			self.previewBox.setHtml(self.parseText())
 	
 	def setCurrentFile(self):	
 		self.setWindowTitle("")
