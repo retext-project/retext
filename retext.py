@@ -164,7 +164,7 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionPrintPreview, SIGNAL('triggered()'), self.printPreview)
 		self.actionViewHtml = QAction(QIcon.fromTheme('text-html', QIcon(icon_path+'text-html.png')), self.tr('View HTML code'), self)
 		self.connect(self.actionViewHtml, SIGNAL('triggered()'), self.viewHtml)
-		self.actionPreview = QAction(QIcon.fromTheme('x-office-document', QIcon(icon_path+'x-office-document.png')), self.tr('Preview'), self)
+		self.actionPreview = QAction(QIcon.fromTheme('document-preview', QIcon.fromTheme('x-office-document', QIcon(icon_path+'document-preview.png'))), self.tr('Preview'), self)
 		self.actionPreview.setCheckable(True)
 		self.connect(self.actionPreview, SIGNAL('triggered(bool)'), self.preview)
 		self.actionPerfectHtml = QAction(QIcon.fromTheme('text-html', QIcon(icon_path+'text-html.png')), 'HTML', self)
@@ -214,7 +214,7 @@ class ReTextWindow(QMainWindow):
 		self.actionAboutQt = QAction(self.tr('About Qt'), self)
 		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
 		if use_gdocs:
-			self.actionsaveGDocs = QAction(QIcon.fromTheme('web-browser', QIcon(icon_path+'web-browser.png')), self.tr('Save to Google Docs'), self)
+			self.actionsaveGDocs = QAction(QIcon.fromTheme('internet-web-browser', QIcon.fromTheme('web-browser', QIcon(icon_path+'intenret-web-browser.png'))), self.tr('Save to Google Docs'), self)
 			self.connect(self.actionsaveGDocs, SIGNAL('triggered()'), self.saveGDocs)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
 		self.usefulTags = ('center', 's', 'span', 'table', 'td', 'tr', 'u')
