@@ -36,7 +36,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.6.0 beta"
+app_version = "0.6.1 beta"
 
 icon_path = "icons/"
 
@@ -394,13 +394,13 @@ class ReTextWindow(QMainWindow):
 			else:
 				defaultExt = self.tr("HTML files (*.html *.htm)")
 			self.fileName = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
-			if QFileInfo(self.fileName).suffix().isEmpty():
+			if self.fileName and QFileInfo(self.fileName).suffix().isEmpty():
 				self.fileName.append(".re")
 		if self.fileName:
 			savefile = QFile(self.fileName)
 			savefile.open(QIODevice.WriteOnly)
 			savestream = QTextStream(savefile)
-			savestream << (self.editBox.toPlainText())
+			savestream << self.editBox.toPlainText()
 			savefile.close()
 		self.editBox.document().setModified(False)	
 		self.setCurrentFile()
