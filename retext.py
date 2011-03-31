@@ -36,7 +36,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.6.1 beta"
+app_version = "0.6.2 beta"
 
 icon_path = "icons/"
 
@@ -189,8 +189,8 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionRedo, SIGNAL('triggered()'), self.editBox, SLOT('redo()'))
 		self.actionUndo.setEnabled(False)
 		self.actionRedo.setEnabled(False)
-		self.connect(self.editBox.document(), SIGNAL('undoAvailable(bool)'), self.actionUndo, SLOT('setEnabled(bool)'))
-		self.connect(self.editBox.document(), SIGNAL('redoAvailable(bool)'), self.actionRedo, SLOT('setEnabled(bool)'))
+		self.connect(self.editBox, SIGNAL('undoAvailable(bool)'), self.actionUndo, SLOT('setEnabled(bool)'))
+		self.connect(self.editBox, SIGNAL('redoAvailable(bool)'), self.actionRedo, SLOT('setEnabled(bool)'))
 		self.actionCopy = QAction(QIcon.fromTheme('edit-copy', QIcon(icon_path+'edit-copy.png')), self.tr('Copy'), self)
 		self.actionCopy.setShortcut(QKeySequence.Copy)
 		self.actionCopy.setEnabled(False)
@@ -199,6 +199,7 @@ class ReTextWindow(QMainWindow):
 		self.actionCut.setEnabled(False)
 		self.actionPaste = QAction(QIcon.fromTheme('edit-paste', QIcon(icon_path+'edit-paste.png')), self.tr('Paste'), self)
 		self.actionPaste.setShortcut(QKeySequence.Paste)
+		self.connect(self.editBox, SIGNAL('copyAvailable(bool)'), self.enableCopy)
 		self.connect(self.actionCut, SIGNAL('triggered()'), self.editBox, SLOT('cut()'))
 		self.connect(self.actionCopy, SIGNAL('triggered()'), self.editBox, SLOT('copy()'))
 		self.connect(self.actionPaste, SIGNAL('triggered()'), self.editBox, SLOT('paste()'))
@@ -310,6 +311,10 @@ class ReTextWindow(QMainWindow):
 	
 	def timerEvent(self, event):
 		self.updatePreviewBox()
+	
+	def enableCopy(self, copymode):
+		self.actionCopy.setEnabled(copymode)
+		self.actionCut.setEnabled(copymode)
 	
 	def updatePreviewBox(self):
 		if self.actionPlainText.isChecked():
