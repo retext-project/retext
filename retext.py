@@ -130,6 +130,7 @@ class ReTextWindow(QMainWindow):
 		monofont = QFont()
 		monofont.setFamily('monospace')
 		self.editBox.setFont(monofont)
+		self.connect(self.editBox, SIGNAL('textChanged()'), self.updateLivePreviewBox)
 		self.layout.addWidget(self.editBox)
 		self.previewBox = QTextEdit(self.centralwidget)
 		self.previewBox.setVisible(False)
@@ -305,12 +306,6 @@ class ReTextWindow(QMainWindow):
 		self.editBox.setVisible(True)
 		if livemode:
 			self.updatePreviewBox()
-			self.timer = self.startTimer(1000)
-		else:
-			self.killTimer(self.timer)
-	
-	def timerEvent(self, event):
-		self.updatePreviewBox()
 	
 	def enableCopy(self, copymode):
 		self.actionCopy.setEnabled(copymode)
@@ -321,6 +316,10 @@ class ReTextWindow(QMainWindow):
 			self.previewBox.setPlainText(self.editBox.toPlainText())
 		else:
 			self.previewBox.setHtml(self.parseText())
+	
+	def updateLivePreviewBox(self):
+		if self.actionLivePreview.isChecked():
+			self.updatePreviewBox()
 	
 	def setCurrentFile(self):	
 		self.setWindowTitle("")
