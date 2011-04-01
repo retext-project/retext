@@ -100,7 +100,6 @@ class HtmlDialog(QDialog):
 		HtmlHighlighter(self.textEdit.document())
 		self.verticalLayout.addWidget(self.textEdit)
 		self.buttonBox = QDialogButtonBox(self)
-		self.buttonBox.setOrientation(Qt.Horizontal)
 		self.buttonBox.setStandardButtons(QDialogButtonBox.Close)
 		self.connect(self.buttonBox, SIGNAL("clicked(QAbstractButton*)"), self.doClose)
 		self.verticalLayout.addWidget(self.buttonBox)
@@ -109,7 +108,7 @@ class HtmlDialog(QDialog):
 		self.close()
 
 class ReTextWindow(QMainWindow):
-	def __init__(self, parent=None):		
+	def __init__(self, parent=None):
 		QMainWindow.__init__(self, parent)
 		self.resize(800, 600)
 		screen = QDesktopWidget().screenGeometry()
