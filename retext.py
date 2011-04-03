@@ -279,7 +279,7 @@ class ReTextWindow(QMainWindow):
 		self.toolBar.addAction(self.actionSave)
 		self.toolBar.addAction(self.actionPrint)
 		self.toolBar.addSeparator()
-		self.toolBar.addAction(self.actionPreview)	
+		self.toolBar.addAction(self.actionPreview)
 		self.editBar.addAction(self.actionUndo)
 		self.editBar.addAction(self.actionRedo)
 		self.editBar.addSeparator()
@@ -320,7 +320,7 @@ class ReTextWindow(QMainWindow):
 		if self.actionLivePreview.isChecked():
 			self.updatePreviewBox()
 	
-	def setCurrentFile(self):	
+	def setCurrentFile(self):
 		self.setWindowTitle("")
 		self.setWindowFilePath(self.fileName)
 		settings = QSettings()
@@ -363,7 +363,7 @@ class ReTextWindow(QMainWindow):
 			self.fileName = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", \
 			self.tr("ReText files (*.re *.md *.txt)")+";;"+self.tr("All files (*)"))
 			self.openFileMain()
-		
+	
 	def openFileMain(self):
 		if QFile.exists(self.fileName):
 			openfile = QFile(self.fileName)
@@ -405,7 +405,7 @@ class ReTextWindow(QMainWindow):
 			savestream = QTextStream(savefile)
 			savestream << self.editBox.toPlainText()
 			savefile.close()
-		self.editBox.document().setModified(False)	
+		self.editBox.document().setModified(False)
 		self.setCurrentFile()
 		self.setWindowModified(False)
 	
@@ -572,7 +572,7 @@ class ReTextWindow(QMainWindow):
 		HtmlDlg.show()
 		HtmlDlg.raise_()
 		HtmlDlg.activateWindow()
-		
+	
 	def aboutDialog(self):
 		QMessageBox.about(self, self.tr('About %1').arg(app_name), '<p>' \
 		+ self.tr('This is <b>%1</b>, version %2<br>Author: Dmitry Shachnev, 2011').arg(app_name, app_version) \
