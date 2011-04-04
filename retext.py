@@ -36,7 +36,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.6.2 beta"
+app_version = "0.6.3 beta"
 
 icon_path = "icons/"
 
@@ -357,7 +357,7 @@ class ReTextWindow(QMainWindow):
 		if ok and not item.isEmpty():
 			self.fileName = item
 			self.openFileMain()
-    
+	
 	def openFile(self):
 		if self.maybeSave():
 			self.fileName = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", \
