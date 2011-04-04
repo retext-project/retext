@@ -27,7 +27,7 @@ import markdown
 md = markdown.Markdown()
 
 app_name = "ReText Webpages generator"
-app_version = "0.2.2"
+app_version = "0.3.0"
 app_site = "http://sourceforge.net/p/retext/"
 
 if sys.platform == "linux2" and os.path.exists("/usr/share/wpgen/"):
@@ -46,18 +46,18 @@ class WebLibrary(object):
 			self.dirPath = dirPath
 	
 	def updateAll(self):
-		"""Process all documents in pages/ directory"""
+		"""Process all documents in the directory"""
 		self._initTemplate()
-		for fname in os.listdir(self.dirPath+"/pages"):
+		for fname in filter(os.path.isfile, os.listdir(self.dirPath)):
 			self._processPage(fname)
 	
 	def update(self, pageName):
-		"""Process document pageName.re or pageName in pages/ directory
+		"""Process document pageName.re or pageName in the directory
 		pageName: basename of the page file"""
 		self._initTemplate()
-		if os.path.exists(self.dirPath+"/pages/"+pageName+".re"):
+		if os.path.exists(self.dirPath+"/"+pageName+".re"):
 			self._processPage(pageName+".re")
-		elif os.path.exists(self.dirPath+"/pages/"+pageName):
+		elif os.path.exists(self.dirPath+"/"+pageName):
 			self._processPage(pageName)
 	
 	def _initTemplate(self):
@@ -69,20 +69,23 @@ class WebLibrary(object):
 	
 	def _processPage(self, fname):
 		bn, ext = os.path.splitext(fname)
-		inputfile = open(self.dirPath+"/pages/"+fname, "r")
-		text = inputfile.read()
-		inputfile.close()
+		html = None
 		if ext == ".re" or ext == ".md":
-			html = md.convert(unicode(text, 'utf-8'))
-		elif ext == ".html":
-			html = unicode(text, 'utf-8')
-		content = self.template
-		content = content.replace("%CONTENT%", html)
-		content = content.replace("%PAGENAME%", bn)
-		content = content.replace("<a href=\""+bn+".html\">", "<a>")
-		outputfile = open(self.dirPath+"/html/"+bn+".html", "w")
-		outputfile.write(content.encode('utf-8'))
-		outputfile.close()
+			inputfile = open(self.dirPath+"/"+fname, "r")
+			html = md.convert(unicode(inputfile.read(), 'utf-8'))
+			inputfile.close()
+		elif ext == ".html" and bn != "template":
+			inputfile = open(self.dirPath+"/"+fname, "r")
+			html = unicode(inputfile.read(), 'utf-8')
+			inputfile.close()
+		if html:
+			content = self.template
+			content = content.replace("%CONTENT%", html)
+			content = content.replace("%PAGENAME%", bn)
+			content = content.replace("<a href=\""+bn+".html\">", "<a>")
+			outputfile = open(self.dirPath+"/html/"+bn+".html", "w")
+			outputfile.write(content.encode('utf-8'))
+			outputfile.close()
 
 def main(argv):
 	if len(argv) > 1:
@@ -94,14 +97,12 @@ def main(argv):
 			for i in argv[2:]:
 				wl.update(i)
 		elif argv[1] == "init":
-			if not os.path.exists("pages"):
-				os.mkdir("pages")
 			if not os.path.exists("html"):
 				os.mkdir("html")
 			shutil.copy(templates_dir+"template_Default.html", "template.html")
 			shutil.copy(templates_dir+"style_Default.css", "html/style.css")
-			if not os.path.exists("pages/index.re"):
-				index = open("pages/index.re", "w")
+			if not os.path.exists("index.re"):
+				index = open("index.re", "w")
 				index.close()
 		elif argv[1] == "usestyle" and len(argv) == 3:
 			if os.path.exists(templates_dir+"style_"+argv[2]+".css"):
