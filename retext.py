@@ -37,7 +37,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.7.0 beta"
+app_version = "0.7.1 beta"
 
 icon_path = "icons/"
 
@@ -351,6 +351,7 @@ class ReTextWindow(QMainWindow):
 			self.actionCut.setEnabled(self.editBoxes[ind].textCursor().hasSelection())
 			self.actionPreview.setChecked(self.apc[ind])
 			self.actionLivePreview.setChecked(self.alpc[ind])
+			self.editBar.setDisabled(self.apc[ind])
 		self.ind = ind
 		if self.fileNames[ind]:
 			self.setWindowTitle("")
