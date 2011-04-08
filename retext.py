@@ -24,8 +24,13 @@ import subprocess
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
-import markdown
-md = markdown.Markdown(['footnotes', 'tables'])
+try:
+	import markdown
+	md = markdown.Markdown(['footnotes', 'tables'])
+except:
+	without_md = True
+else:
+	without_md = False
 
 try:
 	import gdata.docs
@@ -37,16 +42,27 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.7.1 beta"
+app_version = "0.8~pre1 beta"
 
 icon_path = "icons/"
 
 if QFileInfo("wpgen/wpgen.py").isExecutable():
 	wpgen = unicode(QFileInfo("wpgen/wpgen.py").canonicalFilePath(), 'utf-8')
-elif sys.platform == "linux2" and QFileInfo("/usr/bin/wpgen").isExecutable():
+elif QFileInfo("/usr/bin/wpgen").isExecutable():
 	wpgen = "/usr/bin/wpgen"
 else:
 	wpgen = None
+
+if QFile.exists("doc_"+QLocale.system().name()+"/md-examples.re"):
+	about_md = QString.fromUtf8(QFileInfo("doc_"+QLocale.system().name()+"/md-examples.re").canonicalFilePath())
+elif QFile.exists("doc/md-examples.re"):
+	about_md = QString.fromUtf8(QFileInfo("doc/md-examples.re").canonicalFilePath())
+elif QFile.exists("/usr/share/retext/doc_"+QLocale.system().name()+"/md-examples.re"):
+	about_md = "/usr/share/retext/doc_"+QLocale.system().name()+"/md-examples.re"
+elif QFile.exists("/usr/share/retext/doc/md-examples.re"):
+	about_md = "/usr/share/retext/doc/md-examples.re"
+else:
+	about_md = None
 
 class HtmlHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
@@ -54,7 +70,7 @@ class HtmlHighlighter(QSyntaxHighlighter):
 	
 	def highlightBlock(self, text):
 		charFormat = QTextCharFormat()
-		patterns = ('<[^>]*>', '&[^; ]*;', '"[^"]*"', '<!--[^-->]*-->')
+		patterns = ('<[^>]*>', '&[^; ]*;', '"[^"<]*"(?=[^<]*>)', '<!--[^-->]*-->')
 		foregrounds = [Qt.darkMagenta, Qt.darkCyan, Qt.darkYellow, Qt.gray]
 		for i in range(len(patterns)):
 			expression = QRegExp(patterns[i])
@@ -214,6 +230,7 @@ class ReTextWindow(QMainWindow):
 		self.actionAutoFormatting = QAction(self.tr('Auto-formatting'), self)
 		self.actionAutoFormatting.setCheckable(True)
 		self.actionAutoFormatting.setChecked(True)
+		self.connect(self.actionAutoFormatting, SIGNAL('triggered()'), self.updatePreviewBox)
 		self.actionRecentFiles = QAction(QIcon.fromTheme('document-open-recent', QIcon(icon_path+'document-open-recent.png')), self.tr('Open recent'), self)
 		self.connect(self.actionRecentFiles, SIGNAL('triggered()'), self.openRecent)
 		self.actionWpgen = QAction(self.tr('Generate webpages'), self)
@@ -223,6 +240,8 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutDialog)
 		self.actionAboutQt = QAction(self.tr('About Qt'), self)
 		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
+		self.actionAboutMd = QAction(self.tr('Markdown syntax examples'), self)
+		self.connect(self.actionAboutMd, SIGNAL('triggered()'), self.aboutMd)
 		if use_gdocs:
 			self.actionsaveGDocs = QAction(QIcon.fromTheme('internet-web-browser', QIcon.fromTheme('web-browser', QIcon(icon_path+'intenret-web-browser.png'))), self.tr('Save to Google Docs'), self)
 			self.connect(self.actionsaveGDocs, SIGNAL('triggered()'), self.saveGDocs)
@@ -275,6 +294,8 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addAction(self.actionViewHtml)
 		self.menuEdit.addAction(self.actionLivePreview)
 		self.menuEdit.addAction(self.actionPreview)
+		self.menuHelp.addAction(self.actionAboutMd)
+		self.menuHelp.addSeparator()
 		self.menuHelp.addAction(self.actionAbout)
 		self.menuHelp.addAction(self.actionAboutQt)
 		self.menubar.addMenu(self.menuFile)
@@ -298,6 +319,11 @@ class ReTextWindow(QMainWindow):
 		self.editBar.addWidget(self.symbolBox)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
+		if without_md:
+			QMessageBox.warning(self, app_name, self.tr('Markdown module not found! ReText will work in plain-text mode!'))
+			self.actionPlainText.setChecked(True)
+			self.actionPlainText.setEnabled(False)
+			self.enablePlainText(True)
 	
 	def createTab(self, fileName):
 		self.editBoxes.append(QTextEdit())
@@ -373,6 +399,7 @@ class ReTextWindow(QMainWindow):
 	def enableLivePreview(self, livemode):
 		self.alpc[self.ind] = livemode
 		self.actionPreview.setChecked(livemode)
+		self.editBar.setEnabled(True)
 		self.previewBoxes[self.ind].setVisible(livemode)
 		self.editBoxes[self.ind].setVisible(True)
 		if livemode:
@@ -479,7 +506,7 @@ class ReTextWindow(QMainWindow):
 			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
 			if suffix.startsWith("htm"):
 				self.actionAutoFormatting.setChecked(False)
-			if not suffix == "txt":
+			if not (suffix == "txt" or without_md):
 				self.actionPlainText.setChecked(False)
 				self.enablePlainText(False)
 			self.setCurrentFile()
@@ -493,7 +520,9 @@ class ReTextWindow(QMainWindow):
 	
 	def saveFileMain(self, dlg):
 		if (not self.fileNames[self.ind]) or dlg:
-			if self.actionPlainText.isChecked() or self.actionAutoFormatting.isChecked():
+			if self.actionPlainText.isChecked():
+				defaultExt = self.tr("Plain text (*.txt)")
+			elif self.actionAutoFormatting.isChecked():
 				defaultExt = self.tr("ReText files (*.re *.md *.txt)")
 			else:
 				defaultExt = self.tr("HTML files (*.html *.htm)")
@@ -501,14 +530,18 @@ class ReTextWindow(QMainWindow):
 			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).suffix().isEmpty():
 				self.fileNames[self.ind].append(".re")
 		if self.fileNames[self.ind]:
-			savefile = QFile(self.fileNames[self.ind])
-			savefile.open(QIODevice.WriteOnly)
-			savestream = QTextStream(savefile)
-			savestream << self.editBoxes[self.ind].toPlainText()
-			savefile.close()
-		self.editBoxes[self.ind].document().setModified(False)
-		self.setCurrentFile()
-		self.setWindowModified(False)
+			self.setCurrentFile()
+		if QFileInfo(self.fileNames[self.ind]).isWritable() or not QFile.exists(self.fileNames[self.ind]):
+			if self.fileNames[self.ind]:
+				savefile = QFile(self.fileNames[self.ind])
+				savefile.open(QIODevice.WriteOnly)
+				savestream = QTextStream(savefile)
+				savestream << self.editBoxes[self.ind].toPlainText()
+				savefile.close()
+			self.editBoxes[self.ind].document().setModified(False)
+			self.setWindowModified(False)
+		else:
+			QMessageBox.warning(self, app_name, self.tr("Cannot save to file since it is read-only!"))
 	
 	def saveHtml(self, fileName):
 		if QFileInfo(fileName).suffix().isEmpty():
@@ -608,7 +641,7 @@ class ReTextWindow(QMainWindow):
 			try:
 				gdClient.ClientLogin(unicode(login), unicode(passwd))
 			except gdata.service.BadAuthentication:
-				QMessageBox.warning (self, app_name, self.tr("Incorrect user name or password!"))
+				QMessageBox.warning(self, app_name, self.tr("Incorrect user name or password!"))
 			else:
 				settings.setValue("GDocsLogin", login)
 				settings.setValue("GDocsPasswd", passwd)
@@ -679,15 +712,21 @@ class ReTextWindow(QMainWindow):
 		HtmlDlg.raise_()
 		HtmlDlg.activateWindow()
 	
+	def aboutMd(self):
+		self.openFileWrapper(about_md)
+		self.actionLivePreview.setChecked(True)
+		self.enableLivePreview(True)
+	
 	def aboutDialog(self):
 		QMessageBox.about(self, self.tr('About %1').arg(app_name), '<p>' \
 		+ self.tr('This is <b>%1</b>, version %2<br>Author: Dmitry Shachnev, 2011').arg(app_name, app_version) \
 		+ '</p><p>'+ self.tr('Website: <a href="http://sourceforge.net/p/retext/">sf.net/p/retext</a>') + '<br>' \
-		+ self.tr('MarkDown syntax documentation: <a href="http://daringfireball.net/projects/markdown/syntax">daringfireball.net/projects/markdown/syntax</a>') + '</p>')
+		+ self.tr('Markdown syntax documentation: <a href="http://daringfireball.net/projects/markdown/syntax">daringfireball.net/projects/markdown/syntax</a>') + '</p>')
 	
 	def enablePlainText(self, value):
 		self.aptc[self.ind] = value
 		self.enablePlainTextMain(value)
+		self.updatePreviewBox()
 	
 	def enablePlainTextMain(self, value):
 		self.actionAutoFormatting.setDisabled(value)
@@ -710,8 +749,7 @@ def main(fileName):
 	app.setApplicationName("ReText")
 	RtTranslator = QTranslator()
 	if not RtTranslator.load("retext_"+QLocale.system().name()):
-		if sys.platform == "linux2":
-			RtTranslator.load("retext_"+QLocale.system().name(), "/usr/lib/retext")
+		RtTranslator.load("retext_"+QLocale.system().name(), "/usr/lib/retext")
 	QtTranslator = QTranslator()
 	QtTranslator.load("qt_"+QLocale.system().name(), QLibraryInfo.location(QLibraryInfo.TranslationsPath))
 	app.installTranslator(RtTranslator)
@@ -720,6 +758,8 @@ def main(fileName):
 	if QFile.exists(QString.fromUtf8(fileName)):
 		window.openFileWrapper(QString.fromUtf8(fileName))
 	window.show()
+	if about_md and not QSettings().contains("recentFileList"):
+		window.aboutMd()
 	sys.exit(app.exec_())
 
 if __name__ == '__main__':
