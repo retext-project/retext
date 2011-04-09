@@ -22,7 +22,7 @@
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="retext.py" line="477"/>
+        <location filename="retext.py" line="489"/>
         <source>Open file</source>
         <translation>Открыть файл</translation>
     </message>
@@ -47,22 +47,22 @@
         <translation>Просмотр</translation>
     </message>
     <message>
-        <location filename="retext.py" line="252"/>
+        <location filename="retext.py" line="255"/>
         <source>Tags</source>
         <translation>Теги</translation>
     </message>
     <message>
-        <location filename="retext.py" line="256"/>
+        <location filename="retext.py" line="259"/>
         <source>Symbols</source>
         <translation>Символы</translation>
     </message>
     <message>
-        <location filename="retext.py" line="591"/>
+        <location filename="retext.py" line="603"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Файлы HTML (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="591"/>
+        <location filename="retext.py" line="603"/>
         <source>Save file</source>
         <translation>Сохранить файл</translation>
     </message>
@@ -77,27 +77,27 @@
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="retext.py" line="241"/>
+        <location filename="retext.py" line="244"/>
         <source>About Qt</source>
         <translation>О Qt</translation>
     </message>
     <message>
-        <location filename="retext.py" line="262"/>
+        <location filename="retext.py" line="265"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location filename="retext.py" line="263"/>
+        <location filename="retext.py" line="266"/>
         <source>Edit</source>
         <translation>Правка</translation>
     </message>
     <message>
-        <location filename="retext.py" line="264"/>
+        <location filename="retext.py" line="267"/>
         <source>Help</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <location filename="retext.py" line="273"/>
+        <location filename="retext.py" line="279"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
@@ -112,17 +112,17 @@
         <translation>Панель редактирования</translation>
     </message>
     <message>
-        <location filename="retext.py" line="596"/>
+        <location filename="retext.py" line="608"/>
         <source>Export document to PDF</source>
         <translation>Экспортировать документ как PDF</translation>
     </message>
     <message>
-        <location filename="retext.py" line="596"/>
+        <location filename="retext.py" line="608"/>
         <source>PDF files (*.pdf)</source>
         <translation>Файлы PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="688"/>
+        <location filename="retext.py" line="700"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Документ был изменён.
@@ -154,12 +154,12 @@ Do you want to save your changes?</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="retext.py" line="629"/>
+        <location filename="retext.py" line="641"/>
         <source>New document</source>
         <translation>Новый документ</translation>
     </message>
     <message>
-        <location filename="retext.py" line="721"/>
+        <location filename="retext.py" line="733"/>
         <source>About %1</source>
         <translation>О %1</translation>
     </message>
@@ -169,7 +169,7 @@ Do you want to save your changes?</source>
         <translation>Авто-форматирование</translation>
     </message>
     <message>
-        <location filename="retext.py" line="477"/>
+        <location filename="retext.py" line="489"/>
         <source>All files (*)</source>
         <translation>Все файлы (*)</translation>
     </message>
@@ -179,7 +179,7 @@ Do you want to save your changes?</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="retext.py" line="472"/>
+        <location filename="retext.py" line="484"/>
         <source>Open recent</source>
         <translation>Открыть последние</translation>
     </message>
@@ -189,32 +189,32 @@ Do you want to save your changes?</source>
         <translation>Простой текст</translation>
     </message>
     <message>
-        <location filename="retext.py" line="246"/>
+        <location filename="retext.py" line="249"/>
         <source>Save to Google Docs</source>
         <translation>Сохранить в Google Docs</translation>
     </message>
     <message>
-        <location filename="retext.py" line="644"/>
+        <location filename="retext.py" line="656"/>
         <source>Incorrect user name or password!</source>
         <translation>Неверное имя пользователя или пароль!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="721"/>
+        <location filename="retext.py" line="733"/>
         <source>This is &lt;b&gt;%1&lt;/b&gt;, version %2&lt;br&gt;Author: Dmitry Shachnev, 2011</source>
         <translation>Это &lt;b&gt;%1&lt;/b&gt;, версия %2&lt;br&gt;Автор: Дмитрий Шачнев, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="721"/>
+        <location filename="retext.py" line="733"/>
         <source>Website: &lt;a href=&quot;http://sourceforge.net/p/retext/&quot;&gt;sf.net/p/retext&lt;/a&gt;</source>
         <translation>Веб-сайт: &lt;a href=&quot;http://sourceforge.net/p/retext/&quot;&gt;sf.net/p/retext&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="retext.py" line="582"/>
+        <location filename="retext.py" line="594"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Файлы текста OpenDocument (*.odt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="582"/>
+        <location filename="retext.py" line="594"/>
         <source>Export document to ODT</source>
         <translation>Экспортировать документ как ODT</translation>
     </message>
@@ -224,7 +224,7 @@ Do you want to save your changes?</source>
         <translation>Просмотр кода HTML</translation>
     </message>
     <message>
-        <location filename="retext.py" line="709"/>
+        <location filename="retext.py" line="721"/>
         <source>HTML code</source>
         <translation>код HTML</translation>
     </message>
@@ -234,12 +234,12 @@ Do you want to save your changes?</source>
         <translation>Предпросмотр печати</translation>
     </message>
     <message>
-        <location filename="retext.py" line="526"/>
+        <location filename="retext.py" line="538"/>
         <source>ReText files (*.re *.md *.txt)</source>
         <translation>Файлы ReText (*.re *.md *.txt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="611"/>
+        <location filename="retext.py" line="623"/>
         <source>Print document</source>
         <translation>Распечатать документ</translation>
     </message>
@@ -249,44 +249,54 @@ Do you want to save your changes?</source>
         <translation>Живой просмотр</translation>
     </message>
     <message>
-        <location filename="retext.py" line="444"/>
+        <location filename="retext.py" line="450"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Веб-страницы сохранены в папке &lt;code&gt;html&lt;/code&gt;.</translation>
     </message>
     <message>
-        <location filename="retext.py" line="439"/>
+        <location filename="retext.py" line="456"/>
         <source>Please, save the file somewhere.</source>
         <translation>Сначала сохраните файл.</translation>
     </message>
     <message>
-        <location filename="retext.py" line="236"/>
+        <location filename="retext.py" line="237"/>
         <source>Generate webpages</source>
         <translation>Создать веб-страницы</translation>
     </message>
     <message>
-        <location filename="retext.py" line="524"/>
+        <location filename="retext.py" line="536"/>
         <source>Plain text (*.txt)</source>
         <translation>Простой текст (*.txt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="544"/>
+        <location filename="retext.py" line="556"/>
         <source>Cannot save to file since it is read-only!</source>
         <translation>Невозможно сохранить файл, так как он недоступен для записи!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="243"/>
+        <location filename="retext.py" line="246"/>
         <source>Markdown syntax examples</source>
         <translation>Примеры синтаксиса Markdown</translation>
     </message>
     <message>
-        <location filename="retext.py" line="323"/>
+        <location filename="retext.py" line="329"/>
         <source>Markdown module not found! ReText will work in plain-text mode!</source>
         <translation>Модуль Markdown не найден! ReText будет работать в режиме простого текста</translation>
     </message>
     <message>
-        <location filename="retext.py" line="721"/>
+        <location filename="retext.py" line="733"/>
         <source>Markdown syntax documentation: &lt;a href=&quot;http://daringfireball.net/projects/markdown/syntax&quot;&gt;daringfireball.net/projects/markdown/syntax&lt;/a&gt;</source>
         <translation>Описание синтаксиса Markdown: &lt;a href=&quot;http://daringfireball.net/projects/markdown/syntax&quot;&gt;daringfireball.net/projects/markdown/syntax&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="239"/>
+        <source>Show</source>
+        <translation>Показать</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="271"/>
+        <source>Directory</source>
+        <translation>Папка</translation>
     </message>
 </context>
 </TS>

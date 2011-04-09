@@ -42,7 +42,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.8~pre1 beta"
+app_version = "0.8.0 beta"
 
 icon_path = "icons/"
 
@@ -233,8 +233,11 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionAutoFormatting, SIGNAL('triggered()'), self.updatePreviewBox)
 		self.actionRecentFiles = QAction(QIcon.fromTheme('document-open-recent', QIcon(icon_path+'document-open-recent.png')), self.tr('Open recent'), self)
 		self.connect(self.actionRecentFiles, SIGNAL('triggered()'), self.openRecent)
-		self.actionWpgen = QAction(self.tr('Generate webpages'), self)
-		self.connect(self.actionWpgen, SIGNAL('triggered()'), self.startWpgen)
+		if wpgen:
+			self.actionWpgen = QAction(self.tr('Generate webpages'), self)
+			self.connect(self.actionWpgen, SIGNAL('triggered()'), self.startWpgen)
+		self.actionShow = QAction(QIcon.fromTheme('system-file-manager', QIcon(icon_path+'system-file-manager.png')), self.tr('Show'), self)
+		self.connect(self.actionShow, SIGNAL('triggered()'), self.showInDir)
 		self.actionAbout = QAction(QIcon.fromTheme('help-about', QIcon(icon_path+'help-about.png')), self.tr('About %1').arg(app_name), self)
 		self.actionAbout.setMenuRole(QAction.AboutRole)
 		self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutDialog)
@@ -265,7 +268,10 @@ class ReTextWindow(QMainWindow):
 		self.menuFile.addAction(self.actionNew)
 		self.menuFile.addAction(self.actionOpen)
 		self.menuFile.addAction(self.actionRecentFiles)
-		self.menuFile.addAction(self.actionWpgen)
+		self.menuDir = self.menuFile.addMenu(self.tr('Directory'))
+		self.menuDir.addAction(self.actionShow)
+		if wpgen:
+			self.menuDir.addAction(self.actionWpgen)
 		self.menuFile.addSeparator()
 		self.menuFile.addAction(self.actionSave)
 		self.menuFile.addAction(self.actionSaveAs)
@@ -442,6 +448,12 @@ class ReTextWindow(QMainWindow):
 				subprocess.Popen([wpgen, 'init']).wait()
 			subprocess.Popen([wpgen, 'updateall']).wait()
 			QMessageBox.information(self, app_name, self.tr("Webpages saved in <code>html</code> directory."))
+	
+	def showInDir(self):
+		if self.fileNames[self.ind]:
+			QDesktopServices.openUrl(QUrl.fromLocalFile(QFileInfo(self.fileNames[self.ind]).path()))
+		else:
+			QMessageBox.warning(self, app_name, self.tr("Please, save the file somewhere."))
 	
 	def setCurrentFile(self):
 		self.setWindowTitle("")
