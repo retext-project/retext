@@ -1,5 +1,5 @@
 body {
-  background-color: grey;
+  background-color: #457;
   margin: 0px;
 }
 
@@ -27,7 +27,7 @@ a:hover {
 
 .area-toppanel {
   color: white;
-  background-color: #444;
+  background-color: #123;
   height: 50px;
 }
 
@@ -37,6 +37,11 @@ a:hover {
 
 .area-footer {
   text-align: right;
+  color: #bb9;
+}
+
+.area-footer a:link, .area-footer a:visited {
+  color: #ed5;
 }
 
 .area-content {
@@ -45,7 +50,7 @@ a:hover {
 
 .content {
   background-color: whiteSmoke;
-  border: solid 1px black;
+  border: solid 1px #123;
   border-radius: 0.5em;
   padding-left: 0.5em;
   padding-right: 0.5em;
