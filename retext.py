@@ -42,7 +42,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.8.0 beta"
+app_version = "0.8.1 beta"
 
 icon_path = "icons/"
 
@@ -518,7 +518,10 @@ class ReTextWindow(QMainWindow):
 			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
 			if suffix.startsWith("htm"):
 				self.actionAutoFormatting.setChecked(False)
-			if not (suffix == "txt" or without_md):
+			if suffix == "txt":
+				self.actionPlainText.setChecked(True)
+				self.enablePlainText(True)
+			elif not without_md:
 				self.actionPlainText.setChecked(False)
 				self.enablePlainText(False)
 			self.setCurrentFile()
@@ -534,13 +537,16 @@ class ReTextWindow(QMainWindow):
 		if (not self.fileNames[self.ind]) or dlg:
 			if self.actionPlainText.isChecked():
 				defaultExt = self.tr("Plain text (*.txt)")
+				ext = ".txt"
 			elif self.actionAutoFormatting.isChecked():
 				defaultExt = self.tr("ReText files (*.re *.md *.txt)")
+				ext = ".re"
 			else:
 				defaultExt = self.tr("HTML files (*.html *.htm)")
+				ext = ".html"
 			self.fileNames[self.ind] = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).suffix().isEmpty():
-				self.fileNames[self.ind].append(".re")
+				self.fileNames[self.ind].append(ext)
 		if self.fileNames[self.ind]:
 			self.setCurrentFile()
 		if QFileInfo(self.fileNames[self.ind]).isWritable() or not QFile.exists(self.fileNames[self.ind]):
