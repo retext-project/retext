@@ -27,7 +27,7 @@ import markdown
 md = markdown.Markdown()
 
 app_name = "ReText Webpages generator"
-app_version = "0.3.0"
+app_version = "0.3.1"
 app_site = "http://sourceforge.net/p/retext/"
 
 if sys.platform == "linux2" and os.path.exists("/usr/share/wpgen/"):
@@ -83,6 +83,7 @@ class WebLibrary(object):
 			content = content.replace("%CONTENT%", html)
 			content = content.replace("%PAGENAME%", bn)
 			content = content.replace("<a href=\""+bn+".html\">", "<a>")
+			content = content.replace("%\\", "%")
 			outputfile = open(self.dirPath+"/html/"+bn+".html", "w")
 			outputfile.write(content.encode('utf-8'))
 			outputfile.close()
