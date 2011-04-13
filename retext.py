@@ -372,8 +372,6 @@ class ReTextWindow(QMainWindow):
 	
 	def changeIndex(self, ind):
 		if ind > -1:
-			if self.ind < self.tabWidget.count():
-				self.aafc[self.ind] = self.actionAutoFormatting.isChecked()
 			self.actionAutoFormatting.setChecked(self.aafc[ind])
 			self.actionPlainText.setChecked(self.aptc[ind])
 			self.enablePlainTextMain(self.aptc[ind])
@@ -416,6 +414,7 @@ class ReTextWindow(QMainWindow):
 		self.actionCut.setEnabled(copymode)
 	
 	def updatePreviewBox(self):
+		self.aafc[self.ind] = self.actionAutoFormatting.isChecked()
 		if self.actionPlainText.isChecked():
 			self.previewBoxes[self.ind].setPlainText(self.editBoxes[self.ind].toPlainText())
 		else:
@@ -487,7 +486,7 @@ class ReTextWindow(QMainWindow):
 	
 	def openFile(self):
 		fileName = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", \
-		self.tr("ReText files (*.re *.md *.txt)")+";;"+self.tr("All files (*)"))
+		self.tr("Supported files (*.re *.md *.txt *.html *.htm)")+";;"+self.tr("All files (*)"))
 		self.openFileWrapper(fileName)
 	
 	def openFileWrapper(self, fileName):
