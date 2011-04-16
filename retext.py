@@ -42,7 +42,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.8.1 beta"
+app_version = "0.8.2 beta"
 
 icon_path = "icons/"
 
@@ -326,7 +326,7 @@ class ReTextWindow(QMainWindow):
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if without_md:
-			QMessageBox.warning(self, app_name, self.tr('Markdown module not found! ReText will work in plain-text mode!'))
+			QMessageBox.warning(self, app_name, self.tr('Markdown module not found!')+'<br>'+self.tr('ReText will work in plain-text mode.'))
 			self.actionPlainText.setChecked(True)
 			self.actionPlainText.setEnabled(False)
 			self.enablePlainText(True)
@@ -389,6 +389,7 @@ class ReTextWindow(QMainWindow):
 		else:
 			self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
+		self.editBoxes[self.ind].setFocus(Qt.OtherFocusReason)
 	
 	def preview(self, viewmode):
 		self.apc[self.ind] = viewmode
@@ -558,6 +559,7 @@ class ReTextWindow(QMainWindow):
 			self.editBoxes[self.ind].document().setModified(False)
 			self.setWindowModified(False)
 		else:
+			self.setWindowModified(self.isWindowModified())
 			QMessageBox.warning(self, app_name, self.tr("Cannot save to file since it is read-only!"))
 	
 	def saveHtml(self, fileName):
@@ -731,8 +733,9 @@ class ReTextWindow(QMainWindow):
 	
 	def aboutMd(self):
 		self.openFileWrapper(about_md)
-		self.actionLivePreview.setChecked(True)
-		self.enableLivePreview(True)
+		if not without_md:
+			self.actionLivePreview.setChecked(True)
+			self.enableLivePreview(True)
 	
 	def aboutDialog(self):
 		QMessageBox.about(self, self.tr('About %1').arg(app_name), '<p>' \
