@@ -71,7 +71,7 @@ class HtmlHighlighter(QSyntaxHighlighter):
 	def highlightBlock(self, text):
 		charFormat = QTextCharFormat()
 		patterns = ('<[^>]*>', '&[^; ]*;', '"[^"<]*"(?=[^<]*>)', '<!--[^-->]*-->')
-		foregrounds = [Qt.darkMagenta, Qt.darkCyan, Qt.darkYellow, Qt.gray]
+		foregrounds = (Qt.darkMagenta, Qt.darkCyan, Qt.darkYellow, Qt.gray)
 		for i in range(len(patterns)):
 			expression = QRegExp(patterns[i])
 			index = expression.indexIn(text)
@@ -321,6 +321,7 @@ class ReTextWindow(QMainWindow):
 		self.editBar.addAction(self.actionCut)
 		self.editBar.addAction(self.actionCopy)
 		self.editBar.addAction(self.actionPaste)
+		self.editBar.addSeparator()
 		self.editBar.addWidget(self.tagsBox)
 		self.editBar.addWidget(self.symbolBox)
 		self.ind = 0
