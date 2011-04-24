@@ -204,6 +204,7 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionPreview, SIGNAL('triggered(bool)'), self.preview)
 		self.actionLivePreview = QAction(self.tr('Live preview'), self)
 		self.actionLivePreview.setCheckable(True)
+		self.actionLivePreview.setShortcut(Qt.CTRL + Qt.SHIFT + Qt.Key_E)
 		self.connect(self.actionLivePreview, SIGNAL('triggered(bool)'), self.enableLivePreview)
 		self.actionPerfectHtml = QAction(QIcon.fromTheme('text-html', QIcon(icon_path+'text-html.png')), 'HTML', self)
 		self.connect(self.actionPerfectHtml, SIGNAL('triggered()'), self.saveFilePerfect)
