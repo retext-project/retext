@@ -42,7 +42,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "0.8.2 beta"
+app_version = "1.0.0"
 
 icon_path = "icons/"
 
@@ -64,13 +64,19 @@ elif QFile.exists("/usr/share/retext/doc/md-examples.re"):
 else:
 	about_md = None
 
+if without_md:
+	about_md = False
+
+monofont = QFont()
+monofont.setFamily('monospace')
+
 class HtmlHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
 		QSyntaxHighlighter.__init__(self, parent)
 	
 	def highlightBlock(self, text):
 		charFormat = QTextCharFormat()
-		patterns = ('<[^>]*>', '&[^; ]*;', '"[^"<]*"(?=[^<]*>)', '<!--[^-->]*-->')
+		patterns = ('<[^<>]*>', '&[^; ]*;', '"[^"<]*"(?=[^<]*>)', '<!--[^-->]*-->')
 		foregrounds = (Qt.darkMagenta, Qt.darkCyan, Qt.darkYellow, Qt.gray)
 		for i in range(len(patterns)):
 			expression = QRegExp(patterns[i])
@@ -118,8 +124,6 @@ class HtmlDialog(QDialog):
 		self.verticalLayout = QVBoxLayout(self)
 		self.textEdit = QTextEdit(self)
 		self.textEdit.setReadOnly(True)
-		monofont = QFont()
-		monofont.setFamily('monospace')
 		self.textEdit.setFont(monofont)
 		HtmlHighlighter(self.textEdit.document())
 		self.verticalLayout.addWidget(self.textEdit)
@@ -141,6 +145,12 @@ class ReTextWindow(QMainWindow):
 		settings = QSettings()
 		if settings.contains('iconTheme'):
 			QIcon.setThemeName(settings.value('iconTheme').toString())
+		if settings.contains('font'):
+			self.font = QFont(settings.value('font').toString())
+			if settings.contains('fontSize'):
+				self.font.setPointSize(settings.value('fontSize').toInt()[0])
+		else:
+			self.font = None
 		self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
@@ -186,6 +196,8 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionPrintPreview, SIGNAL('triggered()'), self.printPreview)
 		self.actionViewHtml = QAction(QIcon.fromTheme('text-html', QIcon(icon_path+'text-html.png')), self.tr('View HTML code'), self)
 		self.connect(self.actionViewHtml, SIGNAL('triggered()'), self.viewHtml)
+		self.actionChangeFont = QAction(self.tr('Change default font'), self)
+		self.connect(self.actionChangeFont, SIGNAL('triggered()'), self.changeFont)
 		self.actionPreview = QAction(QIcon.fromTheme('document-preview', QIcon.fromTheme('x-office-document', QIcon(icon_path+'document-preview.png'))), self.tr('Preview'), self)
 		self.actionPreview.setCheckable(True)
 		self.actionPreview.setShortcut(Qt.CTRL + Qt.Key_E)
@@ -296,12 +308,14 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addSeparator()
 		self.menuEdit.addAction(self.actionPlainText)
 		self.menuEdit.addAction(self.actionAutoFormatting)
+		self.menuEdit.addAction(self.actionChangeFont)
 		self.menuEdit.addSeparator()
 		self.menuEdit.addAction(self.actionViewHtml)
 		self.menuEdit.addAction(self.actionLivePreview)
 		self.menuEdit.addAction(self.actionPreview)
-		self.menuHelp.addAction(self.actionAboutMd)
-		self.menuHelp.addSeparator()
+		if about_md:
+			self.menuHelp.addAction(self.actionAboutMd)
+			self.menuHelp.addSeparator()
 		self.menuHelp.addAction(self.actionAbout)
 		self.menuHelp.addAction(self.actionAboutQt)
 		self.menubar.addMenu(self.menuFile)
@@ -327,10 +341,11 @@ class ReTextWindow(QMainWindow):
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if without_md:
-			QMessageBox.warning(self, app_name, self.tr('Markdown module not found!')+'<br>'+self.tr('ReText will work in plain-text mode.'))
-			self.actionPlainText.setChecked(True)
-			self.actionPlainText.setEnabled(False)
-			self.enablePlainText(True)
+			QMessageBox.warning(self, app_name, self.tr('Markdown module not found!') \
+			+'<br>'+self.tr('Auto-formatting will be disabled.'))
+			self.actionAutoFormatting.setChecked(False)
+			self.actionAutoFormatting.setEnabled(False)
+			self.updatePreviewBox()
 	
 	def createTab(self, fileName):
 		self.editBoxes.append(QTextEdit())
@@ -342,8 +357,6 @@ class ReTextWindow(QMainWindow):
 		self.alpc.append(False)
 		self.aafc.append(True)
 		self.aptc.append(False)
-		monofont = QFont()
-		monofont.setFamily('monospace')
 		self.editBoxes[-1].setFont(monofont)
 		self.editBoxes[-1].setAcceptRichText(False)
 		self.connect(self.editBoxes[-1], SIGNAL('textChanged()'), self.updateLivePreviewBox)
@@ -392,6 +405,18 @@ class ReTextWindow(QMainWindow):
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
 		self.editBoxes[self.ind].setFocus(Qt.OtherFocusReason)
 	
+	def changeFont(self):
+		if not self.font:
+			self.font = QFont()
+		fd = QFontDialog.getFont(self.font, self)
+		if fd[1]:
+			self.font = QFont()
+			self.font.setFamily(fd[0].family())
+			QSettings().setValue('font', fd[0].family())
+			self.font.setPointSize(fd[0].pointSize())
+			QSettings().setValue('fontSize', fd[0].pointSize())
+			self.updatePreviewBox()
+	
 	def preview(self, viewmode):
 		self.apc[self.ind] = viewmode
 		if self.actionLivePreview.isChecked:
@@ -421,6 +446,8 @@ class ReTextWindow(QMainWindow):
 			self.previewBoxes[self.ind].setPlainText(self.editBoxes[self.ind].toPlainText())
 		else:
 			self.previewBoxes[self.ind].setHtml(self.parseText())
+		if self.font:
+			self.previewBoxes[self.ind].document().setDefaultFont(self.font)
 	
 	def updateLivePreviewBox(self):
 		if self.actionLivePreview.isChecked():
@@ -517,14 +544,10 @@ class ReTextWindow(QMainWindow):
 			openfile.close()
 			self.editBoxes[self.ind].setPlainText(html)
 			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
-			if suffix.startsWith("htm"):
+			if suffix.startsWith("htm") or without_md:
 				self.actionAutoFormatting.setChecked(False)
-			if suffix == "txt":
-				self.actionPlainText.setChecked(True)
-				self.enablePlainText(True)
-			elif not without_md:
-				self.actionPlainText.setChecked(False)
-				self.enablePlainText(False)
+			self.actionPlainText.setChecked(suffix == "txt")
+			self.enablePlainText(suffix == "txt")
 			self.setCurrentFile()
 			self.setWindowModified(False)
 	
@@ -557,8 +580,8 @@ class ReTextWindow(QMainWindow):
 				savestream = QTextStream(savefile)
 				savestream << self.editBoxes[self.ind].toPlainText()
 				savefile.close()
-			self.editBoxes[self.ind].document().setModified(False)
-			self.setWindowModified(False)
+				self.editBoxes[self.ind].document().setModified(False)
+				self.setWindowModified(False)
 		else:
 			self.setWindowModified(self.isWindowModified())
 			QMessageBox.warning(self, app_name, self.tr("Cannot save to file since it is read-only!"))
@@ -566,12 +589,11 @@ class ReTextWindow(QMainWindow):
 	def saveHtml(self, fileName):
 		if QFileInfo(fileName).suffix().isEmpty():
 			fileName.append(".html")
-		if self.actionPlainText.isChecked():
-			td = QTextDocument()
-			td.setPlainText(self.editBoxes[self.ind].toPlainText())
+		if self.actionPlainText.isChecked() or not self.actionAutoFormatting.isChecked():
+			td = self.textDocument()
 			writer = QTextDocumentWriter(fileName)
 			writer.write(td)
-		elif self.actionAutoFormatting.isChecked():
+		else:
 			htmlFile = QFile(fileName)
 			htmlFile.open(QIODevice.WriteOnly)
 			html = QTextStream(htmlFile)
@@ -584,11 +606,6 @@ class ReTextWindow(QMainWindow):
 			html << self.parseText()
 			html << "\n</body>\n</html>\n"
 			htmlFile.close()
-		else:
-			td = QTextDocument()
-			td.setHtml(self.editBoxes[self.ind].toPlainText())
-			writer = QTextDocumentWriter(fileName)
-			writer.write(td)
 	
 	def textDocument(self):
 		td = QTextDocument()
@@ -596,6 +613,8 @@ class ReTextWindow(QMainWindow):
 			td.setPlainText(self.editBoxes[self.ind].toPlainText())
 		else:
 			td.setHtml(self.parseText())
+		if self.font:
+			td.setDefaultFont(self.font)
 		return td
 	
 	def saveOdf(self):
@@ -734,9 +753,8 @@ class ReTextWindow(QMainWindow):
 	
 	def aboutMd(self):
 		self.openFileWrapper(about_md)
-		if not without_md:
-			self.actionLivePreview.setChecked(True)
-			self.enableLivePreview(True)
+		self.actionLivePreview.setChecked(True)
+		self.enableLivePreview(True)
 	
 	def aboutDialog(self):
 		QMessageBox.about(self, self.tr('About %1').arg(app_name), '<p>' \
