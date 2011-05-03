@@ -26,11 +26,18 @@ from PyQt4.QtGui import *
 
 try:
 	import markdown
-	md = markdown.Markdown(['footnotes', 'tables'])
 except:
 	without_md = True
 else:
 	without_md = False
+	s = QSettings('ReText project', 'ReText')
+	if s.contains('mdExtensions'):
+		exts = []
+		for ext in s.value('mdExtensions').toStringList():
+			exts.append(str(ext))
+		md = markdown.Markdown(exts)
+	else:
+		md = markdown.Markdown()
 
 try:
 	import gdata.docs
