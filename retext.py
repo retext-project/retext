@@ -49,7 +49,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "1.0.1"
+app_version = "1.0.2"
 
 icon_path = "icons/"
 
@@ -219,6 +219,14 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionPdf, SIGNAL('triggered()'), self.savePdf)
 		self.actionOdf = QAction(QIcon.fromTheme('x-office-document', QIcon(icon_path+'x-office-document.png')), 'ODT', self)
 		self.connect(self.actionOdf, SIGNAL('triggered()'), self.saveOdf)
+		settings.beginGroup('Export')
+		if not settings.allKeys().isEmpty():
+			self.actionOtherExport = QAction(self.tr('Other formats'), self)
+			self.connect(self.actionOtherExport, SIGNAL('triggered()'), self.otherExport)
+			otherExport = True
+		else:
+			otherExport = False
+		settings.endGroup()
 		self.actionQuit = QAction(QIcon.fromTheme('application-exit', QIcon(icon_path+'application-exit.png')), self.tr('Quit'), self)
 		self.actionQuit.setShortcut(QKeySequence.Quit)
 		self.actionQuit.setMenuRole(QAction.QuitRole)
@@ -266,8 +274,8 @@ class ReTextWindow(QMainWindow):
 		self.actionAboutMd = QAction(self.tr('Markdown syntax examples'), self)
 		self.connect(self.actionAboutMd, SIGNAL('triggered()'), self.aboutMd)
 		if use_gdocs:
-			self.actionsaveGDocs = QAction(QIcon.fromTheme('internet-web-browser', QIcon.fromTheme('web-browser', QIcon(icon_path+'intenret-web-browser.png'))), self.tr('Save to Google Docs'), self)
-			self.connect(self.actionsaveGDocs, SIGNAL('triggered()'), self.saveGDocs)
+			self.actionSaveGDocs = QAction(QIcon.fromTheme('internet-web-browser', QIcon.fromTheme('web-browser', QIcon(icon_path+'intenret-web-browser.png'))), self.tr('Save to Google Docs'), self)
+			self.connect(self.actionSaveGDocs, SIGNAL('triggered()'), self.saveGDocs)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
 		self.usefulTags = ('center', 's', 'span', 'table', 'td', 'tr', 'u')
 		self.usefulChars = ('hellip', 'laquo', 'minus', 'mdash', 'nbsp', 'ndash', 'raquo')
@@ -300,9 +308,11 @@ class ReTextWindow(QMainWindow):
 		self.menuExport.addAction(self.actionPerfectHtml)
 		self.menuExport.addAction(self.actionOdf)
 		self.menuExport.addAction(self.actionPdf)
+		if otherExport:
+			self.menuExport.addAction(self.actionOtherExport)
 		if use_gdocs:
 			self.menuExport.addSeparator()
-			self.menuExport.addAction(self.actionsaveGDocs)
+			self.menuExport.addAction(self.actionSaveGDocs)
 		self.menuFile.addAction(self.actionPrint)
 		self.menuFile.addAction(self.actionPrintPreview)
 		self.menuFile.addSeparator()
@@ -510,13 +520,12 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.setCurrentIndex(self.ind)
 	
 	def openRecent(self):
-		settings = QSettings()
-		filesOld = settings.value("recentFileList").toStringList()
+		filesOld = QSettings().value("recentFileList").toStringList()
 		files = QStringList()
 		for i in filesOld:
 			if QFile.exists(i):
 				files.append(i)
-		settings.setValue("recentFileList", files)
+		QSettings().setValue("recentFileList", files)
 		item, ok = QInputDialog.getItem(self, app_name, self.tr("Open recent"), files, 0, False)
 		if ok and not item.isEmpty():
 			self.openFileWrapper(item)
@@ -583,16 +592,19 @@ class ReTextWindow(QMainWindow):
 			self.setCurrentFile()
 		if QFileInfo(self.fileNames[self.ind]).isWritable() or not QFile.exists(self.fileNames[self.ind]):
 			if self.fileNames[self.ind]:
-				savefile = QFile(self.fileNames[self.ind])
-				savefile.open(QIODevice.WriteOnly)
-				savestream = QTextStream(savefile)
-				savestream << self.editBoxes[self.ind].toPlainText()
-				savefile.close()
+				self.saveFileWrapper(self.fileNames[self.ind])
 				self.editBoxes[self.ind].document().setModified(False)
 				self.setWindowModified(False)
 		else:
 			self.setWindowModified(self.isWindowModified())
 			QMessageBox.warning(self, app_name, self.tr("Cannot save to file since it is read-only!"))
+	
+	def saveFileWrapper(self, fn):
+		savefile = QFile(fn)
+		savefile.open(QIODevice.WriteOnly)
+		savestream = QTextStream(savefile)
+		savestream << self.editBoxes[self.ind].toPlainText()
+		savefile.close()
 	
 	def saveHtml(self, fileName):
 		if QFileInfo(fileName).suffix().isEmpty():
@@ -668,6 +680,30 @@ class ReTextWindow(QMainWindow):
 		preview = QPrintPreviewDialog(printer, self)
 		self.connect(preview, SIGNAL("paintRequested(QPrinter*)"), self.printFileMain)
 		preview.exec_()
+	
+	def otherExport(self):
+		if (self.actionPlainText.isChecked() or not self.actionAutoFormatting.isChecked()):
+			return QMessageBox.warning(self, app_name, self.tr('This function is available only in Auto-formatting mode!'))
+		s = QSettings()
+		s.beginGroup('Export')
+		types = []
+		for i in s.allKeys():
+			types.append(i)
+		item, ok = QInputDialog.getItem(self, app_name, self.tr('Select type'), types, 0, False)
+		if ok:
+			fileName = QFileDialog.getSaveFileName(self, self.tr('Export document'))
+			if QFileInfo(fileName).suffix().isEmpty():
+				fileName.append('.'+item)
+			args = str(s.value(item).toString()).split()
+			self.saveFileWrapper('temp.re')
+			for i in range(len(args)):
+				if args[i] == '%of':
+					args[i] = 'out.'+str(item)
+				elif args[i] == '%if':
+					args[i] = 'temp.re'
+			subprocess.Popen(args).wait()
+			QFile('temp.re').remove()
+			QFile('out.'+item).rename(fileName)
 	
 	def getDocumentTitle(self):
 		if self.fileNames[self.ind]:
