@@ -169,7 +169,6 @@ class ReTextWindow(QMainWindow):
 		self.apc = []
 		self.alpc = []
 		self.aptc = []
-		self.aafc = []
 		self.tabWidget = QTabWidget(self)
 		self.tabWidget.setTabsClosable(True)
 		self.setCentralWidget(self.tabWidget)
@@ -255,10 +254,6 @@ class ReTextWindow(QMainWindow):
 		self.actionPlainText = QAction(self.tr('Plain text'), self)
 		self.actionPlainText.setCheckable(True)
 		self.connect(self.actionPlainText, SIGNAL('triggered(bool)'), self.enablePlainText)
-		self.actionAutoFormatting = QAction(self.tr('Auto-formatting'), self)
-		self.actionAutoFormatting.setCheckable(True)
-		self.actionAutoFormatting.setChecked(True)
-		self.connect(self.actionAutoFormatting, SIGNAL('triggered()'), self.updatePreviewBox)
 		self.actionRecentFiles = QAction(QIcon.fromTheme('document-open-recent', QIcon(icon_path+'document-open-recent.png')), self.tr('Open recent'), self)
 		self.connect(self.actionRecentFiles, SIGNAL('triggered()'), self.openRecent)
 		if wpgen:
@@ -325,7 +320,6 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addAction(self.actionPaste)
 		self.menuEdit.addSeparator()
 		self.menuEdit.addAction(self.actionPlainText)
-		self.menuEdit.addAction(self.actionAutoFormatting)
 		self.menuEdit.addAction(self.actionChangeFont)
 		self.menuEdit.addSeparator()
 		self.menuEdit.addAction(self.actionViewHtml)
@@ -360,10 +354,7 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if without_md:
 			QMessageBox.warning(self, app_name, self.tr('Markdown module not found!') \
-			+'<br>'+self.tr('Auto-formatting will be disabled.'))
-			self.actionAutoFormatting.setChecked(False)
-			self.actionAutoFormatting.setEnabled(False)
-			self.updatePreviewBox()
+			+'<br>'+self.tr('Only HTML formatting will be available.'))
 	
 	def createTab(self, fileName):
 		self.editBoxes.append(QTextEdit())
@@ -373,7 +364,6 @@ class ReTextWindow(QMainWindow):
 		self.fileNames.append(fileName)
 		self.apc.append(False)
 		self.alpc.append(False)
-		self.aafc.append(True)
 		self.aptc.append(False)
 		self.editBoxes[-1].setFont(monofont)
 		self.editBoxes[-1].setAcceptRichText(False)
@@ -399,12 +389,10 @@ class ReTextWindow(QMainWindow):
 			del self.apc[ind]
 			del self.alpc[ind]
 			del self.aptc[ind]
-			del self.aafc[ind]
 			self.tabWidget.removeTab(ind)
 	
 	def changeIndex(self, ind):
 		if ind > -1:
-			self.actionAutoFormatting.setChecked(self.aafc[ind])
 			self.actionPlainText.setChecked(self.aptc[ind])
 			self.enablePlainTextMain(self.aptc[ind])
 			self.actionUndo.setEnabled(self.editBoxes[ind].document().isUndoAvailable())
@@ -459,7 +447,6 @@ class ReTextWindow(QMainWindow):
 		self.actionCut.setEnabled(copymode)
 	
 	def updatePreviewBox(self):
-		self.aafc[self.ind] = self.actionAutoFormatting.isChecked()
 		if self.actionPlainText.isChecked():
 			self.previewBoxes[self.ind].setPlainText(self.editBoxes[self.ind].toPlainText())
 		else:
@@ -561,8 +548,6 @@ class ReTextWindow(QMainWindow):
 			openfile.close()
 			self.editBoxes[self.ind].setPlainText(html)
 			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
-			if suffix.startsWith("htm") or without_md:
-				self.actionAutoFormatting.setChecked(False)
 			self.actionPlainText.setChecked(suffix == "txt")
 			self.enablePlainText(suffix == "txt")
 			self.setCurrentFile()
@@ -579,12 +564,9 @@ class ReTextWindow(QMainWindow):
 			if self.actionPlainText.isChecked():
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
-			elif self.actionAutoFormatting.isChecked():
+			else:
 				defaultExt = self.tr("ReText files (*.re *.md *.txt)")
 				ext = ".re"
-			else:
-				defaultExt = self.tr("HTML files (*.html *.htm)")
-				ext = ".html"
 			self.fileNames[self.ind] = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).suffix().isEmpty():
 				self.fileNames[self.ind].append(ext)
@@ -609,7 +591,7 @@ class ReTextWindow(QMainWindow):
 	def saveHtml(self, fileName):
 		if QFileInfo(fileName).suffix().isEmpty():
 			fileName.append(".html")
-		if self.actionPlainText.isChecked() or not self.actionAutoFormatting.isChecked():
+		if self.actionPlainText.isChecked():
 			td = self.textDocument()
 			writer = QTextDocumentWriter(fileName)
 			writer.write(td)
@@ -682,8 +664,8 @@ class ReTextWindow(QMainWindow):
 		preview.exec_()
 	
 	def otherExport(self):
-		if (self.actionPlainText.isChecked() or not self.actionAutoFormatting.isChecked()):
-			return QMessageBox.warning(self, app_name, self.tr('This function is available only in Auto-formatting mode!'))
+		if (self.actionPlainText.isChecked()):
+			return QMessageBox.warning(self, app_name, self.tr('This function is not available in Plain text mode!'))
 		s = QSettings()
 		s.beginGroup('Export')
 		types = []
@@ -812,7 +794,6 @@ class ReTextWindow(QMainWindow):
 		self.updatePreviewBox()
 	
 	def enablePlainTextMain(self, value):
-		self.actionAutoFormatting.setDisabled(value)
 		self.actionPerfectHtml.setDisabled(value)
 		self.actionViewHtml.setDisabled(value)
 		self.tagsBox.setVisible(value)
@@ -820,11 +801,10 @@ class ReTextWindow(QMainWindow):
 	
 	def parseText(self):
 		htmltext = self.editBoxes[self.ind].toPlainText()
-		if self.actionAutoFormatting.isChecked():
-			toinsert = md.convert(unicode(htmltext))
+		if without_md:
+			return htmltext
 		else:
-			toinsert = htmltext
-		return toinsert
+			return md.convert(unicode(htmltext))
 
 def main(fileName):
 	app = QApplication(sys.argv)
