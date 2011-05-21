@@ -204,7 +204,15 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionViewHtml, SIGNAL('triggered()'), self.viewHtml)
 		self.actionChangeFont = QAction(self.tr('Change default font'), self)
 		self.connect(self.actionChangeFont, SIGNAL('triggered()'), self.changeFont)
-		self.actionPreview = QAction(QIcon.fromTheme('document-preview', QIcon.fromTheme('preview-file', QIcon(icon_path+'document-preview.png'))), self.tr('Preview'), self)
+		self.actionPreview = QAction(self.tr('Preview'), self)
+		if QIcon.hasThemeIcon('document-preview'):
+			self.actionPreview.setIcon(QIcon.fromTheme('document-preview'))
+		elif QIcon.hasThemeIcon('preview-file'):
+			self.actionPreview.setIcon(QIcon.fromTheme('preview-file'))
+		elif QIcon.hasThemeIcon('x-office-document'):
+			self.actionPreview.setIcon(QIcon.fromTheme('x-office-document'))
+		else:
+			self.actionPreview.setIcon(QIcon(icon_path+'document-preview.png'))
 		self.actionPreview.setCheckable(True)
 		self.actionPreview.setShortcut(Qt.CTRL + Qt.Key_E)
 		self.connect(self.actionPreview, SIGNAL('triggered(bool)'), self.preview)
