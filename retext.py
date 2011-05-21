@@ -49,7 +49,7 @@ else:
 	use_gdocs = True
 
 app_name = "ReText"
-app_version = "1.0.2"
+app_version = "1.0.3"
 
 icon_path = "icons/"
 
@@ -204,7 +204,7 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionViewHtml, SIGNAL('triggered()'), self.viewHtml)
 		self.actionChangeFont = QAction(self.tr('Change default font'), self)
 		self.connect(self.actionChangeFont, SIGNAL('triggered()'), self.changeFont)
-		self.actionPreview = QAction(QIcon.fromTheme('document-preview', QIcon.fromTheme('x-office-document', QIcon(icon_path+'document-preview.png'))), self.tr('Preview'), self)
+		self.actionPreview = QAction(QIcon.fromTheme('document-preview', QIcon.fromTheme('preview-file', QIcon(icon_path+'document-preview.png'))), self.tr('Preview'), self)
 		self.actionPreview.setCheckable(True)
 		self.actionPreview.setShortcut(Qt.CTRL + Qt.Key_E)
 		self.connect(self.actionPreview, SIGNAL('triggered(bool)'), self.preview)
