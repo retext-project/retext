@@ -672,15 +672,3 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.
-
--------------------------------------------------------------------------
-
-In addition, as a special exception, Nokia gives permission to link the
-code of its release of Qt with the OpenSSL project's "OpenSSL" library (or
-modified versions of it that use the same license as the "OpenSSL"
-library), and distribute the linked executables.  You must comply with the
-GNU General Public License versions 2.0 or 3.0 in all respects for all of
-the code used other than the "OpenSSL" code.  If you modify this file, you
-may extend this exception to your version of the file, but you are not
-obligated to do so.  If you do not wish to do so, delete this exception
-statement from your version of this file.
