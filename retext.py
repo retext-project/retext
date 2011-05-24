@@ -48,8 +48,15 @@ except:
 else:
 	use_gdocs = True
 
+try:
+	import enchant
+except:
+	use_enchant = False
+else:
+	use_enchant = True
+
 app_name = "ReText"
-app_version = "1.0.3"
+app_version = "1.0.4"
 
 icon_path = "icons/"
 
@@ -97,6 +104,31 @@ class HtmlHighlighter(QSyntaxHighlighter):
 				length = expression.matchedLength()
 				self.setFormat(index, length, charFormat)
 				index = expression.indexIn(text, index + length)
+
+class SpellHighlighter(QSyntaxHighlighter):
+	WORDS = '[\\w][^\\W]*'
+	
+	def __init__(self, *args):
+		QSyntaxHighlighter.__init__(self, *args)
+		self.dict = None
+	
+	def setDict(self, dict):
+		self.dict = dict
+	
+	def highlightBlock(self, text):
+		if not (self.dict):
+			return
+		text = unicode(text)
+		charFormat = QTextCharFormat()
+		charFormat.setUnderlineColor(Qt.red)
+		charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
+		expression = QRegExp(self.WORDS)
+		index = expression.indexIn(text)
+		while (index >= 0):
+			length = expression.matchedLength()
+			if not self.dict.check(text[index:index+length]):
+				self.setFormat(index, length, charFormat)
+			index = expression.indexIn(text, index + length)
 
 class LogPassDialog(QDialog):
 	def __init__(self, defaultLogin="", defaultPass=""):
@@ -259,6 +291,14 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionPaste, SIGNAL('triggered()'), self.paste)
 		self.connect(qApp.clipboard(), SIGNAL('dataChanged()'), self.clipboardDataChanged)
 		self.clipboardDataChanged()
+		self.sc = False
+		if use_enchant:
+			if settings.contains('spellCheck'):
+				self.sc = settings.value('spellCheck').toBool()
+			if settings.contains('spellCheckLocale'):
+				self.sl = str(settings.value('spellCheckLocale').toString())
+			else:
+				self.sl = None
 		self.actionPlainText = QAction(self.tr('Plain text'), self)
 		self.actionPlainText.setCheckable(True)
 		self.connect(self.actionPlainText, SIGNAL('triggered(bool)'), self.enablePlainText)
@@ -366,6 +406,14 @@ class ReTextWindow(QMainWindow):
 	
 	def createTab(self, fileName):
 		self.editBoxes.append(QTextEdit())
+		if self.sc:
+			sh = SpellHighlighter(self.editBoxes[-1].document())
+			if self.sl:
+				sh.setDict(enchant.Dict(self.sl))
+			else:
+				sh.setDict(enchant.Dict())
+		else:
+			HtmlHighlighter(self.editBoxes[-1].document())
 		self.previewBoxes.append(QTextEdit())
 		self.previewBoxes[-1].setVisible(False)
 		self.previewBoxes[-1].setReadOnly(True)
@@ -380,7 +428,6 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.editBoxes[-1], SIGNAL('redoAvailable(bool)'), self.actionRedo, SLOT('setEnabled(bool)'))
 		self.connect(self.editBoxes[-1], SIGNAL('copyAvailable(bool)'), self.enableCopy)
 		self.connect(self.editBoxes[-1].document(), SIGNAL('modificationChanged(bool)'), self.modificationChanged)
-		HtmlHighlighter(self.editBoxes[-1].document())
 		tab = QWidget()
 		layout = QHBoxLayout(tab)
 		layout.addWidget(self.editBoxes[-1])
