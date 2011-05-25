@@ -297,8 +297,6 @@ class ReTextWindow(QMainWindow):
 				if settings.value('spellCheck').toBool():
 					self.actionEnableSC.setChecked(True)
 					self.enableSC(True)
-		#global dict
-		#dict = enchant.Dict('en_US')
 		self.actionPlainText = QAction(self.tr('Plain text'), self)
 		self.actionPlainText.setCheckable(True)
 		self.connect(self.actionPlainText, SIGNAL('triggered(bool)'), self.enablePlainText)
