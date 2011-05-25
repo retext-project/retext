@@ -55,8 +55,10 @@ except:
 else:
 	use_enchant = True
 
+dict = None
+
 app_name = "ReText"
-app_version = "1.0.4"
+app_version = "1.1.0"
 
 icon_path = "icons/"
 
@@ -84,11 +86,25 @@ if without_md:
 monofont = QFont()
 monofont.setFamily('monospace')
 
-class HtmlHighlighter(QSyntaxHighlighter):
+class ReTextHighlighter(QSyntaxHighlighter):
+	words = '[\\w][^\\W]*'
+	
 	def __init__(self, parent):
 		QSyntaxHighlighter.__init__(self, parent)
 	
 	def highlightBlock(self, text):
+		if dict:
+			text = unicode(text)
+			charFormat = QTextCharFormat()
+			charFormat.setUnderlineColor(Qt.red)
+			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
+			expression = QRegExp(self.words)
+			index = expression.indexIn(text)
+			while (index >= 0):
+				length = expression.matchedLength()
+				if not dict.check(text[index:index+length]):
+					self.setFormat(index, length, charFormat)
+				index = expression.indexIn(text, index + length)
 		charFormat = QTextCharFormat()
 		patterns = ('<[^<>]*>', '&[^; ]*;', '"[^"<]*"(?=[^<]*>)', '<!--[^-->]*-->')
 		foregrounds = (Qt.darkMagenta, Qt.darkCyan, Qt.darkYellow, Qt.gray)
@@ -104,31 +120,6 @@ class HtmlHighlighter(QSyntaxHighlighter):
 				length = expression.matchedLength()
 				self.setFormat(index, length, charFormat)
 				index = expression.indexIn(text, index + length)
-
-class SpellHighlighter(QSyntaxHighlighter):
-	WORDS = '[\\w][^\\W]*'
-	
-	def __init__(self, *args):
-		QSyntaxHighlighter.__init__(self, *args)
-		self.dict = None
-	
-	def setDict(self, dict):
-		self.dict = dict
-	
-	def highlightBlock(self, text):
-		if not (self.dict):
-			return
-		text = unicode(text)
-		charFormat = QTextCharFormat()
-		charFormat.setUnderlineColor(Qt.red)
-		charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
-		expression = QRegExp(self.WORDS)
-		index = expression.indexIn(text)
-		while (index >= 0):
-			length = expression.matchedLength()
-			if not self.dict.check(text[index:index+length]):
-				self.setFormat(index, length, charFormat)
-			index = expression.indexIn(text, index + length)
 
 class LogPassDialog(QDialog):
 	def __init__(self, defaultLogin="", defaultPass=""):
@@ -293,12 +284,21 @@ class ReTextWindow(QMainWindow):
 		self.clipboardDataChanged()
 		self.sc = False
 		if use_enchant:
-			if settings.contains('spellCheck'):
-				self.sc = settings.value('spellCheck').toBool()
+			self.actionEnableSC = QAction(self.tr('Enable'), self)
+			self.actionEnableSC.setCheckable(True)
+			self.actionSetLocale = QAction(self.tr('Set locale'), self)
+			self.connect(self.actionEnableSC, SIGNAL('triggered(bool)'), self.enableSC)
+			self.connect(self.actionSetLocale, SIGNAL('triggered()'), self.changeLocale)
 			if settings.contains('spellCheckLocale'):
 				self.sl = str(settings.value('spellCheckLocale').toString())
 			else:
 				self.sl = None
+			if settings.contains('spellCheck'):
+				if settings.value('spellCheck').toBool():
+					self.actionEnableSC.setChecked(True)
+					self.enableSC(True)
+		#global dict
+		#dict = enchant.Dict('en_US')
 		self.actionPlainText = QAction(self.tr('Plain text'), self)
 		self.actionPlainText.setCheckable(True)
 		self.connect(self.actionPlainText, SIGNAL('triggered(bool)'), self.enablePlainText)
@@ -367,6 +367,10 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addAction(self.actionCopy)
 		self.menuEdit.addAction(self.actionPaste)
 		self.menuEdit.addSeparator()
+		if use_enchant:
+			self.menuSC = self.menuEdit.addMenu(self.tr('Spell check'))
+			self.menuSC.addAction(self.actionEnableSC)
+			self.menuSC.addAction(self.actionSetLocale)
 		self.menuEdit.addAction(self.actionPlainText)
 		self.menuEdit.addAction(self.actionChangeFont)
 		self.menuEdit.addSeparator()
@@ -406,14 +410,7 @@ class ReTextWindow(QMainWindow):
 	
 	def createTab(self, fileName):
 		self.editBoxes.append(QTextEdit())
-		if self.sc:
-			sh = SpellHighlighter(self.editBoxes[-1].document())
-			if self.sl:
-				sh.setDict(enchant.Dict(self.sl))
-			else:
-				sh.setDict(enchant.Dict())
-		else:
-			HtmlHighlighter(self.editBoxes[-1].document())
+		ReTextHighlighter(self.editBoxes[-1].document())
 		self.previewBoxes.append(QTextEdit())
 		self.previewBoxes[-1].setVisible(False)
 		self.previewBoxes[-1].setReadOnly(True)
@@ -500,6 +497,36 @@ class ReTextWindow(QMainWindow):
 	def enableCopy(self, copymode):
 		self.actionCopy.setEnabled(copymode)
 		self.actionCut.setEnabled(copymode)
+	
+	def enableSC(self, yes):
+		global dict
+		if yes:
+			if self.sl:
+				dict = enchant.Dict(self.sl)
+			else:
+				dict = enchant.Dict()
+			QSettings().setValue('spellCheck', True)
+		else:
+			dict = None
+			QSettings().remove('spellCheck')
+	
+	def changeLocale(self):
+		if self.sl == None:
+			text = ""
+		else:
+			text = self.sl
+		sl, ok = QInputDialog.getText(self, app_name, self.tr('Enter locale name (example: en_US)'), QLineEdit.Normal, text)
+		if ok and sl:
+			try:
+				sl = str(sl)
+			except:
+				pass
+			else:
+				self.sl = sl
+				self.enableSC(self.actionEnableSC.isChecked())
+		elif sl.isEmpty():
+			self.sl = None
+			self.enableSC(self.actionEnableSC.isChecked())
 	
 	def updatePreviewBox(self):
 		if self.actionPlainText.isChecked():
