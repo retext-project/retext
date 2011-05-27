@@ -599,7 +599,7 @@ class ReTextWindow(QMainWindow):
 	
 	def openFile(self):
 		fileName = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", \
-		self.tr("Supported files")+" (*.re *.md *.markdown *.mdown, *.mkd *.mkdn *.txt *.html *.htm);;"+self.tr("All files (*)"))
+		self.tr("Supported files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt *.html *.htm);;"+self.tr("All files (*)"))
 		self.openFileWrapper(fileName)
 	
 	def openFileWrapper(self, fileName):
@@ -645,7 +645,7 @@ class ReTextWindow(QMainWindow):
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
 			else:
-				defaultExt = self.tr("ReText files")+" (*.re *.md *.markdown *.mdown, *.mkd *.mkdn *.txt)"
+				defaultExt = self.tr("ReText files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
 				ext = ".md"
 			self.fileNames[self.ind] = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).suffix().isEmpty():
