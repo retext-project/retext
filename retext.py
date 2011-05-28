@@ -319,7 +319,7 @@ class ReTextWindow(QMainWindow):
 			self.connect(self.actionSaveGDocs, SIGNAL('triggered()'), self.saveGDocs)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
 		self.usefulTags = ('center', 's', 'span', 'table', 'td', 'tr', 'u')
-		self.usefulChars = ('hellip', 'laquo', 'minus', 'mdash', 'nbsp', 'ndash', 'raquo')
+		self.usefulChars = ('deg', 'hellip', 'laquo', 'larr', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo', 'rarr', 'times')
 		self.tagsBox = QComboBox(self.editBar)
 		self.tagsBox.addItem(self.tr('Tags'))
 		self.tagsBox.addItems(self.usefulTags)
