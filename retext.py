@@ -319,7 +319,7 @@ class ReTextWindow(QMainWindow):
 			self.connect(self.actionSaveGDocs, SIGNAL('triggered()'), self.saveGDocs)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
 		self.usefulTags = ('center', 's', 'span', 'table', 'td', 'tr', 'u')
-		self.usefulChars = ('deg', 'hellip', 'laquo', 'larr', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo', 'rarr', 'times')
+		self.usefulChars = ('deg', 'divide', 'hellip', 'laquo', 'larr', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo', 'rarr', 'times')
 		self.tagsBox = QComboBox(self.editBar)
 		self.tagsBox.addItem(self.tr('Tags'))
 		self.tagsBox.addItems(self.usefulTags)
@@ -806,10 +806,8 @@ class ReTextWindow(QMainWindow):
 	def insertTag(self, num):
 		if num:
 			ut = self.usefulTags[num-1]
-			hc = not ut in ('img', 'td', 'tr')
+			hc = not ut in ('td', 'tr')
 			arg = ''
-			if ut == 'img':
-				arg = ' src=""'
 			if ut == 'span':
 				arg = ' style=""'
 			tc = self.editBoxes[self.ind].textCursor()
