@@ -243,6 +243,10 @@ class ReTextWindow(QMainWindow):
 		self.actionLivePreview.setCheckable(True)
 		self.actionLivePreview.setShortcut(Qt.CTRL + Qt.SHIFT + Qt.Key_E)
 		self.connect(self.actionLivePreview, SIGNAL('triggered(bool)'), self.enableLivePreview)
+		self.actionFullScreen = QAction(QIcon.fromTheme('view-fullscreen', QIcon(icon_path+'view-fullscreen.png')), self.tr('Fullscreen mode'), self)
+		self.actionFullScreen.setCheckable(True)
+		self.actionFullScreen.setShortcut(Qt.Key_F11)
+		self.connect(self.actionFullScreen, SIGNAL('triggered(bool)'), self.enableFullScreen)
 		self.actionPerfectHtml = QAction(QIcon.fromTheme('text-html', QIcon(icon_path+'text-html.png')), 'HTML', self)
 		self.connect(self.actionPerfectHtml, SIGNAL('triggered()'), self.saveFilePerfect)
 		self.actionPdf = QAction(QIcon.fromTheme('application-pdf', QIcon(icon_path+'application-pdf.png')), 'PDF', self)
@@ -375,6 +379,8 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addAction(self.actionViewHtml)
 		self.menuEdit.addAction(self.actionLivePreview)
 		self.menuEdit.addAction(self.actionPreview)
+		self.menuEdit.addSeparator()
+		self.menuEdit.addAction(self.actionFullScreen)
 		if about_md:
 			self.menuHelp.addAction(self.actionAboutMd)
 			self.menuHelp.addSeparator()
@@ -495,6 +501,12 @@ class ReTextWindow(QMainWindow):
 	def enableCopy(self, copymode):
 		self.actionCopy.setEnabled(copymode)
 		self.actionCut.setEnabled(copymode)
+	
+	def enableFullScreen(self, yes):
+		if yes:
+			self.showFullScreen()
+		else:
+			self.showNormal()
 	
 	def enableSC(self, yes):
 		global dict
