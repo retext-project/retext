@@ -508,6 +508,16 @@ class ReTextWindow(QMainWindow):
 		else:
 			self.showNormal()
 	
+	def keyPressEvent(self, event):
+		if event.key() == Qt.Key_F12:
+			self.menubar.setVisible(not self.menubar.isVisible())
+			self.toolBar.setVisible(not self.toolBar.isVisible())
+			self.editBar.setVisible(not self.editBar.isVisible())
+		elif event.key() == Qt.Key_F11:
+			if not self.menubar.isVisible():
+				self.actionFullScreen.setChecked(False)
+				self.enableFullScreen(False)
+	
 	def enableSC(self, yes):
 		global dict
 		if yes:
