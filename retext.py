@@ -87,18 +87,17 @@ monofont = QFont()
 monofont.setFamily('monospace')
 
 class ReTextHighlighter(QSyntaxHighlighter):
-	words = '[\\w][^\\W]*'
-	
 	def __init__(self, parent):
 		QSyntaxHighlighter.__init__(self, parent)
 	
 	def highlightBlock(self, text):
+		words = '[\\w][^\\W]*'
 		if dict:
 			text = unicode(text)
 			charFormat = QTextCharFormat()
 			charFormat.setUnderlineColor(Qt.red)
 			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
-			expression = QRegExp(self.words)
+			expression = QRegExp(words)
 			index = expression.indexIn(text)
 			while (index >= 0):
 				length = expression.matchedLength()
@@ -508,13 +507,13 @@ class ReTextWindow(QMainWindow):
 		else:
 			self.showNormal()
 	
-	def keyPressEvent(self, event):
+	def keyPressEvent(self, e):
 		v = not self.menubar.isVisible()
-		if event.key() == Qt.Key_F12:
+		if e.key() == Qt.Key_F12 and e.modifiers() & Qt.ShiftModifier:
 			self.menubar.setVisible(v)
 			self.toolBar.setVisible(v)
 			self.editBar.setVisible(v)
-		elif event.key() == Qt.Key_F11:
+		elif e.key() == Qt.Key_F11:
 			if v:
 				n = not self.actionFullScreen.isChecked()
 				self.actionFullScreen.setChecked(n)
