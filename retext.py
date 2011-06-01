@@ -669,7 +669,9 @@ class ReTextWindow(QMainWindow):
 				ext = ".txt"
 			else:
 				defaultExt = self.tr("ReText files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
-				ext = ".md"
+				ext = ".re"
+				if QSettings().contains('defaultExt'):
+					ext = QSettings.value('defaultExt').toString()
 			self.fileNames[self.ind] = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).suffix().isEmpty():
 				self.fileNames[self.ind].append(ext)
