@@ -58,7 +58,7 @@ else:
 dict = None
 
 app_name = "ReText"
-app_version = "1.1.0"
+app_version = "1.1.1"
 
 icon_path = "icons/"
 
@@ -696,23 +696,18 @@ class ReTextWindow(QMainWindow):
 	def saveHtml(self, fileName):
 		if QFileInfo(fileName).suffix().isEmpty():
 			fileName.append(".html")
-		if self.actionPlainText.isChecked():
-			td = self.textDocument()
-			writer = QTextDocumentWriter(fileName)
-			writer.write(td)
-		else:
-			htmlFile = QFile(fileName)
-			htmlFile.open(QIODevice.WriteOnly)
-			html = QTextStream(htmlFile)
-			html << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
-			html << "<html>\n<head>\n"
-			html << "  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n"
-			html << QString("  <meta name=\"generator\" content=\"%1 %2\">\n").arg(app_name, app_version)
-			html << "  <title>" + self.getDocumentTitle() + "</title>\n"
-			html << "</head>\n<body>\n"
-			html << self.parseText()
-			html << "\n</body>\n</html>\n"
-			htmlFile.close()
+		htmlFile = QFile(fileName)
+		htmlFile.open(QIODevice.WriteOnly)
+		html = QTextStream(htmlFile)
+		html << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
+		html << "<html>\n<head>\n"
+		html << "  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n"
+		html << QString("  <meta name=\"generator\" content=\"%1 %2\">\n").arg(app_name, app_version)
+		html << "  <title>" + self.getDocumentTitle() + "</title>\n"
+		html << "</head>\n<body>\n"
+		html << self.parseText()
+		html << "\n</body>\n</html>\n"
+		htmlFile.close()
 	
 	def textDocument(self):
 		td = QTextDocument()
@@ -806,7 +801,10 @@ class ReTextWindow(QMainWindow):
 		if loginDialog.exec_() == QDialog.Accepted:
 			login = loginDialog.loginEdit.text()
 			passwd = loginDialog.passEdit.text()
-			self.saveHtml('temp.html')
+			if self.actionPlainText.isChecked():
+				self.saveFileWrapper('temp.txt')
+			else:
+				self.saveHtml('temp.html')
 			gdClient = gdata.docs.service.DocsService(source=app_name)
 			try:
 				gdClient.ClientLogin(unicode(login), unicode(passwd))
@@ -815,10 +813,16 @@ class ReTextWindow(QMainWindow):
 			else:
 				settings.setValue("GDocsLogin", login)
 				settings.setValue("GDocsPasswd", passwd)
-				ms = MediaSource(file_path='temp.html', content_type='text/html')
+				if self.actionPlainText.isChecked():
+					ms = MediaSource(file_path='temp.txt', content_type='text/plain')
+				else:
+					ms = MediaSource(file_path='temp.html', content_type='text/html')
 				entry = gdClient.Upload(ms, unicode(self.getDocumentTitle()))
 				link = entry.GetAlternateLink().href
-				QFile('temp.html').remove()
+				if self.actionPlainText.isChecked():
+					QFile('temp.txt').remove()
+				else:
+					QFile('temp.html').remove()
 				QDesktopServices.openUrl(QUrl(link))
 	
 	def modificationChanged(self, changed):
