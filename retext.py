@@ -58,7 +58,7 @@ else:
 dict = None
 
 app_name = "ReText"
-app_version = "1.1.1"
+app_version = "1.1.2"
 
 icon_path = "icons/"
 
