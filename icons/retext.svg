@@ -3,27 +3,15 @@
 
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.0"
    width="256"
    height="256"
    id="svg2408">
   <defs
      id="defs2410">
-    <inkscape:path-effect
-       effect="spiro"
-       id="path-effect4197" />
-    <inkscape:path-effect
-       effect="spiro"
-       id="path-effect4193" />
-    <inkscape:path-effect
-       effect="spiro"
-       id="path-effect4189" />
     <linearGradient
        x1="45.448002"
        y1="92.540001"
@@ -159,18 +147,6 @@
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(1.0238,0,0,1.0119,-1.1429,0.92857)" />
   </defs>
-  <metadata
-     id="metadata2413">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
   <g
      transform="translate(-2.0189164,161.01785)"
      id="layer2"
