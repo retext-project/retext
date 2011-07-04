@@ -1,18 +1,19 @@
 This is ReText tarball.
+You can read more about ReText on our website (http://retext.sourceforge.net/) or in the wiki (http://sourceforge.net/p/retext/wiki/).
+
+ReText is written in Python and runs on Linux and other POSIX-compatible platforms.
+You do not need to compile the source code, it can be interpreted by Python 2.
 
 ReText requires the following packages to run:
 * python
 * python-qt4
 * python-markdown
-* libqtcore4
-* libqtgui4
+
 Package python-gdata is also needed if you want to use Google Docs export.
 
-You do not need to compile the source code, it can be interpreted by any Python version (Python 3 support is experimental).
 
-However, you need to compile the locale files if you want to use localized version.
-Do it using `lrelease retext_%LANG%.ts` command, where lrelease is from lqt4-dev package and %LANG% is your language (example: retext_ru.ts). This will generate retext_%LANG%.qm file. ReText automatically loads language files if they are placed in its working directory. On Linux systems, /usr/lib/retext/ is the alternate directory.
+Translation files are already compiled and will be automatically loaded. On Linux platform, translation files can also be loaded from /usr/share/retext/ directory.
+If you want to translate ReText into your language, follow the instructions in ReText wiki.
 
-ReText is licensed under GNU GPL license, which is available in LICENSE_GPL file.
-
+ReText is Copyright (C) 2011 Dmitry Shachnev and is licensed under GNU GPL (v2+) license, the current version is available in LICENSE_GPL file.
 ReText icon is based on Faenza accessories-text-editor icon.
