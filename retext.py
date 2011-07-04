@@ -58,7 +58,7 @@ else:
 dict = None
 
 app_name = "ReText"
-app_version = "1.1.2"
+app_version = "1.1.3"
 
 icon_path = "icons/"
 
@@ -278,11 +278,16 @@ class ReTextWindow(QMainWindow):
 		self.actionCut.setEnabled(False)
 		self.actionPaste = QAction(QIcon.fromTheme('edit-paste', QIcon(icon_path+'edit-paste.png')), self.tr('Paste'), self)
 		self.actionPaste.setShortcut(QKeySequence.Paste)
-		self.connect(self.actionUndo, SIGNAL('triggered()'), self.undo)
-		self.connect(self.actionRedo, SIGNAL('triggered()'), self.redo)
-		self.connect(self.actionCut, SIGNAL('triggered()'), self.cut)
-		self.connect(self.actionCopy, SIGNAL('triggered()'), self.copy)
-		self.connect(self.actionPaste, SIGNAL('triggered()'), self.paste)
+		self.connect(self.actionUndo, SIGNAL('triggered()'), \
+		lambda: self.editBoxes[self.ind].undo())
+		self.connect(self.actionRedo, SIGNAL('triggered()'), \
+		lambda: self.editBoxes[self.ind].redo())
+		self.connect(self.actionCut, SIGNAL('triggered()'), \
+		lambda: self.editBoxes[self.ind].cut())
+		self.connect(self.actionCopy, SIGNAL('triggered()'), \
+		lambda: self.editBoxes[self.ind].copy())
+		self.connect(self.actionPaste, SIGNAL('triggered()'), \
+		lambda: self.editBoxes[self.ind].paste())
 		self.connect(qApp.clipboard(), SIGNAL('dataChanged()'), self.clipboardDataChanged)
 		self.clipboardDataChanged()
 		self.sc = False
@@ -331,6 +336,13 @@ class ReTextWindow(QMainWindow):
 		self.symbolBox.addItem(self.tr('Symbols'))
 		self.symbolBox.addItems(self.usefulChars)
 		self.connect(self.symbolBox, SIGNAL('activated(int)'), self.insertSymbol)
+		if settings.contains('styleSheet'):
+			sheetfile = QFile(settings.value('styleSheet').toString())
+			sheetfile.open(QIODevice.ReadOnly)
+			self.ss = QTextStream(sheetfile).readAll()
+			sheetfile.close()
+		else:
+			self.ss = ''
 		self.menubar = QMenuBar(self)
 		self.menubar.setGeometry(QRect(0, 0, 800, 25))
 		self.setMenuBar(self.menubar)
@@ -550,31 +562,11 @@ class ReTextWindow(QMainWindow):
 			self.enableSC(self.actionEnableSC.isChecked())
 	
 	def updatePreviewBox(self):
-		if self.actionPlainText.isChecked():
-			self.previewBoxes[self.ind].setPlainText(self.editBoxes[self.ind].toPlainText())
-		else:
-			self.previewBoxes[self.ind].setHtml(self.parseText())
-		if self.font:
-			self.previewBoxes[self.ind].document().setDefaultFont(self.font)
+		self.previewBoxes[self.ind].setDocument(self.textDocument())
 	
 	def updateLivePreviewBox(self):
 		if self.actionLivePreview.isChecked():
 			self.updatePreviewBox()
-	
-	def undo(self):
-		self.editBoxes[self.ind].undo()
-	
-	def redo(self):
-		self.editBoxes[self.ind].redo()
-	
-	def cut(self):
-		self.editBoxes[self.ind].cut()
-	
-	def copy(self):
-		self.editBoxes[self.ind].copy()
-	
-	def paste(self):
-		self.editBoxes[self.ind].paste()
 	
 	def startWpgen(self):
 		if self.fileNames[self.ind] == "":
@@ -711,10 +703,12 @@ class ReTextWindow(QMainWindow):
 	
 	def textDocument(self):
 		td = QTextDocument()
+		if self.ss:
+			td.setDefaultStyleSheet(self.ss)
 		if self.actionPlainText.isChecked():
 			td.setPlainText(self.editBoxes[self.ind].toPlainText())
 		else:
-			td.setHtml(self.parseText())
+			td.setHtml('<html><body>'+self.parseText()+'</body></html>')
 		if self.font:
 			td.setDefaultFont(self.font)
 		return td
