@@ -24,13 +24,14 @@ import subprocess
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
+s = QSettings('ReText project', 'ReText')
+
 try:
 	import markdown
 except:
 	without_md = True
 else:
 	without_md = False
-	s = QSettings('ReText project', 'ReText')
 	if s.contains('mdExtensions'):
 		exts = []
 		for ext in s.value('mdExtensions').toStringList():
@@ -58,7 +59,7 @@ else:
 dict = None
 
 app_name = "ReText"
-app_version = "1.1.3"
+app_version = "1.1.4"
 
 icon_path = "icons/"
 
@@ -85,6 +86,8 @@ if without_md:
 
 monofont = QFont()
 monofont.setFamily('monospace')
+if s.contains('editorFontSize'):
+	monofont.setPointSize(s.value('editorFontSize').toInt()[0])
 
 class ReTextHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
