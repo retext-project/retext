@@ -85,7 +85,10 @@ if without_md:
 	about_md = False
 
 monofont = QFont()
-monofont.setFamily('monospace')
+if s.contains('editorFont'):
+	monofont.setFamily(s.value('editorFont').toString())
+else:
+	monofont.setFamily('monospace')
 if s.contains('editorFontSize'):
 	monofont.setPointSize(s.value('editorFontSize').toInt()[0])
 
