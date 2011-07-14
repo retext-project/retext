@@ -24,6 +24,9 @@ import subprocess
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
+app_name = "ReText"
+app_version = "2.0 pre 1"
+
 s = QSettings('ReText project', 'ReText')
 
 try:
@@ -57,9 +60,6 @@ else:
 	use_enchant = True
 
 dict = None
-
-app_name = "ReText"
-app_version = "1.1.4"
 
 icon_path = "icons/"
 
@@ -206,32 +206,38 @@ class ReTextWindow(QMainWindow):
 		self.addToolBar(Qt.TopToolBarArea, self.toolBar)
 		self.editBar = QToolBar(self.tr('Edit toolbar'), self)
 		self.addToolBar(Qt.TopToolBarArea, self.editBar)
-		self.actionNew = QAction(QIcon.fromTheme('document-new', QIcon(icon_path+'document-new.png')), self.tr('New'), self)
+		self.searchBar = QToolBar(self.tr('Search toolbar'), self)
+		self.addToolBar(Qt.BottomToolBarArea, self.searchBar)
+		self.actionNew = QAction(self.actIcon('document-new'), self.tr('New'), self)
 		self.actionNew.setShortcut(QKeySequence.New)
 		self.actionNew.setPriority(QAction.LowPriority)
 		self.connect(self.actionNew, SIGNAL('triggered()'), self.createNew)
-		self.actionOpen = QAction(QIcon.fromTheme('document-open', QIcon(icon_path+'document-open.png')), self.tr('Open'), self)
+		self.actionOpen = QAction(self.actIcon('document-open'), self.tr('Open'), self)
 		self.actionOpen.setShortcut(QKeySequence.Open)
 		self.actionOpen.setPriority(QAction.LowPriority)
 		self.connect(self.actionOpen, SIGNAL('triggered()'), self.openFile)
-		self.actionSave = QAction(QIcon.fromTheme('document-save', QIcon(icon_path+'document-save.png')), self.tr('Save'), self)
+		self.actionSave = QAction(self.actIcon('document-save'), self.tr('Save'), self)
 		self.actionSave.setEnabled(False)
 		self.actionSave.setShortcut(QKeySequence.Save)
 		self.actionSave.setPriority(QAction.LowPriority)
 		self.connect(self.actionSave, SIGNAL('triggered()'), self.saveFile)
-		self.actionSaveAs = QAction(QIcon.fromTheme('document-save-as', QIcon(icon_path+'document-save-as.png')), self.tr('Save as'), self)
+		self.actionSaveAs = QAction(self.actIcon('document-save-as'), self.tr('Save as'), self)
 		self.actionSaveAs.setShortcut(QKeySequence.SaveAs)
 		self.connect(self.actionSaveAs, SIGNAL('triggered()'), self.saveFileAs)
-		self.actionPrint = QAction(QIcon.fromTheme('document-print', QIcon(icon_path+'document-print.png')), self.tr('Print'), self)
+		self.actionPrint = QAction(self.actIcon('document-print'), self.tr('Print'), self)
 		self.actionPrint.setShortcut(QKeySequence.Print)
 		self.actionPrint.setPriority(QAction.LowPriority)
 		self.connect(self.actionPrint, SIGNAL('triggered()'), self.printFile)
-		self.actionPrintPreview = QAction(QIcon.fromTheme('document-print-preview', QIcon(icon_path+'document-print-preview.png')), self.tr('Print preview'), self)
+		self.actionPrintPreview = QAction(self.actIcon('document-print-preview'), self.tr('Print preview'), self)
 		self.connect(self.actionPrintPreview, SIGNAL('triggered()'), self.printPreview)
-		self.actionViewHtml = QAction(QIcon.fromTheme('text-html', QIcon(icon_path+'text-html.png')), self.tr('View HTML code'), self)
+		self.actionViewHtml = QAction(self.actIcon('text-html'), self.tr('View HTML code'), self)
 		self.connect(self.actionViewHtml, SIGNAL('triggered()'), self.viewHtml)
 		self.actionChangeFont = QAction(self.tr('Change default font'), self)
 		self.connect(self.actionChangeFont, SIGNAL('triggered()'), self.changeFont)
+		self.actionFind = QAction(self.actIcon('edit-find'), self.tr('Find text'), self)
+		self.actionFind.setCheckable(True)
+		self.connect(self.actionFind, SIGNAL('triggered(bool)'), self.searchBar, SLOT('setVisible(bool)'))
+		self.connect(self.searchBar, SIGNAL('visibilityChanged(bool)'), self.actionFind, SLOT('setChecked(bool)'))
 		self.actionPreview = QAction(self.tr('Preview'), self)
 		if QIcon.hasThemeIcon('document-preview'):
 			self.actionPreview.setIcon(QIcon.fromTheme('document-preview'))
@@ -248,15 +254,15 @@ class ReTextWindow(QMainWindow):
 		self.actionLivePreview.setCheckable(True)
 		self.actionLivePreview.setShortcut(Qt.CTRL + Qt.SHIFT + Qt.Key_E)
 		self.connect(self.actionLivePreview, SIGNAL('triggered(bool)'), self.enableLivePreview)
-		self.actionFullScreen = QAction(QIcon.fromTheme('view-fullscreen', QIcon(icon_path+'view-fullscreen.png')), self.tr('Fullscreen mode'), self)
+		self.actionFullScreen = QAction(self.actIcon('view-fullscreen'), self.tr('Fullscreen mode'), self)
 		self.actionFullScreen.setCheckable(True)
 		self.actionFullScreen.setShortcut(Qt.Key_F11)
 		self.connect(self.actionFullScreen, SIGNAL('triggered(bool)'), self.enableFullScreen)
-		self.actionPerfectHtml = QAction(QIcon.fromTheme('text-html', QIcon(icon_path+'text-html.png')), 'HTML', self)
+		self.actionPerfectHtml = QAction(self.actIcon('text-html'), 'HTML', self)
 		self.connect(self.actionPerfectHtml, SIGNAL('triggered()'), self.saveFilePerfect)
-		self.actionPdf = QAction(QIcon.fromTheme('application-pdf', QIcon(icon_path+'application-pdf.png')), 'PDF', self)
+		self.actionPdf = QAction(self.actIcon('application-pdf'), 'PDF', self)
 		self.connect(self.actionPdf, SIGNAL('triggered()'), self.savePdf)
-		self.actionOdf = QAction(QIcon.fromTheme('x-office-document', QIcon(icon_path+'x-office-document.png')), 'ODT', self)
+		self.actionOdf = QAction(self.actIcon('x-office-document'), 'ODT', self)
 		self.connect(self.actionOdf, SIGNAL('triggered()'), self.saveOdf)
 		settings.beginGroup('Export')
 		if not settings.allKeys().isEmpty():
@@ -266,23 +272,23 @@ class ReTextWindow(QMainWindow):
 		else:
 			otherExport = False
 		settings.endGroup()
-		self.actionQuit = QAction(QIcon.fromTheme('application-exit', QIcon(icon_path+'application-exit.png')), self.tr('Quit'), self)
+		self.actionQuit = QAction(self.actIcon('application-exit'), self.tr('Quit'), self)
 		self.actionQuit.setShortcut(QKeySequence.Quit)
 		self.actionQuit.setMenuRole(QAction.QuitRole)
 		self.connect(self.actionQuit, SIGNAL('triggered()'), qApp, SLOT('quit()'))
-		self.actionUndo = QAction(QIcon.fromTheme('edit-undo', QIcon(icon_path+'edit-undo.png')), self.tr('Undo'), self)
+		self.actionUndo = QAction(self.actIcon('edit-undo'), self.tr('Undo'), self)
 		self.actionUndo.setShortcut(QKeySequence.Undo)
-		self.actionRedo = QAction(QIcon.fromTheme('edit-redo', QIcon(icon_path+'edit-redo.png')), self.tr('Redo'), self)
+		self.actionRedo = QAction(self.actIcon('edit-redo'), self.tr('Redo'), self)
 		self.actionRedo.setShortcut(QKeySequence.Redo)
 		self.actionUndo.setEnabled(False)
 		self.actionRedo.setEnabled(False)
-		self.actionCopy = QAction(QIcon.fromTheme('edit-copy', QIcon(icon_path+'edit-copy.png')), self.tr('Copy'), self)
+		self.actionCopy = QAction(self.actIcon('edit-copy'), self.tr('Copy'), self)
 		self.actionCopy.setShortcut(QKeySequence.Copy)
 		self.actionCopy.setEnabled(False)
-		self.actionCut = QAction(QIcon.fromTheme('edit-cut', QIcon(icon_path+'edit-cut.png')), self.tr('Cut'), self)
+		self.actionCut = QAction(self.actIcon('edit-cut'), self.tr('Cut'), self)
 		self.actionCut.setShortcut(QKeySequence.Cut)
 		self.actionCut.setEnabled(False)
-		self.actionPaste = QAction(QIcon.fromTheme('edit-paste', QIcon(icon_path+'edit-paste.png')), self.tr('Paste'), self)
+		self.actionPaste = QAction(self.actIcon('edit-paste'), self.tr('Paste'), self)
 		self.actionPaste.setShortcut(QKeySequence.Paste)
 		self.connect(self.actionUndo, SIGNAL('triggered()'), \
 		lambda: self.editBoxes[self.ind].undo())
@@ -314,14 +320,18 @@ class ReTextWindow(QMainWindow):
 		self.actionPlainText = QAction(self.tr('Plain text'), self)
 		self.actionPlainText.setCheckable(True)
 		self.connect(self.actionPlainText, SIGNAL('triggered(bool)'), self.enablePlainText)
-		self.actionRecentFiles = QAction(QIcon.fromTheme('document-open-recent', QIcon(icon_path+'document-open-recent.png')), self.tr('Open recent'), self)
+		self.actionRecentFiles = QAction(self.actIcon('document-open-recent'), self.tr('Open recent'), self)
 		self.connect(self.actionRecentFiles, SIGNAL('triggered()'), self.openRecent)
 		if wpgen:
 			self.actionWpgen = QAction(self.tr('Generate webpages'), self)
 			self.connect(self.actionWpgen, SIGNAL('triggered()'), self.startWpgen)
-		self.actionShow = QAction(QIcon.fromTheme('system-file-manager', QIcon(icon_path+'system-file-manager.png')), self.tr('Show'), self)
+		self.actionShow = QAction(self.actIcon('system-file-manager'), self.tr('Show'), self)
 		self.connect(self.actionShow, SIGNAL('triggered()'), self.showInDir)
-		self.actionAbout = QAction(QIcon.fromTheme('help-about', QIcon(icon_path+'help-about.png')), self.tr('About %1').arg(app_name), self)
+		self.actionFind = QAction(self.actIcon('go-next'), self.tr('Next'), self)
+		self.actionFindPrev = QAction(self.actIcon('go-previous'), self.tr('Previous'), self)
+		self.connect(self.actionFind, SIGNAL('triggered()'), self.find)
+		self.connect(self.actionFindPrev, SIGNAL('triggered()'), lambda: self.find(QTextDocument.FindBackward))
+		self.actionAbout = QAction(self.actIcon('help-about'), self.tr('About %1').arg(app_name), self)
 		self.actionAbout.setMenuRole(QAction.AboutRole)
 		self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutDialog)
 		self.actionAboutQt = QAction(self.tr('About Qt'), self)
@@ -329,7 +339,7 @@ class ReTextWindow(QMainWindow):
 		self.actionAboutMd = QAction(self.tr('Markdown syntax examples'), self)
 		self.connect(self.actionAboutMd, SIGNAL('triggered()'), self.aboutMd)
 		if use_gdocs:
-			self.actionSaveGDocs = QAction(QIcon.fromTheme('internet-web-browser', QIcon.fromTheme('web-browser', QIcon(icon_path+'intenret-web-browser.png'))), self.tr('Save to Google Docs'), self)
+			self.actionSaveGDocs = QAction(QIcon.fromTheme('web-browser', self.actIcon('intenret-web-browser')), self.tr('Save to Google Docs'), self)
 			self.connect(self.actionSaveGDocs, SIGNAL('triggered()'), self.saveGDocs)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
 		self.usefulTags = ('center', 's', 'span', 'table', 'td', 'tr', 'u')
@@ -390,6 +400,7 @@ class ReTextWindow(QMainWindow):
 			self.menuSC = self.menuEdit.addMenu(self.tr('Spell check'))
 			self.menuSC.addAction(self.actionEnableSC)
 			self.menuSC.addAction(self.actionSetLocale)
+		self.menuEdit.addAction(self.actionFind)
 		self.menuEdit.addAction(self.actionPlainText)
 		self.menuEdit.addAction(self.actionChangeFont)
 		self.menuEdit.addSeparator()
@@ -423,11 +434,34 @@ class ReTextWindow(QMainWindow):
 		self.editBar.addSeparator()
 		self.editBar.addWidget(self.tagsBox)
 		self.editBar.addWidget(self.symbolBox)
+		self.searchEdit = QLineEdit(self.searchBar)
+		try:
+			self.searchEdit.setPlaceholderText(self.tr('Search'))
+		except:
+			pass
+		self.connect(self.searchEdit, SIGNAL('returnPressed()'), self.find)
+		self.csBox = QCheckBox(self.tr('Case sensitively'), self.searchBar)
+		self.searchBar.addWidget(self.searchEdit)
+		self.searchBar.addWidget(self.csBox)
+		self.searchBar.addAction(self.actionFindPrev)
+		self.searchBar.addAction(self.actionFind)
+		self.searchBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+		self.searchBar.setVisible(False)
+		self.autoSave = False
+		if settings.contains('autoSave'):
+			if settings.value('autoSave').toBool():
+				self.autoSave = True
+				timer = QTimer(self)
+				timer.start(5000)
+				self.connect(timer, SIGNAL('timeout()'), self.saveAll)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if without_md:
 			QMessageBox.warning(self, app_name, self.tr('Markdown module not found!') \
 			+'<br>'+self.tr('Only HTML formatting will be available.'))
+	
+	def actIcon(self, name):
+		return QIcon.fromTheme(name, QIcon(icon_path+name+'.png'))
 	
 	def createTab(self, fileName):
 		self.editBoxes.append(QTextEdit())
@@ -567,6 +601,29 @@ class ReTextWindow(QMainWindow):
 			self.sl = None
 			self.enableSC(self.actionEnableSC.isChecked())
 	
+	def find(self, back=False):
+		flags = 0
+		if back:
+			flags = flags | QTextDocument.FindBackward
+		if self.csBox.isChecked():
+			flags = flags | QTextDocument.FindCaseSensitively
+		text = self.searchEdit.text()
+		if not self.findMain(text, flags):
+			if text in self.editBoxes[self.ind].toPlainText():
+				cursor = self.editBoxes[self.ind].textCursor()
+				if back:
+					cursor.movePosition(QTextCursor.End)
+				else:
+					cursor.movePosition(QTextCursor.Start)
+				self.editBoxes[self.ind].setTextCursor(cursor)
+				self.findMain(text, flags)
+	
+	def findMain(self, text, flags):
+		if flags:
+			return self.editBoxes[self.ind].find(text, flags)
+		else:
+			return self.editBoxes[self.ind].find(text)
+	
 	def updatePreviewBox(self):
 		self.previewBoxes[self.ind].setDocument(self.textDocument())
 	
@@ -655,10 +712,18 @@ class ReTextWindow(QMainWindow):
 			self.setWindowModified(False)
 	
 	def saveFile(self):
-		self.saveFileMain(False)
+		self.saveFileMain(dlg=False)
 	
 	def saveFileAs(self):
-		self.saveFileMain(True)
+		self.saveFileMain(dlg=True)
+	
+	def saveAll(self):
+		oldind = self.ind
+		for self.ind in range(self.tabWidget.count()):
+			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).isWritable():
+				self.saveFileWrapper(self.fileNames[self.ind])
+				self.editBoxes[self.ind].document().setModified(False)
+		self.ind = oldind
 	
 	def saveFileMain(self, dlg):
 		if (not self.fileNames[self.ind]) or dlg:
@@ -825,7 +890,13 @@ class ReTextWindow(QMainWindow):
 					QFile('temp.html').remove()
 				QDesktopServices.openUrl(QUrl(link))
 	
+	def autoSaveActive(self):
+		return self.autoSave and self.fileNames[self.ind] and \
+		QFileInfo(self.fileNames[self.ind]).isWritable()
+	
 	def modificationChanged(self, changed):
+		if self.autoSaveActive():
+			changed = False
 		self.actionSave.setEnabled(changed)
 		self.setWindowModified(changed)
 	
@@ -854,6 +925,9 @@ class ReTextWindow(QMainWindow):
 		self.symbolBox.setCurrentIndex(0)
 	
 	def maybeSave(self, ind):
+		if self.autoSaveActive():
+			self.saveFileWrapper(self.fileNames[self.ind])
+			return True
 		if not self.editBoxes[ind].document().isModified():
 			return True
 		self.tabWidget.setCurrentIndex(ind)
