@@ -25,7 +25,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.0 pre 1"
+app_version = "2.0 pre 2"
 
 s = QSettings('ReText project', 'ReText')
 
@@ -59,7 +59,14 @@ except:
 else:
 	use_enchant = True
 
-dict = None
+dictionary = None
+
+try:
+	from docutils.core import publish_parts
+except:
+	use_docutils = False
+else:
+	use_docutils = True
 
 icon_path = "icons/"
 
@@ -98,7 +105,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 	
 	def highlightBlock(self, text):
 		words = '[\\w][^\\W]*'
-		if dict:
+		if dictionary:
 			text = unicode(text)
 			charFormat = QTextCharFormat()
 			charFormat.setUnderlineColor(Qt.red)
@@ -107,7 +114,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			index = expression.indexIn(text)
 			while (index >= 0):
 				length = expression.matchedLength()
-				if not dict.check(text[index:index+length]):
+				if not dictionary.check(text[index:index+length]):
 					self.setFormat(index, length, charFormat)
 				index = expression.indexIn(text, index + length)
 		charFormat = QTextCharFormat()
@@ -454,6 +461,10 @@ class ReTextWindow(QMainWindow):
 				timer = QTimer(self)
 				timer.start(5000)
 				self.connect(timer, SIGNAL('timeout()'), self.saveAll)
+		self.useDocUtils = False
+		if settings.contains('useReST'):
+			if settings.value('useReST').toBool() and use_docutils:
+				self.useDocUtils = True
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if without_md:
@@ -572,15 +583,15 @@ class ReTextWindow(QMainWindow):
 				self.enableFullScreen(n)
 	
 	def enableSC(self, yes):
-		global dict
+		global dictionary
 		if yes:
 			if self.sl:
-				dict = enchant.Dict(self.sl)
+				dictionary = enchant.Dict(self.sl)
 			else:
-				dict = enchant.Dict()
+				dictionary = enchant.Dict()
 			QSettings().setValue('spellCheck', True)
 		else:
-			dict = None
+			dictionary = None
 			QSettings().remove('spellCheck')
 	
 	def changeLocale(self):
@@ -677,7 +688,7 @@ class ReTextWindow(QMainWindow):
 	
 	def openFile(self):
 		fileName = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", \
-		self.tr("Supported files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt *.html *.htm);;"+self.tr("All files (*)"))
+		self.tr("Supported files")+" (*.re *s *.markdown *.mdown *.mkd *.mkdn *.rst *.rest *.txt *.html *.htm);;"+self.tr("All files (*)"))
 		self.openFileWrapper(fileName)
 	
 	def openFileWrapper(self, fileName):
@@ -730,6 +741,10 @@ class ReTextWindow(QMainWindow):
 			if self.actionPlainText.isChecked():
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
+			elif self.useDocUtils:
+				defaultExt = self.tr("ReText reST files")+" (*.rest *.rst *.txt);;"+\
+					self.tr("ReText files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
+				ext = ".rst"
 			else:
 				defaultExt = self.tr("ReText files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
 				ext = ".re"
@@ -981,9 +996,15 @@ class ReTextWindow(QMainWindow):
 		self.symbolBox.setVisible(value)
 	
 	def parseText(self):
+		if self.fileNames[self.ind]:
+			parseDu = QFileInfo(self.fileNames[self.ind]).suffix() in ('rst', 'rest')
+		else:
+			parseDu = self.useDocUtils
 		htmltext = self.editBoxes[self.ind].toPlainText()
 		if without_md:
 			return htmltext
+		elif parseDu:
+			return publish_parts(unicode(htmltext), writer_name='html')['body']
 		else:
 			return md.convert(unicode(htmltext))
 
