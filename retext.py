@@ -25,7 +25,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.0 pre 2"
+app_version = "2.0 pre 3"
 
 s = QSettings('ReText project', 'ReText')
 
@@ -241,10 +241,10 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionViewHtml, SIGNAL('triggered()'), self.viewHtml)
 		self.actionChangeFont = QAction(self.tr('Change default font'), self)
 		self.connect(self.actionChangeFont, SIGNAL('triggered()'), self.changeFont)
-		self.actionFind = QAction(self.actIcon('edit-find'), self.tr('Find text'), self)
-		self.actionFind.setCheckable(True)
-		self.connect(self.actionFind, SIGNAL('triggered(bool)'), self.searchBar, SLOT('setVisible(bool)'))
-		self.connect(self.searchBar, SIGNAL('visibilityChanged(bool)'), self.actionFind, SLOT('setChecked(bool)'))
+		self.actionSearch = QAction(self.actIcon('edit-find'), self.tr('Find text'), self)
+		self.actionSearch.setCheckable(True)
+		self.connect(self.actionSearch, SIGNAL('triggered(bool)'), self.searchBar, SLOT('setVisible(bool)'))
+		self.connect(self.searchBar, SIGNAL('visibilityChanged(bool)'), self.actionSearch, SLOT('setChecked(bool)'))
 		self.actionPreview = QAction(self.tr('Preview'), self)
 		if QIcon.hasThemeIcon('document-preview'):
 			self.actionPreview.setIcon(QIcon.fromTheme('document-preview'))
@@ -345,6 +345,14 @@ class ReTextWindow(QMainWindow):
 		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
 		self.actionAboutMd = QAction(self.tr('Markdown syntax examples'), self)
 		self.connect(self.actionAboutMd, SIGNAL('triggered()'), self.aboutMd)
+		self.chooseGroup = QActionGroup(self)
+		self.actionUseMarkdown = QAction('Markdown', self)
+		self.actionUseMarkdown.setCheckable(True)
+		self.actionUseReST = QAction('ReStructuredText', self)
+		self.actionUseReST.setCheckable(True)
+		self.connect(self.actionUseReST, SIGNAL('toggled(bool)'), self.setDocUtilsDefault)
+		self.chooseGroup.addAction(self.actionUseMarkdown)
+		self.chooseGroup.addAction(self.actionUseReST)
 		if use_gdocs:
 			self.actionSaveGDocs = QAction(QIcon.fromTheme('web-browser', self.actIcon('intenret-web-browser')), self.tr('Save to Google Docs'), self)
 			self.connect(self.actionSaveGDocs, SIGNAL('triggered()'), self.saveGDocs)
@@ -407,10 +415,14 @@ class ReTextWindow(QMainWindow):
 			self.menuSC = self.menuEdit.addMenu(self.tr('Spell check'))
 			self.menuSC.addAction(self.actionEnableSC)
 			self.menuSC.addAction(self.actionSetLocale)
-		self.menuEdit.addAction(self.actionFind)
+		self.menuEdit.addAction(self.actionSearch)
 		self.menuEdit.addAction(self.actionPlainText)
 		self.menuEdit.addAction(self.actionChangeFont)
 		self.menuEdit.addSeparator()
+		if use_docutils:
+			self.menuEdit.addAction(self.actionUseMarkdown)
+			self.menuEdit.addAction(self.actionUseReST)
+			self.menuEdit.addSeparator()
 		self.menuEdit.addAction(self.actionViewHtml)
 		self.menuEdit.addAction(self.actionLivePreview)
 		self.menuEdit.addAction(self.actionPreview)
@@ -463,8 +475,15 @@ class ReTextWindow(QMainWindow):
 				self.connect(timer, SIGNAL('timeout()'), self.saveAll)
 		self.useDocUtils = False
 		if settings.contains('useReST'):
-			if settings.value('useReST').toBool() and use_docutils:
-				self.useDocUtils = True
+			if settings.value('useReST').toBool():
+				if use_docutils:
+					self.useDocUtils = True
+				self.actionUseReST.setChecked(True)
+			else:
+				print 'else!'
+				self.actionUseMarkdown.setChecked(True)
+		else:
+			self.actionUseMarkdown.setChecked(True)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if without_md:
@@ -789,6 +808,7 @@ class ReTextWindow(QMainWindow):
 	
 	def textDocument(self):
 		td = QTextDocument()
+		td.setMetaInformation(QTextDocument.DocumentTitle, self.getDocumentTitle())
 		if self.ss:
 			td.setDefaultStyleSheet(self.ss)
 		if self.actionPlainText.isChecked():
@@ -868,7 +888,19 @@ class ReTextWindow(QMainWindow):
 			QFile('out.'+item).rename(fileName)
 	
 	def getDocumentTitle(self):
-		if self.fileNames[self.ind]:
+		realTitle = ''
+		text = unicode(self.editBoxes[self.ind].toPlainText())
+		if self.parseDocUtils():
+			realTitle = publish_parts(text, writer_name='html')['title']
+		else:
+			md.convert(text)
+			try:
+				realTitle = str.join(' ', md.Meta['title'])
+			except:
+				pass
+		if realTitle:
+			return realTitle
+		elif self.fileNames[self.ind]:
 			return QFileInfo(self.fileNames[self.ind]).completeBaseName()
 		else:
 			return self.tr("New document")
@@ -995,15 +1027,21 @@ class ReTextWindow(QMainWindow):
 		self.tagsBox.setVisible(value)
 		self.symbolBox.setVisible(value)
 	
-	def parseText(self):
+	def parseDocUtils(self):
 		if self.fileNames[self.ind]:
-			parseDu = QFileInfo(self.fileNames[self.ind]).suffix() in ('rst', 'rest')
+			return QFileInfo(self.fileNames[self.ind]).suffix() in ('rst', 'rest')
 		else:
-			parseDu = self.useDocUtils
+			return self.useDocUtils
+	
+	def setDocUtilsDefault(self, yes):
+		self.useDocUtils = yes
+		QSettings().setValue('useReST', yes)
+	
+	def parseText(self):
 		htmltext = self.editBoxes[self.ind].toPlainText()
 		if without_md:
 			return htmltext
-		elif parseDu:
+		elif self.parseDocUtils():
 			return publish_parts(unicode(htmltext), writer_name='html')['body']
 		else:
 			return md.convert(unicode(htmltext))
