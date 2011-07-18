@@ -25,16 +25,16 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.0 pre 3"
+app_version = "2.0 pre 4"
 
 s = QSettings('ReText project', 'ReText')
 
 try:
 	import markdown
 except:
-	without_md = True
+	use_md = False
 else:
-	without_md = False
+	use_md = True
 	if s.contains('mdExtensions'):
 		exts = []
 		for ext in s.value('mdExtensions').toStringList():
@@ -70,6 +70,8 @@ else:
 
 icon_path = "icons/"
 
+(PARSER_DOCUTILS, PARSER_MARKDOWN, PARSER_HTML, PARSER_NA) = range(4)
+
 if QFileInfo("wpgen/wpgen.py").isExecutable():
 	wpgen = unicode(QFileInfo("wpgen/wpgen.py").canonicalFilePath(), 'utf-8')
 elif QFileInfo("/usr/bin/wpgen").isExecutable():
@@ -88,8 +90,8 @@ elif QFile.exists("/usr/share/retext/doc/md-examples.re"):
 else:
 	about_md = None
 
-if without_md:
-	about_md = False
+if not use_md:
+	about_md = None
 
 monofont = QFont()
 if s.contains('editorFont'):
@@ -419,9 +421,10 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addAction(self.actionPlainText)
 		self.menuEdit.addAction(self.actionChangeFont)
 		self.menuEdit.addSeparator()
-		if use_docutils:
-			self.menuEdit.addAction(self.actionUseMarkdown)
-			self.menuEdit.addAction(self.actionUseReST)
+		if use_docutils and use_md:
+			self.menuMode = self.menuEdit.addMenu(self.tr('Default editing mode'))
+			self.menuMode.addAction(self.actionUseMarkdown)
+			self.menuMode.addAction(self.actionUseReST)
 			self.menuEdit.addSeparator()
 		self.menuEdit.addAction(self.actionViewHtml)
 		self.menuEdit.addAction(self.actionLivePreview)
@@ -480,14 +483,13 @@ class ReTextWindow(QMainWindow):
 					self.useDocUtils = True
 				self.actionUseReST.setChecked(True)
 			else:
-				print 'else!'
 				self.actionUseMarkdown.setChecked(True)
 		else:
 			self.actionUseMarkdown.setChecked(True)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
-		if without_md:
-			QMessageBox.warning(self, app_name, self.tr('Markdown module not found!') \
+		if not (use_md or use_docutils):
+			QMessageBox.warning(self, app_name, self.tr('You have neither Markdown nor Docutils modules installed!') \
 			+'<br>'+self.tr('Only HTML formatting will be available.'))
 	
 	def actIcon(self, name):
@@ -678,7 +680,7 @@ class ReTextWindow(QMainWindow):
 	
 	def setCurrentFile(self):
 		self.setWindowTitle("")
-		self.tabWidget.setTabText(self.ind, self.getDocumentTitle())
+		self.tabWidget.setTabText(self.ind, self.getDocumentTitle(baseName=True))
 		self.setWindowFilePath(self.fileNames[self.ind])
 		settings = QSettings()
 		files = settings.value("recentFileList").toStringList()
@@ -707,7 +709,7 @@ class ReTextWindow(QMainWindow):
 	
 	def openFile(self):
 		fileName = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", \
-		self.tr("Supported files")+" (*.re *s *.markdown *.mdown *.mkd *.mkdn *.rst *.rest *.txt *.html *.htm);;"+self.tr("All files (*)"))
+		self.tr("Supported files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.rst *.rest *.txt *.html *.htm);;"+self.tr("All files (*)"))
 		self.openFileWrapper(fileName)
 	
 	def openFileWrapper(self, fileName):
@@ -736,8 +738,9 @@ class ReTextWindow(QMainWindow):
 			openfile.close()
 			self.editBoxes[self.ind].setPlainText(html)
 			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
-			self.actionPlainText.setChecked(suffix == "txt")
-			self.enablePlainText(suffix == "txt")
+			pt = not (suffix in ('re', 'md', 'markdown', 'mdown', 'mkd', 'mkdn', 'rst', 'rest', 'html', 'htm'))
+			self.actionPlainText.setChecked(pt)
+			self.enablePlainText(pt)
 			self.setCurrentFile()
 			self.setWindowModified(False)
 	
@@ -796,17 +799,19 @@ class ReTextWindow(QMainWindow):
 		htmlFile = QFile(fileName)
 		htmlFile.open(QIODevice.WriteOnly)
 		html = QTextStream(htmlFile)
+		text = self.parseText()
 		html << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
 		html << "<html>\n<head>\n"
 		html << "  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n"
 		html << QString("  <meta name=\"generator\" content=\"%1 %2\">\n").arg(app_name, app_version)
 		html << "  <title>" + self.getDocumentTitle() + "</title>\n"
 		html << "</head>\n<body>\n"
-		html << self.parseText()
+		html << text
 		html << "\n</body>\n</html>\n"
 		htmlFile.close()
 	
 	def textDocument(self):
+		text = self.parseText()
 		td = QTextDocument()
 		td.setMetaInformation(QTextDocument.DocumentTitle, self.getDocumentTitle())
 		if self.ss:
@@ -814,7 +819,7 @@ class ReTextWindow(QMainWindow):
 		if self.actionPlainText.isChecked():
 			td.setPlainText(self.editBoxes[self.ind].toPlainText())
 		else:
-			td.setHtml('<html><body>'+self.parseText()+'</body></html>')
+			td.setHtml('<html><body>'+text+'</body></html>')
 		if self.font:
 			td.setDefaultFont(self.font)
 		return td
@@ -838,20 +843,23 @@ class ReTextWindow(QMainWindow):
 		if fileName:
 			if QFileInfo(fileName).suffix().isEmpty():
 				fileName.append(".pdf")
+			document = self.textDocument()
 			printer = QPrinter(QPrinter.HighResolution)
 			printer.setOutputFormat(QPrinter.PdfFormat)
 			printer.setOutputFileName(fileName)
 			printer.setDocName(self.getDocumentTitle())
 			printer.setCreator(app_name+" "+app_version)
-			self.textDocument().print_(printer)
+			document.print_(printer)
 	
 	def printFile(self):
+		document = self.textDocument()
 		printer = QPrinter(QPrinter.HighResolution)
+		printer.setDocName(self.getDocumentTitle())
 		printer.setCreator(app_name+" "+app_version)
 		dlg = QPrintDialog(printer, self)
 		dlg.setWindowTitle(self.tr("Print document"))
 		if (dlg.exec_() == QDialog.Accepted):
-			self.textDocument().print_(printer)
+			document.print_(printer)
 	
 	def printFileMain(self, printer):
 		self.textDocument().print_(printer)
@@ -887,18 +895,20 @@ class ReTextWindow(QMainWindow):
 			QFile('temp.re').remove()
 			QFile('out.'+item).rename(fileName)
 	
-	def getDocumentTitle(self):
+	def getDocumentTitle(self, baseName=False):
+		"""Ensure that parseText() is called before this function!
+		If 'baseName' is set to True, file basename will be used."""
 		realTitle = ''
 		text = unicode(self.editBoxes[self.ind].toPlainText())
-		if self.parseDocUtils():
+		parser = self.getParser()
+		if parser == PARSER_DOCUTILS:
 			realTitle = publish_parts(text, writer_name='html')['title']
-		else:
-			md.convert(text)
+		elif parser == PARSER_MARKDOWN:
 			try:
 				realTitle = str.join(' ', md.Meta['title'])
 			except:
 				pass
-		if realTitle:
+		if realTitle and not baseName:
 			return realTitle
 		elif self.fileNames[self.ind]:
 			return QFileInfo(self.fileNames[self.ind]).completeBaseName()
@@ -999,8 +1009,8 @@ class ReTextWindow(QMainWindow):
 	
 	def viewHtml(self):
 		HtmlDlg = HtmlDialog(self)
-		HtmlDlg.setWindowTitle(self.getDocumentTitle()+" ("+self.tr("HTML code")+") "+QChar(0x2014)+" "+app_name)
 		HtmlDlg.textEdit.setPlainText(self.parseText())
+		HtmlDlg.setWindowTitle(self.getDocumentTitle(baseName=True)+" ("+self.tr("HTML code")+") "+QChar(0x2014)+" "+app_name)
 		HtmlDlg.show()
 		HtmlDlg.raise_()
 		HtmlDlg.activateWindow()
@@ -1011,10 +1021,13 @@ class ReTextWindow(QMainWindow):
 		self.enableLivePreview(True)
 	
 	def aboutDialog(self):
-		QMessageBox.about(self, self.tr('About %1').arg(app_name), '<p>' \
-		+ self.tr('This is <b>%1</b>, version %2<br>Author: Dmitry Shachnev, 2011').arg(app_name, app_version) \
-		+ '</p><p>'+ self.tr('Website: <a href="http://sourceforge.net/p/retext/">sf.net/p/retext</a>') + '<br>' \
-		+ self.tr('Markdown syntax documentation: <a href="http://daringfireball.net/projects/markdown/syntax">daringfireball.net/projects/markdown/syntax</a>') + '</p>')
+		QMessageBox.about(self, self.tr('About %1').arg(app_name), \
+		'<p><b>'+app_name+' '+app_version+'</b><br>'+self.tr('Simple but powerful editor for Markdown and ReST') \
+		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011') \
+		+'<br><a href="http://sourceforge.net/p/retext/">'+self.tr('Website') \
+		+'</a> | <a href="http://daringfireball.net/projects/markdown/syntax">'+self.tr('Markdown syntax') \
+		+'</a> | <a href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">' \
+		+self.tr('ReST syntax')+'</a></p>')
 	
 	def enablePlainText(self, value):
 		self.aptc[self.ind] = value
@@ -1024,27 +1037,48 @@ class ReTextWindow(QMainWindow):
 	def enablePlainTextMain(self, value):
 		self.actionPerfectHtml.setDisabled(value)
 		self.actionViewHtml.setDisabled(value)
-		self.tagsBox.setVisible(value)
-		self.symbolBox.setVisible(value)
-	
-	def parseDocUtils(self):
-		if self.fileNames[self.ind]:
-			return QFileInfo(self.fileNames[self.ind]).suffix() in ('rst', 'rest')
-		else:
-			return self.useDocUtils
+		self.tagsBox.setDisabled(value)
+		self.symbolBox.setDisabled(value)
 	
 	def setDocUtilsDefault(self, yes):
 		self.useDocUtils = yes
 		QSettings().setValue('useReST', yes)
 	
+	def getParser(self):
+		if self.fileNames[self.ind]:
+			suffix = QFileInfo(fileNames[self.ind]).suffix()
+			if suffix in ('md', 'markdown', 'mdown', 'mkd', 'mkdn'):
+				if use_md:
+					return PARSER_MARKDOWN
+				else:
+					return PARSER_NA
+			elif suffix in ('rest', 'rst'):
+				if use_docutils:
+					return PARSER_DOCUTILS
+				else:
+					return PARSER_NA
+			elif suffix in ('html', 'htm'):
+				return PARSER_HTML
+		if not (use_docutils or use_md):
+			return PARSER_HTML
+		elif use_docutils and (self.useDocUtils or not use_md):
+			return PARSER_DOCUTILS
+		else:
+			return PARSER_MARKDOWN
+	
 	def parseText(self):
 		htmltext = self.editBoxes[self.ind].toPlainText()
-		if without_md:
+		parser = self.getParser()
+		if parser == PARSER_HTML:
 			return htmltext
-		elif self.parseDocUtils():
+		elif parser == PARSER_DOCUTILS:
 			return publish_parts(unicode(htmltext), writer_name='html')['body']
-		else:
+		elif parser == PARSER_MARKDOWN:
 			return md.convert(unicode(htmltext))
+		else:
+			return '<p color="red">'\
+			+self.tr('Could not parse file syntax, check if you have all the necessary modules installed!')\
+			+'</p>'
 
 def main(fileName):
 	app = QApplication(sys.argv)
