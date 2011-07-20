@@ -25,7 +25,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.0 pre 4"
+app_version = "2.0 pre 5"
 
 s = QSettings('ReText project', 'ReText')
 
@@ -733,8 +733,7 @@ class ReTextWindow(QMainWindow):
 		if QFile.exists(self.fileNames[self.ind]):
 			openfile = QFile(self.fileNames[self.ind])
 			openfile.open(QIODevice.ReadOnly)
-			openstream = QTextStream(openfile)
-			html = openstream.readAll()
+			html = QTextStream(openfile).readAll()
 			openfile.close()
 			self.editBoxes[self.ind].setPlainText(html)
 			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
@@ -763,10 +762,13 @@ class ReTextWindow(QMainWindow):
 			if self.actionPlainText.isChecked():
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
-			elif self.useDocUtils:
-				defaultExt = self.tr("ReText reST files")+" (*.rest *.rst *.txt);;"+\
+			elif self.getParser() == PARSER_MARKDOWN:
+				defaultExt = self.tr("ReText ReST files")+" (*.rest *.rst *.txt);;"+\
 					self.tr("ReText files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
 				ext = ".rst"
+			elif self.getParser() == PARSER_HTML:
+				defaultExt = self.tr("HTML files")+" (*.html *.htm)"
+				ext = ".html"
 			else:
 				defaultExt = self.tr("ReText files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
 				ext = ".re"
@@ -800,6 +802,10 @@ class ReTextWindow(QMainWindow):
 		htmlFile.open(QIODevice.WriteOnly)
 		html = QTextStream(htmlFile)
 		text = self.parseText()
+		if self.getParser() == PARSER_HTML:
+			html << text << "\n"
+			htmlFile.close()
+			return
 		html << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
 		html << "<html>\n<head>\n"
 		html << "  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n"
@@ -811,7 +817,8 @@ class ReTextWindow(QMainWindow):
 		htmlFile.close()
 	
 	def textDocument(self):
-		text = self.parseText()
+		if not self.actionPlainText.isChecked():
+			text = self.parseText()
 		td = QTextDocument()
 		td.setMetaInformation(QTextDocument.DocumentTitle, self.getDocumentTitle())
 		if self.ss:
@@ -900,14 +907,16 @@ class ReTextWindow(QMainWindow):
 		If 'baseName' is set to True, file basename will be used."""
 		realTitle = ''
 		text = unicode(self.editBoxes[self.ind].toPlainText())
-		parser = self.getParser()
-		if parser == PARSER_DOCUTILS:
-			realTitle = publish_parts(text, writer_name='html')['title']
-		elif parser == PARSER_MARKDOWN:
-			try:
-				realTitle = str.join(' ', md.Meta['title'])
-			except:
-				pass
+		if not self.actionPlainText.isChecked():
+			parser = self.getParser()
+			if parser == PARSER_DOCUTILS:
+				realTitle = publish_parts(text, writer_name='html')['title']
+			elif parser == PARSER_MARKDOWN:
+				try:
+					realTitle = str.join(' ', md.Meta['title'])
+				except:
+					# Meta extension not installed
+					pass
 		if realTitle and not baseName:
 			return realTitle
 		elif self.fileNames[self.ind]:
@@ -1046,7 +1055,7 @@ class ReTextWindow(QMainWindow):
 	
 	def getParser(self):
 		if self.fileNames[self.ind]:
-			suffix = QFileInfo(fileNames[self.ind]).suffix()
+			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
 			if suffix in ('md', 'markdown', 'mdown', 'mkd', 'mkdn'):
 				if use_md:
 					return PARSER_MARKDOWN
