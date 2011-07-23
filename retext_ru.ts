@@ -219,11 +219,6 @@ Do you want to save your changes?</source>
         <translation>Предпросмотр печати</translation>
     </message>
     <message>
-        <location filename="retext.py" line="773"/>
-        <source>ReText files</source>
-        <translation>Файлы ReText</translation>
-    </message>
-    <message>
         <location filename="retext.py" line="867"/>
         <source>Print document</source>
         <translation>Распечатать документ</translation>
@@ -380,11 +375,6 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <location filename="retext.py" line="1033"/>
-        <source>Simple but powerful editor for Markdown and ReST</source>
-        <translation>Простой, но мощный редактор для Markdown и ReST</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="1033"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Автор: Dmitry Shachnev, 2011</translation>
     </message>
@@ -404,14 +394,24 @@ Do you want to save your changes?</source>
         <translation>Синтаксис ReST</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1089"/>
-        <source>Could not parse file syntax, check if you have all the necessary modules installed!</source>
-        <translation>Невозможно обработать файл, проверьте, что у вас установлены требуемые модули!</translation>
+        <location filename="retext.py" line="766"/>
+        <source>ReStructuredText files</source>
+        <translation>Файлы ReStructuredText</translation>
     </message>
     <message>
-        <location filename="retext.py" line="766"/>
-        <source>ReText ReST files</source>
-        <translation>Файлы ReText (ReST)</translation>
+        <location filename="retext.py" line="773"/>
+        <source>Markdown files</source>
+        <translation>Файлы Markdown</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="1033"/>
+        <source>Simple but powerful editor for Markdown and ReStructuredText</source>
+        <translation>Простой, но мощный редактор для Markdown и ReStructuredText</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="1089"/>
+        <source>Could not parse file contents, check if you have all the necessary modules installed!</source>
+        <translation>Невозможно обработать содержимое файла, убедитесь, что у вас установлены все необходимые модули!</translation>
     </message>
 </context>
 </TS>

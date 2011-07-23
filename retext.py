@@ -25,7 +25,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.0 pre 5"
+app_version = "2.0 pre 6"
 
 s = QSettings('ReText project', 'ReText')
 
@@ -762,18 +762,18 @@ class ReTextWindow(QMainWindow):
 			if self.actionPlainText.isChecked():
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
-			elif self.getParser() == PARSER_MARKDOWN:
-				defaultExt = self.tr("ReText ReST files")+" (*.rest *.rst *.txt);;"+\
-					self.tr("ReText files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
+			elif self.getParser() == PARSER_DOCUTILS:
+				defaultExt = self.tr("ReStructuredText files")+" (*.rest *.rst *.txt);;"+\
+					self.tr("Markdown files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
 				ext = ".rst"
 			elif self.getParser() == PARSER_HTML:
 				defaultExt = self.tr("HTML files")+" (*.html *.htm)"
 				ext = ".html"
 			else:
-				defaultExt = self.tr("ReText files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
-				ext = ".re"
+				defaultExt = self.tr("Markdown files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
+				ext = ".mkd"
 				if QSettings().contains('defaultExt'):
-					ext = QSettings.value('defaultExt').toString()
+					ext = QSettings().value('defaultExt').toString()
 			self.fileNames[self.ind] = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).suffix().isEmpty():
 				self.fileNames[self.ind].append(ext)
@@ -1031,7 +1031,7 @@ class ReTextWindow(QMainWindow):
 	
 	def aboutDialog(self):
 		QMessageBox.about(self, self.tr('About %1').arg(app_name), \
-		'<p><b>'+app_name+' '+app_version+'</b><br>'+self.tr('Simple but powerful editor for Markdown and ReST') \
+		'<p><b>'+app_name+' '+app_version+'</b><br>'+self.tr('Simple but powerful editor for Markdown and ReStructuredText') \
 		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011') \
 		+'<br><a href="http://sourceforge.net/p/retext/">'+self.tr('Website') \
 		+'</a> | <a href="http://daringfireball.net/projects/markdown/syntax">'+self.tr('Markdown syntax') \
@@ -1086,7 +1086,7 @@ class ReTextWindow(QMainWindow):
 			return md.convert(unicode(htmltext))
 		else:
 			return '<p color="red">'\
-			+self.tr('Could not parse file syntax, check if you have all the necessary modules installed!')\
+			+self.tr('Could not parse file contents, check if you have all the necessary modules installed!')\
 			+'</p>'
 
 def main(fileName):

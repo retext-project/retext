@@ -221,11 +221,6 @@
         <translation>Texto Simples (*.txt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="773"/>
-        <source>ReText files</source>
-        <translation>Ficheiro ReText</translation>
-    </message>
-    <message>
         <location filename="retext.py" line="844"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Ficheiros HTML (*.html *.htm)</translation>
@@ -379,11 +374,6 @@ Deseja gravar as alterações?</translation>
     </message>
     <message>
         <location filename="retext.py" line="1033"/>
-        <source>Simple but powerful editor for Markdown and ReST</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="1033"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation type="unfinished"></translation>
     </message>
@@ -403,13 +393,23 @@ Deseja gravar as alterações?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="1089"/>
-        <source>Could not parse file syntax, check if you have all the necessary modules installed!</source>
+        <location filename="retext.py" line="766"/>
+        <source>ReStructuredText files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="766"/>
-        <source>ReText ReST files</source>
+        <location filename="retext.py" line="773"/>
+        <source>Markdown files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="1033"/>
+        <source>Simple but powerful editor for Markdown and ReStructuredText</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="1089"/>
+        <source>Could not parse file contents, check if you have all the necessary modules installed!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -22,15 +22,27 @@
 import os
 import sys
 import shutil
-import markdown
 
-md = markdown.Markdown()
+try:
+	import markdown
+	md = markdown.Markdown()
+except:
+	use_md = False
+else:
+	use_md = True
+
+try:
+	from docutils.core import publish_parts
+except:
+	use_docutils = False
+else:
+	use_docutils = True
 
 app_name = "ReText Webpages generator"
-app_version = "0.3.2"
+app_version = "0.4.0"
 app_site = "http://sourceforge.net/p/retext/"
 
-if sys.platform == "linux2" and os.path.exists("/usr/share/wpgen/"):
+if os.path.exists("/usr/share/wpgen/"):
 	templates_dir = "/usr/share/wpgen/"
 else:
 	templates_dir = "templates/"
@@ -51,37 +63,40 @@ class WebLibrary(object):
 		for fname in filter(os.path.isfile, os.listdir(self.dirPath)):
 			self._processPage(fname)
 	
-	def update(self, pageName):
-		"""Process document pageName.re or pageName in the directory
-		pageName: basename of the page file"""
+	def update(self, fileName):
+		"""Process fileName file in the directory"""
 		self._initTemplate()
-		if os.path.exists(self.dirPath+"/"+pageName+".re"):
-			self._processPage(pageName+".re")
-		elif os.path.exists(self.dirPath+"/"+pageName):
-			self._processPage(pageName)
+		if os.path.exists(self.dirPath+"/"+fileName):
+			self._processPage(fileName)
 	
 	def _initTemplate(self):
 		templatefile = open(self.dirPath+"/template.html", "r")
 		self.template = unicode(templatefile.read(), 'utf-8')
 		templatefile.close()
 		self.template = self.template.replace("%GENERATOR%", app_name + " " + app_version)
-		self.template = self.template.replace("%APPINFO%", "<a href=\""+ app_site + "\">" + app_name + "</a> " + app_version)
+		self.template = self.template.replace("%APPINFO%", "<a href=\""+ app_site + "\">" + app_name + "</a> ")
 	
 	def _processPage(self, fname):
 		bn, ext = os.path.splitext(fname)
-		html = None
-		if ext == ".re" or ext == ".md":
-			inputfile = open(self.dirPath+"/"+fname, "r")
-			html = md.convert(unicode(inputfile.read(), 'utf-8'))
-			inputfile.close()
-		elif ext == ".html" and bn != "template":
-			inputfile = open(self.dirPath+"/"+fname, "r")
-			html = unicode(inputfile.read(), 'utf-8')
-			inputfile.close()
+		html = pagename = ''
+		inputfile = open(self.dirPath+"/"+fname, "r")
+		text = unicode(inputfile.read(), 'utf-8')
+		inputfile.close()
+		if ext in (".md", ".mkd", ".re") and use_md:
+			html = md.convert(text)
+		elif ext in (".rst", ".rest") and use_docutils:
+			parts = publish_parts(text, writer_name='html')
+			html = parts['body']
+			if parts['title']:
+				pagename = parts['title']
+		elif ext in (".htm", ".html") and bn != "template":
+			html = text
+		if pagename == '':
+			pagename = bn
 		if html:
 			content = self.template
 			content = content.replace("%CONTENT%", html)
-			content = content.replace("%PAGENAME%", bn)
+			content = content.replace("%PAGENAME%", pagename)
 			content = content.replace(" href=\""+bn+".html\"", "")
 			content = content.replace("%\\", "%")
 			outputfile = open(self.dirPath+"/html/"+bn+".html", "w")
@@ -102,8 +117,8 @@ def main(argv):
 				os.mkdir("html")
 			shutil.copy(templates_dir+"template_Default.html", "template.html")
 			shutil.copy(templates_dir+"style_Default.css", "html/style.css")
-			if not os.path.exists("index.re"):
-				index = open("index.re", "w")
+			if not os.path.exists("index.mkd"):
+				index = open("index.mkd", "w")
 				index.close()
 		elif argv[1] == "usestyle" and len(argv) == 3:
 			if os.path.exists(templates_dir+"style_"+argv[2]+".css"):
@@ -119,7 +134,7 @@ def printUsage():
 	print("Available commands:")
 	print("  init - create new web library")
 	print("  updateall - generate html files from all pages")
-	print("  update [pagename] - generate html file from pagename.re page")
+	print("  update [filename] - generate html file from given file")
 	print("  usestyle [stylename] - use the given style (example: Default, Simple)")
 
 if __name__ == '__main__':
