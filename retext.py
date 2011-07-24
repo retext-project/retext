@@ -25,7 +25,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.0 pre 6"
+app_version = "2.0 pre 7"
 
 s = QSettings('ReText project', 'ReText')
 
@@ -169,7 +169,7 @@ class HtmlDialog(QDialog):
 		self.textEdit = QTextEdit(self)
 		self.textEdit.setReadOnly(True)
 		self.textEdit.setFont(monofont)
-		HtmlHighlighter(self.textEdit.document())
+		ReTextHighlighter(self.textEdit.document())
 		self.verticalLayout.addWidget(self.textEdit)
 		self.buttonBox = QDialogButtonBox(self)
 		self.buttonBox.setStandardButtons(QDialogButtonBox.Close)
@@ -763,8 +763,7 @@ class ReTextWindow(QMainWindow):
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
 			elif self.getParser() == PARSER_DOCUTILS:
-				defaultExt = self.tr("ReStructuredText files")+" (*.rest *.rst *.txt);;"+\
-					self.tr("Markdown files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
+				defaultExt = self.tr("ReStructuredText files")+" (*.rest *.rst *.txt)"
 				ext = ".rst"
 			elif self.getParser() == PARSER_HTML:
 				defaultExt = self.tr("HTML files")+" (*.html *.htm)"
@@ -1019,7 +1018,10 @@ class ReTextWindow(QMainWindow):
 	def viewHtml(self):
 		HtmlDlg = HtmlDialog(self)
 		HtmlDlg.textEdit.setPlainText(self.parseText())
-		HtmlDlg.setWindowTitle(self.getDocumentTitle(baseName=True)+" ("+self.tr("HTML code")+") "+QChar(0x2014)+" "+app_name)
+		winTitle = self.tr('New document')
+		if self.fileNames[self.ind]:
+			winTitle = QFileInfo(self.fileNames[self.ind]).fileName()
+		HtmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") "+QChar(0x2014)+" "+app_name)
 		HtmlDlg.show()
 		HtmlDlg.raise_()
 		HtmlDlg.activateWindow()
@@ -1052,6 +1054,10 @@ class ReTextWindow(QMainWindow):
 	def setDocUtilsDefault(self, yes):
 		self.useDocUtils = yes
 		QSettings().setValue('useReST', yes)
+		try:
+			self.updatePreviewBox()
+		except:
+			pass
 	
 	def getParser(self):
 		if self.fileNames[self.ind]:
@@ -1085,9 +1091,8 @@ class ReTextWindow(QMainWindow):
 		elif parser == PARSER_MARKDOWN:
 			return md.convert(unicode(htmltext))
 		else:
-			return '<p color="red">'\
-			+self.tr('Could not parse file contents, check if you have all the necessary modules installed!')\
-			+'</p>'
+			return '<p style="color: red">'\
+			+self.tr('Could not parse file contents, check if you have the necessary module installed!')+'</p>'
 
 def main(fileName):
 	app = QApplication(sys.argv)

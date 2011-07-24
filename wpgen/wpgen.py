@@ -74,7 +74,7 @@ class WebLibrary(object):
 		self.template = unicode(templatefile.read(), 'utf-8')
 		templatefile.close()
 		self.template = self.template.replace("%GENERATOR%", app_name + " " + app_version)
-		self.template = self.template.replace("%APPINFO%", "<a href=\""+ app_site + "\">" + app_name + "</a> ")
+		self.template = self.template.replace("%APPINFO%", "<a href=\""+ app_site + "\">" + app_name + "</a>")
 	
 	def _processPage(self, fname):
 		bn, ext = os.path.splitext(fname)
