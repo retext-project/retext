@@ -79,14 +79,14 @@ elif QFileInfo("/usr/bin/wpgen").isExecutable():
 else:
 	wpgen = None
 
-if QFile.exists("doc_"+QLocale.system().name()+"/md-examples.re"):
-	about_md = QString.fromUtf8(QFileInfo("doc_"+QLocale.system().name()+"/md-examples.re").canonicalFilePath())
-elif QFile.exists("doc/md-examples.re"):
-	about_md = QString.fromUtf8(QFileInfo("doc/md-examples.re").canonicalFilePath())
-elif QFile.exists("/usr/share/retext/doc_"+QLocale.system().name()+"/md-examples.re"):
-	about_md = "/usr/share/retext/doc_"+QLocale.system().name()+"/md-examples.re"
-elif QFile.exists("/usr/share/retext/doc/md-examples.re"):
-	about_md = "/usr/share/retext/doc/md-examples.re"
+if QFile.exists("doc_"+QLocale.system().name()+"/md-examples.mkd"):
+	about_md = QString.fromUtf8(QFileInfo("doc_"+QLocale.system().name()+"/md-examples.mkd").canonicalFilePath())
+elif QFile.exists("doc/md-examples.mkd"):
+	about_md = QString.fromUtf8(QFileInfo("doc/md-examples.mkd").canonicalFilePath())
+elif QFile.exists("/usr/share/retext/doc_"+QLocale.system().name()+"/md-examples.mkd"):
+	about_md = "/usr/share/retext/doc_"+QLocale.system().name()+"/md-examples.mkd"
+elif QFile.exists("/usr/share/retext/doc/md-examples.mkd"):
+	about_md = "/usr/share/retext/doc/md-examples.mkd"
 else:
 	about_md = None
 
