@@ -25,7 +25,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.0 pre 7"
+app_version = "2.0 pre 8"
 
 s = QSettings('ReText project', 'ReText')
 
@@ -348,10 +348,20 @@ class ReTextWindow(QMainWindow):
 		self.actionAboutMd = QAction(self.tr('Markdown syntax examples'), self)
 		self.connect(self.actionAboutMd, SIGNAL('triggered()'), self.aboutMd)
 		self.chooseGroup = QActionGroup(self)
+		self.useDocUtils = False
 		self.actionUseMarkdown = QAction('Markdown', self)
 		self.actionUseMarkdown.setCheckable(True)
 		self.actionUseReST = QAction('ReStructuredText', self)
 		self.actionUseReST.setCheckable(True)
+		if settings.contains('useReST'):
+			if settings.value('useReST').toBool():
+				if use_docutils:
+					self.useDocUtils = True
+				self.actionUseReST.setChecked(True)
+			else:
+				self.actionUseMarkdown.setChecked(True)
+		else:
+			self.actionUseMarkdown.setChecked(True)
 		self.connect(self.actionUseReST, SIGNAL('toggled(bool)'), self.setDocUtilsDefault)
 		self.chooseGroup.addAction(self.actionUseMarkdown)
 		self.chooseGroup.addAction(self.actionUseReST)
@@ -476,16 +486,6 @@ class ReTextWindow(QMainWindow):
 				timer = QTimer(self)
 				timer.start(5000)
 				self.connect(timer, SIGNAL('timeout()'), self.saveAll)
-		self.useDocUtils = False
-		if settings.contains('useReST'):
-			if settings.value('useReST').toBool():
-				if use_docutils:
-					self.useDocUtils = True
-				self.actionUseReST.setChecked(True)
-			else:
-				self.actionUseMarkdown.setChecked(True)
-		else:
-			self.actionUseMarkdown.setChecked(True)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if not (use_md or use_docutils):
@@ -1054,10 +1054,7 @@ class ReTextWindow(QMainWindow):
 	def setDocUtilsDefault(self, yes):
 		self.useDocUtils = yes
 		QSettings().setValue('useReST', yes)
-		try:
-			self.updatePreviewBox()
-		except:
-			pass
+		self.updatePreviewBox()
 	
 	def getParser(self):
 		if self.fileNames[self.ind]:
