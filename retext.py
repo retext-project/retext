@@ -844,37 +844,38 @@ class ReTextWindow(QMainWindow):
 		if fileName:
 			self.saveHtml(fileName)
 	
+	def standardPrinter(self):
+		printer = QPrinter(QPrinter.HighResolution)
+		printer.setDocName(self.getDocumentTitle())
+		printer.setCreator(app_name+" "+app_version)
+		return printer
+	
 	def savePdf(self):
 		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to PDF"), "", self.tr("PDF files (*.pdf)"))
 		if fileName:
 			if QFileInfo(fileName).suffix().isEmpty():
 				fileName.append(".pdf")
 			document = self.textDocument()
-			printer = QPrinter(QPrinter.HighResolution)
+			printer = self.standardPrinter()
 			printer.setOutputFormat(QPrinter.PdfFormat)
 			printer.setOutputFileName(fileName)
-			printer.setDocName(self.getDocumentTitle())
-			printer.setCreator(app_name+" "+app_version)
 			document.print_(printer)
 	
 	def printFile(self):
 		document = self.textDocument()
-		printer = QPrinter(QPrinter.HighResolution)
-		printer.setDocName(self.getDocumentTitle())
-		printer.setCreator(app_name+" "+app_version)
+		printer = self.standardPrinter()
 		dlg = QPrintDialog(printer, self)
 		dlg.setWindowTitle(self.tr("Print document"))
 		if (dlg.exec_() == QDialog.Accepted):
 			document.print_(printer)
 	
-	def printFileMain(self, printer):
-		self.textDocument().print_(printer)
-	
 	def printPreview(self):
+		document = self.textDocument()
 		printer = QPrinter(QPrinter.HighResolution)
+		printer.setDocName(self.getDocumentTitle())
 		printer.setCreator(app_name+" "+app_version)
 		preview = QPrintPreviewDialog(printer, self)
-		self.connect(preview, SIGNAL("paintRequested(QPrinter*)"), self.printFileMain)
+		self.connect(preview, SIGNAL("paintRequested(QPrinter*)"), document.print_)
 		preview.exec_()
 	
 	def otherExport(self):
