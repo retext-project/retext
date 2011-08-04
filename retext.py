@@ -25,7 +25,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.0 pre 8"
+app_version = "2.0.0"
 
 s = QSettings('ReText project', 'ReText')
 
@@ -245,6 +245,7 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionChangeFont, SIGNAL('triggered()'), self.changeFont)
 		self.actionSearch = QAction(self.actIcon('edit-find'), self.tr('Find text'), self)
 		self.actionSearch.setCheckable(True)
+		self.actionSearch.setShortcut(QKeySequence.Find)
 		self.connect(self.actionSearch, SIGNAL('triggered(bool)'), self.searchBar, SLOT('setVisible(bool)'))
 		self.connect(self.searchBar, SIGNAL('visibilityChanged(bool)'), self.actionSearch, SLOT('setChecked(bool)'))
 		self.actionPreview = QAction(self.tr('Preview'), self)
@@ -337,7 +338,9 @@ class ReTextWindow(QMainWindow):
 		self.actionShow = QAction(self.actIcon('system-file-manager'), self.tr('Show'), self)
 		self.connect(self.actionShow, SIGNAL('triggered()'), self.showInDir)
 		self.actionFind = QAction(self.actIcon('go-next'), self.tr('Next'), self)
+		self.actionFind.setShortcut(QKeySequence.FindNext)
 		self.actionFindPrev = QAction(self.actIcon('go-previous'), self.tr('Previous'), self)
+		self.actionFindPrev.setShortcut(QKeySequence.FindPrevious)
 		self.connect(self.actionFind, SIGNAL('triggered()'), self.find)
 		self.connect(self.actionFindPrev, SIGNAL('triggered()'), lambda: self.find(QTextDocument.FindBackward))
 		self.actionAbout = QAction(self.actIcon('help-about'), self.tr('About %1').arg(app_name), self)
@@ -657,7 +660,15 @@ class ReTextWindow(QMainWindow):
 			return self.editBoxes[self.ind].find(text)
 	
 	def updatePreviewBox(self):
-		self.previewBoxes[self.ind].setDocument(self.textDocument())
+		pb = self.previewBoxes[self.ind]
+		if self.ss:
+			pb.document().setDefaultStyleSheet(self.ss)
+		if self.actionPlainText.isChecked():
+			pb.setPlainText(self.editBoxes[self.ind].toPlainText())
+		else:
+			pb.setHtml(self.parseText())
+		if self.font:
+			pb.document().setDefaultFont(self.font)
 	
 	def updateLivePreviewBox(self):
 		if self.actionLivePreview.isChecked():
