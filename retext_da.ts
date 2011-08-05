@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="da_DK">
+<!DOCTYPE TS>
+<TS version="2.0" language="da_DK">
 <context>
     <name>LogPassDialog</name>
     <message>
@@ -280,137 +281,137 @@ Do you want to save your changes?</source>
     <message>
         <location filename="retext.py" line="279"/>
         <source>Other formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Andre formater</translation>
     </message>
     <message>
         <location filename="retext.py" line="894"/>
         <source>This function is not available in Plain text mode!</source>
-        <translation type="unfinished"></translation>
+        <translation>Denne funktion er ikke til rådighed i tekstvisning!</translation>
     </message>
     <message>
         <location filename="retext.py" line="900"/>
         <source>Select type</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg type</translation>
     </message>
     <message>
         <location filename="retext.py" line="902"/>
         <source>Export document</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporter dokument</translation>
     </message>
     <message>
         <location filename="retext.py" line="495"/>
         <source>Only HTML formatting will be available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der vil kun være HTML-formattering til rådighed.</translation>
     </message>
     <message>
         <location filename="retext.py" line="317"/>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiver</translation>
     </message>
     <message>
         <location filename="retext.py" line="319"/>
         <source>Set locale</source>
-        <translation type="unfinished"></translation>
+        <translation>Sæt landeindstilling</translation>
     </message>
     <message>
         <location filename="retext.py" line="430"/>
         <source>Spell check</source>
-        <translation type="unfinished"></translation>
+        <translation>Stavekontrol</translation>
     </message>
     <message>
         <location filename="retext.py" line="626"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation type="unfinished"></translation>
+        <translation>Indtast landekode (eksempel: da_DK)</translation>
     </message>
     <message>
         <location filename="retext.py" line="267"/>
         <source>Fullscreen mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuldskærmsvisning</translation>
     </message>
     <message>
         <location filename="retext.py" line="218"/>
         <source>Search toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Søgeværktøjslinie</translation>
     </message>
     <message>
         <location filename="retext.py" line="246"/>
         <source>Find text</source>
-        <translation type="unfinished"></translation>
+        <translation>Find tekst</translation>
     </message>
     <message>
         <location filename="retext.py" line="340"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Næste</translation>
     </message>
     <message>
         <location filename="retext.py" line="342"/>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Foregående</translation>
     </message>
     <message>
         <location filename="retext.py" line="438"/>
         <source>Default editing mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardredigering</translation>
     </message>
     <message>
         <location filename="retext.py" line="474"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Søg</translation>
     </message>
     <message>
         <location filename="retext.py" line="478"/>
         <source>Case sensitively</source>
-        <translation type="unfinished"></translation>
+        <translation>Forskel på små/store bogstaver</translation>
     </message>
     <message>
         <location filename="retext.py" line="495"/>
         <source>You have neither Markdown nor Docutils modules installed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Du har hverken Markdown- eller Docutils-moduler installeret!</translation>
     </message>
     <message>
         <location filename="retext.py" line="780"/>
         <source>HTML files</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML-filer</translation>
     </message>
     <message>
         <location filename="retext.py" line="1047"/>
         <source>Author: Dmitry Shachnev, 2011</source>
-        <translation type="unfinished"></translation>
+        <translation>Udvikler: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
         <location filename="retext.py" line="1047"/>
         <source>Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjemmeside</translation>
     </message>
     <message>
         <location filename="retext.py" line="1047"/>
         <source>Markdown syntax</source>
-        <translation type="unfinished"></translation>
+        <translation>Markdown-syntaks</translation>
     </message>
     <message>
         <location filename="retext.py" line="1047"/>
         <source>ReST syntax</source>
-        <translation type="unfinished"></translation>
+        <translation>ReST-syntaks</translation>
     </message>
     <message>
         <location filename="retext.py" line="777"/>
         <source>ReStructuredText files</source>
-        <translation type="unfinished"></translation>
+        <translation>ReStructuredText-filer</translation>
     </message>
     <message>
         <location filename="retext.py" line="783"/>
         <source>Markdown files</source>
-        <translation type="unfinished"></translation>
+        <translation>Markdown-filer</translation>
     </message>
     <message>
         <location filename="retext.py" line="1047"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
-        <translation type="unfinished"></translation>
+        <translation>Enkel men stærk editor til Markdown og ReStructuredText</translation>
     </message>
     <message>
         <location filename="retext.py" line="1104"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke tolke filens indhold. Undersøg, om du har det påkrævede modul installeret!</translation>
     </message>
 </context>
 </TS>

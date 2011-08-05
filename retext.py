@@ -79,20 +79,6 @@ elif QFileInfo("/usr/bin/wpgen").isExecutable():
 else:
 	wpgen = None
 
-if QFile.exists("doc_"+QLocale.system().name()+"/md-examples.mkd"):
-	about_md = QString.fromUtf8(QFileInfo("doc_"+QLocale.system().name()+"/md-examples.mkd").canonicalFilePath())
-elif QFile.exists("doc/md-examples.mkd"):
-	about_md = QString.fromUtf8(QFileInfo("doc/md-examples.mkd").canonicalFilePath())
-elif QFile.exists("/usr/share/retext/doc_"+QLocale.system().name()+"/md-examples.mkd"):
-	about_md = "/usr/share/retext/doc_"+QLocale.system().name()+"/md-examples.mkd"
-elif QFile.exists("/usr/share/retext/doc/md-examples.mkd"):
-	about_md = "/usr/share/retext/doc/md-examples.mkd"
-else:
-	about_md = None
-
-if not use_md:
-	about_md = None
-
 monofont = QFont()
 if s.contains('editorFont'):
 	monofont.setFamily(s.value('editorFont').toString())
@@ -348,8 +334,6 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutDialog)
 		self.actionAboutQt = QAction(self.tr('About Qt'), self)
 		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
-		self.actionAboutMd = QAction(self.tr('Markdown syntax examples'), self)
-		self.connect(self.actionAboutMd, SIGNAL('triggered()'), self.aboutMd)
 		self.chooseGroup = QActionGroup(self)
 		self.useDocUtils = False
 		self.actionUseMarkdown = QAction('Markdown', self)
@@ -444,9 +428,6 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addAction(self.actionPreview)
 		self.menuEdit.addSeparator()
 		self.menuEdit.addAction(self.actionFullScreen)
-		if about_md:
-			self.menuHelp.addAction(self.actionAboutMd)
-			self.menuHelp.addSeparator()
 		self.menuHelp.addAction(self.actionAbout)
 		self.menuHelp.addAction(self.actionAboutQt)
 		self.menubar.addMenu(self.menuFile)
@@ -1038,11 +1019,6 @@ class ReTextWindow(QMainWindow):
 		HtmlDlg.raise_()
 		HtmlDlg.activateWindow()
 	
-	def aboutMd(self):
-		self.openFileWrapper(about_md)
-		self.actionLivePreview.setChecked(True)
-		self.enableLivePreview(True)
-	
 	def aboutDialog(self):
 		QMessageBox.about(self, self.tr('About %1').arg(app_name), \
 		'<p><b>'+app_name+' '+app_version+'</b><br>'+self.tr('Simple but powerful editor for Markdown and ReStructuredText') \
@@ -1119,8 +1095,6 @@ def main(fileName):
 	if QFile.exists(QString.fromUtf8(fileName)):
 		window.openFileWrapper(QString.fromUtf8(fileName))
 	window.show()
-	if about_md and not QSettings().contains("recentFileList"):
-		window.aboutMd()
 	sys.exit(app.exec_())
 
 if __name__ == '__main__':
