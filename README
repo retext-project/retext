@@ -1,4 +1,4 @@
-This is ReText tarball.
+ReText is a simple but powerful editor for Markdown and ReStructuredText markup languages.
 You can read more about ReText on our website (http://retext.sourceforge.net/) or in the wiki (http://sourceforge.net/p/retext/wiki/).
 
 ReText is written in Python and runs on Linux and other POSIX-compatible platforms.
@@ -7,10 +7,9 @@ You do not need to compile the source code, it can be interpreted by Python 2.
 ReText requires the following packages to run:
 * python
 * python-qt4
-* python-markdown
+* python-markdown and/or python-docutils (ReST), depending on which kinds of documents you want to edit
 
 Package python-gdata is also needed if you want to use Google Docs export.
-
 
 Translation files are already compiled and will be automatically loaded. On Linux platform, translation files can also be loaded from /usr/share/retext/ directory.
 If you want to translate ReText into your language, follow the instructions in ReText wiki.

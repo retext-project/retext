@@ -863,9 +863,7 @@ class ReTextWindow(QMainWindow):
 	
 	def printPreview(self):
 		document = self.textDocument()
-		printer = QPrinter(QPrinter.HighResolution)
-		printer.setDocName(self.getDocumentTitle())
-		printer.setCreator(app_name+" "+app_version)
+		printer = self.standardPrinter()
 		preview = QPrintPreviewDialog(printer, self)
 		self.connect(preview, SIGNAL("paintRequested(QPrinter*)"), document.print_)
 		preview.exec_()
