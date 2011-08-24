@@ -70,7 +70,7 @@ else:
 
 icon_path = "icons/"
 
-(PARSER_DOCUTILS, PARSER_MARKDOWN, PARSER_HTML, PARSER_NA) = range(4)
+PARSER_DOCUTILS, PARSER_MARKDOWN, PARSER_HTML, PARSER_NA = range(4)
 
 if QFileInfo("wpgen/wpgen.py").isExecutable():
 	wpgen = unicode(QFileInfo("wpgen/wpgen.py").canonicalFilePath(), 'utf-8')
@@ -86,6 +86,16 @@ else:
 	monofont.setFamily('monospace')
 if s.contains('editorFontSize'):
 	monofont.setPointSize(s.value('editorFontSize').toInt()[0])
+
+use_webkit = False
+if s.contains('useWebKit'):
+	if s.value('useWebKit').toBool():
+		try:
+			from PyQt4.QtWebKit import QWebView
+		except:
+			pass
+		else:
+			use_webkit = True
 
 class ReTextHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
@@ -367,7 +377,8 @@ class ReTextWindow(QMainWindow):
 		self.symbolBox.addItems(self.usefulChars)
 		self.connect(self.symbolBox, SIGNAL('activated(int)'), self.insertSymbol)
 		if settings.contains('styleSheet'):
-			sheetfile = QFile(settings.value('styleSheet').toString())
+			self.ssname = settings.value('styleSheet').toString()
+			sheetfile = QFile(self.ssname)
 			sheetfile.open(QIODevice.ReadOnly)
 			self.ss = QTextStream(sheetfile).readAll()
 			sheetfile.close()
@@ -482,9 +493,14 @@ class ReTextWindow(QMainWindow):
 	def createTab(self, fileName):
 		self.editBoxes.append(QTextEdit())
 		ReTextHighlighter(self.editBoxes[-1].document())
-		self.previewBoxes.append(QTextEdit())
+		s = QSettings()
+		if use_webkit:
+			self.previewBoxes.append(QWebView())
+			self.previewBoxes[-1].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+		else:
+			self.previewBoxes.append(QTextEdit())
+			self.previewBoxes[-1].setReadOnly(True)
 		self.previewBoxes[-1].setVisible(False)
-		self.previewBoxes[-1].setReadOnly(True)
 		self.fileNames.append(fileName)
 		self.apc.append(False)
 		self.alpc.append(False)
@@ -641,19 +657,29 @@ class ReTextWindow(QMainWindow):
 			return self.editBoxes[self.ind].find(text)
 	
 	def updatePreviewBox(self):
+		self.previewBlocked = False
 		pb = self.previewBoxes[self.ind]
 		if self.ss:
-			pb.document().setDefaultStyleSheet(self.ss)
+			if use_webkit:
+				pb.settings().setUserStyleSheetUrl(QUrl.fromLocalFile(self.ssname))
+			else:
+				pb.document().setDefaultStyleSheet(self.ss)
 		if self.actionPlainText.isChecked():
-			pb.setPlainText(self.editBoxes[self.ind].toPlainText())
+			if use_webkit:
+				td = QTextDocument()
+				td.setPlainText(self.editBoxes[self.ind].toPlainText())
+				pb.setHtml(td.toHtml)
+			else:
+				pb.setPlainText(self.editBoxes[self.ind].toPlainText())
 		else:
 			pb.setHtml(self.parseText())
-		if self.font:
+		if self.font and not use_webkit:
 			pb.document().setDefaultFont(self.font)
 	
 	def updateLivePreviewBox(self):
-		if self.actionLivePreview.isChecked():
-			self.updatePreviewBox()
+		if self.actionLivePreview.isChecked() and self.previewBlocked == False:
+			self.previewBlocked = True
+			QTimer.singleShot(1000, self.updatePreviewBox)
 	
 	def startWpgen(self):
 		if self.fileNames[self.ind] == "":
