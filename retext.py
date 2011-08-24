@@ -668,7 +668,7 @@ class ReTextWindow(QMainWindow):
 			if use_webkit:
 				td = QTextDocument()
 				td.setPlainText(self.editBoxes[self.ind].toPlainText())
-				pb.setHtml(td.toHtml)
+				pb.setHtml(td.toHtml())
 			else:
 				pb.setPlainText(self.editBoxes[self.ind].toPlainText())
 		else:
