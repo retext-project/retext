@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# vim: ts=8:noexpandtab
 
 # ReText
 # Copyright 2011 Dmitry Shachnev
@@ -1098,6 +1099,7 @@ class ReTextWindow(QMainWindow):
 		elif parser == PARSER_DOCUTILS:
 			return publish_parts(unicode(htmltext), writer_name='html')['body']
 		elif parser == PARSER_MARKDOWN:
+			md.reset()
 			return md.convert(unicode(htmltext))
 		else:
 			return '<p style="color: red">'\
