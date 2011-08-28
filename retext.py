@@ -494,10 +494,8 @@ class ReTextWindow(QMainWindow):
 	def createTab(self, fileName):
 		self.editBoxes.append(QTextEdit())
 		ReTextHighlighter(self.editBoxes[-1].document())
-		s = QSettings()
 		if use_webkit:
 			self.previewBoxes.append(QWebView())
-			self.previewBoxes[-1].setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 		else:
 			self.previewBoxes.append(QTextEdit())
 			self.previewBoxes[-1].setReadOnly(True)
@@ -513,11 +511,15 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.editBoxes[-1], SIGNAL('redoAvailable(bool)'), self.actionRedo, SLOT('setEnabled(bool)'))
 		self.connect(self.editBoxes[-1], SIGNAL('copyAvailable(bool)'), self.enableCopy)
 		self.connect(self.editBoxes[-1].document(), SIGNAL('modificationChanged(bool)'), self.modificationChanged)
-		tab = QWidget()
-		layout = QHBoxLayout(tab)
-		layout.addWidget(self.editBoxes[-1])
-		layout.addWidget(self.previewBoxes[-1])
-		return tab
+		splitter = QSplitter(Qt.Horizontal)
+		# Give both boxes a minimum size so the minimumSizeHint will be
+		# ignored when splitter.setSizes is called below
+		for widget in self.editBoxes[-1], self.previewBoxes[-1]:
+			widget.setMinimumWidth(125)
+			splitter.addWidget(widget)
+		splitter.setSizes([50,50])
+		splitter.setChildrenCollapsible(False)
+		return splitter
 	
 	def closeTab(self, ind):
 		if self.maybeSave(ind):
