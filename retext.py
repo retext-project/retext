@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# vim: ts=8:noexpandtab
+# vim: sw=8:ts=8:noexpandtab
 
 # ReText
 # Copyright 2011 Dmitry Shachnev
@@ -26,7 +26,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.0.0"
+app_version = "2.0.1"
 
 s = QSettings('ReText project', 'ReText')
 
@@ -689,7 +689,7 @@ class ReTextWindow(QMainWindow):
 			QMessageBox.warning(self, app_name, self.tr("Please, save the file somewhere."))
 		elif wpgen:
 			if not (QDir("html").exists() and QFile.exists("template.html")):
-				subprocess.Popen([wpgen, 'init']).wait()
+				subprocess.Popen((wpgen, 'init')).wait()
 			subprocess.Popen([wpgen, 'updateall']).wait()
 			QMessageBox.information(self, app_name, self.tr("Webpages saved in <code>html</code> directory."))
 	
@@ -729,9 +729,10 @@ class ReTextWindow(QMainWindow):
 			self.openFileWrapper(item)
 	
 	def openFile(self):
-		fileName = QFileDialog.getOpenFileName(self, self.tr("Open file"), "", \
+		fileNames = QFileDialog.getOpenFileNames(self, self.tr("Select one or several files to open"), "", \
 		self.tr("Supported files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.rst *.rest *.txt *.html *.htm);;"+self.tr("All files (*)"))
-		self.openFileWrapper(fileName)
+		for fileName in fileNames:
+			self.openFileWrapper(fileName)
 	
 	def openFileWrapper(self, fileName):
 		if fileName:
@@ -1107,7 +1108,7 @@ class ReTextWindow(QMainWindow):
 			return '<p style="color: red">'\
 			+self.tr('Could not parse file contents, check if you have the necessary module installed!')+'</p>'
 
-def main(fileName):
+def main(fileNames):
 	app = QApplication(sys.argv)
 	app.setOrganizationName("ReText project")
 	app.setApplicationName("ReText")
@@ -1120,13 +1121,14 @@ def main(fileName):
 	app.installTranslator(RtTranslator)
 	app.installTranslator(QtTranslator)
 	window = ReTextWindow()
-	if QFile.exists(QString.fromUtf8(fileName)):
-		window.openFileWrapper(QString.fromUtf8(fileName))
+	for fileName in fileNames:
+		if QFile.exists(QString.fromUtf8(fileName)):
+			window.openFileWrapper(QString.fromUtf8(fileName))
 	window.show()
 	sys.exit(app.exec_())
 
 if __name__ == '__main__':
 	if len(sys.argv) > 1:
-		main(sys.argv[1])
+		main(sys.argv[1:])
 	else:
 		main("")
