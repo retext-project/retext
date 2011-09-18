@@ -26,7 +26,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.0.1"
+app_version = "2.1.0"
 
 s = QSettings('ReText project', 'ReText')
 
@@ -46,12 +46,19 @@ else:
 
 try:
 	import gdata.docs
-	import gdata.docs.service
-	from gdata import MediaSource
 except:
 	use_gdocs = False
 else:
 	use_gdocs = True
+	try:
+		import gdata.docs.client
+		from gdata.data import MediaSource
+	except:
+		import gdata.docs.service
+		from gdata import MediaSource
+		gdocs_old_api = True
+	else:
+		gdocs_old_api = False
 
 try:
 	import enchant
@@ -203,6 +210,7 @@ class ReTextWindow(QMainWindow):
 		self.apc = []
 		self.alpc = []
 		self.aptc = []
+		self.gDocsEntries = []
 		self.tabWidget = QTabWidget(self)
 		self.tabWidget.setTabsClosable(True)
 		self.setCentralWidget(self.tabWidget)
@@ -504,6 +512,7 @@ class ReTextWindow(QMainWindow):
 		self.apc.append(False)
 		self.alpc.append(False)
 		self.aptc.append(False)
+		self.gDocsEntries.append(None)
 		self.editBoxes[-1].setFont(monofont)
 		self.editBoxes[-1].setAcceptRichText(False)
 		self.connect(self.editBoxes[-1], SIGNAL('textChanged()'), self.updateLivePreviewBox)
@@ -948,33 +957,50 @@ class ReTextWindow(QMainWindow):
 		settings = QSettings()
 		login = settings.value("GDocsLogin").toString()
 		passwd = settings.value("GDocsPasswd").toString()
-		loginDialog = LogPassDialog(login, passwd)
-		if loginDialog.exec_() == QDialog.Accepted:
-			login = loginDialog.loginEdit.text()
-			passwd = loginDialog.passEdit.text()
+		cont = True
+		if self.gDocsEntries[self.ind] == None:
+			loginDialog = LogPassDialog(login, passwd)
+			if loginDialog.exec_() == QDialog.Accepted:
+				login = loginDialog.loginEdit.text()
+				passwd = loginDialog.passEdit.text()
+			else:
+				cont = False
+		if cont:
 			if self.actionPlainText.isChecked():
 				self.saveFileWrapper('temp.txt')
 			else:
 				self.saveHtml('temp.html')
-			gdClient = gdata.docs.service.DocsService(source=app_name)
-			try:
-				gdClient.ClientLogin(unicode(login), unicode(passwd))
-			except gdata.service.BadAuthentication:
-				QMessageBox.warning(self, app_name, self.tr("Incorrect user name or password!"))
+			if gdocs_old_api:
+				gdClient = gdata.docs.service.DocsService(source=app_name)
 			else:
-				settings.setValue("GDocsLogin", login)
-				settings.setValue("GDocsPasswd", passwd)
-				if self.actionPlainText.isChecked():
-					ms = MediaSource(file_path='temp.txt', content_type='text/plain')
+				gdClient = gdata.docs.client.DocsClient(source=app_name)
+			try:
+				if gdocs_old_api:
+					gdClient.ClientLogin(unicode(login), unicode(passwd))
 				else:
-					ms = MediaSource(file_path='temp.html', content_type='text/html')
+					gdClient.ClientLogin(unicode(login), unicode(passwd), gdClient.source)
+			except:
+				# FIXME: the same error is displayed for connection failures
+				QMessageBox.warning(self, app_name, self.tr("Incorrect user name or password!"))
+				return
+			settings.setValue("GDocsLogin", login)
+			settings.setValue("GDocsPasswd", passwd)
+			if self.actionPlainText.isChecked():
+				ms = MediaSource(file_path='temp.txt', content_type='text/plain')
+			else:
+				ms = MediaSource(file_path='temp.html', content_type='text/html')
+			entry = self.gDocsEntries[self.ind]
+			if entry == None or gdocs_old_api:
 				entry = gdClient.Upload(ms, unicode(self.getDocumentTitle()))
-				link = entry.GetAlternateLink().href
-				if self.actionPlainText.isChecked():
-					QFile('temp.txt').remove()
-				else:
-					QFile('temp.html').remove()
-				QDesktopServices.openUrl(QUrl(link))
+			else:
+				entry.title.text = self.getDocumentTitle()
+				entry = gdClient.Update(entry, media_source=ms, force=True)
+			QDesktopServices.openUrl(QUrl(entry.GetAlternateLink().href))
+			self.gDocsEntries[self.ind] = entry
+			if self.actionPlainText.isChecked():
+				QFile('temp.txt').remove()
+			else:
+				QFile('temp.html').remove()
 	
 	def autoSaveActive(self):
 		return self.autoSave and self.fileNames[self.ind] and \
