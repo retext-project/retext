@@ -1,3 +1,10 @@
+2.1
+* Ability to use QtWebKit
+* Splitter between edit and preview boxes
+* Support for opening several files via command-line
+* Support for GData 3 API and replacing existing document in Google Docs
+* Help page
+
 2.0
 * Support for reST (reStructuredText), with a GUI option to switch between Markdown and reST
 * Text search

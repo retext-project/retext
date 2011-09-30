@@ -347,7 +347,9 @@ class ReTextWindow(QMainWindow):
 		self.actionFindPrev = QAction(self.actIcon('go-previous'), self.tr('Previous'), self)
 		self.actionFindPrev.setShortcut(QKeySequence.FindPrevious)
 		self.connect(self.actionFind, SIGNAL('triggered()'), self.find)
-		self.connect(self.actionFindPrev, SIGNAL('triggered()'), lambda: self.find(QTextDocument.FindBackward))
+		self.connect(self.actionFindPrev, SIGNAL('triggered()'), lambda: self.find(back=True))
+		self.actionHelp = QAction(self.actIcon('help-contents'), self.tr('Get help online'), self)
+		self.connect(self.actionHelp, SIGNAL('triggered()'), self.openHelp)
 		self.actionAbout = QAction(self.actIcon('help-about'), self.tr('About %1').arg(app_name), self)
 		self.actionAbout.setMenuRole(QAction.AboutRole)
 		self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutDialog)
@@ -448,6 +450,8 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addAction(self.actionPreview)
 		self.menuEdit.addSeparator()
 		self.menuEdit.addAction(self.actionFullScreen)
+		self.menuHelp.addAction(self.actionHelp)
+		self.menuHelp.addSeparator()
 		self.menuHelp.addAction(self.actionAbout)
 		self.menuHelp.addAction(self.actionAboutQt)
 		self.menubar.addMenu(self.menuFile)
@@ -488,7 +492,7 @@ class ReTextWindow(QMainWindow):
 			if settings.value('autoSave').toBool():
 				self.autoSave = True
 				timer = QTimer(self)
-				timer.start(5000)
+				timer.start(60000)
 				self.connect(timer, SIGNAL('timeout()'), self.saveAll)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
@@ -1072,6 +1076,9 @@ class ReTextWindow(QMainWindow):
 		HtmlDlg.show()
 		HtmlDlg.raise_()
 		HtmlDlg.activateWindow()
+	
+	def openHelp(self):
+		QDesktopServices.openUrl(QUrl('http://sourceforge.net/p/retext/home/Help and Support'))
 	
 	def aboutDialog(self):
 		QMessageBox.about(self, self.tr('About %1').arg(app_name), \
