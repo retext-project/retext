@@ -645,7 +645,7 @@ class ReTextWindow(QMainWindow):
 	def find(self, back=False):
 		flags = 0
 		if back:
-			flags = flags | QTextDocument.FindBackward
+			flags = QTextDocument.FindBackward
 		if self.csBox.isChecked():
 			flags = flags | QTextDocument.FindCaseSensitively
 		text = self.searchEdit.text()

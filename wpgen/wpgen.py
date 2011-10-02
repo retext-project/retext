@@ -39,7 +39,7 @@ else:
 	use_docutils = True
 
 app_name = "ReText Webpages generator"
-app_version = "0.4.0"
+app_version = "0.4.1"
 app_site = "http://sourceforge.net/p/retext/"
 
 if os.path.exists("/usr/share/wpgen/"):
@@ -93,7 +93,7 @@ class WebLibrary(object):
 			html = text
 		if pagename == '':
 			pagename = bn
-		if html:
+		if html or bn == "index":
 			content = self.template
 			content = content.replace("%CONTENT%", html)
 			content = content.replace("%PAGENAME%", pagename)
@@ -117,7 +117,7 @@ def main(argv):
 				os.mkdir("html")
 			shutil.copy(templates_dir+"template_Default.html", "template.html")
 			shutil.copy(templates_dir+"style_Default.css", "html/style.css")
-			if not os.path.exists("index.mkd"):
+			if not (os.path.exists("index.mkd") or os.path.exists("index.rst")):
 				index = open("index.mkd", "w")
 				index.close()
 		elif argv[1] == "usestyle" and len(argv) == 3:
