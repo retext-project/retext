@@ -46,19 +46,12 @@ else:
 
 try:
 	import gdata.docs
+	import gdata.docs.client
+	from gdata.data import MediaSource
 except:
 	use_gdocs = False
 else:
 	use_gdocs = True
-	try:
-		import gdata.docs.client
-		from gdata.data import MediaSource
-	except:
-		import gdata.docs.service
-		from gdata import MediaSource
-		gdocs_old_api = True
-	else:
-		gdocs_old_api = False
 
 try:
 	import enchant
@@ -705,6 +698,8 @@ class ReTextWindow(QMainWindow):
 				subprocess.Popen((wpgen, 'init')).wait()
 			subprocess.Popen([wpgen, 'updateall']).wait()
 			QMessageBox.information(self, app_name, self.tr("Webpages saved in <code>html</code> directory."))
+		#else:
+		#	QMessageBox.error(self, app_name, self.tr("Webpages generator is not available!"))
 	
 	def showInDir(self):
 		if self.fileNames[self.ind]:
@@ -916,23 +911,21 @@ class ReTextWindow(QMainWindow):
 			return QMessageBox.warning(self, app_name, self.tr('This function is not available in Plain text mode!'))
 		s = QSettings()
 		s.beginGroup('Export')
-		types = []
-		for i in s.allKeys():
-			types.append(i)
+		types = s.allKeys()
 		item, ok = QInputDialog.getItem(self, app_name, self.tr('Select type'), types, 0, False)
 		if ok:
 			fileName = QFileDialog.getSaveFileName(self, self.tr('Export document'))
+		if ok and fileName:
 			if QFileInfo(fileName).suffix().isEmpty():
 				fileName.append('.'+item)
-			args = str(s.value(item).toString()).split()
-			self.saveFileWrapper('temp.re')
-			for i in range(len(args)):
-				if args[i] == '%of':
-					args[i] = 'out.'+str(item)
-				elif args[i] == '%if':
-					args[i] = 'temp.re'
+			command = s.value(item).toString()
+			tmpname = 'temp.rst' if self.getParser() == PARSER_DOCUTILS else 'temp.mkd'
+			command.replace('%of', 'out.'+item)
+			command.replace('%if', tmpname)
+			args = str(command).split()
+			self.saveFileWrapper(tmpname)
 			subprocess.Popen(args).wait()
-			QFile('temp.re').remove()
+			QFile(tmpname).remove()
 			QFile('out.'+item).rename(fileName)
 	
 	def getDocumentTitle(self, baseName=False):
@@ -961,50 +954,43 @@ class ReTextWindow(QMainWindow):
 		settings = QSettings()
 		login = settings.value("GDocsLogin").toString()
 		passwd = settings.value("GDocsPasswd").toString()
-		cont = True
 		if self.gDocsEntries[self.ind] == None:
 			loginDialog = LogPassDialog(login, passwd)
 			if loginDialog.exec_() == QDialog.Accepted:
 				login = loginDialog.loginEdit.text()
 				passwd = loginDialog.passEdit.text()
 			else:
-				cont = False
-		if cont:
-			if self.actionPlainText.isChecked():
-				self.saveFileWrapper('temp.txt')
-			else:
-				self.saveHtml('temp.html')
-			if gdocs_old_api:
-				gdClient = gdata.docs.service.DocsService(source=app_name)
-			else:
-				gdClient = gdata.docs.client.DocsClient(source=app_name)
-			try:
-				if gdocs_old_api:
-					gdClient.ClientLogin(unicode(login), unicode(passwd))
-				else:
-					gdClient.ClientLogin(unicode(login), unicode(passwd), gdClient.source)
-			except:
-				# FIXME: the same error is displayed for connection failures
-				QMessageBox.warning(self, app_name, self.tr("Incorrect user name or password!"))
 				return
-			settings.setValue("GDocsLogin", login)
-			settings.setValue("GDocsPasswd", passwd)
-			if self.actionPlainText.isChecked():
-				ms = MediaSource(file_path='temp.txt', content_type='text/plain')
-			else:
-				ms = MediaSource(file_path='temp.html', content_type='text/html')
-			entry = self.gDocsEntries[self.ind]
-			if entry == None or gdocs_old_api:
-				entry = gdClient.Upload(ms, unicode(self.getDocumentTitle()))
-			else:
-				entry.title.text = self.getDocumentTitle()
-				entry = gdClient.Update(entry, media_source=ms, force=True)
-			QDesktopServices.openUrl(QUrl(entry.GetAlternateLink().href))
-			self.gDocsEntries[self.ind] = entry
-			if self.actionPlainText.isChecked():
-				QFile('temp.txt').remove()
-			else:
-				QFile('temp.html').remove()
+		if self.actionPlainText.isChecked():
+			self.saveFileWrapper('temp.txt')
+		else:
+			self.saveHtml('temp.html')
+		gdClient = gdata.docs.client.DocsClient(source=app_name)
+		gdClient.ssl = True
+		try:
+			gdClient.ClientLogin(unicode(login), unicode(passwd), gdClient.source)
+		except:
+			# FIXME: the same error is displayed for connection failures
+			QMessageBox.warning(self, app_name, self.tr("Incorrect user name or password!"))
+			return
+		settings.setValue("GDocsLogin", login)
+		settings.setValue("GDocsPasswd", passwd)
+		if self.actionPlainText.isChecked():
+			ms = MediaSource(file_path='temp.txt', content_type='text/plain')
+		else:
+			ms = MediaSource(file_path='temp.html', content_type='text/html')
+		entry = self.gDocsEntries[self.ind]
+		if entry:
+			entry.title.text = unicode(self.getDocumentTitle())
+			entry = gdClient.Update(entry, media_source=ms, force=True)
+		else:
+			entry = gdClient.Upload(ms, unicode(self.getDocumentTitle()))
+		QDesktopServices.openUrl(QUrl(entry.GetAlternateLink().href))
+		self.gDocsEntries[self.ind] = entry
+		if self.actionPlainText.isChecked():
+			QFile('temp.txt').remove()
+		else:
+			QFile('temp.html').remove()
 	
 	def autoSaveActive(self):
 		return self.autoSave and self.fileNames[self.ind] and \
