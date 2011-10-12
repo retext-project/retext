@@ -697,9 +697,14 @@ class ReTextWindow(QMainWindow):
 			if not (QDir("html").exists() and QFile.exists("template.html")):
 				subprocess.Popen((wpgen, 'init')).wait()
 			subprocess.Popen([wpgen, 'updateall']).wait()
-			QMessageBox.information(self, app_name, self.tr("Webpages saved in <code>html</code> directory."))
-		#else:
-		#	QMessageBox.error(self, app_name, self.tr("Webpages generator is not available!"))
+			msgBox = QMessageBox(QMessageBox.Information, app_name, \
+			self.tr("Webpages saved in <code>html</code> directory."), QMessageBox.Ok)
+			showButton = msgBox.addButton(self.tr("Show directory"), QMessageBox.AcceptRole)
+			msgBox.exec_()
+			if msgBox.clickedButton() == showButton:
+				QDesktopServices.openUrl(QUrl.fromLocalFile(QDir('html').absolutePath()))
+		else:
+			QMessageBox.error(self, app_name, self.tr("Webpages generator is not installed!"))
 	
 	def showInDir(self):
 		if self.fileNames[self.ind]:
@@ -752,7 +757,8 @@ class ReTextWindow(QMainWindow):
 			if exists:
 				self.tabWidget.setCurrentIndex(ex)
 			else:
-				if self.fileNames[self.ind] or self.editBoxes[self.ind].toPlainText() or self.editBoxes[self.ind].document().isModified():
+				if self.fileNames[self.ind] or self.editBoxes[self.ind].toPlainText() \
+				or self.editBoxes[self.ind].document().isModified():
 					self.tabWidget.addTab(self.createTab(""), "")
 					self.ind = self.tabWidget.count()-1
 					self.tabWidget.setCurrentIndex(self.ind)
@@ -815,7 +821,7 @@ class ReTextWindow(QMainWindow):
 				self.setWindowModified(False)
 		else:
 			self.setWindowModified(self.isWindowModified())
-			QMessageBox.warning(self, app_name, self.tr("Cannot save to file since it is read-only!"))
+			QMessageBox.warning(self, app_name, self.tr("Cannot save to file because it is read-only!"))
 	
 	def saveFileWrapper(self, fn):
 		savefile = QFile(fn)
@@ -969,10 +975,11 @@ class ReTextWindow(QMainWindow):
 		gdClient.ssl = True
 		try:
 			gdClient.ClientLogin(unicode(login), unicode(passwd), gdClient.source)
+		except gdata.client.BadAuthentication:
+			return QMessageBox.warning(self, app_name, self.tr("Incorrect user name or password!"))
 		except:
-			# FIXME: the same error is displayed for connection failures
-			QMessageBox.warning(self, app_name, self.tr("Incorrect user name or password!"))
-			return
+			return QMessageBox.warning(self, app_name, \
+			self.tr("Authentification failed, please check your internet connection!"))
 		settings.setValue("GDocsLogin", login)
 		settings.setValue("GDocsPasswd", passwd)
 		if self.actionPlainText.isChecked():
