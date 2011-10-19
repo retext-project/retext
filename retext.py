@@ -537,6 +537,7 @@ class ReTextWindow(QMainWindow):
 			del self.apc[ind]
 			del self.alpc[ind]
 			del self.aptc[ind]
+			del self.gDocsEntries[ind]
 			self.tabWidget.removeTab(ind)
 	
 	def changeIndex(self, ind):
