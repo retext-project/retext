@@ -28,7 +28,7 @@ from PyQt4.QtGui import *
 app_name = "ReText"
 app_version = "2.1.0"
 
-s = QSettings('ReText project', 'ReText')
+settings = QSettings('ReText project', 'ReText')
 
 try:
 	import markdown
@@ -36,9 +36,9 @@ except:
 	use_md = False
 else:
 	use_md = True
-	if s.contains('mdExtensions'):
+	if settings.contains('mdExtensions'):
 		exts = []
-		for ext in s.value('mdExtensions').toStringList():
+		for ext in settings.value('mdExtensions').toStringList():
 			exts.append(str(ext))
 		md = markdown.Markdown(exts)
 	else:
@@ -81,16 +81,16 @@ else:
 	wpgen = None
 
 monofont = QFont()
-if s.contains('editorFont'):
-	monofont.setFamily(s.value('editorFont').toString())
+if settings.contains('editorFont'):
+	monofont.setFamily(settings.value('editorFont').toString())
 else:
 	monofont.setFamily('monospace')
-if s.contains('editorFontSize'):
-	monofont.setPointSize(s.value('editorFontSize').toInt()[0])
+if settings.contains('editorFontSize'):
+	monofont.setPointSize(settings.value('editorFontSize').toInt()[0])
 
 use_webkit = False
-if s.contains('useWebKit'):
-	if s.value('useWebKit').toBool():
+if settings.contains('useWebKit'):
+	if settings.value('useWebKit').toBool():
 		try:
 			from PyQt4.QtWebKit import QWebView
 		except:
@@ -183,7 +183,6 @@ class ReTextWindow(QMainWindow):
 		screen = QDesktopWidget().screenGeometry()
 		size = self.geometry()
 		self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
-		settings = QSettings()
 		if settings.contains('iconTheme'):
 			QIcon.setThemeName(settings.value('iconTheme').toString())
 		if settings.contains('font'):
@@ -567,9 +566,9 @@ class ReTextWindow(QMainWindow):
 		if fd[1]:
 			self.font = QFont()
 			self.font.setFamily(fd[0].family())
-			QSettings().setValue('font', fd[0].family())
+			settings.setValue('font', fd[0].family())
 			self.font.setPointSize(fd[0].pointSize())
-			QSettings().setValue('fontSize', fd[0].pointSize())
+			settings.setValue('fontSize', fd[0].pointSize())
 			self.updatePreviewBox()
 	
 	def preview(self, viewmode):
@@ -620,10 +619,10 @@ class ReTextWindow(QMainWindow):
 				dictionary = enchant.Dict(self.sl)
 			else:
 				dictionary = enchant.Dict()
-			QSettings().setValue('spellCheck', True)
+			settings.setValue('spellCheck', True)
 		else:
 			dictionary = None
-			QSettings().remove('spellCheck')
+			settings.remove('spellCheck')
 	
 	def changeLocale(self):
 		if self.sl == None:
@@ -717,7 +716,6 @@ class ReTextWindow(QMainWindow):
 		self.setWindowTitle("")
 		self.tabWidget.setTabText(self.ind, self.getDocumentTitle(baseName=True))
 		self.setWindowFilePath(self.fileNames[self.ind])
-		settings = QSettings()
 		files = settings.value("recentFileList").toStringList()
 		files.prepend(self.fileNames[self.ind])
 		files.removeDuplicates()
@@ -732,12 +730,12 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.setCurrentIndex(self.ind)
 	
 	def openRecent(self):
-		filesOld = QSettings().value("recentFileList").toStringList()
+		filesOld = settings.value("recentFileList").toStringList()
 		files = QStringList()
 		for i in filesOld:
 			if QFile.exists(i):
 				files.append(i)
-		QSettings().setValue("recentFileList", files)
+		settings.setValue("recentFileList", files)
 		item, ok = QInputDialog.getItem(self, app_name, self.tr("Open recent"), files, 0, False)
 		if ok and not item.isEmpty():
 			self.openFileWrapper(item)
@@ -808,8 +806,8 @@ class ReTextWindow(QMainWindow):
 			else:
 				defaultExt = self.tr("Markdown files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
 				ext = ".mkd"
-				if QSettings().contains('defaultExt'):
-					ext = QSettings().value('defaultExt').toString()
+				if settings.contains('defaultExt'):
+					ext = settings.value('defaultExt').toString()
 			self.fileNames[self.ind] = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).suffix().isEmpty():
 				self.fileNames[self.ind].append(ext)
@@ -916,16 +914,15 @@ class ReTextWindow(QMainWindow):
 	def otherExport(self):
 		if (self.actionPlainText.isChecked()):
 			return QMessageBox.warning(self, app_name, self.tr('This function is not available in Plain text mode!'))
-		s = QSettings()
-		s.beginGroup('Export')
-		types = s.allKeys()
+		settings.beginGroup('Export')
+		types = settings.allKeys()
 		item, ok = QInputDialog.getItem(self, app_name, self.tr('Select type'), types, 0, False)
 		if ok:
 			fileName = QFileDialog.getSaveFileName(self, self.tr('Export document'))
 		if ok and fileName:
 			if QFileInfo(fileName).suffix().isEmpty():
 				fileName.append('.'+item)
-			command = s.value(item).toString()
+			command = settings.value(item).toString()
 			tmpname = 'temp.rst' if self.getParser() == PARSER_DOCUTILS else 'temp.mkd'
 			command.replace('%of', 'out.'+item)
 			command.replace('%if', tmpname)
@@ -958,7 +955,6 @@ class ReTextWindow(QMainWindow):
 			return self.tr("New document")
 	
 	def saveGDocs(self):
-		settings = QSettings()
 		login = settings.value("GDocsLogin").toString()
 		passwd = settings.value("GDocsPasswd").toString()
 		if self.gDocsEntries[self.ind] == None:
@@ -1096,7 +1092,7 @@ class ReTextWindow(QMainWindow):
 	
 	def setDocUtilsDefault(self, yes):
 		self.useDocUtils = yes
-		QSettings().setValue('useReST', yes)
+		settings.setValue('useReST', yes)
 		self.updatePreviewBox()
 	
 	def getParser(self):
@@ -1147,6 +1143,12 @@ def main(fileNames):
 	QtTranslator.load("qt_"+QLocale.system().name(), QLibraryInfo.location(QLibraryInfo.TranslationsPath))
 	app.installTranslator(RtTranslator)
 	app.installTranslator(QtTranslator)
+	if settings.contains('appStyleSheet'):
+		stylename = settings.value('appStyleSheet').toString()
+		sheetfile = QFile(stylename)
+		sheetfile.open(QIODevice.ReadOnly)
+		app.setStyleSheet(QTextStream(sheetfile).readAll())
+		sheetfile.close()
 	window = ReTextWindow()
 	for fileName in fileNames:
 		if QFile.exists(QString.fromUtf8(fileName)):

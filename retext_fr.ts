@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="fr">
+<!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="">
 <context>
     <name>LogPassDialog</name>
     <message>
@@ -411,22 +410,22 @@ Voulez vous enregistrer vos changements ?</translation>
     <message>
         <location filename="retext.py" line="703"/>
         <source>Show directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer répertoire</translation>
     </message>
     <message>
         <location filename="retext.py" line="708"/>
         <source>Webpages generator is not installed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Générateur Webpages non installé !</translation>
     </message>
     <message>
         <location filename="retext.py" line="825"/>
         <source>Cannot save to file because it is read-only!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne peut enregistrer le fichier car en lecture seule !</translation>
     </message>
     <message>
         <location filename="retext.py" line="982"/>
         <source>Authentification failed, please check your internet connection!</source>
-        <translation type="unfinished"></translation>
+        <translation>Authentification echouée, svp vérifier votre connection internet !</translation>
     </message>
 </context>
 </TS>
