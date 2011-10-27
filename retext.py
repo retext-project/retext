@@ -26,7 +26,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.1.0"
+app_version = "2.1.1"
 
 settings = QSettings('ReText project', 'ReText')
 
@@ -244,7 +244,7 @@ class ReTextWindow(QMainWindow):
 		self.actionSearch.setCheckable(True)
 		self.actionSearch.setShortcut(QKeySequence.Find)
 		self.connect(self.actionSearch, SIGNAL('triggered(bool)'), self.searchBar, SLOT('setVisible(bool)'))
-		self.connect(self.searchBar, SIGNAL('visibilityChanged(bool)'), self.actionSearch, SLOT('setChecked(bool)'))
+		self.connect(self.searchBar, SIGNAL('visibilityChanged(bool)'), self.searchBarVisibilityChanged)
 		self.actionPreview = QAction(self.tr('Preview'), self)
 		if QIcon.hasThemeIcon('document-preview'):
 			self.actionPreview.setIcon(QIcon.fromTheme('document-preview'))
@@ -495,6 +495,10 @@ class ReTextWindow(QMainWindow):
 	def actIcon(self, name):
 		return QIcon.fromTheme(name, QIcon(icon_path+name+'.png'))
 	
+	def printError(self, error):
+		print('Exception occured while parsing document:')
+		print(error)
+	
 	def createTab(self, fileName):
 		self.editBoxes.append(QTextEdit())
 		ReTextHighlighter(self.editBoxes[-1].document())
@@ -642,6 +646,11 @@ class ReTextWindow(QMainWindow):
 			self.sl = None
 			self.enableSC(self.actionEnableSC.isChecked())
 	
+	def searchBarVisibilityChanged(self, visible):
+		self.actionSearch.setChecked(visible)
+		if visible:
+			self.searchEdit.setFocus(Qt.ShortcutFocusReason)
+	
 	def find(self, back=False):
 		flags = 0
 		if back:
@@ -681,7 +690,10 @@ class ReTextWindow(QMainWindow):
 			else:
 				pb.setPlainText(self.editBoxes[self.ind].toPlainText())
 		else:
-			pb.setHtml(self.parseText())
+			try:
+				pb.setHtml(self.parseText())
+			except Exception as e:
+				self.printError(e)
 		if self.font and not use_webkit:
 			pb.document().setDefaultFont(self.font)
 	
@@ -835,7 +847,11 @@ class ReTextWindow(QMainWindow):
 		htmlFile = QFile(fileName)
 		htmlFile.open(QIODevice.WriteOnly)
 		html = QTextStream(htmlFile)
-		text = self.parseText()
+		try:
+			text = self.parseText()
+		except Exception as e:
+			self.printError(e)
+			return
 		if self.getParser() == PARSER_HTML:
 			html << text << "\n"
 			htmlFile.close()
@@ -866,12 +882,17 @@ class ReTextWindow(QMainWindow):
 		return td
 	
 	def saveOdf(self):
+		try:
+			document = self.textDocument()
+		except Exception as e:
+			self.printError(e)
+			return
 		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to ODT"), "", self.tr("OpenDocument text files (*.odt)"))
 		if QFileInfo(fileName).suffix().isEmpty():
 			fileName.append(".odt")
 		writer = QTextDocumentWriter(fileName)
 		writer.setFormat("odf")
-		writer.write(self.textDocument())
+		writer.write(document)
 	
 	def saveFilePerfect(self):
 		fileName = None
@@ -886,18 +907,26 @@ class ReTextWindow(QMainWindow):
 		return printer
 	
 	def savePdf(self):
+		try:
+			document = self.textDocument()
+		except Exception as e:
+			self.printError(e)
+			return
 		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to PDF"), "", self.tr("PDF files (*.pdf)"))
 		if fileName:
 			if QFileInfo(fileName).suffix().isEmpty():
 				fileName.append(".pdf")
-			document = self.textDocument()
 			printer = self.standardPrinter()
 			printer.setOutputFormat(QPrinter.PdfFormat)
 			printer.setOutputFileName(fileName)
 			document.print_(printer)
 	
 	def printFile(self):
-		document = self.textDocument()
+		try:
+			document = self.textDocument()
+		except Exception as e:
+			self.printError(e)
+			return
 		printer = self.standardPrinter()
 		dlg = QPrintDialog(printer, self)
 		dlg.setWindowTitle(self.tr("Print document"))
@@ -905,7 +934,11 @@ class ReTextWindow(QMainWindow):
 			document.print_(printer)
 	
 	def printPreview(self):
-		document = self.textDocument()
+		try:
+			document = self.textDocument()
+		except Exception as e:
+			self.printError(e)
+			return
 		printer = self.standardPrinter()
 		preview = QPrintPreviewDialog(printer, self)
 		self.connect(preview, SIGNAL("paintRequested(QPrinter*)"), document.print_)
@@ -1058,7 +1091,11 @@ class ReTextWindow(QMainWindow):
 	
 	def viewHtml(self):
 		HtmlDlg = HtmlDialog(self)
-		HtmlDlg.textEdit.setPlainText(self.parseText())
+		try:
+			HtmlDlg.textEdit.setPlainText(self.parseText())
+		except Exception as e:
+			self.printError(e)
+			return
 		winTitle = self.tr('New document')
 		if self.fileNames[self.ind]:
 			winTitle = QFileInfo(self.fileNames[self.ind]).fileName()
@@ -1126,7 +1163,8 @@ class ReTextWindow(QMainWindow):
 			return publish_parts(unicode(htmltext), writer_name='html')['body']
 		elif parser == PARSER_MARKDOWN:
 			md.reset()
-			return md.convert(unicode(htmltext))
+			result = md.convert(unicode(htmltext))
+			return result
 		else:
 			return '<p style="color: red">'\
 			+self.tr('Could not parse file contents, check if you have the necessary module installed!')+'</p>'
