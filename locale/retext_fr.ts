@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="fr">
 <context>
     <name>LogPassDialog</name>
     <message>
@@ -183,7 +184,7 @@
     <message>
         <location filename="retext.py" line="1111"/>
         <source>About %1</source>
-        <translation>À propros de  %1</translation>
+        <translation>À propos de  %1</translation>
     </message>
     <message>
         <location filename="retext.py" line="348"/>
