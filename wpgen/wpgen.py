@@ -39,7 +39,7 @@ else:
 	use_docutils = True
 
 app_name = "ReText Webpages generator"
-app_version = "0.4.1"
+app_version = "0.4.2"
 app_site = "http://sourceforge.net/p/retext/"
 
 if os.path.exists("/usr/share/wpgen/"):
@@ -105,6 +105,9 @@ class WebLibrary(object):
 
 def main(argv):
 	if len(argv) > 1:
+		if not (os.path.exists("html") or argv[1] == "init"):
+			print("Could not find html directory!")
+			return
 		if argv[1] == "updateall":
 			wl = WebLibrary()
 			wl.updateAll()
