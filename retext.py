@@ -26,7 +26,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.1.2"
+app_version = "2.2.0"
 
 settings = QSettings('ReText project', 'ReText')
 
@@ -365,6 +365,15 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionUseReST, SIGNAL('toggled(bool)'), self.setDocUtilsDefault)
 		self.chooseGroup.addAction(self.actionUseMarkdown)
 		self.chooseGroup.addAction(self.actionUseReST)
+		self.actionBold = QAction(self.tr('Bold'), self)
+		self.actionBold.setShortcut(QKeySequence.Bold)
+		self.actionItalic = QAction(self.tr('Italic'), self)
+		self.actionItalic.setShortcut(QKeySequence.Italic)
+		self.actionUnderline = QAction(self.tr('Underline'), self)
+		self.actionUnderline.setShortcut(QKeySequence.Underline)
+		self.connect(self.actionBold, SIGNAL('triggered()'), lambda: self.insertChars('**'))
+		self.connect(self.actionItalic, SIGNAL('triggered()'), lambda: self.insertChars('*'))
+		self.connect(self.actionUnderline, SIGNAL('triggered()'), lambda: self.insertTag(7)) # <u>...</u>
 		if use_gdocs:
 			self.actionSaveGDocs = QAction(QIcon.fromTheme('web-browser', self.actIcon('intenret-web-browser')), self.tr('Save to Google Docs'), self)
 			self.connect(self.actionSaveGDocs, SIGNAL('triggered()'), self.saveGDocs)
@@ -436,7 +445,11 @@ class ReTextWindow(QMainWindow):
 			self.menuMode = self.menuEdit.addMenu(self.tr('Default editing mode'))
 			self.menuMode.addAction(self.actionUseMarkdown)
 			self.menuMode.addAction(self.actionUseReST)
-			self.menuEdit.addSeparator()
+		self.menuFormat = self.menuEdit.addMenu(self.tr('Formatting'))
+		self.menuFormat.addAction(self.actionBold)
+		self.menuFormat.addAction(self.actionItalic)
+		self.menuFormat.addAction(self.actionUnderline)
+		self.menuEdit.addSeparator()
 		self.menuEdit.addAction(self.actionViewHtml)
 		self.menuEdit.addAction(self.actionLivePreview)
 		self.menuEdit.addAction(self.actionPreview)
@@ -486,6 +499,12 @@ class ReTextWindow(QMainWindow):
 				timer = QTimer(self)
 				timer.start(60000)
 				self.connect(timer, SIGNAL('timeout()'), self.saveAll)
+		self.restorePreviewState = False
+		self.livePreviewEnabled = False
+		if settings.contains('restorePreviewState'):
+			self.restorePreviewState = settings.value('restorePreviewState').toBool()
+		if settings.contains('previewState'):
+			self.livePreviewEnabled = settings.value('previewState').toBool()
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if not (use_md or use_docutils):
@@ -500,6 +519,7 @@ class ReTextWindow(QMainWindow):
 		print(error)
 	
 	def createTab(self, fileName):
+		self.previewBlocked = False
 		self.editBoxes.append(QTextEdit())
 		ReTextHighlighter(self.editBoxes[-1].document())
 		if use_webkit:
@@ -510,7 +530,7 @@ class ReTextWindow(QMainWindow):
 		self.previewBoxes[-1].setVisible(False)
 		self.fileNames.append(fileName)
 		self.apc.append(False)
-		self.alpc.append(False)
+		self.alpc.append(self.restorePreviewState and self.livePreviewEnabled)
 		self.aptc.append(False)
 		self.gDocsEntries.append(None)
 		self.editBoxes[-1].setFont(monofont)
@@ -561,6 +581,9 @@ class ReTextWindow(QMainWindow):
 		else:
 			self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
+		self.livePreviewEnabled = self.alpc[ind]
+		if self.alpc[ind]:
+			self.enableLivePreview(True)
 		self.editBoxes[self.ind].setFocus(Qt.OtherFocusReason)
 	
 	def changeFont(self):
@@ -578,7 +601,7 @@ class ReTextWindow(QMainWindow):
 	def preview(self, viewmode):
 		self.apc[self.ind] = viewmode
 		if self.actionLivePreview.isChecked:
-			self.actionLivePreview.setChecked(False)
+			return self.enableLivePreview(False)
 		self.editBar.setDisabled(viewmode)
 		self.editBoxes[self.ind].setVisible(not viewmode)
 		self.previewBoxes[self.ind].setVisible(viewmode)
@@ -586,6 +609,7 @@ class ReTextWindow(QMainWindow):
 			self.updatePreviewBox()
 	
 	def enableLivePreview(self, livemode):
+		self.livePreviewEnabled = livemode
 		self.alpc[self.ind] = livemode
 		self.actionPreview.setChecked(livemode)
 		self.editBar.setEnabled(True)
@@ -934,11 +958,14 @@ class ReTextWindow(QMainWindow):
 			document.print_(printer)
 	
 	def printPreview(self):
-		try:
-			document = self.textDocument()
-		except Exception as e:
-			self.printError(e)
-			return
+		if use_webkit:
+			document = self.previewBoxes[self.ind]
+		else:
+			try:
+				document = self.textDocument()
+			except Exception as e:
+				self.printError(e)
+				return
 		printer = self.standardPrinter()
 		preview = QPrintPreviewDialog(printer, self)
 		self.connect(preview, SIGNAL("paintRequested(QPrinter*)"), document.print_)
@@ -1042,6 +1069,10 @@ class ReTextWindow(QMainWindow):
 	def clipboardDataChanged(self):
 		self.actionPaste.setEnabled(qApp.clipboard().mimeData().hasText())
 	
+	def insertChars(self, chars):
+		tc = self.editBoxes[self.ind].textCursor()
+		tc.insertText(chars+tc.selectedText()+chars)
+	
 	def insertTag(self, num):
 		if num:
 			ut = self.usefulTags[num-1]
@@ -1085,6 +1116,11 @@ class ReTextWindow(QMainWindow):
 			if not self.maybeSave(self.ind):
 				accept = False
 		if accept:
+			if self.restorePreviewState:
+				if self.livePreviewEnabled:
+					settings.setValue('previewState', True)
+				else:
+					settings.remove('previewState')
 			closeevent.accept()
 		else:
 			closeevent.ignore()
