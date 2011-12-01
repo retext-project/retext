@@ -924,6 +924,15 @@ class ReTextWindow(QMainWindow):
 		if fileName:
 			self.saveHtml(fileName)
 	
+	def getDocumentForPrint(self):
+		if use_webkit:
+			return self.previewBoxes[self.ind]
+		try:
+			return self.textDocument()
+		except Exception as e:
+			self.printError(e)
+			return None
+	
 	def standardPrinter(self):
 		printer = QPrinter(QPrinter.HighResolution)
 		printer.setDocName(self.getDocumentTitle())
@@ -931,10 +940,8 @@ class ReTextWindow(QMainWindow):
 		return printer
 	
 	def savePdf(self):
-		try:
-			document = self.textDocument()
-		except Exception as e:
-			self.printError(e)
+		document = self.getDocumentForPrint()
+		if document == None:
 			return
 		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to PDF"), "", self.tr("PDF files (*.pdf)"))
 		if fileName:
@@ -946,10 +953,8 @@ class ReTextWindow(QMainWindow):
 			document.print_(printer)
 	
 	def printFile(self):
-		try:
-			document = self.textDocument()
-		except Exception as e:
-			self.printError(e)
+		document = self.getDocumentForPrint()
+		if document == None:
 			return
 		printer = self.standardPrinter()
 		dlg = QPrintDialog(printer, self)
@@ -958,14 +963,9 @@ class ReTextWindow(QMainWindow):
 			document.print_(printer)
 	
 	def printPreview(self):
-		if use_webkit:
-			document = self.previewBoxes[self.ind]
-		else:
-			try:
-				document = self.textDocument()
-			except Exception as e:
-				self.printError(e)
-				return
+		document = self.getDocumentForPrint()
+		if document == None:
+			return
 		printer = self.standardPrinter()
 		preview = QPrintPreviewDialog(printer, self)
 		self.connect(preview, SIGNAL("paintRequested(QPrinter*)"), document.print_)
