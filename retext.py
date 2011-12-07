@@ -214,38 +214,24 @@ class ReTextWindow(QMainWindow):
 		self.addToolBar(Qt.TopToolBarArea, self.editBar)
 		self.searchBar = QToolBar(self.tr('Search toolbar'), self)
 		self.addToolBar(Qt.BottomToolBarArea, self.searchBar)
-		self.actionNew = QAction(self.actIcon('document-new'), self.tr('New'), self)
-		self.actionNew.setShortcut(QKeySequence.New)
+		self.actionNew = self.act(self.tr('New'), icon='document-new', shct=QKeySequence.New, trig=self.createNew)
 		self.actionNew.setPriority(QAction.LowPriority)
-		self.connect(self.actionNew, SIGNAL('triggered()'), self.createNew)
-		self.actionOpen = QAction(self.actIcon('document-open'), self.tr('Open'), self)
-		self.actionOpen.setShortcut(QKeySequence.Open)
+		self.actionOpen = self.act(self.tr('Open'), icon='document-open', shct=QKeySequence.Open, trig=self.openFile)
 		self.actionOpen.setPriority(QAction.LowPriority)
-		self.connect(self.actionOpen, SIGNAL('triggered()'), self.openFile)
-		self.actionSave = QAction(self.actIcon('document-save'), self.tr('Save'), self)
+		self.actionSave = self.act(self.tr('Save'), icon='document-save', shct=QKeySequence.Save, trig=self.saveFile)
 		self.actionSave.setEnabled(False)
-		self.actionSave.setShortcut(QKeySequence.Save)
 		self.actionSave.setPriority(QAction.LowPriority)
-		self.connect(self.actionSave, SIGNAL('triggered()'), self.saveFile)
-		self.actionSaveAs = QAction(self.actIcon('document-save-as'), self.tr('Save as'), self)
-		self.actionSaveAs.setShortcut(QKeySequence.SaveAs)
-		self.connect(self.actionSaveAs, SIGNAL('triggered()'), self.saveFileAs)
-		self.actionPrint = QAction(self.actIcon('document-print'), self.tr('Print'), self)
-		self.actionPrint.setShortcut(QKeySequence.Print)
+		self.actionSaveAs = self.act(self.tr('Save as'), icon='document-save-as', shct=QKeySequence.SaveAs, trig=self.saveFileAs)
+		self.actionPrint = self.act(self.tr('Print'), icon='document-print', shct=QKeySequence.Print, trig=self.printFile)
 		self.actionPrint.setPriority(QAction.LowPriority)
-		self.connect(self.actionPrint, SIGNAL('triggered()'), self.printFile)
-		self.actionPrintPreview = QAction(self.actIcon('document-print-preview'), self.tr('Print preview'), self)
-		self.connect(self.actionPrintPreview, SIGNAL('triggered()'), self.printPreview)
-		self.actionViewHtml = QAction(self.actIcon('text-html'), self.tr('View HTML code'), self)
-		self.connect(self.actionViewHtml, SIGNAL('triggered()'), self.viewHtml)
-		self.actionChangeFont = QAction(self.tr('Change default font'), self)
-		self.connect(self.actionChangeFont, SIGNAL('triggered()'), self.changeFont)
-		self.actionSearch = QAction(self.actIcon('edit-find'), self.tr('Find text'), self)
+		self.actionPrintPreview = self.act(self.tr('Print preview'), icon='document-print-preview', trig=self.printPreview)
+		self.actionViewHtml = self.act(self.tr('View HTML code'), icon='text-html', trig=self.viewHtml)
+		self.actionChangeFont = self.act(self.tr('Change default font'), trig=self.changeFont)
+		self.actionSearch = self.act(self.tr('Find text'), icon='edit-find', shct=QKeySequence.Find)
 		self.actionSearch.setCheckable(True)
-		self.actionSearch.setShortcut(QKeySequence.Find)
 		self.connect(self.actionSearch, SIGNAL('triggered(bool)'), self.searchBar, SLOT('setVisible(bool)'))
 		self.connect(self.searchBar, SIGNAL('visibilityChanged(bool)'), self.searchBarVisibilityChanged)
-		self.actionPreview = QAction(self.tr('Preview'), self)
+		self.actionPreview = self.act(self.tr('Preview'), shct=Qt.CTRL+Qt.Key_E, trigbool=self.preview)
 		if QIcon.hasThemeIcon('document-preview'):
 			self.actionPreview.setIcon(QIcon.fromTheme('document-preview'))
 		elif QIcon.hasThemeIcon('preview-file'):
@@ -254,68 +240,43 @@ class ReTextWindow(QMainWindow):
 			self.actionPreview.setIcon(QIcon.fromTheme('x-office-document'))
 		else:
 			self.actionPreview.setIcon(QIcon(icon_path+'document-preview.png'))
-		self.actionPreview.setCheckable(True)
-		self.actionPreview.setShortcut(Qt.CTRL + Qt.Key_E)
-		self.connect(self.actionPreview, SIGNAL('triggered(bool)'), self.preview)
-		self.actionLivePreview = QAction(self.tr('Live preview'), self)
-		self.actionLivePreview.setCheckable(True)
-		self.actionLivePreview.setShortcut(Qt.CTRL + Qt.SHIFT + Qt.Key_E)
-		self.connect(self.actionLivePreview, SIGNAL('triggered(bool)'), self.enableLivePreview)
-		self.actionFullScreen = QAction(self.actIcon('view-fullscreen'), self.tr('Fullscreen mode'), self)
-		self.actionFullScreen.setCheckable(True)
-		self.actionFullScreen.setShortcut(Qt.Key_F11)
-		self.connect(self.actionFullScreen, SIGNAL('triggered(bool)'), self.enableFullScreen)
-		self.actionPerfectHtml = QAction(self.actIcon('text-html'), 'HTML', self)
-		self.connect(self.actionPerfectHtml, SIGNAL('triggered()'), self.saveFilePerfect)
-		self.actionPdf = QAction(self.actIcon('application-pdf'), 'PDF', self)
-		self.connect(self.actionPdf, SIGNAL('triggered()'), self.savePdf)
-		self.actionOdf = QAction(self.actIcon('x-office-document'), 'ODT', self)
-		self.connect(self.actionOdf, SIGNAL('triggered()'), self.saveOdf)
+		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.CTRL+Qt.SHIFT+Qt.Key_E, \
+		trigbool=self.enableLivePreview)
+		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), icon='view-fullscreen', shct=Qt.Key_F11, \
+		trigbool=self.enableFullScreen)
+		self.actionPerfectHtml = self.act('HTML', icon='text-html', trig=self.saveFilePerfect)
+		self.actionPdf = self.act('PDF', icon='application-pdf', trig=self.savePdf)
+		self.actionOdf = self.act('ODT', icon='x-office-document', trig=self.saveOdf)
 		settings.beginGroup('Export')
 		if not settings.allKeys().isEmpty():
-			self.actionOtherExport = QAction(self.tr('Other formats'), self)
-			self.connect(self.actionOtherExport, SIGNAL('triggered()'), self.otherExport)
+			self.actionOtherExport = self.act(self.tr('Other formats'), trig=self.otherExport)
 			otherExport = True
 		else:
 			otherExport = False
 		settings.endGroup()
-		self.actionQuit = QAction(self.actIcon('application-exit'), self.tr('Quit'), self)
-		self.actionQuit.setShortcut(QKeySequence.Quit)
+		self.actionQuit = self.act(self.tr('Quit'), icon='application-exit', shct=QKeySequence.Quit)
 		self.actionQuit.setMenuRole(QAction.QuitRole)
 		self.connect(self.actionQuit, SIGNAL('triggered()'), qApp, SLOT('quit()'))
-		self.actionUndo = QAction(self.actIcon('edit-undo'), self.tr('Undo'), self)
-		self.actionUndo.setShortcut(QKeySequence.Undo)
-		self.actionRedo = QAction(self.actIcon('edit-redo'), self.tr('Redo'), self)
-		self.actionRedo.setShortcut(QKeySequence.Redo)
+		self.actionUndo = self.act(self.tr('Undo'), icon='edit-undo', shct=QKeySequence.Undo, \
+		trig=lambda: self.editBoxes[self.ind].undo())
+		self.actionRedo = self.act(self.tr('Redo'), icon='edit-redo', shct=QKeySequence.Redo, \
+		trig=lambda: self.editBoxes[self.ind].redo())
+		self.actionCopy = self.act(self.tr('Copy'), icon='edit-copy', shct=QKeySequence.Copy, \
+		trig=lambda: self.editBoxes[self.ind].copy())
+		self.actionCut = self.act(self.tr('Cut'), icon='edit-cut', shct=QKeySequence.Cut, \
+		trig=lambda: self.editBoxes[self.ind].cut())
+		self.actionPaste = self.act(self.tr('Paste'), icon='edit-paste', shct=QKeySequence.Paste, \
+		trig=lambda: self.editBoxes[self.ind].paste())
 		self.actionUndo.setEnabled(False)
 		self.actionRedo.setEnabled(False)
-		self.actionCopy = QAction(self.actIcon('edit-copy'), self.tr('Copy'), self)
-		self.actionCopy.setShortcut(QKeySequence.Copy)
 		self.actionCopy.setEnabled(False)
-		self.actionCut = QAction(self.actIcon('edit-cut'), self.tr('Cut'), self)
-		self.actionCut.setShortcut(QKeySequence.Cut)
 		self.actionCut.setEnabled(False)
-		self.actionPaste = QAction(self.actIcon('edit-paste'), self.tr('Paste'), self)
-		self.actionPaste.setShortcut(QKeySequence.Paste)
-		self.connect(self.actionUndo, SIGNAL('triggered()'), \
-		lambda: self.editBoxes[self.ind].undo())
-		self.connect(self.actionRedo, SIGNAL('triggered()'), \
-		lambda: self.editBoxes[self.ind].redo())
-		self.connect(self.actionCut, SIGNAL('triggered()'), \
-		lambda: self.editBoxes[self.ind].cut())
-		self.connect(self.actionCopy, SIGNAL('triggered()'), \
-		lambda: self.editBoxes[self.ind].copy())
-		self.connect(self.actionPaste, SIGNAL('triggered()'), \
-		lambda: self.editBoxes[self.ind].paste())
 		self.connect(qApp.clipboard(), SIGNAL('dataChanged()'), self.clipboardDataChanged)
 		self.clipboardDataChanged()
 		self.sc = False
 		if use_enchant:
-			self.actionEnableSC = QAction(self.tr('Enable'), self)
-			self.actionEnableSC.setCheckable(True)
-			self.actionSetLocale = QAction(self.tr('Set locale'), self)
-			self.connect(self.actionEnableSC, SIGNAL('triggered(bool)'), self.enableSC)
-			self.connect(self.actionSetLocale, SIGNAL('triggered()'), self.changeLocale)
+			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSC)
+			self.actionSetLocale = self.act(self.tr('Set locale'), trigbool=self.changeLocale)
 			if settings.contains('spellCheckLocale'):
 				self.sl = str(settings.value('spellCheckLocale').toString())
 			else:
@@ -324,34 +285,25 @@ class ReTextWindow(QMainWindow):
 				if settings.value('spellCheck').toBool():
 					self.actionEnableSC.setChecked(True)
 					self.enableSC(True)
-		self.actionPlainText = QAction(self.tr('Plain text'), self)
-		self.actionPlainText.setCheckable(True)
-		self.connect(self.actionPlainText, SIGNAL('triggered(bool)'), self.enablePlainText)
-		self.actionRecentFiles = QAction(self.actIcon('document-open-recent'), self.tr('Open recent'), self)
-		self.connect(self.actionRecentFiles, SIGNAL('triggered()'), self.openRecent)
+		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
+		self.actionRecentFiles = self.act(self.tr('Open recent'), icon='document-open-recent', trig=self.openRecent)
 		if wpgen:
-			self.actionWpgen = QAction(self.tr('Generate webpages'), self)
-			self.connect(self.actionWpgen, SIGNAL('triggered()'), self.startWpgen)
-		self.actionShow = QAction(self.actIcon('system-file-manager'), self.tr('Show'), self)
-		self.connect(self.actionShow, SIGNAL('triggered()'), self.showInDir)
-		self.actionFind = QAction(self.actIcon('go-next'), self.tr('Next'), self)
-		self.actionFind.setShortcut(QKeySequence.FindNext)
-		self.actionFindPrev = QAction(self.actIcon('go-previous'), self.tr('Previous'), self)
-		self.actionFindPrev.setShortcut(QKeySequence.FindPrevious)
-		self.connect(self.actionFind, SIGNAL('triggered()'), self.find)
-		self.connect(self.actionFindPrev, SIGNAL('triggered()'), lambda: self.find(back=True))
-		self.actionHelp = QAction(self.actIcon('help-contents'), self.tr('Get help online'), self)
-		self.connect(self.actionHelp, SIGNAL('triggered()'), self.openHelp)
-		self.actionAbout = QAction(self.actIcon('help-about'), self.tr('About %1').arg(app_name), self)
+			self.actionWpgen = self.act(self.tr('Generate webpages'), trig=self.startWpgen)
+		self.actionShow = self.act(self.tr('Show'), icon='system-file-manager', trig=self.showInDir)
+		self.actionFind = self.act(self.tr('Next'), icon='go-next', shct=QKeySequence.FindNext, trig=self.find)
+		self.actionFindPrev = self.act(self.tr('Previous'), icon='go-previous', shct=QKeySequence.FindPrevious, \
+		trig=lambda: self.find(back=True))
+		self.actionHelp = self.act(self.tr('Get help online'), icon='help-contents', trig=self.openHelp)
+		self.actionAbout = self.act(self.tr('About %1').arg(app_name), icon='help-about', trig=self.aboutDialog)
 		self.actionAbout.setMenuRole(QAction.AboutRole)
-		self.connect(self.actionAbout, SIGNAL('triggered()'), self.aboutDialog)
-		self.actionAboutQt = QAction(self.tr('About Qt'), self)
+		self.actionAboutQt = self.act(self.tr('About Qt'))
 		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
+		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
 		self.chooseGroup = QActionGroup(self)
 		self.useDocUtils = False
-		self.actionUseMarkdown = QAction('Markdown', self)
+		self.actionUseMarkdown = self.act('Markdown')
 		self.actionUseMarkdown.setCheckable(True)
-		self.actionUseReST = QAction('ReStructuredText', self)
+		self.actionUseReST = self.act('ReStructuredText')
 		self.actionUseReST.setCheckable(True)
 		if settings.contains('useReST'):
 			if settings.value('useReST').toBool():
@@ -365,19 +317,13 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.actionUseReST, SIGNAL('toggled(bool)'), self.setDocUtilsDefault)
 		self.chooseGroup.addAction(self.actionUseMarkdown)
 		self.chooseGroup.addAction(self.actionUseReST)
-		self.actionBold = QAction(self.tr('Bold'), self)
-		self.actionBold.setShortcut(QKeySequence.Bold)
-		self.actionItalic = QAction(self.tr('Italic'), self)
-		self.actionItalic.setShortcut(QKeySequence.Italic)
-		self.actionUnderline = QAction(self.tr('Underline'), self)
-		self.actionUnderline.setShortcut(QKeySequence.Underline)
-		self.connect(self.actionBold, SIGNAL('triggered()'), lambda: self.insertChars('**'))
-		self.connect(self.actionItalic, SIGNAL('triggered()'), lambda: self.insertChars('*'))
-		self.connect(self.actionUnderline, SIGNAL('triggered()'), lambda: self.insertTag(7)) # <u>...</u>
+		self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.Bold, trig=lambda: self.insertChars('**'))
+		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.Italic, trig=lambda: self.insertChars('*'))
+		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline, \
+		trig=lambda: self.insertTag(7)) # <u>...</u>
 		if use_gdocs:
-			self.actionSaveGDocs = QAction(QIcon.fromTheme('web-browser', self.actIcon('intenret-web-browser')), self.tr('Save to Google Docs'), self)
-			self.connect(self.actionSaveGDocs, SIGNAL('triggered()'), self.saveGDocs)
-		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
+			self.actionSaveGDocs = self.act(self.tr('Save to Google Docs'), trig=self.saveGDocs)
+			self.actionSaveGDocs.setIcon(QIcon.fromTheme('web-browser', self.actIcon('intenret-web-browser')))
 		self.usefulTags = ('center', 's', 'span', 'table', 'td', 'tr', 'u')
 		self.usefulChars = ('deg', 'divide', 'hellip', 'laquo', 'larr', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo', 'rarr', 'times')
 		self.tagsBox = QComboBox(self.editBar)
@@ -510,6 +456,20 @@ class ReTextWindow(QMainWindow):
 		if not (use_md or use_docutils):
 			QMessageBox.warning(self, app_name, self.tr('You have neither Markdown nor Docutils modules installed!') \
 			+'<br>'+self.tr('Only HTML formatting will be available.'))
+	
+	def act(self, name, icon=None, trig=None, trigbool=None, shct=None):
+		if icon:
+			action = QAction(self.actIcon(icon), name, self)
+		else:
+			action = QAction(name, self)
+		if trig:
+			self.connect(action, SIGNAL('triggered()'), trig)
+		elif trigbool:
+			action.setCheckable(True)
+			self.connect(action, SIGNAL('triggered(bool)'), trigbool)
+		if shct:
+			action.setShortcut(shct)
+		return action
 	
 	def actIcon(self, name):
 		return QIcon.fromTheme(name, QIcon(icon_path+name+'.png'))
