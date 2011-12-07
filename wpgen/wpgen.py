@@ -25,7 +25,7 @@ import shutil
 
 try:
 	import markdown
-	md = markdown.Markdown()
+	md = markdown.Markdown(['extra', 'meta'])
 except:
 	use_md = False
 else:
@@ -39,7 +39,7 @@ else:
 	use_docutils = True
 
 app_name = "ReText Webpages generator"
-app_version = "0.4.2"
+app_version = "0.5.0"
 app_site = "http://sourceforge.net/p/retext/"
 
 if os.path.exists("/usr/share/wpgen/"):
@@ -84,6 +84,10 @@ class WebLibrary(object):
 		inputfile.close()
 		if ext in (".md", ".mkd", ".re") and use_md:
 			html = md.convert(text)
+			try:
+				pagename = str.join(' ', md.Meta['title'])
+			except:
+				pass
 		elif ext in (".rst", ".rest") and use_docutils:
 			parts = publish_parts(text, writer_name='html')
 			html = parts['body']
@@ -97,6 +101,7 @@ class WebLibrary(object):
 			content = self.template
 			content = content.replace("%CONTENT%", html)
 			content = content.replace("%PAGENAME%", pagename)
+			content = content.replace("%HTMLDIR%", ".")
 			content = content.replace(" href=\""+bn+".html\"", "")
 			content = content.replace("%\\", "%")
 			outputfile = open(self.dirPath+"/html/"+bn+".html", "w")

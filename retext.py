@@ -538,8 +538,7 @@ class ReTextWindow(QMainWindow):
 			self.editBar.setDisabled(self.apc[ind])
 		self.ind = ind
 		if self.fileNames[ind]:
-			self.setWindowTitle("")
-			self.setWindowFilePath(self.fileNames[ind])
+			self.setCurrentFile()
 		else:
 			self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
@@ -1154,6 +1153,9 @@ class ReTextWindow(QMainWindow):
 	
 	def parseText(self):
 		htmltext = self.editBoxes[self.ind].toPlainText()
+		# WpGen directives
+		htmltext = htmltext.replace('%HTMLDIR%', 'html')
+		htmltext = htmltext.replace('%\\', '%')
 		parser = self.getParser()
 		if parser == PARSER_HTML:
 			return htmltext
