@@ -221,10 +221,12 @@ class ReTextWindow(QMainWindow):
 		self.actionSave = self.act(self.tr('Save'), icon='document-save', shct=QKeySequence.Save, trig=self.saveFile)
 		self.actionSave.setEnabled(False)
 		self.actionSave.setPriority(QAction.LowPriority)
-		self.actionSaveAs = self.act(self.tr('Save as'), icon='document-save-as', shct=QKeySequence.SaveAs, trig=self.saveFileAs)
+		self.actionSaveAs = self.act(self.tr('Save as'), icon='document-save-as', shct=QKeySequence.SaveAs, \
+		trig=self.saveFileAs)
 		self.actionPrint = self.act(self.tr('Print'), icon='document-print', shct=QKeySequence.Print, trig=self.printFile)
 		self.actionPrint.setPriority(QAction.LowPriority)
-		self.actionPrintPreview = self.act(self.tr('Print preview'), icon='document-print-preview', trig=self.printPreview)
+		self.actionPrintPreview = self.act(self.tr('Print preview'), icon='document-print-preview', \
+		trig=self.printPreview)
 		self.actionViewHtml = self.act(self.tr('View HTML code'), icon='text-html', trig=self.viewHtml)
 		self.actionChangeFont = self.act(self.tr('Change default font'), trig=self.changeFont)
 		self.actionSearch = self.act(self.tr('Find text'), icon='edit-find', shct=QKeySequence.Find)
