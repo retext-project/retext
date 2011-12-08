@@ -937,6 +937,7 @@ class ReTextWindow(QMainWindow):
 			return QMessageBox.warning(self, app_name, self.tr('This function is not available in Plain text mode!'))
 		settings.beginGroup('Export')
 		types = settings.allKeys()
+		settings.endGroup()
 		item, ok = QInputDialog.getItem(self, app_name, self.tr('Select type'), types, 0, False)
 		if ok:
 			fileName = QFileDialog.getSaveFileName(self, self.tr('Export document'))
