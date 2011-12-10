@@ -562,6 +562,7 @@ class ReTextWindow(QMainWindow):
 	def preview(self, viewmode):
 		self.apc[self.ind] = viewmode
 		if self.actionLivePreview.isChecked():
+			self.actionLivePreview.setChecked(False)
 			return self.enableLivePreview(False)
 		self.editBar.setDisabled(viewmode)
 		self.editBoxes[self.ind].setVisible(not viewmode)
