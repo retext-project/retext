@@ -26,7 +26,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.1.2"
+app_version = "2.1.3"
 
 settings = QSettings('ReText project', 'ReText')
 
@@ -553,11 +553,10 @@ class ReTextWindow(QMainWindow):
 			self.actionCut.setEnabled(self.editBoxes[ind].textCursor().hasSelection())
 			self.actionPreview.setChecked(self.apc[ind])
 			self.actionLivePreview.setChecked(self.alpc[ind])
-			self.editBar.setDisabled(self.apc[ind])
+			self.editBar.setDisabled(self.apc[ind] and not self.alpc[ind])
 		self.ind = ind
 		if self.fileNames[ind]:
-			self.setWindowTitle("")
-			self.setWindowFilePath(self.fileNames[ind])
+			self.setCurrentFile()
 		else:
 			self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
@@ -577,8 +576,9 @@ class ReTextWindow(QMainWindow):
 	
 	def preview(self, viewmode):
 		self.apc[self.ind] = viewmode
-		if self.actionLivePreview.isChecked:
+		if self.actionLivePreview.isChecked():
 			self.actionLivePreview.setChecked(False)
+			self.alpc[self.ind] = False
 		self.editBar.setDisabled(viewmode)
 		self.editBoxes[self.ind].setVisible(not viewmode)
 		self.previewBoxes[self.ind].setVisible(viewmode)
@@ -587,6 +587,7 @@ class ReTextWindow(QMainWindow):
 	
 	def enableLivePreview(self, livemode):
 		self.alpc[self.ind] = livemode
+		self.apc[self.ind] = livemode
 		self.actionPreview.setChecked(livemode)
 		self.editBar.setEnabled(True)
 		self.previewBoxes[self.ind].setVisible(livemode)
@@ -949,6 +950,7 @@ class ReTextWindow(QMainWindow):
 			return QMessageBox.warning(self, app_name, self.tr('This function is not available in Plain text mode!'))
 		settings.beginGroup('Export')
 		types = settings.allKeys()
+		settings.endGroup()
 		item, ok = QInputDialog.getItem(self, app_name, self.tr('Select type'), types, 0, False)
 		if ok:
 			fileName = QFileDialog.getSaveFileName(self, self.tr('Export document'))
