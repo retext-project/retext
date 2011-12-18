@@ -322,12 +322,14 @@ class ReTextWindow(QMainWindow):
 		self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.Bold, trig=lambda: self.insertChars('**'))
 		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.Italic, trig=lambda: self.insertChars('*'))
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline, \
-		trig=lambda: self.insertTag(7)) # <u>...</u>
+		trig=lambda: self.insertTag(9)) # <u>...</u>
 		if use_gdocs:
 			self.actionSaveGDocs = self.act(self.tr('Save to Google Docs'), trig=self.saveGDocs)
 			self.actionSaveGDocs.setIcon(QIcon.fromTheme('web-browser', self.actIcon('intenret-web-browser')))
-		self.usefulTags = ('center', 's', 'span', 'table', 'td', 'tr', 'u')
-		self.usefulChars = ('deg', 'divide', 'hellip', 'laquo', 'larr', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo', 'rarr', 'times')
+		self.usefulTags = ('big', 'center', 's', 'small', 'span', 'table', 'td', 'tr', 'u')
+		self.usefulChars = ('deg', 'divide', 'hellip', 'laquo', 'larr', \
+			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo', \
+			'rarr', 'rsquo', 'times')
 		self.tagsBox = QComboBox(self.editBar)
 		self.tagsBox.addItem(self.tr('Tags'))
 		self.tagsBox.addItems(self.usefulTags)
@@ -1034,7 +1036,10 @@ class ReTextWindow(QMainWindow):
 	
 	def insertChars(self, chars):
 		tc = self.editBoxes[self.ind].textCursor()
-		tc.insertText(chars+tc.selectedText()+chars)
+		if tc.hasSelection:
+			tc.insertText(chars+tc.selectedText()+chars)
+		else:
+			tc.insertText(chars)
 	
 	def insertTag(self, num):
 		if num:
@@ -1046,7 +1051,6 @@ class ReTextWindow(QMainWindow):
 			tc = self.editBoxes[self.ind].textCursor()
 			if hc:
 				toinsert = '<'+ut+arg+'>'+tc.selectedText()+'</'+ut+'>'
-				tc.removeSelectedText
 				tc.insertText(toinsert)
 			else:
 				tc.insertText('<'+ut+arg+'>'+tc.selectedText())
