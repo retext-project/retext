@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="ru_RU" sourcelanguage="">
+<!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="">
 <context>
     <name>LogPassDialog</name>
     <message>
         <location filename="retext.py" line="141"/>
         <source>Enter your Google account data</source>
-        <translation>Введите данные вашего аккаунта Google</translation>
+        <translation>請輸入您的 Google 帳號訊息</translation>
     </message>
     <message>
         <location filename="retext.py" line="150"/>
         <source>Username</source>
-        <translation>Имя пользователя</translation>
+        <translation>用戶名</translation>
     </message>
     <message>
         <location filename="retext.py" line="151"/>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>密鑰或應用程式碼（適用于兩步式認証的 Google 帳號）</translation>
     </message>
 </context>
 <context>
@@ -23,429 +23,428 @@
     <message>
         <location filename="retext.py" line="219"/>
         <source>Open</source>
-        <translation>Открыть</translation>
+        <translation>開啟</translation>
     </message>
     <message>
         <location filename="retext.py" line="221"/>
         <source>Save</source>
-        <translation>Сохранить</translation>
+        <translation>儲存</translation>
     </message>
     <message>
         <location filename="retext.py" line="226"/>
         <source>Print</source>
-        <translation>Распечатать</translation>
+        <translation>列印</translation>
     </message>
     <message>
         <location filename="retext.py" line="236"/>
         <source>Preview</source>
-        <translation>Просмотр</translation>
+        <translation>預覽</translation>
     </message>
     <message>
         <location filename="retext.py" line="334"/>
         <source>Tags</source>
-        <translation>Теги</translation>
+        <translation>書籤</translation>
     </message>
     <message>
         <location filename="retext.py" line="338"/>
         <source>Symbols</source>
-        <translation>Символы</translation>
+        <translation>特殊符號</translation>
     </message>
     <message>
         <location filename="retext.py" line="887"/>
         <source>HTML files (*.html *.htm)</source>
-        <translation>Файлы HTML (*.html *.htm)</translation>
+        <translation>HTML 檔案 (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="retext.py" line="887"/>
         <source>Save file</source>
-        <translation>Сохранить файл</translation>
+        <translation>儲存檔案</translation>
     </message>
     <message>
         <location filename="retext.py" line="224"/>
         <source>Save as</source>
-        <translation>Сохранить как</translation>
+        <translation>另存新檔</translation>
     </message>
     <message>
         <location filename="retext.py" line="259"/>
         <source>Quit</source>
-        <translation>Выход</translation>
+        <translation>離開</translation>
     </message>
     <message>
         <location filename="retext.py" line="301"/>
         <source>About Qt</source>
-        <translation>О Qt</translation>
+        <translation>關於 Qt</translation>
     </message>
     <message>
         <location filename="retext.py" line="352"/>
         <source>File</source>
-        <translation>Файл</translation>
+        <translation>檔案</translation>
     </message>
     <message>
         <location filename="retext.py" line="353"/>
         <source>Edit</source>
-        <translation>Правка</translation>
+        <translation>編輯</translation>
     </message>
     <message>
         <location filename="retext.py" line="354"/>
         <source>Help</source>
-        <translation>Справка</translation>
+        <translation>說明</translation>
     </message>
     <message>
         <location filename="retext.py" line="366"/>
         <source>Export</source>
-        <translation>Экспорт</translation>
+        <translation>匯出</translation>
     </message>
     <message>
         <location filename="retext.py" line="211"/>
         <source>File toolbar</source>
-        <translation>Панель файла</translation>
+        <translation>檔案工具列</translation>
     </message>
     <message>
         <location filename="retext.py" line="213"/>
         <source>Edit toolbar</source>
-        <translation>Панель редактирования</translation>
+        <translation>編輯工具列</translation>
     </message>
     <message>
         <location filename="retext.py" line="910"/>
         <source>Export document to PDF</source>
-        <translation>Экспортировать документ как PDF</translation>
+        <translation>匯出檔案到 PDF</translation>
     </message>
     <message>
         <location filename="retext.py" line="910"/>
         <source>PDF files (*.pdf)</source>
-        <translation>Файлы PDF (*.pdf)</translation>
+        <translation>PDF 檔案 (*.pdf)</translation>
     </message>
     <message>
         <location filename="retext.py" line="1071"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
-        <translation>Документ был изменён.
-Сохранить изменения?</translation>
+        <translation>檔案已變更，確定儲存嗎？</translation>
     </message>
     <message>
         <location filename="retext.py" line="262"/>
         <source>Undo</source>
-        <translation>Отменить действие</translation>
+        <translation>復原</translation>
     </message>
     <message>
         <location filename="retext.py" line="264"/>
         <source>Redo</source>
-        <translation>Повторить действие</translation>
+        <translation>重做</translation>
     </message>
     <message>
         <location filename="retext.py" line="266"/>
         <source>Copy</source>
-        <translation>Копировать</translation>
+        <translation>複製</translation>
     </message>
     <message>
         <location filename="retext.py" line="268"/>
         <source>Cut</source>
-        <translation>Вырезать</translation>
+        <translation>剪下</translation>
     </message>
     <message>
         <location filename="retext.py" line="270"/>
         <source>Paste</source>
-        <translation>Вставить</translation>
+        <translation>貼上</translation>
     </message>
     <message>
         <location filename="retext.py" line="1102"/>
         <source>New document</source>
-        <translation>Новый документ</translation>
+        <translation>新檔</translation>
     </message>
     <message>
         <location filename="retext.py" line="1114"/>
         <source>About %1</source>
-        <translation>О %1</translation>
+        <translation>關於 %1</translation>
     </message>
     <message>
         <location filename="retext.py" line="744"/>
         <source>All files (*)</source>
-        <translation>Все файлы (*)</translation>
+        <translation>所有檔案 (*)</translation>
     </message>
     <message>
         <location filename="retext.py" line="217"/>
         <source>New</source>
-        <translation>Новый</translation>
+        <translation>新增</translation>
     </message>
     <message>
         <location filename="retext.py" line="739"/>
         <source>Open recent</source>
-        <translation>Открыть последние</translation>
+        <translation>開啟最近的</translation>
     </message>
     <message>
         <location filename="retext.py" line="290"/>
         <source>Plain text</source>
-        <translation>Простой текст</translation>
+        <translation>純文本</translation>
     </message>
     <message>
         <location filename="retext.py" line="327"/>
         <source>Save to Google Docs</source>
-        <translation>Сохранить в Google Docs</translation>
+        <translation>匯出到 Google Docs</translation>
     </message>
     <message>
         <location filename="retext.py" line="1001"/>
         <source>Incorrect user name or password!</source>
-        <translation>Неверное имя пользователя или пароль!</translation>
+        <translation>用戶名或密鑰不正確!</translation>
     </message>
     <message>
         <location filename="retext.py" line="878"/>
         <source>OpenDocument text files (*.odt)</source>
-        <translation>Файлы текста OpenDocument (*.odt)</translation>
+        <translation>Libreoffice 檔案 (*.odt)</translation>
     </message>
     <message>
         <location filename="retext.py" line="878"/>
         <source>Export document to ODT</source>
-        <translation>Экспортировать документ как ODT</translation>
+        <translation>匯出檔案到 ODT</translation>
     </message>
     <message>
         <location filename="retext.py" line="230"/>
         <source>View HTML code</source>
-        <translation>Просмотр кода HTML</translation>
+        <translation>檢視 HTML 程式碼</translation>
     </message>
     <message>
         <location filename="retext.py" line="1105"/>
         <source>HTML code</source>
-        <translation>код HTML</translation>
+        <translation>HTML 程式碼</translation>
     </message>
     <message>
         <location filename="retext.py" line="228"/>
         <source>Print preview</source>
-        <translation>Предпросмотр печати</translation>
+        <translation>列印預覽</translation>
     </message>
     <message>
         <location filename="retext.py" line="925"/>
         <source>Print document</source>
-        <translation>Распечатать документ</translation>
+        <translation>列印檔案</translation>
     </message>
     <message>
         <location filename="retext.py" line="245"/>
         <source>Live preview</source>
-        <translation>Живой просмотр</translation>
+        <translation>同步預覽</translation>
     </message>
     <message>
         <location filename="retext.py" line="700"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
-        <translation>Веб-страницы сохранены в папке &lt;code&gt;html&lt;/code&gt;.</translation>
+        <translation>網頁儲存在 &lt;code&gt;html&lt;/code&gt; 目錄。</translation>
     </message>
     <message>
         <location filename="retext.py" line="713"/>
         <source>Please, save the file somewhere.</source>
-        <translation>Сначала сохраните файл.</translation>
+        <translation>請，儲存到別的地方呦！</translation>
     </message>
     <message>
         <location filename="retext.py" line="293"/>
         <source>Generate webpages</source>
-        <translation>Создать веб-страницы</translation>
+        <translation>產生網頁</translation>
     </message>
     <message>
         <location filename="retext.py" line="798"/>
         <source>Plain text (*.txt)</source>
-        <translation>Простой текст (*.txt)</translation>
+        <translation>純文本 (*.txt)</translation>
     </message>
     <message>
         <location filename="retext.py" line="294"/>
         <source>Show</source>
-        <translation>Показать</translation>
+        <translation>顯示</translation>
     </message>
     <message>
         <location filename="retext.py" line="358"/>
         <source>Directory</source>
-        <translation>Папка</translation>
+        <translation>目錄</translation>
     </message>
     <message>
         <location filename="retext.py" line="744"/>
         <source>Supported files</source>
-        <translation>Поддерживаемые файлы</translation>
+        <translation>支持的檔案格式</translation>
     </message>
     <message>
         <location filename="retext.py" line="231"/>
         <source>Change default font</source>
-        <translation>Изменить стандартный шрифт</translation>
+        <translation>變更預設字型</translation>
     </message>
     <message>
         <location filename="retext.py" line="254"/>
         <source>Other formats</source>
-        <translation>Другие форматы</translation>
+        <translation>其他格式</translation>
     </message>
     <message>
         <location filename="retext.py" line="944"/>
         <source>Select type</source>
-        <translation>Выберите тип</translation>
+        <translation>選擇類型</translation>
     </message>
     <message>
         <location filename="retext.py" line="946"/>
         <source>Export document</source>
-        <translation>Экспортировать документ</translation>
+        <translation>匯出檔案</translation>
     </message>
     <message>
         <location filename="retext.py" line="940"/>
         <source>This function is not available in Plain text mode!</source>
-        <translation>Эта функция недоступна в режиме простого текста!</translation>
+        <translation>該功能無法在純文本模式下使用！</translation>
     </message>
     <message>
         <location filename="retext.py" line="461"/>
         <source>Only HTML formatting will be available.</source>
-        <translation>Будет доступно только HTML-форматирование.</translation>
+        <translation>只有 HTML 格式才供應。</translation>
     </message>
     <message>
         <location filename="retext.py" line="280"/>
         <source>Enable</source>
-        <translation>Включить</translation>
+        <translation>啟用</translation>
     </message>
     <message>
         <location filename="retext.py" line="281"/>
         <source>Set locale</source>
-        <translation>Установить локаль</translation>
+        <translation>選擇程式語言</translation>
     </message>
     <message>
         <location filename="retext.py" line="387"/>
         <source>Spell check</source>
-        <translation>Проверка орфографии</translation>
+        <translation>拼寫檢查</translation>
     </message>
     <message>
         <location filename="retext.py" line="624"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation>Введите код локали (например: en_US)</translation>
+        <translation>輸入語言名字 (例如: en_US)</translation>
     </message>
     <message>
         <location filename="retext.py" line="247"/>
         <source>Fullscreen mode</source>
-        <translation>Полноэкранный режим</translation>
+        <translation>全螢幕</translation>
     </message>
     <message>
         <location filename="retext.py" line="215"/>
         <source>Search toolbar</source>
-        <translation>Панель поиска</translation>
+        <translation>尋找工具列</translation>
     </message>
     <message>
         <location filename="retext.py" line="232"/>
         <source>Find text</source>
-        <translation>Поиск текста</translation>
+        <translation>尋找文本</translation>
     </message>
     <message>
         <location filename="retext.py" line="295"/>
         <source>Next</source>
-        <translation>Следующее</translation>
+        <translation>下一條</translation>
     </message>
     <message>
         <location filename="retext.py" line="296"/>
         <source>Previous</source>
-        <translation>Предыдущее</translation>
+        <translation>上一條</translation>
     </message>
     <message>
         <location filename="retext.py" line="395"/>
         <source>Default editing mode</source>
-        <translation>Стандартный режим редактирования</translation>
+        <translation>預設編輯模式</translation>
     </message>
     <message>
         <location filename="retext.py" line="434"/>
         <source>Search</source>
-        <translation>Поиск</translation>
+        <translation>尋找</translation>
     </message>
     <message>
         <location filename="retext.py" line="438"/>
         <source>Case sensitively</source>
-        <translation>Учитывать регистр</translation>
+        <translation>對大小写敏感</translation>
     </message>
     <message>
         <location filename="retext.py" line="461"/>
         <source>You have neither Markdown nor Docutils modules installed!</source>
-        <translation>У вас не установлен ни один из модулей Markdown и Docutils!</translation>
+        <translation>你既沒有安裝 Markdown 也没有 Docutils 模塊!</translation>
     </message>
     <message>
         <location filename="retext.py" line="804"/>
         <source>HTML files</source>
-        <translation>Файлы HTML</translation>
+        <translation>HTML 檔案</translation>
     </message>
     <message>
         <location filename="retext.py" line="1114"/>
         <source>Author: Dmitry Shachnev, 2011</source>
-        <translation>Автор: Dmitry Shachnev, 2011</translation>
+        <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
         <location filename="retext.py" line="1114"/>
         <source>Website</source>
-        <translation>Веб-сайт</translation>
+        <translation>部落格</translation>
     </message>
     <message>
         <location filename="retext.py" line="1114"/>
         <source>Markdown syntax</source>
-        <translation>Синтаксис Markdown</translation>
+        <translation>Markdown 句法</translation>
     </message>
     <message>
         <location filename="retext.py" line="1114"/>
         <source>ReST syntax</source>
-        <translation>Синтаксис ReST</translation>
+        <translation>ReST 句法</translation>
     </message>
     <message>
         <location filename="retext.py" line="801"/>
         <source>ReStructuredText files</source>
-        <translation>Файлы ReStructuredText</translation>
+        <translation>ReStructuredText 檔案</translation>
     </message>
     <message>
         <location filename="retext.py" line="807"/>
         <source>Markdown files</source>
-        <translation>Файлы Markdown</translation>
+        <translation>Markdown 檔案</translation>
     </message>
     <message>
         <location filename="retext.py" line="1114"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
-        <translation>Простой, но мощный редактор для Markdown и ReStructuredText</translation>
+        <translation>簡單高效的 Markdown 與 ReStructuredText 編輯器</translation>
     </message>
     <message>
         <location filename="retext.py" line="1176"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
-        <translation>Невозможно обработать содержимое файла, убедитесь, что установлен необходимый модуль!</translation>
+        <translation>不能處理檔案內容，檢查你是否安裝了必要的模塊！</translation>
     </message>
     <message>
         <location filename="retext.py" line="744"/>
         <source>Select one or several files to open</source>
-        <translation>Выберите один или несколько файлов для открытия</translation>
+        <translation>選擇一個或多個檔案以開啟</translation>
     </message>
     <message>
         <location filename="retext.py" line="298"/>
         <source>Get help online</source>
-        <translation>Получить помощь в интернете</translation>
+        <translation>在線擷取幫助（英文）</translation>
     </message>
     <message>
         <location filename="retext.py" line="702"/>
         <source>Show directory</source>
-        <translation>Открыть папку</translation>
+        <translation>顯示目錄</translation>
     </message>
     <message>
         <location filename="retext.py" line="707"/>
         <source>Webpages generator is not installed!</source>
-        <translation>Генератор веб-страниц не установлен!</translation>
+        <translation>網頁生成器未安裝！</translation>
     </message>
     <message>
         <location filename="retext.py" line="823"/>
         <source>Cannot save to file because it is read-only!</source>
-        <translation>Невозможно сохранить в файл, так как он доступен только для чтения!</translation>
+        <translation>不能儲存檔案因为它是只讀的！</translation>
     </message>
     <message>
         <location filename="retext.py" line="1003"/>
         <source>Authentification failed, please check your internet connection!</source>
-        <translation>Не удалось подключиться, проверьте ваше интернет-соединение!</translation>
+        <translation>驗証失敗，請核查您的網絡連接！</translation>
     </message>
     <message>
         <location filename="retext.py" line="322"/>
         <source>Bold</source>
-        <translation>Полужирный</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="retext.py" line="323"/>
         <source>Italic</source>
-        <translation>Курсив</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="retext.py" line="324"/>
         <source>Underline</source>
-        <translation>Подчёркивание</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="retext.py" line="398"/>
         <source>Formatting</source>
-        <translation>Форматирование</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

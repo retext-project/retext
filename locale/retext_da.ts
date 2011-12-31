@@ -21,7 +21,7 @@
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="retext.py" line="1097"/>
+        <location filename="retext.py" line="1102"/>
         <source>New document</source>
         <translation>Nyt dokument</translation>
     </message>
@@ -111,12 +111,12 @@
         <translation>Indsæt tekst</translation>
     </message>
     <message>
-        <location filename="retext.py" line="737"/>
+        <location filename="retext.py" line="739"/>
         <source>Open recent</source>
         <translation>Åbn nylige</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1109"/>
+        <location filename="retext.py" line="1114"/>
         <source>About %1</source>
         <translation>Om %1</translation>
     </message>
@@ -131,89 +131,89 @@
         <translation>Gem til Google Docs</translation>
     </message>
     <message>
-        <location filename="retext.py" line="332"/>
+        <location filename="retext.py" line="334"/>
         <source>Tags</source>
         <translation>Tags</translation>
     </message>
     <message>
-        <location filename="retext.py" line="336"/>
+        <location filename="retext.py" line="338"/>
         <source>Symbols</source>
         <translation>Symboler</translation>
     </message>
     <message>
-        <location filename="retext.py" line="350"/>
+        <location filename="retext.py" line="352"/>
         <source>File</source>
         <translation>Fil</translation>
     </message>
     <message>
-        <location filename="retext.py" line="351"/>
+        <location filename="retext.py" line="353"/>
         <source>Edit</source>
         <translation>Rediger</translation>
     </message>
     <message>
-        <location filename="retext.py" line="352"/>
+        <location filename="retext.py" line="354"/>
         <source>Help</source>
         <translation>Hjælp</translation>
     </message>
     <message>
-        <location filename="retext.py" line="364"/>
+        <location filename="retext.py" line="366"/>
         <source>Export</source>
         <translation>Eksport</translation>
     </message>
     <message>
-        <location filename="retext.py" line="742"/>
+        <location filename="retext.py" line="744"/>
         <source>All files (*)</source>
         <translation>Alle filer (*)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="885"/>
+        <location filename="retext.py" line="887"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML-filre (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="885"/>
+        <location filename="retext.py" line="887"/>
         <source>Save file</source>
         <translation>Gem fil</translation>
     </message>
     <message>
-        <location filename="retext.py" line="876"/>
+        <location filename="retext.py" line="878"/>
         <source>Export document to ODT</source>
         <translation>Eksporter dokument til ODT</translation>
     </message>
     <message>
-        <location filename="retext.py" line="876"/>
+        <location filename="retext.py" line="878"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocument-tekstfiler (*.odt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="908"/>
+        <location filename="retext.py" line="910"/>
         <source>Export document to PDF</source>
         <translation>Eksporter dokument til PDF</translation>
     </message>
     <message>
-        <location filename="retext.py" line="908"/>
+        <location filename="retext.py" line="910"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF-filer (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="923"/>
+        <location filename="retext.py" line="925"/>
         <source>Print document</source>
         <translation>Udskriv dokument</translation>
     </message>
     <message>
-        <location filename="retext.py" line="998"/>
+        <location filename="retext.py" line="1001"/>
         <source>Incorrect user name or password!</source>
         <translation>Fejl i brugernavn eller adgangskode!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1066"/>
+        <location filename="retext.py" line="1071"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Dokumentet er blevet ændret.
 Ønsker du at gemme dine ændringer?</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1100"/>
+        <location filename="retext.py" line="1105"/>
         <source>HTML code</source>
         <translation>HTML-kode</translation>
     </message>
@@ -238,27 +238,27 @@ Do you want to save your changes?</source>
         <translation>Vis</translation>
     </message>
     <message>
-        <location filename="retext.py" line="356"/>
+        <location filename="retext.py" line="358"/>
         <source>Directory</source>
         <translation>Mappe</translation>
     </message>
     <message>
-        <location filename="retext.py" line="711"/>
+        <location filename="retext.py" line="713"/>
         <source>Please, save the file somewhere.</source>
         <translation>Gem venligst filen.</translation>
     </message>
     <message>
-        <location filename="retext.py" line="698"/>
+        <location filename="retext.py" line="700"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Hjemmesider gemt i &lt;code&gt;html&lt;/code&gt;-mappe.</translation>
     </message>
     <message>
-        <location filename="retext.py" line="742"/>
+        <location filename="retext.py" line="744"/>
         <source>Supported files</source>
         <translation>Understøttede filtyper</translation>
     </message>
     <message>
-        <location filename="retext.py" line="796"/>
+        <location filename="retext.py" line="798"/>
         <source>Plain text (*.txt)</source>
         <translation>Ren tekst (*.txt)</translation>
     </message>
@@ -268,22 +268,22 @@ Do you want to save your changes?</source>
         <translation>Andre formater</translation>
     </message>
     <message>
-        <location filename="retext.py" line="938"/>
+        <location filename="retext.py" line="940"/>
         <source>This function is not available in Plain text mode!</source>
         <translation>Denne funktion er ikke til rådighed i tekstvisning!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="941"/>
+        <location filename="retext.py" line="944"/>
         <source>Select type</source>
         <translation>Vælg type</translation>
     </message>
     <message>
-        <location filename="retext.py" line="943"/>
+        <location filename="retext.py" line="946"/>
         <source>Export document</source>
         <translation>Eksporter dokument</translation>
     </message>
     <message>
-        <location filename="retext.py" line="459"/>
+        <location filename="retext.py" line="461"/>
         <source>Only HTML formatting will be available.</source>
         <translation>Der vil kun være HTML-formattering til rådighed.</translation>
     </message>
@@ -298,12 +298,12 @@ Do you want to save your changes?</source>
         <translation>Sæt landeindstilling</translation>
     </message>
     <message>
-        <location filename="retext.py" line="385"/>
+        <location filename="retext.py" line="387"/>
         <source>Spell check</source>
         <translation>Stavekontrol</translation>
     </message>
     <message>
-        <location filename="retext.py" line="622"/>
+        <location filename="retext.py" line="624"/>
         <source>Enter locale name (example: en_US)</source>
         <translation>Indtast landekode (eksempel: da_DK)</translation>
     </message>
@@ -333,72 +333,72 @@ Do you want to save your changes?</source>
         <translation>Foregående</translation>
     </message>
     <message>
-        <location filename="retext.py" line="393"/>
+        <location filename="retext.py" line="395"/>
         <source>Default editing mode</source>
         <translation>Standardredigering</translation>
     </message>
     <message>
-        <location filename="retext.py" line="432"/>
+        <location filename="retext.py" line="434"/>
         <source>Search</source>
         <translation>Søg</translation>
     </message>
     <message>
-        <location filename="retext.py" line="436"/>
+        <location filename="retext.py" line="438"/>
         <source>Case sensitively</source>
         <translation>Forskel på små/store bogstaver</translation>
     </message>
     <message>
-        <location filename="retext.py" line="459"/>
+        <location filename="retext.py" line="461"/>
         <source>You have neither Markdown nor Docutils modules installed!</source>
         <translation>Du har hverken Markdown- eller Docutils-moduler installeret!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="802"/>
+        <location filename="retext.py" line="804"/>
         <source>HTML files</source>
         <translation>HTML-filer</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1109"/>
+        <location filename="retext.py" line="1114"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Udvikler: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1109"/>
+        <location filename="retext.py" line="1114"/>
         <source>Website</source>
         <translation>Hjemmeside</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1109"/>
+        <location filename="retext.py" line="1114"/>
         <source>Markdown syntax</source>
         <translation>Markdown-syntaks</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1109"/>
+        <location filename="retext.py" line="1114"/>
         <source>ReST syntax</source>
         <translation>ReST-syntaks</translation>
     </message>
     <message>
-        <location filename="retext.py" line="799"/>
+        <location filename="retext.py" line="801"/>
         <source>ReStructuredText files</source>
         <translation>ReStructuredText-filer</translation>
     </message>
     <message>
-        <location filename="retext.py" line="805"/>
+        <location filename="retext.py" line="807"/>
         <source>Markdown files</source>
         <translation>Markdown-filer</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1109"/>
+        <location filename="retext.py" line="1114"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation>Enkel men stærk editor til Markdown og ReStructuredText</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1168"/>
+        <location filename="retext.py" line="1176"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>Kunne ikke tolke filens indhold. Undersøg, om du har det påkrævede modul installeret!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="742"/>
+        <location filename="retext.py" line="744"/>
         <source>Select one or several files to open</source>
         <translation type="unfinished"></translation>
     </message>
@@ -408,22 +408,22 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="700"/>
+        <location filename="retext.py" line="702"/>
         <source>Show directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="705"/>
+        <location filename="retext.py" line="707"/>
         <source>Webpages generator is not installed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="821"/>
+        <location filename="retext.py" line="823"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="1000"/>
+        <location filename="retext.py" line="1003"/>
         <source>Authentification failed, please check your internet connection!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -443,7 +443,7 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="396"/>
+        <location filename="retext.py" line="398"/>
         <source>Formatting</source>
         <translation type="unfinished"></translation>
     </message>
