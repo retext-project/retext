@@ -288,7 +288,6 @@ class ReTextWindow(QMainWindow):
 					self.actionEnableSC.setChecked(True)
 					self.enableSC(True)
 		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
-		self.actionRecentFiles = self.act(self.tr('Open recent'), icon='document-open-recent', trig=self.openRecent)
 		if wpgen:
 			self.actionWpgen = self.act(self.tr('Generate webpages'), trig=self.startWpgen)
 		self.actionShow = self.act(self.tr('Show'), icon='system-file-manager', trig=self.showInDir)
@@ -354,7 +353,9 @@ class ReTextWindow(QMainWindow):
 		self.menuHelp = self.menubar.addMenu(self.tr('Help'))
 		self.menuFile.addAction(self.actionNew)
 		self.menuFile.addAction(self.actionOpen)
-		self.menuFile.addAction(self.actionRecentFiles)
+		self.menuRecentFiles = self.menuFile.addMenu(self.tr('Open recent'))
+		self.connect(self.menuRecentFiles, SIGNAL('aboutToShow()'), self.updateRecentFiles)
+		self.menuFile.addMenu(self.menuRecentFiles)
 		self.menuDir = self.menuFile.addMenu(self.tr('Directory'))
 		self.menuDir.addAction(self.actionShow)
 		if wpgen:
@@ -729,16 +730,21 @@ class ReTextWindow(QMainWindow):
 		self.ind = self.tabWidget.count()-1
 		self.tabWidget.setCurrentIndex(self.ind)
 	
-	def openRecent(self):
+	def updateRecentFiles(self):
+		self.menuRecentFiles.clear()
+		self.recentFilesActions = []
 		filesOld = settings.value("recentFileList").toStringList()
 		files = QStringList()
-		for i in filesOld:
-			if QFile.exists(i):
-				files.append(i)
+		for f in filesOld:
+			if QFile.exists(f):
+				files.append(f)
+				self.recentFilesActions.append(self.act(f, trig=self.openFunction(f)))
 		settings.setValue("recentFileList", files)
-		item, ok = QInputDialog.getItem(self, app_name, self.tr("Open recent"), files, 0, False)
-		if ok and not item.isEmpty():
-			self.openFileWrapper(item)
+		for action in self.recentFilesActions:
+			self.menuRecentFiles.addAction(action)
+	
+	def openFunction(self, fileName):
+		return lambda: self.openFileWrapper(fileName)
 	
 	def openFile(self):
 		fileNames = QFileDialog.getOpenFileNames(self, self.tr("Select one or several files to open"), "", \
@@ -747,22 +753,23 @@ class ReTextWindow(QMainWindow):
 			self.openFileWrapper(fileName)
 	
 	def openFileWrapper(self, fileName):
-		if fileName:
-			exists = False
-			for i in range(self.tabWidget.count()):
-				if self.fileNames[i] == fileName:
-					exists = True
-					ex = i
-			if exists:
-				self.tabWidget.setCurrentIndex(ex)
-			else:
-				if self.fileNames[self.ind] or self.editBoxes[self.ind].toPlainText() \
-				or self.editBoxes[self.ind].document().isModified():
-					self.tabWidget.addTab(self.createTab(""), "")
-					self.ind = self.tabWidget.count()-1
-					self.tabWidget.setCurrentIndex(self.ind)
-				self.fileNames[self.ind] = fileName
-				self.openFileMain()
+		if not fileName:
+			return
+		exists = False
+		for i in range(self.tabWidget.count()):
+			if self.fileNames[i] == fileName:
+				exists = True
+				ex = i
+		if exists:
+			self.tabWidget.setCurrentIndex(ex)
+		else:
+			if self.fileNames[self.ind] or self.editBoxes[self.ind].toPlainText() \
+			or self.editBoxes[self.ind].document().isModified():
+				self.tabWidget.addTab(self.createTab(""), "")
+				self.ind = self.tabWidget.count()-1
+				self.tabWidget.setCurrentIndex(self.ind)
+			self.fileNames[self.ind] = fileName
+			self.openFileMain()
 	
 	def openFileMain(self):
 		if QFile.exists(self.fileNames[self.ind]):
@@ -811,13 +818,12 @@ class ReTextWindow(QMainWindow):
 			self.fileNames[self.ind] = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).suffix().isEmpty():
 				self.fileNames[self.ind].append(ext)
-		if self.fileNames[self.ind]:
-			self.setCurrentFile()
 		if QFileInfo(self.fileNames[self.ind]).isWritable() or not QFile.exists(self.fileNames[self.ind]):
 			if self.fileNames[self.ind]:
 				self.saveFileWrapper(self.fileNames[self.ind])
 				self.editBoxes[self.ind].document().setModified(False)
 				self.setWindowModified(False)
+				self.setCurrentFile()
 		else:
 			self.setWindowModified(self.isWindowModified())
 			QMessageBox.warning(self, app_name, self.tr("Cannot save to file because it is read-only!"))
