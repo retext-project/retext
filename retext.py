@@ -74,7 +74,11 @@ icon_path = "icons/"
 PARSER_DOCUTILS, PARSER_MARKDOWN, PARSER_HTML, PARSER_NA = range(4)
 
 if QFileInfo("wpgen/wpgen.py").isExecutable():
-	wpgen = unicode(QFileInfo("wpgen/wpgen.py").canonicalFilePath(), 'utf-8')
+	try:
+		wpgen = unicode(QFileInfo("wpgen/wpgen.py").canonicalFilePath(), 'utf-8')
+	except:
+		# For Python 3
+		wpgen = QFileInfo("wpgen/wpgen.py").canonicalFilePath()
 elif QFileInfo("/usr/bin/wpgen").isExecutable():
 	wpgen = "/usr/bin/wpgen"
 else:
@@ -105,7 +109,11 @@ class ReTextHighlighter(QSyntaxHighlighter):
 	def highlightBlock(self, text):
 		words = '[\\w][^\\W]*'
 		if dictionary:
-			text = unicode(text)
+			try:
+				text = unicode(text)
+			except:
+				# Not necessary for Python 3
+				pass
 			charFormat = QTextCharFormat()
 			charFormat.setUnderlineColor(Qt.red)
 			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
@@ -191,7 +199,11 @@ class ReTextWindow(QMainWindow):
 				self.font.setPointSize(settings.value('fontSize', type=int))
 		else:
 			self.font = None
-		self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
+		try:
+			self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
+		except:
+			# For Python 3
+			self.setWindowTitle(self.tr('New document') + '[*] \2014 ' + app_name)
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
 		else:
@@ -250,7 +262,7 @@ class ReTextWindow(QMainWindow):
 		self.actionPdf = self.act('PDF', icon='application-pdf', trig=self.savePdf)
 		self.actionOdf = self.act('ODT', icon='x-office-document', trig=self.saveOdf)
 		settings.beginGroup('Export')
-		if not settings.allKeys().isEmpty():
+		if settings.allKeys():
 			self.actionOtherExport = self.act(self.tr('Other formats'), trig=self.otherExport)
 			otherExport = True
 		else:
@@ -295,7 +307,12 @@ class ReTextWindow(QMainWindow):
 		self.actionFindPrev = self.act(self.tr('Previous'), icon='go-previous', shct=QKeySequence.FindPrevious, \
 		trig=lambda: self.find(back=True))
 		self.actionHelp = self.act(self.tr('Get help online'), icon='help-contents', trig=self.openHelp)
-		self.actionAbout = self.act(self.tr('About %1').arg(app_name), icon='help-about', trig=self.aboutDialog)
+		try:
+			self.aboutWindowTitle = self.tr('About %s') % app_name
+		except:
+			# For Python 2
+			self.aboutWindowTitle = self.tr('About %s').replace('%s', '%1').arg(app_name)
+		self.actionAbout = self.act(self.aboutWindowTitle, icon='help-about', trig=self.aboutDialog)
 		self.actionAbout.setMenuRole(QAction.AboutRole)
 		self.actionAboutQt = self.act(self.tr('About Qt'))
 		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
@@ -543,7 +560,11 @@ class ReTextWindow(QMainWindow):
 		if self.fileNames[ind]:
 			self.setCurrentFile()
 		else:
-			self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
+			try:
+				self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
+			except:
+				# For Python 3
+				self.setWindowTitle(self.tr('New document') + '[*] \u2014 ' + app_name)
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
 		self.livePreviewEnabled = self.alpc[ind]
 		if self.alpc[ind]:
@@ -718,8 +739,14 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.setTabText(self.ind, self.getDocumentTitle(baseName=True))
 		self.setWindowFilePath(self.fileNames[self.ind])
 		files = settings.value("recentFileList", type='QStringList')
-		files.prepend(self.fileNames[self.ind])
-		files.removeDuplicates()
+		try:
+			files.prepend(self.fileNames[self.ind])
+			files.removeDuplicates()
+		except:
+			# For Python 3
+			while self.fileNames[self.ind] in files:
+				files.remove(self.fileNames[self.ind])
+			files.insert(0, self.fileNames[self.ind])
 		if len(files) > 10:
 			del files[10:]
 		settings.setValue("recentFileList", files)
@@ -734,7 +761,8 @@ class ReTextWindow(QMainWindow):
 		self.menuRecentFiles.clear()
 		self.recentFilesActions = []
 		filesOld = settings.value("recentFileList", type='QStringList')
-		files = QStringList()
+		#files = QStringList()
+		files = []
 		for f in filesOld:
 			if QFile.exists(f):
 				files.append(f)
@@ -853,7 +881,7 @@ class ReTextWindow(QMainWindow):
 		html << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
 		html << "<html>\n<head>\n"
 		html << "  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n"
-		html << QString("  <meta name=\"generator\" content=\"%1 %2\">\n").arg(app_name, app_version)
+		html << "  <meta name=\"generator\" content=\"%s %s\">\n" % (app_name, app_version)
 		html << "  <title>" + self.getDocumentTitle() + "</title>\n"
 		html << "</head>\n<body>\n"
 		html << text
@@ -967,7 +995,11 @@ class ReTextWindow(QMainWindow):
 		"""Ensure that parseText() is called before this function!
 		If 'baseName' is set to True, file basename will be used."""
 		realTitle = ''
-		text = unicode(self.editBoxes[self.ind].toPlainText())
+		try:
+			text = unicode(self.editBoxes[self.ind].toPlainText())
+		except:
+			# For Python 3
+			text = self.editBoxes[self.ind].toPlainText()
 		if not self.actionPlainText.isChecked():
 			parser = self.getParser()
 			if parser == PARSER_DOCUTILS:
@@ -1002,7 +1034,11 @@ class ReTextWindow(QMainWindow):
 		gdClient = gdata.docs.client.DocsClient(source=app_name)
 		gdClient.ssl = True
 		try:
-			gdClient.ClientLogin(unicode(login), unicode(passwd), gdClient.source)
+			try:
+				gdClient.ClientLogin(unicode(login), unicode(passwd), gdClient.source)
+			except NameError:
+				# For Python 3
+				gdClient.ClientLogin(login, passwd, gdClient.source)
 		except gdata.client.BadAuthentication:
 			return QMessageBox.warning(self, app_name, self.tr("Incorrect user name or password!"))
 		except:
@@ -1016,10 +1052,18 @@ class ReTextWindow(QMainWindow):
 			ms = MediaSource(file_path='temp.html', content_type='text/html')
 		entry = self.gDocsEntries[self.ind]
 		if entry:
-			entry.title.text = unicode(self.getDocumentTitle())
+			try:
+				entry.title.text = unicode(self.getDocumentTitle())
+			except:
+				# For Python 3
+				entry.title.text = self.getDocumentTitle()
 			entry = gdClient.Update(entry, media_source=ms, force=True)
 		else:
-			entry = gdClient.Upload(ms, unicode(self.getDocumentTitle()))
+			try:
+				entry = gdClient.Upload(ms, unicode(self.getDocumentTitle()))
+			except:
+				# For Python 3
+				entry = gdClient.Upload(ms, self.getDocumentTitle())
 		QDesktopServices.openUrl(QUrl(entry.GetAlternateLink().href))
 		self.gDocsEntries[self.ind] = entry
 		if self.actionPlainText.isChecked():
@@ -1108,7 +1152,11 @@ class ReTextWindow(QMainWindow):
 		winTitle = self.tr('New document')
 		if self.fileNames[self.ind]:
 			winTitle = QFileInfo(self.fileNames[self.ind]).fileName()
-		HtmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") "+QChar(0x2014)+" "+app_name)
+		try:
+			HtmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") "+QChar(0x2014)+" "+app_name)
+		except:
+			# For Python 3
+			HtmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") \u2014 "+app_name)
 		HtmlDlg.show()
 		HtmlDlg.raise_()
 		HtmlDlg.activateWindow()
@@ -1117,7 +1165,7 @@ class ReTextWindow(QMainWindow):
 		QDesktopServices.openUrl(QUrl('http://sourceforge.net/p/retext/home/Help and Support'))
 	
 	def aboutDialog(self):
-		QMessageBox.about(self, self.tr('About %1').arg(app_name), \
+		QMessageBox.about(self, self.aboutWindowTitle, \
 		'<p><b>'+app_name+' '+app_version+'</b><br>'+self.tr('Simple but powerful editor for Markdown and ReStructuredText') \
 		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011') \
 		+'<br><a href="http://sourceforge.net/p/retext/">'+self.tr('Website') \
@@ -1164,7 +1212,11 @@ class ReTextWindow(QMainWindow):
 			return PARSER_MARKDOWN
 	
 	def parseText(self):
-		htmltext = self.editBoxes[self.ind].toPlainText()
+		try:
+			htmltext = unicode(self.editBoxes[self.ind].toPlainText())
+		except:
+			# For Python 3
+			htmltext = self.editBoxes[self.ind].toPlainText()
 		# WpGen directives
 		htmltext = htmltext.replace('%HTMLDIR%', 'html')
 		htmltext = htmltext.replace('%\\', '%')
@@ -1172,11 +1224,10 @@ class ReTextWindow(QMainWindow):
 		if parser == PARSER_HTML:
 			return htmltext
 		elif parser == PARSER_DOCUTILS:
-			return publish_parts(unicode(htmltext), writer_name='html')['body']
+			return publish_parts(htmltext, writer_name='html')['body']
 		elif parser == PARSER_MARKDOWN:
 			md.reset()
-			result = md.convert(unicode(htmltext))
-			return result
+			return md.convert(htmltext)
 		else:
 			return '<p style="color: red">'\
 			+self.tr('Could not parse file contents, check if you have the necessary module installed!')+'</p>'
@@ -1201,8 +1252,13 @@ def main(fileNames):
 		sheetfile.close()
 	window = ReTextWindow()
 	for fileName in fileNames:
-		if QFile.exists(QString.fromUtf8(fileName)):
-			window.openFileWrapper(QString.fromUtf8(fileName))
+		try:
+			fileName = QString.fromUtf8(fileName)
+		except:
+			# Not needed for Python 3
+			pass
+		if QFile.exists(fileName):
+			window.openFileWrapper(fileName)
 	window.show()
 	sys.exit(app.exec_())
 
