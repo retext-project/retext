@@ -28,6 +28,27 @@ from PyQt4.QtGui import *
 app_name = "ReText"
 app_version = "2.2.0"
 
+def readListFromSettings(settings, key):
+	if not settings.contains(key):
+		return []
+	value = settings.value(key)
+	try:
+		return value.toStringList()
+	except:
+		# For Python 3
+		if isinstance(value, str):
+			return [value]
+		else:
+			return value
+
+def writeListToSettings(settings, key, value):
+	if len(value) > 1:
+		settings.setValue(key, value)
+	elif len(value) == 1:
+		settings.setValue(key, value[0])
+	else:
+		settings.remove(key)
+
 settings = QSettings('ReText project', 'ReText')
 
 try:
@@ -38,7 +59,7 @@ else:
 	use_md = True
 	if settings.contains('mdExtensions'):
 		exts = []
-		for ext in settings.value('mdExtensions', type='QStringList'):
+		for ext in readListFromSettings(settings, 'mdExtensions'):
 			exts.append(str(ext))
 		md = markdown.Markdown(exts)
 	else:
@@ -738,15 +759,7 @@ class ReTextWindow(QMainWindow):
 		self.setWindowTitle("")
 		self.tabWidget.setTabText(self.ind, self.getDocumentTitle(baseName=True))
 		self.setWindowFilePath(self.fileNames[self.ind])
-		if settings.contains("recentFileList"):
-			try:
-				files = settings.value("recentFileList").toStringList()
-			except:
-				files = settings.value("recentFileList")#, type='QStringList')
-		else:
-			files = []
-		if isinstance(files, str):
-			files = [files]
+		files = readListFromSettings(settings, "recentFileList")
 		try:
 			files.prepend(self.fileNames[self.ind])
 			files.removeDuplicates()
@@ -757,11 +770,7 @@ class ReTextWindow(QMainWindow):
 			files.insert(0, self.fileNames[self.ind])
 		if len(files) > 10:
 			del files[10:]
-		#settings.setValue("recentFileList", files)
-		if len(files) > 1:
-			settings.setValue("recentFileList", files)
-		else:
-			settings.setValue("recentFileList", files[0])
+		writeListToSettings(settings, "recentFileList", files)
 		QDir.setCurrent(QFileInfo(self.fileNames[self.ind]).dir().path())
 	
 	def createNew(self):
@@ -772,28 +781,14 @@ class ReTextWindow(QMainWindow):
 	def updateRecentFiles(self):
 		self.menuRecentFiles.clear()
 		self.recentFilesActions = []
-		if settings.contains("recentFileList"):
-			try:
-				filesOld = settings.value("recentFileList").toStringList()
-			except:
-				filesOld = settings.value("recentFileList")#, type='QStringList')
-		else:
-			filesOld = []
-		if isinstance(filesOld, str):
-			filesOld = [filesOld]
+		filesOld = readListFromSettings(settings, "recentFileList")
 		#files = QStringList()
 		files = []
 		for f in filesOld:
 			if QFile.exists(f):
 				files.append(f)
 				self.recentFilesActions.append(self.act(f, trig=self.openFunction(f)))
-		#settings.setValue("recentFileList", files)
-		if len(files) > 1:
-			settings.setValue("recentFileList", files)
-		elif len(files) == 1:
-			settings.setValue("recentFileList", files[0])
-		else:
-			settings.remove("recentFileList")
+		writeListToSettings(settings, "recentFileList", files)
 		for action in self.recentFilesActions:
 			self.menuRecentFiles.addAction(action)
 	
