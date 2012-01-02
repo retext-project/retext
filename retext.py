@@ -739,7 +739,10 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.setTabText(self.ind, self.getDocumentTitle(baseName=True))
 		self.setWindowFilePath(self.fileNames[self.ind])
 		if settings.contains("recentFileList"):
-			files = settings.value("recentFileList")#, type='QStringList')
+			try:
+				files = settings.value("recentFileList").toStringList()
+			except:
+				files = settings.value("recentFileList")#, type='QStringList')
 		else:
 			files = []
 		if isinstance(files, str):
@@ -770,7 +773,10 @@ class ReTextWindow(QMainWindow):
 		self.menuRecentFiles.clear()
 		self.recentFilesActions = []
 		if settings.contains("recentFileList"):
-			filesOld = settings.value("recentFileList")#, type='QStringList')
+			try:
+				filesOld = settings.value("recentFileList").toStringList()
+			except:
+				filesOld = settings.value("recentFileList")#, type='QStringList')
 		else:
 			filesOld = []
 		if isinstance(filesOld, str):
@@ -784,8 +790,10 @@ class ReTextWindow(QMainWindow):
 		#settings.setValue("recentFileList", files)
 		if len(files) > 1:
 			settings.setValue("recentFileList", files)
-		else:
+		elif len(files) == 1:
 			settings.setValue("recentFileList", files[0])
+		else:
+			settings.remove("recentFileList")
 		for action in self.recentFilesActions:
 			self.menuRecentFiles.addAction(action)
 	
