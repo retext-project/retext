@@ -38,7 +38,7 @@ else:
 	use_md = True
 	if settings.contains('mdExtensions'):
 		exts = []
-		for ext in settings.value('mdExtensions').toStringList():
+		for ext in settings.value('mdExtensions', type='QStringList'):
 			exts.append(str(ext))
 		md = markdown.Markdown(exts)
 	else:
@@ -82,15 +82,15 @@ else:
 
 monofont = QFont()
 if settings.contains('editorFont'):
-	monofont.setFamily(settings.value('editorFont').toString())
+	monofont.setFamily(settings.value('editorFont', type='QString'))
 else:
 	monofont.setFamily('monospace')
 if settings.contains('editorFontSize'):
-	monofont.setPointSize(settings.value('editorFontSize').toInt()[0])
+	monofont.setPointSize(settings.value('editorFontSize', type='QString'))
 
 use_webkit = False
 if settings.contains('useWebKit'):
-	if settings.value('useWebKit').toBool():
+	if settings.value('useWebKit', type=bool):
 		try:
 			from PyQt4.QtWebKit import QWebView
 		except:
@@ -184,11 +184,11 @@ class ReTextWindow(QMainWindow):
 		size = self.geometry()
 		self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
 		if settings.contains('iconTheme'):
-			QIcon.setThemeName(settings.value('iconTheme').toString())
+			QIcon.setThemeName(settings.value('iconTheme', type='QString'))
 		if settings.contains('font'):
-			self.font = QFont(settings.value('font').toString())
+			self.font = QFont(settings.value('font', type='QString'))
 			if settings.contains('fontSize'):
-				self.font.setPointSize(settings.value('fontSize').toInt()[0])
+				self.font.setPointSize(settings.value('fontSize', type=int))
 		else:
 			self.font = None
 		self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
@@ -280,11 +280,11 @@ class ReTextWindow(QMainWindow):
 			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSC)
 			self.actionSetLocale = self.act(self.tr('Set locale'), trigbool=self.changeLocale)
 			if settings.contains('spellCheckLocale'):
-				self.sl = str(settings.value('spellCheckLocale').toString())
+				self.sl = str(settings.value('spellCheckLocale', type='QString'))
 			else:
 				self.sl = None
 			if settings.contains('spellCheck'):
-				if settings.value('spellCheck').toBool():
+				if settings.value('spellCheck', type=bool):
 					self.actionEnableSC.setChecked(True)
 					self.enableSC(True)
 		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
@@ -307,7 +307,7 @@ class ReTextWindow(QMainWindow):
 		self.actionUseReST = self.act('ReStructuredText')
 		self.actionUseReST.setCheckable(True)
 		if settings.contains('useReST'):
-			if settings.value('useReST').toBool():
+			if settings.value('useReST', type=bool):
 				if use_docutils:
 					self.useDocUtils = True
 				self.actionUseReST.setChecked(True)
@@ -338,7 +338,7 @@ class ReTextWindow(QMainWindow):
 		self.symbolBox.addItems(self.usefulChars)
 		self.connect(self.symbolBox, SIGNAL('activated(int)'), self.insertSymbol)
 		if settings.contains('styleSheet'):
-			self.ssname = settings.value('styleSheet').toString()
+			self.ssname = settings.value('styleSheet', type='QString')
 			sheetfile = QFile(self.ssname)
 			sheetfile.open(QIODevice.ReadOnly)
 			self.ss = QTextStream(sheetfile).readAll()
@@ -445,7 +445,7 @@ class ReTextWindow(QMainWindow):
 		self.searchBar.setVisible(False)
 		self.autoSave = False
 		if settings.contains('autoSave'):
-			if settings.value('autoSave').toBool():
+			if settings.value('autoSave', type=bool):
 				self.autoSave = True
 				timer = QTimer(self)
 				timer.start(60000)
@@ -453,9 +453,9 @@ class ReTextWindow(QMainWindow):
 		self.restorePreviewState = False
 		self.livePreviewEnabled = False
 		if settings.contains('restorePreviewState'):
-			self.restorePreviewState = settings.value('restorePreviewState').toBool()
+			self.restorePreviewState = settings.value('restorePreviewState', type=bool)
 		if settings.contains('previewState'):
-			self.livePreviewEnabled = settings.value('previewState').toBool()
+			self.livePreviewEnabled = settings.value('previewState', type=bool)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if not (use_md or use_docutils):
@@ -717,7 +717,7 @@ class ReTextWindow(QMainWindow):
 		self.setWindowTitle("")
 		self.tabWidget.setTabText(self.ind, self.getDocumentTitle(baseName=True))
 		self.setWindowFilePath(self.fileNames[self.ind])
-		files = settings.value("recentFileList").toStringList()
+		files = settings.value("recentFileList", type='QStringList')
 		files.prepend(self.fileNames[self.ind])
 		files.removeDuplicates()
 		if len(files) > 10:
@@ -733,7 +733,7 @@ class ReTextWindow(QMainWindow):
 	def updateRecentFiles(self):
 		self.menuRecentFiles.clear()
 		self.recentFilesActions = []
-		filesOld = settings.value("recentFileList").toStringList()
+		filesOld = settings.value("recentFileList", type='QStringList')
 		files = QStringList()
 		for f in filesOld:
 			if QFile.exists(f):
@@ -814,7 +814,7 @@ class ReTextWindow(QMainWindow):
 				defaultExt = self.tr("Markdown files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
 				ext = ".mkd"
 				if settings.contains('defaultExt'):
-					ext = settings.value('defaultExt').toString()
+					ext = settings.value('defaultExt', type='QString')
 			self.fileNames[self.ind] = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).suffix().isEmpty():
 				self.fileNames[self.ind].append(ext)
@@ -953,7 +953,7 @@ class ReTextWindow(QMainWindow):
 		if ok and fileName:
 			if QFileInfo(fileName).suffix().isEmpty():
 				fileName.append('.'+item)
-			command = settings.value(item).toString()
+			command = settings.value(item, type='QString')
 			tmpname = 'temp.rst' if self.getParser() == PARSER_DOCUTILS else 'temp.mkd'
 			command.replace('%of', 'out.'+item)
 			command.replace('%if', tmpname)
@@ -986,8 +986,8 @@ class ReTextWindow(QMainWindow):
 			return self.tr("New document")
 	
 	def saveGDocs(self):
-		login = settings.value("GDocsLogin").toString()
-		passwd = settings.value("GDocsPasswd").toString()
+		login = settings.value("GDocsLogin", type='QString')
+		passwd = settings.value("GDocsPasswd", type='QString')
 		if self.gDocsEntries[self.ind] == None:
 			loginDialog = LogPassDialog(login, passwd)
 			if loginDialog.exec_() == QDialog.Accepted:
@@ -1194,7 +1194,7 @@ def main(fileNames):
 	app.installTranslator(RtTranslator)
 	app.installTranslator(QtTranslator)
 	if settings.contains('appStyleSheet'):
-		stylename = settings.value('appStyleSheet').toString()
+		stylename = settings.value('appStyleSheet', type='QString')
 		sheetfile = QFile(stylename)
 		sheetfile.open(QIODevice.ReadOnly)
 		app.setStyleSheet(QTextStream(sheetfile).readAll())
