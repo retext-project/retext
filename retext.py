@@ -652,7 +652,7 @@ class ReTextWindow(QMainWindow):
 			else:
 				self.sl = sl
 				self.enableSC(self.actionEnableSC.isChecked())
-		elif sl.isEmpty():
+		elif not sl:
 			self.sl = None
 			self.enableSC(self.actionEnableSC.isChecked())
 	
@@ -738,7 +738,12 @@ class ReTextWindow(QMainWindow):
 		self.setWindowTitle("")
 		self.tabWidget.setTabText(self.ind, self.getDocumentTitle(baseName=True))
 		self.setWindowFilePath(self.fileNames[self.ind])
-		files = settings.value("recentFileList", type='QStringList')
+		if settings.contains("recentFileList"):
+			files = settings.value("recentFileList")#, type='QStringList')
+		else:
+			files = []
+		if isinstance(files, str):
+			files = [files]
 		try:
 			files.prepend(self.fileNames[self.ind])
 			files.removeDuplicates()
@@ -749,7 +754,11 @@ class ReTextWindow(QMainWindow):
 			files.insert(0, self.fileNames[self.ind])
 		if len(files) > 10:
 			del files[10:]
-		settings.setValue("recentFileList", files)
+		#settings.setValue("recentFileList", files)
+		if len(files) > 1:
+			settings.setValue("recentFileList", files)
+		else:
+			settings.setValue("recentFileList", files[0])
 		QDir.setCurrent(QFileInfo(self.fileNames[self.ind]).dir().path())
 	
 	def createNew(self):
@@ -760,14 +769,23 @@ class ReTextWindow(QMainWindow):
 	def updateRecentFiles(self):
 		self.menuRecentFiles.clear()
 		self.recentFilesActions = []
-		filesOld = settings.value("recentFileList", type='QStringList')
+		if settings.contains("recentFileList"):
+			filesOld = settings.value("recentFileList")#, type='QStringList')
+		else:
+			filesOld = []
+		if isinstance(filesOld, str):
+			filesOld = [filesOld]
 		#files = QStringList()
 		files = []
 		for f in filesOld:
 			if QFile.exists(f):
 				files.append(f)
 				self.recentFilesActions.append(self.act(f, trig=self.openFunction(f)))
-		settings.setValue("recentFileList", files)
+		#settings.setValue("recentFileList", files)
+		if len(files) > 1:
+			settings.setValue("recentFileList", files)
+		else:
+			settings.setValue("recentFileList", files[0])
 		for action in self.recentFilesActions:
 			self.menuRecentFiles.addAction(action)
 	
@@ -844,8 +862,8 @@ class ReTextWindow(QMainWindow):
 				if settings.contains('defaultExt'):
 					ext = settings.value('defaultExt', type='QString')
 			self.fileNames[self.ind] = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
-			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).suffix().isEmpty():
-				self.fileNames[self.ind].append(ext)
+			if self.fileNames[self.ind] and not QFileInfo(self.fileNames[self.ind]).suffix():
+				self.fileNames[self.ind] += ext
 		if QFileInfo(self.fileNames[self.ind]).isWritable() or not QFile.exists(self.fileNames[self.ind]):
 			if self.fileNames[self.ind]:
 				self.saveFileWrapper(self.fileNames[self.ind])
@@ -864,7 +882,7 @@ class ReTextWindow(QMainWindow):
 		savefile.close()
 	
 	def saveHtml(self, fileName):
-		if QFileInfo(fileName).suffix().isEmpty():
+		if not QFileInfo(fileName).suffix():
 			fileName.append(".html")
 		htmlFile = QFile(fileName)
 		htmlFile.open(QIODevice.WriteOnly)
@@ -910,7 +928,7 @@ class ReTextWindow(QMainWindow):
 			self.printError(e)
 			return
 		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to ODT"), "", self.tr("OpenDocument text files (*.odt)"))
-		if QFileInfo(fileName).suffix().isEmpty():
+		if not QFileInfo(fileName).suffix():
 			fileName.append(".odt")
 		writer = QTextDocumentWriter(fileName)
 		writer.setFormat("odf")
@@ -943,7 +961,7 @@ class ReTextWindow(QMainWindow):
 			return
 		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to PDF"), "", self.tr("PDF files (*.pdf)"))
 		if fileName:
-			if QFileInfo(fileName).suffix().isEmpty():
+			if not QFileInfo(fileName).suffix():
 				fileName.append(".pdf")
 			printer = self.standardPrinter()
 			printer.setOutputFormat(QPrinter.PdfFormat)
@@ -979,7 +997,7 @@ class ReTextWindow(QMainWindow):
 		if ok:
 			fileName = QFileDialog.getSaveFileName(self, self.tr('Export document'))
 		if ok and fileName:
-			if QFileInfo(fileName).suffix().isEmpty():
+			if not QFileInfo(fileName).suffix():
 				fileName.append('.'+item)
 			command = settings.value(item, type='QString')
 			tmpname = 'temp.rst' if self.getParser() == PARSER_DOCUTILS else 'temp.mkd'
