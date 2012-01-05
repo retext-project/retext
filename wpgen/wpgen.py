@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # ReText webpages generator
-# Copyright 2011 Dmitry Shachnev
+# Copyright 2011-2012 Dmitry Shachnev
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ else:
 	use_docutils = True
 
 app_name = "ReText Webpages generator"
-app_version = "0.5.0"
+app_version = "0.5.1"
 app_site = "http://sourceforge.net/p/retext/"
 
 if os.path.exists("/usr/share/wpgen/"):
@@ -71,7 +71,11 @@ class WebLibrary(object):
 	
 	def _initTemplate(self):
 		templatefile = open(self.dirPath+"/template.html", "r")
-		self.template = unicode(templatefile.read(), 'utf-8')
+		try:
+			self.template = unicode(templatefile.read(), 'utf-8')
+		except:
+			# For Python 3
+			self.template = templatefile.read()
 		templatefile.close()
 		self.template = self.template.replace("%GENERATOR%", app_name + " " + app_version)
 		self.template = self.template.replace("%APPINFO%", "<a href=\""+ app_site + "\">" + app_name + "</a>")
@@ -80,7 +84,11 @@ class WebLibrary(object):
 		bn, ext = os.path.splitext(fname)
 		html = pagename = ''
 		inputfile = open(self.dirPath+"/"+fname, "r")
-		text = unicode(inputfile.read(), 'utf-8')
+		try:
+			text = unicode(inputfile.read(), 'utf-8')
+		except:
+			# For Python 3
+			text = inputfile.read()
 		inputfile.close()
 		if ext in (".md", ".mkd", ".re") and use_md:
 			html = md.convert(text)
@@ -100,12 +108,22 @@ class WebLibrary(object):
 		if html or bn == "index":
 			content = self.template
 			content = content.replace("%CONTENT%", html)
+			try:
+				pagename = unicode(pagename, 'utf-8')
+				bn = unicode(bn, 'utf-8')
+			except:
+				# Not needed for Python 3
+				pass
 			content = content.replace("%PAGENAME%", pagename)
 			content = content.replace("%HTMLDIR%", ".")
 			content = content.replace(" href=\""+bn+".html\"", "")
 			content = content.replace("%\\", "%")
 			outputfile = open(self.dirPath+"/html/"+bn+".html", "w")
-			outputfile.write(content.encode('utf-8'))
+			try:
+				outputfile.write(content.encode('utf-8'))
+			except:
+				# For Python 3
+				outputfile.write(content)
 			outputfile.close()
 
 def main(argv):
