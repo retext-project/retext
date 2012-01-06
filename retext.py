@@ -748,7 +748,10 @@ class ReTextWindow(QMainWindow):
 		for i in filesOld:
 			if QFile.exists(i):
 				files.append(i)
-		settings.setValue("recentFileList", files)
+		if files:
+			settings.setValue("recentFileList", files)
+		else:
+			settings.remove("recentFileList")
 		item, ok = QInputDialog.getItem(self, app_name, self.tr("Open recent"), files, 0, False)
 		if ok and not item.isEmpty():
 			self.openFileWrapper(item)
@@ -950,7 +953,6 @@ class ReTextWindow(QMainWindow):
 			return QMessageBox.warning(self, app_name, self.tr('This function is not available in Plain text mode!'))
 		settings.beginGroup('Export')
 		types = settings.allKeys()
-		settings.endGroup()
 		item, ok = QInputDialog.getItem(self, app_name, self.tr('Select type'), types, 0, False)
 		if ok:
 			fileName = QFileDialog.getSaveFileName(self, self.tr('Export document'))
@@ -966,6 +968,7 @@ class ReTextWindow(QMainWindow):
 			subprocess.Popen(args).wait()
 			QFile(tmpname).remove()
 			QFile('out.'+item).rename(fileName)
+		settings.endGroup()
 	
 	def getDocumentTitle(self, baseName=False):
 		"""Ensure that parseText() is called before this function!
@@ -985,7 +988,8 @@ class ReTextWindow(QMainWindow):
 		if realTitle and not baseName:
 			return realTitle
 		elif self.fileNames[self.ind]:
-			return QFileInfo(self.fileNames[self.ind]).completeBaseName()
+			basename = QFileInfo(self.fileNames[self.ind]).completeBaseName()
+			return (basename if basename else self.fileNames[self.ind])
 		else:
 			return self.tr("New document")
 	
