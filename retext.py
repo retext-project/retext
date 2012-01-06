@@ -220,17 +220,13 @@ class ReTextWindow(QMainWindow):
 				self.font.setPointSize(settings.value('fontSize', type=int))
 		else:
 			self.font = None
-		try:
-			self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
-		except:
-			# For Python 3
-			self.setWindowTitle(self.tr('New document') + '[*] \2014 ' + app_name)
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
 		else:
 			self.setWindowIcon(QIcon.fromTheme('retext', QIcon.fromTheme('accessories-text-editor')))
 		self.editBoxes = []
 		self.previewBoxes = []
+		self.highlighters = []
 		self.fileNames = []
 		self.apc = []
 		self.alpc = []
@@ -524,7 +520,7 @@ class ReTextWindow(QMainWindow):
 	def createTab(self, fileName):
 		self.previewBlocked = False
 		self.editBoxes.append(QTextEdit())
-		ReTextHighlighter(self.editBoxes[-1].document())
+		self.highlighters.append(ReTextHighlighter(self.editBoxes[-1].document()))
 		if use_webkit:
 			self.previewBoxes.append(QWebView())
 		else:
@@ -559,6 +555,7 @@ class ReTextWindow(QMainWindow):
 				self.tabWidget.addTab(self.createTab(""), self.tr("New document"))
 			del self.editBoxes[ind]
 			del self.previewBoxes[ind]
+			del self.highlighters[ind]
 			del self.fileNames[ind]
 			del self.apc[ind]
 			del self.alpc[ind]
@@ -651,13 +648,19 @@ class ReTextWindow(QMainWindow):
 		global dictionary
 		if yes:
 			if self.sl:
-				dictionary = enchant.Dict(self.sl)
+				try:
+					dictionary = enchant.Dict(self.sl)
+				except Exception as e:
+					QMessageBox.warning(self, app_name, str(e))
+					dictionary = enchant.Dict()
 			else:
 				dictionary = enchant.Dict()
 			settings.setValue('spellCheck', True)
 		else:
 			dictionary = None
 			settings.remove('spellCheck')
+		for highlighter in self.highlighters:
+			highlighter.rehighlight()
 	
 	def changeLocale(self):
 		if self.sl == None:
@@ -1025,7 +1028,7 @@ class ReTextWindow(QMainWindow):
 			except:
 				# Not needed for Python 3
 				pass
-			QMessageBox.warning(self, app_name, self.tr('Failed to execute the command!') + '\n' + errorstr)
+			QMessageBox.warning(self, app_name, self.tr('Failed to execute the command:') + '\n' + errorstr)
 		QFile(tmpname).remove()
 		if of:
 			QFile('out.'+item).rename(fileName)
