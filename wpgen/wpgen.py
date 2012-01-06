@@ -95,6 +95,11 @@ class WebLibrary(object):
 			pagename = bn
 		if html or bn == "index":
 			content = self.template
+			try:
+				pagename = unicode(pagename, 'utf-8')
+				bn = unicode(bn, 'utf-8')
+			except:
+				pass
 			content = content.replace("%CONTENT%", html)
 			content = content.replace("%PAGENAME%", pagename)
 			content = content.replace(" href=\""+bn+".html\"", "")

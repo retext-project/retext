@@ -621,7 +621,11 @@ class ReTextWindow(QMainWindow):
 		global dictionary
 		if yes:
 			if self.sl:
-				dictionary = enchant.Dict(self.sl)
+				try:
+					dictionary = enchant.Dict(self.sl)
+				except Exception as e:
+					QMessageBox.warning(self, app_name, str(e))
+					dictionary = enchant.Dict()
 			else:
 				dictionary = enchant.Dict()
 			settings.setValue('spellCheck', True)
@@ -988,8 +992,9 @@ class ReTextWindow(QMainWindow):
 		if realTitle and not baseName:
 			return realTitle
 		elif self.fileNames[self.ind]:
-			basename = QFileInfo(self.fileNames[self.ind]).completeBaseName()
-			return (basename if basename else self.fileNames[self.ind])
+			fileinfo = QFileInfo(self.fileNames[self.ind])
+			basename = fileinfo.completeBaseName()
+			return (basename if basename else fileinfo.fileName())
 		else:
 			return self.tr("New document")
 	
