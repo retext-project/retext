@@ -26,7 +26,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.1.3"
+app_version = "2.1.4"
 
 settings = QSettings('ReText project', 'ReText')
 
@@ -55,6 +55,7 @@ else:
 
 try:
 	import enchant
+	enchant.Dict()
 except:
 	use_enchant = False
 else:
@@ -960,10 +961,11 @@ class ReTextWindow(QMainWindow):
 		item, ok = QInputDialog.getItem(self, app_name, self.tr('Select type'), types, 0, False)
 		if ok:
 			fileName = QFileDialog.getSaveFileName(self, self.tr('Export document'))
+			command = settings.value(item).toString()
+		settings.endGroup()
 		if ok and fileName:
 			if QFileInfo(fileName).suffix().isEmpty():
 				fileName.append('.'+item)
-			command = settings.value(item).toString()
 			tmpname = 'temp.rst' if self.getParser() == PARSER_DOCUTILS else 'temp.mkd'
 			command.replace('%of', 'out.'+item)
 			command.replace('%if', tmpname)
@@ -972,7 +974,6 @@ class ReTextWindow(QMainWindow):
 			subprocess.Popen(args).wait()
 			QFile(tmpname).remove()
 			QFile('out.'+item).rename(fileName)
-		settings.endGroup()
 	
 	def getDocumentTitle(self, baseName=False):
 		"""Ensure that parseText() is called before this function!
