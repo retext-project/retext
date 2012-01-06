@@ -995,21 +995,39 @@ class ReTextWindow(QMainWindow):
 			return QMessageBox.warning(self, app_name, self.tr('This function is not available in Plain text mode!'))
 		settings.beginGroup('Export')
 		types = settings.allKeys()
-		settings.endGroup()
 		item, ok = QInputDialog.getItem(self, app_name, self.tr('Select type'), types, 0, False)
-		if ok:
+		if not ok:
+			return settings.endGroup()
+		command = settings.value(item, type='QString')
+		of = ('%of' in command)
+		html = ('%html' in command)
+		if of:
 			fileName = QFileDialog.getSaveFileName(self, self.tr('Export document'))
-		if ok and fileName:
+			if not fileName:
+				return
 			if not QFileInfo(fileName).suffix():
 				fileName.append('.'+item)
-			command = settings.value(item, type='QString')
+		if html:
+			tmpname = 'temp.html'
+			self.saveHtml(tmpname)
+		else:
 			tmpname = 'temp.rst' if self.getParser() == PARSER_DOCUTILS else 'temp.mkd'
-			command.replace('%of', 'out.'+item)
-			command.replace('%if', tmpname)
-			args = str(command).split()
 			self.saveFileWrapper(tmpname)
+		command = command.replace('%of', 'out.'+item)
+		command = command.replace('%html' if html else '%if', tmpname)
+		args = str(command).split()
+		try:
 			subprocess.Popen(args).wait()
-			QFile(tmpname).remove()
+		except OSError as error:
+			errorstr = str(error)
+			try:
+				errorstr = QString.fromUtf8(errorstr)
+			except:
+				# Not needed for Python 3
+				pass
+			QMessageBox.warning(self, app_name, self.tr('Failed to execute the command!') + '\n' + errorstr)
+		QFile(tmpname).remove()
+		if of:
 			QFile('out.'+item).rename(fileName)
 	
 	def getDocumentTitle(self, baseName=False):
