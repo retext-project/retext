@@ -1002,6 +1002,7 @@ class ReTextWindow(QMainWindow):
 		if not ok:
 			return settings.endGroup()
 		command = settings.value(item, type='QString')
+		settings.endGroup()
 		of = ('%of' in command)
 		html = ('%html' in command)
 		if of:
@@ -1055,7 +1056,9 @@ class ReTextWindow(QMainWindow):
 		if realTitle and not baseName:
 			return realTitle
 		elif self.fileNames[self.ind]:
-			return QFileInfo(self.fileNames[self.ind]).completeBaseName()
+			fileinfo = QFileInfo(self.fileNames[self.ind])
+			basename = fileinfo.completeBaseName()
+			return (basename if basename else fileinfo.fileName())
 		else:
 			return self.tr("New document")
 	
