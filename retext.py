@@ -112,7 +112,7 @@ if settings.contains('editorFont'):
 else:
 	monofont.setFamily('monospace')
 if settings.contains('editorFontSize'):
-	monofont.setPointSize(settings.value('editorFontSize', type='QString'))
+	monofont.setPointSize(settings.value('editorFontSize', type=int))
 
 try:
 	from PyQt4.QtWebKit import QWebView
