@@ -3,7 +3,7 @@
 # vim: sw=8:ts=8:noexpandtab
 
 # ReText
-# Copyright 2011 Dmitry Shachnev
+# Copyright 2011-2012 Dmitry Shachnev
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -76,6 +76,7 @@ else:
 
 try:
 	import enchant
+	enchant.Dict()
 except:
 	use_enchant = False
 else:
@@ -113,15 +114,12 @@ else:
 if settings.contains('editorFontSize'):
 	monofont.setPointSize(settings.value('editorFontSize', type='QString'))
 
-use_webkit = False
-if settings.contains('useWebKit'):
-	if settings.value('useWebKit', type=bool):
-		try:
-			from PyQt4.QtWebKit import QWebView
-		except:
-			pass
-		else:
-			use_webkit = True
+try:
+	from PyQt4.QtWebKit import QWebView
+except:
+	webkit_available = False
+else:
+	webkit_available = True
 
 class ReTextHighlighter(QSyntaxHighlighter):
 	def __init__(self, parent):
@@ -317,6 +315,13 @@ class ReTextWindow(QMainWindow):
 					self.actionEnableSC.setChecked(True)
 					self.enableSC(True)
 		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
+		if webkit_available:
+			self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
+			self.useWebKit = False
+			if settings.contains('useWebKit'):
+				if settings.value('useWebKit', type=bool):
+					self.useWebKit = True
+					self.actionWebKit.setChecked(True)
 		if wpgen:
 			self.actionWpgen = self.act(self.tr('Generate webpages'), trig=self.startWpgen)
 		self.actionShow = self.act(self.tr('Show'), icon='system-file-manager', trig=self.showInDir)
@@ -434,6 +439,8 @@ class ReTextWindow(QMainWindow):
 		self.menuFormat.addAction(self.actionBold)
 		self.menuFormat.addAction(self.actionItalic)
 		self.menuFormat.addAction(self.actionUnderline)
+		if webkit_available:
+			self.menuEdit.addAction(self.actionWebKit)
 		self.menuEdit.addSeparator()
 		self.menuEdit.addAction(self.actionViewHtml)
 		self.menuEdit.addAction(self.actionLivePreview)
@@ -517,11 +524,22 @@ class ReTextWindow(QMainWindow):
 		print('Exception occured while parsing document:')
 		print(error)
 	
+	def getSplitter(self, index):
+		splitter = QSplitter(Qt.Horizontal)
+		# Give both boxes a minimum size so the minimumSizeHint will be
+		# ignored when splitter.setSizes is called below
+		for widget in self.editBoxes[index], self.previewBoxes[index]:
+			widget.setMinimumWidth(125)
+			splitter.addWidget(widget)
+		splitter.setSizes((50, 50))
+		splitter.setChildrenCollapsible(False)
+		return splitter
+	
 	def createTab(self, fileName):
 		self.previewBlocked = False
 		self.editBoxes.append(QTextEdit())
 		self.highlighters.append(ReTextHighlighter(self.editBoxes[-1].document()))
-		if use_webkit:
+		if self.useWebKit:
 			self.previewBoxes.append(QWebView())
 		else:
 			self.previewBoxes.append(QTextEdit())
@@ -539,15 +557,7 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.editBoxes[-1], SIGNAL('redoAvailable(bool)'), self.actionRedo, SLOT('setEnabled(bool)'))
 		self.connect(self.editBoxes[-1], SIGNAL('copyAvailable(bool)'), self.enableCopy)
 		self.connect(self.editBoxes[-1].document(), SIGNAL('modificationChanged(bool)'), self.modificationChanged)
-		splitter = QSplitter(Qt.Horizontal)
-		# Give both boxes a minimum size so the minimumSizeHint will be
-		# ignored when splitter.setSizes is called below
-		for widget in self.editBoxes[-1], self.previewBoxes[-1]:
-			widget.setMinimumWidth(125)
-			splitter.addWidget(widget)
-		splitter.setSizes([50,50])
-		splitter.setChildrenCollapsible(False)
-		return splitter
+		return self.getSplitter(-1)
 	
 	def closeTab(self, ind):
 		if self.maybeSave(ind):
@@ -621,6 +631,28 @@ class ReTextWindow(QMainWindow):
 		self.editBoxes[self.ind].setVisible(True)
 		if livemode:
 			self.updatePreviewBox()
+	
+	def enableWebKit(self, enable):
+		self.useWebKit = enable
+		if enable:
+			settings.setValue('useWebKit', True)
+		else:
+			settings.remove('useWebKit')
+		oldind = self.ind
+		self.tabWidget.clear()
+		for self.ind in range(len(self.editBoxes)):
+			if enable:
+				self.previewBoxes[self.ind] = QWebView()
+			else:
+				self.previewBoxes[self.ind] = QTextEdit()
+				self.previewBoxes[self.ind].setReadOnly(True)
+			splitter = self.getSplitter(self.ind)
+			self.tabWidget.addTab(splitter, self.getDocumentTitle(baseName=True))
+			self.updatePreviewBox()
+			self.editBoxes[self.ind].setVisible(self.alpc[self.ind] or not self.apc[self.ind])
+			self.previewBoxes[self.ind].setVisible(self.apc[self.ind])
+		self.ind = oldind
+		self.tabWidget.setCurrentIndex(self.ind)
 	
 	def enableCopy(self, copymode):
 		self.actionCopy.setEnabled(copymode)
@@ -712,12 +744,12 @@ class ReTextWindow(QMainWindow):
 		self.previewBlocked = False
 		pb = self.previewBoxes[self.ind]
 		if self.ss:
-			if use_webkit:
+			if self.useWebKit:
 				pb.settings().setUserStyleSheetUrl(QUrl.fromLocalFile(self.ssname))
 			else:
 				pb.document().setDefaultStyleSheet(self.ss)
 		if self.actionPlainText.isChecked():
-			if use_webkit:
+			if self.useWebKit:
 				td = QTextDocument()
 				td.setPlainText(self.editBoxes[self.ind].toPlainText())
 				pb.setHtml(td.toHtml())
@@ -728,7 +760,7 @@ class ReTextWindow(QMainWindow):
 				pb.setHtml(self.parseText())
 			except Exception as e:
 				self.printError(e)
-		if self.font and not use_webkit:
+		if self.font and not self.useWebKit:
 			pb.document().setDefaultFont(self.font)
 	
 	def updateLivePreviewBox(self):
@@ -947,7 +979,7 @@ class ReTextWindow(QMainWindow):
 			self.saveHtml(fileName)
 	
 	def getDocumentForPrint(self):
-		if use_webkit:
+		if self.useWebKit:
 			return self.previewBoxes[self.ind]
 		try:
 			return self.textDocument()
