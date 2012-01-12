@@ -21,6 +21,7 @@
 # MA 02110-1301, USA.
 
 import sys
+import re
 import subprocess
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -126,7 +127,6 @@ class ReTextHighlighter(QSyntaxHighlighter):
 		QSyntaxHighlighter.__init__(self, parent)
 	
 	def highlightBlock(self, text):
-		words = '[\\w][^\\W]*'
 		if dictionary:
 			try:
 				text = unicode(text)
@@ -136,28 +136,35 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			charFormat = QTextCharFormat()
 			charFormat.setUnderlineColor(Qt.red)
 			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
-			expression = QRegExp(words)
-			index = expression.indexIn(text)
-			while (index >= 0):
-				length = expression.matchedLength()
-				if not dictionary.check(text[index:index+length]):
-					self.setFormat(index, length, charFormat)
-				index = expression.indexIn(text, index + length)
-		charFormat = QTextCharFormat()
-		patterns = ('<[^<>]*>', '&[^; ]*;', '"[^"<]*"(?=[^<]*>)', '<!--[^-->]*-->')
-		foregrounds = (Qt.darkMagenta, Qt.darkCyan, Qt.darkYellow, Qt.gray)
-		for i in range(len(patterns)):
-			expression = QRegExp(patterns[i])
-			index = expression.indexIn(text)
-			if i == 3:
-				charFormat.setFontWeight(QFont.Normal)
-			else:
-				charFormat.setFontWeight(QFont.Bold)
-			charFormat.setForeground(foregrounds[i])
-			while (index >= 0):
-				length = expression.matchedLength()
-				self.setFormat(index, length, charFormat)
-				index = expression.indexIn(text, index + length)
+			for match in re.finditer('\\w+', text, flags=re.UNICODE):
+				if not dictionary.check(match.group(0)):
+					self.setFormat(match.start(), match.end() - match.start(), charFormat)
+		patterns = (
+			('<[^<>]*>', Qt.darkMagenta, QFont.Bold),          # HTML tags
+			('&[^; ]*;', Qt.darkCyan, QFont.Bold),             # HTML symbols
+			('"[^"<]*"(?=[^<]*>)', Qt.darkYellow, QFont.Bold), # Quoted strings inside tags
+			('<!--[^<>]*-->', Qt.gray, QFont.Normal),          # HTML comments
+			('(?<!\\*)\\*[^ \\*][^\\*]*\\*', None, QFont.Normal, True), # *Italics*
+			('(?<!_)_[^_]+_', None, QFont.Normal, True),       # _Italics_
+			('(?<!\\*)\\*\\*((?!\\*\\*).)*[^\\*]\\*\\*', None, QFont.Bold), # **Bold**
+			('(?<!_)__[^_]+__', None, QFont.Bold),             # __Bold__
+			('\\*{3,3}[^\\*]+\\*{3,3}', None, QFont.Bold, True), # ***BoldItalics***
+			('___[^_]+___', None, QFont.Bold, True),           # ___BoldItalics___
+			('^#.+', None, QFont.Bold),                        # Headers
+			('(?<=\\[).+(?=\\])', Qt.blue, QFont.Normal),      # Links and images
+			('(?<=\\]\\().+(?=\\))', None, QFont.Normal, True, True) # Link references
+		)
+		for pattern in patterns:
+			charFormat = QTextCharFormat()
+			charFormat.setFontWeight(pattern[2])
+			if pattern[1] != None:
+				charFormat.setForeground(pattern[1])
+			if len(pattern) >= 4:
+				charFormat.setFontItalic(pattern[3])
+			if len(pattern) >= 5:
+				charFormat.setFontUnderline(pattern[4])
+			for match in re.finditer(pattern[0], text):
+				self.setFormat(match.start(), match.end() - match.start(), charFormat)
 
 class LogPassDialog(QDialog):
 	def __init__(self, defaultLogin="", defaultPass=""):
