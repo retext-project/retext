@@ -161,8 +161,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
 			for match in re.finditer('[^_\\W]+', text, flags=re.UNICODE):
 				finalFormat = charFormat
-				finalFormat.merge(self.format(0))
-				print match.group(0)
+				finalFormat.merge(self.format(match.start()))
 				if not dictionary.check(match.group(0)):
 					self.setFormat(match.start(), match.end() - match.start(), finalFormat)
 
