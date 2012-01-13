@@ -123,22 +123,7 @@ else:
 	webkit_available = True
 
 class ReTextHighlighter(QSyntaxHighlighter):
-	def __init__(self, parent):
-		QSyntaxHighlighter.__init__(self, parent)
-	
 	def highlightBlock(self, text):
-		if dictionary:
-			try:
-				text = unicode(text)
-			except:
-				# Not necessary for Python 3
-				pass
-			charFormat = QTextCharFormat()
-			charFormat.setUnderlineColor(Qt.red)
-			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
-			for match in re.finditer('\\w+', text, flags=re.UNICODE):
-				if not dictionary.check(match.group(0)):
-					self.setFormat(match.start(), match.end() - match.start(), charFormat)
 		patterns = (
 			('<[^<>]*>', Qt.darkMagenta, QFont.Bold),          # HTML tags
 			('&[^; ]*;', Qt.darkCyan, QFont.Bold),             # HTML symbols
@@ -165,6 +150,21 @@ class ReTextHighlighter(QSyntaxHighlighter):
 				charFormat.setFontUnderline(pattern[4])
 			for match in re.finditer(pattern[0], text):
 				self.setFormat(match.start(), match.end() - match.start(), charFormat)
+		if dictionary:
+			try:
+				text = unicode(text)
+			except:
+				# Not necessary for Python 3
+				pass
+			charFormat = QTextCharFormat()
+			charFormat.setUnderlineColor(Qt.red)
+			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
+			for match in re.finditer('[^_\\W]+', text, flags=re.UNICODE):
+				finalFormat = charFormat
+				finalFormat.merge(self.format(0))
+				print match.group(0)
+				if not dictionary.check(match.group(0)):
+					self.setFormat(match.start(), match.end() - match.start(), finalFormat)
 
 class LogPassDialog(QDialog):
 	def __init__(self, defaultLogin="", defaultPass=""):
