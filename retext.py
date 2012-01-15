@@ -160,7 +160,8 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			charFormat.setUnderlineColor(Qt.red)
 			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
 			for match in re.finditer('[^_\\W]+', text, flags=re.UNICODE):
-				finalFormat = charFormat
+				finalFormat = QTextCharFormat()
+				finalFormat.merge(charFormat)
 				finalFormat.merge(self.format(match.start()))
 				if not dictionary.check(match.group(0)):
 					self.setFormat(match.start(), match.end() - match.start(), finalFormat)
@@ -289,6 +290,7 @@ class ReTextWindow(QMainWindow):
 		else:
 			otherExport = False
 		settings.endGroup()
+		self.getExportExtensionsList()
 		self.actionQuit = self.act(self.tr('Quit'), icon='application-exit', shct=QKeySequence.Quit)
 		self.actionQuit.setMenuRole(QAction.QuitRole)
 		self.connect(self.actionQuit, SIGNAL('triggered()'), qApp, SLOT('quit()'))
@@ -413,6 +415,10 @@ class ReTextWindow(QMainWindow):
 		self.menuExport.addAction(self.actionPerfectHtml)
 		self.menuExport.addAction(self.actionOdf)
 		self.menuExport.addAction(self.actionPdf)
+		if self.extensionActions:
+			self.menuExport.addSeparator()
+			for action, mimetype in self.extensionActions:
+				self.menuExport.addAction(action)
 		if otherExport:
 			self.menuExport.addAction(self.actionOtherExport)
 		if use_gdocs:
@@ -823,7 +829,6 @@ class ReTextWindow(QMainWindow):
 		self.menuRecentFiles.clear()
 		self.recentFilesActions = []
 		filesOld = readListFromSettings(settings, "recentFileList")
-		#files = QStringList()
 		files = []
 		for f in filesOld:
 			if QFile.exists(f):
@@ -835,6 +840,58 @@ class ReTextWindow(QMainWindow):
 	
 	def openFunction(self, fileName):
 		return lambda: self.openFileWrapper(fileName)
+	
+	def extensionFuntion(self, data):
+		return lambda: \
+		self.runExtensionCommand(data['Exec'], data['FileFilter'], data['DefaultExtension'])
+	
+	def getExportExtensionsList(self):
+		extensions = []
+		for extsprefix in ('/usr', QDir.homePath()+'/.local'):
+			extsdir = QDir(extsprefix+'/share/retext/export-extensions/')
+			if extsdir.exists():
+				for fileInfo in extsdir.entryInfoList(['*.desktop', '*.ini'], QDir.Files | QDir.Readable):
+					extensions.append(self.readExtension(fileInfo.filePath()))
+		locale = QLocale.system().name()
+		self.extensionActions = []
+		for extension in extensions:
+			if ('Name[%s]' % locale.split('_')[0]) in extension:
+				name = extension['Name[%s]' % locale.split('_')[0]]
+			elif ('Name[%s]' % locale) in extension:
+				name = extension['Name[%s]' % locale]
+			else:
+				name = extension['Name']
+			data = {}
+			for prop in ('FileFilter', 'DefaultExtension', 'Exec'):
+				if 'X-ReText-'+prop in extension:
+					data[prop] = extension['X-ReText-'+prop]
+				elif prop in extension:
+					data[prop] = extension[prop]
+				else:
+					data[prop] = ''
+			action = self.act(name, trig=self.extensionFuntion(data))
+			if 'Icon' in extension:
+				action.setIcon(self.actIcon(extension['Icon']))
+			mimetype = extension['MimeType'] if 'MimeType' in extension else None
+			self.extensionActions.append((action, mimetype))
+	
+	def readExtension(self, fileName):
+		extFile = QFile(fileName)
+		extFile.open(QIODevice.ReadOnly)
+		extension = {}
+		stream = QTextStream(extFile)
+		while not stream.atEnd():
+			line = stream.readLine()
+			try:
+				line = unicode(line)
+			except:
+				# Not needed for Python 3
+				pass
+			if '=' in line:
+				index = line.index('=')
+				extension[line[:index].rstrip()] = line[index+1:].lstrip()
+		extFile.close()
+		return extension
 	
 	def openFile(self):
 		fileNames = QFileDialog.getOpenFileNames(self, self.tr("Select one or several files to open"), "", \
@@ -928,14 +985,13 @@ class ReTextWindow(QMainWindow):
 	def saveHtml(self, fileName):
 		if not QFileInfo(fileName).suffix():
 			fileName.append(".html")
-		htmlFile = QFile(fileName)
-		htmlFile.open(QIODevice.WriteOnly)
-		html = QTextStream(htmlFile)
 		try:
 			text = self.parseText()
 		except Exception as e:
-			self.printError(e)
-			return
+			return self.printError(e)
+		htmlFile = QFile(fileName)
+		htmlFile.open(QIODevice.WriteOnly)
+		html = QTextStream(htmlFile)
 		if self.getParser() == PARSER_HTML:
 			html << text << "\n"
 			htmlFile.close()
@@ -1031,31 +1087,24 @@ class ReTextWindow(QMainWindow):
 		self.connect(preview, SIGNAL("paintRequested(QPrinter*)"), document.print_)
 		preview.exec_()
 	
-	def otherExport(self):
-		if (self.actionPlainText.isChecked()):
-			return QMessageBox.warning(self, app_name, self.tr('This function is not available in Plain text mode!'))
-		settings.beginGroup('Export')
-		types = settings.allKeys()
-		item, ok = QInputDialog.getItem(self, app_name, self.tr('Select type'), types, 0, False)
-		if not ok:
-			return settings.endGroup()
-		command = settings.value(item, type='QString')
-		settings.endGroup()
+	def runExtensionCommand(self, command, filefilter='', defaultext=''):
 		of = ('%of' in command)
 		html = ('%html' in command)
 		if of:
-			fileName = QFileDialog.getSaveFileName(self, self.tr('Export document'))
+			if defaultext and not filefilter:
+				filefilter = '*'+defaultext
+			fileName = QFileDialog.getSaveFileName(self, self.tr('Export document'), '', filefilter)
 			if not fileName:
 				return
-			if not QFileInfo(fileName).suffix():
-				fileName.append('.'+item)
+			if defaultext and not QFileInfo(fileName).suffix():
+				fileName.append(defaultext)
 		if html:
 			tmpname = 'temp.html'
 			self.saveHtml(tmpname)
 		else:
 			tmpname = 'temp.rst' if self.getParser() == PARSER_DOCUTILS else 'temp.mkd'
 			self.saveFileWrapper(tmpname)
-		command = command.replace('%of', 'out.'+item)
+		command = command.replace('%of', 'out'+defaultext)
 		command = command.replace('%html' if html else '%if', tmpname)
 		args = str(command).split()
 		try:
@@ -1070,7 +1119,19 @@ class ReTextWindow(QMainWindow):
 			QMessageBox.warning(self, app_name, self.tr('Failed to execute the command:') + '\n' + errorstr)
 		QFile(tmpname).remove()
 		if of:
-			QFile('out.'+item).rename(fileName)
+			QFile('out'+defaultext).rename(fileName)
+	
+	def otherExport(self):
+		if (self.actionPlainText.isChecked()):
+			return QMessageBox.warning(self, app_name, self.tr('This function is not available in Plain text mode!'))
+		settings.beginGroup('Export')
+		types = settings.allKeys()
+		item, ok = QInputDialog.getItem(self, app_name, self.tr('Select type'), types, 0, False)
+		if not ok:
+			return settings.endGroup()
+		command = settings.value(item, type='QString')
+		settings.endGroup()
+		self.runExtensionCommand(command, defaultext='.'+item)
 	
 	def getDocumentTitle(self, baseName=False):
 		"""Ensure that parseText() is called before this function!
@@ -1275,7 +1336,7 @@ class ReTextWindow(QMainWindow):
 	def getParser(self):
 		if self.fileNames[self.ind]:
 			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
-			if suffix in ('md', 'markdown', 'mdown', 'mkd', 'mkdn'):
+			if suffix in ('md', 'markdown', 'mdown', 'mkd', 'mkdn', 're'):
 				if use_md:
 					return PARSER_MARKDOWN
 				else:
