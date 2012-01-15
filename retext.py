@@ -27,7 +27,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.2.0"
+app_version = "3.0.0"
 
 def readListFromSettings(settings, key):
 	if not settings.contains(key):
@@ -58,8 +58,8 @@ except:
 	use_md = False
 else:
 	use_md = True
+	exts = []
 	if settings.contains('mdExtensions'):
-		exts = []
 		for ext in readListFromSettings(settings, 'mdExtensions'):
 			exts.append(str(ext))
 		md = markdown.Markdown(exts)
@@ -392,6 +392,14 @@ class ReTextWindow(QMainWindow):
 			sheetfile.close()
 		else:
 			self.ss = ''
+		if use_md and 'codehilite' in exts:
+			# Load CSS style for codehilite
+			try:
+				from pygments.formatters import HtmlFormatter
+			except:
+				pass
+			else:
+				self.ss += HtmlFormatter().get_style_defs('.codehilite')
 		self.menubar = QMenuBar(self)
 		self.menubar.setGeometry(QRect(0, 0, 800, 25))
 		self.setMenuBar(self.menubar)
