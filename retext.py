@@ -863,10 +863,10 @@ class ReTextWindow(QMainWindow):
 		locale = QLocale.system().name()
 		self.extensionActions = []
 		for extension in extensions:
-			if ('Name[%s]' % locale.split('_')[0]) in extension:
-				name = extension['Name[%s]' % locale.split('_')[0]]
-			elif ('Name[%s]' % locale) in extension:
+			if ('Name[%s]' % locale) in extension:
 				name = extension['Name[%s]' % locale]
+			elif ('Name[%s]' % locale.split('_')[0]) in extension:
+				name = extension['Name[%s]' % locale.split('_')[0]]
 			else:
 				name = extension['Name']
 			data = {}
