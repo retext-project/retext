@@ -25,7 +25,6 @@ import shutil
 
 try:
 	import markdown
-	md = markdown.Markdown(['extra', 'meta'])
 except:
 	use_md = False
 else:
@@ -39,7 +38,7 @@ else:
 	use_docutils = True
 
 app_name = "ReText Webpages generator"
-app_version = "0.5.1"
+app_version = "0.5.2"
 app_site = "http://sourceforge.net/p/retext/"
 
 if os.path.exists("/usr/share/wpgen/"):
@@ -60,14 +59,24 @@ class WebLibrary(object):
 	def updateAll(self):
 		"""Process all documents in the directory"""
 		self._initTemplate()
+		self._initExtensions()
 		for fname in filter(os.path.isfile, os.listdir(self.dirPath)):
 			self._processPage(fname)
 	
 	def update(self, fileName):
 		"""Process fileName file in the directory"""
 		self._initTemplate()
+		self._initExtensions()
 		if os.path.exists(self.dirPath+"/"+fileName):
 			self._processPage(fileName)
+	
+	def _initExtensions(self):
+		self.extensions = []
+		extspath = self.dirPath+"/markdown-extensions.txt"
+		if os.path.exists(extspath):
+			extsfile = open(extspath)
+			self.extensions = [ext.rstrip() for ext in extsfile]
+			extsfile.close()
 	
 	def _initTemplate(self):
 		templatefile = open(self.dirPath+"/template.html", "r")
@@ -83,6 +92,7 @@ class WebLibrary(object):
 	def _processPage(self, fname):
 		bn, ext = os.path.splitext(fname)
 		html = pagename = ''
+		md = markdown.Markdown(self.extensions)
 		inputfile = open(self.dirPath+"/"+fname, "r")
 		try:
 			text = unicode(inputfile.read(), 'utf-8')
