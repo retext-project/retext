@@ -889,6 +889,9 @@ class ReTextWindow(QMainWindow):
 			mimetype = action[1]
 			if mimetype == None:
 				continue
+			if self.actionPlainText.isChecked():
+				action[0].setEnabled(False)
+				continue
 			if self.getParser() == PARSER_MARKDOWN:
 				enabled = (mimetype in ("text/x-retext-markdown", "text/x-markdown"))
 			elif self.getParser() == PARSER_DOCUTILS:
