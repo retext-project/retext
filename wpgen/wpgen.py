@@ -153,9 +153,6 @@ def main(argv):
 				os.mkdir("html")
 			shutil.copy(templates_dir+"template_Default.html", "template.html")
 			shutil.copy(templates_dir+"style_Default.css", "html/style.css")
-			if not (os.path.exists("index.mkd") or os.path.exists("index.rst")):
-				index = open("index.mkd", "w")
-				index.close()
 		elif argv[1] == "usestyle" and len(argv) == 3:
 			if os.path.exists(templates_dir+"style_"+argv[2]+".css"):
 				shutil.copy(templates_dir+"style_"+argv[2]+".css", "html/style.css")
