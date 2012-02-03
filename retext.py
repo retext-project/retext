@@ -27,7 +27,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "3.0.0"
+app_version = "3.0 beta 1"
 
 def readListFromSettings(settings, key):
 	if not settings.contains(key):
@@ -427,6 +427,7 @@ class ReTextWindow(QMainWindow):
 			self.menuExport.addSeparator()
 			for action, mimetype in self.extensionActions:
 				self.menuExport.addAction(action)
+			self.connect(self.menuRecentFiles, SIGNAL('aboutToShow()'), self.updateExtensionsVisibility)
 		if otherExport:
 			self.menuExport.addAction(self.actionOtherExport)
 		if use_gdocs:
@@ -883,6 +884,21 @@ class ReTextWindow(QMainWindow):
 			mimetype = extension['MimeType'] if 'MimeType' in extension else None
 			self.extensionActions.append((action, mimetype))
 	
+	def updateExtensionsVisibility(self):
+		for action in self.extensionActions:
+			mimetype = action[1]
+			if mimetype == None:
+				continue
+			if self.getParser() == PARSER_MARKDOWN:
+				enabled = (mimetype in ("text/x-retext-markdown", "text/x-markdown"))
+			elif self.getParser() == PARSER_DOCUTILS:
+				enabled = (mimetype in ("text/x-retext-rst", "text/x-rst"))
+			elif self.getParser() == PARSER_HTML:
+				enabled = (mimetype == "text/html")
+			else:
+				enabled = False
+			action[0].setEnabled(enabled)
+	
 	def readExtension(self, fileName):
 		extFile = QFile(fileName)
 		extFile.open(QIODevice.ReadOnly)
@@ -1107,10 +1123,10 @@ class ReTextWindow(QMainWindow):
 			if defaultext and not QFileInfo(fileName).suffix():
 				fileName.append(defaultext)
 		if html:
-			tmpname = 'temp.html'
+			tmpname = '.retext-temp.html'
 			self.saveHtml(tmpname)
 		else:
-			tmpname = 'temp.rst' if self.getParser() == PARSER_DOCUTILS else 'temp.mkd'
+			tmpname = '.retext-temp.rst' if self.getParser() == PARSER_DOCUTILS else '.retext-temp.mkd'
 			self.saveFileWrapper(tmpname)
 		command = command.replace('%of', 'out'+defaultext)
 		command = command.replace('%html' if html else '%if', tmpname)
@@ -1180,9 +1196,11 @@ class ReTextWindow(QMainWindow):
 			else:
 				return
 		if self.actionPlainText.isChecked():
-			self.saveFileWrapper('temp.txt')
+			tempFile = '.retext-temp.txt'
+			self.saveFileWrapper(tempFile)
 		else:
-			self.saveHtml('temp.html')
+			tempFile = '.retext-temp.html'
+			self.saveHtml(tempFile)
 		gdClient = gdata.docs.client.DocsClient(source=app_name)
 		gdClient.ssl = True
 		try:
@@ -1199,9 +1217,9 @@ class ReTextWindow(QMainWindow):
 		settings.setValue("GDocsLogin", login)
 		settings.setValue("GDocsPasswd", passwd)
 		if self.actionPlainText.isChecked():
-			ms = MediaSource(file_path='temp.txt', content_type='text/plain')
+			ms = MediaSource(file_path=tempFile, content_type='text/plain')
 		else:
-			ms = MediaSource(file_path='temp.html', content_type='text/html')
+			ms = MediaSource(file_path=tempFile, content_type='text/html')
 		entry = self.gDocsEntries[self.ind]
 		if entry:
 			try:
@@ -1218,10 +1236,7 @@ class ReTextWindow(QMainWindow):
 				entry = gdClient.Upload(ms, self.getDocumentTitle())
 		QDesktopServices.openUrl(QUrl(entry.GetAlternateLink().href))
 		self.gDocsEntries[self.ind] = entry
-		if self.actionPlainText.isChecked():
-			QFile('temp.txt').remove()
-		else:
-			QFile('temp.html').remove()
+		QFile(tempFile).remove()
 	
 	def autoSaveActive(self):
 		return self.autoSave and self.fileNames[self.ind] and \
