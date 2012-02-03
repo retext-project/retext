@@ -130,9 +130,9 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			('"[^"<]*"(?=[^<]*>)', Qt.darkYellow, QFont.Bold), # Quoted strings inside tags
 			('<!--[^<>]*-->', Qt.gray, QFont.Normal),          # HTML comments
 			('(?<!\\*)\\*[^ \\*][^\\*]*\\*', None, QFont.Normal, True), # *Italics*
-			('(?<!_)_[^_]+_', None, QFont.Normal, True),       # _Italics_
-			('(?<!\\*)\\*\\*((?!\\*\\*).)*[^\\*]\\*\\*', None, QFont.Bold), # **Bold**
-			('(?<!_)__[^_]+__', None, QFont.Bold),             # __Bold__
+			('(?<!_|\\w)_[^_]+_(?!\\w)', None, QFont.Normal, True),     # _Italics_
+			('(?<!\\*)\\*\\*((?!\\*\\*).)*\\*\\*', None, QFont.Bold), # **Bold**
+			('(?<!_|\\w)__[^_]+__(?!\\w)', None, QFont.Bold),         # __Bold__
 			('\\*{3,3}[^\\*]+\\*{3,3}', None, QFont.Bold, True), # ***BoldItalics***
 			('___[^_]+___', None, QFont.Bold, True),           # ___BoldItalics___
 			('^#.+', None, QFont.Bold),                        # Headers
