@@ -886,13 +886,13 @@ class ReTextWindow(QMainWindow):
 	
 	def updateExtensionsVisibility(self):
 		for action in self.extensionActions:
-			mimetype = action[1]
-			if mimetype == None:
-				continue
 			if self.actionPlainText.isChecked():
 				action[0].setEnabled(False)
 				continue
-			if self.getParser() == PARSER_MARKDOWN:
+			mimetype = action[1]
+			if mimetype == None:
+				enabled = True
+			elif self.getParser() == PARSER_MARKDOWN:
 				enabled = (mimetype in ("text/x-retext-markdown", "text/x-markdown"))
 			elif self.getParser() == PARSER_DOCUTILS:
 				enabled = (mimetype in ("text/x-retext-rst", "text/x-rst"))
@@ -1011,7 +1011,7 @@ class ReTextWindow(QMainWindow):
 	
 	def saveHtml(self, fileName):
 		if not QFileInfo(fileName).suffix():
-			fileName.append(".html")
+			fileName += ".html"
 		try:
 			text = self.parseText()
 		except Exception as e:
@@ -1056,7 +1056,7 @@ class ReTextWindow(QMainWindow):
 			return
 		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to ODT"), "", self.tr("OpenDocument text files (*.odt)"))
 		if not QFileInfo(fileName).suffix():
-			fileName.append(".odt")
+			fileName += ".odt"
 		writer = QTextDocumentWriter(fileName)
 		writer.setFormat("odf")
 		writer.write(document)
@@ -1089,7 +1089,7 @@ class ReTextWindow(QMainWindow):
 		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to PDF"), "", self.tr("PDF files (*.pdf)"))
 		if fileName:
 			if not QFileInfo(fileName).suffix():
-				fileName.append(".pdf")
+				fileName += ".pdf"
 			printer = self.standardPrinter()
 			printer.setOutputFormat(QPrinter.PdfFormat)
 			printer.setOutputFileName(fileName)
@@ -1124,7 +1124,7 @@ class ReTextWindow(QMainWindow):
 			if not fileName:
 				return
 			if defaultext and not QFileInfo(fileName).suffix():
-				fileName.append(defaultext)
+				fileName += defaultext
 		if html:
 			tmpname = '.retext-temp.html'
 			self.saveHtml(tmpname)
