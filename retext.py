@@ -67,7 +67,7 @@ else:
 		md = markdown.Markdown()
 
 try:
-	import gdata.docs
+	import gdata.docs.data
 	import gdata.docs.client
 	from gdata.data import MediaSource
 except:
@@ -1219,24 +1219,26 @@ class ReTextWindow(QMainWindow):
 			self.tr("Authentification failed, please check your internet connection!"))
 		settings.setValue("GDocsLogin", login)
 		settings.setValue("GDocsPasswd", passwd)
+		try:
+			title = unicode(self.getDocumentTitle())
+		except:
+			# For Python 3
+			title = self.getDocumentTitle()
 		if self.actionPlainText.isChecked():
 			ms = MediaSource(file_path=tempFile, content_type='text/plain')
 		else:
 			ms = MediaSource(file_path=tempFile, content_type='text/html')
 		entry = self.gDocsEntries[self.ind]
 		if entry:
-			try:
-				entry.title.text = unicode(self.getDocumentTitle())
-			except:
-				# For Python 3
-				entry.title.text = self.getDocumentTitle()
+			entry.title.text = title
 			entry = gdClient.Update(entry, media_source=ms, force=True)
 		else:
 			try:
-				entry = gdClient.Upload(ms, unicode(self.getDocumentTitle()))
+				resource = gdata.docs.data.Resource(tempFile, title)
+				entry = gdClient.CreateResource(resource, create_uri=gdata.docs.client.RESOURCE_UPLOAD_URI, media=ms)
 			except:
-				# For Python 3
-				entry = gdClient.Upload(ms, self.getDocumentTitle())
+				# For old gdata versions
+				entry = gdClient.Upload(ms, title)
 		QDesktopServices.openUrl(QUrl(entry.GetAlternateLink().href))
 		self.gDocsEntries[self.ind] = entry
 		QFile(tempFile).remove()
