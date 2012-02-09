@@ -116,7 +116,7 @@ if settings.contains('editorFontSize'):
 	monofont.setPointSize(settings.value('editorFontSize', type=int))
 
 try:
-	from PyQt4.QtWebKit import QWebView
+	from PyQt4.QtWebKit import QWebView, QWebSettings
 except:
 	webkit_available = False
 else:
@@ -135,7 +135,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			('(?<!_|\\w)__[^_]+__(?!\\w)', None, QFont.Bold),         # __Bold__
 			('\\*{3,3}[^\\*]+\\*{3,3}', None, QFont.Bold, True), # ***BoldItalics***
 			('___[^_]+___', None, QFont.Bold, True),           # ___BoldItalics___
-			('^#.+', None, QFont.Bold),                        # Headers
+			('^#.+', None, QFont.Black),                       # Headers
 			('(?<=\\[).+(?=\\])', Qt.blue, QFont.Normal),      # Links and images
 			('(?<=\\]\\().+(?=\\))', None, QFont.Normal, True, True) # Link references
 		)
@@ -385,11 +385,13 @@ class ReTextWindow(QMainWindow):
 		self.symbolBox.addItems(self.usefulChars)
 		self.connect(self.symbolBox, SIGNAL('activated(int)'), self.insertSymbol)
 		if settings.contains('styleSheet'):
-			self.ssname = settings.value('styleSheet', type='QString')
-			sheetfile = QFile(self.ssname)
+			ssname = settings.value('styleSheet', type='QString')
+			sheetfile = QFile(ssname)
 			sheetfile.open(QIODevice.ReadOnly)
 			self.ss = QTextStream(sheetfile).readAll()
 			sheetfile.close()
+			webkitsettings = QWebSettings.globalSettings()
+			webkitsettings.setUserStyleSheetUrl(QUrl.fromLocalFile(ssname))
 		else:
 			self.ss = ''
 		if use_md and 'codehilite' in exts:
@@ -567,8 +569,9 @@ class ReTextWindow(QMainWindow):
 			self.previewBoxes[-1].setReadOnly(True)
 		self.previewBoxes[-1].setVisible(False)
 		self.fileNames.append(fileName)
-		self.apc.append(False)
-		self.alpc.append(self.restorePreviewState and self.livePreviewEnabled)
+		liveMode = self.restorePreviewState and self.livePreviewEnabled
+		self.apc.append(liveMode)
+		self.alpc.append(liveMode)
 		self.aptc.append(False)
 		self.gDocsEntries.append(None)
 		self.editBoxes[-1].setFont(monofont)
@@ -764,24 +767,22 @@ class ReTextWindow(QMainWindow):
 	def updatePreviewBox(self):
 		self.previewBlocked = False
 		pb = self.previewBoxes[self.ind]
-		if self.ss:
-			if self.useWebKit:
-				pb.settings().setUserStyleSheetUrl(QUrl.fromLocalFile(self.ssname))
-			else:
-				pb.document().setDefaultStyleSheet(self.ss)
+		textedit = isinstance(pb, QTextEdit)
+		if self.ss and textedit:
+			pb.document().setDefaultStyleSheet(self.ss)
 		if self.actionPlainText.isChecked():
-			if self.useWebKit:
+			if textedit:
+				pb.setPlainText(self.editBoxes[self.ind].toPlainText())
+			else:
 				td = QTextDocument()
 				td.setPlainText(self.editBoxes[self.ind].toPlainText())
 				pb.setHtml(td.toHtml())
-			else:
-				pb.setPlainText(self.editBoxes[self.ind].toPlainText())
 		else:
 			try:
 				pb.setHtml(self.parseText())
 			except Exception as e:
 				self.printError(e)
-		if self.font and not self.useWebKit:
+		if self.font and textedit:
 			pb.document().setDefaultFont(self.font)
 	
 	def updateLivePreviewBox(self):
