@@ -1234,8 +1234,8 @@ class ReTextWindow(QMainWindow):
 			entry = gdClient.Update(entry, media_source=ms, force=True)
 		else:
 			try:
-				resource = gdata.docs.data.Resource(tempFile, title)
-				entry = gdClient.CreateResource(resource, create_uri=gdata.docs.client.RESOURCE_UPLOAD_URI, media=ms)
+				resource = gdata.docs.data.Resource(title=title)
+				entry = gdClient.CreateResource(resource, media=ms)
 			except:
 				# For old gdata versions
 				entry = gdClient.Upload(ms, title)
