@@ -1214,8 +1214,10 @@ class ReTextWindow(QMainWindow):
 				# For Python 3
 				gdClient.ClientLogin(login, passwd, gdClient.source)
 		except gdata.client.BadAuthentication:
+			QFile(tempFile).remove()
 			return QMessageBox.warning(self, app_name, self.tr("Incorrect user name or password!"))
 		except:
+			QFile(tempFile).remove()
 			return QMessageBox.warning(self, app_name, \
 			self.tr("Authentification failed, please check your internet connection!"))
 		settings.setValue("GDocsLogin", login)

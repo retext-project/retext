@@ -21,7 +21,7 @@
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="retext.py" line="1325"/>
+        <location filename="retext.py" line="1327"/>
         <source>New document</source>
         <translation>新規文書</translation>
     </message>
@@ -371,54 +371,54 @@
         <translation>文書をエクスポート</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1217"/>
+        <location filename="retext.py" line="1218"/>
         <source>Incorrect user name or password!</source>
         <translation>ユーザー名またはパスワードが違います!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1219"/>
+        <location filename="retext.py" line="1221"/>
         <source>Authentification failed, please check your internet connection!</source>
         <translation>認証に失敗しました。インターネットへの接続を確認してください!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1294"/>
+        <location filename="retext.py" line="1296"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>文書は変更されています.
 変更内容を保存しますか?</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1332"/>
+        <location filename="retext.py" line="1334"/>
         <source>HTML code</source>
         <translation>HTMLコード</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1341"/>
+        <location filename="retext.py" line="1343"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation>MarkdownとReStructuredTextのためのシンプルで強力なエディタ</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1341"/>
+        <location filename="retext.py" line="1343"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1341"/>
+        <location filename="retext.py" line="1343"/>
         <source>Website</source>
         <translation>Webサイト</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1341"/>
+        <location filename="retext.py" line="1343"/>
         <source>Markdown syntax</source>
         <translation>Markdown記法</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1341"/>
+        <location filename="retext.py" line="1343"/>
         <source>ReST syntax</source>
         <translation>ReST記法</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1406"/>
+        <location filename="retext.py" line="1408"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>ファイル内容が解析できません。必要なモジュールがインストールされているか確認してください!</translation>
     </message>
