@@ -1,3 +1,12 @@
+3.0
+* Python 3 support
+* Improved highlighter
+* Export extensions
+* Recent files menu
+* Spell checking improvements
+* Shortcuts for formatting
+* WebKit engine improvements
+
 2.1
 * Ability to use QtWebKit
 * Splitter between edit and preview boxes

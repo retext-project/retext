@@ -1239,7 +1239,7 @@ class ReTextWindow(QMainWindow):
 			try:
 				resource = gdata.docs.data.Resource(title=title)
 				entry = gdClient.CreateResource(resource, media=ms)
-			except:
+			except AttributeError:
 				# For old gdata versions
 				entry = gdClient.Upload(ms, title)
 		QDesktopServices.openUrl(QUrl(entry.GetAlternateLink().href))
