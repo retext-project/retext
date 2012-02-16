@@ -28,7 +28,7 @@
     <message>
         <location filename="retext.py" line="245"/>
         <source>File toolbar</source>
-        <translation type="unfinished">Pasek pliku</translation>
+        <translation>Pasek pliku</translation>
     </message>
     <message>
         <location filename="retext.py" line="247"/>
@@ -73,12 +73,12 @@
     <message>
         <location filename="retext.py" line="264"/>
         <source>View HTML code</source>
-        <translation type="unfinished">Zobacz źródło HTML</translation>
+        <translation>Zobacz źródło HTML</translation>
     </message>
     <message>
         <location filename="retext.py" line="265"/>
         <source>Change default font</source>
-        <translation type="unfinished">Zmień domyślną czcionkę</translation>
+        <translation>Zmień domyślną czcionkę</translation>
     </message>
     <message>
         <location filename="retext.py" line="266"/>
@@ -93,7 +93,7 @@
     <message>
         <location filename="retext.py" line="279"/>
         <source>Live preview</source>
-        <translation type="unfinished">Podgląd na żywo</translation>
+        <translation>Podgląd na żywo</translation>
     </message>
     <message>
         <location filename="retext.py" line="281"/>
@@ -143,7 +143,7 @@
     <message>
         <location filename="retext.py" line="316"/>
         <source>Set locale</source>
-        <translation type="unfinished">Ustaw język</translation>
+        <translation>Ustaw język</translation>
     </message>
     <message>
         <location filename="retext.py" line="325"/>
@@ -153,7 +153,7 @@
     <message>
         <location filename="retext.py" line="413"/>
         <source>Open recent</source>
-        <translation type="unfinished">Otwórz ostatnie</translation>
+        <translation>Otwórz ostatnie</translation>
     </message>
     <message>
         <location filename="retext.py" line="334"/>
@@ -248,7 +248,7 @@
     <message>
         <location filename="retext.py" line="503"/>
         <source>Case sensitively</source>
-        <translation type="unfinished">Rozróżnianie wielkości znaków</translation>
+        <translation>Rozróżnianie wielkości znaków</translation>
     </message>
     <message>
         <location filename="retext.py" line="526"/>
@@ -273,7 +273,7 @@
     <message>
         <location filename="retext.py" line="800"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
-        <translation type="unfinished">Strony internetowe zapisywane są w katalogu &lt;code&gt;html&lt;/code&gt;.</translation>
+        <translation>Strony internetowe zapisywane są w katalogu &lt;code&gt;html&lt;/code&gt;.</translation>
     </message>
     <message>
         <location filename="retext.py" line="802"/>
@@ -400,18 +400,18 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <location filename="retext.py" line="1343"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
-        <translation type="unfinished">Prosty, ale potężny edytor Markdown i RestructuredText</translation>
+        <translation>Prosty, ale potężny edytor Markdown i RestructuredText</translation>
     </message>
     <message>
         <location filename="retext.py" line="1343"/>
         <source>Author: Dmitry Shachnev, 2011</source>
-        <translation type="unfinished">Autor: Dmitry Shachnev, 2011&lt;br&gt;
+        <translation>Autor: Dmitry Shachnev, 2011&lt;br&gt;
 Tłumaczenie: Kristian Kann, 2012</translation>
     </message>
     <message>
         <location filename="retext.py" line="1343"/>
         <source>Website</source>
-        <translation type="unfinished">Strona internetowa</translation>
+        <translation>Strona internetowa</translation>
     </message>
     <message>
         <location filename="retext.py" line="1343"/>
