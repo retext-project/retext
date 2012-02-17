@@ -1201,9 +1201,11 @@ class ReTextWindow(QMainWindow):
 				return
 		if self.actionPlainText.isChecked():
 			tempFile = '.retext-temp.txt'
+			contentType = 'text/plain'
 			self.saveFileWrapper(tempFile)
 		else:
 			tempFile = '.retext-temp.html'
+			contentType = 'text/html'
 			self.saveHtml(tempFile)
 		gdClient = gdata.docs.client.DocsClient(source=app_name)
 		gdClient.ssl = True
@@ -1227,10 +1229,7 @@ class ReTextWindow(QMainWindow):
 		except:
 			# For Python 3
 			title = self.getDocumentTitle()
-		if self.actionPlainText.isChecked():
-			ms = MediaSource(file_path=tempFile, content_type='text/plain')
-		else:
-			ms = MediaSource(file_path=tempFile, content_type='text/html')
+		ms = MediaSource(file_path=tempFile, content_type=contentType)
 		entry = self.gDocsEntries[self.ind]
 		if entry:
 			entry.title.text = title
