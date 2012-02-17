@@ -45,7 +45,7 @@ else:
 		md = markdown.Markdown()
 
 try:
-	import gdata.docs
+	import gdata.docs.data
 	import gdata.docs.client
 	from gdata.data import MediaSource
 except:
@@ -1010,36 +1010,42 @@ class ReTextWindow(QMainWindow):
 			else:
 				return
 		if self.actionPlainText.isChecked():
-			self.saveFileWrapper('temp.txt')
+			tempFile = '.retext-temp.txt'
+			contentType = 'text/plain'
+			self.saveFileWrapper(tempFile)
 		else:
-			self.saveHtml('temp.html')
+			tempFile = '.retext-temp.html'
+			contentType = 'text/html'
+			self.saveHtml(tempFile)
 		gdClient = gdata.docs.client.DocsClient(source=app_name)
 		gdClient.ssl = True
 		try:
 			gdClient.ClientLogin(unicode(login), unicode(passwd), gdClient.source)
 		except gdata.client.BadAuthentication:
+			QFile(tempFile).remove()
 			return QMessageBox.warning(self, app_name, self.tr("Incorrect user name or password!"))
 		except:
+			QFile(tempFile).remove()
 			return QMessageBox.warning(self, app_name, \
 			self.tr("Authentification failed, please check your internet connection!"))
 		settings.setValue("GDocsLogin", login)
 		settings.setValue("GDocsPasswd", passwd)
-		if self.actionPlainText.isChecked():
-			ms = MediaSource(file_path='temp.txt', content_type='text/plain')
-		else:
-			ms = MediaSource(file_path='temp.html', content_type='text/html')
+		title = unicode(self.getDocumentTitle())
+		ms = MediaSource(file_path=tempFile, content_type=contentType)
 		entry = self.gDocsEntries[self.ind]
 		if entry:
-			entry.title.text = unicode(self.getDocumentTitle())
+			entry.title.text = title
 			entry = gdClient.Update(entry, media_source=ms, force=True)
 		else:
-			entry = gdClient.Upload(ms, unicode(self.getDocumentTitle()))
+			try:
+				resource = gdata.docs.data.Resource(title=title)
+				entry = gdClient.CreateResource(resource, media=ms)
+			except AttributeError:
+				# For old gdata versions
+				entry = gdClient.Upload(ms, title)
 		QDesktopServices.openUrl(QUrl(entry.GetAlternateLink().href))
 		self.gDocsEntries[self.ind] = entry
-		if self.actionPlainText.isChecked():
-			QFile('temp.txt').remove()
-		else:
-			QFile('temp.html').remove()
+		QFile(tempFile).remove()
 	
 	def autoSaveActive(self):
 		return self.autoSave and self.fileNames[self.ind] and \
