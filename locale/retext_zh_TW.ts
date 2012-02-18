@@ -116,7 +116,7 @@
         <translation>PDF 檔案 (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1296"/>
+        <location filename="retext.py" line="1295"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>檔案已變更，確定儲存嗎？</translation>
@@ -147,7 +147,7 @@ Do you want to save your changes?</source>
         <translation>貼上</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1327"/>
+        <location filename="retext.py" line="1326"/>
         <source>New document</source>
         <translation>新檔</translation>
     </message>
@@ -177,7 +177,7 @@ Do you want to save your changes?</source>
         <translation>匯出到 Google Docs</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1218"/>
+        <location filename="retext.py" line="1220"/>
         <source>Incorrect user name or password!</source>
         <translation>用戶名或密鑰不正確!</translation>
     </message>
@@ -197,7 +197,7 @@ Do you want to save your changes?</source>
         <translation>檢視 HTML 程式碼</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1334"/>
+        <location filename="retext.py" line="1333"/>
         <source>HTML code</source>
         <translation>HTML 程式碼</translation>
     </message>
@@ -352,22 +352,22 @@ Do you want to save your changes?</source>
         <translation>HTML 檔案</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1342"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1342"/>
         <source>Website</source>
         <translation>部落格</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1342"/>
         <source>Markdown syntax</source>
         <translation>Markdown 句法</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1342"/>
         <source>ReST syntax</source>
         <translation>ReST 句法</translation>
     </message>
@@ -382,12 +382,12 @@ Do you want to save your changes?</source>
         <translation>Markdown 檔案</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1342"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation>簡單高效的 Markdown 與 ReStructuredText 編輯器</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1408"/>
+        <location filename="retext.py" line="1407"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>不能處理檔案內容，檢查你是否安裝了必要的模塊！</translation>
     </message>
@@ -417,29 +417,29 @@ Do you want to save your changes?</source>
         <translation>不能儲存檔案因为它是只讀的！</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1221"/>
+        <location filename="retext.py" line="1223"/>
         <source>Authentification failed, please check your internet connection!</source>
         <translation>驗証失敗，請核查您的網絡連接！</translation>
     </message>
     <message>
         <location filename="retext.py" line="368"/>
         <source>Bold</source>
-        <translation type="unfinished"></translation>
+        <translation>加粗</translation>
     </message>
     <message>
         <location filename="retext.py" line="369"/>
         <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>傾斜</translation>
     </message>
     <message>
         <location filename="retext.py" line="370"/>
         <source>Underline</source>
-        <translation type="unfinished"></translation>
+        <translation>下劃線</translation>
     </message>
     <message>
         <location filename="retext.py" line="461"/>
         <source>Formatting</source>
-        <translation type="unfinished"></translation>
+        <translation>樣式</translation>
     </message>
     <message>
         <location filename="retext.py" line="344"/>
@@ -449,12 +449,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="retext.py" line="327"/>
         <source>Use WebKit renderer</source>
-        <translation type="unfinished"></translation>
+        <translation>使用WebKit渲染</translation>
     </message>
     <message>
         <location filename="retext.py" line="1147"/>
         <source>Failed to execute the command:</source>
-        <translation type="unfinished"></translation>
+        <translation>不能執行指令:</translation>
     </message>
 </context>
 </TS>
