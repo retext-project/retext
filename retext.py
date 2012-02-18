@@ -971,7 +971,11 @@ class ReTextWindow(QMainWindow):
 			command.replace('%if', tmpname)
 			args = str(command).split()
 			self.saveFileWrapper(tmpname)
-			subprocess.Popen(args).wait()
+			try:
+				subprocess.Popen(args).wait()
+			except OSError as error:
+				errorstr = QString.fromUtf8(str(error))
+				QMessageBox.warning(self, app_name, errorstr)
 			QFile(tmpname).remove()
 			QFile('out.'+item).rename(fileName)
 	
