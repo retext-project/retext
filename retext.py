@@ -136,8 +136,8 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			('\\*{3,3}[^\\*]+\\*{3,3}', None, QFont.Bold, True), # ***BoldItalics***
 			('___[^_]+___', None, QFont.Bold, True),           # ___BoldItalics___
 			('^#.+', None, QFont.Black),                       # Headers
-			('(?<=\\[).+(?=\\])', Qt.blue, QFont.Normal),      # Links and images
-			('(?<=\\]\\().+(?=\\))', None, QFont.Normal, True, True) # Link references
+			('(?<=\\[)[^\\[\\]]*(?=\\])', Qt.blue, QFont.Normal), # Links and images
+			('(?<=\\]\\()[^\\(\\)]*(?=\\))', None, QFont.Normal, True, True) # Link references
 		)
 		for pattern in patterns:
 			charFormat = QTextCharFormat()
