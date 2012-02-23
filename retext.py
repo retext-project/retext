@@ -996,9 +996,9 @@ class ReTextWindow(QMainWindow):
 		if QFileInfo(self.fileNames[self.ind]).isWritable() or not QFile.exists(self.fileNames[self.ind]):
 			if self.fileNames[self.ind]:
 				self.saveFileWrapper(self.fileNames[self.ind])
+				self.setCurrentFile()
 				self.editBoxes[self.ind].document().setModified(False)
 				self.setWindowModified(False)
-				self.setCurrentFile()
 		else:
 			self.setWindowModified(self.isWindowModified())
 			QMessageBox.warning(self, app_name, self.tr("Cannot save to file because it is read-only!"))
