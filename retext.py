@@ -27,7 +27,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "3.0 beta 1"
+app_version = "3.0 beta 2"
 
 def readListFromSettings(settings, key):
 	if not settings.contains(key):
@@ -313,7 +313,7 @@ class ReTextWindow(QMainWindow):
 		self.sc = False
 		if use_enchant:
 			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSC)
-			self.actionSetLocale = self.act(self.tr('Set locale'), trigbool=self.changeLocale)
+			self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
 			if settings.contains('spellCheckLocale'):
 				self.sl = str(settings.value('spellCheckLocale', type='QString'))
 			else:
