@@ -163,7 +163,7 @@
     <message>
         <location filename="retext.py" line="336"/>
         <source>Next</source>
-        <translation>Nowy</translation>
+        <translation>Następny</translation>
     </message>
     <message>
         <location filename="retext.py" line="337"/>
@@ -413,7 +413,7 @@
     <message>
         <location filename="retext.py" line="1223"/>
         <source>Authentification failed, please check your internet connection!</source>
-        <translation>Logowanie nie powiodło się.Sprawdź połączenie internetowe!</translation>
+        <translation>Logowanie nie powiodło się. Sprawdź połączenie internetowe!</translation>
     </message>
     <message>
         <location filename="retext.py" line="1295"/>
