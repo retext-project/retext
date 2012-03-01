@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="pl_PL" sourcelanguage="en">
+<!DOCTYPE TS><TS version="2.0" language="pl_PL" sourcelanguage="">
 <context>
     <name>LogPassDialog</name>
     <message>
@@ -20,11 +20,6 @@
 </context>
 <context>
     <name>ReTextWindow</name>
-    <message>
-        <location filename="retext.py" line="1327"/>
-        <source>New document</source>
-        <translation>Nowy dokument</translation>
-    </message>
     <message>
         <location filename="retext.py" line="245"/>
         <source>File toolbar</source>
@@ -151,14 +146,14 @@
         <translation>Tryb tekstowy</translation>
     </message>
     <message>
-        <location filename="retext.py" line="413"/>
-        <source>Open recent</source>
-        <translation>Otwórz ostatnie</translation>
+        <location filename="retext.py" line="327"/>
+        <source>Use WebKit renderer</source>
+        <translation>Używaj silnika WebKit</translation>
     </message>
     <message>
         <location filename="retext.py" line="334"/>
         <source>Generate webpages</source>
-        <translation>Generuj stronę intenetową</translation>
+        <translation>Generuj stronę internetową</translation>
     </message>
     <message>
         <location filename="retext.py" line="335"/>
@@ -168,7 +163,7 @@
     <message>
         <location filename="retext.py" line="336"/>
         <source>Next</source>
-        <translation>Następny</translation>
+        <translation>Nowy</translation>
     </message>
     <message>
         <location filename="retext.py" line="337"/>
@@ -189,6 +184,21 @@
         <location filename="retext.py" line="347"/>
         <source>About Qt</source>
         <translation>O Qt</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="368"/>
+        <source>Bold</source>
+        <translation>Pogrubienie</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="369"/>
+        <source>Italic</source>
+        <translation>Kursywa</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="370"/>
+        <source>Underline</source>
+        <translation>Podkreślenie</translation>
     </message>
     <message>
         <location filename="retext.py" line="373"/>
@@ -221,6 +231,11 @@
         <translation>Pomoc</translation>
     </message>
     <message>
+        <location filename="retext.py" line="413"/>
+        <source>Open recent</source>
+        <translation>Otwórz ostatnie</translation>
+    </message>
+    <message>
         <location filename="retext.py" line="416"/>
         <source>Directory</source>
         <translation>Katalog</translation>
@@ -241,6 +256,11 @@
         <translation>Domyślna metoda edycji</translation>
     </message>
     <message>
+        <location filename="retext.py" line="461"/>
+        <source>Formatting</source>
+        <translation>Formatowanie</translation>
+    </message>
+    <message>
         <location filename="retext.py" line="499"/>
         <source>Search</source>
         <translation>Wyszukaj</translation>
@@ -249,6 +269,11 @@
         <location filename="retext.py" line="503"/>
         <source>Case sensitively</source>
         <translation>Rozróżnianie wielkości znaków</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="1326"/>
+        <source>New document</source>
+        <translation>Nowy dokument</translation>
     </message>
     <message>
         <location filename="retext.py" line="526"/>
@@ -361,6 +386,16 @@
         <translation>Drukuj dokument</translation>
     </message>
     <message>
+        <location filename="retext.py" line="1124"/>
+        <source>Export document</source>
+        <translation>Eksportuj dokument</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="1147"/>
+        <source>Failed to execute the command:</source>
+        <translation>Błąd podczas wykonywania komendy:</translation>
+    </message>
+    <message>
         <location filename="retext.py" line="1154"/>
         <source>This function is not available in Plain text mode!</source>
         <translation>Ta funkcja nie jest dostępna w trybie tekstowym!</translation>
@@ -371,92 +406,57 @@
         <translation>Wybierz typ</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1124"/>
-        <source>Export document</source>
-        <translation>Eksportuj Dokument</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="1218"/>
+        <location filename="retext.py" line="1220"/>
         <source>Incorrect user name or password!</source>
         <translation>Nieprawidłowa nazwa użytkownika lub hasło!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1221"/>
+        <location filename="retext.py" line="1223"/>
         <source>Authentification failed, please check your internet connection!</source>
-        <translation>Logowanie nie powiodło się.Sprawdź połączenie internetowe.</translation>
+        <translation>Logowanie nie powiodło się.Sprawdź połączenie internetowe!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1296"/>
+        <location filename="retext.py" line="1295"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Dokument został zmieniony.
 Czy chcesz zapisać zmiany?</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1334"/>
+        <location filename="retext.py" line="1333"/>
         <source>HTML code</source>
         <translation>Kod HTML</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1342"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation>Prosty, ale potężny edytor Markdown i RestructuredText</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1342"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Autor: Dmitry Shachnev, 2011&lt;br&gt;
 Tłumaczenie: Kristian Kann, 2012</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1342"/>
         <source>Website</source>
         <translation>Strona internetowa</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1342"/>
         <source>Markdown syntax</source>
         <translation>Składnia Markdown</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1342"/>
         <source>ReST syntax</source>
         <translation>Składnia ReST</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1408"/>
+        <location filename="retext.py" line="1407"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>Nie można wykonać zawartości pliku. Sprawdź, czy masz zainstalowane potrzebne moduły!</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="327"/>
-        <source>Use WebKit renderer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="368"/>
-        <source>Bold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="369"/>
-        <source>Italic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="370"/>
-        <source>Underline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="461"/>
-        <source>Formatting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="1147"/>
-        <source>Failed to execute the command:</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
