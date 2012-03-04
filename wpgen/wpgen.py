@@ -38,7 +38,7 @@ else:
 	use_docutils = True
 
 app_name = "ReText Webpages generator"
-app_version = "0.5.2"
+app_version = "0.5.3"
 app_site = "http://sourceforge.net/p/retext/"
 
 if os.path.exists("/usr/share/wpgen/"):
@@ -156,6 +156,8 @@ def main(argv):
 		elif argv[1] == "usestyle" and len(argv) == 3:
 			if os.path.exists(templates_dir+"style_"+argv[2]+".css"):
 				shutil.copy(templates_dir+"style_"+argv[2]+".css", "html/style.css")
+			else:
+				print('Error: no such file!')
 		else:
 			printUsage()
 	else:

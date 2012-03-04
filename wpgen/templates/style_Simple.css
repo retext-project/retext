@@ -24,11 +24,6 @@ body {
   text-align: right;
 }
 
-.area-content {
-  height: 100%;
-}
-
-.content {
-  overflow: auto;
+.area-content, .content {
   height: 100%;
 }
