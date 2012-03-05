@@ -886,7 +886,8 @@ class ReTextWindow(QMainWindow):
 				mimetype = extension['MimeType'] if 'MimeType' in extension else None
 			except KeyError:
 				print('Failed to parse extension: Name is required')
-			self.extensionActions.append((action, mimetype))
+			else:
+				self.extensionActions.append((action, mimetype))
 	
 	def updateExtensionsVisibility(self):
 		for action in self.extensionActions:
