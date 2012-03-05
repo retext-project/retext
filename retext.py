@@ -865,24 +865,27 @@ class ReTextWindow(QMainWindow):
 		locale = QLocale.system().name()
 		self.extensionActions = []
 		for extension in extensions:
-			if ('Name[%s]' % locale) in extension:
-				name = extension['Name[%s]' % locale]
-			elif ('Name[%s]' % locale.split('_')[0]) in extension:
-				name = extension['Name[%s]' % locale.split('_')[0]]
-			else:
-				name = extension['Name']
-			data = {}
-			for prop in ('FileFilter', 'DefaultExtension', 'Exec'):
-				if 'X-ReText-'+prop in extension:
-					data[prop] = extension['X-ReText-'+prop]
-				elif prop in extension:
-					data[prop] = extension[prop]
+			try:
+				if ('Name[%s]' % locale) in extension:
+					name = extension['Name[%s]' % locale]
+				elif ('Name[%s]' % locale.split('_')[0]) in extension:
+					name = extension['Name[%s]' % locale.split('_')[0]]
 				else:
-					data[prop] = ''
-			action = self.act(name, trig=self.extensionFuntion(data))
-			if 'Icon' in extension:
-				action.setIcon(self.actIcon(extension['Icon']))
-			mimetype = extension['MimeType'] if 'MimeType' in extension else None
+					name = extension['Name']
+				data = {}
+				for prop in ('FileFilter', 'DefaultExtension', 'Exec'):
+					if 'X-ReText-'+prop in extension:
+						data[prop] = extension['X-ReText-'+prop]
+					elif prop in extension:
+						data[prop] = extension[prop]
+					else:
+						data[prop] = ''
+				action = self.act(name, trig=self.extensionFuntion(data))
+				if 'Icon' in extension:
+					action.setIcon(self.actIcon(extension['Icon']))
+				mimetype = extension['MimeType'] if 'MimeType' in extension else None
+			except KeyError:
+				print('Failed to parse extension: Name is required')
 			self.extensionActions.append((action, mimetype))
 	
 	def updateExtensionsVisibility(self):
@@ -1024,14 +1027,14 @@ class ReTextWindow(QMainWindow):
 			html << text << "\n"
 			htmlFile.close()
 			return
-		html << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
-		html << "<html>\n<head>\n"
-		html << "  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n"
-		html << "  <meta name=\"generator\" content=\"%s %s\">\n" % (app_name, app_version)
-		html << "  <title>" + self.getDocumentTitle() + "</title>\n"
-		html << "</head>\n<body>\n"
+		html << '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n'
+		html << '<html>\n<head>\n'
+		html << '  <meta http-equiv="content-type" content="text/html; charset="utf-8">\n'
+		html << '  <meta name="generator" content="%s %s">\n' % (app_name, app_version)
+		html << '  <title>' + self.getDocumentTitle() + '</title>\n'
+		html << '</head>\n<body>\n'
 		html << text
-		html << "\n</body>\n</html>\n"
+		html << '\n</body>\n</html>\n'
 		htmlFile.close()
 	
 	def textDocument(self):
@@ -1137,7 +1140,7 @@ class ReTextWindow(QMainWindow):
 		args = str(command).split()
 		try:
 			subprocess.Popen(args).wait()
-		except OSError as error:
+		except Exception as error:
 			errorstr = str(error)
 			try:
 				errorstr = QString.fromUtf8(errorstr)
