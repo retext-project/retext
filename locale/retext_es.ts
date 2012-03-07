@@ -271,7 +271,7 @@
         <translation>Distinguir mayúsculas/minúsculas</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1327"/>
+        <location filename="retext.py" line="1330"/>
         <source>New document</source>
         <translation>Nuevo documento</translation>
     </message>
@@ -311,149 +311,149 @@
         <translation>¡El generador de páginas web no está instalado!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="925"/>
+        <location filename="retext.py" line="929"/>
         <source>Select one or several files to open</source>
         <translation>Seleccione uno o varios archivos a abrir</translation>
     </message>
     <message>
-        <location filename="retext.py" line="925"/>
+        <location filename="retext.py" line="929"/>
         <source>Supported files</source>
         <translation>Archivos soportados</translation>
     </message>
     <message>
-        <location filename="retext.py" line="925"/>
+        <location filename="retext.py" line="929"/>
         <source>All files (*)</source>
         <translation>Todos los archivos (*)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="980"/>
+        <location filename="retext.py" line="984"/>
         <source>Plain text (*.txt)</source>
         <translation>Texto plano (*.txt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="983"/>
+        <location filename="retext.py" line="987"/>
         <source>ReStructuredText files</source>
         <translation>Archivos ReStructuredText</translation>
     </message>
     <message>
-        <location filename="retext.py" line="986"/>
+        <location filename="retext.py" line="990"/>
         <source>HTML files</source>
         <translation>Archivos HTML</translation>
     </message>
     <message>
-        <location filename="retext.py" line="989"/>
+        <location filename="retext.py" line="993"/>
         <source>Markdown files</source>
         <translation>Archivos Markdown</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1067"/>
+        <location filename="retext.py" line="1071"/>
         <source>Save file</source>
         <translation>Guardar archivo</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1004"/>
+        <location filename="retext.py" line="1008"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>¡No se puede guardar el archivo porque está como sólo-lectura!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1058"/>
+        <location filename="retext.py" line="1062"/>
         <source>Export document to ODT</source>
         <translation>Exportar documento a ODT</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1058"/>
+        <location filename="retext.py" line="1062"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Archivos de texto OpenDocument (*.odt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1067"/>
+        <location filename="retext.py" line="1071"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Archivos HTML (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1090"/>
+        <location filename="retext.py" line="1094"/>
         <source>Export document to PDF</source>
         <translation>Exportar documento a PDF</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1090"/>
+        <location filename="retext.py" line="1094"/>
         <source>PDF files (*.pdf)</source>
         <translation>Archivos PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1105"/>
+        <location filename="retext.py" line="1109"/>
         <source>Print document</source>
         <translation>Imprimir documento</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1124"/>
+        <location filename="retext.py" line="1128"/>
         <source>Export document</source>
         <translation>Exportar documento</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1147"/>
+        <location filename="retext.py" line="1151"/>
         <source>Failed to execute the command:</source>
         <translation>Fallo al ejecutar el comando:</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1154"/>
+        <location filename="retext.py" line="1158"/>
         <source>This function is not available in Plain text mode!</source>
         <translation>¡Esta función no está disponible en modo Texto plano!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1157"/>
+        <location filename="retext.py" line="1161"/>
         <source>Select type</source>
         <translation>Seleccione tipo</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1218"/>
+        <location filename="retext.py" line="1224"/>
         <source>Incorrect user name or password!</source>
         <translation>¡Nombre de usuario o contraseña incorrectos!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1221"/>
+        <location filename="retext.py" line="1227"/>
         <source>Authentification failed, please check your internet connection!</source>
         <translation>¡Autenticación fallida. Compruebe su conexión a internet!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1296"/>
+        <location filename="retext.py" line="1299"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>El documento ha sido modificado.
 ¿Quiere guardar sus cambios?</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1334"/>
+        <location filename="retext.py" line="1337"/>
         <source>HTML code</source>
         <translation>Código HTML</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1346"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation>Sencillo pero potente editor para Markdown y ReStructuredText</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1346"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Autor: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1346"/>
         <source>Website</source>
         <translation>Sitio web</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1346"/>
         <source>Markdown syntax</source>
         <translation>Sintaxis Markdown</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1343"/>
+        <location filename="retext.py" line="1346"/>
         <source>ReST syntax</source>
         <translation>Sintaxis ReST</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1408"/>
+        <location filename="retext.py" line="1411"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>¡No se pudo analizar el contenido del archivo. Compruebe si tiene los módulos necesarios instalados!</translation>
     </message>
