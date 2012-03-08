@@ -973,7 +973,7 @@ class ReTextWindow(QMainWindow):
 			self.saveFileWrapper(tmpname)
 			try:
 				subprocess.Popen(args).wait()
-			except OSError as error:
+			except Exception as error:
 				errorstr = QString.fromUtf8(str(error))
 				QMessageBox.warning(self, app_name, errorstr)
 			QFile(tmpname).remove()
