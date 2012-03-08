@@ -1,431 +1,431 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="">
+<!DOCTYPE TS><TS version="2.0" language="es_ES" sourcelanguage="">
 <context>
     <name>LogPassDialog</name>
     <message>
         <location filename="retext.py" line="142"/>
         <source>Enter your Google account data</source>
-        <translation>Sartu zure Google kontuaren datuak</translation>
+        <translation>Introduzca los datos de su cuenta de Google</translation>
     </message>
     <message>
         <location filename="retext.py" line="151"/>
         <source>Username</source>
-        <translation>Erabiltzailea</translation>
+        <translation>Usuario</translation>
     </message>
     <message>
         <location filename="retext.py" line="152"/>
         <source>Password</source>
-        <translation>Pasahitza</translation>
+        <translation>Contraseña</translation>
     </message>
 </context>
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="retext.py" line="1121"/>
-        <source>New document</source>
-        <translation>Dokumentu berria</translation>
-    </message>
-    <message>
         <location filename="retext.py" line="212"/>
         <source>File toolbar</source>
-        <translation>Fitxategi menu barra</translation>
+        <translation>Barra de archivos</translation>
     </message>
     <message>
         <location filename="retext.py" line="214"/>
         <source>Edit toolbar</source>
-        <translation>Edizio menu barra</translation>
+        <translation>Barra de edición</translation>
     </message>
     <message>
         <location filename="retext.py" line="216"/>
         <source>Search toolbar</source>
-        <translation>Bilakera menu barra</translation>
+        <translation>Barra de búsqueda</translation>
     </message>
     <message>
         <location filename="retext.py" line="218"/>
         <source>New</source>
-        <translation>Berria</translation>
+        <translation>Nuevo</translation>
     </message>
     <message>
         <location filename="retext.py" line="222"/>
         <source>Open</source>
-        <translation>Ireki</translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <location filename="retext.py" line="226"/>
         <source>Save</source>
-        <translation>Gorde</translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <location filename="retext.py" line="231"/>
         <source>Save as</source>
-        <translation>Gorde honela...</translation>
+        <translation>Guardar cómo</translation>
     </message>
     <message>
         <location filename="retext.py" line="234"/>
         <source>Print</source>
-        <translation>Inprimatu</translation>
+        <translation>Imprimir</translation>
     </message>
     <message>
         <location filename="retext.py" line="238"/>
         <source>Print preview</source>
-        <translation>Inprimatzeko aurrebista</translation>
+        <translation>Vista preliminar de impresión</translation>
     </message>
     <message>
         <location filename="retext.py" line="240"/>
         <source>View HTML code</source>
-        <translation>HTML iturburua ikusi</translation>
+        <translation>Ver código HTML</translation>
     </message>
     <message>
         <location filename="retext.py" line="242"/>
         <source>Change default font</source>
-        <translation>Lehenetsitako letra-tipoa aldatu</translation>
+        <translation>Cambiar fuente predeterminada</translation>
     </message>
     <message>
         <location filename="retext.py" line="244"/>
         <source>Find text</source>
-        <translation>Bilatu testua</translation>
+        <translation>Buscar texto</translation>
     </message>
     <message>
         <location filename="retext.py" line="249"/>
         <source>Preview</source>
-        <translation>Aurrebista</translation>
+        <translation>Vista preliminar</translation>
     </message>
     <message>
         <location filename="retext.py" line="261"/>
         <source>Live preview</source>
-        <translation>Aurrebista zuzenean</translation>
+        <translation>Vista preliminar en vivo</translation>
     </message>
     <message>
         <location filename="retext.py" line="265"/>
         <source>Fullscreen mode</source>
-        <translation>Pantaila osoa</translation>
+        <translation>Pantalla completa</translation>
     </message>
     <message>
         <location filename="retext.py" line="277"/>
         <source>Other formats</source>
-        <translation>Beste formatuak</translation>
+        <translation>Otros formatos</translation>
     </message>
     <message>
         <location filename="retext.py" line="283"/>
         <source>Quit</source>
-        <translation>Kendu</translation>
+        <translation>Salir</translation>
     </message>
     <message>
         <location filename="retext.py" line="287"/>
         <source>Undo</source>
-        <translation>Desegin</translation>
+        <translation>Deshacer</translation>
     </message>
     <message>
         <location filename="retext.py" line="289"/>
         <source>Redo</source>
-        <translation>Berregin</translation>
+        <translation>Rehacer</translation>
     </message>
     <message>
         <location filename="retext.py" line="293"/>
         <source>Copy</source>
-        <translation>Kopiatu</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <location filename="retext.py" line="296"/>
         <source>Cut</source>
-        <translation>Ebaki</translation>
+        <translation>Cortar</translation>
     </message>
     <message>
         <location filename="retext.py" line="299"/>
         <source>Paste</source>
-        <translation>Itsatsi</translation>
+        <translation>Pegar</translation>
     </message>
     <message>
         <location filename="retext.py" line="315"/>
         <source>Enable</source>
-        <translation>Gaitu</translation>
+        <translation>Activar</translation>
     </message>
     <message>
         <location filename="retext.py" line="317"/>
         <source>Set locale</source>
-        <translation>Lokala aukeratu</translation>
+        <translation>Establecer local</translation>
     </message>
     <message>
         <location filename="retext.py" line="328"/>
         <source>Plain text</source>
-        <translation>Testu arrunta</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="760"/>
-        <source>Open recent</source>
-        <translation>Azken dokumentuak</translation>
+        <translation>Texto plano</translation>
     </message>
     <message>
         <location filename="retext.py" line="334"/>
         <source>Generate webpages</source>
-        <translation>Web orriak sortu</translation>
+        <translation>Generar páginas web</translation>
     </message>
     <message>
         <location filename="retext.py" line="336"/>
         <source>Show</source>
-        <translation>Erakutsi</translation>
+        <translation>Mostrar</translation>
     </message>
     <message>
         <location filename="retext.py" line="338"/>
         <source>Next</source>
-        <translation>Hurrengoa</translation>
+        <translation>Siguiente</translation>
     </message>
     <message>
         <location filename="retext.py" line="340"/>
         <source>Previous</source>
-        <translation>Aurrekoa</translation>
+        <translation>Anterior</translation>
     </message>
     <message>
         <location filename="retext.py" line="344"/>
         <source>Get help online</source>
-        <translation>Laguntza on-line</translation>
+        <translation>Obtener ayuda en-línea</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="1133"/>
+        <source>About %1</source>
+        <translation>Acerca de %1</translation>
     </message>
     <message>
         <location filename="retext.py" line="349"/>
         <source>About Qt</source>
-        <translation>Qt-i buruz</translation>
+        <translation>Acerca de Qt</translation>
     </message>
     <message>
         <location filename="retext.py" line="370"/>
         <source>Save to Google Docs</source>
-        <translation>Gorde Google Docs-en</translation>
+        <translation>Guardar en Google Docs</translation>
     </message>
     <message>
         <location filename="retext.py" line="376"/>
         <source>Tags</source>
-        <translation>Tags</translation>
+        <translation>Etiquetas</translation>
     </message>
     <message>
         <location filename="retext.py" line="380"/>
         <source>Symbols</source>
-        <translation>Sinboloak</translation>
+        <translation>Símbolos</translation>
     </message>
     <message>
         <location filename="retext.py" line="394"/>
         <source>File</source>
-        <translation>Fitxategia</translation>
+        <translation>Archivo</translation>
     </message>
     <message>
         <location filename="retext.py" line="395"/>
         <source>Edit</source>
-        <translation>Editatu</translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <location filename="retext.py" line="396"/>
         <source>Help</source>
-        <translation>Laguntza</translation>
+        <translation>Ayuda</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="760"/>
+        <source>Open recent</source>
+        <translation>Abrir recientes</translation>
     </message>
     <message>
         <location filename="retext.py" line="400"/>
         <source>Directory</source>
-        <translation>Karpeta</translation>
+        <translation>Directorio</translation>
     </message>
     <message>
         <location filename="retext.py" line="408"/>
         <source>Export</source>
-        <translation>Esportatu</translation>
+        <translation>Exportar</translation>
     </message>
     <message>
         <location filename="retext.py" line="429"/>
         <source>Spell check</source>
-        <translation>Egiaztatu ortografia</translation>
+        <translation>Revisar ortografía</translation>
     </message>
     <message>
         <location filename="retext.py" line="437"/>
         <source>Default editing mode</source>
-        <translation>Lehenetsitako editatzeko modua</translation>
+        <translation>Modo de edición por defecto</translation>
     </message>
     <message>
         <location filename="retext.py" line="472"/>
         <source>Search</source>
-        <translation>Bilatu</translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <location filename="retext.py" line="476"/>
         <source>Case sensitively</source>
-        <translation>Maiuskulak/minuskulak</translation>
+        <translation>Distinguir mayúsculas/minúsculas</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="1121"/>
+        <source>New document</source>
+        <translation>Nuevo documento</translation>
     </message>
     <message>
         <location filename="retext.py" line="493"/>
         <source>You have neither Markdown nor Docutils modules installed!</source>
-        <translation>Ez duzu ez Markdown, ez Docutils instalatuta!</translation>
+        <translation>¡No tiene ni el módulo Markdown ni Docutils instalados!</translation>
     </message>
     <message>
         <location filename="retext.py" line="493"/>
         <source>Only HTML formatting will be available.</source>
-        <translation>Bakarrik HTML formatua eskuragarri.</translation>
+        <translation>Sólo estará disponible el formato HTML.</translation>
     </message>
     <message>
         <location filename="retext.py" line="642"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation>Sartu hizkuntzako prefijoa (adibidez: eu_EU)</translation>
+        <translation>Introduzca el nombre del local (por ejemplo: en_US)</translation>
     </message>
     <message>
         <location filename="retext.py" line="731"/>
         <source>Please, save the file somewhere.</source>
-        <translation>Gorde fitxategia edonon, mesedez.</translation>
+        <translation>Salve el fichero en algún lugar.</translation>
     </message>
     <message>
         <location filename="retext.py" line="718"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
-        <translation>Web orriak &lt;code&gt;html&lt;/code&gt; karpetan gorde dira.</translation>
+        <translation>Páginas web guardadas en el directorio &lt;code&gt;html&lt;/code&gt;.</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="720"/>
+        <source>Show directory</source>
+        <translation>Mostrar directorio</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="725"/>
+        <source>Webpages generator is not installed!</source>
+        <translation>¡El generador de páginas web no está instalado!</translation>
     </message>
     <message>
         <location filename="retext.py" line="765"/>
         <source>Select one or several files to open</source>
-        <translation>Aukeratu fitzategi bat(zuk) irekitzeko</translation>
+        <translation>Seleccione uno o varios archivos a abrir</translation>
     </message>
     <message>
         <location filename="retext.py" line="765"/>
         <source>Supported files</source>
-        <translation>Onartutako formatuak</translation>
+        <translation>Archivos soportados</translation>
     </message>
     <message>
         <location filename="retext.py" line="765"/>
         <source>All files (*)</source>
-        <translation>Fitxategi guztiak (*)</translation>
+        <translation>Todos los archivos (*)</translation>
     </message>
     <message>
         <location filename="retext.py" line="819"/>
         <source>Plain text (*.txt)</source>
-        <translation>Testu arrunta (*.txt)</translation>
+        <translation>Texto plano (*.txt)</translation>
     </message>
     <message>
         <location filename="retext.py" line="822"/>
         <source>ReStructuredText files</source>
-        <translation>ReStructuredText fitxategiak</translation>
+        <translation>Archivos ReStructuredText</translation>
     </message>
     <message>
         <location filename="retext.py" line="825"/>
         <source>HTML files</source>
-        <translation>HTML fitxategiak</translation>
+        <translation>Archivos HTML</translation>
     </message>
     <message>
         <location filename="retext.py" line="828"/>
         <source>Markdown files</source>
-        <translation>Markdown fitxategiak</translation>
+        <translation>Archivos Markdown</translation>
     </message>
     <message>
         <location filename="retext.py" line="908"/>
         <source>Save file</source>
-        <translation>Gorde fitxategia</translation>
+        <translation>Guardar archivo</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="844"/>
+        <source>Cannot save to file because it is read-only!</source>
+        <translation>¡No se puede guardar el archivo porque está como sólo-lectura!</translation>
     </message>
     <message>
         <location filename="retext.py" line="899"/>
         <source>Export document to ODT</source>
-        <translation>Esportatu ODT gisa</translation>
+        <translation>Exportar documento a ODT</translation>
     </message>
     <message>
         <location filename="retext.py" line="899"/>
         <source>OpenDocument text files (*.odt)</source>
-        <translation>Ireki OpenDocument testu fitxategiak (*.odt)</translation>
+        <translation>Archivos de texto OpenDocument (*.odt)</translation>
     </message>
     <message>
         <location filename="retext.py" line="908"/>
         <source>HTML files (*.html *.htm)</source>
-        <translation>HTML fitxategiak (*.html, *.htm)</translation>
+        <translation>Archivos HTML (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="retext.py" line="924"/>
         <source>Export document to PDF</source>
-        <translation>Esportatu PDF gisa</translation>
+        <translation>Exportar documento a PDF</translation>
     </message>
     <message>
         <location filename="retext.py" line="924"/>
         <source>PDF files (*.pdf)</source>
-        <translation>PDF fitxategiak (*.pdf)</translation>
+        <translation>Archivos PDF (*.pdf)</translation>
     </message>
     <message>
         <location filename="retext.py" line="941"/>
         <source>Print document</source>
-        <translation>Inprimatu dokumentua</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="958"/>
-        <source>This function is not available in Plain text mode!</source>
-        <translation>Ekintza hau ezin da testu arrunta moduan egin!</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="961"/>
-        <source>Select type</source>
-        <translation>Aukeratu mota</translation>
+        <translation>Imprimir documento</translation>
     </message>
     <message>
         <location filename="retext.py" line="963"/>
         <source>Export document</source>
-        <translation>Esportatu dokumentua</translation>
+        <translation>Exportar documento</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="958"/>
+        <source>This function is not available in Plain text mode!</source>
+        <translation>¡Esta función no está disponible en modo Texto plano!</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="961"/>
+        <source>Select type</source>
+        <translation>Seleccione tipo</translation>
     </message>
     <message>
         <location filename="retext.py" line="1030"/>
         <source>Incorrect user name or password!</source>
-        <translation>Erabiltzailearen pasa hitza okerra!</translation>
+        <translation>¡Nombre de usuario o contraseña incorrectos!</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="1033"/>
+        <source>Authentification failed, please check your internet connection!</source>
+        <translation>¡Autenticación fallida. Compruebe su conexión a internet!</translation>
     </message>
     <message>
         <location filename="retext.py" line="1095"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
-        <translation>Dokumentua aldatu da.
-Aldaketak gorde nahi duzu?</translation>
+        <translation>El documento ha sido modificado.
+¿Quiere guardar sus cambios?</translation>
     </message>
     <message>
         <location filename="retext.py" line="1124"/>
         <source>HTML code</source>
-        <translation>HTML iturburua</translation>
+        <translation>Código HTML</translation>
     </message>
     <message>
         <location filename="retext.py" line="1133"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
-        <translation>Markdown et ReStructuredText-erako editore sinple baina boteretsua</translation>
+        <translation>Sencillo pero potente editor para Markdown y ReStructuredText</translation>
     </message>
     <message>
         <location filename="retext.py" line="1133"/>
         <source>Author: Dmitry Shachnev, 2011</source>
-        <translation>Egilea :Dmity Schachnev, 2011</translation>
+        <translation>Autor: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
         <location filename="retext.py" line="1133"/>
         <source>Website</source>
-        <translation>Webgune</translation>
+        <translation>Sitio web</translation>
     </message>
     <message>
         <location filename="retext.py" line="1133"/>
         <source>Markdown syntax</source>
-        <translation>Markdown sintaxia</translation>
+        <translation>Sintaxis Markdown</translation>
     </message>
     <message>
         <location filename="retext.py" line="1133"/>
         <source>ReST syntax</source>
-        <translation>Rest sintaxia</translation>
+        <translation>Sintaxis ReST</translation>
     </message>
     <message>
         <location filename="retext.py" line="1192"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
-        <translation>Ezin da fitxategiaren edukia prozesatu, beharrezko moduluak instalatuta dauden egiaztatu!</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="720"/>
-        <source>Show directory</source>
-        <translation>Karpeta erakutsi</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="725"/>
-        <source>Webpages generator is not installed!</source>
-        <translation>Weborri sortzailea ez dago instalatua&gt;</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="844"/>
-        <source>Cannot save to file because it is read-only!</source>
-        <translation>Ezin da gorde fitxategia irakurtzeko-soilik delako!</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="1033"/>
-        <source>Authentification failed, please check your internet connection!</source>
-        <translation>Autentifikazioak huts egin du, konprobatu zure interneteko konexioa!</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="1133"/>
-        <source>About %1</source>
-        <translation>%1(r)i buruz</translation>
+        <translation>¡No se pudo analizar el contenido del archivo. Compruebe si tiene los módulos necesarios instalados!</translation>
     </message>
 </context>
 </TS>

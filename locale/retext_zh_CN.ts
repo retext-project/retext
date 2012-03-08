@@ -116,7 +116,7 @@
         <translation>PDF 文件 (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1085"/>
+        <location filename="retext.py" line="1095"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>文件已更改，确认保存吗？</translation>
@@ -147,7 +147,7 @@ Do you want to save your changes?</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1111"/>
+        <location filename="retext.py" line="1121"/>
         <source>New document</source>
         <translation>新文件</translation>
     </message>
@@ -177,7 +177,7 @@ Do you want to save your changes?</source>
         <translation>保存到 Google Docs</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1021"/>
+        <location filename="retext.py" line="1030"/>
         <source>Incorrect user name or password!</source>
         <translation>用户名或密码不正确!</translation>
     </message>
@@ -197,7 +197,7 @@ Do you want to save your changes?</source>
         <translation>查看 HTML 代码</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1114"/>
+        <location filename="retext.py" line="1124"/>
         <source>HTML code</source>
         <translation>HTML 代码</translation>
     </message>
@@ -352,22 +352,22 @@ Do you want to save your changes?</source>
         <translation>HTML 文件</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Website</source>
         <translation>网站</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Markdown syntax</source>
         <translation>Markdown 语法</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>ReST syntax</source>
         <translation>ReST 语法</translation>
     </message>
@@ -382,12 +382,12 @@ Do you want to save your changes?</source>
         <translation>Markdown 文件</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation>简单高效的 Markdown 与 ReStructuredText 编辑器</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1182"/>
+        <location filename="retext.py" line="1192"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>不能处理文件内容，检查你是否安装了必需的模块！</translation>
     </message>
@@ -417,12 +417,12 @@ Do you want to save your changes?</source>
         <translation>不能保存文件因为它是只读的！</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1023"/>
+        <location filename="retext.py" line="1033"/>
         <source>Authentification failed, please check your internet connection!</source>
         <translation>认证失败，请检查您的网络连接！</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>About %1</source>
         <translation>关于 %1</translation>
     </message>

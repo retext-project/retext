@@ -116,7 +116,7 @@
         <translation>Файлы PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1085"/>
+        <location filename="retext.py" line="1095"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Документ был изменён.
@@ -148,14 +148,9 @@ Do you want to save your changes?</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1111"/>
+        <location filename="retext.py" line="1121"/>
         <source>New document</source>
         <translation>Новый документ</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="1123"/>
-        <source>About %1</source>
-        <translation>О %1</translation>
     </message>
     <message>
         <location filename="retext.py" line="765"/>
@@ -183,7 +178,7 @@ Do you want to save your changes?</source>
         <translation>Сохранить в Google Docs</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1021"/>
+        <location filename="retext.py" line="1030"/>
         <source>Incorrect user name or password!</source>
         <translation>Неверное имя пользователя или пароль!</translation>
     </message>
@@ -203,7 +198,7 @@ Do you want to save your changes?</source>
         <translation>Просмотр кода HTML</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1114"/>
+        <location filename="retext.py" line="1124"/>
         <source>HTML code</source>
         <translation>код HTML</translation>
     </message>
@@ -358,22 +353,22 @@ Do you want to save your changes?</source>
         <translation>Файлы HTML</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Автор: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Website</source>
         <translation>Веб-сайт</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Markdown syntax</source>
         <translation>Синтаксис Markdown</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>ReST syntax</source>
         <translation>Синтаксис ReST</translation>
     </message>
@@ -388,12 +383,12 @@ Do you want to save your changes?</source>
         <translation>Файлы Markdown</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation>Простой, но мощный редактор для Markdown и ReStructuredText</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1182"/>
+        <location filename="retext.py" line="1192"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>Невозможно обработать содержимое файла, убедитесь, что установлен необходимый модуль!</translation>
     </message>
@@ -423,9 +418,14 @@ Do you want to save your changes?</source>
         <translation>Невозможно сохранить в файл, так как он доступен только для чтения!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1023"/>
+        <location filename="retext.py" line="1033"/>
         <source>Authentification failed, please check your internet connection!</source>
         <translation>Не удалось подключиться, проверьте ваше интернет-соединение!</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="1133"/>
+        <source>About %1</source>
+        <translation>О %1</translation>
     </message>
 </context>
 </TS>

@@ -21,7 +21,7 @@
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="retext.py" line="1111"/>
+        <location filename="retext.py" line="1121"/>
         <source>New document</source>
         <translation>Nouveau document</translation>
     </message>
@@ -179,11 +179,6 @@
         <location filename="retext.py" line="344"/>
         <source>Get help online</source>
         <translation>Aide en ligne</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="1123"/>
-        <source>About %1</source>
-        <translation>À propos de  %1</translation>
     </message>
     <message>
         <location filename="retext.py" line="349"/>
@@ -361,49 +356,49 @@
         <translation>Exporter document</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1021"/>
+        <location filename="retext.py" line="1030"/>
         <source>Incorrect user name or password!</source>
         <translation>Utilisateur ou mot de passe incorrect !</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1085"/>
+        <location filename="retext.py" line="1095"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Le document a changé.
 Voulez vous enregistrer vos changements ?</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1114"/>
+        <location filename="retext.py" line="1124"/>
         <source>HTML code</source>
         <translation>Code HTML</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation>Éditeur de Markdown et ReStructuredText simple mais puissant</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Auteur :Dmity Schachnev, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Website</source>
         <translation>Site Web</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Markdown syntax</source>
         <translation>Syntaxe Markdown</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>ReST syntax</source>
         <translation>Syntaxe Rest</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1182"/>
+        <location filename="retext.py" line="1192"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>Ne peut analyser le contenu du fichier, vérifier si les modules sont bien installés</translation>
     </message>
@@ -423,9 +418,14 @@ Voulez vous enregistrer vos changements ?</translation>
         <translation>Ne peut enregistrer le fichier car en lecture seule !</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1023"/>
+        <location filename="retext.py" line="1033"/>
         <source>Authentification failed, please check your internet connection!</source>
         <translation>Authentification echouée, svp vérifier votre connection internet !</translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="1133"/>
+        <source>About %1</source>
+        <translation>À propos de %1</translation>
     </message>
 </context>
 </TS>

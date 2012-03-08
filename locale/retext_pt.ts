@@ -21,7 +21,7 @@
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="retext.py" line="1111"/>
+        <location filename="retext.py" line="1121"/>
         <source>New document</source>
         <translation>Novo documento</translation>
     </message>
@@ -136,11 +136,6 @@
         <translation>Mostrar</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
-        <source>About %1</source>
-        <translation>Sobre %1</translation>
-    </message>
-    <message>
         <location filename="retext.py" line="349"/>
         <source>About Qt</source>
         <translation>So o Qt</translation>
@@ -246,19 +241,19 @@
         <translation>Imprimir documento</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1021"/>
+        <location filename="retext.py" line="1030"/>
         <source>Incorrect user name or password!</source>
         <translation>Utilizador ou palavra-passe incorrectos!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1085"/>
+        <location filename="retext.py" line="1095"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>O documernto foi alterado
 Deseja gravar as alterações?</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1114"/>
+        <location filename="retext.py" line="1124"/>
         <source>HTML code</source>
         <translation>Código HTML</translation>
     </message>
@@ -358,22 +353,22 @@ Deseja gravar as alterações?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Website</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Markdown syntax</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>ReST syntax</source>
         <translation type="unfinished"></translation>
     </message>
@@ -388,12 +383,12 @@ Deseja gravar as alterações?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="1123"/>
+        <location filename="retext.py" line="1133"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="1182"/>
+        <location filename="retext.py" line="1192"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -423,9 +418,14 @@ Deseja gravar as alterações?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="retext.py" line="1023"/>
+        <location filename="retext.py" line="1033"/>
         <source>Authentification failed, please check your internet connection!</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="retext.py" line="1133"/>
+        <source>About %1</source>
+        <translation>Sobre %1</translation>
     </message>
 </context>
 </TS>
