@@ -954,7 +954,7 @@ class ReTextWindow(QMainWindow):
 		preview.exec_()
 	
 	def otherExport(self):
-		if (self.actionPlainText.isChecked()):
+		if self.actionPlainText.isChecked():
 			return QMessageBox.warning(self, app_name, self.tr('This function is not available in Plain text mode!'))
 		settings.beginGroup('Export')
 		types = settings.allKeys()
