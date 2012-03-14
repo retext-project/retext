@@ -131,6 +131,8 @@ def main(argv):
 		elif argv[1] == "usestyle" and len(argv) == 3:
 			if os.path.exists(templates_dir+"style_"+argv[2]+".css"):
 				shutil.copy(templates_dir+"style_"+argv[2]+".css", "html/style.css")
+			else:
+				print('Error: no such file!')
 		else:
 			printUsage()
 	else:
