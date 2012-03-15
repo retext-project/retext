@@ -34,7 +34,7 @@ def readOptionFromSettings(settings, key, keytype):
 		return settings.value(key, type=keytype)
 	except TypeError:
 		# For old PyQt versions
-		if keytype in ('QString', str):
+		if keytype == str:
 			return settings.value(key).toString()
 		elif keytype == int:
 			return settings.value(key).toInt()
@@ -121,7 +121,7 @@ else:
 
 monofont = QFont()
 if settings.contains('editorFont'):
-	monofont.setFamily(readOptionFromSettings(settings, 'editorFont', 'QString'))
+	monofont.setFamily(readOptionFromSettings(settings, 'editorFont', str))
 else:
 	monofont.setFamily('monospace')
 if settings.contains('editorFontSize'):
@@ -230,9 +230,9 @@ class ReTextWindow(QMainWindow):
 		size = self.geometry()
 		self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
 		if settings.contains('iconTheme'):
-			QIcon.setThemeName(readOptionFromSettings(settings, 'iconTheme', 'QString'))
+			QIcon.setThemeName(readOptionFromSettings(settings, 'iconTheme', str))
 		if settings.contains('font'):
-			self.font = QFont(readOptionFromSettings(settings, 'font', 'QString'))
+			self.font = QFont(readOptionFromSettings(settings, 'font', str))
 			if settings.contains('fontSize'):
 				self.font.setPointSize(readOptionFromSettings(settings, 'fontSize', int))
 		else:
@@ -327,7 +327,7 @@ class ReTextWindow(QMainWindow):
 			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSC)
 			self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
 			if settings.contains('spellCheckLocale'):
-				self.sl = str(readOptionFromSettings(settings, 'spellCheckLocale', 'QString'))
+				self.sl = str(readOptionFromSettings(settings, 'spellCheckLocale', str))
 			else:
 				self.sl = None
 			if settings.contains('spellCheck'):
@@ -397,7 +397,7 @@ class ReTextWindow(QMainWindow):
 		self.symbolBox.addItems(self.usefulChars)
 		self.connect(self.symbolBox, SIGNAL('activated(int)'), self.insertSymbol)
 		if settings.contains('styleSheet'):
-			ssname = readOptionFromSettings(settings, 'styleSheet', 'QString')
+			ssname = readOptionFromSettings(settings, 'styleSheet', str)
 			sheetfile = QFile(ssname)
 			sheetfile.open(QIODevice.ReadOnly)
 			self.ss = QTextStream(sheetfile).readAll()
@@ -1008,7 +1008,7 @@ class ReTextWindow(QMainWindow):
 				defaultExt = self.tr("Markdown files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
 				ext = ".mkd"
 				if settings.contains('defaultExt'):
-					ext = readOptionFromSettings(settings, 'defaultExt', 'QString')
+					ext = readOptionFromSettings(settings, 'defaultExt', str)
 			self.fileNames[self.ind] = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 			if self.fileNames[self.ind] and not QFileInfo(self.fileNames[self.ind]).suffix():
 				self.fileNames[self.ind] += ext
@@ -1176,7 +1176,7 @@ class ReTextWindow(QMainWindow):
 		item, ok = QInputDialog.getItem(self, app_name, self.tr('Select type'), types, 0, False)
 		if not ok:
 			return settings.endGroup()
-		command = readOptionFromSettings(settings, item, 'QString')
+		command = readOptionFromSettings(settings, item, str)
 		settings.endGroup()
 		self.runExtensionCommand(command, defaultext='.'+item)
 	
@@ -1211,8 +1211,8 @@ class ReTextWindow(QMainWindow):
 	def saveGDocs(self):
 		login = passwd = ''
 		if settings.contains('GDocsLogin') and settings.contains('GDocsPasswd'):
-			login = readOptionFromSettings(settings, 'GDocsLogin', 'QString')
-			passwd = readOptionFromSettings(settings, 'GDocsPasswd', 'QString')
+			login = readOptionFromSettings(settings, 'GDocsLogin', str)
+			passwd = readOptionFromSettings(settings, 'GDocsPasswd', str)
 		if self.gDocsEntries[self.ind] == None:
 			loginDialog = LogPassDialog(login, passwd)
 			if loginDialog.exec_() == QDialog.Accepted:
@@ -1443,7 +1443,7 @@ def main(fileNames):
 	app.installTranslator(RtTranslator)
 	app.installTranslator(QtTranslator)
 	if settings.contains('appStyleSheet'):
-		stylename = readOptionFromSettings(settings, 'appStyleSheet', 'QString')
+		stylename = readOptionFromSettings(settings, 'appStyleSheet', str)
 		sheetfile = QFile(stylename)
 		sheetfile.open(QIODevice.ReadOnly)
 		app.setStyleSheet(QTextStream(sheetfile).readAll())
