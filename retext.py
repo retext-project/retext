@@ -971,6 +971,9 @@ class ReTextWindow(QMainWindow):
 			self.editBoxes[self.ind].setPlainText(html)
 			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
 			pt = not (suffix in ('re', 'md', 'markdown', 'mdown', 'mkd', 'mkdn', 'rst', 'rest', 'html', 'htm'))
+			if settings.contains('autoPlainText'):
+				if not readOptionFromSettings(settings, 'autoPlainText', bool):
+					pt = False
 			self.actionPlainText.setChecked(pt)
 			self.enablePlainText(pt)
 			self.setCurrentFile()
