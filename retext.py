@@ -32,7 +32,7 @@ app_version = "3.0.0"
 def readOptionFromSettings(settings, key, keytype):
 	try:
 		return settings.value(key, type=keytype)
-	except:
+	except TypeError:
 		# For old PyQt versions
 		if keytype in ('QString', str):
 			return settings.value(key).toString()
