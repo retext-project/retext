@@ -138,7 +138,7 @@ class WebLibrary(object):
 
 def main(argv):
 	if len(argv) > 1:
-		if not (os.path.exists("html") or argv[1] == "init"):
+		if argv[1] in ('updateall', 'update', 'usestyle') and not os.path.exists("html"):
 			print("Could not find html directory!")
 			return
 		if argv[1] == "updateall":
@@ -164,8 +164,9 @@ def main(argv):
 		printUsage()
 
 def printUsage():
-	print(app_name + ", version " + app_version + "\n")
-	print("Usage: wpgen command")
+	print(app_name + ", version " + app_version)
+	print("Usage: wpgen COMMAND <ARGUMENTS>")
+	print("")
 	print("Available commands:")
 	print("  init - create new web library")
 	print("  updateall - generate html files from all pages")
