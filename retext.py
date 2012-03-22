@@ -22,7 +22,7 @@
 
 import sys
 import re
-import subprocess
+from subprocess import Popen
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
@@ -807,8 +807,8 @@ class ReTextWindow(QMainWindow):
 			QMessageBox.warning(self, app_name, self.tr("Please, save the file somewhere."))
 		elif wpgen:
 			if not (QDir("html").exists() and QFile.exists("template.html")):
-				subprocess.Popen((wpgen, 'init')).wait()
-			subprocess.Popen([wpgen, 'updateall']).wait()
+				Popen((wpgen, 'init')).wait()
+			Popen([wpgen, 'updateall']).wait()
 			msgBox = QMessageBox(QMessageBox.Information, app_name, \
 			self.tr("Webpages saved in <code>html</code> directory."), QMessageBox.Ok)
 			showButton = msgBox.addButton(self.tr("Show directory"), QMessageBox.AcceptRole)
@@ -946,6 +946,7 @@ class ReTextWindow(QMainWindow):
 	def openFileWrapper(self, fileName):
 		if not fileName:
 			return
+		fileName = QFileInfo(fileName).canonicalFilePath()
 		exists = False
 		for i in range(self.tabWidget.count()):
 			if self.fileNames[i] == fileName:
@@ -970,7 +971,7 @@ class ReTextWindow(QMainWindow):
 			openfile.close()
 			self.editBoxes[self.ind].setPlainText(html)
 			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
-			pt = not (suffix in ('re', 'md', 'markdown', 'mdown', 'mkd', 'mkdn', 'rst', 'rest', 'html', 'htm'))
+			pt = suffix not in ('re', 'md', 'markdown', 'mdown', 'mkd', 'mkdn', 'rst', 'rest', 'html', 'htm')
 			if settings.contains('autoPlainText'):
 				if not readOptionFromSettings(settings, 'autoPlainText', bool):
 					pt = False
@@ -1155,7 +1156,7 @@ class ReTextWindow(QMainWindow):
 		command = command.replace('%html' if html else '%if', tmpname)
 		args = str(command).split()
 		try:
-			subprocess.Popen(args).wait()
+			Popen(args).wait()
 		except Exception as error:
 			errorstr = str(error)
 			try:
