@@ -768,22 +768,24 @@ class ReTextWindow(QMainWindow):
 			self.openFileWrapper(fileName)
 	
 	def openFileWrapper(self, fileName):
-		if fileName:
-			exists = False
-			for i in range(self.tabWidget.count()):
-				if self.fileNames[i] == fileName:
-					exists = True
-					ex = i
-			if exists:
-				self.tabWidget.setCurrentIndex(ex)
-			else:
-				if self.fileNames[self.ind] or self.editBoxes[self.ind].toPlainText() \
-				or self.editBoxes[self.ind].document().isModified():
-					self.tabWidget.addTab(self.createTab(""), "")
-					self.ind = self.tabWidget.count()-1
-					self.tabWidget.setCurrentIndex(self.ind)
-				self.fileNames[self.ind] = fileName
-				self.openFileMain()
+		if not fileName:
+			return
+		fileName = QFileInfo(fileName).canonicalFilePath()
+		exists = False
+		for i in range(self.tabWidget.count()):
+			if self.fileNames[i] == fileName:
+				exists = True
+				ex = i
+		if exists:
+			self.tabWidget.setCurrentIndex(ex)
+		else:
+			if self.fileNames[self.ind] or self.editBoxes[self.ind].toPlainText() \
+			or self.editBoxes[self.ind].document().isModified():
+				self.tabWidget.addTab(self.createTab(""), "")
+				self.ind = self.tabWidget.count()-1
+				self.tabWidget.setCurrentIndex(self.ind)
+			self.fileNames[self.ind] = fileName
+			self.openFileMain()
 	
 	def openFileMain(self):
 		if QFile.exists(self.fileNames[self.ind]):
