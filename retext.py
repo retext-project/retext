@@ -295,13 +295,6 @@ class ReTextWindow(QMainWindow):
 		self.actionPerfectHtml = self.act('HTML', icon='text-html', trig=self.saveFilePerfect)
 		self.actionPdf = self.act('PDF', icon='application-pdf', trig=self.savePdf)
 		self.actionOdf = self.act('ODT', icon='x-office-document', trig=self.saveOdf)
-		settings.beginGroup('Export')
-		if settings.allKeys():
-			self.actionOtherExport = self.act(self.tr('Other formats'), trig=self.otherExport)
-			otherExport = True
-		else:
-			otherExport = False
-		settings.endGroup()
 		self.getExportExtensionsList()
 		self.actionQuit = self.act(self.tr('Quit'), icon='application-exit', shct=QKeySequence.Quit)
 		self.actionQuit.setMenuRole(QAction.QuitRole)
@@ -442,8 +435,6 @@ class ReTextWindow(QMainWindow):
 			for action, mimetype in self.extensionActions:
 				self.menuExport.addAction(action)
 			self.connect(self.menuRecentFiles, SIGNAL('aboutToShow()'), self.updateExtensionsVisibility)
-		if otherExport:
-			self.menuExport.addAction(self.actionOtherExport)
 		if use_gdocs:
 			self.menuExport.addSeparator()
 			self.menuExport.addAction(self.actionSaveGDocs)
@@ -1135,7 +1126,7 @@ class ReTextWindow(QMainWindow):
 		self.connect(preview, SIGNAL("paintRequested(QPrinter*)"), document.print_)
 		preview.exec_()
 	
-	def runExtensionCommand(self, command, filefilter='', defaultext=''):
+	def runExtensionCommand(self, command, filefilter, defaultext):
 		of = ('%of' in command)
 		html = ('%html' in command)
 		if of:
@@ -1168,18 +1159,6 @@ class ReTextWindow(QMainWindow):
 		QFile(tmpname).remove()
 		if of:
 			QFile('out'+defaultext).rename(fileName)
-	
-	def otherExport(self):
-		if self.actionPlainText.isChecked():
-			return QMessageBox.warning(self, app_name, self.tr('This function is not available in Plain text mode!'))
-		settings.beginGroup('Export')
-		types = settings.allKeys()
-		item, ok = QInputDialog.getItem(self, app_name, self.tr('Select type'), types, 0, False)
-		if not ok:
-			return settings.endGroup()
-		command = readFromSettings(settings, item, str)
-		settings.endGroup()
-		self.runExtensionCommand(command, defaultext='.'+item)
 	
 	def getDocumentTitle(self, baseName=False):
 		"""Ensure that parseText() is called before this function!
