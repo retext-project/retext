@@ -37,7 +37,10 @@ def readFromSettings(settings, key, keytype):
 		if keytype == str:
 			return settings.value(key).toString()
 		elif keytype == int:
-			return settings.value(key).toInt()
+			result, ok = settings.value(key).toInt()
+			if not ok:
+				print('Warning: cannot covert settings value to int!')
+			return result
 		elif keytype == bool:
 			return settings.value(key).toBool()
 
@@ -1392,15 +1395,9 @@ class ReTextWindow(QMainWindow):
 		if self.fileNames[self.ind]:
 			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
 			if suffix in ('md', 'markdown', 'mdown', 'mkd', 'mkdn', 're'):
-				if use_md:
-					return PARSER_MARKDOWN
-				else:
-					return PARSER_NA
+				return PARSER_MARKDOWN if use_md else PARSER_NA
 			elif suffix in ('rest', 'rst'):
-				if use_docutils:
-					return PARSER_DOCUTILS
-				else:
-					return PARSER_NA
+				return PARSER_DOCUTILS if use_docutils else PARSER_NA
 			elif suffix in ('html', 'htm'):
 				return PARSER_HTML
 		if not (use_docutils or use_md):
