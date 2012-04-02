@@ -27,7 +27,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "3.0.1"
+app_version = "3.1 (Git)"
 
 def readFromSettings(settings, key, keytype):
 	try:
@@ -37,7 +37,10 @@ def readFromSettings(settings, key, keytype):
 		if keytype == str:
 			return settings.value(key).toString()
 		elif keytype == int:
-			return settings.value(key).toInt()
+			result, ok = settings.value(key).toInt()
+			if not ok:
+				print('Warning: cannot covert settings value to int!')
+			return result
 		elif keytype == bool:
 			return settings.value(key).toBool()
 
