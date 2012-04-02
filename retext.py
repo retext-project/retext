@@ -32,7 +32,12 @@ app_version = "3.1 (Git)"
 def readFromSettings(settings, key, keytype):
 	try:
 		return settings.value(key, type=keytype)
-	except TypeError:
+	except TypeError as error:
+		if str(error).startswith('unable to convert'):
+			# New PyQt version, but type mismatch
+			print('Warning: '+str(error))
+			# Return an instance of keytype
+			return keytype()
 		# For old PyQt versions
 		if keytype == str:
 			return settings.value(key).toString()
