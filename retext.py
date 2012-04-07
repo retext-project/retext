@@ -1159,16 +1159,10 @@ class ReTextWindow(QMainWindow):
 	def getParser(self):
 		if self.fileNames[self.ind]:
 			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
-			if suffix in ('md', 'markdown', 'mdown', 'mkd', 'mkdn'):
-				if use_md:
-					return PARSER_MARKDOWN
-				else:
-					return PARSER_NA
+			if suffix in ('md', 'markdown', 'mdown', 'mkd', 'mkdn', 're'):
+				return PARSER_MARKDOWN if use_md else PARSER_NA
 			elif suffix in ('rest', 'rst'):
-				if use_docutils:
-					return PARSER_DOCUTILS
-				else:
-					return PARSER_NA
+				return PARSER_DOCUTILS if use_docutils else PARSER_NA
 			elif suffix in ('html', 'htm'):
 				return PARSER_HTML
 		if not (use_docutils or use_md):
