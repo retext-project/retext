@@ -684,7 +684,6 @@ class ReTextWindow(QMainWindow):
 			splitter = self.getSplitter(self.ind)
 			self.tabWidget.addTab(splitter, self.getDocumentTitle(baseName=True))
 			self.updatePreviewBox()
-			self.editBoxes[self.ind].setVisible(self.alpc[self.ind] or not self.apc[self.ind])
 			self.previewBoxes[self.ind].setVisible(self.apc[self.ind])
 		self.ind = oldind
 		self.tabWidget.setCurrentIndex(self.ind)
