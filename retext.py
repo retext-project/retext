@@ -296,7 +296,7 @@ class ReTextWindow(QMainWindow):
 			self.actionPreview.setIcon(QIcon.fromTheme('x-office-document'))
 		else:
 			self.actionPreview.setIcon(QIcon(icon_path+'document-preview.png'))
-		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.CTRL+Qt.SHIFT+Qt.Key_E, \
+		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.CTRL+Qt.Key_L, \
 		trigbool=self.enableLivePreview)
 		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), icon='view-fullscreen', shct=Qt.Key_F11, \
 		trigbool=self.enableFullScreen)
