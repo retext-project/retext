@@ -578,6 +578,7 @@ class ReTextWindow(QMainWindow):
 		else:
 			self.previewBoxes.append(QTextEdit())
 			self.previewBoxes[-1].setReadOnly(True)
+		self.editBoxes[-1].contextMenuEvent = self.contextMenuEvent
 		self.previewBoxes[-1].setVisible(False)
 		self.fileNames.append(fileName)
 		liveMode = self.restorePreviewState and self.livePreviewEnabled
@@ -593,6 +594,46 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.editBoxes[-1], SIGNAL('copyAvailable(bool)'), self.enableCopy)
 		self.connect(self.editBoxes[-1].document(), SIGNAL('modificationChanged(bool)'), self.modificationChanged)
 		return self.getSplitter(-1)
+	
+	def contextMenuEvent(self, event):
+		editBox = self.editBoxes[self.ind]
+		text = editBox.toPlainText()
+		if dictionary is None or not text:
+			return QTextEdit.contextMenuEvent(editBox, event)
+		oldcursor = editBox.textCursor()
+		cursor = editBox.cursorForPosition(event.pos())
+		pos = cursor.positionInBlock()
+		if pos == len(text): pos -= 1
+		try:
+			curchar = text[pos]
+			isalpha = curchar.isalpha()
+		except AttributeError:
+			# For Python 2
+			curchar = text.at(pos)
+			isalpha = curchar.isLetter()
+		if not isalpha:
+			return QTextEdit.contextMenuEvent(editBox, event)
+		cursor.select(QTextCursor.WordUnderCursor)
+		editBox.setTextCursor(cursor)
+		word = cursor.selectedText()
+		try:
+			word = unicode(cursor.selectedText())
+		except NameError:
+			# Not needed for Python 3
+			word = cursor.selectedText()
+		if not word or dictionary.check(word):
+			editBox.setTextCursor(oldcursor)
+			return QTextEdit.contextMenuEvent(editBox, event)
+		suggestions = dictionary.suggest(word)
+		actions = [self.act(sug, trig=self.fixWord(sug)) for sug in suggestions]
+		menu = editBox.createStandardContextMenu()
+		menu.insertSeparator(menu.actions()[0])
+		for action in actions[::-1]:
+			menu.insertAction(menu.actions()[0], action) 
+		menu.exec_(event.globalPos())
+	
+	def fixWord(self, correctword):
+		return lambda: self.editBoxes[self.ind].insertPlainText(correctword)
 	
 	def closeTab(self, ind):
 		if self.maybeSave(ind):
