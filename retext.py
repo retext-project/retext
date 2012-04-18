@@ -103,8 +103,6 @@ except:
 else:
 	use_enchant = True
 
-dictionary = None
-
 try:
 	from docutils.core import publish_parts
 except:
@@ -143,6 +141,8 @@ else:
 	webkit_available = True
 
 class ReTextHighlighter(QSyntaxHighlighter):
+	dictionary = None
+	
 	def highlightBlock(self, text):
 		patterns = (
 			('<[^<>]*>', Qt.darkMagenta, QFont.Bold),          # HTML tags
@@ -170,7 +170,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 				charFormat.setFontUnderline(pattern[4])
 			for match in re.finditer(pattern[0], text):
 				self.setFormat(match.start(), match.end() - match.start(), charFormat)
-		if dictionary:
+		if self.dictionary:
 			try:
 				text = unicode(text)
 			except:
@@ -183,7 +183,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 				finalFormat = QTextCharFormat()
 				finalFormat.merge(charFormat)
 				finalFormat.merge(self.format(match.start()))
-				if not dictionary.check(match.group(0)):
+				if not self.dictionary.check(match.group(0)):
 					self.setFormat(match.start(), match.end() - match.start(), finalFormat)
 
 class LogPassDialog(QDialog):
@@ -323,18 +323,9 @@ class ReTextWindow(QMainWindow):
 		self.actionCut.setEnabled(False)
 		self.connect(qApp.clipboard(), SIGNAL('dataChanged()'), self.clipboardDataChanged)
 		self.clipboardDataChanged()
-		self.sc = False
 		if use_enchant:
 			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSC)
 			self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
-			if settings.contains('spellCheckLocale'):
-				self.sl = str(readFromSettings(settings, 'spellCheckLocale', str))
-			else:
-				self.sl = None
-			if settings.contains('spellCheck'):
-				if readFromSettings(settings, 'spellCheck', bool):
-					self.actionEnableSC.setChecked(True)
-					self.enableSC(True)
 		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
 		if webkit_available:
 			self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
@@ -457,6 +448,7 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addAction(self.actionCopy)
 		self.menuEdit.addAction(self.actionPaste)
 		self.menuEdit.addSeparator()
+		self.sc = False
 		if use_enchant:
 			self.menuSC = self.menuEdit.addMenu(self.tr('Spell check'))
 			self.menuSC.addAction(self.actionEnableSC)
@@ -533,6 +525,15 @@ class ReTextWindow(QMainWindow):
 			self.livePreviewEnabled = readFromSettings(settings, 'previewState', bool)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
+		if use_enchant:
+			if settings.contains('spellCheckLocale'):
+				self.sl = str(readFromSettings(settings, 'spellCheckLocale', str))
+			else:
+				self.sl = None
+			if settings.contains('spellCheck'):
+				if readFromSettings(settings, 'spellCheck', bool):
+					self.actionEnableSC.setChecked(True)
+					self.enableSC(True)
 		if not (use_md or use_docutils):
 			QMessageBox.warning(self, app_name, self.tr('You have neither Markdown nor Docutils modules installed!') \
 			+'<br>'+self.tr('Only HTML formatting will be available.'))
@@ -598,6 +599,7 @@ class ReTextWindow(QMainWindow):
 	def contextMenuEvent(self, event):
 		editBox = self.editBoxes[self.ind]
 		text = editBox.toPlainText()
+		dictionary = self.highlighters[self.ind].dictionary
 		if dictionary is None or not text:
 			return QTextEdit.contextMenuEvent(editBox, event)
 		oldcursor = editBox.textCursor()
@@ -752,22 +754,24 @@ class ReTextWindow(QMainWindow):
 				self.enableFullScreen(n)
 	
 	def enableSC(self, yes):
-		global dictionary
 		if yes:
 			if self.sl:
 				try:
-					dictionary = enchant.Dict(self.sl)
+					self.setAllDictionaries(enchant.Dict(self.sl))
 				except Exception as e:
 					QMessageBox.warning(self, app_name, str(e))
-					dictionary = enchant.Dict()
+					self.setAllDictionaries(enchant.Dict())
 			else:
-				dictionary = enchant.Dict()
+				self.setAllDictionaries(enchant.Dict())
 			settings.setValue('spellCheck', True)
 		else:
-			dictionary = None
+			self.setAllDictionaries(None)
 			settings.remove('spellCheck')
-		for highlighter in self.highlighters:
-			highlighter.rehighlight()
+	
+	def setAllDictionaries(self, dictionary):
+		for hl in self.highlighters:
+			hl.dictionary = dictionary
+			hl.rehighlight()
 	
 	def changeLocale(self):
 		if self.sl == None:
