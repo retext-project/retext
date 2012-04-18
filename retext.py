@@ -708,6 +708,7 @@ class ReTextWindow(QMainWindow):
 		self.previewBoxes[self.ind].setVisible(livemode)
 		self.editBoxes[self.ind].setVisible(True)
 		if livemode:
+			self.apc[self.ind] = True
 			self.updatePreviewBox()
 	
 	def enableWebKit(self, enable):
