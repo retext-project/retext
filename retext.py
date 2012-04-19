@@ -867,14 +867,14 @@ class ReTextWindow(QMainWindow):
 			html << text << "\n"
 			htmlFile.close()
 			return
-		html << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
-		html << "<html>\n<head>\n"
-		html << "  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n"
-		html << QString("  <meta name=\"generator\" content=\"%1 %2\">\n").arg(app_name, app_version)
-		html << "  <title>" + self.getDocumentTitle() + "</title>\n"
-		html << "</head>\n<body>\n"
+		html << '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n'
+		html << '<html>\n<head>\n'
+		html << '  <meta http-equiv="content-type" content="text/html; charset=utf-8">\n'
+		html << '  <meta name="generator" content="%s %s">\n' % (app_name, app_version)
+		html << '  <title>' + self.getDocumentTitle() + '</title>\n'
+		html << '</head>\n<body>\n'
 		html << text
-		html << "\n</body>\n</html>\n"
+		html << '\n</body>\n</html>\n'
 		htmlFile.close()
 	
 	def textDocument(self):
