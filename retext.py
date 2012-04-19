@@ -835,9 +835,17 @@ class ReTextWindow(QMainWindow):
 				pb.setHtml(td.toHtml())
 		else:
 			try:
-				pb.setHtml(self.parseText())
+				parsedText = self.parseText()
 			except Exception as e:
 				self.printError(e)
+			else:
+				if textedit:
+					pb.setHtml(parsedText)
+				else:
+					pb.setHtml(
+					'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' +\
+					'<html><body style="font-family: Sans; font-size: 10.5pt">\n' +\
+					parsedText + '</body></html>\n')
 		if self.font and textedit:
 			pb.document().setDefaultFont(self.font)
 	
