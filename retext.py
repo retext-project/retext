@@ -1050,7 +1050,7 @@ class ReTextWindow(QMainWindow):
 			return
 		html << '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n'
 		html << '<html>\n<head>\n'
-		html << '  <meta http-equiv="content-type" content="text/html; charset="utf-8">\n'
+		html << '  <meta http-equiv="content-type" content="text/html; charset=utf-8">\n'
 		html << '  <meta name="generator" content="%s %s">\n' % (app_name, app_version)
 		html << '  <title>' + self.getDocumentTitle() + '</title>\n'
 		html << '</head>\n<body>\n'
