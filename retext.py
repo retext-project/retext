@@ -842,9 +842,10 @@ class ReTextWindow(QMainWindow):
 				if textedit:
 					pb.setHtml(parsedText)
 				else:
+					size = (self.font if self.font else QFont()).pointSize()
 					pb.setHtml(
 					'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' +\
-					'<html><body style="font-family: Sans; font-size: 10.5pt">\n' +\
+					'<html><body style="font-family: Sans; font-size: %spt">\n' % size +\
 					parsedText + '</body></html>\n')
 		if self.font and textedit:
 			pb.document().setDefaultFont(self.font)
