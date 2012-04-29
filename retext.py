@@ -82,7 +82,11 @@ else:
 	if settings.contains('mdExtensions'):
 		for ext in readListFromSettings(settings, 'mdExtensions'):
 			exts.append(str(ext))
-		md = markdown.Markdown(exts)
+		try:
+			md = markdown.Markdown(exts)
+		except ValueError:
+			print('Warning: failed to load extensions!')
+			md = markdown.Markdown()
 	else:
 		md = markdown.Markdown()
 
