@@ -707,12 +707,12 @@ class ReTextWindow(QMainWindow):
 	def enableLivePreview(self, livemode):
 		self.livePreviewEnabled = livemode
 		self.alpc[self.ind] = livemode
+		self.apc[self.ind] = livemode
 		self.actionPreview.setChecked(livemode)
 		self.editBar.setEnabled(True)
 		self.previewBoxes[self.ind].setVisible(livemode)
 		self.editBoxes[self.ind].setVisible(True)
 		if livemode:
-			self.apc[self.ind] = True
 			self.updatePreviewBox()
 	
 	def enableWebKit(self, enable):
@@ -846,9 +846,10 @@ class ReTextWindow(QMainWindow):
 				if textedit:
 					pb.setHtml(parsedText)
 				else:
+					size = (self.font if self.font else QFont()).pointSize()
 					pb.setHtml(
 					'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' +\
-					'<html><body style="font-family: Sans; font-size: 10.5pt">\n' +\
+					'<html><body style="font-family: Sans; font-size: %spt">\n' % size +\
 					parsedText + '</body></html>\n')
 		if self.font and textedit:
 			pb.document().setDefaultFont(self.font)
