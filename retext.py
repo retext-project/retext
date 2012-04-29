@@ -40,7 +40,11 @@ else:
 		exts = []
 		for ext in settings.value('mdExtensions').toStringList():
 			exts.append(str(ext))
-		md = markdown.Markdown(exts)
+		try:
+			md = markdown.Markdown(exts)
+		except ValueError:
+			print('Warning: failed to load extensions!')
+			md = markdown.Markdown()
 	else:
 		md = markdown.Markdown()
 
