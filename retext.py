@@ -1289,7 +1289,7 @@ class ReTextWindow(QMainWindow):
 	
 	def insertChars(self, chars):
 		tc = self.editBoxes[self.ind].textCursor()
-		if tc.hasSelection:
+		if tc.hasSelection():
 			tc.insertText(chars+tc.selectedText()+chars)
 		else:
 			tc.insertText(chars)
