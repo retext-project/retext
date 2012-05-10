@@ -1429,6 +1429,9 @@ class ReTextWindow(QMainWindow):
 		self.updatePreviewBox()
 	
 	def enablePlainTextMain(self, value):
+		if value: self.highlighters[self.ind].docType = None
+		else: self.highlighters[self.ind].docType = self.getParser()
+		self.highlighters[self.ind].rehighlight()
 		self.actionPerfectHtml.setDisabled(value)
 		self.actionViewHtml.setDisabled(value)
 		self.tagsBox.setDisabled(value)
