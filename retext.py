@@ -146,10 +146,11 @@ else:
 
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
+	docType = None
 	
 	def highlightBlock(self, text):
 		patterns = (
-			('<[^<>]*>', Qt.darkMagenta, QFont.Bold),          # 0: HTML tags
+			('<[^<>@]*>', Qt.darkMagenta, QFont.Bold),         # 0: HTML tags
 			('&[^; ]*;', Qt.darkCyan, QFont.Bold),             # 1: HTML symbols
 			('"[^"<]*"(?=[^<]*>)', Qt.darkYellow, QFont.Bold), # 2: Quoted strings inside tags
 			('<!--[^<>]*-->', Qt.gray, QFont.Normal),          # 3: HTML comments
@@ -163,12 +164,14 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			('(?<=\\[)[^\\[\\]]*(?=\\])', Qt.blue, QFont.Normal), # 11: Links and images
 			('(?<=\\]\\()[^\\(\\)]*(?=\\))', None, QFont.Normal, True, True) # 12: Link references
 		)
-		patterns_dict = {
+		patternsDict = {
+			None: (),
 			PARSER_MARKDOWN: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
 			PARSER_HTML: (0, 1, 2, 3),
 			PARSER_DOCUTILS: (4, 6)
 		}
-		for pattern in patterns:
+		for number in patternsDict[self.docType]:
+			pattern = patterns[number]
 			charFormat = QTextCharFormat()
 			charFormat.setFontWeight(pattern[2])
 			if pattern[1] != None:
@@ -534,6 +537,7 @@ class ReTextWindow(QMainWindow):
 			self.livePreviewEnabled = readFromSettings(settings, 'previewState', bool)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
+		self.highlighters[0].docType = self.getParser()
 		if use_enchant:
 			if settings.contains('spellCheckLocale'):
 				self.sl = str(readFromSettings(settings, 'spellCheckLocale', str))
@@ -891,6 +895,8 @@ class ReTextWindow(QMainWindow):
 			del files[10:]
 		writeListToSettings(settings, "recentFileList", files)
 		QDir.setCurrent(QFileInfo(self.fileNames[self.ind]).dir().path())
+		self.highlighters[self.ind].docType = self.getParser()
+		self.highlighters[self.ind].rehighlight()
 	
 	def createNew(self):
 		self.tabWidget.addTab(self.createTab(""), self.tr("New document"))
@@ -1434,7 +1440,12 @@ class ReTextWindow(QMainWindow):
 			settings.setValue('useReST', True)
 		else:
 			settings.remove('useReST')
-		self.updatePreviewBox()
+		oldind = self.ind
+		for self.ind in range(len(self.previewBoxes)):
+			self.updatePreviewBox()
+			self.highlighters[self.ind].docType = self.getParser()
+			self.highlighters[self.ind].rehighlight()
+		self.ind = oldind
 	
 	def getParser(self):
 		if self.fileNames[self.ind]:
