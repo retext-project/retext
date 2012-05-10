@@ -746,18 +746,6 @@ class ReTextWindow(QMainWindow):
 		else:
 			self.showNormal()
 	
-	def keyPressEvent(self, e):
-		v = not self.menubar.isVisible()
-		if e.key() == Qt.Key_F12 and e.modifiers() & Qt.ShiftModifier:
-			self.menubar.setVisible(v)
-			self.toolBar.setVisible(v)
-			self.editBar.setVisible(v)
-		elif e.key() == Qt.Key_F11:
-			if v:
-				n = not self.actionFullScreen.isChecked()
-				self.actionFullScreen.setChecked(n)
-				self.enableFullScreen(n)
-	
 	def enableSC(self, yes):
 		if yes:
 			if self.sl:
