@@ -144,7 +144,7 @@ else:
 class ReTextHighlighter(QSyntaxHighlighter):
 	def highlightBlock(self, text):
 		patterns = (
-			('<[^<>]*>', Qt.darkMagenta, QFont.Bold),          # HTML tags
+			('<[^<>@]*>', Qt.darkMagenta, QFont.Bold),         # HTML tags
 			('&[^; ]*;', Qt.darkCyan, QFont.Bold),             # HTML symbols
 			('"[^"<]*"(?=[^<]*>)', Qt.darkYellow, QFont.Bold), # Quoted strings inside tags
 			('<!--[^<>]*-->', Qt.gray, QFont.Normal),          # HTML comments
