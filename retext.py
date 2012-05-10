@@ -149,20 +149,25 @@ class ReTextHighlighter(QSyntaxHighlighter):
 	
 	def highlightBlock(self, text):
 		patterns = (
-			('<[^<>]*>', Qt.darkMagenta, QFont.Bold),          # HTML tags
-			('&[^; ]*;', Qt.darkCyan, QFont.Bold),             # HTML symbols
-			('"[^"<]*"(?=[^<]*>)', Qt.darkYellow, QFont.Bold), # Quoted strings inside tags
-			('<!--[^<>]*-->', Qt.gray, QFont.Normal),          # HTML comments
-			('(?<!\\*)\\*[^ \\*][^\\*]*\\*', None, QFont.Normal, True), # *Italics*
-			('(?<!_|\\w)_[^_]+_(?!\\w)', None, QFont.Normal, True),     # _Italics_
-			('(?<!\\*)\\*\\*((?!\\*\\*).)*\\*\\*', None, QFont.Bold), # **Bold**
-			('(?<!_|\\w)__[^_]+__(?!\\w)', None, QFont.Bold),         # __Bold__
-			('\\*{3,3}[^\\*]+\\*{3,3}', None, QFont.Bold, True), # ***BoldItalics***
-			('___[^_]+___', None, QFont.Bold, True),           # ___BoldItalics___
-			('^#.+', None, QFont.Black),                       # Headers
-			('(?<=\\[)[^\\[\\]]*(?=\\])', Qt.blue, QFont.Normal), # Links and images
-			('(?<=\\]\\()[^\\(\\)]*(?=\\))', None, QFont.Normal, True, True) # Link references
+			('<[^<>]*>', Qt.darkMagenta, QFont.Bold),          # 0: HTML tags
+			('&[^; ]*;', Qt.darkCyan, QFont.Bold),             # 1: HTML symbols
+			('"[^"<]*"(?=[^<]*>)', Qt.darkYellow, QFont.Bold), # 2: Quoted strings inside tags
+			('<!--[^<>]*-->', Qt.gray, QFont.Normal),          # 3: HTML comments
+			('(?<!\\*)\\*[^ \\*][^\\*]*\\*', None, QFont.Normal, True), # 4: *Italics*
+			('(?<!_|\\w)_[^_]+_(?!\\w)', None, QFont.Normal, True),     # 5: _Italics_
+			('(?<!\\*)\\*\\*((?!\\*\\*).)*\\*\\*', None, QFont.Bold), # 6: **Bold**
+			('(?<!_|\\w)__[^_]+__(?!\\w)', None, QFont.Bold),         # 7: __Bold__
+			('\\*{3,3}[^\\*]+\\*{3,3}', None, QFont.Bold, True), # 8: ***BoldItalics***
+			('___[^_]+___', None, QFont.Bold, True),           # 9: ___BoldItalics___
+			('^#.+', None, QFont.Black),                       # 10: Headers
+			('(?<=\\[)[^\\[\\]]*(?=\\])', Qt.blue, QFont.Normal), # 11: Links and images
+			('(?<=\\]\\()[^\\(\\)]*(?=\\))', None, QFont.Normal, True, True) # 12: Link references
 		)
+		patterns_dict = {
+			PARSER_MARKDOWN: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+			PARSER_HTML: (0, 1, 2, 3),
+			PARSER_DOCUTILS: (4, 6)
+		}
 		for pattern in patterns:
 			charFormat = QTextCharFormat()
 			charFormat.setFontWeight(pattern[2])
