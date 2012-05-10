@@ -583,7 +583,7 @@ class ReTextWindow(QMainWindow):
 		else:
 			self.previewBoxes.append(QTextEdit())
 			self.previewBoxes[-1].setReadOnly(True)
-		self.editBoxes[-1].contextMenuEvent = self.contextMenuEvent
+		self.editBoxes[-1].contextMenuEvent = self.editBoxMenuEvent
 		self.previewBoxes[-1].setVisible(False)
 		self.fileNames.append(fileName)
 		liveMode = self.restorePreviewState and self.livePreviewEnabled
@@ -600,7 +600,7 @@ class ReTextWindow(QMainWindow):
 		self.connect(self.editBoxes[-1].document(), SIGNAL('modificationChanged(bool)'), self.modificationChanged)
 		return self.getSplitter(-1)
 	
-	def contextMenuEvent(self, event):
+	def editBoxMenuEvent(self, event):
 		editBox = self.editBoxes[self.ind]
 		text = editBox.toPlainText()
 		dictionary = self.highlighters[self.ind].dictionary
