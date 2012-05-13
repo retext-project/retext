@@ -1446,8 +1446,9 @@ class ReTextWindow(QMainWindow):
 		oldind = self.ind
 		for self.ind in range(len(self.previewBoxes)):
 			self.updatePreviewBox()
-			self.highlighters[self.ind].docType = self.getParser()
-			self.highlighters[self.ind].rehighlight()
+			if not self.aptc[self.ind]:
+				self.highlighters[self.ind].docType = self.getParser()
+				self.highlighters[self.ind].rehighlight()
 		self.ind = oldind
 	
 	def getParser(self):
