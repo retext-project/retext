@@ -117,6 +117,7 @@ else:
 icon_path = "icons/"
 
 PARSER_DOCUTILS, PARSER_MARKDOWN, PARSER_HTML, PARSER_NA = range(4)
+DOCTYPE_PLAINTEXT, DOCTYPE_REST, DOCTYPE_MARKDOWN, DOCTYPE_HTML = range(4)
 
 if QFileInfo("wpgen/wpgen.py").isExecutable():
 	try:
@@ -165,10 +166,10 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			('(?<=\\]\\()[^\\(\\)]*(?=\\))', None, QFont.Normal, True, True) # 12: Link references
 		)
 		patternsDict = {
-			None: (),
-			PARSER_MARKDOWN: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
-			PARSER_HTML: (0, 1, 2, 3),
-			PARSER_DOCUTILS: (4, 6)
+			DOCTYPE_PLAINTEXT: (),
+			DOCTYPE_MARKDOWN: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+			DOCTYPE_HTML: (0, 1, 2, 3),
+			DOCTYPE_REST: (4, 6)
 		}
 		for number in patternsDict[self.docType]:
 			pattern = patterns[number]
@@ -537,7 +538,7 @@ class ReTextWindow(QMainWindow):
 			self.livePreviewEnabled = readFromSettings(settings, 'previewState', bool)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
-		self.highlighters[0].docType = self.getParser()
+		self.highlighters[0].docType = self.getDocType()
 		if use_enchant:
 			if settings.contains('spellCheckLocale'):
 				self.sl = str(readFromSettings(settings, 'spellCheckLocale', str))
@@ -664,6 +665,31 @@ class ReTextWindow(QMainWindow):
 			del self.gDocsEntries[ind]
 			self.tabWidget.removeTab(ind)
 	
+	def getDocType(self):
+		if self.aptc[self.ind]:
+			return DOCTYPE_PLAINTEXT
+		else:
+			parser = self.getParser()
+			if parser == PARSER_MARKDOWN:
+				return DOCTYPE_MARKDOWN
+			elif parser == PARSER_DOCUTILS:
+				return DOCTYPE_REST
+			elif parser == PARSER_HTML:
+				return DOCTYPE_HTML
+			else:
+				return DOCTYPE_PLAINTEXT
+	
+	def docTypeChanged(self):
+		oldType = self.highlighters[self.ind].docType
+		newType = self.getDocType()
+		if oldType != newType:
+			self.updatePreviewBox()
+			self.highlighters[self.ind].docType = newType
+			self.highlighters[self.ind].rehighlight()
+		boxesEnabled = newType in (DOCTYPE_MARKDOWN, DOCTYPE_HTML)
+		self.tagsBox.setEnabled(boxesEnabled)
+		self.symbolBox.setEnabled(boxesEnabled)
+	
 	def changeIndex(self, ind):
 		if ind > -1:
 			self.actionPlainText.setChecked(self.aptc[ind])
@@ -684,6 +710,7 @@ class ReTextWindow(QMainWindow):
 			except:
 				# For Python 3
 				self.setWindowTitle(self.tr('New document') + '[*] \u2014 ' + app_name)
+			self.docTypeChanged()
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
 		self.livePreviewEnabled = self.alpc[ind]
 		if self.alpc[ind]:
@@ -895,8 +922,7 @@ class ReTextWindow(QMainWindow):
 			del files[10:]
 		writeListToSettings(settings, "recentFileList", files)
 		QDir.setCurrent(QFileInfo(self.fileNames[self.ind]).dir().path())
-		self.highlighters[self.ind].docType = self.getParser()
-		self.highlighters[self.ind].rehighlight()
+		self.docTypeChanged()
 	
 	def createNew(self):
 		self.tabWidget.addTab(self.createTab(""), self.tr("New document"))
@@ -1052,13 +1078,14 @@ class ReTextWindow(QMainWindow):
 	
 	def saveFileMain(self, dlg):
 		if (not self.fileNames[self.ind]) or dlg:
-			if self.actionPlainText.isChecked():
+			docType = self.getDocType()
+			if docType == DOCTYPE_PLAINTEXT:
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
-			elif self.getParser() == PARSER_DOCUTILS:
+			elif docType == DOCTYPE_REST:
 				defaultExt = self.tr("ReStructuredText files")+" (*.rest *.rst *.txt)"
 				ext = ".rst"
-			elif self.getParser() == PARSER_HTML:
+			elif docType == DOCTYPE_HTML:
 				defaultExt = self.tr("HTML files")+" (*.html *.htm)"
 				ext = ".html"
 			else:
@@ -1096,7 +1123,7 @@ class ReTextWindow(QMainWindow):
 		htmlFile = QFile(fileName)
 		htmlFile.open(QIODevice.WriteOnly)
 		html = QTextStream(htmlFile)
-		if self.getParser() == PARSER_HTML:
+		if self.getDocType() == DOCTYPE_HTML:
 			html << text << "\n"
 			htmlFile.close()
 			return
@@ -1427,15 +1454,11 @@ class ReTextWindow(QMainWindow):
 		self.aptc[self.ind] = value
 		self.enablePlainTextMain(value)
 		self.updatePreviewBox()
+		self.docTypeChanged()
 	
 	def enablePlainTextMain(self, value):
-		if value: self.highlighters[self.ind].docType = None
-		else: self.highlighters[self.ind].docType = self.getParser()
-		self.highlighters[self.ind].rehighlight()
 		self.actionPerfectHtml.setDisabled(value)
 		self.actionViewHtml.setDisabled(value)
-		self.tagsBox.setDisabled(value)
-		self.symbolBox.setDisabled(value)
 	
 	def setDocUtilsDefault(self, yes):
 		self.useDocUtils = yes
@@ -1445,10 +1468,7 @@ class ReTextWindow(QMainWindow):
 			settings.remove('useReST')
 		oldind = self.ind
 		for self.ind in range(len(self.previewBoxes)):
-			self.updatePreviewBox()
-			if not self.aptc[self.ind]:
-				self.highlighters[self.ind].docType = self.getParser()
-				self.highlighters[self.ind].rehighlight()
+			self.docTypeChanged()
 		self.ind = oldind
 	
 	def getParser(self):
