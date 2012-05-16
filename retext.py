@@ -147,7 +147,7 @@ else:
 
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
-	docType = None
+	docType = DOCTYPE_PLAINTEXT
 	
 	def highlightBlock(self, text):
 		patterns = (
@@ -540,10 +540,14 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		self.highlighters[0].docType = self.getDocType()
 		if use_enchant:
+			self.sl = None
 			if settings.contains('spellCheckLocale'):
-				self.sl = str(readFromSettings(settings, 'spellCheckLocale', str))
-			else:
-				self.sl = None
+				try:
+					self.sl = str(readFromSettings(settings, 'spellCheckLocale', str))
+					enchant.Dict(self.sl)
+				except Exception as e:
+					print(e)
+					self.sl = None
 			if settings.contains('spellCheck'):
 				if readFromSettings(settings, 'spellCheck', bool):
 					self.actionEnableSC.setChecked(True)
@@ -588,6 +592,10 @@ class ReTextWindow(QMainWindow):
 		self.previewBlocked = False
 		self.editBoxes.append(QTextEdit())
 		self.highlighters.append(ReTextHighlighter(self.editBoxes[-1].document()))
+		if self.actionEnableSC.isChecked():
+			self.highlighters[-1].dictionary = \
+			enchant.Dict(self.sl) if self.sl else enchant.Dict()
+			self.highlighters[-1].rehighlight()
 		if self.useWebKit:
 			self.previewBoxes.append(QWebView())
 		else:
@@ -785,11 +793,7 @@ class ReTextWindow(QMainWindow):
 	def enableSC(self, yes):
 		if yes:
 			if self.sl:
-				try:
-					self.setAllDictionaries(enchant.Dict(self.sl))
-				except Exception as e:
-					QMessageBox.warning(self, app_name, str(e))
-					self.setAllDictionaries(enchant.Dict())
+				self.setAllDictionaries(enchant.Dict(self.sl))
 			else:
 				self.setAllDictionaries(enchant.Dict())
 			settings.setValue('spellCheck', True)
@@ -811,8 +815,9 @@ class ReTextWindow(QMainWindow):
 		if ok and sl:
 			try:
 				sl = str(sl)
-			except:
-				pass
+				enchant.Dict(sl)
+			except Exception as e:
+				QMessageBox.warning(self, app_name, str(e))
 			else:
 				self.sl = sl
 				self.enableSC(self.actionEnableSC.isChecked())
