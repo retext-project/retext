@@ -116,8 +116,8 @@ else:
 
 icon_path = "icons/"
 
-PARSER_DOCUTILS, PARSER_MARKDOWN, PARSER_HTML, PARSER_NA = range(4)
-DOCTYPE_PLAINTEXT, DOCTYPE_REST, DOCTYPE_MARKDOWN, DOCTYPE_HTML = range(4)
+PARSER_DOCUTILS, PARSER_MARKDOWN, PARSER_NA = range(3)
+DOCTYPE_PLAINTEXT, DOCTYPE_REST, DOCTYPE_MARKDOWN = range(3)
 
 if QFileInfo("wpgen/wpgen.py").isExecutable():
 	try:
@@ -168,7 +168,6 @@ class ReTextHighlighter(QSyntaxHighlighter):
 		patternsDict = {
 			DOCTYPE_PLAINTEXT: (),
 			DOCTYPE_MARKDOWN: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
-			DOCTYPE_HTML: (0, 1, 2, 3),
 			DOCTYPE_REST: (4, 6)
 		}
 		for number in patternsDict[self.docType]:
@@ -365,7 +364,7 @@ class ReTextWindow(QMainWindow):
 		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
 		self.chooseGroup = QActionGroup(self)
-		self.useDocUtils = False
+		self.defaultDocType = DOCTYPE_MARKDOWN
 		self.actionUseMarkdown = self.act('Markdown')
 		self.actionUseMarkdown.setCheckable(True)
 		self.actionUseReST = self.act('ReStructuredText')
@@ -373,7 +372,7 @@ class ReTextWindow(QMainWindow):
 		if settings.contains('useReST'):
 			if readFromSettings(settings, 'useReST', bool):
 				if use_docutils:
-					self.useDocUtils = True
+					self.defaultDocType = DOCTYPE_REST
 				self.actionUseReST.setChecked(True)
 			else:
 				self.actionUseMarkdown.setChecked(True)
@@ -592,7 +591,7 @@ class ReTextWindow(QMainWindow):
 		self.previewBlocked = False
 		self.editBoxes.append(QTextEdit())
 		self.highlighters.append(ReTextHighlighter(self.editBoxes[-1].document()))
-		if self.actionEnableSC.isChecked():
+		if use_enchant and self.actionEnableSC.isChecked():
 			self.highlighters[-1].dictionary = \
 			enchant.Dict(self.sl) if self.sl else enchant.Dict()
 			self.highlighters[-1].rehighlight()
@@ -676,16 +675,15 @@ class ReTextWindow(QMainWindow):
 	def getDocType(self):
 		if self.aptc[self.ind]:
 			return DOCTYPE_PLAINTEXT
-		else:
-			parser = self.getParser()
-			if parser == PARSER_MARKDOWN:
+		if self.fileNames[self.ind]:
+			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
+			if suffix in ('md', 'markdown', 'mdown', 'mkd', 'mkdn', 're'):
 				return DOCTYPE_MARKDOWN
-			elif parser == PARSER_DOCUTILS:
+			elif suffix in ('rest', 'rst'):
 				return DOCTYPE_REST
-			elif parser == PARSER_HTML:
-				return DOCTYPE_HTML
 			else:
 				return DOCTYPE_PLAINTEXT
+		return self.defaultDocType
 	
 	def docTypeChanged(self):
 		oldType = self.highlighters[self.ind].docType
@@ -694,7 +692,7 @@ class ReTextWindow(QMainWindow):
 			self.updatePreviewBox()
 			self.highlighters[self.ind].docType = newType
 			self.highlighters[self.ind].rehighlight()
-		boxesEnabled = newType in (DOCTYPE_MARKDOWN, DOCTYPE_HTML)
+		boxesEnabled = newType == DOCTYPE_MARKDOWN
 		self.tagsBox.setEnabled(boxesEnabled)
 		self.symbolBox.setEnabled(boxesEnabled)
 	
@@ -996,12 +994,10 @@ class ReTextWindow(QMainWindow):
 			mimetype = action[1]
 			if mimetype == None:
 				enabled = True
-			elif self.getParser() == PARSER_MARKDOWN:
+			elif self.getDocType() == DOCTYPE_MARKDOWN:
 				enabled = (mimetype in ("text/x-retext-markdown", "text/x-markdown"))
-			elif self.getParser() == PARSER_DOCUTILS:
+			elif self.getDocType() == DOCTYPE_REST:
 				enabled = (mimetype in ("text/x-retext-rst", "text/x-rst"))
-			elif self.getParser() == PARSER_HTML:
-				enabled = (mimetype == "text/html")
 			else:
 				enabled = False
 			action[0].setEnabled(enabled)
@@ -1026,7 +1022,7 @@ class ReTextWindow(QMainWindow):
 	
 	def openFile(self):
 		fileNames = QFileDialog.getOpenFileNames(self, self.tr("Select one or several files to open"), "", \
-		self.tr("Supported files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.rst *.rest *.txt *.html *.htm);;"+self.tr("All files (*)"))
+		self.tr("Supported files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.rst *.rest *.txt);;"+self.tr("All files (*)"))
 		for fileName in fileNames:
 			self.openFileWrapper(fileName)
 	
@@ -1090,9 +1086,6 @@ class ReTextWindow(QMainWindow):
 			elif docType == DOCTYPE_REST:
 				defaultExt = self.tr("ReStructuredText files")+" (*.rest *.rst *.txt)"
 				ext = ".rst"
-			elif docType == DOCTYPE_HTML:
-				defaultExt = self.tr("HTML files")+" (*.html *.htm)"
-				ext = ".html"
 			else:
 				defaultExt = self.tr("Markdown files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
 				ext = ".mkd"
@@ -1128,10 +1121,6 @@ class ReTextWindow(QMainWindow):
 		htmlFile = QFile(fileName)
 		htmlFile.open(QIODevice.WriteOnly)
 		html = QTextStream(htmlFile)
-		if self.getDocType() == DOCTYPE_HTML:
-			html << text << "\n"
-			htmlFile.close()
-			return
 		html << '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n'
 		html << '<html>\n<head>\n'
 		html << '  <meta http-equiv="content-type" content="text/html; charset=utf-8">\n'
@@ -1466,7 +1455,7 @@ class ReTextWindow(QMainWindow):
 		self.actionViewHtml.setDisabled(value)
 	
 	def setDocUtilsDefault(self, yes):
-		self.useDocUtils = yes
+		self.defaultDocType = DOCTYPE_REST if yes else DOCTYPE_MARKDOWN
 		if yes:
 			settings.setValue('useReST', True)
 		else:
@@ -1477,20 +1466,12 @@ class ReTextWindow(QMainWindow):
 		self.ind = oldind
 	
 	def getParser(self):
-		if self.fileNames[self.ind]:
-			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
-			if suffix in ('md', 'markdown', 'mdown', 'mkd', 'mkdn', 're'):
-				return PARSER_MARKDOWN if use_md else PARSER_NA
-			elif suffix in ('rest', 'rst'):
-				return PARSER_DOCUTILS if use_docutils else PARSER_NA
-			elif suffix in ('html', 'htm'):
-				return PARSER_HTML
-		if not (use_docutils or use_md):
-			return PARSER_HTML
-		elif use_docutils and (self.useDocUtils or not use_md):
-			return PARSER_DOCUTILS
-		else:
-			return PARSER_MARKDOWN
+		docType = self.getDocType()
+		if docType == DOCTYPE_MARKDOWN:
+			return PARSER_MARKDOWN if use_md else PARSER_NA
+		if docType == DOCTYPE_REST:
+			return PARSER_DOCUTILS if use_docutils else PARSER_NA
+		return PARSER_NA
 	
 	def parseText(self):
 		try:
@@ -1502,9 +1483,7 @@ class ReTextWindow(QMainWindow):
 		htmltext = htmltext.replace('%HTMLDIR%', 'html')
 		htmltext = htmltext.replace('%\\', '%')
 		parser = self.getParser()
-		if parser == PARSER_HTML:
-			return htmltext
-		elif parser == PARSER_DOCUTILS:
+		if parser == PARSER_DOCUTILS:
 			return publish_parts(htmltext, writer_name='html')['body']
 		elif parser == PARSER_MARKDOWN:
 			md.reset()
