@@ -1229,7 +1229,8 @@ class ReTextWindow(QMainWindow):
 			tmpname = '.retext-temp.html'
 			self.saveHtml(tmpname)
 		else:
-			tmpname = '.retext-temp.rst' if self.getParser() == PARSER_DOCUTILS else '.retext-temp.mkd'
+			if self.getDocType() == DOCTYPE_REST: tmpname = '.retext-temp.rst'
+			else tmpname = '.retext-temp.mkd'
 			self.saveFileWrapper(tmpname)
 		command = command.replace('%of', 'out'+defaultext)
 		command = command.replace('%html' if html else '%if', tmpname)
