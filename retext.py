@@ -1404,16 +1404,13 @@ class ReTextWindow(QMainWindow):
 		accept = True
 		for self.ind in range(self.tabWidget.count()):
 			if not self.maybeSave(self.ind):
-				accept = False
-		if accept:
-			if self.restorePreviewState:
-				if self.livePreviewEnabled:
-					settings.setValue('previewState', True)
-				else:
-					settings.remove('previewState')
-			closeevent.accept()
-		else:
-			closeevent.ignore()
+				return closeevent.ignore()
+		if self.restorePreviewState:
+			if self.livePreviewEnabled:
+				settings.setValue('previewState', True)
+			else:
+				settings.remove('previewState')
+		closeevent.accept()
 	
 	def viewHtml(self):
 		HtmlDlg = HtmlDialog(self)
