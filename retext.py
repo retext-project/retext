@@ -1040,7 +1040,7 @@ class ReTextWindow(QMainWindow):
 				ex = i
 		if exists:
 			self.tabWidget.setCurrentIndex(ex)
-		else:
+		elif QFile.exists(fileName):
 			if self.fileNames[self.ind] or self.editBoxes[self.ind].toPlainText() \
 			or self.editBoxes[self.ind].document().isModified():
 				self.tabWidget.addTab(self.createTab(""), "")
@@ -1050,21 +1050,20 @@ class ReTextWindow(QMainWindow):
 			self.openFileMain()
 	
 	def openFileMain(self):
-		if QFile.exists(self.fileNames[self.ind]):
-			openfile = QFile(self.fileNames[self.ind])
-			openfile.open(QIODevice.ReadOnly)
-			html = QTextStream(openfile).readAll()
-			openfile.close()
-			self.editBoxes[self.ind].setPlainText(html)
-			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
-			pt = suffix not in ('re', 'md', 'markdown', 'mdown', 'mkd', 'mkdn', 'rst', 'rest', 'html', 'htm')
-			if settings.contains('autoPlainText'):
-				if not readFromSettings(settings, 'autoPlainText', bool):
-					pt = False
-			self.actionPlainText.setChecked(pt)
-			self.enablePlainText(pt)
-			self.setCurrentFile()
-			self.setWindowModified(False)
+		openfile = QFile(self.fileNames[self.ind])
+		openfile.open(QIODevice.ReadOnly)
+		html = QTextStream(openfile).readAll()
+		openfile.close()
+		self.editBoxes[self.ind].setPlainText(html)
+		suffix = QFileInfo(self.fileNames[self.ind]).suffix()
+		pt = suffix not in ('re', 'md', 'markdown', 'mdown', 'mkd', 'mkdn', 'rst', 'rest', 'html', 'htm')
+		if settings.contains('autoPlainText'):
+			if not readFromSettings(settings, 'autoPlainText', bool):
+				pt = False
+		self.actionPlainText.setChecked(pt)
+		self.enablePlainText(pt)
+		self.setCurrentFile()
+		self.setWindowModified(False)
 	
 	def saveFile(self):
 		self.saveFileMain(dlg=False)
@@ -1097,22 +1096,24 @@ class ReTextWindow(QMainWindow):
 			self.fileNames[self.ind] = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 			if self.fileNames[self.ind] and not QFileInfo(self.fileNames[self.ind]).suffix():
 				self.fileNames[self.ind] += ext
-		if QFileInfo(self.fileNames[self.ind]).isWritable() or not QFile.exists(self.fileNames[self.ind]):
-			if self.fileNames[self.ind]:
-				self.saveFileWrapper(self.fileNames[self.ind])
+		if self.fileNames[self.ind]:
+			result = self.saveFileWrapper(self.fileNames[self.ind])
+			if result:
 				self.setCurrentFile()
 				self.editBoxes[self.ind].document().setModified(False)
 				self.setWindowModified(False)
-		else:
-			self.setWindowModified(self.isWindowModified())
-			QMessageBox.warning(self, app_name, self.tr("Cannot save to file because it is read-only!"))
+			else:
+				self.setWindowModified(self.isWindowModified())
+				QMessageBox.warning(self, app_name, self.tr("Cannot save to file because it is read-only!"))
 	
 	def saveFileWrapper(self, fn):
 		savefile = QFile(fn)
-		savefile.open(QIODevice.WriteOnly)
-		savestream = QTextStream(savefile)
-		savestream << self.editBoxes[self.ind].toPlainText()
-		savefile.close()
+		result = savefile.open(QIODevice.WriteOnly)
+		if result:
+			savestream = QTextStream(savefile)
+			savestream << self.editBoxes[self.ind].toPlainText()
+			savefile.close()
+		return result
 	
 	def saveHtml(self, fileName):
 		if not QFileInfo(fileName).suffix():
