@@ -700,7 +700,8 @@ class ReTextWindow(QMainWindow):
 	def changeIndex(self, ind):
 		if ind > -1:
 			self.actionPlainText.setChecked(self.aptc[ind])
-			self.enablePlainTextMain(self.aptc[ind])
+			self.actionPerfectHtml.setDisabled(self.aptc[ind])
+			self.actionViewHtml.setDisabled(self.aptc[ind])
 			self.actionUndo.setEnabled(self.editBoxes[ind].document().isUndoAvailable())
 			self.actionRedo.setEnabled(self.editBoxes[ind].document().isRedoAvailable())
 			self.actionCopy.setEnabled(self.editBoxes[ind].textCursor().hasSelection())
@@ -1258,8 +1259,8 @@ class ReTextWindow(QMainWindow):
 		except:
 			# For Python 3
 			text = self.editBoxes[self.ind].toPlainText()
-		docType = self.getDocType():
-		if docType = DOCTYPE_REST:
+		docType = self.getDocType()
+		if docType == DOCTYPE_REST:
 			realTitle = publish_parts(text, writer_name='html')['title']
 		elif docType == DOCTYPE_MARKDOWN:
 			try:
@@ -1450,8 +1451,6 @@ class ReTextWindow(QMainWindow):
 		self.enablePlainTextMain(value)
 		self.updatePreviewBox()
 		self.docTypeChanged()
-	
-	def enablePlainTextMain(self, value):
 		self.actionPerfectHtml.setDisabled(value)
 		self.actionViewHtml.setDisabled(value)
 	
