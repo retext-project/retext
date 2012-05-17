@@ -1026,7 +1026,6 @@ class ReTextWindow(QMainWindow):
 				self.editBoxes[self.ind].document().setModified(False)
 				self.setWindowModified(False)
 			else:
-				self.setWindowModified(self.isWindowModified())
 				QMessageBox.warning(self, app_name, self.tr("Cannot save to file because it is read-only!"))
 	
 	def saveFileWrapper(self, fn):
