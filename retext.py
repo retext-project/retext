@@ -838,13 +838,12 @@ class ReTextWindow(QMainWindow):
 			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).suffix().isEmpty():
 				self.fileNames[self.ind].append(ext)
 		if self.fileNames[self.ind]:
-			self.setCurrentFile()
 			result = self.saveFileWrapper(self.fileNames[self.ind])
 			if result:
+				self.setCurrentFile()
 				self.editBoxes[self.ind].document().setModified(False)
 				self.setWindowModified(False)
 			else:
-				self.setWindowModified(self.isWindowModified())
 				QMessageBox.warning(self, app_name, self.tr("Cannot save to file because it is read-only!"))
 	
 	def saveFileWrapper(self, fn):
