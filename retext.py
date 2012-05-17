@@ -1448,11 +1448,10 @@ class ReTextWindow(QMainWindow):
 	
 	def enablePlainText(self, value):
 		self.aptc[self.ind] = value
-		self.enablePlainTextMain(value)
-		self.updatePreviewBox()
-		self.docTypeChanged()
 		self.actionPerfectHtml.setDisabled(value)
 		self.actionViewHtml.setDisabled(value)
+		self.updatePreviewBox()
+		self.docTypeChanged()
 	
 	def setDocUtilsDefault(self, yes):
 		self.defaultDocType = DOCTYPE_REST if yes else DOCTYPE_MARKDOWN
