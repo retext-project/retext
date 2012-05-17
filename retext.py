@@ -858,7 +858,7 @@ class ReTextWindow(QMainWindow):
 		textedit = isinstance(pb, QTextEdit)
 		if self.ss and textedit:
 			pb.document().setDefaultStyleSheet(self.ss)
-		if self.actionPlainText.isChecked():
+		if self.getDocType() == DOCTYPE_PLAINTEXT:
 			if textedit:
 				pb.setPlainText(self.editBoxes[self.ind].toPlainText())
 			else:
@@ -988,16 +988,17 @@ class ReTextWindow(QMainWindow):
 				self.extensionActions.append((action, mimetype))
 	
 	def updateExtensionsVisibility(self):
+		docType = self.getDocType()
 		for action in self.extensionActions:
-			if self.actionPlainText.isChecked():
+			if docType == DOCTYPE_PLAINTEXT:
 				action[0].setEnabled(False)
 				continue
 			mimetype = action[1]
 			if mimetype == None:
 				enabled = True
-			elif self.getDocType() == DOCTYPE_MARKDOWN:
+			elif docType == DOCTYPE_MARKDOWN:
 				enabled = (mimetype in ("text/x-retext-markdown", "text/x-markdown"))
-			elif self.getDocType() == DOCTYPE_REST:
+			elif docType == DOCTYPE_REST:
 				enabled = (mimetype in ("text/x-retext-rst", "text/x-rst"))
 			else:
 				enabled = False
@@ -1133,13 +1134,13 @@ class ReTextWindow(QMainWindow):
 		htmlFile.close()
 	
 	def textDocument(self):
-		if not self.actionPlainText.isChecked():
-			text = self.parseText()
+		plainText = (self.getDocType == DOCTYPE_PLAINTEXT)
+		if not plainText: text = self.parseText()
 		td = QTextDocument()
 		td.setMetaInformation(QTextDocument.DocumentTitle, self.getDocumentTitle())
 		if self.ss:
 			td.setDefaultStyleSheet(self.ss)
-		if self.actionPlainText.isChecked():
+		if plainText:
 			td.setPlainText(self.editBoxes[self.ind].toPlainText())
 		else:
 			td.setHtml('<html><body>'+text+'</body></html>')
@@ -1256,24 +1257,22 @@ class ReTextWindow(QMainWindow):
 		except:
 			# For Python 3
 			text = self.editBoxes[self.ind].toPlainText()
-		if not self.actionPlainText.isChecked():
-			parser = self.getParser()
-			if parser == PARSER_DOCUTILS:
-				realTitle = publish_parts(text, writer_name='html')['title']
-			elif parser == PARSER_MARKDOWN:
-				try:
-					realTitle = str.join(' ', md.Meta['title'])
-				except:
-					# Meta extension not installed
-					pass
+		docType = self.getDocType():
+		if docType = DOCTYPE_REST:
+			realTitle = publish_parts(text, writer_name='html')['title']
+		elif docType == DOCTYPE_MARKDOWN:
+			try:
+				realTitle = str.join(' ', md.Meta['title'])
+			except:
+				# Meta extension not installed
+				pass
 		if realTitle and not baseName:
 			return realTitle
 		elif self.fileNames[self.ind]:
 			fileinfo = QFileInfo(self.fileNames[self.ind])
 			basename = fileinfo.completeBaseName()
 			return (basename if basename else fileinfo.fileName())
-		else:
-			return self.tr("New document")
+		return self.tr("New document")
 	
 	def saveGDocs(self):
 		login = passwd = ''
@@ -1287,7 +1286,7 @@ class ReTextWindow(QMainWindow):
 				passwd = loginDialog.passEdit.text()
 			else:
 				return
-		if self.actionPlainText.isChecked():
+		if self.getDocType() == DOCTYPE_PLAINTEXT:
 			tempFile = '.retext-temp.txt'
 			contentType = 'text/plain'
 			self.saveFileWrapper(tempFile)
