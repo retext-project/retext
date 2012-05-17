@@ -692,9 +692,10 @@ class ReTextWindow(QMainWindow):
 			self.updatePreviewBox()
 			self.highlighters[self.ind].docType = newType
 			self.highlighters[self.ind].rehighlight()
-		boxesEnabled = newType == DOCTYPE_MARKDOWN
-		self.tagsBox.setEnabled(boxesEnabled)
-		self.symbolBox.setEnabled(boxesEnabled)
+		dtMarkdown = (newType == DOCTYPE_MARKDOWN)
+		self.tagsBox.setEnabled(dtMarkdown)
+		self.symbolBox.setEnabled(dtMarkdown)
+		self.actionUnderline.setEnabled(dtMarkdown)
 	
 	def changeIndex(self, ind):
 		if ind > -1:
