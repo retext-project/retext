@@ -1331,7 +1331,6 @@ class ReTextWindow(QMainWindow):
 		return True
 	
 	def closeEvent(self, closeevent):
-		accept = True
 		for self.ind in range(self.tabWidget.count()):
 			if not self.maybeSave(self.ind):
 				return closeevent.ignore()
