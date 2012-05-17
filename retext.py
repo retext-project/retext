@@ -1107,14 +1107,10 @@ class ReTextWindow(QMainWindow):
 		return True
 	
 	def closeEvent(self, closeevent):
-		accept = True
 		for self.ind in range(self.tabWidget.count()):
 			if not self.maybeSave(self.ind):
-				accept = False
-		if accept:
-			closeevent.accept()
-		else:
-			closeevent.ignore()
+				return closeevent.ignore()
+		closeevent.accept()
 	
 	def viewHtml(self):
 		HtmlDlg = HtmlDialog(self)
