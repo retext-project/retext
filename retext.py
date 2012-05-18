@@ -1367,16 +1367,10 @@ class ReTextWindow(QMainWindow):
 	def insertTag(self, num):
 		if num:
 			ut = self.usefulTags[num-1]
-			hc = not ut in ('td', 'tr')
-			arg = ''
-			if ut == 'span':
-				arg = ' style=""'
+			arg = ' style=""' if ut == 'span' else '' 
 			tc = self.editBoxes[self.ind].textCursor()
-			if hc:
-				toinsert = '<'+ut+arg+'>'+tc.selectedText()+'</'+ut+'>'
-				tc.insertText(toinsert)
-			else:
-				tc.insertText('<'+ut+arg+'>'+tc.selectedText())
+			toinsert = '<'+ut+arg+'>'+tc.selectedText()+'</'+ut+'>'
+			tc.insertText(toinsert)
 		self.tagsBox.setCurrentIndex(0)
 	
 	def insertSymbol(self, num):
