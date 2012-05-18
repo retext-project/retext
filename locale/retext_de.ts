@@ -271,7 +271,7 @@
         <translation>Groß-/Kleinschreibung</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1355"/>
+        <location filename="retext.py" line="1351"/>
         <source>New document</source>
         <translation>Neues Dokument</translation>
     </message>
@@ -326,22 +326,22 @@
         <translation>Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1007"/>
+        <location filename="retext.py" line="1006"/>
         <source>Plain text (*.txt)</source>
         <translation>Klartext (*.txt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1010"/>
+        <location filename="retext.py" line="1009"/>
         <source>ReStructuredText files</source>
         <translation>ReStructuredText-Dateien</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1013"/>
+        <location filename="retext.py" line="1012"/>
         <source>HTML files</source>
         <translation>HTML-Dateien</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1016"/>
+        <location filename="retext.py" line="1015"/>
         <source>Markdown files</source>
         <translation>Markdown-Dateien</translation>
     </message>
@@ -351,7 +351,7 @@
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1031"/>
+        <location filename="retext.py" line="1029"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Kann nicht speichern, Datei ist schreibgeschützt.</translation>
     </message>
@@ -423,37 +423,37 @@ Do you want to save your changes?</source>
 Sollen die Änderungen gespeichert werden?</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1362"/>
+        <location filename="retext.py" line="1358"/>
         <source>HTML code</source>
         <translation>HTML-Code</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1371"/>
+        <location filename="retext.py" line="1367"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation>Einfacher aber mächtiger Editor für Markdown and ReStructuredText</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1371"/>
+        <location filename="retext.py" line="1367"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Autor: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1371"/>
+        <location filename="retext.py" line="1367"/>
         <source>Website</source>
         <translation>Webseite</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1371"/>
+        <location filename="retext.py" line="1367"/>
         <source>Markdown syntax</source>
         <translation>Markdown-Syntax</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1371"/>
+        <location filename="retext.py" line="1367"/>
         <source>ReST syntax</source>
         <translation>ReST-Syntax</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1433"/>
+        <location filename="retext.py" line="1429"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>Dateiinhalt konnte nicht geparst werden. Überprüfen Sie, ob die notwendigen Module installiert sind!</translation>
     </message>
