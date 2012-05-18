@@ -287,7 +287,7 @@ class ReTextWindow(QMainWindow):
 		self.actionQuit = QAction(self.actIcon('application-exit'), self.tr('Quit'), self)
 		self.actionQuit.setShortcut(QKeySequence.Quit)
 		self.actionQuit.setMenuRole(QAction.QuitRole)
-		self.connect(self.actionQuit, SIGNAL('triggered()'), qApp, SLOT('quit()'))
+		self.connect(self.actionQuit, SIGNAL('triggered()'), self.close)
 		self.actionUndo = QAction(self.actIcon('edit-undo'), self.tr('Undo'), self)
 		self.actionUndo.setShortcut(QKeySequence.Undo)
 		self.actionRedo = QAction(self.actIcon('edit-redo'), self.tr('Redo'), self)
