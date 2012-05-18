@@ -312,7 +312,7 @@ class ReTextWindow(QMainWindow):
 		self.getExportExtensionsList()
 		self.actionQuit = self.act(self.tr('Quit'), icon='application-exit', shct=QKeySequence.Quit)
 		self.actionQuit.setMenuRole(QAction.QuitRole)
-		self.connect(self.actionQuit, SIGNAL('triggered()'), qApp, SLOT('quit()'))
+		self.connect(self.actionQuit, SIGNAL('triggered()'), self.close)
 		self.actionUndo = self.act(self.tr('Undo'), icon='edit-undo', shct=QKeySequence.Undo, \
 		trig=lambda: self.editBoxes[self.ind].undo())
 		self.actionRedo = self.act(self.tr('Redo'), icon='edit-redo', shct=QKeySequence.Redo, \
