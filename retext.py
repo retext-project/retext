@@ -117,7 +117,7 @@ else:
 icon_path = "icons/"
 
 PARSER_DOCUTILS, PARSER_MARKDOWN, PARSER_NA = range(3)
-DOCTYPE_PLAINTEXT, DOCTYPE_REST, DOCTYPE_MARKDOWN = range(3)
+DOCTYPE_PLAINTEXT, DOCTYPE_REST, DOCTYPE_MARKDOWN, DOCTYPE_HTML = range(4)
 
 if QFileInfo("wpgen/wpgen.py").isExecutable():
 	try:
@@ -168,7 +168,8 @@ class ReTextHighlighter(QSyntaxHighlighter):
 		patternsDict = {
 			DOCTYPE_PLAINTEXT: (),
 			DOCTYPE_MARKDOWN: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
-			DOCTYPE_REST: (4, 6)
+			DOCTYPE_REST: (4, 6),
+			DOCTYPE_HTML: (0, 1, 2, 3)
 		}
 		for number in patternsDict[self.docType]:
 			pattern = patterns[number]
@@ -232,7 +233,8 @@ class HtmlDialog(QDialog):
 		self.textEdit = QTextEdit(self)
 		self.textEdit.setReadOnly(True)
 		self.textEdit.setFont(monofont)
-		ReTextHighlighter(self.textEdit.document())
+		hl = ReTextHighlighter(self.textEdit.document())
+		hl.docType = DOCTYPE_HTML
 		self.verticalLayout.addWidget(self.textEdit)
 		self.buttonBox = QDialogButtonBox(self)
 		self.buttonBox.setStandardButtons(QDialogButtonBox.Close)
