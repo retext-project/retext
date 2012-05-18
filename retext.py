@@ -789,7 +789,7 @@ class ReTextWindow(QMainWindow):
 		textedit = isinstance(pb, QTextEdit)
 		if self.ss and textedit:
 			pb.document().setDefaultStyleSheet(self.ss)
-		if self.actionPlainText.isChecked():
+		if self.aptc[self.ind]:
 			if textedit:
 				pb.setPlainText(self.editBoxes[self.ind].toPlainText())
 			else:
