@@ -22,7 +22,7 @@
 
 import sys
 import re
-from subprocess import Popen
+from subprocess import Popen, PIPE
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
@@ -253,6 +253,14 @@ class ReTextWindow(QMainWindow):
 		self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
 		if settings.contains('iconTheme'):
 			QIcon.setThemeName(readFromSettings(settings, 'iconTheme', str))
+		if QIcon.themeName() in ('', 'hicolor'):
+			try:
+				gconf = Popen(['gconftool-2', '--get', '/desktop/gnome/interface/icon_theme'],
+				stdout=PIPE)
+			except: pass
+			else:
+				iconTheme = gconf.stdout.read().rstrip()
+				if iconTheme: QIcon.setThemeName(iconTheme.decode())
 		if settings.contains('font'):
 			self.font = QFont(readFromSettings(settings, 'font', str))
 			if settings.contains('fontSize'):
@@ -416,8 +424,7 @@ class ReTextWindow(QMainWindow):
 			# Load CSS style for codehilite
 			try:
 				from pygments.formatters import HtmlFormatter
-			except:
-				pass
+			except: pass
 			else:
 				self.ss += HtmlFormatter().get_style_defs('.codehilite')
 		self.menubar = QMenuBar(self)
@@ -514,8 +521,7 @@ class ReTextWindow(QMainWindow):
 		self.searchEdit = QLineEdit(self.searchBar)
 		try:
 			self.searchEdit.setPlaceholderText(self.tr('Search'))
-		except:
-			pass
+		except: pass
 		self.connect(self.searchEdit, SIGNAL('returnPressed()'), self.find)
 		self.csBox = QCheckBox(self.tr('Case sensitively'), self.searchBar)
 		self.searchBar.addWidget(self.searchEdit)
