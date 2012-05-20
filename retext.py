@@ -238,6 +238,14 @@ class ReTextWindow(QMainWindow):
 		self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
 		if settings.contains('iconTheme'):
 			QIcon.setThemeName(readFromSettings(settings, 'iconTheme', str))
+		if QIcon.themeName() in ('', 'hicolor'):
+			try:
+				gconf = Popen(['gconftool-2', '--get', '/desktop/gnome/interface/icon_theme'],
+				stdout=PIPE)
+			except: pass
+			else:
+				iconTheme = gconf.stdout.read().rstrip()
+				if iconTheme: QIcon.setThemeName(iconTheme.decode())
 		if settings.contains('font'):
 			self.font = QFont(readFromSettings(settings, 'font', str))
 			if settings.contains('fontSize'):
