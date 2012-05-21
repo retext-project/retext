@@ -560,8 +560,7 @@ class ReTextWindow(QMainWindow):
 					self.actionEnableSC.setChecked(True)
 					self.enableSC(True)
 		if not (use_md or use_docutils):
-			QMessageBox.warning(self, app_name, self.tr('You have neither Markdown nor Docutils modules installed!') \
-			+'<br>'+self.tr('Only HTML formatting will be available.'))
+			QMessageBox.warning(self, app_name, self.tr('You have neither Markdown nor Docutils modules installed!'))
 	
 	def act(self, name, icon=None, trig=None, trigbool=None, shct=None):
 		if icon:
