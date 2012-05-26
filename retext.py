@@ -1109,8 +1109,10 @@ class ReTextWindow(QMainWindow):
 				self.setCurrentFile()
 				self.editBoxes[self.ind].document().setModified(False)
 				self.setWindowModified(False)
+				return True
 			else:
 				QMessageBox.warning(self, app_name, self.tr("Cannot save to file because it is read-only!"))
+		return False
 	
 	def saveFileWrapper(self, fn):
 		savefile = QFile(fn)
@@ -1395,8 +1397,7 @@ class ReTextWindow(QMainWindow):
 		ret = QMessageBox.warning(self, app_name, self.tr("The document has been modified.\nDo you want to save your changes?"), \
 		QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel)
 		if ret == QMessageBox.Save:
-			self.saveFileMain(False)
-			return True
+			return self.saveFileMain(False)
 		elif ret == QMessageBox.Cancel:
 			return False
 		return True
