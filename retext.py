@@ -26,7 +26,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "2.1.5"
+app_version = "2.1.6"
 
 settings = QSettings('ReText project', 'ReText')
 
