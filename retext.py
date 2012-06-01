@@ -83,12 +83,12 @@ else:
 		for ext in readListFromSettings(settings, 'mdExtensions'):
 			exts.append(str(ext))
 		try:
-			md = markdown.Markdown(exts)
+			md = markdown.Markdown(exts, output_format='html4')
 		except ValueError:
 			print('Warning: failed to load extensions!')
-			md = markdown.Markdown()
+			md = markdown.Markdown(output_format='html4')
 	else:
-		md = markdown.Markdown()
+		md = markdown.Markdown(output_format='html4')
 
 try:
 	import gdata.docs.data
