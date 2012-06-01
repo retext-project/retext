@@ -92,7 +92,7 @@ class WebLibrary(object):
 	def _processPage(self, fname):
 		bn, ext = os.path.splitext(fname)
 		html = pagename = ''
-		md = markdown.Markdown(self.extensions)
+		md = markdown.Markdown(self.extensions, output_format='html4')
 		inputfile = open(self.dirPath+"/"+fname, "r")
 		try:
 			text = unicode(inputfile.read(), 'utf-8')

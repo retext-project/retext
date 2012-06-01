@@ -46,8 +46,8 @@ a:hover {
   background-color: whiteSmoke;
   border: solid 1px black;
   border-radius: 0.5em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding: 0.5em;
+  padding-top: 0em;
   margin: 0px auto;
   max-width: 800px;
   height: 100%;
