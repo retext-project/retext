@@ -688,8 +688,6 @@ class ReTextWindow(QMainWindow):
 				return DOCTYPE_MARKDOWN
 			elif suffix in ('rest', 'rst'):
 				return DOCTYPE_REST
-			else:
-				return DOCTYPE_PLAINTEXT
 		return self.defaultDocType
 	
 	def docTypeChanged(self):
@@ -1063,7 +1061,7 @@ class ReTextWindow(QMainWindow):
 		openfile.close()
 		self.editBoxes[self.ind].setPlainText(html)
 		suffix = QFileInfo(self.fileNames[self.ind]).suffix()
-		pt = suffix not in ('re', 'md', 'markdown', 'mdown', 'mkd', 'mkdn', 'rst', 'rest', 'html', 'htm')
+		pt = suffix not in ('re', 'md', 'markdown', 'mdown', 'mkd', 'mkdn', 'rst', 'rest')
 		if settings.contains('autoPlainText'):
 			if not readFromSettings(settings, 'autoPlainText', bool):
 				pt = False
