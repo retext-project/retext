@@ -47,14 +47,9 @@ else:
 	templates_dir = "templates/"
 
 class WebLibrary(object):
-	def __init__(self):
-		self.dirPath = "."
-	
-	def setDir(self, dirPath):
-		"""Set the working directory to dirPath
-		dirPath: relative or absolute path to directory"""
-		if os.path.exists(dirPath):
-			self.dirPath = dirPath
+	def __init__(self, directoryPath="."):
+		"""Construct a new WebLibrary object"""
+		self.dirPath = directoryPath
 	
 	def updateAll(self):
 		"""Process all documents in the directory"""
