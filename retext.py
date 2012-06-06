@@ -1080,7 +1080,7 @@ class ReTextWindow(QMainWindow):
 		oldind = self.ind
 		for self.ind in range(self.tabWidget.count()):
 			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).isWritable():
-				self.saveFileWrapper(self.fileNames[self.ind])
+				self.saveFileCore(self.fileNames[self.ind])
 				self.editBoxes[self.ind].document().setModified(False)
 		self.ind = oldind
 	
@@ -1102,7 +1102,7 @@ class ReTextWindow(QMainWindow):
 			if self.fileNames[self.ind] and not QFileInfo(self.fileNames[self.ind]).suffix():
 				self.fileNames[self.ind] += ext
 		if self.fileNames[self.ind]:
-			result = self.saveFileWrapper(self.fileNames[self.ind])
+			result = self.saveFileCore(self.fileNames[self.ind])
 			if result:
 				self.setCurrentFile()
 				self.editBoxes[self.ind].document().setModified(False)
@@ -1112,7 +1112,7 @@ class ReTextWindow(QMainWindow):
 				QMessageBox.warning(self, app_name, self.tr("Cannot save to file because it is read-only!"))
 		return False
 	
-	def saveFileWrapper(self, fn):
+	def saveFileCore(self, fn):
 		savefile = QFile(fn)
 		result = savefile.open(QIODevice.WriteOnly)
 		if result:
@@ -1239,7 +1239,7 @@ class ReTextWindow(QMainWindow):
 		else:
 			if self.getDocType() == DOCTYPE_REST: tmpname = '.retext-temp.rst'
 			else: tmpname = '.retext-temp.mkd'
-			self.saveFileWrapper(tmpname)
+			self.saveFileCore(tmpname)
 		command = command.replace('%of', 'out'+defaultext)
 		command = command.replace('%html' if html else '%if', tmpname)
 		args = str(command).split()
@@ -1298,7 +1298,7 @@ class ReTextWindow(QMainWindow):
 		if self.getDocType() == DOCTYPE_PLAINTEXT:
 			tempFile = '.retext-temp.txt'
 			contentType = 'text/plain'
-			self.saveFileWrapper(tempFile)
+			self.saveFileCore(tempFile)
 		else:
 			tempFile = '.retext-temp.html'
 			contentType = 'text/html'
@@ -1387,7 +1387,7 @@ class ReTextWindow(QMainWindow):
 	
 	def maybeSave(self, ind):
 		if self.autoSaveActive():
-			self.saveFileWrapper(self.fileNames[self.ind])
+			self.saveFileCore(self.fileNames[self.ind])
 			return True
 		if not self.editBoxes[ind].document().isModified():
 			return True
