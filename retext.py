@@ -27,7 +27,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "3.1 (Git)"
+app_version = "3.1.0"
 
 def readFromSettings(settings, key, keytype):
 	try:
