@@ -1,3 +1,9 @@
+3.1
+* Spell checker suggestions
+* Markup-specifing highlighting
+* Re-written parser & document-type logic
+* Lots of code clean-up
+
 3.0
 * Python 3 support
 * Improved highlighter
