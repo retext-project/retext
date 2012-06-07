@@ -1182,7 +1182,6 @@ class ReTextWindow(QMainWindow):
 			return self.textDocument()
 		except Exception as e:
 			self.printError(e)
-			return None
 	
 	def standardPrinter(self):
 		printer = QPrinter(QPrinter.HighResolution)
@@ -1470,19 +1469,19 @@ class ReTextWindow(QMainWindow):
 	
 	def parseText(self):
 		try:
-			htmltext = unicode(self.editBoxes[self.ind].toPlainText())
+			text = unicode(self.editBoxes[self.ind].toPlainText())
 		except:
 			# For Python 3
-			htmltext = self.editBoxes[self.ind].toPlainText()
+			text = self.editBoxes[self.ind].toPlainText()
 		# WpGen directives
-		htmltext = htmltext.replace('%HTMLDIR%', 'html')
-		htmltext = htmltext.replace('%\\', '%')
+		text = text.replace('%HTMLDIR%', 'html')
+		text = text.replace('%\\', '%')
 		parser = self.getParser()
 		if parser == PARSER_DOCUTILS:
-			return publish_parts(htmltext, writer_name='html')['body']
+			return publish_parts(text, writer_name='html')['body']
 		elif parser == PARSER_MARKDOWN:
 			md.reset()
-			return md.convert(htmltext)
+			return md.convert(text)
 		else:
 			return '<p style="color: red">'\
 			+self.tr('Could not parse file contents, check if you have the necessary module installed!')+'</p>'
