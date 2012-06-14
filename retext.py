@@ -91,15 +91,6 @@ else:
 		md = markdown.Markdown(output_format='html4')
 
 try:
-	import gdata.docs.data
-	import gdata.docs.client
-	from gdata.data import MediaSource
-except:
-	use_gdocs = False
-else:
-	use_gdocs = True
-
-try:
 	import enchant
 	enchant.Dict()
 except:
@@ -199,32 +190,6 @@ class ReTextHighlighter(QSyntaxHighlighter):
 				if not self.dictionary.check(match.group(0)):
 					self.setFormat(match.start(), match.end() - match.start(), finalFormat)
 
-class LogPassDialog(QDialog):
-	def __init__(self, defaultLogin="", defaultPass=""):
-		QDialog.__init__(self)
-		self.setWindowTitle(app_name)
-		self.verticalLayout = QVBoxLayout(self)
-		self.label = QLabel(self)
-		self.label.setText(self.tr("Enter your Google account data"))
-		self.verticalLayout.addWidget(self.label)
-		self.loginEdit = QLineEdit(self)
-		self.loginEdit.setText(defaultLogin)
-		self.verticalLayout.addWidget(self.loginEdit)
-		self.passEdit = QLineEdit(self)
-		self.passEdit.setText(defaultPass)
-		self.passEdit.setEchoMode(QLineEdit.Password)
-		try:
-			self.loginEdit.setPlaceholderText(self.tr("Username"))
-			self.passEdit.setPlaceholderText(self.tr("Password"))
-		except:
-			pass
-		self.verticalLayout.addWidget(self.passEdit)
-		self.buttonBox = QDialogButtonBox(self)
-		self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
-		self.verticalLayout.addWidget(self.buttonBox)
-		self.connect(self.buttonBox, SIGNAL("accepted()"), self.accept)
-		self.connect(self.buttonBox, SIGNAL("rejected()"), self.reject)
-
 class HtmlDialog(QDialog):
 	def __init__(self, parent=None):
 		QDialog.__init__(self, parent)
@@ -278,7 +243,6 @@ class ReTextWindow(QMainWindow):
 		self.apc = []
 		self.alpc = []
 		self.aptc = []
-		self.gDocsEntries = []
 		self.tabWidget = QTabWidget(self)
 		self.tabWidget.setTabsClosable(True)
 		self.setCentralWidget(self.tabWidget)
@@ -395,9 +359,6 @@ class ReTextWindow(QMainWindow):
 		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.Italic, trig=lambda: self.insertChars('*'))
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline, \
 		trig=lambda: self.insertTag(9)) # <u>...</u>
-		if use_gdocs:
-			self.actionSaveGDocs = self.act(self.tr('Save to Google Docs'), trig=self.saveGDocs)
-			self.actionSaveGDocs.setIcon(QIcon.fromTheme('web-browser', self.actIcon('intenret-web-browser')))
 		self.usefulTags = ('big', 'center', 's', 'small', 'span', 'table', 'td', 'tr', 'u')
 		self.usefulChars = ('deg', 'divide', 'hellip', 'laquo', 'larr', \
 			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo', \
@@ -455,9 +416,6 @@ class ReTextWindow(QMainWindow):
 			for action, mimetype in self.extensionActions:
 				self.menuExport.addAction(action)
 			self.connect(self.menuRecentFiles, SIGNAL('aboutToShow()'), self.updateExtensionsVisibility)
-		if use_gdocs:
-			self.menuExport.addSeparator()
-			self.menuExport.addAction(self.actionSaveGDocs)
 		self.menuFile.addAction(self.actionPrint)
 		self.menuFile.addAction(self.actionPrintPreview)
 		self.menuFile.addSeparator()
@@ -614,7 +572,6 @@ class ReTextWindow(QMainWindow):
 		self.apc.append(liveMode)
 		self.alpc.append(liveMode)
 		self.aptc.append(False)
-		self.gDocsEntries.append(None)
 		self.editBoxes[-1].setFont(monofont)
 		self.editBoxes[-1].setAcceptRichText(False)
 		self.connect(self.editBoxes[-1], SIGNAL('textChanged()'), self.updateLivePreviewBox)
@@ -676,7 +633,6 @@ class ReTextWindow(QMainWindow):
 			del self.apc[ind]
 			del self.alpc[ind]
 			del self.aptc[ind]
-			del self.gDocsEntries[ind]
 			self.tabWidget.removeTab(ind)
 	
 	def getDocType(self):
@@ -1281,64 +1237,6 @@ class ReTextWindow(QMainWindow):
 			basename = fileinfo.completeBaseName()
 			return (basename if basename else fileinfo.fileName())
 		return self.tr("New document")
-	
-	def saveGDocs(self):
-		login = passwd = ''
-		if settings.contains('GDocsLogin') and settings.contains('GDocsPasswd'):
-			login = readFromSettings(settings, 'GDocsLogin', str)
-			passwd = readFromSettings(settings, 'GDocsPasswd', str)
-		if self.gDocsEntries[self.ind] == None:
-			loginDialog = LogPassDialog(login, passwd)
-			if loginDialog.exec_() == QDialog.Accepted:
-				login = loginDialog.loginEdit.text()
-				passwd = loginDialog.passEdit.text()
-			else:
-				return
-		if self.getDocType() == DOCTYPE_PLAINTEXT:
-			tempFile = '.retext-temp.txt'
-			contentType = 'text/plain'
-			self.saveFileCore(tempFile)
-		else:
-			tempFile = '.retext-temp.html'
-			contentType = 'text/html'
-			self.saveHtml(tempFile)
-		gdClient = gdata.docs.client.DocsClient(source=app_name)
-		gdClient.ssl = True
-		try:
-			try:
-				gdClient.ClientLogin(unicode(login), unicode(passwd), gdClient.source)
-			except NameError:
-				# For Python 3
-				gdClient.ClientLogin(login, passwd, gdClient.source)
-		except gdata.client.BadAuthentication:
-			QFile(tempFile).remove()
-			return QMessageBox.warning(self, app_name, self.tr("Incorrect user name or password!"))
-		except:
-			QFile(tempFile).remove()
-			return QMessageBox.warning(self, app_name, \
-			self.tr("Authentification failed, please check your internet connection!"))
-		settings.setValue("GDocsLogin", login)
-		settings.setValue("GDocsPasswd", passwd)
-		try:
-			title = unicode(self.getDocumentTitle())
-		except:
-			# For Python 3
-			title = self.getDocumentTitle()
-		ms = MediaSource(file_path=tempFile, content_type=contentType)
-		entry = self.gDocsEntries[self.ind]
-		if entry:
-			entry.title.text = title
-			entry = gdClient.Update(entry, media_source=ms, force=True)
-		else:
-			try:
-				resource = gdata.docs.data.Resource(title=title)
-				entry = gdClient.CreateResource(resource, media=ms)
-			except AttributeError:
-				# For old gdata versions
-				entry = gdClient.Upload(ms, title)
-		QDesktopServices.openUrl(QUrl(entry.GetAlternateLink().href))
-		self.gDocsEntries[self.ind] = entry
-		QFile(tempFile).remove()
 	
 	def autoSaveActive(self):
 		return self.autoSave and self.fileNames[self.ind] and \
