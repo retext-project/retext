@@ -654,9 +654,12 @@ class ReTextWindow(QMainWindow):
 			self.highlighters[self.ind].docType = newType
 			self.highlighters[self.ind].rehighlight()
 		dtMarkdown = (newType == DOCTYPE_MARKDOWN)
+		dtMkdOrReST = (newType in (DOCTYPE_MARKDOWN, DOCTYPE_REST))
 		self.tagsBox.setEnabled(dtMarkdown)
 		self.symbolBox.setEnabled(dtMarkdown)
 		self.actionUnderline.setEnabled(dtMarkdown)
+		self.actionBold.setEnabled(dtMkdOrReST)
+		self.actionItalic.setEnabled(dtMkdOrReST)
 	
 	def changeIndex(self, ind):
 		if ind > -1:
@@ -679,7 +682,6 @@ class ReTextWindow(QMainWindow):
 			except:
 				# For Python 3
 				self.setWindowTitle(self.tr('New document') + '[*] \u2014 ' + app_name)
-			self.docTypeChanged()
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
 		self.livePreviewEnabled = self.alpc[ind]
 		if self.alpc[ind]:
