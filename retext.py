@@ -1313,8 +1313,7 @@ class ReTextWindow(QMainWindow):
 		try:
 			HtmlDlg.textEdit.setPlainText(self.parseText())
 		except Exception as e:
-			self.printError(e)
-			return
+			return self.printError(e)
 		winTitle = self.tr('New document')
 		if self.fileNames[self.ind]:
 			winTitle = QFileInfo(self.fileNames[self.ind]).fileName()
