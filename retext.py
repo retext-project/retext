@@ -108,7 +108,7 @@ else:
 icon_path = "icons/"
 
 PARSER_DOCUTILS, PARSER_MARKDOWN, PARSER_NA = range(3)
-DOCTYPE_PLAINTEXT, DOCTYPE_REST, DOCTYPE_MARKDOWN, DOCTYPE_HTML = range(4)
+DOCTYPE_NONE, DOCTYPE_REST, DOCTYPE_MARKDOWN, DOCTYPE_HTML = range(4)
 
 if QFileInfo("wpgen/wpgen.py").isExecutable():
 	try:
@@ -138,7 +138,7 @@ else:
 
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
-	docType = DOCTYPE_PLAINTEXT
+	docType = DOCTYPE_NONE
 	
 	def highlightBlock(self, text):
 		patterns = (
@@ -157,7 +157,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			('(?<=\\]\\()[^\\(\\)]*(?=\\))', None, QFont.Normal, True, True) # 12: Link references
 		)
 		patternsDict = {
-			DOCTYPE_PLAINTEXT: (),
+			DOCTYPE_NONE: (),
 			DOCTYPE_MARKDOWN: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
 			DOCTYPE_REST: (4, 6),
 			DOCTYPE_HTML: (0, 1, 2, 3)
@@ -637,7 +637,7 @@ class ReTextWindow(QMainWindow):
 	
 	def getDocType(self):
 		if self.aptc[self.ind]:
-			return DOCTYPE_PLAINTEXT
+			return DOCTYPE_NONE
 		if self.fileNames[self.ind]:
 			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
 			if suffix in ('md', 'markdown', 'mdown', 'mkd', 'mkdn', 're'):
@@ -820,7 +820,7 @@ class ReTextWindow(QMainWindow):
 		textedit = isinstance(pb, QTextEdit)
 		if self.ss and textedit:
 			pb.document().setDefaultStyleSheet(self.ss)
-		if self.getDocType() == DOCTYPE_PLAINTEXT:
+		if self.getDocType() == DOCTYPE_NONE:
 			if textedit:
 				pb.setPlainText(self.editBoxes[self.ind].toPlainText())
 			else:
@@ -952,7 +952,7 @@ class ReTextWindow(QMainWindow):
 	def updateExtensionsVisibility(self):
 		docType = self.getDocType()
 		for action in self.extensionActions:
-			if docType == DOCTYPE_PLAINTEXT:
+			if docType == DOCTYPE_NONE:
 				action[0].setEnabled(False)
 				continue
 			mimetype = action[1]
@@ -1043,7 +1043,7 @@ class ReTextWindow(QMainWindow):
 	def saveFileMain(self, dlg):
 		if (not self.fileNames[self.ind]) or dlg:
 			docType = self.getDocType()
-			if docType == DOCTYPE_PLAINTEXT:
+			if docType == DOCTYPE_NONE:
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
 			elif docType == DOCTYPE_REST:
@@ -1098,7 +1098,7 @@ class ReTextWindow(QMainWindow):
 		htmlFile.close()
 	
 	def textDocument(self):
-		plainText = (self.getDocType == DOCTYPE_PLAINTEXT)
+		plainText = (self.getDocType == DOCTYPE_NONE)
 		if not plainText: text = self.parseText()
 		td = QTextDocument()
 		td.setMetaInformation(QTextDocument.DocumentTitle, self.getDocumentTitle())
