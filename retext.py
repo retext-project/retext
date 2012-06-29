@@ -77,9 +77,9 @@ try:
 	import enchant
 	enchant.Dict()
 except:
-	use_enchant = False
+	enchant_available = False
 else:
-	use_enchant = True
+	enchant_available = True
 
 icon_path = "icons/"
 
@@ -288,7 +288,7 @@ class ReTextWindow(QMainWindow):
 		self.actionCut.setEnabled(False)
 		self.connect(qApp.clipboard(), SIGNAL('dataChanged()'), self.clipboardDataChanged)
 		self.clipboardDataChanged()
-		if use_enchant:
+		if enchant_available:
 			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSC)
 			self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
 		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
@@ -398,7 +398,7 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addAction(self.actionPaste)
 		self.menuEdit.addSeparator()
 		self.sc = False
-		if use_enchant:
+		if enchant_available:
 			self.menuSC = self.menuEdit.addMenu(self.tr('Spell check'))
 			self.menuSC.addAction(self.actionEnableSC)
 			self.menuSC.addAction(self.actionSetLocale)
@@ -473,7 +473,7 @@ class ReTextWindow(QMainWindow):
 			self.livePreviewEnabled = readFromSettings(settings, 'previewState', bool)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
-		if use_enchant:
+		if enchant_available:
 			self.sl = None
 			if settings.contains('spellCheckLocale'):
 				try:
@@ -523,7 +523,7 @@ class ReTextWindow(QMainWindow):
 		self.previewBlocked = False
 		self.editBoxes.append(QTextEdit())
 		self.highlighters.append(ReTextHighlighter(self.editBoxes[-1].document()))
-		if use_enchant and self.actionEnableSC.isChecked():
+		if enchant_available and self.actionEnableSC.isChecked():
 			self.highlighters[-1].dictionary = \
 			enchant.Dict(self.sl) if self.sl else enchant.Dict()
 			self.highlighters[-1].rehighlight()
