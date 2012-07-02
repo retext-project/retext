@@ -1145,27 +1145,28 @@ class ReTextWindow(QMainWindow):
 		return printer
 	
 	def savePdf(self):
-		document = self.getDocumentForPrint()
-		if document == None:
-			return
-		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to PDF"), "", self.tr("PDF files (*.pdf)"))
+		self.updatePreviewBox()
+		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to PDF"),
+			"", self.tr("PDF files (*.pdf)"))
 		if fileName:
 			if not QFileInfo(fileName).suffix():
 				fileName += ".pdf"
 			printer = self.standardPrinter()
 			printer.setOutputFormat(QPrinter.PdfFormat)
 			printer.setOutputFileName(fileName)
-			document.print_(printer)
+			document = self.getDocumentForPrint()
+			if document != None:
+				document.print_(printer)
 	
 	def printFile(self):
-		document = self.getDocumentForPrint()
-		if document == None:
-			return
+		self.updatePreviewBox()
 		printer = self.standardPrinter()
 		dlg = QPrintDialog(printer, self)
 		dlg.setWindowTitle(self.tr("Print document"))
 		if (dlg.exec_() == QDialog.Accepted):
-			document.print_(printer)
+			document = self.getDocumentForPrint()
+			if document != None:
+				document.print_(printer)
 	
 	def printPreview(self):
 		document = self.getDocumentForPrint()
