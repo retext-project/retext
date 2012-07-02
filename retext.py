@@ -321,7 +321,7 @@ class ReTextWindow(QMainWindow):
 			print('Warning: no markups are available!')
 		self.defaultMarkup = availableMarkups[0] if availableMarkups else None
 		if settings.contains('defaultMarkup'):
-			dm = readFromSettings(settings, 'defaultMarkup', str)
+			dm = str(readFromSettings(settings, 'defaultMarkup', str))
 			mc = documents.find_markup_class_by_name(dm)
 			if mc and mc.available():
 				self.defaultMarkup = mc
