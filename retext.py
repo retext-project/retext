@@ -850,7 +850,7 @@ class ReTextWindow(QMainWindow):
 				stream = QTextStream(tempFile)
 				stream << html
 				tempFile.close()
-				self.connect(pb, SIGNAL('loadFinished(bool)'), \
+				self.connect(pb, SIGNAL('loadFinished(bool)'),
 					lambda ok: tempFile.remove())
 				pb.load(QUrl.fromLocalFile(tempFile.fileName()))
 			else:
