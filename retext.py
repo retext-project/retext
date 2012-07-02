@@ -71,6 +71,13 @@ def writeListToSettings(settings, key, value):
 	else:
 		settings.remove(key)
 
+def convertToUnicode(string):
+	try:
+		return unicode(string)
+	except:
+		# For Python 3
+		return string
+
 settings = QSettings('ReText project', 'ReText')
 
 try:
@@ -153,11 +160,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			for match in re.finditer(pattern[0], text):
 				self.setFormat(match.start(), match.end() - match.start(), charFormat)
 		if self.dictionary:
-			try:
-				text = unicode(text)
-			except:
-				# Not necessary for Python 3
-				pass
+			text = convertToUnicode(text)
 			charFormat = QTextCharFormat()
 			charFormat.setUnderlineColor(Qt.red)
 			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
@@ -572,12 +575,7 @@ class ReTextWindow(QMainWindow):
 			return QTextEdit.contextMenuEvent(editBox, event)
 		cursor.select(QTextCursor.WordUnderCursor)
 		editBox.setTextCursor(cursor)
-		word = cursor.selectedText()
-		try:
-			word = unicode(cursor.selectedText())
-		except NameError:
-			# Not needed for Python 3
-			word = cursor.selectedText()
+		word = convertToUnicode(cursor.selectedText())
 		if not word or dictionary.check(word):
 			editBox.setTextCursor(oldcursor)
 			return QTextEdit.contextMenuEvent(editBox, event)
@@ -609,11 +607,12 @@ class ReTextWindow(QMainWindow):
 	def getMarkupClass(self, fileName=None):
 		if fileName is None:
 			fileName = self.fileNames[self.ind]
+		fileName = convertToUnicode(fileName)
 		if self.actionPlainText.isChecked():
 			return
 		if fileName:
 			markupClass = documents.get_markup_for_file_name(
-				self.fileNames[self.ind], return_class=True)
+				fileName, return_class=True)
 			if markupClass:
 				return markupClass
 		return self.defaultMarkup
@@ -621,6 +620,7 @@ class ReTextWindow(QMainWindow):
 	def getMarkup(self, fileName=None):
 		if fileName is None:
 			fileName = self.fileNames[self.ind]
+		fileName = convertToUnicode(fileName)
 		markupClass = self.getMarkupClass(fileName=fileName)
 		if markupClass and markupClass.available():
 			return markupClass(filename=fileName)
@@ -802,11 +802,7 @@ class ReTextWindow(QMainWindow):
 		if self.markups[self.ind] is None:
 			return '<p style="color: red">'\
 			+self.tr('Could not parse file contents, check if you have the necessary module installed!')+'</p>'
-		try:
-			text = unicode(self.editBoxes[self.ind].toPlainText())
-		except:
-			# For Python 3
-			text = self.editBoxes[self.ind].toPlainText()
+		text = convertToUnicode(self.editBoxes[self.ind].toPlainText())
 		# WpGen directives
 		text = text.replace('%HTMLDIR%', 'html')
 		text = text.replace('%\\', '%')
@@ -993,12 +989,7 @@ class ReTextWindow(QMainWindow):
 		extension = {}
 		stream = QTextStream(extFile)
 		while not stream.atEnd():
-			line = stream.readLine()
-			try:
-				line = unicode(line)
-			except:
-				# Not needed for Python 3
-				pass
+			line = convertToUnicode(stream.readLine())
 			if '=' in line:
 				index = line.index('=')
 				extension[line[:index].rstrip()] = line[index+1:].lstrip()
@@ -1220,11 +1211,7 @@ class ReTextWindow(QMainWindow):
 			QFile('out'+defaultext).rename(fileName)
 	
 	def getDocumentTitle(self, baseName=False):
-		try:
-			text = unicode(self.editBoxes[self.ind].toPlainText())
-		except:
-			# For Python 3
-			text = self.editBoxes[self.ind].toPlainText()
+		text = convertToUnicode(self.editBoxes[self.ind].toPlainText())
 		markup = self.markups[self.ind]
 		realTitle = markup.get_document_title(text) if markup else ''
 		if realTitle and not baseName:
@@ -1251,11 +1238,7 @@ class ReTextWindow(QMainWindow):
 	def insertChars(self, chars):
 		tc = self.editBoxes[self.ind].textCursor()
 		if tc.hasSelection():
-			try:
-				selection = unicode(tc.selectedText())
-			except:
-				# For Python 3
-				selection = tc.selectedText()
+			selection = convertToUnicode(tc.selectedText())
 			if selection.startswith(chars) and selection.endswith(chars):
 				if len(selection) > 2*len(chars):
 					selection = selection[len(chars):-len(chars)]
