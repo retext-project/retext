@@ -22,12 +22,13 @@
 
 import sys
 import re
+import documents
 from subprocess import Popen, PIPE
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "3.1.0"
+app_version = "4.0 (Git)"
 
 def readFromSettings(settings, key, keytype):
 	try:
@@ -70,45 +71,29 @@ def writeListToSettings(settings, key, value):
 	else:
 		settings.remove(key)
 
-settings = QSettings('ReText project', 'ReText')
+def convertToUnicode(string):
+	try:
+		return unicode(string)
+	except:
+		# For Python 3
+		return string
 
-try:
-	import markdown
-except:
-	use_md = False
-else:
-	use_md = True
-	exts = []
-	if settings.contains('mdExtensions'):
-		for ext in readListFromSettings(settings, 'mdExtensions'):
-			exts.append(str(ext))
-		try:
-			md = markdown.Markdown(exts, output_format='html4')
-		except ValueError:
-			print('Warning: failed to load extensions!')
-			md = markdown.Markdown(output_format='html4')
-	else:
-		md = markdown.Markdown(output_format='html4')
+settings = QSettings('ReText project', 'ReText')
 
 try:
 	import enchant
 	enchant.Dict()
 except:
-	use_enchant = False
+	enchant_available = False
 else:
-	use_enchant = True
-
-try:
-	from docutils.core import publish_parts
-except:
-	use_docutils = False
-else:
-	use_docutils = True
+	enchant_available = True
 
 icon_path = "icons/"
 
-PARSER_DOCUTILS, PARSER_MARKDOWN, PARSER_NA = range(3)
-DOCTYPE_NONE, DOCTYPE_REST, DOCTYPE_MARKDOWN, DOCTYPE_HTML = range(4)
+DOCTYPE_NONE = ''
+DOCTYPE_MARKDOWN = documents.MarkdownMarkup.name
+DOCTYPE_REST = documents.ReStructuredTextMarkup.name
+DOCTYPE_HTML = 'html'
 
 if QFileInfo("wpgen/wpgen.py").isExecutable():
 	try:
@@ -130,7 +115,7 @@ if settings.contains('editorFontSize'):
 	monofont.setPointSize(readFromSettings(settings, 'editorFontSize', int))
 
 try:
-	from PyQt4.QtWebKit import QWebView, QWebSettings
+	from PyQt4.QtWebKit import QWebView
 except:
 	webkit_available = False
 else:
@@ -175,11 +160,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			for match in re.finditer(pattern[0], text):
 				self.setFormat(match.start(), match.end() - match.start(), charFormat)
 		if self.dictionary:
-			try:
-				text = unicode(text)
-			except:
-				# Not necessary for Python 3
-				pass
+			text = convertToUnicode(text)
 			charFormat = QTextCharFormat()
 			charFormat.setUnderlineColor(Qt.red)
 			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
@@ -239,6 +220,7 @@ class ReTextWindow(QMainWindow):
 		self.editBoxes = []
 		self.previewBoxes = []
 		self.highlighters = []
+		self.markups = []
 		self.fileNames = []
 		self.apc = []
 		self.alpc = []
@@ -309,7 +291,7 @@ class ReTextWindow(QMainWindow):
 		self.actionCut.setEnabled(False)
 		self.connect(qApp.clipboard(), SIGNAL('dataChanged()'), self.clipboardDataChanged)
 		self.clipboardDataChanged()
-		if use_enchant:
+		if enchant_available:
 			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSC)
 			self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
 		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
@@ -337,24 +319,24 @@ class ReTextWindow(QMainWindow):
 		self.actionAboutQt = self.act(self.tr('About Qt'))
 		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
-		self.chooseGroup = QActionGroup(self)
-		self.defaultDocType = DOCTYPE_MARKDOWN
-		self.actionUseMarkdown = self.act('Markdown')
-		self.actionUseMarkdown.setCheckable(True)
-		self.actionUseReST = self.act('ReStructuredText')
-		self.actionUseReST.setCheckable(True)
-		if settings.contains('useReST'):
-			if readFromSettings(settings, 'useReST', bool):
-				if use_docutils:
-					self.defaultDocType = DOCTYPE_REST
-				self.actionUseReST.setChecked(True)
-			else:
-				self.actionUseMarkdown.setChecked(True)
-		else:
-			self.actionUseMarkdown.setChecked(True)
-		self.connect(self.actionUseReST, SIGNAL('toggled(bool)'), self.setDocUtilsDefault)
-		self.chooseGroup.addAction(self.actionUseMarkdown)
-		self.chooseGroup.addAction(self.actionUseReST)
+		availableMarkups = documents.get_available_markups()
+		if not availableMarkups:
+			print('Warning: no markups are available!')
+		self.defaultMarkup = availableMarkups[0] if availableMarkups else None
+		if settings.contains('defaultMarkup'):
+			dm = str(readFromSettings(settings, 'defaultMarkup', str))
+			mc = documents.find_markup_class_by_name(dm)
+			if mc and mc.available():
+				self.defaultMarkup = mc
+		if len(availableMarkups) > 1:
+			self.chooseGroup = QActionGroup(self)
+			markupActions = []
+			for markup in availableMarkups:
+				markupAction = self.act(markup.name, trigbool=self.markupFunction(markup))
+				if markup == self.defaultMarkup:
+					markupAction.setChecked(True)
+				self.chooseGroup.addAction(markupAction)
+				markupActions.append(markupAction)
 		self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.Bold, trig=lambda: self.insertChars('**'))
 		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.Italic, trig=lambda: self.insertChars('*'))
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline, \
@@ -377,17 +359,8 @@ class ReTextWindow(QMainWindow):
 			sheetfile.open(QIODevice.ReadOnly)
 			self.ss = QTextStream(sheetfile).readAll()
 			sheetfile.close()
-			webkitsettings = QWebSettings.globalSettings()
-			webkitsettings.setUserStyleSheetUrl(QUrl.fromLocalFile(ssname))
 		else:
 			self.ss = ''
-		if use_md and 'codehilite' in exts:
-			# Load CSS style for codehilite
-			try:
-				from pygments.formatters import HtmlFormatter
-			except: pass
-			else:
-				self.ss += HtmlFormatter().get_style_defs('.codehilite')
 		self.menubar = QMenuBar(self)
 		self.menubar.setGeometry(QRect(0, 0, 800, 25))
 		self.setMenuBar(self.menubar)
@@ -428,7 +401,7 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addAction(self.actionPaste)
 		self.menuEdit.addSeparator()
 		self.sc = False
-		if use_enchant:
+		if enchant_available:
 			self.menuSC = self.menuEdit.addMenu(self.tr('Spell check'))
 			self.menuSC.addAction(self.actionEnableSC)
 			self.menuSC.addAction(self.actionSetLocale)
@@ -436,10 +409,10 @@ class ReTextWindow(QMainWindow):
 		self.menuEdit.addAction(self.actionPlainText)
 		self.menuEdit.addAction(self.actionChangeFont)
 		self.menuEdit.addSeparator()
-		if use_docutils and use_md:
+		if len(availableMarkups) > 1:
 			self.menuMode = self.menuEdit.addMenu(self.tr('Default editing mode'))
-			self.menuMode.addAction(self.actionUseMarkdown)
-			self.menuMode.addAction(self.actionUseReST)
+			for markupAction in markupActions:
+				self.menuMode.addAction(markupAction)
 		self.menuFormat = self.menuEdit.addMenu(self.tr('Formatting'))
 		self.menuFormat.addAction(self.actionBold)
 		self.menuFormat.addAction(self.actionItalic)
@@ -503,8 +476,7 @@ class ReTextWindow(QMainWindow):
 			self.livePreviewEnabled = readFromSettings(settings, 'previewState', bool)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
-		self.highlighters[0].docType = self.getDocType()
-		if use_enchant:
+		if enchant_available:
 			self.sl = None
 			if settings.contains('spellCheckLocale'):
 				try:
@@ -517,8 +489,6 @@ class ReTextWindow(QMainWindow):
 				if readFromSettings(settings, 'spellCheck', bool):
 					self.actionEnableSC.setChecked(True)
 					self.enableSC(True)
-		if not (use_md or use_docutils):
-			QMessageBox.warning(self, app_name, self.tr('You have neither Markdown nor Docutils modules installed!'))
 	
 	def act(self, name, icon=None, trig=None, trigbool=None, shct=None):
 		if icon:
@@ -556,7 +526,7 @@ class ReTextWindow(QMainWindow):
 		self.previewBlocked = False
 		self.editBoxes.append(QTextEdit())
 		self.highlighters.append(ReTextHighlighter(self.editBoxes[-1].document()))
-		if use_enchant and self.actionEnableSC.isChecked():
+		if enchant_available and self.actionEnableSC.isChecked():
 			self.highlighters[-1].dictionary = \
 			enchant.Dict(self.sl) if self.sl else enchant.Dict()
 			self.highlighters[-1].rehighlight()
@@ -568,6 +538,9 @@ class ReTextWindow(QMainWindow):
 		self.editBoxes[-1].contextMenuEvent = self.editBoxMenuEvent
 		self.previewBoxes[-1].setVisible(False)
 		self.fileNames.append(fileName)
+		markupClass = self.getMarkupClass(fileName)
+		self.markups.append(self.getMarkup(fileName))
+		self.highlighters[-1].docType = (markupClass.name if markupClass else '')
 		liveMode = self.restorePreviewState and self.livePreviewEnabled
 		self.apc.append(liveMode)
 		self.alpc.append(liveMode)
@@ -602,12 +575,7 @@ class ReTextWindow(QMainWindow):
 			return QTextEdit.contextMenuEvent(editBox, event)
 		cursor.select(QTextCursor.WordUnderCursor)
 		editBox.setTextCursor(cursor)
-		word = cursor.selectedText()
-		try:
-			word = unicode(cursor.selectedText())
-		except NameError:
-			# Not needed for Python 3
-			word = cursor.selectedText()
+		word = convertToUnicode(cursor.selectedText())
 		if not word or dictionary.check(word):
 			editBox.setTextCursor(oldcursor)
 			return QTextEdit.contextMenuEvent(editBox, event)
@@ -629,26 +597,39 @@ class ReTextWindow(QMainWindow):
 			del self.editBoxes[ind]
 			del self.previewBoxes[ind]
 			del self.highlighters[ind]
+			del self.markups[ind]
 			del self.fileNames[ind]
 			del self.apc[ind]
 			del self.alpc[ind]
 			del self.aptc[ind]
 			self.tabWidget.removeTab(ind)
 	
-	def getDocType(self):
-		if self.aptc[self.ind]:
-			return DOCTYPE_NONE
-		if self.fileNames[self.ind]:
-			suffix = QFileInfo(self.fileNames[self.ind]).suffix()
-			if suffix in ('md', 'markdown', 'mdown', 'mkd', 'mkdn', 're'):
-				return DOCTYPE_MARKDOWN
-			elif suffix in ('rest', 'rst'):
-				return DOCTYPE_REST
-		return self.defaultDocType
+	def getMarkupClass(self, fileName=None):
+		if fileName is None:
+			fileName = self.fileNames[self.ind]
+		fileName = convertToUnicode(fileName)
+		if self.actionPlainText.isChecked():
+			return
+		if fileName:
+			markupClass = documents.get_markup_for_file_name(
+				fileName, return_class=True)
+			if markupClass:
+				return markupClass
+		return self.defaultMarkup
+	
+	def getMarkup(self, fileName=None):
+		if fileName is None:
+			fileName = self.fileNames[self.ind]
+		fileName = convertToUnicode(fileName)
+		markupClass = self.getMarkupClass(fileName=fileName)
+		if markupClass and markupClass.available():
+			return markupClass(filename=fileName)
 	
 	def docTypeChanged(self):
+		self.markups[self.ind] = self.getMarkup()
 		oldType = self.highlighters[self.ind].docType
-		newType = self.getDocType()
+		markupClass = self.getMarkupClass()
+		newType = markupClass.name if markupClass else ''
 		if oldType != newType:
 			self.updatePreviewBox()
 			self.highlighters[self.ind].docType = newType
@@ -816,13 +797,39 @@ class ReTextWindow(QMainWindow):
 		else:
 			return self.editBoxes[self.ind].find(text)
 	
+	def getHtml(self, includeStyleSheet=True, includeTitle=True,
+	            includeMeta=False, styleForWebKit=False):
+		if self.markups[self.ind] is None:
+			return '<p style="color: red">'\
+			+self.tr('Could not parse file contents, check if you have the necessary module installed!')+'</p>'
+		text = convertToUnicode(self.editBoxes[self.ind].toPlainText())
+		# WpGen directives
+		text = text.replace('%HTMLDIR%', 'html')
+		text = text.replace('%\\', '%')
+		headers = ''
+		if includeStyleSheet:
+			fontline = ''
+			if styleForWebKit:
+				fontsize = (self.font if self.font else QFont()).pointSize()
+				fontline = 'body { font-family: Sans; font-size: %spt }\n' % fontsize
+			headers += '<style type="text/css">\n' + fontline + self.ss + '</style>\n'
+		if includeMeta:
+			headers += '<meta name="generator" content="%s %s">\n' % \
+			(app_name, app_version)
+		fallbackTitle = self.getDocumentTitle() if includeTitle else ''
+		if includeStyleSheet:
+			return self.markups[self.ind].get_whole_html(text,
+				custom_headers=headers, fallback_title=fallbackTitle)
+		else:
+			return self.markups[self.ind].get_whole_html(text,
+				custom_headers=headers, include_stylesheet=False,
+				fallback_title=fallbackTitle)
+	
 	def updatePreviewBox(self):
 		self.previewBlocked = False
 		pb = self.previewBoxes[self.ind]
 		textedit = isinstance(pb, QTextEdit)
-		if self.ss and textedit:
-			pb.document().setDefaultStyleSheet(self.ss)
-		if self.getDocType() == DOCTYPE_NONE:
+		if self.actionPlainText.isChecked():
 			if textedit:
 				pb.setPlainText(self.editBoxes[self.ind].toPlainText())
 			else:
@@ -831,18 +838,23 @@ class ReTextWindow(QMainWindow):
 				pb.setHtml(td.toHtml())
 		else:
 			try:
-				parsedText = self.parseText()
+				html = self.getHtml(styleForWebKit=(not textedit))
 			except Exception as e:
-				self.printError(e)
+				return self.printError(e)
+			if not textedit and '<script ' in html:
+				# Work-around a bug in QtWebKit
+				# by saving the html locally
+				tempFile = QTemporaryFile('retext-XXXXXX.html')
+				tempFile.setAutoRemove(False)
+				tempFile.open(QIODevice.WriteOnly)
+				stream = QTextStream(tempFile)
+				stream << html
+				tempFile.close()
+				self.connect(pb, SIGNAL('loadFinished(bool)'),
+					lambda ok: tempFile.remove())
+				pb.load(QUrl.fromLocalFile(tempFile.fileName()))
 			else:
-				if textedit:
-					pb.setHtml(parsedText)
-				else:
-					size = (self.font if self.font else QFont()).pointSize()
-					pb.setHtml(
-					'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' +\
-					'<html><body style="font-family: Sans; font-size: %spt">\n' % size +\
-					parsedText + '</body></html>\n')
+				pb.setHtml(html)
 		if self.font and textedit:
 			pb.document().setDefaultFont(self.font)
 	
@@ -910,6 +922,9 @@ class ReTextWindow(QMainWindow):
 		for action in self.recentFilesActions:
 			self.menuRecentFiles.addAction(action)
 	
+	def markupFunction(self, markup):
+		return lambda: self.setDefaultMarkup(markup)
+	
 	def openFunction(self, fileName):
 		return lambda: self.openFileWrapper(fileName)
 	
@@ -952,17 +967,17 @@ class ReTextWindow(QMainWindow):
 				self.extensionActions.append((action, mimetype))
 	
 	def updateExtensionsVisibility(self):
-		docType = self.getDocType()
+		markupClass = self.getMarkupClass()
 		for action in self.extensionActions:
-			if docType == DOCTYPE_NONE:
+			if markupClass is None:
 				action[0].setEnabled(False)
 				continue
 			mimetype = action[1]
 			if mimetype == None:
 				enabled = True
-			elif docType == DOCTYPE_MARKDOWN:
+			elif markupClass == documents.MarkdownMarkup:
 				enabled = (mimetype in ("text/x-retext-markdown", "text/x-markdown"))
-			elif docType == DOCTYPE_REST:
+			elif markupClass == documents.ReStructuredTextMarkup:
 				enabled = (mimetype in ("text/x-retext-rst", "text/x-rst"))
 			else:
 				enabled = False
@@ -974,12 +989,7 @@ class ReTextWindow(QMainWindow):
 		extension = {}
 		stream = QTextStream(extFile)
 		while not stream.atEnd():
-			line = stream.readLine()
-			try:
-				line = unicode(line)
-			except:
-				# Not needed for Python 3
-				pass
+			line = convertToUnicode(stream.readLine())
 			if '=' in line:
 				index = line.index('=')
 				extension[line[:index].rstrip()] = line[index+1:].lstrip()
@@ -1044,18 +1054,14 @@ class ReTextWindow(QMainWindow):
 	
 	def saveFileMain(self, dlg):
 		if (not self.fileNames[self.ind]) or dlg:
-			docType = self.getDocType()
-			if docType == DOCTYPE_NONE:
+			markupClass = self.getMarkupClass()
+			if markupClass is None:
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
-			elif docType == DOCTYPE_REST:
-				defaultExt = self.tr("ReStructuredText files")+" (*.rest *.rst *.txt)"
-				ext = ".rst"
 			else:
-				defaultExt = self.tr("Markdown files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.txt)"
-				ext = ".mkd"
-				if settings.contains('defaultExt'):
-					ext = readFromSettings(settings, 'defaultExt', str)
+				defaultExt = self.tr('%s files') % markupClass.name + ' (' \
+					+ str.join(' ', ['*'+ext for ext in markupClass.file_extensions]) + ')'
+				ext = markupClass.default_extension
 			self.fileNames[self.ind] = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 			if self.fileNames[self.ind] and not QFileInfo(self.fileNames[self.ind]).suffix():
 				self.fileNames[self.ind] += ext
@@ -1083,33 +1089,24 @@ class ReTextWindow(QMainWindow):
 		if not QFileInfo(fileName).suffix():
 			fileName += ".html"
 		try:
-			text = self.parseText()
+			htmltext = self.getHtml(includeStyleSheet=False, includeMeta=True)
 		except Exception as e:
 			return self.printError(e)
 		htmlFile = QFile(fileName)
 		htmlFile.open(QIODevice.WriteOnly)
 		html = QTextStream(htmlFile)
-		html << '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n'
-		html << '<html>\n<head>\n'
-		html << '  <meta http-equiv="content-type" content="text/html; charset=utf-8">\n'
-		html << '  <meta name="generator" content="%s %s">\n' % (app_name, app_version)
-		html << '  <title>' + self.getDocumentTitle() + '</title>\n'
-		html << '</head>\n<body>\n'
-		html << text
-		html << '\n</body>\n</html>\n'
+		html << htmltext
 		htmlFile.close()
 	
 	def textDocument(self):
-		plainText = (self.getDocType == DOCTYPE_NONE)
-		if not plainText: text = self.parseText()
 		td = QTextDocument()
 		td.setMetaInformation(QTextDocument.DocumentTitle, self.getDocumentTitle())
 		if self.ss:
 			td.setDefaultStyleSheet(self.ss)
-		if plainText:
+		if self.actionPlainText.isChecked():
 			td.setPlainText(self.editBoxes[self.ind].toPlainText())
 		else:
-			td.setHtml('<html><body>'+text+'</body></html>')
+			td.setHtml(self.getHtml())
 		if self.font:
 			td.setDefaultFont(self.font)
 		return td
@@ -1148,27 +1145,28 @@ class ReTextWindow(QMainWindow):
 		return printer
 	
 	def savePdf(self):
-		document = self.getDocumentForPrint()
-		if document == None:
-			return
-		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to PDF"), "", self.tr("PDF files (*.pdf)"))
+		self.updatePreviewBox()
+		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to PDF"),
+			"", self.tr("PDF files (*.pdf)"))
 		if fileName:
 			if not QFileInfo(fileName).suffix():
 				fileName += ".pdf"
 			printer = self.standardPrinter()
 			printer.setOutputFormat(QPrinter.PdfFormat)
 			printer.setOutputFileName(fileName)
-			document.print_(printer)
+			document = self.getDocumentForPrint()
+			if document != None:
+				document.print_(printer)
 	
 	def printFile(self):
-		document = self.getDocumentForPrint()
-		if document == None:
-			return
+		self.updatePreviewBox()
 		printer = self.standardPrinter()
 		dlg = QPrintDialog(printer, self)
 		dlg.setWindowTitle(self.tr("Print document"))
 		if (dlg.exec_() == QDialog.Accepted):
-			document.print_(printer)
+			document = self.getDocumentForPrint()
+			if document != None:
+				document.print_(printer)
 	
 	def printPreview(self):
 		document = self.getDocumentForPrint()
@@ -1194,8 +1192,7 @@ class ReTextWindow(QMainWindow):
 			tmpname = '.retext-temp.html'
 			self.saveHtml(tmpname)
 		else:
-			if self.getDocType() == DOCTYPE_REST: tmpname = '.retext-temp.rst'
-			else: tmpname = '.retext-temp.mkd'
+			tmpname = '.retext-temp' + self.getMarkupClass().default_extension
 			self.saveFileCore(tmpname)
 		command = command.replace('%of', 'out'+defaultext)
 		command = command.replace('%html' if html else '%if', tmpname)
@@ -1215,23 +1212,9 @@ class ReTextWindow(QMainWindow):
 			QFile('out'+defaultext).rename(fileName)
 	
 	def getDocumentTitle(self, baseName=False):
-		"""Ensure that parseText() is called before this function!
-		If 'baseName' is set to True, file basename will be used."""
-		realTitle = ''
-		try:
-			text = unicode(self.editBoxes[self.ind].toPlainText())
-		except:
-			# For Python 3
-			text = self.editBoxes[self.ind].toPlainText()
-		docType = self.getDocType()
-		if docType == DOCTYPE_REST:
-			realTitle = publish_parts(text, writer_name='html')['title']
-		elif docType == DOCTYPE_MARKDOWN:
-			try:
-				realTitle = str.join(' ', md.Meta['title'])
-			except:
-				# Meta extension not installed
-				pass
+		text = convertToUnicode(self.editBoxes[self.ind].toPlainText())
+		markup = self.markups[self.ind]
+		realTitle = markup.get_document_title(text) if markup else ''
 		if realTitle and not baseName:
 			return realTitle
 		elif self.fileNames[self.ind]:
@@ -1256,11 +1239,7 @@ class ReTextWindow(QMainWindow):
 	def insertChars(self, chars):
 		tc = self.editBoxes[self.ind].textCursor()
 		if tc.hasSelection():
-			try:
-				selection = unicode(tc.selectedText())
-			except:
-				# For Python 3
-				selection = tc.selectedText()
+			selection = convertToUnicode(tc.selectedText())
 			if selection.startswith(chars) and selection.endswith(chars):
 				if len(selection) > 2*len(chars):
 					selection = selection[len(chars):-len(chars)]
@@ -1313,17 +1292,16 @@ class ReTextWindow(QMainWindow):
 	def viewHtml(self):
 		HtmlDlg = HtmlDialog(self)
 		try:
-			HtmlDlg.textEdit.setPlainText(self.parseText())
+			htmltext = self.getHtml(includeStyleSheet=False, includeTitle=False)
 		except Exception as e:
 			return self.printError(e)
-		winTitle = self.tr('New document')
-		if self.fileNames[self.ind]:
-			winTitle = QFileInfo(self.fileNames[self.ind]).fileName()
+		winTitle = self.getDocumentTitle(baseName=True)
 		try:
 			HtmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") "+QChar(0x2014)+" "+app_name)
 		except:
 			# For Python 3
 			HtmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") \u2014 "+app_name)
+		HtmlDlg.textEdit.setPlainText(htmltext)
 		HtmlDlg.show()
 		HtmlDlg.raise_()
 		HtmlDlg.activateWindow()
@@ -1347,43 +1325,13 @@ class ReTextWindow(QMainWindow):
 		self.updatePreviewBox()
 		self.docTypeChanged()
 	
-	def setDocUtilsDefault(self, yes):
-		self.defaultDocType = DOCTYPE_REST if yes else DOCTYPE_MARKDOWN
-		if yes:
-			settings.setValue('useReST', True)
-		else:
-			settings.remove('useReST')
+	def setDefaultMarkup(self, markup):
+		self.defaultMarkup = markup
+		settings.setValue('defaultMarkup', markup.name)
 		oldind = self.ind
 		for self.ind in range(len(self.previewBoxes)):
 			self.docTypeChanged()
 		self.ind = oldind
-	
-	def getParser(self):
-		docType = self.getDocType()
-		if docType == DOCTYPE_MARKDOWN:
-			return PARSER_MARKDOWN if use_md else PARSER_NA
-		if docType == DOCTYPE_REST:
-			return PARSER_DOCUTILS if use_docutils else PARSER_NA
-		return PARSER_NA
-	
-	def parseText(self):
-		try:
-			text = unicode(self.editBoxes[self.ind].toPlainText())
-		except:
-			# For Python 3
-			text = self.editBoxes[self.ind].toPlainText()
-		# WpGen directives
-		text = text.replace('%HTMLDIR%', 'html')
-		text = text.replace('%\\', '%')
-		parser = self.getParser()
-		if parser == PARSER_DOCUTILS:
-			return publish_parts(text, writer_name='html')['body']
-		elif parser == PARSER_MARKDOWN:
-			md.reset()
-			return md.convert(text)
-		else:
-			return '<p style="color: red">'\
-			+self.tr('Could not parse file contents, check if you have the necessary module installed!')+'</p>'
 
 def main(fileNames):
 	app = QApplication(sys.argv)
