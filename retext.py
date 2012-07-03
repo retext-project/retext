@@ -131,15 +131,15 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			('&[^; ]*;', Qt.darkCyan, QFont.Bold),             # 1: HTML symbols
 			('"[^"<]*"(?=[^<]*>)', Qt.darkYellow, QFont.Bold), # 2: Quoted strings inside tags
 			('<!--[^<>]*-->', Qt.gray, QFont.Normal),          # 3: HTML comments
-			('(?<!\\*)\\*[^ \\*][^\\*]*\\*', None, QFont.Normal, True), # 4: *Italics*
-			('(?<!_|\\w)_[^_]+_(?!\\w)', None, QFont.Normal, True),     # 5: _Italics_
-			('(?<!\\*)\\*\\*((?!\\*\\*).)*\\*\\*', None, QFont.Bold), # 6: **Bold**
-			('(?<!_|\\w)__[^_]+__(?!\\w)', None, QFont.Bold),         # 7: __Bold__
-			('\\*{3,3}[^\\*]+\\*{3,3}', None, QFont.Bold, True), # 8: ***BoldItalics***
+			(r'(?<!\*)\*[^ \*][^\*]*\*', None, QFont.Normal, True), # 4: *Italics*
+			(r'(?<!_|\w)_[^_]+_(?!\w)', None, QFont.Normal, True),  # 5: _Italics_
+			(r'(?<!\*)\*\*((?!\*\*).)*\*\*', None, QFont.Bold), # 6: **Bold**
+			(r'(?<!_|\w)__[^_]+__(?!\w)', None, QFont.Bold),   # 7: __Bold__
+			(r'\*{3,3}[^\*]+\*{3,3}', None, QFont.Bold, True), # 8: ***BoldItalics***
 			('___[^_]+___', None, QFont.Bold, True),           # 9: ___BoldItalics___
 			('^#.+', None, QFont.Black),                       # 10: Headers
-			('(?<=\\[)[^\\[\\]]*(?=\\])', Qt.blue, QFont.Normal), # 11: Links and images
-			('(?<=\\]\\()[^\\(\\)]*(?=\\))', None, QFont.Normal, True, True) # 12: Link references
+			(r'(?<=\[)[^\[\]]*(?=\])', Qt.blue, QFont.Normal), # 11: Links and images
+			(r'(?<=\]\()[^\(\)]*(?=\))', None, QFont.Normal, True, True) # 12: Link references
 		)
 		patternsDict = {
 			DOCTYPE_NONE: (),
