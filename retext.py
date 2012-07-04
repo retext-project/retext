@@ -243,11 +243,11 @@ class ReTextWindow(QMainWindow):
 		self.actionSave = self.act(self.tr('Save'), icon='document-save', shct=QKeySequence.Save, trig=self.saveFile)
 		self.actionSave.setEnabled(False)
 		self.actionSave.setPriority(QAction.LowPriority)
-		self.actionSaveAs = self.act(self.tr('Save as'), icon='document-save-as', shct=QKeySequence.SaveAs, \
+		self.actionSaveAs = self.act(self.tr('Save as'), icon='document-save-as', shct=QKeySequence.SaveAs,
 		trig=self.saveFileAs)
 		self.actionPrint = self.act(self.tr('Print'), icon='document-print', shct=QKeySequence.Print, trig=self.printFile)
 		self.actionPrint.setPriority(QAction.LowPriority)
-		self.actionPrintPreview = self.act(self.tr('Print preview'), icon='document-print-preview', \
+		self.actionPrintPreview = self.act(self.tr('Print preview'), icon='document-print-preview',
 		trig=self.printPreview)
 		self.actionViewHtml = self.act(self.tr('View HTML code'), icon='text-html', trig=self.viewHtml)
 		self.actionChangeFont = self.act(self.tr('Change default font'), trig=self.changeFont)
@@ -264,9 +264,9 @@ class ReTextWindow(QMainWindow):
 			self.actionPreview.setIcon(QIcon.fromTheme('x-office-document'))
 		else:
 			self.actionPreview.setIcon(QIcon(icon_path+'document-preview.png'))
-		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.CTRL+Qt.Key_L, \
+		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.CTRL+Qt.Key_L,
 		trigbool=self.enableLivePreview)
-		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), icon='view-fullscreen', shct=Qt.Key_F11, \
+		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), icon='view-fullscreen', shct=Qt.Key_F11,
 		trigbool=self.enableFullScreen)
 		self.actionPerfectHtml = self.act('HTML', icon='text-html', trig=self.saveFilePerfect)
 		self.actionPdf = self.act('PDF', icon='application-pdf', trig=self.savePdf)
@@ -275,15 +275,15 @@ class ReTextWindow(QMainWindow):
 		self.actionQuit = self.act(self.tr('Quit'), icon='application-exit', shct=QKeySequence.Quit)
 		self.actionQuit.setMenuRole(QAction.QuitRole)
 		self.connect(self.actionQuit, SIGNAL('triggered()'), self.close)
-		self.actionUndo = self.act(self.tr('Undo'), icon='edit-undo', shct=QKeySequence.Undo, \
+		self.actionUndo = self.act(self.tr('Undo'), icon='edit-undo', shct=QKeySequence.Undo,
 		trig=lambda: self.editBoxes[self.ind].undo())
-		self.actionRedo = self.act(self.tr('Redo'), icon='edit-redo', shct=QKeySequence.Redo, \
+		self.actionRedo = self.act(self.tr('Redo'), icon='edit-redo', shct=QKeySequence.Redo,
 		trig=lambda: self.editBoxes[self.ind].redo())
-		self.actionCopy = self.act(self.tr('Copy'), icon='edit-copy', shct=QKeySequence.Copy, \
+		self.actionCopy = self.act(self.tr('Copy'), icon='edit-copy', shct=QKeySequence.Copy,
 		trig=lambda: self.editBoxes[self.ind].copy())
-		self.actionCut = self.act(self.tr('Cut'), icon='edit-cut', shct=QKeySequence.Cut, \
+		self.actionCut = self.act(self.tr('Cut'), icon='edit-cut', shct=QKeySequence.Cut,
 		trig=lambda: self.editBoxes[self.ind].cut())
-		self.actionPaste = self.act(self.tr('Paste'), icon='edit-paste', shct=QKeySequence.Paste, \
+		self.actionPaste = self.act(self.tr('Paste'), icon='edit-paste', shct=QKeySequence.Paste,
 		trig=lambda: self.editBoxes[self.ind].paste())
 		self.actionUndo.setEnabled(False)
 		self.actionRedo.setEnabled(False)
@@ -306,7 +306,7 @@ class ReTextWindow(QMainWindow):
 			self.actionWpgen = self.act(self.tr('Generate webpages'), trig=self.startWpgen)
 		self.actionShow = self.act(self.tr('Show'), icon='system-file-manager', trig=self.showInDir)
 		self.actionFind = self.act(self.tr('Next'), icon='go-next', shct=QKeySequence.FindNext, trig=self.find)
-		self.actionFindPrev = self.act(self.tr('Previous'), icon='go-previous', shct=QKeySequence.FindPrevious, \
+		self.actionFindPrev = self.act(self.tr('Previous'), icon='go-previous', shct=QKeySequence.FindPrevious,
 		trig=lambda: self.find(back=True))
 		self.actionHelp = self.act(self.tr('Get help online'), icon='help-contents', trig=self.openHelp)
 		try:
@@ -339,11 +339,11 @@ class ReTextWindow(QMainWindow):
 				markupActions.append(markupAction)
 		self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.Bold, trig=lambda: self.insertChars('**'))
 		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.Italic, trig=lambda: self.insertChars('*'))
-		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline, \
+		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
 		trig=lambda: self.insertTag(9)) # <u>...</u>
 		self.usefulTags = ('big', 'center', 's', 'small', 'span', 'table', 'td', 'tr', 'u')
-		self.usefulChars = ('deg', 'divide', 'hellip', 'laquo', 'larr', \
-			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo', \
+		self.usefulChars = ('deg', 'divide', 'hellip', 'laquo', 'larr',
+			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
 			'rarr', 'rsquo', 'times')
 		self.tagsBox = QComboBox(self.editBar)
 		self.tagsBox.addItem(self.tr('Tags'))
@@ -870,7 +870,7 @@ class ReTextWindow(QMainWindow):
 			if not (QDir("html").exists() and QFile.exists("template.html")):
 				Popen((wpgen, 'init')).wait()
 			Popen([wpgen, 'updateall']).wait()
-			msgBox = QMessageBox(QMessageBox.Information, app_name, \
+			msgBox = QMessageBox(QMessageBox.Information, app_name,
 			self.tr("Webpages saved in <code>html</code> directory."), QMessageBox.Ok)
 			showButton = msgBox.addButton(self.tr("Show directory"), QMessageBox.AcceptRole)
 			msgBox.exec_()
@@ -997,7 +997,7 @@ class ReTextWindow(QMainWindow):
 		return extension
 	
 	def openFile(self):
-		fileNames = QFileDialog.getOpenFileNames(self, self.tr("Select one or several files to open"), "", \
+		fileNames = QFileDialog.getOpenFileNames(self, self.tr("Select one or several files to open"), "",
 		self.tr("Supported files")+" (*.re *.md *.markdown *.mdown *.mkd *.mkdn *.rst *.rest *.txt);;"+self.tr("All files (*)"))
 		for fileName in fileNames:
 			self.openFileWrapper(fileName)
@@ -1270,8 +1270,9 @@ class ReTextWindow(QMainWindow):
 		if not self.editBoxes[ind].document().isModified():
 			return True
 		self.tabWidget.setCurrentIndex(ind)
-		ret = QMessageBox.warning(self, app_name, self.tr("The document has been modified.\nDo you want to save your changes?"), \
-		QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel)
+		ret = QMessageBox.warning(self, app_name,
+			self.tr("The document has been modified.\nDo you want to save your changes?"),
+			QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel)
 		if ret == QMessageBox.Save:
 			return self.saveFileMain(False)
 		elif ret == QMessageBox.Cancel:
@@ -1310,12 +1311,12 @@ class ReTextWindow(QMainWindow):
 		QDesktopServices.openUrl(QUrl('http://sourceforge.net/p/retext/home/Help and Support'))
 	
 	def aboutDialog(self):
-		QMessageBox.about(self, self.aboutWindowTitle, \
-		'<p><b>'+app_name+' '+app_version+'</b><br>'+self.tr('Simple but powerful editor for Markdown and ReStructuredText') \
-		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011') \
-		+'<br><a href="http://sourceforge.net/p/retext/">'+self.tr('Website') \
-		+'</a> | <a href="http://daringfireball.net/projects/markdown/syntax">'+self.tr('Markdown syntax') \
-		+'</a> | <a href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">' \
+		QMessageBox.about(self, self.aboutWindowTitle,
+		'<p><b>'+app_name+' '+app_version+'</b><br>'+self.tr('Simple but powerful editor for Markdown and ReStructuredText')
+		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011')
+		+'<br><a href="http://sourceforge.net/p/retext/">'+self.tr('Website')
+		+'</a> | <a href="http://daringfireball.net/projects/markdown/syntax">'+self.tr('Markdown syntax')
+		+'</a> | <a href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">'
 		+self.tr('ReST syntax')+'</a></p>')
 	
 	def enablePlainText(self, value):
