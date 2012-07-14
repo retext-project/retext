@@ -829,6 +829,12 @@ class ReTextWindow(QMainWindow):
 		self.previewBlocked = False
 		pb = self.previewBoxes[self.ind]
 		textedit = isinstance(pb, QTextEdit)
+		if textedit:
+			scrollbar = pb.verticalScrollBar()
+			scrollpos = scrollbar.value()
+		else:
+			frame = pb.page().mainFrame()
+			scrollpos = frame.scrollPosition()
 		if self.actionPlainText.isChecked():
 			if textedit:
 				pb.setPlainText(self.editBoxes[self.ind].toPlainText())
@@ -857,6 +863,10 @@ class ReTextWindow(QMainWindow):
 				pb.setHtml(html)
 		if self.font and textedit:
 			pb.document().setDefaultFont(self.font)
+		if textedit:
+			scrollbar.setValue(scrollpos)
+		else:
+			frame.setScrollPosition(scrollpos)
 	
 	def updateLivePreviewBox(self):
 		if self.actionLivePreview.isChecked() and self.previewBlocked == False:
