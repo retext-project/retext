@@ -213,6 +213,10 @@ class ReTextWindow(QMainWindow):
 				self.font.setPointSize(readFromSettings(settings, 'fontSize', int))
 		else:
 			self.font = None
+		if settings.contains('tabWidth'):
+			self.tabWidth = readFromSettings(settings, 'tabWidth', int)
+		else:
+			self.tabWidth = 4
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
 		else:
@@ -546,6 +550,8 @@ class ReTextWindow(QMainWindow):
 		self.alpc.append(liveMode)
 		self.aptc.append(False)
 		self.editBoxes[-1].setFont(monofont)
+		metrics = QFontMetrics(self.editBoxes[-1].font())
+		self.editBoxes[-1].setTabStopWidth(self.tabWidth*metrics.width(' '))
 		self.editBoxes[-1].setAcceptRichText(False)
 		self.connect(self.editBoxes[-1], SIGNAL('textChanged()'), self.updateLivePreviewBox)
 		self.connect(self.editBoxes[-1], SIGNAL('undoAvailable(bool)'), self.actionUndo, SLOT('setEnabled(bool)'))
