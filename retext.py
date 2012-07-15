@@ -217,6 +217,10 @@ class ReTextWindow(QMainWindow):
 			self.tabWidth = readFromSettings(settings, 'tabWidth', int)
 		else:
 			self.tabWidth = 4
+		if settings.contains('tabInsertsSpaces'):
+			self.tabInsertsSpaces = readFromSettings(settings, 'tabInsertsSpaces', bool)
+		else:
+			self.tabInsertsSpaces = False
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
 		else:
@@ -540,6 +544,8 @@ class ReTextWindow(QMainWindow):
 			self.previewBoxes.append(QTextEdit())
 			self.previewBoxes[-1].setReadOnly(True)
 		self.editBoxes[-1].contextMenuEvent = self.editBoxMenuEvent
+		if self.tabInsertsSpaces:
+			self.editBoxes[-1].keyPressEvent = self.editBoxKeyPressEvent
 		self.previewBoxes[-1].setVisible(False)
 		self.fileNames.append(fileName)
 		markupClass = self.getMarkupClass(fileName)
@@ -595,6 +601,49 @@ class ReTextWindow(QMainWindow):
 	
 	def fixWord(self, correctword):
 		return lambda: self.editBoxes[self.ind].insertPlainText(correctword)
+	
+	def editBoxKeyPressEvent(self, event):
+		key = event.key()
+		if key == Qt.Key_Tab:
+			self.editBoxIndentMore(self.editBoxes[self.ind])
+		elif key == Qt.Key_Backtab:
+			self.editBoxIndentLess(self.editBoxes[self.ind])
+		else:
+			QTextEdit.keyPressEvent(self.editBoxes[self.ind], event)
+	
+	def editBoxIndentMore(self, editBox):
+		cursor = editBox.textCursor()
+		if cursor.hasSelection():
+			block = editBox.document().findBlock(cursor.selectionStart())
+			end = editBox.document().findBlock(cursor.selectionEnd()).next()
+			cursor.beginEditBlock()
+			while block != end:
+				cursor.setPosition(block.position())
+				cursor.insertText(' ' * self.tabWidth)
+				block = block.next()
+			cursor.endEditBlock()
+		else:
+			indent = self.tabWidth - (cursor.positionInBlock() % self.tabWidth)
+			cursor.insertText(' ' * indent)
+	
+	def editBoxIndentLess(self, editBox):
+		cursor = editBox.textCursor()
+		if cursor.hasSelection():
+			block = editBox.document().findBlock(cursor.selectionStart())
+			end = editBox.document().findBlock(cursor.selectionEnd()).next()
+		else:
+			block = editBox.document().findBlock(cursor.position())
+			end = block.next()
+		cursor.beginEditBlock()
+		while block != end:
+			cursor.setPosition(block.position())
+			pos = 0
+			while editBox.document().characterAt(cursor.position()) == ' ' \
+			and pos < self.tabWidth:
+				pos += 1
+				cursor.deleteChar()
+			block = block.next()
+		cursor.endEditBlock()
 	
 	def closeTab(self, ind):
 		if self.maybeSave(ind):
