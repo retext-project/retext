@@ -22,114 +22,20 @@
 import os
 import sys
 import shutil
-
-try:
-	import markdown
-except:
-	use_md = False
-else:
-	use_md = True
-
-try:
-	from docutils.core import publish_parts
-except:
-	use_docutils = False
-else:
-	use_docutils = True
+from documents.web import WebLibrary
 
 app_name = "ReText Webpages generator"
-app_version = "0.5.4"
-app_site = "http://sourceforge.net/p/retext/"
+app_version = "0.6 (Git)"
+app_data = (
+	app_name,
+	app_version,
+	"http://sourceforge.net/p/retext/"
+)
 
 if os.path.exists("/usr/share/wpgen/"):
 	templates_dir = "/usr/share/wpgen/"
 else:
 	templates_dir = "templates/"
-
-class WebLibrary(object):
-	def __init__(self, directoryPath="."):
-		"""Construct a new WebLibrary object"""
-		self.dirPath = directoryPath
-	
-	def updateAll(self):
-		"""Process all documents in the directory"""
-		self._initTemplate()
-		self._initExtensions()
-		for fname in filter(os.path.isfile, os.listdir(self.dirPath)):
-			self._processPage(fname)
-	
-	def update(self, fileName):
-		"""Process fileName file in the directory"""
-		self._initTemplate()
-		self._initExtensions()
-		if os.path.exists(self.dirPath+"/"+fileName):
-			self._processPage(fileName)
-	
-	def _initExtensions(self):
-		self.extensions = []
-		extspath = self.dirPath+"/markdown-extensions.txt"
-		if os.path.exists(extspath):
-			extsfile = open(extspath)
-			self.extensions = [ext.rstrip() for ext in extsfile]
-			extsfile.close()
-	
-	def _initTemplate(self):
-		templatefile = open(self.dirPath+"/template.html", "r")
-		try:
-			self.template = unicode(templatefile.read(), 'utf-8')
-		except:
-			# For Python 3
-			self.template = templatefile.read()
-		templatefile.close()
-		self.template = self.template.replace("%GENERATOR%", app_name + " " + app_version)
-		self.template = self.template.replace("%APPINFO%", "<a href=\""+ app_site + "\">" + app_name + "</a>")
-	
-	def _processPage(self, fname):
-		bn, ext = os.path.splitext(fname)
-		html = pagename = ''
-		md = markdown.Markdown(self.extensions, output_format='html4')
-		inputfile = open(self.dirPath+"/"+fname, "r")
-		try:
-			text = unicode(inputfile.read(), 'utf-8')
-		except:
-			# For Python 3
-			text = inputfile.read()
-		inputfile.close()
-		if ext in (".md", ".mkd", ".re") and use_md:
-			html = md.convert(text)
-			try:
-				pagename = str.join(' ', md.Meta['title'])
-			except:
-				pass
-		elif ext in (".rst", ".rest") and use_docutils:
-			parts = publish_parts(text, writer_name='html')
-			html = parts['body']
-			if parts['title']:
-				pagename = parts['title']
-		elif ext in (".htm", ".html") and bn != "template":
-			html = text
-		if pagename == '':
-			pagename = bn
-		if html or bn == "index":
-			content = self.template
-			content = content.replace("%CONTENT%", html)
-			try:
-				pagename = unicode(pagename, 'utf-8')
-				bn = unicode(bn, 'utf-8')
-			except:
-				# Not needed for Python 3
-				pass
-			content = content.replace("%PAGENAME%", pagename)
-			content = content.replace("%HTMLDIR%", ".")
-			content = content.replace(" href=\""+bn+".html\"", "")
-			content = content.replace("%\\", "%")
-			outputfile = open(self.dirPath+"/html/"+bn+".html", "w")
-			try:
-				outputfile.write(content.encode('utf-8'))
-			except:
-				# For Python 3
-				outputfile.write(content)
-			outputfile.close()
 
 def main(argv):
 	if len(argv) > 1:
@@ -137,12 +43,18 @@ def main(argv):
 			print("Could not find html directory!")
 			return
 		if argv[1] == "updateall":
-			wl = WebLibrary()
-			wl.updateAll()
+			wl = WebLibrary(app_data=app_data)
+			try:
+				wl.update_all()
+			except IOError as e:
+				print(e)
 		elif argv[1] == "update" and len(argv) > 2:
-			wl = WebLibrary()
+			wl = WebLibrary(app_data=app_data)
 			for i in argv[2:]:
-				wl.update(i)
+				try:
+					wl.update(i)
+				except IOError as e:
+					print(e)
 		elif argv[1] == "init":
 			if not os.path.exists("html"):
 				os.mkdir("html")
