@@ -865,8 +865,10 @@ class ReTextWindow(QMainWindow):
 		if includeStyleSheet:
 			fontline = ''
 			if styleForWebKit:
+				fontname = self.font.family() if self.font else 'Sans'
 				fontsize = (self.font if self.font else QFont()).pointSize()
-				fontline = 'body { font-family: Sans; font-size: %spt }\n' % fontsize
+				fontline = 'body { font-family: %s; font-size: %spt }\n' % \
+					(fontname, fontsize)
 			headers += '<style type="text/css">\n' + fontline + self.ss + '</style>\n'
 		if includeMeta:
 			headers += '<meta name="generator" content="%s %s">\n' % \
