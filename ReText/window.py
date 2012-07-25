@@ -1,4 +1,5 @@
 from ReText import *
+from ReText.webpages import wpInit, wpUpdateAll
 from ReText.htmldialog import HtmlDialog
 from ReText.highlighter import ReTextHighlighter
 
@@ -745,18 +746,15 @@ class ReTextWindow(QMainWindow):
 	def startWpgen(self):
 		if self.fileNames[self.ind] == "":
 			QMessageBox.warning(self, app_name, self.tr("Please, save the file somewhere."))
-		elif wpgen:
-			if not (QDir("html").exists() and QFile.exists("template.html")):
-				Popen((wpgen, 'init')).wait()
-			Popen([wpgen, 'updateall']).wait()
-			msgBox = QMessageBox(QMessageBox.Information, app_name,
-			self.tr("Webpages saved in <code>html</code> directory."), QMessageBox.Ok)
-			showButton = msgBox.addButton(self.tr("Show directory"), QMessageBox.AcceptRole)
-			msgBox.exec_()
-			if msgBox.clickedButton() == showButton:
-				QDesktopServices.openUrl(QUrl.fromLocalFile(QDir('html').absolutePath()))
-		else:
-			QMessageBox.error(self, app_name, self.tr("Webpages generator is not installed!"))
+		if not (QDir("html").exists() and QFile.exists("template.html")):
+			wpInit()
+		wpUpdateAll()
+		msgBox = QMessageBox(QMessageBox.Information, app_name,
+		self.tr("Webpages saved in <code>html</code> directory."), QMessageBox.Ok)
+		showButton = msgBox.addButton(self.tr("Show directory"), QMessageBox.AcceptRole)
+		msgBox.exec_()
+		if msgBox.clickedButton() == showButton:
+			QDesktopServices.openUrl(QUrl.fromLocalFile(QDir('html').absolutePath()))
 	
 	def showInDir(self):
 		if self.fileNames[self.ind]:

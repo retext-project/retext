@@ -23,17 +23,6 @@ DOCTYPE_MARKDOWN = markups.MarkdownMarkup.name
 DOCTYPE_REST = markups.ReStructuredTextMarkup.name
 DOCTYPE_HTML = 'html'
 
-if QFileInfo("wpgen/wpgen.py").isExecutable():
-	try:
-		wpgen = unicode(QFileInfo("wpgen/wpgen.py").canonicalFilePath(), 'utf-8')
-	except:
-		# For Python 3
-		wpgen = QFileInfo("wpgen/wpgen.py").canonicalFilePath()
-elif QFileInfo("/usr/bin/wpgen").isExecutable():
-	wpgen = "/usr/bin/wpgen"
-else:
-	wpgen = None
-
 monofont = QFont()
 if settings.contains('editorFont'):
 	monofont.setFamily(readFromSettings(settings, 'editorFont', str))

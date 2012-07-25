@@ -19,23 +19,9 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-import os
+import os.path
 import sys
-import shutil
-from markups.web import WebLibrary
-
-app_name = "ReText Webpages generator"
-app_version = "0.6 (Git)"
-app_data = (
-	app_name,
-	app_version,
-	"http://sourceforge.net/p/retext/"
-)
-
-if os.path.exists("/usr/share/wpgen/"):
-	templates_dir = "/usr/share/wpgen/"
-else:
-	templates_dir = "templates/"
+from ReText.webpages import *
 
 def main(argv):
 	if len(argv) > 1:
@@ -43,28 +29,13 @@ def main(argv):
 			print("Could not find html directory!")
 			return
 		if argv[1] == "updateall":
-			wl = WebLibrary(app_data=app_data)
-			try:
-				wl.update_all()
-			except IOError as e:
-				print(e)
+			wpUpdateAll()
 		elif argv[1] == "update" and len(argv) > 2:
-			wl = WebLibrary(app_data=app_data)
-			for i in argv[2:]:
-				try:
-					wl.update(i)
-				except IOError as e:
-					print(e)
+			wpUpdate(argv[2:])
 		elif argv[1] == "init":
-			if not os.path.exists("html"):
-				os.mkdir("html")
-			shutil.copy(templates_dir+"template_Default.html", "template.html")
-			shutil.copy(templates_dir+"style_Default.css", "html/style.css")
+			wpInit()
 		elif argv[1] == "usestyle" and len(argv) == 3:
-			if os.path.exists(templates_dir+"style_"+argv[2]+".css"):
-				shutil.copy(templates_dir+"style_"+argv[2]+".css", "html/style.css")
-			else:
-				print('Error: no such file!')
+			wpUseStyle(argv[2])
 		else:
 			printUsage()
 	else:
