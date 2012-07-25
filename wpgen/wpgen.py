@@ -22,7 +22,7 @@
 import os
 import sys
 import shutil
-from documents.web import WebLibrary
+from markups.web import WebLibrary
 
 app_name = "ReText Webpages generator"
 app_version = "0.6 (Git)"

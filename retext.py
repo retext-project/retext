@@ -22,7 +22,7 @@
 
 import sys
 import re
-import documents
+import markups
 from subprocess import Popen, PIPE
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -91,8 +91,8 @@ else:
 icon_path = "icons/"
 
 DOCTYPE_NONE = ''
-DOCTYPE_MARKDOWN = documents.MarkdownMarkup.name
-DOCTYPE_REST = documents.ReStructuredTextMarkup.name
+DOCTYPE_MARKDOWN = markups.MarkdownMarkup.name
+DOCTYPE_REST = markups.ReStructuredTextMarkup.name
 DOCTYPE_HTML = 'html'
 
 if QFileInfo("wpgen/wpgen.py").isExecutable():
@@ -327,13 +327,13 @@ class ReTextWindow(QMainWindow):
 		self.actionAboutQt = self.act(self.tr('About Qt'))
 		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
 		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
-		availableMarkups = documents.get_available_markups()
+		availableMarkups = markups.get_available_markups()
 		if not availableMarkups:
 			print('Warning: no markups are available!')
 		self.defaultMarkup = availableMarkups[0] if availableMarkups else None
 		if settings.contains('defaultMarkup'):
 			dm = str(readFromSettings(settings, 'defaultMarkup', str))
-			mc = documents.find_markup_class_by_name(dm)
+			mc = markups.find_markup_class_by_name(dm)
 			if mc and mc.available():
 				self.defaultMarkup = mc
 		if len(availableMarkups) > 1:
@@ -666,7 +666,7 @@ class ReTextWindow(QMainWindow):
 		if self.actionPlainText.isChecked():
 			return
 		if fileName:
-			markupClass = documents.get_markup_for_file_name(
+			markupClass = markups.get_markup_for_file_name(
 				fileName, return_class=True)
 			if markupClass:
 				return markupClass
@@ -1042,9 +1042,9 @@ class ReTextWindow(QMainWindow):
 			mimetype = action[1]
 			if mimetype == None:
 				enabled = True
-			elif markupClass == documents.MarkdownMarkup:
+			elif markupClass == markups.MarkdownMarkup:
 				enabled = (mimetype in ("text/x-retext-markdown", "text/x-markdown"))
-			elif markupClass == documents.ReStructuredTextMarkup:
+			elif markupClass == markups.ReStructuredTextMarkup:
 				enabled = (mimetype in ("text/x-retext-rst", "text/x-rst"))
 			else:
 				enabled = False
@@ -1065,7 +1065,7 @@ class ReTextWindow(QMainWindow):
 	
 	def openFile(self):
 		supportedExtensions = ['.txt']
-		for markup in documents.known_markups:
+		for markup in markups.known_markups:
 			supportedExtensions = supportedExtensions + list(markup.file_extensions)
 		fileFilter = ' (' + str.join(' ', ['*'+ext for ext in supportedExtensions]) + ');;'
 		fileNames = QFileDialog.getOpenFileNames(self, self.tr("Select one or several files to open"), "",
