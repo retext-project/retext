@@ -123,8 +123,7 @@ class ReTextWindow(QMainWindow):
 				if readFromSettings(settings, 'useWebKit', bool):
 					self.useWebKit = True
 					self.actionWebKit.setChecked(True)
-		if wpgen:
-			self.actionWpgen = self.act(self.tr('Generate webpages'), trig=self.startWpgen)
+		self.actionWpgen = self.act(self.tr('Generate webpages'), trig=self.startWpgen)
 		self.actionShow = self.act(self.tr('Show'), icon='system-file-manager', trig=self.showInDir)
 		self.actionFind = self.act(self.tr('Next'), icon='go-next', shct=QKeySequence.FindNext, trig=self.find)
 		self.actionFindPrev = self.act(self.tr('Previous'), icon='go-previous', shct=QKeySequence.FindPrevious,
@@ -195,8 +194,7 @@ class ReTextWindow(QMainWindow):
 		self.menuFile.addMenu(self.menuRecentFiles)
 		self.menuDir = self.menuFile.addMenu(self.tr('Directory'))
 		self.menuDir.addAction(self.actionShow)
-		if wpgen:
-			self.menuDir.addAction(self.actionWpgen)
+		self.menuDir.addAction(self.actionWpgen)
 		self.menuFile.addSeparator()
 		self.menuFile.addAction(self.actionSave)
 		self.menuFile.addAction(self.actionSaveAs)
