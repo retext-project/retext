@@ -1,9 +1,9 @@
 import os
 import shutil
 from markups.web import WebLibrary
+from ReText import app_version
 
 app_name = "ReText Webpages generator"
-app_version = "0.6 (Git)"
 app_data = (
 	app_name,
 	app_version,
