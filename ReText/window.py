@@ -1202,7 +1202,6 @@ class ReTextWindow(QMainWindow):
 		self.aptc[self.ind] = value
 		self.actionPerfectHtml.setDisabled(value)
 		self.actionViewHtml.setDisabled(value)
-		self.updatePreviewBox()
 		self.docTypeChanged()
 	
 	def setDefaultMarkup(self, markup):
