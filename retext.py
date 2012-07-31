@@ -862,6 +862,12 @@ class ReTextWindow(QMainWindow):
 		self.previewBlocked = False
 		pb = self.previewBoxes[self.ind]
 		textedit = isinstance(pb, QTextEdit)
+		if textedit:
+			scrollbar = pb.verticalScrollBar()
+			scrollpos = scrollbar.value()
+		else:
+			frame = pb.page().mainFrame()
+			scrollpos = frame.scrollPosition()
 		if self.ss and textedit:
 			pb.document().setDefaultStyleSheet(self.ss)
 		if self.getDocType() == DOCTYPE_PLAINTEXT:
@@ -887,6 +893,10 @@ class ReTextWindow(QMainWindow):
 					parsedText + '</body></html>\n')
 		if self.font and textedit:
 			pb.document().setDefaultFont(self.font)
+		if textedit:
+			scrollbar.setValue(scrollpos)
+		else:
+			frame.setScrollPosition(scrollpos)
 	
 	def updateLivePreviewBox(self):
 		if self.actionLivePreview.isChecked() and self.previewBlocked == False:
