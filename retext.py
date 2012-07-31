@@ -36,7 +36,7 @@ def main(fileNames):
 	app.installTranslator(RtTranslator)
 	app.installTranslator(QtTranslator)
 	if settings.contains('appStyleSheet'):
-		stylename = readFromSettings(settings, 'appStyleSheet', str)
+		stylename = readFromSettings('appStyleSheet', str)
 		sheetfile = QFile(stylename)
 		sheetfile.open(QIODevice.ReadOnly)
 		app.setStyleSheet(QTextStream(sheetfile).readAll())

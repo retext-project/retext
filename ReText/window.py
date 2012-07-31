@@ -11,7 +11,7 @@ class ReTextWindow(QMainWindow):
 		size = self.geometry()
 		self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
 		if settings.contains('iconTheme'):
-			QIcon.setThemeName(readFromSettings(settings, 'iconTheme', str))
+			QIcon.setThemeName(readFromSettings('iconTheme', str))
 		if QIcon.themeName() in ('', 'hicolor'):
 			try:
 				gconf = Popen(['gconftool-2', '--get', '/desktop/gnome/interface/icon_theme'],
@@ -21,17 +21,17 @@ class ReTextWindow(QMainWindow):
 				iconTheme = gconf.stdout.read().rstrip()
 				if iconTheme: QIcon.setThemeName(iconTheme.decode())
 		if settings.contains('font'):
-			self.font = QFont(readFromSettings(settings, 'font', str))
+			self.font = QFont(readFromSettings('font', str))
 			if settings.contains('fontSize'):
-				self.font.setPointSize(readFromSettings(settings, 'fontSize', int))
+				self.font.setPointSize(readFromSettings('fontSize', int))
 		else:
 			self.font = None
 		if settings.contains('tabWidth'):
-			self.tabWidth = readFromSettings(settings, 'tabWidth', int)
+			self.tabWidth = readFromSettings('tabWidth', int)
 		else:
 			self.tabWidth = 4
 		if settings.contains('tabInsertsSpaces'):
-			self.tabInsertsSpaces = readFromSettings(settings, 'tabInsertsSpaces', bool)
+			self.tabInsertsSpaces = readFromSettings('tabInsertsSpaces', bool)
 		else:
 			self.tabInsertsSpaces = False
 		if QFile.exists(icon_path+'retext.png'):
@@ -120,7 +120,7 @@ class ReTextWindow(QMainWindow):
 			self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
 			self.useWebKit = False
 			if settings.contains('useWebKit'):
-				if readFromSettings(settings, 'useWebKit', bool):
+				if readFromSettings('useWebKit', bool):
 					self.useWebKit = True
 					self.actionWebKit.setChecked(True)
 		self.actionWpgen = self.act(self.tr('Generate webpages'), trig=self.startWpgen)
@@ -144,7 +144,7 @@ class ReTextWindow(QMainWindow):
 			print('Warning: no markups are available!')
 		self.defaultMarkup = availableMarkups[0] if availableMarkups else None
 		if settings.contains('defaultMarkup'):
-			dm = str(readFromSettings(settings, 'defaultMarkup', str))
+			dm = str(readFromSettings('defaultMarkup', str))
 			mc = markups.find_markup_class_by_name(dm)
 			if mc and mc.available():
 				self.defaultMarkup = mc
@@ -174,7 +174,7 @@ class ReTextWindow(QMainWindow):
 		self.symbolBox.addItems(self.usefulChars)
 		self.connect(self.symbolBox, SIGNAL('activated(int)'), self.insertSymbol)
 		if settings.contains('styleSheet'):
-			ssname = readFromSettings(settings, 'styleSheet', str)
+			ssname = readFromSettings('styleSheet', str)
 			sheetfile = QFile(ssname)
 			sheetfile.open(QIODevice.ReadOnly)
 			self.ss = QTextStream(sheetfile).readAll()
@@ -282,7 +282,7 @@ class ReTextWindow(QMainWindow):
 		self.searchBar.setVisible(False)
 		self.autoSave = False
 		if settings.contains('autoSave'):
-			if readFromSettings(settings, 'autoSave', bool):
+			if readFromSettings('autoSave', bool):
 				self.autoSave = True
 				timer = QTimer(self)
 				timer.start(60000)
@@ -290,22 +290,22 @@ class ReTextWindow(QMainWindow):
 		self.restorePreviewState = False
 		self.livePreviewEnabled = False
 		if settings.contains('restorePreviewState'):
-			self.restorePreviewState = readFromSettings(settings, 'restorePreviewState', bool)
+			self.restorePreviewState = readFromSettings('restorePreviewState', bool)
 		if settings.contains('previewState'):
-			self.livePreviewEnabled = readFromSettings(settings, 'previewState', bool)
+			self.livePreviewEnabled = readFromSettings('previewState', bool)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if enchant_available:
 			self.sl = None
 			if settings.contains('spellCheckLocale'):
 				try:
-					self.sl = str(readFromSettings(settings, 'spellCheckLocale', str))
+					self.sl = str(readFromSettings('spellCheckLocale', str))
 					enchant.Dict(self.sl)
 				except Exception as e:
 					print(e)
 					self.sl = None
 			if settings.contains('spellCheck'):
-				if readFromSettings(settings, 'spellCheck', bool):
+				if readFromSettings('spellCheck', bool):
 					self.actionEnableSC.setChecked(True)
 					self.enableSC(True)
 	
@@ -764,7 +764,7 @@ class ReTextWindow(QMainWindow):
 		self.setWindowTitle("")
 		self.tabWidget.setTabText(self.ind, self.getDocumentTitle(baseName=True))
 		self.setWindowFilePath(self.fileNames[self.ind])
-		files = readListFromSettings(settings, "recentFileList")
+		files = readListFromSettings("recentFileList")
 		try:
 			files.prepend(self.fileNames[self.ind])
 			files.removeDuplicates()
@@ -775,7 +775,7 @@ class ReTextWindow(QMainWindow):
 			files.insert(0, self.fileNames[self.ind])
 		if len(files) > 10:
 			del files[10:]
-		writeListToSettings(settings, "recentFileList", files)
+		writeListToSettings("recentFileList", files)
 		QDir.setCurrent(QFileInfo(self.fileNames[self.ind]).dir().path())
 		self.docTypeChanged()
 	
@@ -787,13 +787,13 @@ class ReTextWindow(QMainWindow):
 	def updateRecentFiles(self):
 		self.menuRecentFiles.clear()
 		self.recentFilesActions = []
-		filesOld = readListFromSettings(settings, "recentFileList")
+		filesOld = readListFromSettings("recentFileList")
 		files = []
 		for f in filesOld:
 			if QFile.exists(f):
 				files.append(f)
 				self.recentFilesActions.append(self.act(f, trig=self.openFunction(f)))
-		writeListToSettings(settings, "recentFileList", files)
+		writeListToSettings("recentFileList", files)
 		for action in self.recentFilesActions:
 			self.menuRecentFiles.addAction(action)
 	
@@ -910,7 +910,7 @@ class ReTextWindow(QMainWindow):
 		suffix = QFileInfo(self.fileNames[self.ind]).suffix()
 		pt = suffix not in ('re', 'md', 'markdown', 'mdown', 'mkd', 'mkdn', 'rst', 'rest')
 		if settings.contains('autoPlainText'):
-			if not readFromSettings(settings, 'autoPlainText', bool):
+			if not readFromSettings('autoPlainText', bool):
 				pt = False
 		self.actionPlainText.setChecked(pt)
 		self.enablePlainText(pt)

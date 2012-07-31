@@ -38,7 +38,7 @@ except:
 else:
 	webkit_available = True
 
-def readFromSettings(settings, key, keytype):
+def readFromSettings(key, keytype, settings=settings):
 	try:
 		return settings.value(key, type=keytype)
 	except TypeError as error:
@@ -58,7 +58,7 @@ def readFromSettings(settings, key, keytype):
 		elif keytype == bool:
 			return settings.value(key).toBool()
 
-def readListFromSettings(settings, key):
+def readListFromSettings(key, settings=settings):
 	if not settings.contains(key):
 		return []
 	value = settings.value(key)
@@ -71,7 +71,7 @@ def readListFromSettings(settings, key):
 		else:
 			return value
 
-def writeListToSettings(settings, key, value):
+def writeListToSettings(key, value, settings=settings):
 	if len(value) > 1:
 		settings.setValue(key, value)
 	elif len(value) == 1:
