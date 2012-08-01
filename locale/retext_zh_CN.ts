@@ -51,12 +51,12 @@
         <translation>符号</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1174"/>
+        <location filename="retext.py" line="1184"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML 文件 (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1174"/>
+        <location filename="retext.py" line="1184"/>
         <source>Save file</source>
         <translation>保存文件</translation>
     </message>
@@ -106,17 +106,17 @@
         <translation>编辑工具栏</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1197"/>
+        <location filename="retext.py" line="1206"/>
         <source>Export document to PDF</source>
         <translation>导出文件到 PDF</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1197"/>
+        <location filename="retext.py" line="1206"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF 文件 (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1395"/>
+        <location filename="retext.py" line="1404"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>文件已更改，确认保存吗？</translation>
@@ -147,12 +147,12 @@ Do you want to save your changes?</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1421"/>
+        <location filename="retext.py" line="1430"/>
         <source>New document</source>
         <translation>新文件</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1032"/>
+        <location filename="retext.py" line="1042"/>
         <source>All files (*)</source>
         <translation>全部文件 (*)</translation>
     </message>
@@ -177,17 +177,17 @@ Do you want to save your changes?</source>
         <translation>保存到 Google Docs</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1316"/>
+        <location filename="retext.py" line="1325"/>
         <source>Incorrect user name or password!</source>
         <translation>用户名或密码不正确!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1165"/>
+        <location filename="retext.py" line="1175"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Libreoffice 文件 (*.odt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1165"/>
+        <location filename="retext.py" line="1175"/>
         <source>Export document to ODT</source>
         <translation>导出文件到 ODT</translation>
     </message>
@@ -197,7 +197,7 @@ Do you want to save your changes?</source>
         <translation>查看 HTML 代码</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1428"/>
+        <location filename="retext.py" line="1437"/>
         <source>HTML code</source>
         <translation>HTML 代码</translation>
     </message>
@@ -207,7 +207,7 @@ Do you want to save your changes?</source>
         <translation>打印预览</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1212"/>
+        <location filename="retext.py" line="1221"/>
         <source>Print document</source>
         <translation>打印文件</translation>
     </message>
@@ -217,12 +217,12 @@ Do you want to save your changes?</source>
         <translation>实时预览</translation>
     </message>
     <message>
-        <location filename="retext.py" line="903"/>
+        <location filename="retext.py" line="913"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>网页保存在 &lt;code&gt;html&lt;/code&gt; 文件夹。</translation>
     </message>
     <message>
-        <location filename="retext.py" line="916"/>
+        <location filename="retext.py" line="926"/>
         <source>Please, save the file somewhere.</source>
         <translation>请，保存到别的地方呦！</translation>
     </message>
@@ -232,7 +232,7 @@ Do you want to save your changes?</source>
         <translation>生成网页</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1091"/>
+        <location filename="retext.py" line="1101"/>
         <source>Plain text (*.txt)</source>
         <translation>普通文本文档 (*.txt)</translation>
     </message>
@@ -247,7 +247,7 @@ Do you want to save your changes?</source>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1032"/>
+        <location filename="retext.py" line="1042"/>
         <source>Supported files</source>
         <translation>支持的文件类型</translation>
     </message>
@@ -257,7 +257,7 @@ Do you want to save your changes?</source>
         <translation>改变默认字体</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1231"/>
+        <location filename="retext.py" line="1240"/>
         <source>Export document</source>
         <translation>导出文件</translation>
     </message>
@@ -327,47 +327,47 @@ Do you want to save your changes?</source>
         <translation>你既没有安装 Markdown 也没有 Docutils 模块!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1437"/>
+        <location filename="retext.py" line="1446"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1437"/>
+        <location filename="retext.py" line="1446"/>
         <source>Website</source>
         <translation>网站</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1437"/>
+        <location filename="retext.py" line="1446"/>
         <source>Markdown syntax</source>
         <translation>Markdown 语法</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1437"/>
+        <location filename="retext.py" line="1446"/>
         <source>ReST syntax</source>
         <translation>ReST 语法</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1094"/>
+        <location filename="retext.py" line="1104"/>
         <source>ReStructuredText files</source>
         <translation>ReStructuredText 文件</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1097"/>
+        <location filename="retext.py" line="1107"/>
         <source>Markdown files</source>
         <translation>Markdown 文件</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1437"/>
+        <location filename="retext.py" line="1446"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation>简单高效的 Markdown 与 ReStructuredText 编辑器</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1488"/>
+        <location filename="retext.py" line="1497"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>不能处理文件内容，检查你是否安装了必需的模块！</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1032"/>
+        <location filename="retext.py" line="1042"/>
         <source>Select one or several files to open</source>
         <translation>选择一个或多个文件以打开</translation>
     </message>
@@ -377,22 +377,22 @@ Do you want to save your changes?</source>
         <translation>在线获取帮助（英文）</translation>
     </message>
     <message>
-        <location filename="retext.py" line="905"/>
+        <location filename="retext.py" line="915"/>
         <source>Show directory</source>
         <translation>显示文件夹</translation>
     </message>
     <message>
-        <location filename="retext.py" line="910"/>
+        <location filename="retext.py" line="920"/>
         <source>Webpages generator is not installed!</source>
         <translation>网页生成器未安装！</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1112"/>
+        <location filename="retext.py" line="1122"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>不能保存文件因为它是只读的！</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1319"/>
+        <location filename="retext.py" line="1328"/>
         <source>Authentification failed, please check your internet connection!</source>
         <translation>认证失败，请检查您的网络连接！</translation>
     </message>
@@ -427,7 +427,7 @@ Do you want to save your changes?</source>
         <translation>使用WebKit渲染</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1255"/>
+        <location filename="retext.py" line="1264"/>
         <source>Failed to execute the command:</source>
         <translation>不能执行命令:</translation>
     </message>

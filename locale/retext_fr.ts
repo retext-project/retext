@@ -266,7 +266,7 @@
         <translation>Sensible à la casse</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1420"/>
+        <location filename="retext.py" line="1430"/>
         <source>New document</source>
         <translation>Nouveau document</translation>
     </message>
@@ -281,154 +281,154 @@
         <translation>Saisir le code de la langue (par exemple : fr_FR)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="916"/>
+        <location filename="retext.py" line="926"/>
         <source>Please, save the file somewhere.</source>
         <translation>Veuillez enregistrer le fichier quelque part.</translation>
     </message>
     <message>
-        <location filename="retext.py" line="903"/>
+        <location filename="retext.py" line="913"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Pages web enregistrées dans le répertoire &lt;code&gt;html&lt;/code&gt;.</translation>
     </message>
     <message>
-        <location filename="retext.py" line="905"/>
+        <location filename="retext.py" line="915"/>
         <source>Show directory</source>
         <translation>Afficher le répertoire</translation>
     </message>
     <message>
-        <location filename="retext.py" line="910"/>
+        <location filename="retext.py" line="920"/>
         <source>Webpages generator is not installed!</source>
         <translation>Le générateur de pages web n&apos;est pas installé !</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1032"/>
+        <location filename="retext.py" line="1042"/>
         <source>Select one or several files to open</source>
         <translation>Choisir un ou plusieurs fichiers à ouvrir</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1032"/>
+        <location filename="retext.py" line="1042"/>
         <source>Supported files</source>
         <translation>Formats acceptés</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1032"/>
+        <location filename="retext.py" line="1042"/>
         <source>All files (*)</source>
         <translation>Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1091"/>
+        <location filename="retext.py" line="1101"/>
         <source>Plain text (*.txt)</source>
         <translation>Fichier text (*.txt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1094"/>
+        <location filename="retext.py" line="1104"/>
         <source>ReStructuredText files</source>
         <translation>Fichiers ReStructuredText</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1097"/>
+        <location filename="retext.py" line="1107"/>
         <source>Markdown files</source>
         <translation>Fichiers Markdown</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1174"/>
+        <location filename="retext.py" line="1184"/>
         <source>Save file</source>
         <translation>Enregistrer le fichier</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1112"/>
+        <location filename="retext.py" line="1122"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Impossible d&apos;enregistrer le fichier car il est en lecture seule !</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1165"/>
+        <location filename="retext.py" line="1175"/>
         <source>Export document to ODT</source>
         <translation>Exporter le document au format ODT</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1165"/>
+        <location filename="retext.py" line="1175"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Fichiers OpenDocument texte (*.odt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1174"/>
+        <location filename="retext.py" line="1184"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Fichier HTML (*.html, *.htm)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1196"/>
+        <location filename="retext.py" line="1206"/>
         <source>Export document to PDF</source>
         <translation>Exporter le document au format PDF</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1196"/>
+        <location filename="retext.py" line="1206"/>
         <source>PDF files (*.pdf)</source>
         <translation>Fichiers PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1211"/>
+        <location filename="retext.py" line="1221"/>
         <source>Print document</source>
         <translation>Imprimer le document</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1230"/>
+        <location filename="retext.py" line="1240"/>
         <source>Export document</source>
         <translation>Exporter le document</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1254"/>
+        <location filename="retext.py" line="1264"/>
         <source>Failed to execute the command:</source>
         <translation>Échec lors de l&apos;exécution de la commande :</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1315"/>
+        <location filename="retext.py" line="1325"/>
         <source>Incorrect user name or password!</source>
         <translation>Nom d&apos;utilisateur ou mot de passe incorrect !</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1318"/>
+        <location filename="retext.py" line="1328"/>
         <source>Authentification failed, please check your internet connection!</source>
         <translation>Authentification échouée, veuillez vérifier votre connexion internet !</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1394"/>
+        <location filename="retext.py" line="1404"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Le document a modifié.
 Voulez vous enregistrer vos changements ?</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1427"/>
+        <location filename="retext.py" line="1437"/>
         <source>HTML code</source>
         <translation>Code HTML</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1436"/>
+        <location filename="retext.py" line="1446"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation>Éditeur simple mais puissant pour Markdown et ReStructuredText</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1436"/>
+        <location filename="retext.py" line="1446"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Auteur: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1436"/>
+        <location filename="retext.py" line="1446"/>
         <source>Website</source>
         <translation>Site Web</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1436"/>
+        <location filename="retext.py" line="1446"/>
         <source>Markdown syntax</source>
         <translation>Syntaxe Markdown</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1436"/>
+        <location filename="retext.py" line="1446"/>
         <source>ReST syntax</source>
         <translation>Syntaxe ReST</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1487"/>
+        <location filename="retext.py" line="1497"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>Impossible d&apos;analyser le contenu du fichier, vérifier si les modules sont bien installés</translation>
     </message>
