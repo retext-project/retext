@@ -42,6 +42,7 @@ def main(fileNames):
 		app.setStyleSheet(QTextStream(sheetfile).readAll())
 		sheetfile.close()
 	window = ReTextWindow()
+	window.show()
 	for fileName in fileNames:
 		try:
 			fileName = QString.fromUtf8(fileName)
@@ -50,7 +51,6 @@ def main(fileNames):
 			pass
 		if QFile.exists(fileName):
 			window.openFileWrapper(fileName)
-	window.show()
 	sys.exit(app.exec_())
 
 if __name__ == '__main__':
