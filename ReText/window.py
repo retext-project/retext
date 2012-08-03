@@ -671,7 +671,7 @@ class ReTextWindow(QMainWindow):
 		text = convertToUnicode(self.editBoxes[self.ind].toPlainText())
 		# WpGen directives
 		text = text.replace('%HTMLDIR%', 'html')
-		text = text.replace('%\\', '%')
+		text = text.replace('%\\HTMLDIR%', '%HTMLDIR%')
 		headers = ''
 		if includeStyleSheet:
 			fontline = ''
