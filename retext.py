@@ -1485,7 +1485,7 @@ class ReTextWindow(QMainWindow):
 			text = self.editBoxes[self.ind].toPlainText()
 		# WpGen directives
 		text = text.replace('%HTMLDIR%', 'html')
-		text = text.replace('%\\', '%')
+		text = text.replace('%\\HTMLDIR%', '%HTMLDIR%')
 		parser = self.getParser()
 		if parser == PARSER_DOCUTILS:
 			return publish_parts(text, writer_name='html')['body']
