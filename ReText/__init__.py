@@ -38,7 +38,9 @@ except:
 else:
 	webkit_available = True
 
-def readFromSettings(key, keytype, settings=settings):
+def readFromSettings(key, keytype, settings=settings, default=None):
+	if not settings.contains(key):
+		return default
 	try:
 		return settings.value(key, type=keytype)
 	except TypeError as error:
