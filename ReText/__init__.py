@@ -48,7 +48,7 @@ def readFromSettings(key, keytype, settings=settings, default=None):
 			# New PyQt version, but type mismatch
 			print('Warning: '+str(error))
 			# Return an instance of keytype
-			return keytype()
+			return default if (default is not None) else keytype()
 		# For old PyQt versions
 		if keytype == str:
 			return settings.value(key).toString()
