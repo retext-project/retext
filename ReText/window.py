@@ -26,14 +26,8 @@ class ReTextWindow(QMainWindow):
 				self.font.setPointSize(readFromSettings('fontSize', int))
 		else:
 			self.font = None
-		if settings.contains('tabWidth'):
-			self.tabWidth = readFromSettings('tabWidth', int)
-		else:
-			self.tabWidth = 4
-		if settings.contains('tabInsertsSpaces'):
-			self.tabInsertsSpaces = readFromSettings('tabInsertsSpaces', bool)
-		else:
-			self.tabInsertsSpaces = False
+		self.tabWidth = readFromSettings('tabWidth', int, default=4)
+		self.tabInsertsSpaces = readFromSettings('tabInsertsSpaces', bool, default=False)
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
 		else:
@@ -118,11 +112,9 @@ class ReTextWindow(QMainWindow):
 		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
 		if webkit_available:
 			self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
-			self.useWebKit = False
-			if settings.contains('useWebKit'):
-				if readFromSettings('useWebKit', bool):
-					self.useWebKit = True
-					self.actionWebKit.setChecked(True)
+			self.useWebKit = readFromSettings('useWebKit', bool, default=False)
+			if self.useWebKit:
+				self.actionWebKit.setChecked(True)
 		self.actionWpgen = self.act(self.tr('Generate webpages'), trig=self.startWpgen)
 		self.actionShow = self.act(self.tr('Show'), icon='system-file-manager', trig=self.showInDir)
 		self.actionFind = self.act(self.tr('Next'), icon='go-next', shct=QKeySequence.FindNext, trig=self.find)
@@ -280,19 +272,15 @@ class ReTextWindow(QMainWindow):
 		self.searchBar.addAction(self.actionFind)
 		self.searchBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 		self.searchBar.setVisible(False)
-		self.autoSave = False
-		if settings.contains('autoSave'):
-			if readFromSettings('autoSave', bool):
-				self.autoSave = True
-				timer = QTimer(self)
-				timer.start(60000)
-				self.connect(timer, SIGNAL('timeout()'), self.saveAll)
-		self.restorePreviewState = False
-		self.livePreviewEnabled = False
-		if settings.contains('restorePreviewState'):
-			self.restorePreviewState = readFromSettings('restorePreviewState', bool)
-		if settings.contains('previewState'):
-			self.livePreviewEnabled = readFromSettings('previewState', bool)
+		self.autoSave = readFromSettings('autoSave', bool, default=False)
+		if self.autoSave:
+			timer = QTimer(self)
+			timer.start(60000)
+			self.connect(timer, SIGNAL('timeout()'), self.saveAll)
+		self.restorePreviewState = readFromSettings('restorePreviewState', bool,
+			default=False)
+		self.livePreviewEnabled = readFromSettings('previewState', bool,
+			default=False)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if enchant_available:
@@ -304,10 +292,9 @@ class ReTextWindow(QMainWindow):
 				except Exception as e:
 					print(e)
 					self.sl = None
-			if settings.contains('spellCheck'):
-				if readFromSettings('spellCheck', bool):
-					self.actionEnableSC.setChecked(True)
-					self.enableSC(True)
+			if readFromSettings('spellCheck', bool, default=False):
+				self.actionEnableSC.setChecked(True)
+				self.enableSC(True)
 	
 	def act(self, name, icon=None, trig=None, trigbool=None, shct=None):
 		if icon:
@@ -909,9 +896,8 @@ class ReTextWindow(QMainWindow):
 		self.editBoxes[self.ind].setPlainText(html)
 		suffix = QFileInfo(self.fileNames[self.ind]).suffix()
 		pt = suffix not in ('re', 'md', 'markdown', 'mdown', 'mkd', 'mkdn', 'rst', 'rest')
-		if settings.contains('autoPlainText'):
-			if not readFromSettings('autoPlainText', bool):
-				pt = False
+		if readFromSettings('autoPlainText', bool, default=True):
+			pt = False
 		self.actionPlainText.setChecked(pt)
 		self.enablePlainText(pt)
 		self.setCurrentFile()
