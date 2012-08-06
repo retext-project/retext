@@ -23,14 +23,6 @@ DOCTYPE_MARKDOWN = markups.MarkdownMarkup.name
 DOCTYPE_REST = markups.ReStructuredTextMarkup.name
 DOCTYPE_HTML = 'html'
 
-monofont = QFont()
-if settings.contains('editorFont'):
-	monofont.setFamily(readFromSettings(settings, 'editorFont', str))
-else:
-	monofont.setFamily('monospace')
-if settings.contains('editorFontSize'):
-	monofont.setPointSize(readFromSettings(settings, 'editorFontSize', int))
-
 try:
 	from PyQt4.QtWebKit import QWebView
 except:
@@ -87,3 +79,8 @@ def convertToUnicode(string):
 	except:
 		# For Python 3
 		return string
+
+monofont = QFont()
+monofont.setFamily(readFromSettings('editorFont', str, default='monospace'))
+if settings.contains('editorFontSize'):
+	monofont.setPointSize(readFromSettings('editorFontSize', int))
