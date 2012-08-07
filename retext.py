@@ -628,9 +628,9 @@ class ReTextWindow(QMainWindow):
 		editBox = self.editBoxes[self.ind]
 		text = editBox.toPlainText()
 		dictionary = self.highlighters[self.ind].dictionary
-		if dictionary is None or not text:
-			return QTextEdit.contextMenuEvent(editBox, event)
 		oldcursor = editBox.textCursor()
+		if (dictionary is None) or (not text) or oldcursor.hasSelection():
+			return QTextEdit.contextMenuEvent(editBox, event)
 		cursor = editBox.cursorForPosition(event.pos())
 		pos = cursor.positionInBlock()
 		if pos == len(text): pos -= 1
