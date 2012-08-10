@@ -27,18 +27,19 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			DOCTYPE_REST: (4, 6),
 			DOCTYPE_HTML: (0, 1, 2, 3)
 		}
-		for number in patternsDict[self.docType]:
-			pattern = patterns[number]
-			charFormat = QTextCharFormat()
-			charFormat.setFontWeight(pattern[2])
-			if pattern[1] != None:
-				charFormat.setForeground(pattern[1])
-			if len(pattern) >= 4:
-				charFormat.setFontItalic(pattern[3])
-			if len(pattern) >= 5:
-				charFormat.setFontUnderline(pattern[4])
-			for match in re.finditer(pattern[0], text):
-				self.setFormat(match.start(), match.end() - match.start(), charFormat)
+		if self.docType in patternsDict:
+			for number in patternsDict[self.docType]:
+				pattern = patterns[number]
+				charFormat = QTextCharFormat()
+				charFormat.setFontWeight(pattern[2])
+				if pattern[1] != None:
+					charFormat.setForeground(pattern[1])
+				if len(pattern) >= 4:
+					charFormat.setFontItalic(pattern[3])
+				if len(pattern) >= 5:
+					charFormat.setFontUnderline(pattern[4])
+				for match in re.finditer(pattern[0], text):
+					self.setFormat(match.start(), match.end() - match.start(), charFormat)
 		if self.dictionary:
 			text = convertToUnicode(text)
 			charFormat = QTextCharFormat()
