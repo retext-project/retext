@@ -28,6 +28,7 @@ class ReTextWindow(QMainWindow):
 			self.font = None
 		self.tabWidth = readFromSettings('tabWidth', int, default=4)
 		self.tabInsertsSpaces = readFromSettings('tabInsertsSpaces', bool, default=False)
+		self.handleLinks = readFromSettings('handleWebLinks', bool, default=False)
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
 		else:
@@ -328,6 +329,23 @@ class ReTextWindow(QMainWindow):
 		splitter.setChildrenCollapsible(False)
 		return splitter
 	
+	def getWebView(self):
+		webView = QWebView()
+		if not self.handleLinks:
+			webView.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
+			self.connect(webView.page(), SIGNAL("linkClicked(const QUrl&)"), self.linkClicked)
+		return webView
+	
+	def linkClicked(self, url):
+		urlstr = convertToUnicode(url.toString())
+		if not (urlstr.startswith('http://') or urlstr.startswith('https://') \
+		or urlstr.startswith('ftp://')):
+			self.previewBoxes[self.ind].load(url)
+		elif urlstr.startswith('about:blank#'):
+			self.previewBoxes[self.ind].page().mainFrame().scrollToAnchor(urlstr[12:])
+		else:
+			QDesktopServices.openUrl(url)
+	
 	def createTab(self, fileName):
 		self.previewBlocked = False
 		self.editBoxes.append(QTextEdit())
@@ -337,7 +355,7 @@ class ReTextWindow(QMainWindow):
 			enchant.Dict(self.sl) if self.sl else enchant.Dict()
 			self.highlighters[-1].rehighlight()
 		if self.useWebKit:
-			self.previewBoxes.append(QWebView())
+			self.previewBoxes.append(self.getWebView())
 		else:
 			self.previewBoxes.append(QTextEdit())
 			self.previewBoxes[-1].setReadOnly(True)
@@ -566,7 +584,7 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.clear()
 		for self.ind in range(len(self.editBoxes)):
 			if enable:
-				self.previewBoxes[self.ind] = QWebView()
+				self.previewBoxes[self.ind] = self.getWebView()
 			else:
 				self.previewBoxes[self.ind] = QTextEdit()
 				self.previewBoxes[self.ind].setReadOnly(True)

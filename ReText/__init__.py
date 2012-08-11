@@ -24,7 +24,7 @@ DOCTYPE_REST = markups.ReStructuredTextMarkup.name
 DOCTYPE_HTML = 'html'
 
 try:
-	from PyQt4.QtWebKit import QWebView
+	from PyQt4.QtWebKit import QWebView, QWebPage
 except:
 	webkit_available = False
 else:
