@@ -686,6 +686,9 @@ class ReTextWindow(QMainWindow):
 				fontline = 'body { font-family: %s; font-size: %spt }\n' % \
 					(fontname, fontsize)
 			headers += '<style type="text/css">\n' + fontline + self.ss + '</style>\n'
+		cssFileName = self.getDocumentTitle(baseName=True)+'.css'
+		if QFile(cssFileName).exists():
+			headers += '<link rel="stylesheet" type="text/css" href="%s">\n' % cssFileName
 		if includeMeta:
 			headers += '<meta name="generator" content="%s %s">\n' % \
 			(app_name, app_version)
