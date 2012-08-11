@@ -338,8 +338,7 @@ class ReTextWindow(QMainWindow):
 	
 	def linkClicked(self, url):
 		urlstr = convertToUnicode(url.toString())
-		if not (urlstr.startswith('http://') or urlstr.startswith('https://') \
-		or urlstr.startswith('ftp://')):
+		if urlstr.startswith('file://') or not (':/' in urlstr):
 			self.previewBoxes[self.ind].load(url)
 		elif urlstr.startswith('about:blank#'):
 			self.previewBoxes[self.ind].page().mainFrame().scrollToAnchor(urlstr[12:])
