@@ -722,7 +722,7 @@ class ReTextWindow(QMainWindow):
 				html = self.getHtml(styleForWebKit=(not textedit))
 			except Exception as e:
 				return self.printError(e)
-			if not textedit and '<script ' in html:
+			if not textedit and ('<script ' in html or '<link rel="stylesheet"' in html):
 				# Work-around a bug in QtWebKit
 				# by saving the html locally
 				tempFile = QTemporaryFile('retext-XXXXXX.html')
