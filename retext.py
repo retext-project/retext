@@ -628,9 +628,9 @@ class ReTextWindow(QMainWindow):
 		editBox = self.editBoxes[self.ind]
 		text = editBox.toPlainText()
 		dictionary = self.highlighters[self.ind].dictionary
-		oldcursor = editBox.textCursor()
-		if (dictionary is None) or (not text) or oldcursor.hasSelection():
+		if dictionary is None or not text:
 			return QTextEdit.contextMenuEvent(editBox, event)
+		oldcursor = editBox.textCursor()
 		cursor = editBox.cursorForPosition(event.pos())
 		pos = cursor.positionInBlock()
 		if pos == len(text): pos -= 1
@@ -641,11 +641,11 @@ class ReTextWindow(QMainWindow):
 			# For Python 2
 			curchar = text.at(pos)
 			isalpha = curchar.isLetter()
-		if not isalpha:
-			return QTextEdit.contextMenuEvent(editBox, event)
 		cursor.select(QTextCursor.WordUnderCursor)
+		if not isalpha or (oldcursor.hasSelection() and
+		oldcursor.selectedText() != cursor.selectedText()):
+			return QTextEdit.contextMenuEvent(editBox, event)
 		editBox.setTextCursor(cursor)
-		word = cursor.selectedText()
 		try:
 			word = unicode(cursor.selectedText())
 		except NameError:
