@@ -359,8 +359,7 @@ class ReTextWindow(QMainWindow):
 			self.previewBoxes.append(QTextEdit())
 			self.previewBoxes[-1].setReadOnly(True)
 		self.editBoxes[-1].contextMenuEvent = self.editBoxMenuEvent
-		if self.tabInsertsSpaces:
-			self.editBoxes[-1].keyPressEvent = self.editBoxKeyPressEvent
+		self.editBoxes[-1].keyPressEvent = self.editBoxKeyPressEvent
 		self.previewBoxes[-1].setVisible(False)
 		self.fileNames.append(fileName)
 		markupClass = self.getMarkupClass(fileName)
@@ -435,12 +434,18 @@ class ReTextWindow(QMainWindow):
 			cursor.beginEditBlock()
 			while block != end:
 				cursor.setPosition(block.position())
-				cursor.insertText(' ' * self.tabWidth)
+				if self.tabInsertsSpaces:
+					cursor.insertText(' ' * self.tabWidth)
+				else:
+					cursor.insertText('\t')
 				block = block.next()
 			cursor.endEditBlock()
 		else:
 			indent = self.tabWidth - (cursor.positionInBlock() % self.tabWidth)
-			cursor.insertText(' ' * indent)
+			if self.tabInsertsSpaces:
+				cursor.insertText(' ' * indent)
+			else:
+				cursor.insertText('\t')
 	
 	def editBoxIndentLess(self, editBox):
 		cursor = editBox.textCursor()
@@ -453,11 +458,15 @@ class ReTextWindow(QMainWindow):
 		cursor.beginEditBlock()
 		while block != end:
 			cursor.setPosition(block.position())
-			pos = 0
-			while editBox.document().characterAt(cursor.position()) == ' ' \
-			and pos < self.tabWidth:
-				pos += 1
-				cursor.deleteChar()
+			if self.tabInsertsSpaces:
+				pos = 0
+				while editBox.document().characterAt(cursor.position()) == ' ' \
+				and pos < self.tabWidth:
+					pos += 1
+					cursor.deleteChar()
+			else:
+				if editBox.document().characterAt(cursor.position()) == '\t':
+					cursor.deleteChar()
 			block = block.next()
 		cursor.endEditBlock()
 	
