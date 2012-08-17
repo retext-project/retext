@@ -702,13 +702,9 @@ class ReTextWindow(QMainWindow):
 			headers += '<meta name="generator" content="%s %s">\n' % \
 			(app_name, app_version)
 		fallbackTitle = self.getDocumentTitle() if includeTitle else ''
-		if includeStyleSheet:
-			return self.markups[self.ind].get_whole_html(text,
-				custom_headers=headers, fallback_title=fallbackTitle)
-		else:
-			return self.markups[self.ind].get_whole_html(text,
-				custom_headers=headers, include_stylesheet=False,
-				fallback_title=fallbackTitle)
+		return self.markups[self.ind].get_whole_html(text,
+			custom_headers=headers, include_stylesheet=includeStyleSheet,
+			fallback_title=fallbackTitle)
 	
 	def updatePreviewBox(self):
 		self.previewBlocked = False
