@@ -458,14 +458,13 @@ class ReTextWindow(QMainWindow):
 		cursor.beginEditBlock()
 		while block != end:
 			cursor.setPosition(block.position())
-			if self.tabInsertsSpaces:
+			if editBox.document().characterAt(cursor.position()) == '\t':
+				cursor.deleteChar()
+			else:
 				pos = 0
 				while editBox.document().characterAt(cursor.position()) == ' ' \
 				and pos < self.tabWidth:
 					pos += 1
-					cursor.deleteChar()
-			else:
-				if editBox.document().characterAt(cursor.position()) == '\t':
 					cursor.deleteChar()
 			block = block.next()
 		cursor.endEditBlock()
