@@ -419,12 +419,22 @@ class ReTextWindow(QMainWindow):
 	
 	def editBoxKeyPressEvent(self, event):
 		key = event.key()
+		editBox = self.editBoxes[self.ind]
 		if key == Qt.Key_Tab:
-			self.editBoxIndentMore(self.editBoxes[self.ind])
+			self.editBoxIndentMore(editBox)
 		elif key == Qt.Key_Backtab:
-			self.editBoxIndentLess(self.editBoxes[self.ind])
+			self.editBoxIndentLess(editBox)
+		elif key == Qt.Key_Return and event.modifiers() == Qt.ShiftModifier:
+			# Markdown-style line break
+			markupClass = self.getMarkupClass()
+			cursor = editBox.textCursor()
+			if (markupClass and markupClass.name == DOCTYPE_MARKDOWN
+			and not cursor.hasSelection()):
+				cursor.insertText('  \n')
+			else:
+				QTextEdit.keyPressEvent(editBox, event)
 		else:
-			QTextEdit.keyPressEvent(self.editBoxes[self.ind], event)
+			QTextEdit.keyPressEvent(editBox, event)
 	
 	def editBoxIndentMore(self, editBox):
 		cursor = editBox.textCursor()
