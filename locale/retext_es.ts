@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="es_ES" sourcelanguage="">
+<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="en_US">
 <context>
     <name>LogPassDialog</name>
     <message>
@@ -10,7 +10,7 @@
     <message>
         <location filename="retext.py" line="217"/>
         <source>Username</source>
-        <translation>Usuario</translation>
+        <translation>Nombre de usuario</translation>
     </message>
     <message>
         <location filename="retext.py" line="218"/>
@@ -53,7 +53,7 @@
     <message>
         <location filename="retext.py" line="300"/>
         <source>Save as</source>
-        <translation>Guardar cómo</translation>
+        <translation>Guardar como</translation>
     </message>
     <message>
         <location filename="retext.py" line="302"/>
@@ -63,7 +63,7 @@
     <message>
         <location filename="retext.py" line="304"/>
         <source>Print preview</source>
-        <translation>Vista preliminar de impresión</translation>
+        <translation>Previsualización de impresión</translation>
     </message>
     <message>
         <location filename="retext.py" line="306"/>
@@ -73,7 +73,7 @@
     <message>
         <location filename="retext.py" line="307"/>
         <source>Change default font</source>
-        <translation>Cambiar fuente predeterminada</translation>
+        <translation>Cambiar tipografía predeterminada</translation>
     </message>
     <message>
         <location filename="retext.py" line="308"/>
@@ -83,12 +83,12 @@
     <message>
         <location filename="retext.py" line="312"/>
         <source>Preview</source>
-        <translation>Vista preliminar</translation>
+        <translation>Previsualización</translation>
     </message>
     <message>
         <location filename="retext.py" line="321"/>
         <source>Live preview</source>
-        <translation>Vista preliminar en vivo</translation>
+        <translation>Previsualización en vivo</translation>
     </message>
     <message>
         <location filename="retext.py" line="323"/>
@@ -143,7 +143,7 @@
     <message>
         <location filename="retext.py" line="353"/>
         <source>Use WebKit renderer</source>
-        <translation>Usar intérprete Webkit</translation>
+        <translation>Usar renderizador Webkit</translation>
     </message>
     <message>
         <location filename="retext.py" line="360"/>
@@ -168,7 +168,7 @@
     <message>
         <location filename="retext.py" line="365"/>
         <source>Get help online</source>
-        <translation>Obtener ayuda en-línea</translation>
+        <translation>Obtener ayuda en línea</translation>
     </message>
     <message>
         <location filename="retext.py" line="370"/>
@@ -248,7 +248,7 @@
     <message>
         <location filename="retext.py" line="482"/>
         <source>Default editing mode</source>
-        <translation>Modo de edición por defecto</translation>
+        <translation>Modo de edición predeterminado</translation>
     </message>
     <message>
         <location filename="retext.py" line="485"/>
@@ -263,27 +263,27 @@
     <message>
         <location filename="retext.py" line="526"/>
         <source>Case sensitively</source>
-        <translation>Distinguir mayúsculas/minúsculas</translation>
+        <translation>Distinguir mayúsculas y minúsculas</translation>
     </message>
     <message>
         <location filename="retext.py" line="1430"/>
         <source>New document</source>
-        <translation>Nuevo documento</translation>
+        <translation>Documento nuevo</translation>
     </message>
     <message>
         <location filename="retext.py" line="563"/>
         <source>You have neither Markdown nor Docutils modules installed!</source>
-        <translation>¡No tiene ni el módulo Markdown ni Docutils instalados!</translation>
+        <translation>No tiene el módulo Markdown ni Docutils instalados.</translation>
     </message>
     <message>
         <location filename="retext.py" line="819"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation>Introduzca el nombre del local (por ejemplo: en_US)</translation>
+        <translation>Introduzca el nombre la localización (por ejemplo: es_MX)</translation>
     </message>
     <message>
         <location filename="retext.py" line="926"/>
         <source>Please, save the file somewhere.</source>
-        <translation>Salve el fichero en algún lugar.</translation>
+        <translation>Guarde el archivo en algún lugar.</translation>
     </message>
     <message>
         <location filename="retext.py" line="913"/>
@@ -298,7 +298,7 @@
     <message>
         <location filename="retext.py" line="920"/>
         <source>Webpages generator is not installed!</source>
-        <translation>¡El generador de páginas web no está instalado!</translation>
+        <translation>El generador de páginas web no está instalado.</translation>
     </message>
     <message>
         <location filename="retext.py" line="1042"/>
@@ -308,7 +308,7 @@
     <message>
         <location filename="retext.py" line="1042"/>
         <source>Supported files</source>
-        <translation>Archivos soportados</translation>
+        <translation>Archivos compatibles</translation>
     </message>
     <message>
         <location filename="retext.py" line="1042"/>
@@ -338,7 +338,7 @@
     <message>
         <location filename="retext.py" line="1122"/>
         <source>Cannot save to file because it is read-only!</source>
-        <translation>¡No se puede guardar el archivo porque está como sólo-lectura!</translation>
+        <translation>No se puede guardar el archivo porque es de solo lectura.</translation>
     </message>
     <message>
         <location filename="retext.py" line="1175"/>
@@ -383,12 +383,12 @@
     <message>
         <location filename="retext.py" line="1325"/>
         <source>Incorrect user name or password!</source>
-        <translation>¡Nombre de usuario o contraseña incorrectos!</translation>
+        <translation>Nombre de usuario o contraseña incorrectos.</translation>
     </message>
     <message>
         <location filename="retext.py" line="1328"/>
         <source>Authentification failed, please check your internet connection!</source>
-        <translation>¡Autenticación fallida. Compruebe su conexión a internet!</translation>
+        <translation>Falló la autenticación, compruebe su conexión a Internet.</translation>
     </message>
     <message>
         <location filename="retext.py" line="1404"/>
@@ -405,7 +405,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="retext.py" line="1446"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
-        <translation>Sencillo pero potente editor para Markdown y ReStructuredText</translation>
+        <translation>Editor para Markdown y ReStructuredText sencillo pero potente</translation>
     </message>
     <message>
         <location filename="retext.py" line="1446"/>
@@ -430,7 +430,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="retext.py" line="1497"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
-        <translation>¡No se pudo analizar el contenido del archivo. Compruebe si tiene los módulos necesarios instalados!</translation>
+        <translation>No se pudo analizar el contenido del archivo. Compruebe si tiene los módulos necesarios instalados.</translation>
     </message>
 </context>
 </TS>
