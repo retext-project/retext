@@ -1213,12 +1213,12 @@ class ReTextWindow(QMainWindow):
 	
 	def aboutDialog(self):
 		QMessageBox.about(self, self.aboutWindowTitle,
-		'<p><b>'+app_name+' '+app_version+'</b><br>'+self.tr('Simple but powerful editor for Markdown and ReStructuredText')
+		'<p><b>'+app_name+' '+app_version+'</b><br>'+self.tr('Simple but powerful editor for Markdown and reStructuredText')
 		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011')
 		+'<br><a href="http://sourceforge.net/p/retext/">'+self.tr('Website')
 		+'</a> | <a href="http://daringfireball.net/projects/markdown/syntax">'+self.tr('Markdown syntax')
 		+'</a> | <a href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">'
-		+self.tr('ReST syntax')+'</a></p>')
+		+self.tr('reStructuredText syntax')+'</a></p>')
 	
 	def enablePlainText(self, value):
 		self.aptc[self.ind] = value
