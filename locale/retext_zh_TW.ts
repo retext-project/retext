@@ -1,433 +1,385 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="2.0" language="zh_TW" sourcelanguage="">
 <context>
-    <name>LogPassDialog</name>
-    <message>
-        <location filename="retext.py" line="208"/>
-        <source>Enter your Google account data</source>
-        <translation>請輸入您的 Google 帳號訊息</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="217"/>
-        <source>Username</source>
-        <translation>用戶名</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="218"/>
-        <source>Password</source>
-        <translation>密鑰或應用程式碼（適用于兩步式認証的 Google 帳號）</translation>
-    </message>
-</context>
-<context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="retext.py" line="295"/>
+        <location filename="window.py" line="57"/>
         <source>Open</source>
         <translation>開啟</translation>
     </message>
     <message>
-        <location filename="retext.py" line="297"/>
+        <location filename="window.py" line="59"/>
         <source>Save</source>
         <translation>儲存</translation>
     </message>
     <message>
-        <location filename="retext.py" line="302"/>
+        <location filename="window.py" line="64"/>
         <source>Print</source>
         <translation>列印</translation>
     </message>
     <message>
-        <location filename="retext.py" line="312"/>
+        <location filename="window.py" line="74"/>
         <source>Preview</source>
         <translation>預覽</translation>
     </message>
     <message>
-        <location filename="retext.py" line="406"/>
+        <location filename="window.py" line="162"/>
         <source>Tags</source>
         <translation>書籤</translation>
     </message>
     <message>
-        <location filename="retext.py" line="410"/>
+        <location filename="window.py" line="166"/>
         <source>Symbols</source>
         <translation>特殊符號</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1174"/>
+        <location filename="window.py" line="1030"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML 檔案 (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1174"/>
+        <location filename="window.py" line="1030"/>
         <source>Save file</source>
         <translation>儲存檔案</translation>
     </message>
     <message>
-        <location filename="retext.py" line="300"/>
+        <location filename="window.py" line="62"/>
         <source>Save as</source>
         <translation>另存新檔</translation>
     </message>
     <message>
-        <location filename="retext.py" line="329"/>
+        <location filename="window.py" line="91"/>
         <source>Quit</source>
         <translation>離開</translation>
     </message>
     <message>
-        <location filename="retext.py" line="373"/>
+        <location filename="window.py" line="132"/>
         <source>About Qt</source>
         <translation>關於 Qt</translation>
     </message>
     <message>
-        <location filename="retext.py" line="433"/>
+        <location filename="window.py" line="180"/>
         <source>File</source>
         <translation>檔案</translation>
     </message>
     <message>
-        <location filename="retext.py" line="434"/>
+        <location filename="window.py" line="181"/>
         <source>Edit</source>
         <translation>編輯</translation>
     </message>
     <message>
-        <location filename="retext.py" line="435"/>
+        <location filename="window.py" line="182"/>
         <source>Help</source>
         <translation>說明</translation>
     </message>
     <message>
-        <location filename="retext.py" line="449"/>
+        <location filename="window.py" line="195"/>
         <source>Export</source>
         <translation>匯出</translation>
     </message>
     <message>
-        <location filename="retext.py" line="287"/>
+        <location filename="window.py" line="49"/>
         <source>File toolbar</source>
         <translation>檔案工具列</translation>
     </message>
     <message>
-        <location filename="retext.py" line="289"/>
+        <location filename="window.py" line="51"/>
         <source>Edit toolbar</source>
         <translation>編輯工具列</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1197"/>
+        <location filename="window.py" line="1050"/>
         <source>Export document to PDF</source>
         <translation>匯出檔案到 PDF</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1197"/>
+        <location filename="window.py" line="1050"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF 檔案 (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1395"/>
+        <location filename="window.py" line="1174"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>檔案已變更，確定儲存嗎？</translation>
     </message>
     <message>
-        <location filename="retext.py" line="332"/>
+        <location filename="window.py" line="94"/>
         <source>Undo</source>
         <translation>復原</translation>
     </message>
     <message>
-        <location filename="retext.py" line="334"/>
+        <location filename="window.py" line="96"/>
         <source>Redo</source>
         <translation>重做</translation>
     </message>
     <message>
-        <location filename="retext.py" line="336"/>
+        <location filename="window.py" line="98"/>
         <source>Copy</source>
         <translation>複製</translation>
     </message>
     <message>
-        <location filename="retext.py" line="338"/>
+        <location filename="window.py" line="100"/>
         <source>Cut</source>
         <translation>剪下</translation>
     </message>
     <message>
-        <location filename="retext.py" line="340"/>
+        <location filename="window.py" line="102"/>
         <source>Paste</source>
         <translation>貼上</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1421"/>
+        <location filename="window.py" line="1125"/>
         <source>New document</source>
         <translation>新檔</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1032"/>
+        <location filename="window.py" line="901"/>
         <source>All files (*)</source>
         <translation>所有檔案 (*)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="293"/>
+        <location filename="window.py" line="55"/>
         <source>New</source>
         <translation>新增</translation>
     </message>
     <message>
-        <location filename="retext.py" line="438"/>
+        <location filename="window.py" line="185"/>
         <source>Open recent</source>
         <translation>開啟最近的</translation>
     </message>
     <message>
-        <location filename="retext.py" line="351"/>
+        <location filename="window.py" line="113"/>
         <source>Plain text</source>
         <translation>純文本</translation>
     </message>
     <message>
-        <location filename="retext.py" line="399"/>
-        <source>Save to Google Docs</source>
-        <translation>匯出到 Google Docs</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="1316"/>
-        <source>Incorrect user name or password!</source>
-        <translation>用戶名或密鑰不正確!</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="1165"/>
+        <location filename="window.py" line="1021"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Libreoffice 檔案 (*.odt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1165"/>
+        <location filename="window.py" line="1021"/>
         <source>Export document to ODT</source>
         <translation>匯出檔案到 ODT</translation>
     </message>
     <message>
-        <location filename="retext.py" line="306"/>
+        <location filename="window.py" line="68"/>
         <source>View HTML code</source>
         <translation>檢視 HTML 程式碼</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1428"/>
+        <location filename="window.py" line="1205"/>
         <source>HTML code</source>
         <translation>HTML 程式碼</translation>
     </message>
     <message>
-        <location filename="retext.py" line="304"/>
+        <location filename="window.py" line="66"/>
         <source>Print preview</source>
         <translation>列印預覽</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1212"/>
+        <location filename="window.py" line="1066"/>
         <source>Print document</source>
         <translation>列印檔案</translation>
     </message>
     <message>
-        <location filename="retext.py" line="321"/>
+        <location filename="window.py" line="83"/>
         <source>Live preview</source>
         <translation>同步預覽</translation>
     </message>
     <message>
-        <location filename="retext.py" line="903"/>
+        <location filename="window.py" line="772"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>網頁儲存在 &lt;code&gt;html&lt;/code&gt; 目錄。</translation>
     </message>
     <message>
-        <location filename="retext.py" line="916"/>
+        <location filename="window.py" line="783"/>
         <source>Please, save the file somewhere.</source>
         <translation>請，儲存到別的地方呦！</translation>
     </message>
     <message>
-        <location filename="retext.py" line="360"/>
+        <location filename="window.py" line="119"/>
         <source>Generate webpages</source>
         <translation>產生網頁</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1091"/>
+        <location filename="window.py" line="959"/>
         <source>Plain text (*.txt)</source>
         <translation>純文本 (*.txt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="361"/>
+        <location filename="window.py" line="120"/>
         <source>Show</source>
         <translation>顯示</translation>
     </message>
     <message>
-        <location filename="retext.py" line="441"/>
+        <location filename="window.py" line="188"/>
         <source>Directory</source>
         <translation>目錄</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1032"/>
+        <location filename="window.py" line="901"/>
         <source>Supported files</source>
         <translation>支持的檔案格式</translation>
     </message>
     <message>
-        <location filename="retext.py" line="307"/>
+        <location filename="window.py" line="69"/>
         <source>Change default font</source>
         <translation>變更預設字型</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1231"/>
+        <location filename="window.py" line="1087"/>
         <source>Export document</source>
         <translation>匯出檔案</translation>
     </message>
     <message>
-        <location filename="retext.py" line="349"/>
+        <location filename="window.py" line="111"/>
         <source>Enable</source>
         <translation>啟用</translation>
     </message>
     <message>
-        <location filename="retext.py" line="350"/>
+        <location filename="window.py" line="112"/>
         <source>Set locale</source>
         <translation>選擇程式語言</translation>
     </message>
     <message>
-        <location filename="retext.py" line="474"/>
+        <location filename="window.py" line="217"/>
         <source>Spell check</source>
         <translation>拼寫檢查</translation>
     </message>
     <message>
-        <location filename="retext.py" line="819"/>
+        <location filename="window.py" line="647"/>
         <source>Enter locale name (example: en_US)</source>
         <translation>輸入語言名字 (例如: en_US)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="323"/>
+        <location filename="window.py" line="85"/>
         <source>Fullscreen mode</source>
         <translation>全螢幕</translation>
     </message>
     <message>
-        <location filename="retext.py" line="291"/>
+        <location filename="window.py" line="53"/>
         <source>Search toolbar</source>
         <translation>尋找工具列</translation>
     </message>
     <message>
-        <location filename="retext.py" line="308"/>
+        <location filename="window.py" line="70"/>
         <source>Find text</source>
         <translation>尋找文本</translation>
     </message>
     <message>
-        <location filename="retext.py" line="362"/>
+        <location filename="window.py" line="121"/>
         <source>Next</source>
         <translation>下一條</translation>
     </message>
     <message>
-        <location filename="retext.py" line="363"/>
+        <location filename="window.py" line="122"/>
         <source>Previous</source>
         <translation>上一條</translation>
     </message>
     <message>
-        <location filename="retext.py" line="482"/>
+        <location filename="window.py" line="225"/>
         <source>Default editing mode</source>
         <translation>預設編輯模式</translation>
     </message>
     <message>
-        <location filename="retext.py" line="523"/>
+        <location filename="window.py" line="266"/>
         <source>Search</source>
         <translation>尋找</translation>
     </message>
     <message>
-        <location filename="retext.py" line="526"/>
+        <location filename="window.py" line="269"/>
         <source>Case sensitively</source>
         <translation>對大小写敏感</translation>
     </message>
     <message>
-        <location filename="retext.py" line="563"/>
-        <source>You have neither Markdown nor Docutils modules installed!</source>
-        <translation>你既沒有安裝 Markdown 也没有 Docutils 模塊!</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="1437"/>
+        <location filename="window.py" line="1215"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1437"/>
+        <location filename="window.py" line="1215"/>
         <source>Website</source>
         <translation>部落格</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1437"/>
+        <location filename="window.py" line="1215"/>
         <source>Markdown syntax</source>
-        <translation>Markdown 句法</translation>
+        <translation>%s 句法</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1437"/>
-        <source>ReST syntax</source>
-        <translation>ReST 句法</translation>
+        <location filename="window.py" line="1215"/>
+        <source>reStructuredText syntax</source>
+        <translation>reStructuredText 句法</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1094"/>
-        <source>ReStructuredText files</source>
-        <translation>ReStructuredText 檔案</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="1097"/>
-        <source>Markdown files</source>
+        <location filename="window.py" line="962"/>
+        <source>%s files</source>
         <translation>Markdown 檔案</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1437"/>
-        <source>Simple but powerful editor for Markdown and ReStructuredText</source>
-        <translation>簡單高效的 Markdown 與 ReStructuredText 編輯器</translation>
+        <location filename="window.py" line="1215"/>
+        <source>Simple but powerful editor for Markdown and reStructuredText</source>
+        <translation>簡單高效的 Markdown 與 reStructuredText 編輯器</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1488"/>
+        <location filename="window.py" line="693"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>不能處理檔案內容，檢查你是否安裝了必要的模塊！</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1032"/>
+        <location filename="window.py" line="901"/>
         <source>Select one or several files to open</source>
         <translation>選擇一個或多個檔案以開啟</translation>
     </message>
     <message>
-        <location filename="retext.py" line="365"/>
+        <location filename="window.py" line="124"/>
         <source>Get help online</source>
         <translation>在線擷取幫助（英文）</translation>
     </message>
     <message>
-        <location filename="retext.py" line="905"/>
+        <location filename="window.py" line="774"/>
         <source>Show directory</source>
         <translation>顯示目錄</translation>
     </message>
     <message>
-        <location filename="retext.py" line="910"/>
-        <source>Webpages generator is not installed!</source>
-        <translation>網頁生成器未安裝！</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="1112"/>
+        <location filename="window.py" line="976"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>不能儲存檔案因为它是只讀的！</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1319"/>
-        <source>Authentification failed, please check your internet connection!</source>
-        <translation>驗証失敗，請核查您的網絡連接！</translation>
-    </message>
-    <message>
-        <location filename="retext.py" line="394"/>
+        <location filename="window.py" line="153"/>
         <source>Bold</source>
         <translation>加粗</translation>
     </message>
     <message>
-        <location filename="retext.py" line="395"/>
+        <location filename="window.py" line="154"/>
         <source>Italic</source>
         <translation>傾斜</translation>
     </message>
     <message>
-        <location filename="retext.py" line="396"/>
+        <location filename="window.py" line="155"/>
         <source>Underline</source>
         <translation>下劃線</translation>
     </message>
     <message>
-        <location filename="retext.py" line="485"/>
+        <location filename="window.py" line="228"/>
         <source>Formatting</source>
         <translation>樣式</translation>
     </message>
     <message>
-        <location filename="retext.py" line="370"/>
+        <location filename="window.py" line="129"/>
         <source>About %s</source>
         <translation>關於 %s</translation>
     </message>
     <message>
-        <location filename="retext.py" line="353"/>
+        <location filename="window.py" line="115"/>
         <source>Use WebKit renderer</source>
         <translation>使用WebKit渲染</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1255"/>
+        <location filename="window.py" line="1110"/>
         <source>Failed to execute the command:</source>
         <translation>不能執行指令:</translation>
     </message>
