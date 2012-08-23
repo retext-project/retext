@@ -687,7 +687,7 @@ class ReTextWindow(QMainWindow):
 			return self.editBoxes[self.ind].find(text)
 	
 	def getHtml(self, includeStyleSheet=True, includeTitle=True,
-	            includeMeta=False, styleForWebKit=False):
+	            includeMeta=False, styleForWebKit=False, webenv=False):
 		if self.markups[self.ind] is None:
 			return '<p style="color: red">'\
 			+self.tr('Could not parse file contents, check if you have the necessary module installed!')+'</p>'
@@ -713,7 +713,7 @@ class ReTextWindow(QMainWindow):
 		fallbackTitle = self.getDocumentTitle() if includeTitle else ''
 		return self.markups[self.ind].get_whole_html(text,
 			custom_headers=headers, include_stylesheet=includeStyleSheet,
-			fallback_title=fallbackTitle)
+			fallback_title=fallbackTitle, webenv=webenv)
 	
 	def updatePreviewBox(self):
 		self.previewBlocked = False
@@ -989,7 +989,8 @@ class ReTextWindow(QMainWindow):
 		if not QFileInfo(fileName).suffix():
 			fileName += ".html"
 		try:
-			htmltext = self.getHtml(includeStyleSheet=False, includeMeta=True)
+			htmltext = self.getHtml(includeStyleSheet=False, includeMeta=True, 
+			webenv=True)
 		except Exception as e:
 			return self.printError(e)
 		htmlFile = QFile(fileName)
