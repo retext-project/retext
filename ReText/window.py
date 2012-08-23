@@ -122,11 +122,12 @@ class ReTextWindow(QMainWindow):
 		self.actionFindPrev = self.act(self.tr('Previous'), icon='go-previous', shct=QKeySequence.FindPrevious,
 		trig=lambda: self.find(back=True))
 		self.actionHelp = self.act(self.tr('Get help online'), icon='help-contents', trig=self.openHelp)
+		self.aboutWindowTitle = self.tr('About %s', 'Example of final string: About ReText')
 		try:
-			self.aboutWindowTitle = self.tr('About %s') % app_name
+			self.aboutWindowTitle =  self.aboutWindowTitle % app_name
 		except:
 			# For Python 2
-			self.aboutWindowTitle = self.tr('About %s').replace('%s', '%1').arg(app_name)
+			self.aboutWindowTitle = self.aboutWindowTitle.replace('%s', '%1').arg(app_name)
 		self.actionAbout = self.act(self.aboutWindowTitle, icon='help-about', trig=self.aboutDialog)
 		self.actionAbout.setMenuRole(QAction.AboutRole)
 		self.actionAboutQt = self.act(self.tr('About Qt'))
@@ -955,11 +956,11 @@ class ReTextWindow(QMainWindow):
 	def saveFileMain(self, dlg):
 		if (not self.fileNames[self.ind]) or dlg:
 			markupClass = self.getMarkupClass()
-			if markupClass is None:
+			if (markupClass is None) or not hasattr(markupClass, 'defaultExt'):
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
 			else:
-				defaultExt = self.tr('%s files') % markupClass.name + ' (' \
+				defaultExt = self.tr('%s files', 'Example of final string: Markdown files') % markupClass.name + ' (' \
 					+ str.join(' ', ['*'+ext for ext in markupClass.file_extensions]) + ')'
 				ext = markupClass.default_extension
 			self.fileNames[self.ind] = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)

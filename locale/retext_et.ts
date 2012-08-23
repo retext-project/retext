@@ -1,390 +1,390 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="da_DK" sourcelanguage="en">
+<!DOCTYPE TS><TS version="2.0" language="et" sourcelanguage="en_US">
 <context>
     <name>ReTextWindow</name>
     <message>
         <location filename="window.py" line="49"/>
         <source>File toolbar</source>
-        <translation>Fil-værktøjslinie</translation>
+        <translation>Faili tööriistariba</translation>
     </message>
     <message>
         <location filename="window.py" line="51"/>
         <source>Edit toolbar</source>
-        <translation>Redigering-værktøjslinie</translation>
+        <translation>Muuda tööriistariba</translation>
     </message>
     <message>
         <location filename="window.py" line="53"/>
         <source>Search toolbar</source>
-        <translation>Søge-værktøjslinie</translation>
+        <translation>Otsingu tööriistariba</translation>
     </message>
     <message>
         <location filename="window.py" line="55"/>
         <source>New</source>
-        <translation>Ny</translation>
+        <translation>Uus</translation>
     </message>
     <message>
         <location filename="window.py" line="57"/>
         <source>Open</source>
-        <translation>Åben</translation>
+        <translation>Ava</translation>
     </message>
     <message>
         <location filename="window.py" line="59"/>
         <source>Save</source>
-        <translation>Gem</translation>
+        <translation>Salvesta</translation>
     </message>
     <message>
         <location filename="window.py" line="62"/>
         <source>Save as</source>
-        <translation>Gem som</translation>
+        <translation>Salvesta kui...</translation>
     </message>
     <message>
         <location filename="window.py" line="64"/>
         <source>Print</source>
-        <translation>Udskrift</translation>
+        <translation>Prindi</translation>
     </message>
     <message>
         <location filename="window.py" line="66"/>
         <source>Print preview</source>
-        <translation>Udskriftsvisning</translation>
+        <translation>Printimise eelvaade</translation>
     </message>
     <message>
         <location filename="window.py" line="68"/>
         <source>View HTML code</source>
-        <translation>Vis HTML-kode</translation>
+        <translation>Vaata HTML koodi</translation>
     </message>
     <message>
         <location filename="window.py" line="69"/>
         <source>Change default font</source>
-        <translation>Skift standardskrifttype</translation>
+        <translation>Muuda vaikimisi tekstitüüpi</translation>
     </message>
     <message>
         <location filename="window.py" line="70"/>
         <source>Find text</source>
-        <translation>Find tekst</translation>
+        <translation>Leia tekst</translation>
     </message>
     <message>
         <location filename="window.py" line="74"/>
         <source>Preview</source>
-        <translation>Forhåndsvisning</translation>
+        <translation>Eelvaade</translation>
     </message>
     <message>
         <location filename="window.py" line="83"/>
         <source>Live preview</source>
-        <translation>Live-forhåndsvisning</translation>
+        <translation>Aktiivne eelvaade</translation>
     </message>
     <message>
         <location filename="window.py" line="85"/>
         <source>Fullscreen mode</source>
-        <translation>Fuldskærmsvisning</translation>
+        <translation>Täisekraani režiim</translation>
     </message>
     <message>
         <location filename="window.py" line="91"/>
         <source>Quit</source>
-        <translation>Afslut</translation>
+        <translation>Välju</translation>
     </message>
     <message>
         <location filename="window.py" line="94"/>
         <source>Undo</source>
-        <translation>Fortryd</translation>
+        <translation>Võta tagasi</translation>
     </message>
     <message>
         <location filename="window.py" line="96"/>
         <source>Redo</source>
-        <translation>Gendan</translation>
+        <translation>Korda</translation>
     </message>
     <message>
         <location filename="window.py" line="98"/>
         <source>Copy</source>
-        <translation>Kopier</translation>
+        <translation>Kopeeri</translation>
     </message>
     <message>
         <location filename="window.py" line="100"/>
         <source>Cut</source>
-        <translation>Klip</translation>
+        <translation>Lõika</translation>
     </message>
     <message>
         <location filename="window.py" line="102"/>
         <source>Paste</source>
-        <translation>Indsæt</translation>
+        <translation>Aseta</translation>
     </message>
     <message>
         <location filename="window.py" line="111"/>
         <source>Enable</source>
-        <translation>Aktiver</translation>
+        <translation>Luba</translation>
     </message>
     <message>
         <location filename="window.py" line="112"/>
         <source>Set locale</source>
-        <translation>Sæt sprogindstillinger</translation>
+        <translation>Sea regioon</translation>
     </message>
     <message>
         <location filename="window.py" line="113"/>
         <source>Plain text</source>
-        <translation>Ren tekst</translation>
+        <translation>Tavaline tekst</translation>
     </message>
     <message>
         <location filename="window.py" line="115"/>
         <source>Use WebKit renderer</source>
-        <translation>Anvend WebKit-fremviser</translation>
+        <translation>Kasuta WebKit renderdajat</translation>
     </message>
     <message>
         <location filename="window.py" line="119"/>
         <source>Generate webpages</source>
-        <translation>Generer websider</translation>
+        <translation>Tekita veebilehed.</translation>
     </message>
     <message>
         <location filename="window.py" line="120"/>
         <source>Show</source>
-        <translation>Vis</translation>
+        <translation>Näita</translation>
     </message>
     <message>
         <location filename="window.py" line="121"/>
         <source>Next</source>
-        <translation>Næste</translation>
+        <translation>Järgmine</translation>
     </message>
     <message>
         <location filename="window.py" line="122"/>
         <source>Previous</source>
-        <translation>Foregående</translation>
+        <translation>Eelmine</translation>
     </message>
     <message>
         <location filename="window.py" line="124"/>
         <source>Get help online</source>
-        <translation>Find hjælp online</translation>
+        <translation>Saa abi internetist</translation>
     </message>
     <message>
         <location filename="window.py" line="125"/>
         <source>About %s</source>
         <comment>Example of final string: About ReText</comment>
-        <translation>Om %s</translation>
+        <translation>%s kohta</translation>
     </message>
     <message>
         <location filename="window.py" line="133"/>
         <source>About Qt</source>
-        <translation>Om Qt</translation>
+        <translation>Qt kohta</translation>
     </message>
     <message>
         <location filename="window.py" line="154"/>
         <source>Bold</source>
-        <translation>Fed</translation>
+        <translation>Rasvane</translation>
     </message>
     <message>
         <location filename="window.py" line="155"/>
         <source>Italic</source>
-        <translation>Kursiv</translation>
+        <translation>Kaldu</translation>
     </message>
     <message>
         <location filename="window.py" line="156"/>
         <source>Underline</source>
-        <translation>Understregning</translation>
+        <translation>Allajoonitud</translation>
     </message>
     <message>
         <location filename="window.py" line="163"/>
         <source>Tags</source>
-        <translation>Tags</translation>
+        <translation>Sildid</translation>
     </message>
     <message>
         <location filename="window.py" line="167"/>
         <source>Symbols</source>
-        <translation>Symboler</translation>
+        <translation>Sümbolid</translation>
     </message>
     <message>
         <location filename="window.py" line="181"/>
         <source>File</source>
-        <translation>Fil</translation>
+        <translation>Fail</translation>
     </message>
     <message>
         <location filename="window.py" line="182"/>
         <source>Edit</source>
-        <translation>Rediger</translation>
+        <translation>Muuda</translation>
     </message>
     <message>
         <location filename="window.py" line="183"/>
         <source>Help</source>
-        <translation>Hjælp</translation>
+        <translation>Abi</translation>
     </message>
     <message>
         <location filename="window.py" line="186"/>
         <source>Open recent</source>
-        <translation>Åben seneste</translation>
+        <translation>Ava hiljutine</translation>
     </message>
     <message>
         <location filename="window.py" line="189"/>
         <source>Directory</source>
-        <translation>Mappe</translation>
+        <translation>Kataloog</translation>
     </message>
     <message>
         <location filename="window.py" line="196"/>
         <source>Export</source>
-        <translation>Eksport</translation>
+        <translation>Ekspordi</translation>
     </message>
     <message>
         <location filename="window.py" line="218"/>
         <source>Spell check</source>
-        <translation>Stavekontrol</translation>
+        <translation>Õigekirjakontroll</translation>
     </message>
     <message>
         <location filename="window.py" line="226"/>
         <source>Default editing mode</source>
-        <translation>Standardredigering</translation>
+        <translation>Vaikimisi redigeerimise režiim</translation>
     </message>
     <message>
         <location filename="window.py" line="229"/>
         <source>Formatting</source>
-        <translation>Formattering</translation>
+        <translation>Vormindus</translation>
     </message>
     <message>
         <location filename="window.py" line="267"/>
         <source>Search</source>
-        <translation>Søg</translation>
+        <translation>Otsi</translation>
     </message>
     <message>
         <location filename="window.py" line="270"/>
         <source>Case sensitively</source>
-        <translation>Skelnen mellem store og små bogstaver</translation>
+        <translation>Tõstutundeliselt</translation>
     </message>
     <message>
         <location filename="window.py" line="1126"/>
         <source>New document</source>
-        <translation>Nyt dokument</translation>
+        <translation>Uus dokument</translation>
     </message>
     <message>
         <location filename="window.py" line="648"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation>Indtast sprogindstilling (eksempel:en_US)</translation>
+        <translation>Sisesta regiooni nimi (näiteks en_US)</translation>
     </message>
     <message>
         <location filename="window.py" line="784"/>
         <source>Please, save the file somewhere.</source>
-        <translation>Gem venligst filen et sted.</translation>
+        <translation>Palun salvesta fail kuhugi.</translation>
     </message>
     <message>
         <location filename="window.py" line="773"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
-        <translation>Sider gemt i &lt;code&gt;html&lt;/code&gt;-mappe.</translation>
+        <translation>Veebilehed salvestatud &lt;code&gt;html&lt;/code&gt; kataloogi.</translation>
     </message>
     <message>
         <location filename="window.py" line="775"/>
         <source>Show directory</source>
-        <translation>Vis mappe</translation>
+        <translation>Näita kataloogi</translation>
     </message>
     <message>
         <location filename="window.py" line="902"/>
         <source>Select one or several files to open</source>
-        <translation>Vælg en eller flere filer, der skal åbnes</translation>
+        <translation>Vali avamiseks üks või mitu faili</translation>
     </message>
     <message>
         <location filename="window.py" line="902"/>
         <source>Supported files</source>
-        <translation>Understøttede filer</translation>
+        <translation>Toetatud failid</translation>
     </message>
     <message>
         <location filename="window.py" line="902"/>
         <source>All files (*)</source>
-        <translation>Alle filer (*)</translation>
+        <translation>Kõik failid (*)</translation>
     </message>
     <message>
         <location filename="window.py" line="960"/>
         <source>Plain text (*.txt)</source>
-        <translation>Ren tekst (*.txt)</translation>
+        <translation>Tavaline tekst (*.txt)</translation>
     </message>
     <message>
         <location filename="window.py" line="1031"/>
         <source>Save file</source>
-        <translation>Gem fil</translation>
+        <translation>Salvesta fail</translation>
     </message>
     <message>
         <location filename="window.py" line="977"/>
         <source>Cannot save to file because it is read-only!</source>
-        <translation>Kan ikke gemme filen, fordi den er skrivebeskyttet!</translation>
+        <translation>Ei saa faili salvestada, kuna see fail on ainult lugemiseks!</translation>
     </message>
     <message>
         <location filename="window.py" line="1022"/>
         <source>Export document to ODT</source>
-        <translation>Eksporter dokument til ODT</translation>
+        <translation>Ekspordi dokument ODT formaati</translation>
     </message>
     <message>
         <location filename="window.py" line="1022"/>
         <source>OpenDocument text files (*.odt)</source>
-        <translation>OpenDocument-tekstfiler (*.odt)</translation>
+        <translation>OpenDocument tekstifailid (.*odt)</translation>
     </message>
     <message>
         <location filename="window.py" line="1031"/>
         <source>HTML files (*.html *.htm)</source>
-        <translation>HTML-filer (*.html *.htm)</translation>
+        <translation>HTML failid (*.html, *.htm)</translation>
     </message>
     <message>
         <location filename="window.py" line="1051"/>
         <source>Export document to PDF</source>
-        <translation>Eksporter dokument til PDF</translation>
+        <translation>Ekspordi dokument PDF&apos;ina</translation>
     </message>
     <message>
         <location filename="window.py" line="1051"/>
         <source>PDF files (*.pdf)</source>
-        <translation>PDF-filer (*.pdf)</translation>
+        <translation>PDF failid (*.pdf)</translation>
     </message>
     <message>
         <location filename="window.py" line="1067"/>
         <source>Print document</source>
-        <translation>Udskriv dokument</translation>
+        <translation>Prindi dokument</translation>
     </message>
     <message>
         <location filename="window.py" line="1088"/>
         <source>Export document</source>
-        <translation>Eksporter dokument</translation>
+        <translation>Ekspordi dokument</translation>
     </message>
     <message>
         <location filename="window.py" line="1111"/>
         <source>Failed to execute the command:</source>
-        <translation>Kunne ikke udføre kommandoen:</translation>
+        <translation>Järgmise käsu täitmine ebaõnnestus:</translation>
     </message>
     <message>
         <location filename="window.py" line="1175"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
-        <translation>Dokumentet er blevet ændret.
-Ønsker du at gemme dine ændringer?</translation>
+        <translation>Dokumenti on muudetud.
+Soovid salvestada oma muudatused?</translation>
     </message>
     <message>
         <location filename="window.py" line="1206"/>
         <source>HTML code</source>
-        <translation>HTML-kode</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1216"/>
-        <source>Author: Dmitry Shachnev, 2011</source>
-        <translation>Forfatter: Dmitry Shachnev, 2011</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1216"/>
-        <source>Website</source>
-        <translation>Hjemmeside</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1216"/>
-        <source>Markdown syntax</source>
-        <translation>Markdown-syntaks</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1216"/>
-        <source>reStructuredText syntax</source>
-        <translation>reStructuredText-syntaks</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="694"/>
-        <source>Could not parse file contents, check if you have the necessary module installed!</source>
-        <translation>Kunne ikke indlæse filens indhold, efterse, at du har de rette moduler installeret!</translation>
+        <translation>HTML kood</translation>
     </message>
     <message>
         <location filename="window.py" line="1216"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>Enkel men stærk editor til Markdown og reStructuredText</translation>
+        <translation>Lihtne aga võimas Markdown ja reStructuredText redaktor</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1216"/>
+        <source>Author: Dmitry Shachnev, 2011</source>
+        <translation>Autor: Dmitry Shachnev, 2011</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1216"/>
+        <source>Website</source>
+        <translation>Veebileht</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1216"/>
+        <source>Markdown syntax</source>
+        <translation>Markdown süntaks</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1216"/>
+        <source>reStructuredText syntax</source>
+        <translation>reStructuredText süntaks</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="694"/>
+        <source>Could not parse file contents, check if you have the necessary module installed!</source>
+        <translation>Ei suutnud faili sisu töödelda, kontrolli kas sul on vajalikud moodulid paigaldatud!</translation>
     </message>
     <message>
         <location filename="window.py" line="963"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
-        <translation>%s-filer</translation>
+        <translation>%s failid</translation>
     </message>
 </context>
 </TS>

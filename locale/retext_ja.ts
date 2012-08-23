@@ -3,7 +3,7 @@
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="window.py" line="1125"/>
+        <location filename="window.py" line="1126"/>
         <source>New document</source>
         <translation>新規文書</translation>
     </message>
@@ -128,7 +128,7 @@
         <translation>プレーンテキスト</translation>
     </message>
     <message>
-        <location filename="window.py" line="185"/>
+        <location filename="window.py" line="186"/>
         <source>Open recent</source>
         <translation>最近使用したファイル</translation>
     </message>
@@ -158,194 +158,189 @@
         <translation>オンラインでヘルプを読む</translation>
     </message>
     <message>
-        <location filename="window.py" line="132"/>
+        <location filename="window.py" line="133"/>
         <source>About Qt</source>
         <translation>Qtについて</translation>
     </message>
     <message>
-        <location filename="window.py" line="162"/>
+        <location filename="window.py" line="163"/>
         <source>Tags</source>
         <translation>タグ</translation>
     </message>
     <message>
-        <location filename="window.py" line="166"/>
+        <location filename="window.py" line="167"/>
         <source>Symbols</source>
         <translation>シンボル</translation>
     </message>
     <message>
-        <location filename="window.py" line="180"/>
+        <location filename="window.py" line="181"/>
         <source>File</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="window.py" line="181"/>
+        <location filename="window.py" line="182"/>
         <source>Edit</source>
         <translation>編集</translation>
     </message>
     <message>
-        <location filename="window.py" line="182"/>
+        <location filename="window.py" line="183"/>
         <source>Help</source>
         <translation>ヘルプ</translation>
     </message>
     <message>
-        <location filename="window.py" line="188"/>
+        <location filename="window.py" line="189"/>
         <source>Directory</source>
         <translation>ディレクトリ</translation>
     </message>
     <message>
-        <location filename="window.py" line="195"/>
+        <location filename="window.py" line="196"/>
         <source>Export</source>
         <translation>エクスポート</translation>
     </message>
     <message>
-        <location filename="window.py" line="217"/>
+        <location filename="window.py" line="218"/>
         <source>Spell check</source>
         <translation>スペルチェック</translation>
     </message>
     <message>
-        <location filename="window.py" line="225"/>
+        <location filename="window.py" line="226"/>
         <source>Default editing mode</source>
         <translation>規定の編集モード</translation>
     </message>
     <message>
-        <location filename="window.py" line="266"/>
+        <location filename="window.py" line="267"/>
         <source>Search</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location filename="window.py" line="269"/>
+        <location filename="window.py" line="270"/>
         <source>Case sensitively</source>
         <translation>大文字と小文字を区別</translation>
     </message>
     <message>
-        <location filename="window.py" line="647"/>
+        <location filename="window.py" line="648"/>
         <source>Enter locale name (example: en_US)</source>
         <translation>ロケール名を入力 (例: en_US)</translation>
     </message>
     <message>
-        <location filename="window.py" line="783"/>
+        <location filename="window.py" line="784"/>
         <source>Please, save the file somewhere.</source>
         <translation>どこかにファイルを保存してください.</translation>
     </message>
     <message>
-        <location filename="window.py" line="772"/>
+        <location filename="window.py" line="773"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Webページを&lt;code&gt;html&lt;/code&gt;ディレクトリに保存しました.</translation>
     </message>
     <message>
-        <location filename="window.py" line="774"/>
+        <location filename="window.py" line="775"/>
         <source>Show directory</source>
         <translation>ディレクトリを表示</translation>
     </message>
     <message>
-        <location filename="window.py" line="901"/>
+        <location filename="window.py" line="902"/>
         <source>Select one or several files to open</source>
         <translation>開くには一つまたは複数のファイルを選択します</translation>
     </message>
     <message>
-        <location filename="window.py" line="901"/>
+        <location filename="window.py" line="902"/>
         <source>Supported files</source>
         <translation>サポートされているファイル</translation>
     </message>
     <message>
-        <location filename="window.py" line="901"/>
+        <location filename="window.py" line="902"/>
         <source>All files (*)</source>
         <translation>すべてのファイル (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="959"/>
+        <location filename="window.py" line="960"/>
         <source>Plain text (*.txt)</source>
         <translation>プレーンテキスト (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="962"/>
-        <source>%s files</source>
-        <translation>%sファイル</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1030"/>
+        <location filename="window.py" line="1031"/>
         <source>Save file</source>
         <translation>ファイルを保存</translation>
     </message>
     <message>
-        <location filename="window.py" line="976"/>
+        <location filename="window.py" line="977"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>読み取り専用ファイルなので保存できません!</translation>
     </message>
     <message>
-        <location filename="window.py" line="1021"/>
+        <location filename="window.py" line="1022"/>
         <source>Export document to ODT</source>
         <translation>文書をODTにエクスポート</translation>
     </message>
     <message>
-        <location filename="window.py" line="1021"/>
+        <location filename="window.py" line="1022"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocumentテキストファイル (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1030"/>
+        <location filename="window.py" line="1031"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTMLファイル (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1050"/>
+        <location filename="window.py" line="1051"/>
         <source>Export document to PDF</source>
         <translation>文書をPDFにエクスポート</translation>
     </message>
     <message>
-        <location filename="window.py" line="1050"/>
+        <location filename="window.py" line="1051"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDFファイル (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1066"/>
+        <location filename="window.py" line="1067"/>
         <source>Print document</source>
         <translation>文書を印刷</translation>
     </message>
     <message>
-        <location filename="window.py" line="1087"/>
+        <location filename="window.py" line="1088"/>
         <source>Export document</source>
         <translation>文書をエクスポート</translation>
     </message>
     <message>
-        <location filename="window.py" line="1174"/>
+        <location filename="window.py" line="1175"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>文書は変更されています.
 変更内容を保存しますか?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1205"/>
+        <location filename="window.py" line="1206"/>
         <source>HTML code</source>
         <translation>HTMLコード</translation>
     </message>
     <message>
-        <location filename="window.py" line="1215"/>
+        <location filename="window.py" line="1216"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>MarkdownとreStructuredTextのためのシンプルで強力なエディタ</translation>
     </message>
     <message>
-        <location filename="window.py" line="1215"/>
+        <location filename="window.py" line="1216"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1215"/>
+        <location filename="window.py" line="1216"/>
         <source>Website</source>
         <translation>Webサイト</translation>
     </message>
     <message>
-        <location filename="window.py" line="1215"/>
+        <location filename="window.py" line="1216"/>
         <source>Markdown syntax</source>
         <translation>Markdown記法</translation>
     </message>
     <message>
-        <location filename="window.py" line="1215"/>
+        <location filename="window.py" line="1216"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText記法</translation>
     </message>
     <message>
-        <location filename="window.py" line="693"/>
+        <location filename="window.py" line="694"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>ファイル内容が解析できません。必要なモジュールがインストールされているか確認してください!</translation>
     </message>
@@ -355,34 +350,41 @@ Do you want to save your changes?</source>
         <translation>WebKitレンダラーを使用</translation>
     </message>
     <message>
-        <location filename="window.py" line="129"/>
+        <location filename="window.py" line="125"/>
         <source>About %s</source>
+        <comment>Example of final string: About ReText</comment>
         <translation>%s について</translation>
     </message>
     <message>
-        <location filename="window.py" line="153"/>
+        <location filename="window.py" line="154"/>
         <source>Bold</source>
         <translation>太字</translation>
     </message>
     <message>
-        <location filename="window.py" line="154"/>
+        <location filename="window.py" line="155"/>
         <source>Italic</source>
         <translation>斜体</translation>
     </message>
     <message>
-        <location filename="window.py" line="155"/>
+        <location filename="window.py" line="156"/>
         <source>Underline</source>
         <translation>下線</translation>
     </message>
     <message>
-        <location filename="window.py" line="228"/>
+        <location filename="window.py" line="229"/>
         <source>Formatting</source>
         <translation>書式</translation>
     </message>
     <message>
-        <location filename="window.py" line="1110"/>
+        <location filename="window.py" line="1111"/>
         <source>Failed to execute the command:</source>
         <translation>コマンドの実行に失敗しました:</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="963"/>
+        <source>%s files</source>
+        <comment>Example of final string: Markdown files</comment>
+        <translation>%sファイル</translation>
     </message>
 </context>
 </TS>
