@@ -956,7 +956,7 @@ class ReTextWindow(QMainWindow):
 	def saveFileMain(self, dlg):
 		if (not self.fileNames[self.ind]) or dlg:
 			markupClass = self.getMarkupClass()
-			if (markupClass is None) or not hasattr(markupClass, 'defaultExt'):
+			if (markupClass is None) or not hasattr(markupClass, 'default_extension'):
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
 			else:
