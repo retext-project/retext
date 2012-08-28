@@ -553,6 +553,7 @@ class ReTextWindow(QMainWindow):
 			except:
 				# For Python 3
 				self.setWindowTitle(self.tr('New document') + '[*] \u2014 ' + app_name)
+			self.docTypeChanged()
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
 		self.livePreviewEnabled = self.alpc[ind]
 		if self.alpc[ind]:
