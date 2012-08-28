@@ -156,7 +156,7 @@ class ReTextWindow(QMainWindow):
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
 		trig=lambda: self.insertTag(9)) # <u>...</u>
 		self.usefulTags = ('big', 'center', 's', 'small', 'span', 'table', 'td', 'tr', 'u')
-		self.usefulChars = ('deg', 'divide', 'hellip', 'laquo', 'larr',
+		self.usefulChars = ('deg', 'divide', 'dollar', 'hellip', 'laquo', 'larr',
 			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
 			'rarr', 'rsquo', 'times')
 		self.tagsBox = QComboBox(self.editBar)
