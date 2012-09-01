@@ -1,10 +1,12 @@
-3.1
+## 3.1
+
 * Spell checker suggestions
 * Markup-specifing highlighting
 * Re-written parser & document-type logic
 * Lots of code clean-up
 
-3.0
+## 3.0
+
 * Python 3 support
 * Improved highlighter
 * Export extensions
@@ -13,40 +15,47 @@
 * Shortcuts for formatting
 * WebKit engine improvements
 
-2.1
+## 2.1
+
 * Ability to use QtWebKit
 * Splitter between edit and preview boxes
 * Support for opening several files via command-line
 * Support for GData 3 API and replacing existing document in Google Docs
 * Help page
 
-2.0
-* Support for reST (reStructuredText), with a GUI option to switch between Markdown and reST
+## 2.0
+
+* Support for reStructuredText, with a GUI option to switch between
+  Markdown and reStructuredText
 * Text search
 * Global CSS file support
 * File auto-save support
 * WpGen 0.4, also with reST support
 * Getting title from ReST title or Markdown metadata
 * Changed the default extension for Markdown to .mkd
-* New "About" dialog
+* New “About” dialog
 
-1.1
+## 1.1
+
 * Added spell checker based on enchant
 * Added fullscreen mode
 
-1.0
+## 1.0
+
 * First stable release
-* Add "Select default font" option
-* Use HTML input when Markdown not loaded
+* Add “Select default font” option
+* Use HTML input when Markdown is not loaded
 * Add Ctrl+Shift+E sequence for Live preview
 
-0.8
-* Add "Show folder", "Markdown syntax exapmles" actions
+## 0.8
+
+* Add “Show folder”, “Markdown syntax exapmles" actions
 * Start even if Markdown is not installed
 * Do not highlight quotes outside the tags
-* Save plain text documents with *.txt format
+* Save plain text documents with `*.txt` format
 
-0.7
+## 0.7
+
 * Tabs support
 * GUI for WpGen
 * Launching preview on Ctrl+E shortcut
