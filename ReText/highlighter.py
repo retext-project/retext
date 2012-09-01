@@ -19,11 +19,12 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			('___[^_]+___', None, QFont.Bold, True),           # 9: ___BoldItalics___
 			('^#.+', None, QFont.Black),                       # 10: Headers
 			(r'(?<=\[)[^\[\]]*(?=\])', Qt.blue, QFont.Normal), # 11: Links and images
-			(r'(?<=\]\()[^\(\)]*(?=\))', None, QFont.Normal, True, True) # 12: Link references
+			(r'(?<=\]\()[^\(\)]*(?=\))', None, QFont.Normal, True, True), # 12: Link references
+			('^ *>', Qt.darkGray, QFont.Bold)                  # 13: Blockquotes
 		)
 		patternsDict = {
 			DOCTYPE_NONE: (),
-			DOCTYPE_MARKDOWN: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+			DOCTYPE_MARKDOWN: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13),
 			DOCTYPE_REST: (4, 6),
 			DOCTYPE_HTML: (0, 1, 2, 3)
 		}
