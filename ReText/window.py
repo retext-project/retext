@@ -421,21 +421,40 @@ class ReTextWindow(QMainWindow):
 	def editBoxKeyPressEvent(self, event):
 		key = event.key()
 		editBox = self.editBoxes[self.ind]
+		cursor = editBox.textCursor()
 		if key == Qt.Key_Tab:
 			self.editBoxIndentMore(editBox)
 		elif key == Qt.Key_Backtab:
 			self.editBoxIndentLess(editBox)
-		elif key == Qt.Key_Return and event.modifiers() == Qt.ShiftModifier:
-			# Markdown-style line break
-			markupClass = self.getMarkupClass()
-			cursor = editBox.textCursor()
-			if (markupClass and markupClass.name == DOCTYPE_MARKDOWN
-			and not cursor.hasSelection()):
-				cursor.insertText('  \n')
+		elif key == Qt.Key_Return and not cursor.hasSelection():
+			markdownLineBreak = False
+			if event.modifiers() & Qt.ShiftModifier:
+				# Markdown-style line break
+				markupClass = self.getMarkupClass()
+				if markupClass and markupClass.name == DOCTYPE_MARKDOWN:
+					markdownLineBreak = True
+			if event.modifiers() & Qt.ControlModifier:
+				if markdownLineBreak:
+					cursor.insertText('  ')
+				cursor.insertText('\n')
 			else:
-				QTextEdit.keyPressEvent(editBox, event)
+				self.editBoxHandleReturn(editBox, cursor, markdownLineBreak)
 		else:
 			QTextEdit.keyPressEvent(editBox, event)
+	
+	def editBoxHandleReturn(self, editBox, cursor, markdownLineBreak):
+		# Select text between the cursor and the line start
+		cursor.movePosition(QTextCursor.StartOfLine, QTextCursor.KeepAnchor)
+		text = convertToUnicode(cursor.selectedText())
+		length = len(text)
+		pos = 0
+		while pos < length and text[pos] in (' ', '\t'):
+			pos += 1
+		# Reset the cursor
+		cursor = editBox.textCursor()
+		if markdownLineBreak:
+			cursor.insertText('  ')
+		cursor.insertText('\n'+text[:pos])
 	
 	def editBoxIndentMore(self, editBox):
 		cursor = editBox.textCursor()
