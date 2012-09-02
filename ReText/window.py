@@ -2,6 +2,7 @@ from ReText import *
 from ReText.webpages import wpInit, wpUpdateAll
 from ReText.htmldialog import HtmlDialog
 from ReText.highlighter import ReTextHighlighter
+from ReText.editor import ReTextEdit
 
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
@@ -348,7 +349,7 @@ class ReTextWindow(QMainWindow):
 	
 	def createTab(self, fileName):
 		self.previewBlocked = False
-		self.editBoxes.append(QTextEdit())
+		self.editBoxes.append(ReTextEdit(self))
 		self.highlighters.append(ReTextHighlighter(self.editBoxes[-1].document()))
 		if enchant_available and self.actionEnableSC.isChecked():
 			self.highlighters[-1].dictionary = \
@@ -359,8 +360,6 @@ class ReTextWindow(QMainWindow):
 		else:
 			self.previewBoxes.append(QTextEdit())
 			self.previewBoxes[-1].setReadOnly(True)
-		self.editBoxes[-1].contextMenuEvent = self.editBoxMenuEvent
-		self.editBoxes[-1].keyPressEvent = self.editBoxKeyPressEvent
 		self.previewBoxes[-1].setVisible(False)
 		self.fileNames.append(fileName)
 		markupClass = self.getMarkupClass(fileName)
@@ -370,134 +369,14 @@ class ReTextWindow(QMainWindow):
 		self.apc.append(liveMode)
 		self.alpc.append(liveMode)
 		self.aptc.append(False)
-		self.editBoxes[-1].setFont(monofont)
 		metrics = QFontMetrics(self.editBoxes[-1].font())
 		self.editBoxes[-1].setTabStopWidth(self.tabWidth*metrics.width(' '))
-		self.editBoxes[-1].setAcceptRichText(False)
 		self.connect(self.editBoxes[-1], SIGNAL('textChanged()'), self.updateLivePreviewBox)
 		self.connect(self.editBoxes[-1], SIGNAL('undoAvailable(bool)'), self.actionUndo, SLOT('setEnabled(bool)'))
 		self.connect(self.editBoxes[-1], SIGNAL('redoAvailable(bool)'), self.actionRedo, SLOT('setEnabled(bool)'))
 		self.connect(self.editBoxes[-1], SIGNAL('copyAvailable(bool)'), self.enableCopy)
 		self.connect(self.editBoxes[-1].document(), SIGNAL('modificationChanged(bool)'), self.modificationChanged)
 		return self.getSplitter(-1)
-	
-	def editBoxMenuEvent(self, event):
-		editBox = self.editBoxes[self.ind]
-		text = editBox.toPlainText()
-		dictionary = self.highlighters[self.ind].dictionary
-		if (dictionary is None) or not text:
-			return QTextEdit.contextMenuEvent(editBox, event)
-		oldcursor = editBox.textCursor()
-		cursor = editBox.cursorForPosition(event.pos())
-		pos = cursor.positionInBlock()
-		if pos == len(text): pos -= 1
-		try:
-			curchar = text[pos]
-			isalpha = curchar.isalpha()
-		except AttributeError:
-			# For Python 2
-			curchar = text.at(pos)
-			isalpha = curchar.isLetter()
-		cursor.select(QTextCursor.WordUnderCursor)
-		if not isalpha or (oldcursor.hasSelection() and
-		oldcursor.selectedText() != cursor.selectedText()):
-			return QTextEdit.contextMenuEvent(editBox, event)
-		editBox.setTextCursor(cursor)
-		word = convertToUnicode(cursor.selectedText())
-		if not word or dictionary.check(word):
-			editBox.setTextCursor(oldcursor)
-			return QTextEdit.contextMenuEvent(editBox, event)
-		suggestions = dictionary.suggest(word)
-		actions = [self.act(sug, trig=self.fixWord(sug)) for sug in suggestions]
-		menu = editBox.createStandardContextMenu()
-		menu.insertSeparator(menu.actions()[0])
-		for action in actions[::-1]:
-			menu.insertAction(menu.actions()[0], action) 
-		menu.exec_(event.globalPos())
-	
-	def fixWord(self, correctword):
-		return lambda: self.editBoxes[self.ind].insertPlainText(correctword)
-	
-	def editBoxKeyPressEvent(self, event):
-		key = event.key()
-		editBox = self.editBoxes[self.ind]
-		cursor = editBox.textCursor()
-		if key == Qt.Key_Tab:
-			self.editBoxIndentMore(editBox)
-		elif key == Qt.Key_Backtab:
-			self.editBoxIndentLess(editBox)
-		elif key == Qt.Key_Return and not cursor.hasSelection():
-			markdownLineBreak = False
-			if event.modifiers() & Qt.ShiftModifier:
-				# Markdown-style line break
-				markupClass = self.getMarkupClass()
-				if markupClass and markupClass.name == DOCTYPE_MARKDOWN:
-					markdownLineBreak = True
-			if event.modifiers() & Qt.ControlModifier:
-				if markdownLineBreak:
-					cursor.insertText('  ')
-				cursor.insertText('\n')
-			else:
-				self.editBoxHandleReturn(editBox, cursor, markdownLineBreak)
-		else:
-			QTextEdit.keyPressEvent(editBox, event)
-	
-	def editBoxHandleReturn(self, editBox, cursor, markdownLineBreak):
-		# Select text between the cursor and the line start
-		cursor.movePosition(QTextCursor.StartOfLine, QTextCursor.KeepAnchor)
-		text = convertToUnicode(cursor.selectedText())
-		length = len(text)
-		pos = 0
-		while pos < length and text[pos] in (' ', '\t'):
-			pos += 1
-		# Reset the cursor
-		cursor = editBox.textCursor()
-		if markdownLineBreak:
-			cursor.insertText('  ')
-		cursor.insertText('\n'+text[:pos])
-	
-	def editBoxIndentMore(self, editBox):
-		cursor = editBox.textCursor()
-		if cursor.hasSelection():
-			block = editBox.document().findBlock(cursor.selectionStart())
-			end = editBox.document().findBlock(cursor.selectionEnd()).next()
-			cursor.beginEditBlock()
-			while block != end:
-				cursor.setPosition(block.position())
-				if self.tabInsertsSpaces:
-					cursor.insertText(' ' * self.tabWidth)
-				else:
-					cursor.insertText('\t')
-				block = block.next()
-			cursor.endEditBlock()
-		else:
-			indent = self.tabWidth - (cursor.positionInBlock() % self.tabWidth)
-			if self.tabInsertsSpaces:
-				cursor.insertText(' ' * indent)
-			else:
-				cursor.insertText('\t')
-	
-	def editBoxIndentLess(self, editBox):
-		cursor = editBox.textCursor()
-		if cursor.hasSelection():
-			block = editBox.document().findBlock(cursor.selectionStart())
-			end = editBox.document().findBlock(cursor.selectionEnd()).next()
-		else:
-			block = editBox.document().findBlock(cursor.position())
-			end = block.next()
-		cursor.beginEditBlock()
-		while block != end:
-			cursor.setPosition(block.position())
-			if editBox.document().characterAt(cursor.position()) == '\t':
-				cursor.deleteChar()
-			else:
-				pos = 0
-				while editBox.document().characterAt(cursor.position()) == ' ' \
-				and pos < self.tabWidth:
-					pos += 1
-					cursor.deleteChar()
-			block = block.next()
-		cursor.endEditBlock()
 	
 	def closeTab(self, ind):
 		if self.maybeSave(ind):
