@@ -7,6 +7,18 @@ class ReTextEdit(QTextEdit):
 		self.setFont(monofont)
 		self.setAcceptRichText(False)
 	
+	def paintEvent(self, event):
+		if not self.parent.rightMargin:
+			return QTextEdit.paintEvent(self, event)
+		painter = QPainter(self.viewport())
+		painter.setPen(QColor(230, 230, 200))
+		y1 = self.rect().topLeft().y()
+		y2 = self.rect().bottomLeft().y()
+		x = (self.cursorRect(self.cursorForPosition(QPoint())).topLeft().x()
+			+ self.fontMetrics().width(" "*self.parent.rightMargin))
+		painter.drawLine(QLine(x, y1, x, y2))
+		QTextEdit.paintEvent(self, event)
+	
 	def getHighlighter(self):
 		return self.parent.highlighters[self.parent.ind]
 	

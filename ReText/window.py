@@ -29,6 +29,7 @@ class ReTextWindow(QMainWindow):
 			self.font = None
 		self.tabWidth = readFromSettings('tabWidth', int, default=4)
 		self.tabInsertsSpaces = readFromSettings('tabInsertsSpaces', bool, default=True)
+		self.rightMargin = readFromSettings('rightMargin', int, default=0)
 		self.handleLinks = readFromSettings('handleWebLinks', bool, default=False)
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
