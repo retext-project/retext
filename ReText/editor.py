@@ -7,7 +7,7 @@ class ReTextEdit(QTextEdit):
 		self.setFont(monofont)
 		self.setAcceptRichText(False)
 		self.marginx = (self.cursorRect(self.cursorForPosition(QPoint())).topLeft().x()
-			+ self.fontMetrics().width(" "*self.parent.rightMargin))
+			+ self.fontMetrics().width(" "*parent.rightMargin))
 	
 	def paintEvent(self, event):
 		if not self.parent.rightMargin:
