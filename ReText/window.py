@@ -623,6 +623,8 @@ class ReTextWindow(QMainWindow):
 		if textedit:
 			scrollbar = pb.verticalScrollBar()
 			scrollpos = scrollbar.value()
+			maximum = (scrollpos == scrollbar.maximum()
+				and scrollpos != scrollbar.minimum())
 		else:
 			frame = pb.page().mainFrame()
 			scrollpos = frame.scrollPosition()
@@ -655,7 +657,10 @@ class ReTextWindow(QMainWindow):
 		if self.font and textedit:
 			pb.document().setDefaultFont(self.font)
 		if textedit:
-			scrollbar.setValue(scrollpos)
+			if maximum:
+				scrollbar.triggerAction(QScrollBar.SliderToMaximum)
+			else:
+				scrollbar.setValue(scrollpos)
 		else:
 			frame.setScrollPosition(scrollpos)
 	
