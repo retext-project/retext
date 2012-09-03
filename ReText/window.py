@@ -978,9 +978,6 @@ class ReTextWindow(QMainWindow):
 			return
 		printer = self.standardPrinter()
 		preview = QPrintPreviewDialog(printer, self)
-		# Remove Dialog flag, then add a maximize button using bitwise XORs
-		notDialog = preview.windowFlags() ^ (Qt.Window ^ Qt.Dialog)
-		preview.setWindowFlags(notDialog ^ Qt.WindowMaximizeButtonHint)
 		self.connect(preview, SIGNAL("paintRequested(QPrinter*)"), document.print_)
 		preview.exec_()
 	
