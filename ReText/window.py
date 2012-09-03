@@ -415,11 +415,11 @@ class ReTextWindow(QMainWindow):
 			return markupClass(filename=fileName)
 	
 	def docTypeChanged(self):
-		self.markups[self.ind] = self.getMarkup()
 		oldType = self.highlighters[self.ind].docType
 		markupClass = self.getMarkupClass()
 		newType = markupClass.name if markupClass else ''
 		if oldType != newType:
+			self.markups[self.ind] = self.getMarkup()
 			self.updatePreviewBox()
 			self.highlighters[self.ind].docType = newType
 			self.highlighters[self.ind].rehighlight()
