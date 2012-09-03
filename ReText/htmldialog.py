@@ -4,7 +4,7 @@ from ReText.highlighter import ReTextHighlighter
 class HtmlDialog(QDialog):
 	def __init__(self, parent=None):
 		QDialog.__init__(self, parent)
-		self.resize(600, 500)
+		self.resize(700, 600)
 		self.verticalLayout = QVBoxLayout(self)
 		self.textEdit = QTextEdit(self)
 		self.textEdit.setReadOnly(True)
