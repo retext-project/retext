@@ -1253,9 +1253,8 @@ class ReTextWindow(QMainWindow):
 			self.saveFileCore(tmpname)
 		command = command.replace('%of', 'out'+defaultext)
 		command = command.replace('%html' if html else '%if', tmpname)
-		args = str(command).split()
 		try:
-			Popen(args).wait()
+			Popen(str(command), shell=True).wait()
 		except Exception as error:
 			errorstr = str(error)
 			try:
