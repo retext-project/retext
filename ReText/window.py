@@ -1,3 +1,7 @@
+# This file is part of ReText
+# Copyright: Dmitry Shachnev 2012
+# License: GNU GPL v2 or higher
+
 from ReText import *
 from ReText.webpages import wpInit, wpUpdateAll
 from ReText.htmldialog import HtmlDialog
