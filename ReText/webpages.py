@@ -2,7 +2,7 @@
 # Copyright: Dmitry Shachnev 2012
 # License: GNU GPL v2 or higher
 
-import os
+import os.path
 import shutil
 from markups.web import WebLibrary
 from ReText import app_version
@@ -20,8 +20,6 @@ else:
 	templatesDir = "templates/"
 
 def wpInit():
-	if not os.path.exists("html"):
-		os.mkdir("html")
 	shutil.copy(templatesDir+"template_Default.html", "template.html")
 	shutil.copy(templatesDir+"style_Default.css", "html/style.css")
 
