@@ -1,0 +1,4 @@
+include changelog.md
+recursive-include locale
+recursive-include icons
+recursive-include templates
