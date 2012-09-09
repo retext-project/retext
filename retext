@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 # ReText
 # Copyright 2011-2012 Dmitry Shachnev

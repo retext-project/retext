@@ -1,3 +1,7 @@
+# This file is part of ReText
+# Copyright: Dmitry Shachnev 2012
+# License: GNU GPL v2 or higher
+
 from ReText import *
 from ReText.webpages import wpInit, wpUpdateAll
 from ReText.htmldialog import HtmlDialog
@@ -1135,7 +1139,10 @@ class ReTextWindow(QMainWindow):
 	
 	def setDefaultMarkup(self, markup):
 		self.defaultMarkup = markup
-		settings.setValue('defaultMarkup', markup.name)
+		if markup == markups.get_available_markups()[0]:
+			settings.remove('defaultMarkup')
+		else:
+			settings.setValue('defaultMarkup', markup.name)
 		oldind = self.ind
 		for self.ind in range(len(self.previewBoxes)):
 			self.docTypeChanged()
