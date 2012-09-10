@@ -58,6 +58,9 @@ class ReTextWindow(QMainWindow):
 		self.addToolBar(Qt.TopToolBarArea, self.editBar)
 		self.searchBar = QToolBar(self.tr('Search toolbar'), self)
 		self.addToolBar(Qt.BottomToolBarArea, self.searchBar)
+		if readFromSettings('hideToolBar', bool, default=False):
+			toolBar.setVisible(False)
+			self.editBar.setVisible(False)
 		self.actionNew = self.act(self.tr('New'), icon='document-new', shct=QKeySequence.New, trig=self.createNew)
 		self.actionNew.setPriority(QAction.LowPriority)
 		self.actionOpen = self.act(self.tr('Open'), icon='document-open', shct=QKeySequence.Open, trig=self.openFile)
