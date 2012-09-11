@@ -677,7 +677,7 @@ class ReTextWindow(QMainWindow):
 			QTimer.singleShot(1000, self.updatePreviewBox)
 	
 	def startWpgen(self):
-		if self.fileNames[self.ind] == "":
+		if not self.fileNames[self.ind]:
 			QMessageBox.warning(self, app_name, self.tr("Please, save the file somewhere."))
 		if not QFile.exists("template.html"):
 			try:
