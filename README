@@ -12,7 +12,7 @@ ReText requires the following packages to run:
 
 * [python](http://python.org/) ­— we recommend using version 3.2 or higher
 * [python-qt4](http://www.riverbankcomputing.co.uk/software/pyqt/intro)
-* [python-markups](https://launchpad.net/python-markups/)
+* [python-markups](http://pypi.python.org/pypi/Markups)
 
 We also recommend having these packages installed:
 
@@ -20,7 +20,7 @@ We also recommend having these packages installed:
   language support
 * [python-docutils](http://docutils.sourceforge.net/) — for reStructuredText
   language support
-* [python-enchant](http://packages.python.org/pyenchant/) — for spell checking
+* [python-enchant](http://pypi.python.org/pypi/pyenchant) — for spell checking
   support
 
 Translation files are already compiled for release tarballs and will be
