@@ -24,9 +24,6 @@ from ReText.webpages import *
 
 def main(argv):
 	if len(argv) > 1:
-		if argv[1] in ('updateall', 'update', 'usestyle') and not os.path.exists("html"):
-			print("Could not find html directory!")
-			return
 		if argv[1] == "updateall":
 			wpUpdateAll()
 		elif argv[1] == "update" and len(argv) > 2:

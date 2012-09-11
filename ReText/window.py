@@ -679,8 +679,18 @@ class ReTextWindow(QMainWindow):
 	def startWpgen(self):
 		if self.fileNames[self.ind] == "":
 			QMessageBox.warning(self, app_name, self.tr("Please, save the file somewhere."))
-		if not (QDir("html").exists() and QFile.exists("template.html")):
-			wpInit()
+		if not QFile.exists("template.html"):
+			try:
+				wpInit()
+			except IOError as e:
+				try:
+					e = unicode(str(e), 'utf-8')
+				except NameError:
+					# For Python 3
+					e = str(e)
+				return QMessageBox.warning(self, app_name, self.tr(
+				'Failed to copy default template, please create template.html manually.')
+				+ '\n\n' + e)
 		wpUpdateAll()
 		msgBox = QMessageBox(QMessageBox.Information, app_name,
 		self.tr("Webpages saved in <code>html</code> directory."), QMessageBox.Ok)
