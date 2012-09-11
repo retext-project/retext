@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 from distutils.core import setup
 from ReText import app_version
@@ -10,6 +10,6 @@ setup(name='ReText',
 	author_email='mitya57@gmail.com',
 	url='http://retext.sourceforge.net/',
 	packages=['ReText'],
-	scripts=['retext', 'wpgen'],
+	scripts=['retext.py', 'wpgen.py'],
 	license='GPL 2+'
 )
