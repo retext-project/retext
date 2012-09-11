@@ -678,7 +678,7 @@ class ReTextWindow(QMainWindow):
 	
 	def startWpgen(self):
 		if not self.fileNames[self.ind]:
-			QMessageBox.warning(self, app_name, self.tr("Please, save the file somewhere."))
+			return QMessageBox.warning(self, app_name, self.tr("Please, save the file somewhere."))
 		if not QFile.exists("template.html"):
 			try:
 				wpInit()
