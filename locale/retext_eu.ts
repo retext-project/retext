@@ -3,388 +3,393 @@
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="window.py" line="1126"/>
+        <location filename="window.py" line="1049"/>
         <source>New document</source>
         <translation>Dokumentu berria</translation>
     </message>
     <message>
-        <location filename="window.py" line="49"/>
+        <location filename="window.py" line="55"/>
         <source>File toolbar</source>
         <translation>Fitxategi menu barra</translation>
     </message>
     <message>
-        <location filename="window.py" line="51"/>
+        <location filename="window.py" line="57"/>
         <source>Edit toolbar</source>
         <translation>Edizio menu barra</translation>
     </message>
     <message>
-        <location filename="window.py" line="53"/>
+        <location filename="window.py" line="59"/>
         <source>Search toolbar</source>
         <translation>Bilakera menu barra</translation>
     </message>
     <message>
-        <location filename="window.py" line="55"/>
+        <location filename="window.py" line="64"/>
         <source>New</source>
         <translation>Berria</translation>
     </message>
     <message>
-        <location filename="window.py" line="57"/>
+        <location filename="window.py" line="66"/>
         <source>Open</source>
         <translation>Ireki</translation>
     </message>
     <message>
-        <location filename="window.py" line="59"/>
+        <location filename="window.py" line="68"/>
         <source>Save</source>
         <translation>Gorde</translation>
     </message>
     <message>
-        <location filename="window.py" line="62"/>
+        <location filename="window.py" line="71"/>
         <source>Save as</source>
         <translation>Gorde honela...</translation>
     </message>
     <message>
-        <location filename="window.py" line="64"/>
+        <location filename="window.py" line="73"/>
         <source>Print</source>
         <translation>Inprimatu</translation>
     </message>
     <message>
-        <location filename="window.py" line="66"/>
+        <location filename="window.py" line="75"/>
         <source>Print preview</source>
         <translation>Inprimatzeko aurrebista</translation>
     </message>
     <message>
-        <location filename="window.py" line="68"/>
+        <location filename="window.py" line="77"/>
         <source>View HTML code</source>
         <translation>HTML iturburua ikusi</translation>
     </message>
     <message>
-        <location filename="window.py" line="69"/>
+        <location filename="window.py" line="78"/>
         <source>Change default font</source>
         <translation>Lehenetsitako letra-tipoa aldatu</translation>
     </message>
     <message>
-        <location filename="window.py" line="70"/>
+        <location filename="window.py" line="79"/>
         <source>Find text</source>
         <translation>Bilatu testua</translation>
     </message>
     <message>
-        <location filename="window.py" line="74"/>
+        <location filename="window.py" line="83"/>
         <source>Preview</source>
         <translation>Aurrebista</translation>
     </message>
     <message>
-        <location filename="window.py" line="83"/>
+        <location filename="window.py" line="92"/>
         <source>Live preview</source>
         <translation>Aurrebista zuzenean</translation>
     </message>
     <message>
-        <location filename="window.py" line="85"/>
+        <location filename="window.py" line="94"/>
         <source>Fullscreen mode</source>
         <translation>Pantaila osoa</translation>
     </message>
     <message>
-        <location filename="window.py" line="91"/>
+        <location filename="window.py" line="100"/>
         <source>Quit</source>
         <translation>Kendu</translation>
     </message>
     <message>
-        <location filename="window.py" line="94"/>
+        <location filename="window.py" line="103"/>
         <source>Undo</source>
         <translation>Desegin</translation>
     </message>
     <message>
-        <location filename="window.py" line="96"/>
+        <location filename="window.py" line="105"/>
         <source>Redo</source>
         <translation>Berregin</translation>
     </message>
     <message>
-        <location filename="window.py" line="98"/>
+        <location filename="window.py" line="107"/>
         <source>Copy</source>
         <translation>Kopiatu</translation>
     </message>
     <message>
-        <location filename="window.py" line="100"/>
+        <location filename="window.py" line="109"/>
         <source>Cut</source>
         <translation>Ebaki</translation>
     </message>
     <message>
-        <location filename="window.py" line="102"/>
+        <location filename="window.py" line="111"/>
         <source>Paste</source>
         <translation>Itsatsi</translation>
     </message>
     <message>
-        <location filename="window.py" line="111"/>
+        <location filename="window.py" line="120"/>
         <source>Enable</source>
         <translation>Gaitu</translation>
     </message>
     <message>
-        <location filename="window.py" line="112"/>
+        <location filename="window.py" line="121"/>
         <source>Set locale</source>
         <translation>Lokala aukeratu</translation>
     </message>
     <message>
-        <location filename="window.py" line="113"/>
+        <location filename="window.py" line="122"/>
         <source>Plain text</source>
         <translation>Testu arrunta</translation>
     </message>
     <message>
-        <location filename="window.py" line="186"/>
+        <location filename="window.py" line="195"/>
         <source>Open recent</source>
         <translation>Azken dokumentuak</translation>
     </message>
     <message>
-        <location filename="window.py" line="119"/>
+        <location filename="window.py" line="128"/>
         <source>Generate webpages</source>
         <translation>Web orriak sortu</translation>
     </message>
     <message>
-        <location filename="window.py" line="120"/>
+        <location filename="window.py" line="129"/>
         <source>Show</source>
         <translation>Erakutsi</translation>
     </message>
     <message>
-        <location filename="window.py" line="121"/>
+        <location filename="window.py" line="130"/>
         <source>Next</source>
         <translation>Hurrengoa</translation>
     </message>
     <message>
-        <location filename="window.py" line="122"/>
+        <location filename="window.py" line="131"/>
         <source>Previous</source>
         <translation>Aurrekoa</translation>
     </message>
     <message>
-        <location filename="window.py" line="124"/>
+        <location filename="window.py" line="133"/>
         <source>Get help online</source>
         <translation>Laguntza on-line</translation>
     </message>
     <message>
-        <location filename="window.py" line="133"/>
+        <location filename="window.py" line="142"/>
         <source>About Qt</source>
         <translation>Qt-i buruz</translation>
     </message>
     <message>
-        <location filename="window.py" line="163"/>
+        <location filename="window.py" line="172"/>
         <source>Tags</source>
         <translation>Tags</translation>
     </message>
     <message>
-        <location filename="window.py" line="167"/>
+        <location filename="window.py" line="176"/>
         <source>Symbols</source>
         <translation>Sinboloak</translation>
     </message>
     <message>
-        <location filename="window.py" line="181"/>
+        <location filename="window.py" line="190"/>
         <source>File</source>
         <translation>Fitxategia</translation>
     </message>
     <message>
-        <location filename="window.py" line="182"/>
+        <location filename="window.py" line="191"/>
         <source>Edit</source>
         <translation>Editatu</translation>
     </message>
     <message>
-        <location filename="window.py" line="183"/>
+        <location filename="window.py" line="192"/>
         <source>Help</source>
         <translation>Laguntza</translation>
     </message>
     <message>
-        <location filename="window.py" line="189"/>
+        <location filename="window.py" line="198"/>
         <source>Directory</source>
         <translation>Karpeta</translation>
     </message>
     <message>
-        <location filename="window.py" line="196"/>
+        <location filename="window.py" line="205"/>
         <source>Export</source>
         <translation>Esportatu</translation>
     </message>
     <message>
-        <location filename="window.py" line="218"/>
+        <location filename="window.py" line="227"/>
         <source>Spell check</source>
         <translation>Egiaztatu ortografia</translation>
     </message>
     <message>
-        <location filename="window.py" line="226"/>
+        <location filename="window.py" line="235"/>
         <source>Default editing mode</source>
         <translation>Lehenetsitako editatzeko modua</translation>
     </message>
     <message>
-        <location filename="window.py" line="267"/>
+        <location filename="window.py" line="276"/>
         <source>Search</source>
         <translation>Bilatu</translation>
     </message>
     <message>
-        <location filename="window.py" line="270"/>
+        <location filename="window.py" line="279"/>
         <source>Case sensitively</source>
         <translation>Maiuskulak/minuskulak</translation>
     </message>
     <message>
-        <location filename="window.py" line="648"/>
+        <location filename="window.py" line="555"/>
         <source>Enter locale name (example: en_US)</source>
         <translation>Sartu hizkuntzako prefijoa (adibidez: eu_EU)</translation>
     </message>
     <message>
-        <location filename="window.py" line="784"/>
+        <location filename="window.py" line="706"/>
         <source>Please, save the file somewhere.</source>
         <translation>Gorde fitxategia edonon, mesedez.</translation>
     </message>
     <message>
-        <location filename="window.py" line="773"/>
+        <location filename="window.py" line="695"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Web orriak &lt;code&gt;html&lt;/code&gt; karpetan gorde dira.</translation>
     </message>
     <message>
-        <location filename="window.py" line="902"/>
+        <location filename="window.py" line="824"/>
         <source>Select one or several files to open</source>
         <translation>Aukeratu fitzategi bat(zuk) irekitzeko</translation>
     </message>
     <message>
-        <location filename="window.py" line="902"/>
+        <location filename="window.py" line="824"/>
         <source>Supported files</source>
         <translation>Onartutako formatuak</translation>
     </message>
     <message>
-        <location filename="window.py" line="902"/>
+        <location filename="window.py" line="824"/>
         <source>All files (*)</source>
         <translation>Fitxategi guztiak (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="960"/>
+        <location filename="window.py" line="882"/>
         <source>Plain text (*.txt)</source>
         <translation>Testu arrunta (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1031"/>
+        <location filename="window.py" line="955"/>
         <source>Save file</source>
         <translation>Gorde fitxategia</translation>
     </message>
     <message>
-        <location filename="window.py" line="1022"/>
+        <location filename="window.py" line="946"/>
         <source>Export document to ODT</source>
         <translation>Esportatu ODT gisa</translation>
     </message>
     <message>
-        <location filename="window.py" line="1022"/>
+        <location filename="window.py" line="946"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Ireki OpenDocument testu fitxategiak (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1031"/>
+        <location filename="window.py" line="955"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML fitxategiak (*.html, *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1051"/>
+        <location filename="window.py" line="975"/>
         <source>Export document to PDF</source>
         <translation>Esportatu PDF gisa</translation>
     </message>
     <message>
-        <location filename="window.py" line="1051"/>
+        <location filename="window.py" line="975"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF fitxategiak (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1067"/>
+        <location filename="window.py" line="991"/>
         <source>Print document</source>
         <translation>Inprimatu dokumentua</translation>
     </message>
     <message>
-        <location filename="window.py" line="1088"/>
+        <location filename="window.py" line="1012"/>
         <source>Export document</source>
         <translation>Esportatu dokumentua</translation>
     </message>
     <message>
-        <location filename="window.py" line="1175"/>
+        <location filename="window.py" line="1098"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Dokumentua aldatu da.
 Aldaketak gorde nahi duzu?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1206"/>
+        <location filename="window.py" line="1129"/>
         <source>HTML code</source>
         <translation>HTML iturburua</translation>
     </message>
     <message>
-        <location filename="window.py" line="1216"/>
+        <location filename="window.py" line="1139"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Markdown et reStructuredText-erako editore sinple baina boteretsua</translation>
     </message>
     <message>
-        <location filename="window.py" line="1216"/>
+        <location filename="window.py" line="1139"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Egilea :Dmity Schachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1216"/>
+        <location filename="window.py" line="1139"/>
         <source>Website</source>
         <translation>Webgune</translation>
     </message>
     <message>
-        <location filename="window.py" line="1216"/>
+        <location filename="window.py" line="1139"/>
         <source>Markdown syntax</source>
         <translation>Markdown sintaxia</translation>
     </message>
     <message>
-        <location filename="window.py" line="1216"/>
+        <location filename="window.py" line="1139"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText sintaxia</translation>
     </message>
     <message>
-        <location filename="window.py" line="694"/>
+        <location filename="window.py" line="601"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>Ezin da fitxategiaren edukia prozesatu, beharrezko moduluak instalatuta dauden egiaztatu!</translation>
     </message>
     <message>
-        <location filename="window.py" line="775"/>
+        <location filename="window.py" line="697"/>
         <source>Show directory</source>
         <translation>Karpeta erakutsi</translation>
     </message>
     <message>
-        <location filename="window.py" line="977"/>
+        <location filename="window.py" line="901"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Ezin da gorde fitxategia irakurtzeko-soilik delako!</translation>
     </message>
     <message>
-        <location filename="window.py" line="154"/>
+        <location filename="window.py" line="163"/>
         <source>Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="155"/>
+        <location filename="window.py" line="164"/>
         <source>Italic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="156"/>
+        <location filename="window.py" line="165"/>
         <source>Underline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="229"/>
+        <location filename="window.py" line="238"/>
         <source>Formatting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="125"/>
+        <location filename="window.py" line="134"/>
         <source>About %s</source>
         <comment>Example of final string: About ReText</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="115"/>
+        <location filename="window.py" line="124"/>
         <source>Use WebKit renderer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1111"/>
+        <location filename="window.py" line="1034"/>
         <source>Failed to execute the command:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="963"/>
+        <location filename="window.py" line="885"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s fitxategiak</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="691"/>
+        <source>Failed to copy default template, please create template.html manually.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
