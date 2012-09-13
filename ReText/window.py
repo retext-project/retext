@@ -840,7 +840,7 @@ class ReTextWindow(QMainWindow):
 		elif QFile.exists(fileName):
 			if self.fileNames[self.ind] or self.editBoxes[self.ind].toPlainText() \
 			or self.editBoxes[self.ind].document().isModified():
-				self.tabWidget.addTab(self.createTab(""), "")
+				self.tabWidget.addTab(self.createTab(fileName), "")
 				self.ind = self.tabWidget.count()-1
 				self.tabWidget.setCurrentIndex(self.ind)
 			self.fileNames[self.ind] = fileName
@@ -851,10 +851,12 @@ class ReTextWindow(QMainWindow):
 		openfile.open(QIODevice.ReadOnly)
 		html = QTextStream(openfile).readAll()
 		openfile.close()
+		markupClass = markups.get_markup_for_file_name(
+			convertToUnicode(self.fileNames[self.ind]), return_class=True)
+		self.highlighters[self.ind].docType = (markupClass.name if markupClass else '')
 		self.editBoxes[self.ind].setPlainText(html)
-		suffix = QFileInfo(self.fileNames[self.ind]).suffix()
-		pt = suffix not in ('re', 'md', 'markdown', 'mdown', 'mkd', 'mkdn', 'rst', 'rest')
-		if readFromSettings('autoPlainText', bool, default=True):
+		pt = not markupClass
+		if not readFromSettings('autoPlainText', bool, default=True):
 			pt = False
 		self.actionPlainText.setChecked(pt)
 		self.enablePlainText(pt)
