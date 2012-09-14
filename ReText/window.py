@@ -597,8 +597,16 @@ class ReTextWindow(QMainWindow):
 	def getHtml(self, includeStyleSheet=True, includeTitle=True,
 	            includeMeta=False, styleForWebKit=False, webenv=False):
 		if self.markups[self.ind] is None:
-			return '<p style="color: red">'\
-			+self.tr('Could not parse file contents, check if you have the necessary module installed!')+'</p>'
+			markupClass = self.getMarkupClass()
+			error = '<p style="color: red">%s</p>' % self.tr(
+			'Could not parse file contents, check if you have the necessary module installed!')
+			try:
+				error += '<p><a href="%s">%s</a></p>' % (
+					markupClass.attributes[markups.MODULE_HOME_PAGE],
+					markupClass.name)
+			except:
+				pass
+			return error
 		text = convertToUnicode(self.editBoxes[self.ind].toPlainText())
 		# WpGen directives
 		text = text.replace('%HTMLDIR%', 'html')
