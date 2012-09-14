@@ -544,7 +544,7 @@ class ReTextWindow(QMainWindow):
 		if settings.contains('previewState'):
 			self.livePreviewEnabled = readFromSettings(settings, 'previewState', bool)
 		self.ind = 0
-		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
+		self.tabWidget.addTab(self.createTab(), self.tr('New document'))
 		self.highlighters[0].docType = self.getDocType()
 		if use_enchant:
 			self.sl = None
@@ -594,7 +594,7 @@ class ReTextWindow(QMainWindow):
 		splitter.setChildrenCollapsible(False)
 		return splitter
 	
-	def createTab(self, fileName):
+	def createTab(self):
 		self.previewBlocked = False
 		self.editBoxes.append(QTextEdit())
 		self.highlighters.append(ReTextHighlighter(self.editBoxes[-1].document()))
@@ -609,7 +609,7 @@ class ReTextWindow(QMainWindow):
 			self.previewBoxes[-1].setReadOnly(True)
 		self.editBoxes[-1].contextMenuEvent = self.editBoxMenuEvent
 		self.previewBoxes[-1].setVisible(False)
-		self.fileNames.append(fileName)
+		self.fileNames.append("")
 		liveMode = self.restorePreviewState and self.livePreviewEnabled
 		self.apc.append(liveMode)
 		self.alpc.append(liveMode)
@@ -668,7 +668,7 @@ class ReTextWindow(QMainWindow):
 	def closeTab(self, ind):
 		if self.maybeSave(ind):
 			if self.tabWidget.count() == 1:
-				self.tabWidget.addTab(self.createTab(""), self.tr("New document"))
+				self.tabWidget.addTab(self.createTab(), self.tr("New document"))
 			del self.editBoxes[ind]
 			del self.previewBoxes[ind]
 			del self.highlighters[ind]
@@ -945,7 +945,7 @@ class ReTextWindow(QMainWindow):
 		self.docTypeChanged()
 	
 	def createNew(self):
-		self.tabWidget.addTab(self.createTab(""), self.tr("New document"))
+		self.tabWidget.addTab(self.createTab(), self.tr("New document"))
 		self.ind = self.tabWidget.count()-1
 		self.tabWidget.setCurrentIndex(self.ind)
 	
@@ -1058,7 +1058,7 @@ class ReTextWindow(QMainWindow):
 		elif QFile.exists(fileName):
 			if self.fileNames[self.ind] or self.editBoxes[self.ind].toPlainText() \
 			or self.editBoxes[self.ind].document().isModified():
-				self.tabWidget.addTab(self.createTab(""), "")
+				self.tabWidget.addTab(self.createTab(), "")
 				self.ind = self.tabWidget.count()-1
 				self.tabWidget.setCurrentIndex(self.ind)
 			self.fileNames[self.ind] = fileName
