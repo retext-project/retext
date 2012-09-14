@@ -854,10 +854,12 @@ class ReTextWindow(QMainWindow):
 		markupClass = markups.get_markup_for_file_name(
 			convertToUnicode(self.fileNames[self.ind]), return_class=True)
 		self.highlighters[self.ind].docType = (markupClass.name if markupClass else '')
-		self.editBoxes[self.ind].setPlainText(html)
 		pt = not markupClass
 		if not readFromSettings('autoPlainText', bool, default=True):
 			pt = False
+			if self.defaultMarkup:
+				self.highlighters[self.ind].docType = self.defaultMarkup.name
+		self.editBoxes[self.ind].setPlainText(html)
 		self.actionPlainText.setChecked(pt)
 		self.enablePlainText(pt)
 		self.setCurrentFile()
