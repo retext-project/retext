@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<!DOCTYPE TS><TS version="2.0" language="ru_RU" sourcelanguage="">
 <context>
     <name>ReTextWindow</name>
     <message>
@@ -34,12 +33,12 @@
         <translation>Символы</translation>
     </message>
     <message>
-        <location filename="window.py" line="955"/>
+        <location filename="window.py" line="968"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Файлы HTML (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="955"/>
+        <location filename="window.py" line="968"/>
         <source>Save file</source>
         <translation>Сохранить файл</translation>
     </message>
@@ -89,17 +88,17 @@
         <translation>Панель редактирования</translation>
     </message>
     <message>
-        <location filename="window.py" line="975"/>
+        <location filename="window.py" line="988"/>
         <source>Export document to PDF</source>
         <translation>Экспортировать документ как PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="975"/>
+        <location filename="window.py" line="988"/>
         <source>PDF files (*.pdf)</source>
         <translation>Файлы PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1098"/>
+        <location filename="window.py" line="1111"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Документ был изменён.
@@ -131,12 +130,12 @@ Do you want to save your changes?</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="window.py" line="1049"/>
+        <location filename="window.py" line="1062"/>
         <source>New document</source>
         <translation>Новый документ</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="832"/>
         <source>All files (*)</source>
         <translation>Все файлы (*)</translation>
     </message>
@@ -156,12 +155,12 @@ Do you want to save your changes?</source>
         <translation>Простой текст</translation>
     </message>
     <message>
-        <location filename="window.py" line="946"/>
+        <location filename="window.py" line="959"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Файлы текста OpenDocument (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="946"/>
+        <location filename="window.py" line="959"/>
         <source>Export document to ODT</source>
         <translation>Экспортировать документ как ODT</translation>
     </message>
@@ -171,7 +170,7 @@ Do you want to save your changes?</source>
         <translation>Просмотр кода HTML</translation>
     </message>
     <message>
-        <location filename="window.py" line="1129"/>
+        <location filename="window.py" line="1142"/>
         <source>HTML code</source>
         <translation>код HTML</translation>
     </message>
@@ -181,7 +180,7 @@ Do you want to save your changes?</source>
         <translation>Предпросмотр печати</translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="1004"/>
         <source>Print document</source>
         <translation>Распечатать документ</translation>
     </message>
@@ -191,12 +190,12 @@ Do you want to save your changes?</source>
         <translation>Живой просмотр</translation>
     </message>
     <message>
-        <location filename="window.py" line="695"/>
+        <location filename="window.py" line="703"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Веб-страницы сохранены в папке &lt;code&gt;html&lt;/code&gt;.</translation>
     </message>
     <message>
-        <location filename="window.py" line="706"/>
+        <location filename="window.py" line="714"/>
         <source>Please, save the file somewhere.</source>
         <translation>Сначала сохраните файл.</translation>
     </message>
@@ -206,7 +205,7 @@ Do you want to save your changes?</source>
         <translation>Создать веб-страницы</translation>
     </message>
     <message>
-        <location filename="window.py" line="882"/>
+        <location filename="window.py" line="895"/>
         <source>Plain text (*.txt)</source>
         <translation>Простой текст (*.txt)</translation>
     </message>
@@ -221,7 +220,7 @@ Do you want to save your changes?</source>
         <translation>Папка</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="832"/>
         <source>Supported files</source>
         <translation>Поддерживаемые файлы</translation>
     </message>
@@ -231,7 +230,7 @@ Do you want to save your changes?</source>
         <translation>Изменить стандартный шрифт</translation>
     </message>
     <message>
-        <location filename="window.py" line="1012"/>
+        <location filename="window.py" line="1025"/>
         <source>Export document</source>
         <translation>Экспортировать документ</translation>
     </message>
@@ -296,37 +295,32 @@ Do you want to save your changes?</source>
         <translation>Учитывать регистр</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Автор: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>Website</source>
         <translation>Веб-сайт</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>Markdown syntax</source>
         <translation>Синтаксис Markdown</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>reStructuredText syntax</source>
         <translation>Синтаксис reStructuredText</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Простой, но мощный редактор для Markdown и reStructuredText</translation>
     </message>
     <message>
-        <location filename="window.py" line="601"/>
-        <source>Could not parse file contents, check if you have the necessary module installed!</source>
-        <translation>Невозможно обработать содержимое файла, убедитесь, что установлен необходимый модуль!</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="832"/>
         <source>Select one or several files to open</source>
         <translation>Выберите один или несколько файлов для открытия</translation>
     </message>
@@ -336,12 +330,12 @@ Do you want to save your changes?</source>
         <translation>Получить помощь в интернете</translation>
     </message>
     <message>
-        <location filename="window.py" line="697"/>
+        <location filename="window.py" line="705"/>
         <source>Show directory</source>
         <translation>Открыть папку</translation>
     </message>
     <message>
-        <location filename="window.py" line="901"/>
+        <location filename="window.py" line="914"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Невозможно сохранить в файл, так как он доступен только для чтения!</translation>
     </message>
@@ -377,20 +371,25 @@ Do you want to save your changes?</source>
         <translation>Использовать движок WebKit</translation>
     </message>
     <message>
-        <location filename="window.py" line="1034"/>
+        <location filename="window.py" line="1047"/>
         <source>Failed to execute the command:</source>
         <translation>Невозможно запустить команду:</translation>
     </message>
     <message>
-        <location filename="window.py" line="885"/>
+        <location filename="window.py" line="898"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>Файлы %s</translation>
     </message>
     <message>
-        <location filename="window.py" line="691"/>
+        <location filename="window.py" line="699"/>
         <source>Failed to copy default template, please create template.html manually.</source>
         <translation>Не удалось скопировать шаблон по умолчанию, создайте template.html вручную.</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="601"/>
+        <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
+        <translation>Не удалось обработать содержимое файла, убедитесь, что установлен &lt;a href=&quot;%s&quot;&gt;необходимый модуль&lt;/a&gt;!</translation>
     </message>
 </context>
 </TS>

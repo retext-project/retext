@@ -33,12 +33,12 @@
         <translation>符号</translation>
     </message>
     <message>
-        <location filename="window.py" line="955"/>
+        <location filename="window.py" line="968"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML 文件 (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="955"/>
+        <location filename="window.py" line="968"/>
         <source>Save file</source>
         <translation>保存文件</translation>
     </message>
@@ -88,17 +88,17 @@
         <translation>编辑工具栏</translation>
     </message>
     <message>
-        <location filename="window.py" line="975"/>
+        <location filename="window.py" line="988"/>
         <source>Export document to PDF</source>
         <translation>导出文件到 PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="975"/>
+        <location filename="window.py" line="988"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF 文件 (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1098"/>
+        <location filename="window.py" line="1111"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>文件已更改，确认保存吗？</translation>
@@ -129,12 +129,12 @@ Do you want to save your changes?</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="window.py" line="1049"/>
+        <location filename="window.py" line="1062"/>
         <source>New document</source>
         <translation>新文件</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="832"/>
         <source>All files (*)</source>
         <translation>全部文件 (*)</translation>
     </message>
@@ -154,12 +154,12 @@ Do you want to save your changes?</source>
         <translation>普通文本</translation>
     </message>
     <message>
-        <location filename="window.py" line="946"/>
+        <location filename="window.py" line="959"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Libreoffice 文件 (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="946"/>
+        <location filename="window.py" line="959"/>
         <source>Export document to ODT</source>
         <translation>导出文件到 ODT</translation>
     </message>
@@ -169,7 +169,7 @@ Do you want to save your changes?</source>
         <translation>查看 HTML 代码</translation>
     </message>
     <message>
-        <location filename="window.py" line="1129"/>
+        <location filename="window.py" line="1142"/>
         <source>HTML code</source>
         <translation>HTML 代码</translation>
     </message>
@@ -179,7 +179,7 @@ Do you want to save your changes?</source>
         <translation>打印预览</translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="1004"/>
         <source>Print document</source>
         <translation>打印文件</translation>
     </message>
@@ -189,12 +189,12 @@ Do you want to save your changes?</source>
         <translation>实时预览</translation>
     </message>
     <message>
-        <location filename="window.py" line="695"/>
+        <location filename="window.py" line="703"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>网页保存在 &lt;code&gt;html&lt;/code&gt; 文件夹。</translation>
     </message>
     <message>
-        <location filename="window.py" line="706"/>
+        <location filename="window.py" line="714"/>
         <source>Please, save the file somewhere.</source>
         <translation>请，保存到别的地方呦！</translation>
     </message>
@@ -204,7 +204,7 @@ Do you want to save your changes?</source>
         <translation>生成网页</translation>
     </message>
     <message>
-        <location filename="window.py" line="882"/>
+        <location filename="window.py" line="895"/>
         <source>Plain text (*.txt)</source>
         <translation>普通文本文档 (*.txt)</translation>
     </message>
@@ -219,7 +219,7 @@ Do you want to save your changes?</source>
         <translation>目录</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="832"/>
         <source>Supported files</source>
         <translation>支持的文件类型</translation>
     </message>
@@ -229,7 +229,7 @@ Do you want to save your changes?</source>
         <translation>改变默认字体</translation>
     </message>
     <message>
-        <location filename="window.py" line="1012"/>
+        <location filename="window.py" line="1025"/>
         <source>Export document</source>
         <translation>导出文件</translation>
     </message>
@@ -294,37 +294,32 @@ Do you want to save your changes?</source>
         <translation>对大小写敏感</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>Website</source>
         <translation>网站</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>Markdown syntax</source>
         <translation>Markdown 语法</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText 语法</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>简单高效的 Markdown 与 reStructuredText 编辑器</translation>
     </message>
     <message>
-        <location filename="window.py" line="601"/>
-        <source>Could not parse file contents, check if you have the necessary module installed!</source>
-        <translation>不能处理文件内容，检查你是否安装了必需的模块！</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="832"/>
         <source>Select one or several files to open</source>
         <translation>选择一个或多个文件以打开</translation>
     </message>
@@ -334,12 +329,12 @@ Do you want to save your changes?</source>
         <translation>在线获取帮助（英文）</translation>
     </message>
     <message>
-        <location filename="window.py" line="697"/>
+        <location filename="window.py" line="705"/>
         <source>Show directory</source>
         <translation>显示文件夹</translation>
     </message>
     <message>
-        <location filename="window.py" line="901"/>
+        <location filename="window.py" line="914"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>不能保存文件因为它是只读的！</translation>
     </message>
@@ -375,19 +370,24 @@ Do you want to save your changes?</source>
         <translation>使用WebKit渲染</translation>
     </message>
     <message>
-        <location filename="window.py" line="1034"/>
+        <location filename="window.py" line="1047"/>
         <source>Failed to execute the command:</source>
         <translation>不能执行命令:</translation>
     </message>
     <message>
-        <location filename="window.py" line="885"/>
+        <location filename="window.py" line="898"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s 文件</translation>
     </message>
     <message>
-        <location filename="window.py" line="691"/>
+        <location filename="window.py" line="699"/>
         <source>Failed to copy default template, please create template.html manually.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="window.py" line="601"/>
+        <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

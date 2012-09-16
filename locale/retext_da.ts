@@ -244,7 +244,7 @@
         <translation>Skelnen mellem store og små bogstaver</translation>
     </message>
     <message>
-        <location filename="window.py" line="1049"/>
+        <location filename="window.py" line="1062"/>
         <source>New document</source>
         <translation>Nyt dokument</translation>
     </message>
@@ -254,141 +254,141 @@
         <translation>Indtast sprogindstilling (eksempel:en_US)</translation>
     </message>
     <message>
-        <location filename="window.py" line="706"/>
+        <location filename="window.py" line="714"/>
         <source>Please, save the file somewhere.</source>
         <translation>Gem venligst filen et sted.</translation>
     </message>
     <message>
-        <location filename="window.py" line="695"/>
+        <location filename="window.py" line="703"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Sider gemt i &lt;code&gt;html&lt;/code&gt;-mappe.</translation>
     </message>
     <message>
-        <location filename="window.py" line="697"/>
+        <location filename="window.py" line="705"/>
         <source>Show directory</source>
         <translation>Vis mappe</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="832"/>
         <source>Select one or several files to open</source>
         <translation>Vælg en eller flere filer, der skal åbnes</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="832"/>
         <source>Supported files</source>
         <translation>Understøttede filer</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="832"/>
         <source>All files (*)</source>
         <translation>Alle filer (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="882"/>
+        <location filename="window.py" line="895"/>
         <source>Plain text (*.txt)</source>
         <translation>Ren tekst (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="955"/>
+        <location filename="window.py" line="968"/>
         <source>Save file</source>
         <translation>Gem fil</translation>
     </message>
     <message>
-        <location filename="window.py" line="901"/>
+        <location filename="window.py" line="914"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Kan ikke gemme filen, fordi den er skrivebeskyttet!</translation>
     </message>
     <message>
-        <location filename="window.py" line="946"/>
+        <location filename="window.py" line="959"/>
         <source>Export document to ODT</source>
         <translation>Eksporter dokument til ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="946"/>
+        <location filename="window.py" line="959"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocument-tekstfiler (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="955"/>
+        <location filename="window.py" line="968"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML-filer (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="975"/>
+        <location filename="window.py" line="988"/>
         <source>Export document to PDF</source>
         <translation>Eksporter dokument til PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="975"/>
+        <location filename="window.py" line="988"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF-filer (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="1004"/>
         <source>Print document</source>
         <translation>Udskriv dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="1012"/>
+        <location filename="window.py" line="1025"/>
         <source>Export document</source>
         <translation>Eksporter dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="1034"/>
+        <location filename="window.py" line="1047"/>
         <source>Failed to execute the command:</source>
         <translation>Kunne ikke udføre kommandoen:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1098"/>
+        <location filename="window.py" line="1111"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Dokumentet er blevet ændret.
 Ønsker du at gemme dine ændringer?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1129"/>
+        <location filename="window.py" line="1142"/>
         <source>HTML code</source>
         <translation>HTML-kode</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Forfatter: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>Website</source>
         <translation>Hjemmeside</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>Markdown syntax</source>
         <translation>Markdown-syntaks</translation>
     </message>
     <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText-syntaks</translation>
     </message>
     <message>
-        <location filename="window.py" line="601"/>
-        <source>Could not parse file contents, check if you have the necessary module installed!</source>
-        <translation>Kunne ikke indlæse filens indhold, efterse, at du har de rette moduler installeret!</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1139"/>
+        <location filename="window.py" line="1152"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Enkel men stærk editor til Markdown og reStructuredText</translation>
     </message>
     <message>
-        <location filename="window.py" line="885"/>
+        <location filename="window.py" line="898"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s-filer</translation>
     </message>
     <message>
-        <location filename="window.py" line="691"/>
+        <location filename="window.py" line="699"/>
         <source>Failed to copy default template, please create template.html manually.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="window.py" line="601"/>
+        <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
