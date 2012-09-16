@@ -355,7 +355,7 @@ Aldaketak gorde nahi duzu?</translation>
     <message>
         <location filename="retext.py" line="1446"/>
         <source>Author: Dmitry Shachnev, 2011</source>
-        <translation>Egilea :Dmity Schachnev, 2011</translation>
+        <translation>Egilea: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
         <location filename="retext.py" line="1446"/>
