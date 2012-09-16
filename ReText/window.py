@@ -598,15 +598,15 @@ class ReTextWindow(QMainWindow):
 	            includeMeta=False, styleForWebKit=False, webenv=False):
 		if self.markups[self.ind] is None:
 			markupClass = self.getMarkupClass()
-			error = '<p style="color: red">%s</p>' % self.tr(
-			'Could not parse file contents, check if you have the necessary module installed!')
+			errMsg = self.tr('Could not parse file contents, check if '
+			'you have the <a href="%s">necessary module</a> installed!')
 			try:
-				error += '<p><a href="%s">%s</a></p>' % (
-					markupClass.attributes[markups.MODULE_HOME_PAGE],
-					markupClass.name)
+				errMsg %= markupClass.attributes[markups.MODULE_HOME_PAGE]
 			except:
-				pass
-			return error
+				# Remove the link if markupClass doesn't have the needed attribute
+				errMsg = errMsg.replace('<a href="%s">', '')
+				errMsg = errMsg.replace('</a>', '')
+			return '<p style="color: red">%s</p>' % errMsg
 		text = convertToUnicode(self.editBoxes[self.ind].toPlainText())
 		# WpGen directives
 		text = text.replace('%HTMLDIR%', 'html')
@@ -862,6 +862,7 @@ class ReTextWindow(QMainWindow):
 		markupClass = markups.get_markup_for_file_name(
 			convertToUnicode(self.fileNames[self.ind]), return_class=True)
 		self.highlighters[self.ind].docType = (markupClass.name if markupClass else '')
+		self.markups[self.ind] = self.getMarkup()
 		pt = not markupClass
 		if not readFromSettings('autoPlainText', bool, default=True):
 			pt = False
