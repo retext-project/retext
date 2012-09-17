@@ -366,8 +366,8 @@ class ReTextWindow(QMainWindow):
 		if self.useWebKit:
 			self.previewBoxes.append(self.getWebView())
 		else:
-			self.previewBoxes.append(QTextEdit())
-			self.previewBoxes[-1].setReadOnly(True)
+			self.previewBoxes.append(QTextBrowser())
+			self.previewBoxes[-1].setOpenExternalLinks(True)
 		self.previewBoxes[-1].setVisible(False)
 		self.fileNames.append(fileName)
 		markupClass = self.getMarkupClass(fileName)
@@ -512,8 +512,8 @@ class ReTextWindow(QMainWindow):
 			if enable:
 				self.previewBoxes[self.ind] = self.getWebView()
 			else:
-				self.previewBoxes[self.ind] = QTextEdit()
-				self.previewBoxes[self.ind].setReadOnly(True)
+				self.previewBoxes[self.ind] = QTextBrowser()
+				self.previewBoxes[self.ind].setOpenExternalLinks(True)
 			splitter = self.getSplitter(self.ind)
 			self.tabWidget.addTab(splitter, self.getDocumentTitle(baseName=True))
 			self.updatePreviewBox()
