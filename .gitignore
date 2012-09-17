@@ -2,3 +2,5 @@ ReText/__pycache__
 ReText/*.pyc
 locale/*.qm
 MANIFEST
+build
+dist
