@@ -16,7 +16,7 @@ def build_translations():
 		except Exception as e:
 			error = e
 	if error:
-		print(error)
+		print('Failed to build translations:', error)
 
 class retext_build(build):
 	def run(self):
