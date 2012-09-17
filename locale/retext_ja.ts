@@ -21,7 +21,7 @@
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="retext.py" line="1430"/>
+        <location filename="retext.py" line="1431"/>
         <source>New document</source>
         <translation>新規文書</translation>
     </message>
@@ -301,99 +301,99 @@
         <translation>Markdownファイル</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1184"/>
+        <location filename="retext.py" line="1186"/>
         <source>Save file</source>
         <translation>ファイルを保存</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1122"/>
+        <location filename="retext.py" line="1124"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>読み取り専用ファイルなので保存できません!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1175"/>
+        <location filename="retext.py" line="1177"/>
         <source>Export document to ODT</source>
         <translation>文書をODTにエクスポート</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1175"/>
+        <location filename="retext.py" line="1177"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocumentテキストファイル (*.odt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1184"/>
+        <location filename="retext.py" line="1186"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTMLファイル (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1206"/>
+        <location filename="retext.py" line="1208"/>
         <source>Export document to PDF</source>
         <translation>文書をPDFにエクスポート</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1206"/>
+        <location filename="retext.py" line="1208"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDFファイル (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1221"/>
+        <location filename="retext.py" line="1223"/>
         <source>Print document</source>
         <translation>文書を印刷</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1240"/>
+        <location filename="retext.py" line="1242"/>
         <source>Export document</source>
         <translation>文書をエクスポート</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1325"/>
+        <location filename="retext.py" line="1326"/>
         <source>Incorrect user name or password!</source>
         <translation>ユーザー名またはパスワードが違います!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1328"/>
+        <location filename="retext.py" line="1329"/>
         <source>Authentification failed, please check your internet connection!</source>
         <translation>認証に失敗しました。インターネットへの接続を確認してください!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1404"/>
+        <location filename="retext.py" line="1405"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>文書は変更されています.
 変更内容を保存しますか?</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1437"/>
+        <location filename="retext.py" line="1438"/>
         <source>HTML code</source>
         <translation>HTMLコード</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1446"/>
+        <location filename="retext.py" line="1447"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation>MarkdownとReStructuredTextのためのシンプルで強力なエディタ</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1446"/>
+        <location filename="retext.py" line="1447"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1446"/>
+        <location filename="retext.py" line="1447"/>
         <source>Website</source>
         <translation>Webサイト</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1446"/>
+        <location filename="retext.py" line="1447"/>
         <source>Markdown syntax</source>
         <translation>Markdown記法</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1446"/>
+        <location filename="retext.py" line="1447"/>
         <source>ReST syntax</source>
         <translation>ReST記法</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1497"/>
+        <location filename="retext.py" line="1498"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>ファイル内容が解析できません。必要なモジュールがインストールされているか確認してください!</translation>
     </message>
@@ -428,7 +428,7 @@ Do you want to save your changes?</source>
         <translation>書式</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1264"/>
+        <location filename="retext.py" line="1265"/>
         <source>Failed to execute the command:</source>
         <translation>コマンドの実行に失敗しました:</translation>
     </message>

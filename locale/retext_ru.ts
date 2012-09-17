@@ -51,12 +51,12 @@
         <translation>Символы</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1184"/>
+        <location filename="retext.py" line="1186"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Файлы HTML (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1184"/>
+        <location filename="retext.py" line="1186"/>
         <source>Save file</source>
         <translation>Сохранить файл</translation>
     </message>
@@ -106,17 +106,17 @@
         <translation>Панель редактирования</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1206"/>
+        <location filename="retext.py" line="1208"/>
         <source>Export document to PDF</source>
         <translation>Экспортировать документ как PDF</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1206"/>
+        <location filename="retext.py" line="1208"/>
         <source>PDF files (*.pdf)</source>
         <translation>Файлы PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1404"/>
+        <location filename="retext.py" line="1405"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Документ был изменён.
@@ -148,7 +148,7 @@ Do you want to save your changes?</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1430"/>
+        <location filename="retext.py" line="1431"/>
         <source>New document</source>
         <translation>Новый документ</translation>
     </message>
@@ -178,17 +178,17 @@ Do you want to save your changes?</source>
         <translation>Сохранить в Google Docs</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1325"/>
+        <location filename="retext.py" line="1326"/>
         <source>Incorrect user name or password!</source>
         <translation>Неверное имя пользователя или пароль!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1175"/>
+        <location filename="retext.py" line="1177"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Файлы текста OpenDocument (*.odt)</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1175"/>
+        <location filename="retext.py" line="1177"/>
         <source>Export document to ODT</source>
         <translation>Экспортировать документ как ODT</translation>
     </message>
@@ -198,7 +198,7 @@ Do you want to save your changes?</source>
         <translation>Просмотр кода HTML</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1437"/>
+        <location filename="retext.py" line="1438"/>
         <source>HTML code</source>
         <translation>код HTML</translation>
     </message>
@@ -208,7 +208,7 @@ Do you want to save your changes?</source>
         <translation>Предпросмотр печати</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1221"/>
+        <location filename="retext.py" line="1223"/>
         <source>Print document</source>
         <translation>Распечатать документ</translation>
     </message>
@@ -258,7 +258,7 @@ Do you want to save your changes?</source>
         <translation>Изменить стандартный шрифт</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1240"/>
+        <location filename="retext.py" line="1242"/>
         <source>Export document</source>
         <translation>Экспортировать документ</translation>
     </message>
@@ -328,22 +328,22 @@ Do you want to save your changes?</source>
         <translation>У вас не установлен ни один из модулей Markdown и Docutils!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1446"/>
+        <location filename="retext.py" line="1447"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Автор: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1446"/>
+        <location filename="retext.py" line="1447"/>
         <source>Website</source>
         <translation>Веб-сайт</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1446"/>
+        <location filename="retext.py" line="1447"/>
         <source>Markdown syntax</source>
         <translation>Синтаксис Markdown</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1446"/>
+        <location filename="retext.py" line="1447"/>
         <source>ReST syntax</source>
         <translation>Синтаксис ReST</translation>
     </message>
@@ -358,12 +358,12 @@ Do you want to save your changes?</source>
         <translation>Файлы Markdown</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1446"/>
+        <location filename="retext.py" line="1447"/>
         <source>Simple but powerful editor for Markdown and ReStructuredText</source>
         <translation>Простой, но мощный редактор для Markdown и ReStructuredText</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1497"/>
+        <location filename="retext.py" line="1498"/>
         <source>Could not parse file contents, check if you have the necessary module installed!</source>
         <translation>Невозможно обработать содержимое файла, убедитесь, что установлен необходимый модуль!</translation>
     </message>
@@ -388,12 +388,12 @@ Do you want to save your changes?</source>
         <translation>Генератор веб-страниц не установлен!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1122"/>
+        <location filename="retext.py" line="1124"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Невозможно сохранить в файл, так как он доступен только для чтения!</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1328"/>
+        <location filename="retext.py" line="1329"/>
         <source>Authentification failed, please check your internet connection!</source>
         <translation>Не удалось подключиться, проверьте ваше интернет-соединение!</translation>
     </message>
@@ -428,7 +428,7 @@ Do you want to save your changes?</source>
         <translation>Использовать движок WebKit</translation>
     </message>
     <message>
-        <location filename="retext.py" line="1264"/>
+        <location filename="retext.py" line="1265"/>
         <source>Failed to execute the command:</source>
         <translation>Невозможно запустить команду:</translation>
     </message>
