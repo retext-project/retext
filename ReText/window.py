@@ -8,6 +8,8 @@ from ReText.htmldialog import HtmlDialog
 from ReText.highlighter import ReTextHighlighter
 from ReText.editor import ReTextEdit
 
+import markups
+
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
 		QMainWindow.__init__(self, parent)

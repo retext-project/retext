@@ -2,7 +2,6 @@
 # Copyright: Dmitry Shachnev 2012
 # License: GNU GPL v2 or higher
 
-import markups
 from subprocess import Popen, PIPE
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -23,8 +22,8 @@ else:
 icon_path = "icons/"
 
 DOCTYPE_NONE = ''
-DOCTYPE_MARKDOWN = markups.MarkdownMarkup.name
-DOCTYPE_REST = markups.ReStructuredTextMarkup.name
+DOCTYPE_MARKDOWN = 'Markdown'
+DOCTYPE_REST = 'reStructuredText'
 DOCTYPE_HTML = 'html'
 
 try:
