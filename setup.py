@@ -21,7 +21,8 @@ def build_translations():
 class retext_build(build):
 	def run(self):
 		build.run(self)
-		build_translations()
+		if not glob('locale/*.qm'):
+			build_translations()
 
 class retext_sdist(sdist):
 	def run(self):
