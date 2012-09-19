@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
+VERSION = '4.0~beta1'
+
 from distutils.core import setup
 from distutils.command.build import build
 from distutils.command.sdist import sdist
 from subprocess import check_call
 from glob import glob
-from ReText import app_version
 
 def build_translations():
 	print('running build_translations')
@@ -30,7 +31,7 @@ class retext_sdist(sdist):
 		sdist.run(self)
 
 setup(name='ReText',
-	version=app_version,
+	version=VERSION,
 	description='Simple editor for Markdown and reStructuredText',
 	author='Dmitry Shachnev',
 	author_email='mitya57@gmail.com',
