@@ -825,9 +825,8 @@ class ReTextWindow(QMainWindow):
 		return extension
 	
 	def openFile(self):
-		supportedExtensions = ['.txt']
 		for markup in markups.get_all_markups():
-			supportedExtensions = supportedExtensions + list(markup.file_extensions)
+			supportedExtensions = ['.txt'] + list(markup.file_extensions)
 		fileFilter = ' (' + str.join(' ', ['*'+ext for ext in supportedExtensions]) + ');;'
 		fileNames = QFileDialog.getOpenFileNames(self, self.tr("Select one or several files to open"), "",
 		self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
