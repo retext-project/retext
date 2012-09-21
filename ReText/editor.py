@@ -70,24 +70,27 @@ class ReTextEdit(QTextEdit):
 		elif key == Qt.Key_Backtab:
 			self.indentLess()
 		elif key == Qt.Key_Return and not cursor.hasSelection():
+			newevent = QKeyEvent(QEvent.KeyPress, Qt.Key_Return, Qt.NoModifier)
+			QTextEdit.keyPressEvent(self, newevent)
 			markdownLineBreak = False
 			if event.modifiers() & Qt.ShiftModifier:
 				# Markdown-style line break
 				markupClass = self.parent.getMarkupClass()
 				if markupClass and markupClass.name == DOCTYPE_MARKDOWN:
 					markdownLineBreak = True
-			if event.modifiers() & Qt.ControlModifier:
-				if markdownLineBreak:
-					cursor.insertText('  ')
-				cursor.insertText('\n')
-			else:
-				self.handleReturn(cursor, markdownLineBreak)
+			if markdownLineBreak:
+				cursor.movePosition(QTextCursor.Left)
+				cursor.insertText('  ')
+			if not (event.modifiers() & Qt.ControlModifier):
+				self.handleReturn(markdownLineBreak)
 		else:
 			QTextEdit.keyPressEvent(self, event)
 	
-	def handleReturn(self, cursor, markdownLineBreak):
+	def handleReturn(self, markdownLineBreak):
+		cursor = self.textCursor()
 		# Select text between the cursor and the line start
-		cursor.movePosition(QTextCursor.StartOfLine, QTextCursor.KeepAnchor)
+		cursor.movePosition(QTextCursor.PreviousBlock)
+		cursor.movePosition(QTextCursor.EndOfLine, QTextCursor.KeepAnchor)
 		text = convertToUnicode(cursor.selectedText())
 		length = len(text)
 		pos = 0
@@ -95,9 +98,7 @@ class ReTextEdit(QTextEdit):
 			pos += 1
 		# Reset the cursor
 		cursor = self.textCursor()
-		if markdownLineBreak:
-			cursor.insertText('  ')
-		cursor.insertText('\n'+text[:pos])
+		cursor.insertText(text[:pos])
 	
 	def indentMore(self):
 		cursor = self.textCursor()
