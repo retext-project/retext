@@ -1,3 +1,14 @@
+## 4.0
+
+* Switch to pymarkups backend
+* Switch to python3 by default
+* Split every class to its separate file
+* MathJax support
+* Tab now inserts 4 spaces by default
+* Automatic indentation of new lines
+* Open external links in a web browser by default
+* Support for per-document CSS stylesheets
+
 ## 3.1
 
 * Spell checker suggestions
