@@ -70,24 +70,21 @@ class ReTextEdit(QTextEdit):
 		elif key == Qt.Key_Backtab:
 			self.indentLess()
 		elif key == Qt.Key_Return and not cursor.hasSelection():
-			cursor.beginEditBlock()
 			if event.modifiers() & Qt.ShiftModifier:
 				# Insert Markdown-style line break
 				markupClass = self.parent.getMarkupClass()
 				if markupClass and markupClass.name == DOCTYPE_MARKDOWN:
 					cursor.insertText('  ')
-			newevent = QKeyEvent(QEvent.KeyPress, Qt.Key_Return, Qt.NoModifier)
-			QTextEdit.keyPressEvent(self, newevent)
-			if not (event.modifiers() & Qt.ControlModifier):
+			if event.modifiers() & Qt.ControlModifier:
+				cursor.insertText('\n')
+			else:
 				self.handleReturn(cursor)
-			cursor.endEditBlock()
 		else:
 			QTextEdit.keyPressEvent(self, event)
 	
 	def handleReturn(self, cursor):
 		# Select text between the cursor and the line start
-		cursor.movePosition(QTextCursor.PreviousBlock)
-		cursor.movePosition(QTextCursor.EndOfLine, QTextCursor.KeepAnchor)
+		cursor.movePosition(QTextCursor.StartOfBlock, QTextCursor.KeepAnchor)
 		text = convertToUnicode(cursor.selectedText())
 		length = len(text)
 		pos = 0
@@ -95,7 +92,8 @@ class ReTextEdit(QTextEdit):
 			pos += 1
 		# Reset the cursor
 		cursor = self.textCursor()
-		cursor.insertText(text[:pos])
+		cursor.insertText('\n'+text[:pos])
+		self.ensureCursorVisible()
 	
 	def indentMore(self):
 		cursor = self.textCursor()
