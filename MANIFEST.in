@@ -1,4 +1,4 @@
 include changelog.md
-recursive-include locale *.ts *.qm
+recursive-include locale retext_*.ts retext_*.qm
 recursive-include icons *.png *.svg
 recursive-include templates *.html *.css

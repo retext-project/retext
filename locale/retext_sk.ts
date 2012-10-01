@@ -243,22 +243,22 @@
         <translation>Nový dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="555"/>
+        <location filename="window.py" line="556"/>
         <source>Enter locale name (example: en_US)</source>
         <translation>Zadajte názov lokalizácie (napr.: sk_SK)</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="715"/>
         <source>Please, save the file somewhere.</source>
         <translation>Uložte prosím niekam súbor.</translation>
     </message>
     <message>
-        <location filename="window.py" line="703"/>
+        <location filename="window.py" line="704"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Web stránky uložené do priečinku &lt;code&gt;html&lt;/code&gt;.</translation>
     </message>
     <message>
-        <location filename="window.py" line="705"/>
+        <location filename="window.py" line="706"/>
         <source>Show directory</source>
         <translation>Zobraziť priečinok</translation>
     </message>
@@ -366,7 +366,7 @@ Chcete uložiť vaše zmeny?</translation>
         <translation type="unfinished">O %s</translation>
     </message>
     <message>
-        <location filename="window.py" line="699"/>
+        <location filename="window.py" line="700"/>
         <source>Failed to copy default template, please create template.html manually.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -387,7 +387,7 @@ Chcete uložiť vaše zmeny?</translation>
         <translation>reStructuredText syntax</translation>
     </message>
     <message>
-        <location filename="window.py" line="601"/>
+        <location filename="window.py" line="602"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation type="unfinished"></translation>
     </message>
