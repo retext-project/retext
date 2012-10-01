@@ -24,7 +24,10 @@ class ReTextWindow(QMainWindow):
 			except: pass
 			else:
 				iconTheme = gconf.stdout.read().rstrip()
-				if iconTheme: QIcon.setThemeName(iconTheme.decode())
+				if iconTheme:
+					iconTheme = iconTheme.decode()
+					QIcon.setThemeName(iconTheme)
+					settings.setValue('iconTheme', iconTheme)
 		if settings.contains('font'):
 			self.font = QFont(readFromSettings('font', str))
 			if settings.contains('fontSize'):
