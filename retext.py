@@ -580,8 +580,9 @@ class ReTextWindow(QMainWindow):
 		return QIcon.fromTheme(name, QIcon(icon_path+name+'.png'))
 	
 	def printError(self, error):
+		import traceback
 		print('Exception occured while parsing document:')
-		print(error)
+		traceback.print_exc()
 	
 	def getSplitter(self, index):
 		splitter = QSplitter(Qt.Horizontal)
