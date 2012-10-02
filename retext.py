@@ -1278,14 +1278,13 @@ class ReTextWindow(QMainWindow):
 			# For Python 3
 			text = self.editBoxes[self.ind].toPlainText()
 		docType = self.getDocType()
-		if docType == DOCTYPE_REST:
-			realTitle = publish_parts(text, writer_name='html')['title']
-		elif docType == DOCTYPE_MARKDOWN:
-			try:
+		try:
+			if docType == DOCTYPE_REST:
+				realTitle = publish_parts(text, writer_name='html')['title']
+			elif docType == DOCTYPE_MARKDOWN:
 				realTitle = str.join(' ', md.Meta['title'])
-			except:
-				# Meta extension not installed
-				pass
+		except:
+			pass
 		if realTitle and not baseName:
 			return realTitle
 		elif self.fileNames[self.ind]:
