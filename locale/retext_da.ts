@@ -249,22 +249,22 @@
         <translation>Nyt dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="555"/>
+        <location filename="window.py" line="556"/>
         <source>Enter locale name (example: en_US)</source>
         <translation>Indtast sprogindstilling (eksempel:en_US)</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="715"/>
         <source>Please, save the file somewhere.</source>
         <translation>Gem venligst filen et sted.</translation>
     </message>
     <message>
-        <location filename="window.py" line="703"/>
+        <location filename="window.py" line="704"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Sider gemt i &lt;code&gt;html&lt;/code&gt;-mappe.</translation>
     </message>
     <message>
-        <location filename="window.py" line="705"/>
+        <location filename="window.py" line="706"/>
         <source>Show directory</source>
         <translation>Vis mappe</translation>
     </message>
@@ -382,12 +382,12 @@ Do you want to save your changes?</source>
         <translation>%s-filer</translation>
     </message>
     <message>
-        <location filename="window.py" line="699"/>
+        <location filename="window.py" line="700"/>
         <source>Failed to copy default template, please create template.html manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="601"/>
+        <location filename="window.py" line="602"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation type="unfinished"></translation>
     </message>

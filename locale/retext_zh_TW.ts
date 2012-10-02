@@ -189,12 +189,12 @@ Do you want to save your changes?</source>
         <translation>同步預覽</translation>
     </message>
     <message>
-        <location filename="window.py" line="703"/>
+        <location filename="window.py" line="704"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>網頁儲存在 &lt;code&gt;html&lt;/code&gt; 目錄。</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="715"/>
         <source>Please, save the file somewhere.</source>
         <translation>請，儲存到別的地方呦！</translation>
     </message>
@@ -249,7 +249,7 @@ Do you want to save your changes?</source>
         <translation>拼寫檢查</translation>
     </message>
     <message>
-        <location filename="window.py" line="555"/>
+        <location filename="window.py" line="556"/>
         <source>Enter locale name (example: en_US)</source>
         <translation>輸入語言名字 (例如: en_US)</translation>
     </message>
@@ -329,7 +329,7 @@ Do you want to save your changes?</source>
         <translation>在線擷取幫助（英文）</translation>
     </message>
     <message>
-        <location filename="window.py" line="705"/>
+        <location filename="window.py" line="706"/>
         <source>Show directory</source>
         <translation>顯示目錄</translation>
     </message>
@@ -381,12 +381,12 @@ Do you want to save your changes?</source>
         <translation>%s 檔案</translation>
     </message>
     <message>
-        <location filename="window.py" line="699"/>
+        <location filename="window.py" line="700"/>
         <source>Failed to copy default template, please create template.html manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="601"/>
+        <location filename="window.py" line="602"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation type="unfinished"></translation>
     </message>

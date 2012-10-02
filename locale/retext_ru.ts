@@ -190,12 +190,12 @@ Do you want to save your changes?</source>
         <translation>Живой просмотр</translation>
     </message>
     <message>
-        <location filename="window.py" line="703"/>
+        <location filename="window.py" line="704"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Веб-страницы сохранены в папке &lt;code&gt;html&lt;/code&gt;.</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="715"/>
         <source>Please, save the file somewhere.</source>
         <translation>Сначала сохраните файл.</translation>
     </message>
@@ -250,7 +250,7 @@ Do you want to save your changes?</source>
         <translation>Проверка орфографии</translation>
     </message>
     <message>
-        <location filename="window.py" line="555"/>
+        <location filename="window.py" line="556"/>
         <source>Enter locale name (example: en_US)</source>
         <translation>Введите код локали (например: en_US)</translation>
     </message>
@@ -330,7 +330,7 @@ Do you want to save your changes?</source>
         <translation>Получить помощь в интернете</translation>
     </message>
     <message>
-        <location filename="window.py" line="705"/>
+        <location filename="window.py" line="706"/>
         <source>Show directory</source>
         <translation>Открыть папку</translation>
     </message>
@@ -382,12 +382,12 @@ Do you want to save your changes?</source>
         <translation>Файлы %s</translation>
     </message>
     <message>
-        <location filename="window.py" line="699"/>
+        <location filename="window.py" line="700"/>
         <source>Failed to copy default template, please create template.html manually.</source>
         <translation>Не удалось скопировать шаблон по умолчанию, создайте template.html вручную.</translation>
     </message>
     <message>
-        <location filename="window.py" line="601"/>
+        <location filename="window.py" line="602"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation>Не удалось обработать содержимое файла, убедитесь, что установлен &lt;a href=&quot;%s&quot;&gt;необходимый модуль&lt;/a&gt;!</translation>
     </message>
