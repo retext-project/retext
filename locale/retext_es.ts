@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="en_US">
+<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
 <context>
     <name>ReTextWindow</name>
     <message>
@@ -125,7 +125,7 @@
     <message>
         <location filename="window.py" line="124"/>
         <source>Use WebKit renderer</source>
-        <translation>Usar renderizador Webkit</translation>
+        <translation>Usar renderizador WebKit</translation>
     </message>
     <message>
         <location filename="window.py" line="128"/>
@@ -249,22 +249,32 @@
         <translation>Documento nuevo</translation>
     </message>
     <message>
-        <location filename="window.py" line="555"/>
+        <location filename="window.py" line="556"/>
         <source>Enter locale name (example: en_US)</source>
         <translation>Introduzca el nombre la localización (por ejemplo: es_MX)</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="602"/>
+        <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
+        <translation>No se pudo analizar el contenido del archivo, compruebe si tiene el &lt;a href=&quot;%s&quot;&gt;módulo necesario&lt;/a&gt; instalado.</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="715"/>
         <source>Please, save the file somewhere.</source>
         <translation>Guarde el archivo en algún lugar.</translation>
     </message>
     <message>
-        <location filename="window.py" line="703"/>
+        <location filename="window.py" line="700"/>
+        <source>Failed to copy default template, please create template.html manually.</source>
+        <translation>Falló al copiar la plantilla predeterminada, cree template.html manualmente.</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="704"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Páginas web guardadas en el directorio &lt;code&gt;html&lt;/code&gt;.</translation>
     </message>
     <message>
-        <location filename="window.py" line="705"/>
+        <location filename="window.py" line="706"/>
         <source>Show directory</source>
         <translation>Mostrar directorio</translation>
     </message>
@@ -287,6 +297,12 @@
         <location filename="window.py" line="895"/>
         <source>Plain text (*.txt)</source>
         <translation>Texto plano (*.txt)</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="898"/>
+        <source>%s files</source>
+        <comment>Example of final string: Markdown files</comment>
+        <translation>%s archivos</translation>
     </message>
     <message>
         <location filename="window.py" line="968"/>
@@ -353,7 +369,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1152"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>Editor para Markdown y reStructuredText sencillo pero potente</translation>
+        <translation>Editor para Markdown y reStructuredText sencillo pero poderoso</translation>
     </message>
     <message>
         <location filename="window.py" line="1152"/>
@@ -373,23 +389,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1152"/>
         <source>reStructuredText syntax</source>
-        <translation>Sintaxis reStructuredText</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="898"/>
-        <source>%s files</source>
-        <comment>Example of final string: Markdown files</comment>
-        <translation>Archivos %s</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="699"/>
-        <source>Failed to copy default template, please create template.html manually.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="601"/>
-        <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sintaxis de reStructuredText</translation>
     </message>
 </context>
 </TS>
