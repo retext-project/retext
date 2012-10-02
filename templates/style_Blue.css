@@ -57,3 +57,12 @@ a:hover {
   max-width: 800px;
   height: 100%;
 }
+
+.content table {
+  border-collapse: collapse;
+}
+
+.content td, th {
+  padding: 5px;
+  border: 1px solid black;
+}
