@@ -43,8 +43,8 @@ def printUsage():
 	print("")
 	print("Available commands:")
 	print("  init - create new web library")
-	print("  updateall - generate html files from all pages")
-	print("  update [filename] - generate html file from given file")
+	print("  updateall - generate html pages from all files")
+	print("  update [filename1] [filename2] ... - generate html pages from given files")
 	print("  usestyle [stylename] - use the given style (example: Default, Simple)")
 
 if __name__ == '__main__':
