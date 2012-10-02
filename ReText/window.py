@@ -327,7 +327,7 @@ class ReTextWindow(QMainWindow):
 	def actIcon(self, name):
 		return QIcon.fromTheme(name, QIcon(icon_path+name+'.png'))
 	
-	def printError(self, error):
+	def printError(self):
 		import traceback
 		print('Exception occured while parsing document:')
 		traceback.print_exc()
@@ -657,8 +657,8 @@ class ReTextWindow(QMainWindow):
 		else:
 			try:
 				html = self.getHtml(styleForWebKit=(not textedit))
-			except Exception as e:
-				return self.printError(e)
+			except:
+				return self.printError()
 			if not textedit and ('<script ' in html or '<link rel="stylesheet"' in html):
 				# Work-around a bug in QtWebKit
 				# by saving the html locally
@@ -932,8 +932,8 @@ class ReTextWindow(QMainWindow):
 		try:
 			htmltext = self.getHtml(includeStyleSheet=False, includeMeta=True, 
 			webenv=True)
-		except Exception as e:
-			return self.printError(e)
+		except:
+			return self.printError()
 		htmlFile = QFile(fileName)
 		htmlFile.open(QIODevice.WriteOnly)
 		html = QTextStream(htmlFile)
@@ -956,9 +956,8 @@ class ReTextWindow(QMainWindow):
 	def saveOdf(self):
 		try:
 			document = self.textDocument()
-		except Exception as e:
-			self.printError(e)
-			return
+		except:
+			return self.printError()
 		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to ODT"), "", self.tr("OpenDocument text files (*.odt)"))
 		if not QFileInfo(fileName).suffix():
 			fileName += ".odt"
@@ -977,8 +976,8 @@ class ReTextWindow(QMainWindow):
 			return self.previewBoxes[self.ind]
 		try:
 			return self.textDocument()
-		except Exception as e:
-			self.printError(e)
+		except:
+			self.printError()
 	
 	def standardPrinter(self):
 		printer = QPrinter(QPrinter.HighResolution)
@@ -1055,7 +1054,12 @@ class ReTextWindow(QMainWindow):
 	def getDocumentTitle(self, baseName=False):
 		text = convertToUnicode(self.editBoxes[self.ind].toPlainText())
 		markup = self.markups[self.ind]
-		realTitle = markup.get_document_title(text) if markup else ''
+		realTitle = ''
+		if markup:
+			try:
+				realTitle = markup.get_document_title(text)
+			except:
+				self.printError()
 		if realTitle and not baseName:
 			return realTitle
 		elif self.fileNames[self.ind]:
@@ -1135,8 +1139,8 @@ class ReTextWindow(QMainWindow):
 		HtmlDlg = HtmlDialog(self)
 		try:
 			htmltext = self.getHtml(includeStyleSheet=False, includeTitle=False)
-		except Exception as e:
-			return self.printError(e)
+		except:
+			return self.printError()
 		winTitle = self.getDocumentTitle(baseName=True)
 		try:
 			HtmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") "+QChar(0x2014)+" "+app_name)
