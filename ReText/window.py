@@ -1052,10 +1052,10 @@ class ReTextWindow(QMainWindow):
 			QFile('out'+defaultext).rename(fileName)
 	
 	def getDocumentTitle(self, baseName=False):
-		text = convertToUnicode(self.editBoxes[self.ind].toPlainText())
 		markup = self.markups[self.ind]
 		realTitle = ''
 		if markup and not baseName:
+			text = convertToUnicode(self.editBoxes[self.ind].toPlainText())
 			try:
 				realTitle = markup.get_document_title(text)
 			except:
