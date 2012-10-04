@@ -1272,20 +1272,21 @@ class ReTextWindow(QMainWindow):
 		"""Ensure that parseText() is called before this function!
 		If 'baseName' is set to True, file basename will be used."""
 		realTitle = ''
-		try:
-			text = unicode(self.editBoxes[self.ind].toPlainText())
-		except:
-			# For Python 3
-			text = self.editBoxes[self.ind].toPlainText()
-		docType = self.getDocType()
-		try:
-			if docType == DOCTYPE_REST:
-				realTitle = publish_parts(text, writer_name='html')['title']
-			elif docType == DOCTYPE_MARKDOWN:
-				realTitle = str.join(' ', md.Meta['title'])
-		except:
-			pass
-		if realTitle and not baseName:
+		if not baseName:
+			try:
+				text = unicode(self.editBoxes[self.ind].toPlainText())
+			except:
+				# For Python 3
+				text = self.editBoxes[self.ind].toPlainText()
+			docType = self.getDocType()
+			try:
+				if docType == DOCTYPE_REST:
+					realTitle = publish_parts(text, writer_name='html')['title']
+				elif docType == DOCTYPE_MARKDOWN:
+					realTitle = str.join(' ', md.Meta['title'])
+			except:
+				pass
+		if realTitle:
 			return realTitle
 		elif self.fileNames[self.ind]:
 			fileinfo = QFileInfo(self.fileNames[self.ind])
