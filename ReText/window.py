@@ -1055,12 +1055,12 @@ class ReTextWindow(QMainWindow):
 		text = convertToUnicode(self.editBoxes[self.ind].toPlainText())
 		markup = self.markups[self.ind]
 		realTitle = ''
-		if markup:
+		if markup and not baseName:
 			try:
 				realTitle = markup.get_document_title(text)
 			except:
 				self.printError()
-		if realTitle and not baseName:
+		if realTitle:
 			return realTitle
 		elif self.fileNames[self.ind]:
 			fileinfo = QFileInfo(self.fileNames[self.ind])
