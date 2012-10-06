@@ -44,7 +44,7 @@ a:hover {
 
 .content {
   background-color: whiteSmoke;
-  border: solid 1px black;
+  border: solid 1px #665;
   border-radius: 0.5em;
   padding: 0.5em;
   padding-top: 0em;
