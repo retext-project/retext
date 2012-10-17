@@ -55,6 +55,8 @@ def readFromSettings(key, keytype, settings=settings, default=None):
 			return result
 		elif keytype == bool:
 			return settings.value(key).toBool()
+		elif keytype == QByteArray:
+			return settings.value(key).toByteArray()
 
 def readListFromSettings(key, settings=settings):
 	if not settings.contains(key):

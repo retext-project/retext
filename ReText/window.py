@@ -11,10 +11,14 @@ from ReText.editor import ReTextEdit
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
 		QMainWindow.__init__(self, parent)
+		self.initConfig()
 		self.resize(800, 600)
-		screen = QDesktopWidget().screenGeometry()
-		size = self.geometry()
-		self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
+		if settings.contains('windowGeometry'):
+			self.restoreGeometry(readFromSettings('windowGeometry', QByteArray))
+		else:
+			screen = QDesktopWidget().screenGeometry()
+			size = self.geometry()
+			self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
 		if settings.contains('iconTheme'):
 			QIcon.setThemeName(readFromSettings('iconTheme', str))
 		if QIcon.themeName() in ('', 'hicolor'):
@@ -28,16 +32,6 @@ class ReTextWindow(QMainWindow):
 					iconTheme = iconTheme.decode()
 					QIcon.setThemeName(iconTheme)
 					settings.setValue('iconTheme', iconTheme)
-		if settings.contains('font'):
-			self.font = QFont(readFromSettings('font', str))
-			if settings.contains('fontSize'):
-				self.font.setPointSize(readFromSettings('fontSize', int))
-		else:
-			self.font = None
-		self.tabWidth = readFromSettings('tabWidth', int, default=4)
-		self.tabInsertsSpaces = readFromSettings('tabInsertsSpaces', bool, default=True)
-		self.rightMargin = readFromSettings('rightMargin', int, default=0)
-		self.handleLinks = readFromSettings('handleWebLinks', bool, default=False)
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
 		else:
@@ -286,15 +280,10 @@ class ReTextWindow(QMainWindow):
 		self.searchBar.addAction(self.actionFind)
 		self.searchBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 		self.searchBar.setVisible(False)
-		self.autoSave = readFromSettings('autoSave', bool, default=False)
 		if self.autoSave:
 			timer = QTimer(self)
 			timer.start(60000)
 			self.connect(timer, SIGNAL('timeout()'), self.saveAll)
-		self.restorePreviewState = readFromSettings('restorePreviewState', bool,
-			default=False)
-		self.livePreviewEnabled = readFromSettings('previewState', bool,
-			default=False)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if enchant_available:
@@ -309,6 +298,23 @@ class ReTextWindow(QMainWindow):
 			if readFromSettings('spellCheck', bool, default=False):
 				self.actionEnableSC.setChecked(True)
 				self.enableSC(True)
+	
+	def initConfig(self):
+		self.font = QFont(readFromSettings('font', str, default=None))
+		if self.font and settings.contains('fontSize'):
+			self.font.setPointSize(readFromSettings('fontSize', int))
+		self.tabWidth = readFromSettings('tabWidth', int, default=4)
+		self.tabInsertsSpaces = readFromSettings('tabInsertsSpaces', bool,
+			default=True)
+		self.rightMargin = readFromSettings('rightMargin', int, default=0)
+		self.saveWindowGeometry = readFromSettings('saveWindowGeometry', bool,
+			default=False)
+		self.handleLinks = readFromSettings('handleWebLinks', bool, default=False)
+		self.autoSave = readFromSettings('autoSave', bool, default=False)
+		self.restorePreviewState = readFromSettings('restorePreviewState', bool,
+			default=False)
+		self.livePreviewEnabled = readFromSettings('previewState', bool,
+			default=False)
 	
 	def act(self, name, icon=None, trig=None, trigbool=None, shct=None):
 		if icon:
@@ -1134,6 +1140,8 @@ class ReTextWindow(QMainWindow):
 				settings.setValue('previewState', True)
 			else:
 				settings.remove('previewState')
+		if self.saveWindowGeometry and not self.isMaximized():
+			settings.setValue('windowGeometry', self.saveGeometry())
 		closeevent.accept()
 	
 	def viewHtml(self):
