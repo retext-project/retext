@@ -58,24 +58,29 @@ class ReTextWindow(QMainWindow):
 		if readFromSettings('hideToolBar', bool, default=False):
 			toolBar.setVisible(False)
 			self.editBar.setVisible(False)
-		self.actionNew = self.act(self.tr('New'), icon='document-new', shct=QKeySequence.New, trig=self.createNew)
+		self.actionNew = self.act(self.tr('New'), icon='document-new', shct=QKeySequence.New,
+			trig=self.createNew)
 		self.actionNew.setPriority(QAction.LowPriority)
-		self.actionOpen = self.act(self.tr('Open'), icon='document-open', shct=QKeySequence.Open, trig=self.openFile)
+		self.actionOpen = self.act(self.tr('Open'), icon='document-open', shct=QKeySequence.Open,
+			trig=self.openFile)
 		self.actionOpen.setPriority(QAction.LowPriority)
-		self.actionSave = self.act(self.tr('Save'), icon='document-save', shct=QKeySequence.Save, trig=self.saveFile)
+		self.actionSave = self.act(self.tr('Save'), icon='document-save', shct=QKeySequence.Save,
+			trig=self.saveFile)
 		self.actionSave.setEnabled(False)
 		self.actionSave.setPriority(QAction.LowPriority)
-		self.actionSaveAs = self.act(self.tr('Save as'), icon='document-save-as', shct=QKeySequence.SaveAs,
-		trig=self.saveFileAs)
-		self.actionPrint = self.act(self.tr('Print'), icon='document-print', shct=QKeySequence.Print, trig=self.printFile)
+		self.actionSaveAs = self.act(self.tr('Save as'), icon='document-save-as',
+			shct=QKeySequence.SaveAs, trig=self.saveFileAs)
+		self.actionPrint = self.act(self.tr('Print'), icon='document-print', shct=QKeySequence.Print,
+			trig=self.printFile)
 		self.actionPrint.setPriority(QAction.LowPriority)
 		self.actionPrintPreview = self.act(self.tr('Print preview'), icon='document-print-preview',
-		trig=self.printPreview)
+			trig=self.printPreview)
 		self.actionViewHtml = self.act(self.tr('View HTML code'), icon='text-html', trig=self.viewHtml)
 		self.actionChangeFont = self.act(self.tr('Change default font'), trig=self.changeFont)
 		self.actionSearch = self.act(self.tr('Find text'), icon='edit-find', shct=QKeySequence.Find)
 		self.actionSearch.setCheckable(True)
-		self.connect(self.actionSearch, SIGNAL('triggered(bool)'), self.searchBar, SLOT('setVisible(bool)'))
+		self.connect(self.actionSearch, SIGNAL('triggered(bool)'), self.searchBar,
+			SLOT('setVisible(bool)'))
 		self.connect(self.searchBar, SIGNAL('visibilityChanged(bool)'), self.searchBarVisibilityChanged)
 		self.actionPreview = self.act(self.tr('Preview'), shct=Qt.CTRL+Qt.Key_E, trigbool=self.preview)
 		if QIcon.hasThemeIcon('document-preview'):
@@ -88,8 +93,8 @@ class ReTextWindow(QMainWindow):
 			self.actionPreview.setIcon(QIcon(icon_path+'document-preview.png'))
 		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.CTRL+Qt.Key_L,
 		trigbool=self.enableLivePreview)
-		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), icon='view-fullscreen', shct=Qt.Key_F11,
-		trigbool=self.enableFullScreen)
+		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), icon='view-fullscreen',
+			shct=Qt.Key_F11, trigbool=self.enableFullScreen)
 		self.actionPerfectHtml = self.act('HTML', icon='text-html', trig=self.saveFilePerfect)
 		self.actionPdf = self.act('PDF', icon='application-pdf', trig=self.savePdf)
 		self.actionOdf = self.act('ODT', icon='x-office-document', trig=self.saveOdf)
@@ -98,15 +103,15 @@ class ReTextWindow(QMainWindow):
 		self.actionQuit.setMenuRole(QAction.QuitRole)
 		self.connect(self.actionQuit, SIGNAL('triggered()'), self.close)
 		self.actionUndo = self.act(self.tr('Undo'), icon='edit-undo', shct=QKeySequence.Undo,
-		trig=lambda: self.editBoxes[self.ind].undo())
+			trig=lambda: self.editBoxes[self.ind].undo())
 		self.actionRedo = self.act(self.tr('Redo'), icon='edit-redo', shct=QKeySequence.Redo,
-		trig=lambda: self.editBoxes[self.ind].redo())
+			trig=lambda: self.editBoxes[self.ind].redo())
 		self.actionCopy = self.act(self.tr('Copy'), icon='edit-copy', shct=QKeySequence.Copy,
-		trig=lambda: self.editBoxes[self.ind].copy())
+			trig=lambda: self.editBoxes[self.ind].copy())
 		self.actionCut = self.act(self.tr('Cut'), icon='edit-cut', shct=QKeySequence.Cut,
-		trig=lambda: self.editBoxes[self.ind].cut())
+			trig=lambda: self.editBoxes[self.ind].cut())
 		self.actionPaste = self.act(self.tr('Paste'), icon='edit-paste', shct=QKeySequence.Paste,
-		trig=lambda: self.editBoxes[self.ind].paste())
+			trig=lambda: self.editBoxes[self.ind].paste())
 		self.actionUndo.setEnabled(False)
 		self.actionRedo.setEnabled(False)
 		self.actionCopy.setEnabled(False)
@@ -124,9 +129,10 @@ class ReTextWindow(QMainWindow):
 				self.actionWebKit.setChecked(True)
 		self.actionWpgen = self.act(self.tr('Generate webpages'), trig=self.startWpgen)
 		self.actionShow = self.act(self.tr('Show'), icon='system-file-manager', trig=self.showInDir)
-		self.actionFind = self.act(self.tr('Next'), icon='go-next', shct=QKeySequence.FindNext, trig=self.find)
-		self.actionFindPrev = self.act(self.tr('Previous'), icon='go-previous', shct=QKeySequence.FindPrevious,
-		trig=lambda: self.find(back=True))
+		self.actionFind = self.act(self.tr('Next'), icon='go-next', shct=QKeySequence.FindNext,
+			trig=self.find)
+		self.actionFindPrev = self.act(self.tr('Previous'), icon='go-previous',
+			shct=QKeySequence.FindPrevious, trig=lambda: self.find(back=True))
 		self.actionHelp = self.act(self.tr('Get help online'), icon='help-contents', trig=self.openHelp)
 		self.aboutWindowTitle = self.tr('About %s', 'Example of final string: About ReText')
 		try:
@@ -157,10 +163,12 @@ class ReTextWindow(QMainWindow):
 					markupAction.setChecked(True)
 				self.chooseGroup.addAction(markupAction)
 				markupActions.append(markupAction)
-		self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.Bold, trig=lambda: self.insertChars('**'))
-		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.Italic, trig=lambda: self.insertChars('*'))
+		self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.Bold,
+			trig=lambda: self.insertChars('**'))
+		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.Italic,
+			trig=lambda: self.insertChars('*'))
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
-		trig=lambda: self.insertTag(9)) # <u>...</u>
+			trig=lambda: self.insertTag(9)) # <u>...</u>
 		self.usefulTags = ('big', 'center', 's', 'small', 'span', 'table', 'td', 'tr', 'u')
 		self.usefulChars = ('deg', 'divide', 'dollar', 'hellip', 'laquo', 'larr',
 			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
@@ -389,10 +397,13 @@ class ReTextWindow(QMainWindow):
 		metrics = QFontMetrics(self.editBoxes[-1].font())
 		self.editBoxes[-1].setTabStopWidth(self.tabWidth*metrics.width(' '))
 		self.connect(self.editBoxes[-1], SIGNAL('textChanged()'), self.updateLivePreviewBox)
-		self.connect(self.editBoxes[-1], SIGNAL('undoAvailable(bool)'), self.actionUndo, SLOT('setEnabled(bool)'))
-		self.connect(self.editBoxes[-1], SIGNAL('redoAvailable(bool)'), self.actionRedo, SLOT('setEnabled(bool)'))
+		self.connect(self.editBoxes[-1], SIGNAL('undoAvailable(bool)'), self.actionUndo,
+			SLOT('setEnabled(bool)'))
+		self.connect(self.editBoxes[-1], SIGNAL('redoAvailable(bool)'), self.actionRedo,
+			SLOT('setEnabled(bool)'))
 		self.connect(self.editBoxes[-1], SIGNAL('copyAvailable(bool)'), self.enableCopy)
-		self.connect(self.editBoxes[-1].document(), SIGNAL('modificationChanged(bool)'), self.modificationChanged)
+		self.connect(self.editBoxes[-1].document(), SIGNAL('modificationChanged(bool)'),
+			self.modificationChanged)
 		return self.getSplitter(-1)
 	
 	def closeTab(self, ind):
@@ -561,7 +572,8 @@ class ReTextWindow(QMainWindow):
 			text = ""
 		else:
 			text = self.sl
-		sl, ok = QInputDialog.getText(self, app_name, self.tr('Enter locale name (example: en_US)'), QLineEdit.Normal, text)
+		sl, ok = QInputDialog.getText(self, app_name, self.tr('Enter locale name (example: en_US)'),
+			QLineEdit.Normal, text)
 		if ok and sl:
 			try:
 				sl = str(sl)
@@ -904,8 +916,9 @@ class ReTextWindow(QMainWindow):
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
 			else:
-				defaultExt = self.tr('%s files', 'Example of final string: Markdown files') % markupClass.name + ' (' \
-					+ str.join(' ', ['*'+ext for ext in markupClass.file_extensions]) + ')'
+				defaultExt = self.tr('%s files', 'Example of final string: Markdown files') \
+					% markupClass.name + ' (' + str.join(' ',
+					['*'+ext for ext in markupClass.file_extensions]) + ')'
 				ext = markupClass.default_extension
 			newFileName = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 			if newFileName:
@@ -920,7 +933,8 @@ class ReTextWindow(QMainWindow):
 				self.setWindowModified(False)
 				return True
 			else:
-				QMessageBox.warning(self, app_name, self.tr("Cannot save to file because it is read-only!"))
+				QMessageBox.warning(self, app_name,
+				self.tr("Cannot save to file because it is read-only!"))
 		return False
 	
 	def saveFileCore(self, fn):
@@ -964,7 +978,8 @@ class ReTextWindow(QMainWindow):
 			document = self.textDocument()
 		except:
 			return self.printError()
-		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to ODT"), "", self.tr("OpenDocument text files (*.odt)"))
+		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to ODT"), "",
+			self.tr("OpenDocument text files (*.odt)"))
 		if not QFileInfo(fileName).suffix():
 			fileName += ".odt"
 		writer = QTextDocumentWriter(fileName)
@@ -973,7 +988,8 @@ class ReTextWindow(QMainWindow):
 	
 	def saveFilePerfect(self):
 		fileName = None
-		fileName = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", self.tr("HTML files (*.html *.htm)"))
+		fileName = QFileDialog.getSaveFileName(self, self.tr("Save file"), "",
+			self.tr("HTML files (*.html *.htm)"))
 		if fileName:
 			self.saveHtml(fileName)
 	
@@ -1052,7 +1068,8 @@ class ReTextWindow(QMainWindow):
 			except:
 				# Not needed for Python 3
 				pass
-			QMessageBox.warning(self, app_name, self.tr('Failed to execute the command:') + '\n' + errorstr)
+			QMessageBox.warning(self, app_name, self.tr('Failed to execute the command:')
+			+ '\n' + errorstr)
 		QFile(tmpname).remove()
 		if of:
 			QFile('out'+defaultext).rename(fileName)
@@ -1165,7 +1182,8 @@ class ReTextWindow(QMainWindow):
 	
 	def aboutDialog(self):
 		QMessageBox.about(self, self.aboutWindowTitle,
-		'<p><b>'+app_name+' '+app_version+'</b><br>'+self.tr('Simple but powerful editor for Markdown and reStructuredText')
+		'<p><b>'+app_name+' '+app_version+'</b><br>'+self.tr('Simple but powerful editor'
+		' for Markdown and reStructuredText')
 		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011')
 		+'<br><a href="http://sourceforge.net/p/retext/">'+self.tr('Website')
 		+'</a> | <a href="http://daringfireball.net/projects/markdown/syntax">'+self.tr('Markdown syntax')
