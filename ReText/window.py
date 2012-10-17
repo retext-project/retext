@@ -219,7 +219,6 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionCopy)
 		menuEdit.addAction(self.actionPaste)
 		menuEdit.addSeparator()
-		self.sc = False
 		if enchant_available:
 			menuSC = menuEdit.addMenu(self.tr('Spell check'))
 			menuSC.addAction(self.actionEnableSC)
