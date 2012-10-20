@@ -307,7 +307,9 @@ class ReTextWindow(QMainWindow):
 				self.enableSC(True)
 	
 	def initConfig(self):
-		self.font = QFont(readFromSettings('font', str, default=None))
+		self.font = None
+		if settings.contains('font'):
+			self.font = QFont(readFromSettings('font', str))
 		if self.font and settings.contains('fontSize'):
 			self.font.setPointSize(readFromSettings('fontSize', int))
 		self.tabWidth = readFromSettings('tabWidth', int, default=4)
