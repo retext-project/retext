@@ -12,6 +12,11 @@ app_version = "4.0 (Git)"
 
 settings = QSettings('ReText project', 'ReText')
 
+if not str(settings.fileName()).endswith('.conf'):
+	# We are on Windows probably
+	settings = QSettings(QSettings.IniFormat, QSettings.UserScope, 
+		'ReText project', 'ReText')
+
 try:
 	import enchant
 	enchant.Dict()
