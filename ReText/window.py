@@ -1053,11 +1053,12 @@ class ReTextWindow(QMainWindow):
 				return
 			if defaultext and not QFileInfo(fileName).suffix():
 				fileName += defaultext
+		basename = '.%s.retext-temp' % self.getDocumentTitle(baseName=True)
 		if html:
-			tmpname = '.retext-temp.html'
+			tmpname = basename+'.html'
 			self.saveHtml(tmpname)
 		else:
-			tmpname = '.retext-temp' + self.getMarkupClass().default_extension
+			tmpname = basename+self.getMarkupClass().default_extension
 			self.saveFileCore(tmpname)
 		command = command.replace('%of', 'out'+defaultext)
 		command = command.replace('%html' if html else '%if', tmpname)
