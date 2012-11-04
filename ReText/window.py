@@ -169,7 +169,8 @@ class ReTextWindow(QMainWindow):
 			trig=lambda: self.insertChars('*'))
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
 			trig=lambda: self.insertTag(9)) # <u>...</u>
-		self.usefulTags = ('big', 'center', 's', 'small', 'span', 'table', 'td', 'tr', 'u')
+		self.usefulTags = ('a', 'big', 'center', 'img', 's', 'small', 'span',
+			'table', 'td', 'tr', 'u')
 		self.usefulChars = ('deg', 'divide', 'dollar', 'hellip', 'laquo', 'larr',
 			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
 			'rarr', 'rsquo', 'times')
@@ -1125,7 +1126,14 @@ class ReTextWindow(QMainWindow):
 			ut = self.usefulTags[num-1]
 			arg = ' style=""' if ut == 'span' else '' 
 			tc = self.editBoxes[self.ind].textCursor()
-			toinsert = '<'+ut+arg+'>'+tc.selectedText()+'</'+ut+'>'
+			if ut == 'img':
+				toinsert = ('<a href="' + tc.selectedText() +
+				'" target="_blank"><img src="' + tc.selectedText() + '"/></a>')
+			elif ut == 'a':
+				toinsert = ('<a href="' + tc.selectedText() +
+				'" target="_blank">' + tc.selectedText() + '</a>')
+			else:
+				toinsert = '<'+ut+arg+'>'+tc.selectedText()+'</'+ut+'>'
 			tc.insertText(toinsert)
 		self.tagsBox.setCurrentIndex(0)
 	
