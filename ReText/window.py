@@ -646,7 +646,8 @@ class ReTextWindow(QMainWindow):
 			headers += '<style type="text/css">\n' + fontline + self.ss + '</style>\n'
 		cssFileName = self.getDocumentTitle(baseName=True)+'.css'
 		if QFile(cssFileName).exists():
-			headers += '<link rel="stylesheet" type="text/css" href="%s">\n' % cssFileName
+			headers += '<link rel="stylesheet" type="text/css" href="%s">\n' \
+			% QUrl.fromLocalFile(QFileInfo(cssFileName).absoluteFilePath()).toString()
 		if includeMeta:
 			headers += '<meta name="generator" content="%s %s">\n' % \
 			(app_name, app_version)
@@ -679,7 +680,7 @@ class ReTextWindow(QMainWindow):
 				html = self.getHtml(styleForWebKit=(not textedit))
 			except:
 				return self.printError()
-			if not textedit and ('<script ' in html or '<link rel="stylesheet"' in html):
+			if not textedit and ('<script ' in html):
 				# Work-around a bug in QtWebKit
 				# by saving the html locally
 				tempFile = QTemporaryFile('retext-XXXXXX.html')
