@@ -8,6 +8,25 @@ from ReText.htmldialog import HtmlDialog
 from ReText.highlighter import ReTextHighlighter
 from ReText.editor import ReTextEdit
 
+class LocaleDialog(QDialog):
+	def __init__(self, parent, defaultText=""):
+		QDialog.__init__(self, parent)
+		self.setWindowTitle(app_name)
+		verticalLayout = QVBoxLayout(self)
+		self.label = QLabel(self)
+		self.label.setText(self.tr('Enter locale name (example: en_US)'))
+		verticalLayout.addWidget(self.label)
+		self.localeEdit = QLineEdit(self)
+		self.localeEdit.setText(defaultText)
+		verticalLayout.addWidget(self.localeEdit)
+		self.checkBox = QCheckBox('Set as default', self)
+		verticalLayout.addWidget(self.checkBox)
+		buttonBox = QDialogButtonBox(self)
+		buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
+		verticalLayout.addWidget(buttonBox)
+		self.connect(buttonBox, SIGNAL('accepted()'), self.accept)
+		self.connect(buttonBox, SIGNAL('rejected()'), self.reject)
+
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
 		QMainWindow.__init__(self, parent)
@@ -571,13 +590,15 @@ class ReTextWindow(QMainWindow):
 			hl.rehighlight()
 	
 	def changeLocale(self):
-		if self.sl == None:
-			text = ""
+		if self.sl:
+			localedlg = LocaleDialog(self, defaultText=self.sl)
 		else:
-			text = self.sl
-		sl, ok = QInputDialog.getText(self, app_name, self.tr('Enter locale name (example: en_US)'),
-			QLineEdit.Normal, text)
-		if ok and sl:
+			localedlg = LocaleDialog(self)
+		if localedlg.exec_() != QDialog.Accepted:
+			return
+		sl = localedlg.localeEdit.text()
+		setdefault = localedlg.checkBox.isChecked()
+		if sl:
 			try:
 				sl = str(sl)
 				enchant.Dict(sl)
@@ -586,9 +607,13 @@ class ReTextWindow(QMainWindow):
 			else:
 				self.sl = sl
 				self.enableSC(self.actionEnableSC.isChecked())
-		elif not sl:
+				if setdefault:
+					settings.setValue('spellCheckLocale', sl)
+		else:
 			self.sl = None
 			self.enableSC(self.actionEnableSC.isChecked())
+			if setdefault:
+				settings.remove('spellCheckLocale')
 	
 	def searchBarVisibilityChanged(self, visible):
 		self.actionSearch.setChecked(visible)
