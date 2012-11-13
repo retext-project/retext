@@ -22,7 +22,7 @@ import sys
 from ReText import *
 from ReText.window import ReTextWindow
 
-def main(fileNames):
+def main():
 	app = QApplication(sys.argv)
 	app.setOrganizationName("ReText project")
 	app.setApplicationName("ReText")
@@ -41,6 +41,7 @@ def main(fileNames):
 		sheetfile.close()
 	window = ReTextWindow()
 	window.show()
+	fileNames = [QFileInfo(arg).canonicalFilePath() for arg in sys.argv[1:]]
 	for fileName in fileNames:
 		try:
 			fileName = QString.fromUtf8(fileName)
@@ -52,4 +53,4 @@ def main(fileNames):
 	sys.exit(app.exec_())
 
 if __name__ == '__main__':
-	main(sys.argv[1:])
+	main()
