@@ -19,7 +19,7 @@ class LocaleDialog(QDialog):
 		self.localeEdit = QLineEdit(self)
 		self.localeEdit.setText(defaultText)
 		verticalLayout.addWidget(self.localeEdit)
-		self.checkBox = QCheckBox('Set as default', self)
+		self.checkBox = QCheckBox(self.tr('Set as default'), self)
 		verticalLayout.addWidget(self.checkBox)
 		buttonBox = QDialogButtonBox(self)
 		buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
