@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-VERSION = '4.0~beta1'
+VERSION = '4.0~rc1'
 
 from distutils.core import setup
 from distutils.command.build import build
