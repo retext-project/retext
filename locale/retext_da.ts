@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="da_DK" sourcelanguage="en">
+<!DOCTYPE TS><TS version="2.0" language="da" sourcelanguage="">
 <context>
     <name>LocaleDialog</name>
     <message>
         <location filename="window.py" line="17"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation>Indtast sprogindstilling (eksempel: en_US)</translation>
+        <translation>Indtast lokalitetsnavn (f.eks. da_DK)</translation>
     </message>
     <message>
         <location filename="window.py" line="22"/>
         <source>Set as default</source>
-        <translation type="unfinished"></translation>
+        <translation>Sæt som standard</translation>
     </message>
 </context>
 <context>
@@ -262,9 +262,19 @@
         <translation>Nyt dokument</translation>
     </message>
     <message>
+        <location filename="window.py" line="650"/>
+        <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
+        <translation>Kunne ikke indlæse filens indhold, dobbeltcheck at du har det &lt;a href=&quot;%s&quot;&gt;nødvendige modul&lt;/a&gt; installeret.</translation>
+    </message>
+    <message>
         <location filename="window.py" line="764"/>
         <source>Please, save the file somewhere.</source>
         <translation>Gem venligst filen et sted.</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="749"/>
+        <source>Failed to copy default template, please create template.html manually.</source>
+        <translation>Kunne ikke kopiere standardskabelonen. Opret template.html manuelt.</translation>
     </message>
     <message>
         <location filename="window.py" line="753"/>
@@ -295,6 +305,12 @@
         <location filename="window.py" line="945"/>
         <source>Plain text (*.txt)</source>
         <translation>Ren tekst (*.txt)</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="948"/>
+        <source>%s files</source>
+        <comment>Example of final string: Markdown files</comment>
+        <translation>%s-filer</translation>
     </message>
     <message>
         <location filename="window.py" line="1020"/>
@@ -360,6 +376,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <location filename="window.py" line="1221"/>
+        <source>Simple but powerful editor for Markdown and reStructuredText</source>
+        <translation>Enkel men stærk editor til Markdown og reStructuredText</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1221"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Forfatter: Dmitry Shachnev, 2011</translation>
     </message>
@@ -377,27 +398,6 @@ Do you want to save your changes?</source>
         <location filename="window.py" line="1221"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText-syntaks</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1221"/>
-        <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>Enkel men stærk editor til Markdown og reStructuredText</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="948"/>
-        <source>%s files</source>
-        <comment>Example of final string: Markdown files</comment>
-        <translation>%s-filer</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="749"/>
-        <source>Failed to copy default template, please create template.html manually.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="650"/>
-        <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
