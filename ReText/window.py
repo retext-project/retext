@@ -945,7 +945,8 @@ class ReTextWindow(QMainWindow):
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
 			else:
-				defaultExt = self.tr('%s files', 'Example of final string: Markdown files') \
+				defaultExt = convertToUnicode(self.tr('%s files',
+					'Example of final string: Markdown files')) \
 					% markupClass.name + ' (' + str.join(' ',
 					['*'+ext for ext in markupClass.file_extensions]) + ')'
 				ext = markupClass.default_extension
