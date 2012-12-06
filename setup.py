@@ -2,6 +2,10 @@
 
 VERSION = '4.0.0'
 
+long_description = '''\
+ReText is simple text editor that supports Markdown and reStructuredText
+markup languages. It is written in Python using PyQt libraries.'''
+
 from distutils.core import setup
 from distutils.command.build import build
 from distutils.command.sdist import sdist
@@ -33,6 +37,7 @@ class retext_sdist(sdist):
 setup(name='ReText',
 	version=VERSION,
 	description='Simple editor for Markdown and reStructuredText',
+	long_description=long_description,
 	author='Dmitry Shachnev',
 	author_email='mitya57@gmail.com',
 	url='http://retext.sourceforge.net/',
