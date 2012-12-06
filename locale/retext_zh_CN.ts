@@ -46,12 +46,12 @@
         <translation>符号</translation>
     </message>
     <message>
-        <location filename="window.py" line="1020"/>
+        <location filename="window.py" line="1021"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML 文件 (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1020"/>
+        <location filename="window.py" line="1021"/>
         <source>Save file</source>
         <translation>保存文件</translation>
     </message>
@@ -101,17 +101,17 @@
         <translation>编辑工具栏</translation>
     </message>
     <message>
-        <location filename="window.py" line="1041"/>
+        <location filename="window.py" line="1042"/>
         <source>Export document to PDF</source>
         <translation>导出文件到 PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="1041"/>
+        <location filename="window.py" line="1042"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF 文件 (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1178"/>
+        <location filename="window.py" line="1179"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>文件已更改，确认保存吗？</translation>
@@ -142,7 +142,7 @@ Do you want to save your changes?</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="window.py" line="1122"/>
+        <location filename="window.py" line="1123"/>
         <source>New document</source>
         <translation>新文件</translation>
     </message>
@@ -167,12 +167,12 @@ Do you want to save your changes?</source>
         <translation>普通文本</translation>
     </message>
     <message>
-        <location filename="window.py" line="1010"/>
+        <location filename="window.py" line="1011"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Libreoffice 文件 (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1010"/>
+        <location filename="window.py" line="1011"/>
         <source>Export document to ODT</source>
         <translation>导出文件到 ODT</translation>
     </message>
@@ -182,7 +182,7 @@ Do you want to save your changes?</source>
         <translation>查看 HTML 代码</translation>
     </message>
     <message>
-        <location filename="window.py" line="1211"/>
+        <location filename="window.py" line="1212"/>
         <source>HTML code</source>
         <translation>HTML 代码</translation>
     </message>
@@ -192,7 +192,7 @@ Do you want to save your changes?</source>
         <translation>打印预览</translation>
     </message>
     <message>
-        <location filename="window.py" line="1057"/>
+        <location filename="window.py" line="1058"/>
         <source>Print document</source>
         <translation>打印文件</translation>
     </message>
@@ -242,7 +242,7 @@ Do you want to save your changes?</source>
         <translation>改变默认字体</translation>
     </message>
     <message>
-        <location filename="window.py" line="1078"/>
+        <location filename="window.py" line="1079"/>
         <source>Export document</source>
         <translation>导出文件</translation>
     </message>
@@ -302,27 +302,27 @@ Do you want to save your changes?</source>
         <translation>对大小写敏感</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Website</source>
         <translation>网站</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Markdown syntax</source>
         <translation>Markdown 语法</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText 语法</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>简单高效的 Markdown 与 reStructuredText 编辑器</translation>
     </message>
@@ -342,7 +342,7 @@ Do you want to save your changes?</source>
         <translation>显示文件夹</translation>
     </message>
     <message>
-        <location filename="window.py" line="965"/>
+        <location filename="window.py" line="966"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>不能保存文件因为它是只读的！</translation>
     </message>
@@ -378,7 +378,7 @@ Do you want to save your changes?</source>
         <translation>使用WebKit渲染</translation>
     </message>
     <message>
-        <location filename="window.py" line="1101"/>
+        <location filename="window.py" line="1102"/>
         <source>Failed to execute the command:</source>
         <translation>不能执行命令:</translation>
     </message>

@@ -251,7 +251,7 @@
         <translation>Rozlišovanie veľkosti písmen</translation>
     </message>
     <message>
-        <location filename="window.py" line="1122"/>
+        <location filename="window.py" line="1123"/>
         <source>New document</source>
         <translation>Nový dokument</translation>
     </message>
@@ -291,79 +291,79 @@
         <translation>Jednoduchý text (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1020"/>
+        <location filename="window.py" line="1021"/>
         <source>Save file</source>
         <translation>Uložiť súbor</translation>
     </message>
     <message>
-        <location filename="window.py" line="965"/>
+        <location filename="window.py" line="966"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Nie je možné uložiť, pretože súbor je len nna čítanie!</translation>
     </message>
     <message>
-        <location filename="window.py" line="1010"/>
+        <location filename="window.py" line="1011"/>
         <source>Export document to ODT</source>
         <translation>Exportovať dokument do ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="1010"/>
+        <location filename="window.py" line="1011"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocument textové súbory (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1020"/>
+        <location filename="window.py" line="1021"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML súbory (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1041"/>
+        <location filename="window.py" line="1042"/>
         <source>Export document to PDF</source>
         <translation>Exportovať dokument do PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="1041"/>
+        <location filename="window.py" line="1042"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF súbory (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1057"/>
+        <location filename="window.py" line="1058"/>
         <source>Print document</source>
         <translation>Tlačiť dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="1078"/>
+        <location filename="window.py" line="1079"/>
         <source>Export document</source>
         <translation>Exportovať dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="1101"/>
+        <location filename="window.py" line="1102"/>
         <source>Failed to execute the command:</source>
         <translation>Nepodarilo sa spustiť príkaz:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1178"/>
+        <location filename="window.py" line="1179"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Dokument bol zmenený.
 Chcete uložiť vaše zmeny?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1211"/>
+        <location filename="window.py" line="1212"/>
         <source>HTML code</source>
         <translation>HTML kód</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Autor: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Website</source>
         <translation>Webová stránka</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Markdown syntax</source>
         <translation>Markdown syntax</translation>
     </message>
@@ -385,12 +385,12 @@ Chcete uložiť vaše zmeny?</translation>
         <translation>Súbory %s</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Jednoduchý a pritom efektívny editor pre Markdown a reStructuredText</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText syntax</translation>
     </message>
