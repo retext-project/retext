@@ -5,12 +5,12 @@
     <message>
         <location filename="window.py" line="17"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation>Introduzca el nombre la localización (por ejemplo: es_MX)</translation>
+        <translation>Escriba el nombre de la localidad (ejemplo: es_MX)</translation>
     </message>
     <message>
         <location filename="window.py" line="22"/>
         <source>Set as default</source>
-        <translation type="unfinished"></translation>
+        <translation>Establecer como predeterminado</translation>
     </message>
 </context>
 <context>
@@ -257,7 +257,7 @@
         <translation>Distinguir mayúsculas y minúsculas</translation>
     </message>
     <message>
-        <location filename="window.py" line="1122"/>
+        <location filename="window.py" line="1123"/>
         <source>New document</source>
         <translation>Documento nuevo</translation>
     </message>
@@ -313,89 +313,89 @@
         <translation>%s archivos</translation>
     </message>
     <message>
-        <location filename="window.py" line="1020"/>
+        <location filename="window.py" line="1021"/>
         <source>Save file</source>
         <translation>Guardar archivo</translation>
     </message>
     <message>
-        <location filename="window.py" line="965"/>
+        <location filename="window.py" line="966"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>No se puede guardar el archivo porque es de solo lectura.</translation>
     </message>
     <message>
-        <location filename="window.py" line="1010"/>
+        <location filename="window.py" line="1011"/>
         <source>Export document to ODT</source>
         <translation>Exportar documento a ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="1010"/>
+        <location filename="window.py" line="1011"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Archivos de texto OpenDocument (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1020"/>
+        <location filename="window.py" line="1021"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Archivos HTML (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1041"/>
+        <location filename="window.py" line="1042"/>
         <source>Export document to PDF</source>
         <translation>Exportar documento a PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="1041"/>
+        <location filename="window.py" line="1042"/>
         <source>PDF files (*.pdf)</source>
         <translation>Archivos PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1057"/>
+        <location filename="window.py" line="1058"/>
         <source>Print document</source>
         <translation>Imprimir documento</translation>
     </message>
     <message>
-        <location filename="window.py" line="1078"/>
+        <location filename="window.py" line="1079"/>
         <source>Export document</source>
         <translation>Exportar documento</translation>
     </message>
     <message>
-        <location filename="window.py" line="1101"/>
+        <location filename="window.py" line="1102"/>
         <source>Failed to execute the command:</source>
         <translation>Fallo al ejecutar el comando:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1178"/>
+        <location filename="window.py" line="1179"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>El documento ha sido modificado.
 ¿Quiere guardar sus cambios?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1211"/>
+        <location filename="window.py" line="1212"/>
         <source>HTML code</source>
         <translation>Código HTML</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Editor para Markdown y reStructuredText sencillo pero poderoso</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Autor: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Website</source>
         <translation>Sitio web</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Markdown syntax</source>
         <translation>Sintaxis Markdown</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>reStructuredText syntax</source>
         <translation>Sintaxis de reStructuredText</translation>
     </message>

@@ -10,7 +10,7 @@
     <message>
         <location filename="window.py" line="22"/>
         <source>Set as default</source>
-        <translation type="unfinished"></translation>
+        <translation>Desa&apos;l com per defecte</translation>
     </message>
 </context>
 <context>
@@ -257,7 +257,7 @@
         <translation>Majúscules i minúscules</translation>
     </message>
     <message>
-        <location filename="window.py" line="1122"/>
+        <location filename="window.py" line="1123"/>
         <source>New document</source>
         <translation>Document nou</translation>
     </message>
@@ -313,89 +313,89 @@
         <translation>%s fitxers</translation>
     </message>
     <message>
-        <location filename="window.py" line="1020"/>
+        <location filename="window.py" line="1021"/>
         <source>Save file</source>
         <translation>Desa el fitxer</translation>
     </message>
     <message>
-        <location filename="window.py" line="965"/>
+        <location filename="window.py" line="966"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>No s&apos;ha pogut desar el fitxer perquè només és de lectura</translation>
     </message>
     <message>
-        <location filename="window.py" line="1010"/>
+        <location filename="window.py" line="1011"/>
         <source>Export document to ODT</source>
         <translation>Exporta el document a ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="1010"/>
+        <location filename="window.py" line="1011"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Fitxers de text OpenDocument (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1020"/>
+        <location filename="window.py" line="1021"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Fitxers HTML (*.html *htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1041"/>
+        <location filename="window.py" line="1042"/>
         <source>Export document to PDF</source>
         <translation>Exporta document com a PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="1041"/>
+        <location filename="window.py" line="1042"/>
         <source>PDF files (*.pdf)</source>
         <translation>Fitxers PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1057"/>
+        <location filename="window.py" line="1058"/>
         <source>Print document</source>
         <translation>Imprimeix document</translation>
     </message>
     <message>
-        <location filename="window.py" line="1078"/>
+        <location filename="window.py" line="1079"/>
         <source>Export document</source>
         <translation>Exporta document</translation>
     </message>
     <message>
-        <location filename="window.py" line="1101"/>
+        <location filename="window.py" line="1102"/>
         <source>Failed to execute the command:</source>
         <translation>S&apos;ha produït un error a l&apos;executar el comandament:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1178"/>
+        <location filename="window.py" line="1179"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>S&apos;ha modificat el document.
 Voleu desar els canvis?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1211"/>
+        <location filename="window.py" line="1212"/>
         <source>HTML code</source>
         <translation>Codi HTML</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Editor de Markdown i reStructuredText senzill alhora que potent</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Autor: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Website</source>
         <translation>Lloc web</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>Markdown syntax</source>
         <translation>Sintaxi markdown</translation>
     </message>
     <message>
-        <location filename="window.py" line="1221"/>
+        <location filename="window.py" line="1222"/>
         <source>reStructuredText syntax</source>
         <translation>Sintaxi reStructuredText</translation>
     </message>
