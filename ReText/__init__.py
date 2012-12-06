@@ -8,7 +8,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 app_name = "ReText"
-app_version = "4.0 (Git)"
+app_version = "4.0.0"
 
 settings = QSettings('ReText project', 'ReText')
 
