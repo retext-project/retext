@@ -35,19 +35,14 @@ class ReTextEdit(QTextEdit):
 		cursor = self.cursorForPosition(event.pos())
 		pos = cursor.positionInBlock()
 		if pos == len(text): pos -= 1
-		try:
-			curchar = text[pos]
-			isalpha = curchar.isalpha()
-		except AttributeError:
-			# For Python 2
-			curchar = text.at(pos)
-			isalpha = curchar.isLetter()
+		curchar = text[pos]
+		isalpha = curchar.isalpha()
 		cursor.select(QTextCursor.WordUnderCursor)
 		if not isalpha or (oldcursor.hasSelection() and
 		oldcursor.selectedText() != cursor.selectedText()):
 			return QTextEdit.contextMenuEvent(self, event)
 		self.setTextCursor(cursor)
-		word = convertToUnicode(cursor.selectedText())
+		word = cursor.selectedText()
 		if not word or dictionary.check(word):
 			self.setTextCursor(oldcursor)
 			return QTextEdit.contextMenuEvent(self, event)
@@ -85,7 +80,7 @@ class ReTextEdit(QTextEdit):
 	def handleReturn(self, cursor):
 		# Select text between the cursor and the line start
 		cursor.movePosition(QTextCursor.StartOfBlock, QTextCursor.KeepAnchor)
-		text = convertToUnicode(cursor.selectedText())
+		text = cursor.selectedText()
 		length = len(text)
 		pos = 0
 		while pos < length and text[pos] in (' ', '\t'):

@@ -48,7 +48,6 @@ class ReTextHighlighter(QSyntaxHighlighter):
 				for match in re.finditer(pattern[0], text):
 					self.setFormat(match.start(), match.end() - match.start(), charFormat)
 		if self.dictionary:
-			text = convertToUnicode(text)
 			charFormat = QTextCharFormat()
 			charFormat.setUnderlineColor(Qt.red)
 			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)

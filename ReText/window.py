@@ -135,7 +135,6 @@ class ReTextWindow(QMainWindow):
 		self.actionRedo.setEnabled(False)
 		self.actionCopy.setEnabled(False)
 		self.actionCut.setEnabled(False)
-		qApp = QCoreApplication.instance()
 		self.connect(qApp.clipboard(), SIGNAL('dataChanged()'), self.clipboardDataChanged)
 		self.clipboardDataChanged()
 		if enchant_available:
@@ -157,11 +156,7 @@ class ReTextWindow(QMainWindow):
 			shct=QKeySequence.FindPrevious, trig=lambda: self.find(back=True))
 		self.actionHelp = self.act(self.tr('Get help online'), icon='help-contents', trig=self.openHelp)
 		self.aboutWindowTitle = self.tr('About %s', 'Example of final string: About ReText')
-		try:
-			self.aboutWindowTitle =  self.aboutWindowTitle % app_name
-		except:
-			# For Python 2
-			self.aboutWindowTitle = self.aboutWindowTitle.replace('%s', '%1').arg(app_name)
+		self.aboutWindowTitle =  self.aboutWindowTitle % app_name
 		self.actionAbout = self.act(self.aboutWindowTitle, icon='help-about', trig=self.aboutDialog)
 		self.actionAbout.setMenuRole(QAction.AboutRole)
 		self.actionAboutQt = self.act(self.tr('About Qt'))
@@ -349,8 +344,6 @@ class ReTextWindow(QMainWindow):
 			default=False)
 	
 	def act(self, name, icon=None, trig=None, trigbool=None, shct=None):
-		if not isinstance(shct, QKeySequence):
-			shct = QKeySequence(shct)
 		if icon:
 			action = QAction(self.actIcon(icon), name, self)
 		else:
@@ -391,7 +384,7 @@ class ReTextWindow(QMainWindow):
 		return webView
 	
 	def linkClicked(self, url):
-		urlstr = convertToUnicode(url.toString())
+		urlstr = url.toString()
 		if urlstr.startswith('file://') or not (':/' in urlstr):
 			self.previewBoxes[self.ind].load(url)
 		elif urlstr.startswith('about:blank#'):
@@ -450,7 +443,6 @@ class ReTextWindow(QMainWindow):
 	def getMarkupClass(self, fileName=None):
 		if fileName is None:
 			fileName = self.fileNames[self.ind]
-		fileName = convertToUnicode(fileName)
 		if self.actionPlainText.isChecked():
 			return
 		if fileName:
@@ -463,7 +455,6 @@ class ReTextWindow(QMainWindow):
 	def getMarkup(self, fileName=None):
 		if fileName is None:
 			fileName = self.fileNames[self.ind]
-		fileName = convertToUnicode(fileName)
 		markupClass = self.getMarkupClass(fileName=fileName)
 		if markupClass and markupClass.available():
 			return markupClass(filename=fileName)
@@ -501,11 +492,7 @@ class ReTextWindow(QMainWindow):
 		if self.fileNames[ind]:
 			self.setCurrentFile()
 		else:
-			try:
-				self.setWindowTitle(self.tr('New document') + '[*] ' + QChar(0x2014) + ' ' + app_name)
-			except:
-				# For Python 3
-				self.setWindowTitle(self.tr('New document') + '[*] \u2014 ' + app_name)
+			self.setWindowTitle(self.tr('New document') + '[*] \u2014 ' + app_name)
 			self.docTypeChanged()
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
 		self.livePreviewEnabled = self.alpc[ind]
@@ -661,7 +648,7 @@ class ReTextWindow(QMainWindow):
 				errMsg = errMsg.replace('<a href="%s">', '')
 				errMsg = errMsg.replace('</a>', '')
 			return '<p style="color: red">%s</p>' % errMsg
-		text = convertToUnicode(self.editBoxes[self.ind].toPlainText())
+		text = self.editBoxes[self.ind].toPlainText()
 		# WpGen directives
 		text = text.replace('%HTMLDIR%', 'html')
 		text = text.replace('%\\HTMLDIR%', '%HTMLDIR%')
@@ -746,11 +733,7 @@ class ReTextWindow(QMainWindow):
 			try:
 				wpInit()
 			except IOError as e:
-				try:
-					e = unicode(str(e), 'utf-8')
-				except NameError:
-					# For Python 3
-					e = str(e)
+				e = str(e)
 				return QMessageBox.warning(self, app_name, self.tr(
 				'Failed to copy default template, please create template.html manually.')
 				+ '\n\n' + e)
@@ -773,14 +756,9 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.setTabText(self.ind, self.getDocumentTitle(baseName=True))
 		self.setWindowFilePath(self.fileNames[self.ind])
 		files = readListFromSettings("recentFileList")
-		try:
-			files.prepend(self.fileNames[self.ind])
-			files.removeDuplicates()
-		except:
-			# For Python 3
-			while self.fileNames[self.ind] in files:
-				files.remove(self.fileNames[self.ind])
-			files.insert(0, self.fileNames[self.ind])
+		while self.fileNames[self.ind] in files:
+			files.remove(self.fileNames[self.ind])
+		files.insert(0, self.fileNames[self.ind])
 		if len(files) > 10:
 			del files[10:]
 		writeListToSettings("recentFileList", files)
@@ -872,7 +850,7 @@ class ReTextWindow(QMainWindow):
 		extension = {}
 		stream = QTextStream(extFile)
 		while not stream.atEnd():
-			line = convertToUnicode(stream.readLine())
+			line = stream.readLine()
 			if '=' in line:
 				index = line.index('=')
 				extension[line[:index].rstrip()] = line[index+1:].lstrip()
@@ -886,9 +864,6 @@ class ReTextWindow(QMainWindow):
 		fileFilter = ' (' + str.join(' ', ['*'+ext for ext in supportedExtensions]) + ');;'
 		fileNames = QFileDialog.getOpenFileNames(self, self.tr("Select one or several files to open"), "",
 		self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
-		if isinstance(fileNames, tuple):
-			# PySide
-			fileNames = fileNames[0]
 		for fileName in fileNames:
 			self.openFileWrapper(fileName)
 	
@@ -918,7 +893,7 @@ class ReTextWindow(QMainWindow):
 		html = QTextStream(openfile).readAll()
 		openfile.close()
 		markupClass = markups.get_markup_for_file_name(
-			convertToUnicode(self.fileNames[self.ind]), return_class=True)
+			self.fileNames[self.ind], return_class=True)
 		self.highlighters[self.ind].docType = (markupClass.name if markupClass else '')
 		self.markups[self.ind] = self.getMarkup()
 		pt = not markupClass
@@ -953,8 +928,8 @@ class ReTextWindow(QMainWindow):
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
 			else:
-				defaultExt = convertToUnicode(self.tr('%s files',
-					'Example of final string: Markdown files')) \
+				defaultExt = self.tr('%s files',
+					'Example of final string: Markdown files') \
 					% markupClass.name + ' (' + str.join(' ',
 					['*'+ext for ext in markupClass.file_extensions]) + ')'
 				ext = markupClass.default_extension
@@ -1102,11 +1077,6 @@ class ReTextWindow(QMainWindow):
 			Popen(str(command), shell=True).wait()
 		except Exception as error:
 			errorstr = str(error)
-			try:
-				errorstr = QString.fromUtf8(errorstr)
-			except:
-				# Not needed for Python 3
-				pass
 			QMessageBox.warning(self, app_name, self.tr('Failed to execute the command:')
 			+ '\n' + errorstr)
 		QFile(tmpname).remove()
@@ -1117,7 +1087,7 @@ class ReTextWindow(QMainWindow):
 		markup = self.markups[self.ind]
 		realTitle = ''
 		if markup and not baseName:
-			text = convertToUnicode(self.editBoxes[self.ind].toPlainText())
+			text = self.editBoxes[self.ind].toPlainText()
 			try:
 				realTitle = markup.get_document_title(text)
 			except:
@@ -1141,12 +1111,12 @@ class ReTextWindow(QMainWindow):
 		self.setWindowModified(changed)
 	
 	def clipboardDataChanged(self):
-		self.actionPaste.setEnabled(QCoreApplication.instance().clipboard().mimeData().hasText())
+		self.actionPaste.setEnabled(qApp.clipboard().mimeData().hasText())
 	
 	def insertChars(self, chars):
 		tc = self.editBoxes[self.ind].textCursor()
 		if tc.hasSelection():
-			selection = convertToUnicode(tc.selectedText())
+			selection = tc.selectedText()
 			if selection.startswith(chars) and selection.endswith(chars):
 				if len(selection) > 2*len(chars):
 					selection = selection[len(chars):-len(chars)]
@@ -1213,11 +1183,7 @@ class ReTextWindow(QMainWindow):
 		except:
 			return self.printError()
 		winTitle = self.getDocumentTitle(baseName=True)
-		try:
-			HtmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") "+QChar(0x2014)+" "+app_name)
-		except:
-			# For Python 3
-			HtmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") \u2014 "+app_name)
+		HtmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") \u2014 "+app_name)
 		HtmlDlg.textEdit.setPlainText(htmltext.rstrip())
 		HtmlDlg.show()
 		HtmlDlg.raise_()

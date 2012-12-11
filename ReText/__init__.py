@@ -56,36 +56,19 @@ def readFromSettings(key, keytype, settings=settings, default=None):
 	try:
 		return settings.value(key, type=keytype)
 	except TypeError as error:
-		if str(error).startswith('unable to convert'):
-			# New PyQt version, but type mismatch
-			print('Warning: '+str(error))
-			# Return an instance of keytype
-			return default if (default is not None) else keytype()
-		# For old PyQt versions
-		if keytype == str:
-			return settings.value(key).toString()
-		elif keytype == int:
-			result, ok = settings.value(key).toInt()
-			if not ok:
-				print('Warning: cannot covert settings value to int!')
-			return result
-		elif keytype == bool:
-			return settings.value(key).toBool()
-		elif keytype == QByteArray:
-			return settings.value(key).toByteArray()
+		# Type mismatch
+		print('Warning: '+str(error))
+		# Return an instance of keytype
+		return default if (default is not None) else keytype()
 
 def readListFromSettings(key, settings=settings):
 	if not settings.contains(key):
 		return []
 	value = settings.value(key)
-	try:
-		return value.toStringList()
-	except:
-		# For Python 3
-		if isinstance(value, str):
-			return [value]
-		else:
-			return value
+	if isinstance(value, str):
+		return [value]
+	else:
+		return value
 
 def writeListToSettings(key, value, settings=settings):
 	if len(value) > 1:
@@ -94,13 +77,6 @@ def writeListToSettings(key, value, settings=settings):
 		settings.setValue(key, value[0])
 	else:
 		settings.remove(key)
-
-def convertToUnicode(string):
-	try:
-		return unicode(string)
-	except:
-		# For Python 3
-		return string
 
 monofont = QFont()
 monofont.setFamily(readFromSettings('editorFont', str, default='monospace'))
