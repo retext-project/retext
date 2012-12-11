@@ -135,6 +135,7 @@ class ReTextWindow(QMainWindow):
 		self.actionRedo.setEnabled(False)
 		self.actionCopy.setEnabled(False)
 		self.actionCut.setEnabled(False)
+		qApp = QCoreApplication.instance()
 		self.connect(qApp.clipboard(), SIGNAL('dataChanged()'), self.clipboardDataChanged)
 		self.clipboardDataChanged()
 		if enchant_available:
@@ -348,6 +349,8 @@ class ReTextWindow(QMainWindow):
 			default=False)
 	
 	def act(self, name, icon=None, trig=None, trigbool=None, shct=None):
+		if not isinstance(shct, QKeySequence):
+			shct = QKeySequence(shct)
 		if icon:
 			action = QAction(self.actIcon(icon), name, self)
 		else:
@@ -883,6 +886,9 @@ class ReTextWindow(QMainWindow):
 		fileFilter = ' (' + str.join(' ', ['*'+ext for ext in supportedExtensions]) + ');;'
 		fileNames = QFileDialog.getOpenFileNames(self, self.tr("Select one or several files to open"), "",
 		self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
+		if isinstance(fileNames, tuple):
+			# PySide
+			fileNames = fileNames[0]
 		for fileName in fileNames:
 			self.openFileWrapper(fileName)
 	
@@ -1135,7 +1141,7 @@ class ReTextWindow(QMainWindow):
 		self.setWindowModified(changed)
 	
 	def clipboardDataChanged(self):
-		self.actionPaste.setEnabled(qApp.clipboard().mimeData().hasText())
+		self.actionPaste.setEnabled(QCoreApplication.instance().clipboard().mimeData().hasText())
 	
 	def insertChars(self, chars):
 		tc = self.editBoxes[self.ind].textCursor()
