@@ -146,6 +146,8 @@ class ReTextWindow(QMainWindow):
 			self.useWebKit = readFromSettings('useWebKit', bool, default=False)
 			if self.useWebKit:
 				self.actionWebKit.setChecked(True)
+		else:
+			self.useWebKit = False
 		self.actionWpgen = self.act(self.tr('Generate webpages'), trig=self.startWpgen)
 		self.actionShow = self.act(self.tr('Show'), icon='system-file-manager', trig=self.showInDir)
 		self.actionFind = self.act(self.tr('Next'), icon='go-next', shct=QKeySequence.FindNext,
