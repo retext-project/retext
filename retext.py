@@ -19,6 +19,7 @@
 # MA 02110-1301, USA.
 
 import sys
+import signal
 from ReText import *
 from ReText.window import ReTextWindow
 
@@ -50,6 +51,7 @@ def main():
 			pass
 		if QFile.exists(fileName):
 			window.openFileWrapper(fileName)
+	signal.signal(signal.SIGINT, lambda sig, frame: window.close())
 	sys.exit(app.exec_())
 
 if __name__ == '__main__':
