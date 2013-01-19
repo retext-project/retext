@@ -578,7 +578,7 @@ class ReTextWindow(QMainWindow):
 	def actIcon(self, name):
 		return QIcon.fromTheme(name, QIcon(icon_path+name+'.png'))
 	
-	def printError(self, error):
+	def printError(self):
 		import traceback
 		print('Exception occured while parsing document:')
 		traceback.print_exc()
@@ -880,8 +880,8 @@ class ReTextWindow(QMainWindow):
 		else:
 			try:
 				parsedText = self.parseText()
-			except Exception as e:
-				self.printError(e)
+			except:
+				self.printError()
 			else:
 				if textedit:
 					pb.setHtml(parsedText)
@@ -1138,8 +1138,8 @@ class ReTextWindow(QMainWindow):
 			fileName += ".html"
 		try:
 			text = self.parseText()
-		except Exception as e:
-			return self.printError(e)
+		except:
+			return self.printError()
 		htmlFile = QFile(fileName)
 		htmlFile.open(QIODevice.WriteOnly)
 		html = QTextStream(htmlFile)
@@ -1171,9 +1171,8 @@ class ReTextWindow(QMainWindow):
 	def saveOdf(self):
 		try:
 			document = self.textDocument()
-		except Exception as e:
-			self.printError(e)
-			return
+		except:
+			return self.printError()
 		fileName = QFileDialog.getSaveFileName(self, self.tr("Export document to ODT"), "", self.tr("OpenDocument text files (*.odt)"))
 		if not QFileInfo(fileName).suffix():
 			fileName += ".odt"
@@ -1192,8 +1191,8 @@ class ReTextWindow(QMainWindow):
 			return self.previewBoxes[self.ind]
 		try:
 			return self.textDocument()
-		except Exception as e:
-			self.printError(e)
+		except:
+			self.printError()
 	
 	def standardPrinter(self):
 		printer = QPrinter(QPrinter.HighResolution)
@@ -1425,9 +1424,8 @@ class ReTextWindow(QMainWindow):
 		HtmlDlg = HtmlDialog(self)
 		try:
 			HtmlDlg.textEdit.setPlainText(self.parseText())
-		except Exception as e:
-			self.printError(e)
-			return
+		except:
+			return self.printError()
 		winTitle = self.tr('New document')
 		if self.fileNames[self.ind]:
 			winTitle = QFileInfo(self.fileNames[self.ind]).fileName()
