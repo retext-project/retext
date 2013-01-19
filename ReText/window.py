@@ -255,7 +255,7 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionChangeFont)
 		menuEdit.addSeparator()
 		if len(availableMarkups) > 1:
-			self.menuMode = menuEdit.addMenu(self.tr('Default editing mode'))
+			self.menuMode = menuEdit.addMenu(self.tr('Default markup'))
 			for markupAction in markupActions:
 				self.menuMode.addAction(markupAction)
 		menuFormat = menuEdit.addMenu(self.tr('Formatting'))
