@@ -1154,7 +1154,7 @@ class ReTextWindow(QMainWindow):
 		htmlFile.close()
 	
 	def textDocument(self):
-		plainText = (self.getDocType == DOCTYPE_PLAINTEXT)
+		plainText = (self.getDocType() == DOCTYPE_PLAINTEXT)
 		if not plainText: text = self.parseText()
 		td = QTextDocument()
 		td.setMetaInformation(QTextDocument.DocumentTitle, self.getDocumentTitle())
