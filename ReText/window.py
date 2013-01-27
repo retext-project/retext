@@ -295,9 +295,7 @@ class ReTextWindow(QMainWindow):
 		self.editBar.addWidget(self.tagsBox)
 		self.editBar.addWidget(self.symbolBox)
 		self.searchEdit = QLineEdit(self.searchBar)
-		try:
-			self.searchEdit.setPlaceholderText(self.tr('Search'))
-		except: pass
+		self.searchEdit.setPlaceholderText(self.tr('Search'))
 		self.connect(self.searchEdit, SIGNAL('returnPressed()'), self.find)
 		self.csBox = QCheckBox(self.tr('Case sensitively'), self.searchBar)
 		self.searchBar.addWidget(self.searchEdit)
