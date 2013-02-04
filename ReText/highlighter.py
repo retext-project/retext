@@ -5,6 +5,11 @@
 from ReText import *
 import re
 
+def isHeaderLine(text):
+	if len(text) < 3:
+		return False
+	return (text[0] in '=-*~^+') and (text == text[0] * len(text))
+
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
 	docType = DOCTYPE_NONE
@@ -34,6 +39,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			DOCTYPE_REST: (4, 6, 14, 15),
 			DOCTYPE_HTML: (0, 1, 2, 3)
 		}
+		# Syntax highlighter
 		if self.docType in patternsDict:
 			for number in patternsDict[self.docType]:
 				pattern = patterns[number]
@@ -47,6 +53,19 @@ class ReTextHighlighter(QSyntaxHighlighter):
 					charFormat.setFontUnderline(pattern[4])
 				for match in re.finditer(pattern[0], text):
 					self.setFormat(match.start(), match.end() - match.start(), charFormat)
+		# Headers highlighter
+		block = self.currentBlock()
+		if isHeaderLine(block.text()) and block.previous().text():
+			block = block.previous()
+			prevLine = block.previous().text()
+			if not prevLine or isHeaderLine(prevLine):
+				charFormat = QTextCharFormat()
+				charFormat.setFontWeight(QFont.Black)
+				for bl in (block, block.previous(), block.next()):
+					cursor = QTextCursor(bl)
+					cursor.select(QTextCursor.BlockUnderCursor)
+					cursor.setCharFormat(charFormat)
+		# Spell checker
 		if self.dictionary:
 			charFormat = QTextCharFormat()
 			charFormat.setUnderlineColor(Qt.red)
