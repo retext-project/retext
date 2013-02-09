@@ -25,7 +25,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			(r'(?<=\[)[^\[\]]*(?=\])', Qt.blue, QFont.Normal), # 11: Links and images
 			(r'(?<=\]\()[^\(\)]*(?=\))', None, QFont.Normal, True, True), # 12: Link references
 			('^ *>.+', Qt.darkGray, QFont.Normal),             # 13: Blockquotes
-			('.. [a-z]+::', Qt.darkMagenta, QFont.Normal),     # 14: reStructuredText directives
+			(r'\.\. [a-z]+::', Qt.darkMagenta, QFont.Normal),  # 14: reStructuredText directives
 			(':[a-z]+:', Qt.darkRed, QFont.Normal)             # 15: reStructuredText roles
 		)
 		patternsDict = {
