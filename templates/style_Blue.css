@@ -62,7 +62,7 @@ a:hover {
   border-collapse: collapse;
 }
 
-.content td, th {
+.content table, .content td, .content th {
   padding: 5px;
   border: 1px solid black;
 }
