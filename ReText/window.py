@@ -1176,17 +1176,18 @@ class ReTextWindow(QMainWindow):
 		closeevent.accept()
 	
 	def viewHtml(self):
-		HtmlDlg = HtmlDialog(self)
+		htmlDlg = HtmlDialog(self)
 		try:
 			htmltext = self.getHtml(includeStyleSheet=False, includeTitle=False)
 		except:
 			return self.printError()
 		winTitle = self.getDocumentTitle(baseName=True)
-		HtmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") \u2014 "+app_name)
-		HtmlDlg.textEdit.setPlainText(htmltext.rstrip())
-		HtmlDlg.show()
-		HtmlDlg.raise_()
-		HtmlDlg.activateWindow()
+		htmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") \u2014 "+app_name)
+		htmlDlg.textEdit.setPlainText(htmltext.rstrip())
+		htmlDlg.hl.rehighlight()
+		htmlDlg.show()
+		htmlDlg.raise_()
+		htmlDlg.activateWindow()
 	
 	def openHelp(self):
 		QDesktopServices.openUrl(QUrl('http://sourceforge.net/p/retext/home/Help and Support'))

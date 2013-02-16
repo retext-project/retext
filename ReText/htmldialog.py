@@ -13,8 +13,8 @@ class HtmlDialog(QDialog):
 		self.textEdit = QTextEdit(self)
 		self.textEdit.setReadOnly(True)
 		self.textEdit.setFont(monofont)
-		hl = ReTextHighlighter(self.textEdit.document())
-		hl.docType = DOCTYPE_HTML
+		self.hl = ReTextHighlighter(self.textEdit.document())
+		self.hl.docType = DOCTYPE_HTML
 		self.verticalLayout.addWidget(self.textEdit)
 		self.buttonBox = QDialogButtonBox(self)
 		self.buttonBox.setStandardButtons(QDialogButtonBox.Close)
