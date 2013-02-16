@@ -1213,6 +1213,7 @@ class ReTextWindow(QMainWindow):
 			# For Python 3
 			HtmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") \u2014 "+app_name)
 		HtmlDlg.textEdit.setPlainText(htmltext.rstrip())
+		HtmlDlg.hl.rehighlight()
 		HtmlDlg.show()
 		HtmlDlg.raise_()
 		HtmlDlg.activateWindow()
