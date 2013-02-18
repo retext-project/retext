@@ -121,282 +121,282 @@
         <translation>Vložiť</translation>
     </message>
     <message>
-        <location filename="window.py" line="141"/>
+        <location filename="window.py" line="142"/>
         <source>Enable</source>
         <translation>Povoliť</translation>
     </message>
     <message>
-        <location filename="window.py" line="142"/>
+        <location filename="window.py" line="143"/>
         <source>Set locale</source>
         <translation>Nastaviť lokalizáciu</translation>
     </message>
     <message>
-        <location filename="window.py" line="143"/>
+        <location filename="window.py" line="144"/>
         <source>Plain text</source>
         <translation>Jednoduchý text</translation>
     </message>
     <message>
-        <location filename="window.py" line="145"/>
+        <location filename="window.py" line="146"/>
         <source>Use WebKit renderer</source>
         <translation>Použiť k vykresľovaniu WebKit</translation>
     </message>
     <message>
-        <location filename="window.py" line="149"/>
+        <location filename="window.py" line="152"/>
         <source>Generate webpages</source>
         <translation>Generovať web stránky</translation>
     </message>
     <message>
-        <location filename="window.py" line="150"/>
+        <location filename="window.py" line="153"/>
         <source>Show</source>
         <translation>Zobraziť</translation>
     </message>
     <message>
-        <location filename="window.py" line="151"/>
+        <location filename="window.py" line="154"/>
         <source>Next</source>
         <translation>Nasledujúci</translation>
     </message>
     <message>
-        <location filename="window.py" line="153"/>
+        <location filename="window.py" line="156"/>
         <source>Previous</source>
         <translation>Predchádzajúci</translation>
     </message>
     <message>
-        <location filename="window.py" line="155"/>
+        <location filename="window.py" line="158"/>
         <source>Get help online</source>
         <translation>Získať online pomoc</translation>
     </message>
     <message>
-        <location filename="window.py" line="164"/>
+        <location filename="window.py" line="163"/>
         <source>About Qt</source>
         <translation>O Qt</translation>
     </message>
     <message>
-        <location filename="window.py" line="185"/>
+        <location filename="window.py" line="184"/>
         <source>Bold</source>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location filename="window.py" line="187"/>
+        <location filename="window.py" line="186"/>
         <source>Italic</source>
         <translation>Kurzíva</translation>
     </message>
     <message>
-        <location filename="window.py" line="189"/>
+        <location filename="window.py" line="188"/>
         <source>Underline</source>
         <translation>Podčiarknuté</translation>
     </message>
     <message>
-        <location filename="window.py" line="197"/>
+        <location filename="window.py" line="196"/>
         <source>Tags</source>
         <translation>Značky</translation>
     </message>
     <message>
-        <location filename="window.py" line="201"/>
+        <location filename="window.py" line="200"/>
         <source>Symbols</source>
         <translation>Symboly</translation>
     </message>
     <message>
-        <location filename="window.py" line="215"/>
+        <location filename="window.py" line="214"/>
         <source>File</source>
         <translation>Súbor</translation>
     </message>
     <message>
-        <location filename="window.py" line="216"/>
+        <location filename="window.py" line="215"/>
         <source>Edit</source>
         <translation>Upraviť</translation>
     </message>
     <message>
-        <location filename="window.py" line="217"/>
+        <location filename="window.py" line="216"/>
         <source>Help</source>
         <translation>Pomocník</translation>
     </message>
     <message>
-        <location filename="window.py" line="220"/>
+        <location filename="window.py" line="219"/>
         <source>Open recent</source>
         <translation>Otvoriť nedávne</translation>
     </message>
     <message>
-        <location filename="window.py" line="223"/>
+        <location filename="window.py" line="222"/>
         <source>Directory</source>
         <translation>Priečinok</translation>
     </message>
     <message>
-        <location filename="window.py" line="230"/>
+        <location filename="window.py" line="229"/>
         <source>Export</source>
         <translation>Export</translation>
     </message>
     <message>
-        <location filename="window.py" line="251"/>
+        <location filename="window.py" line="250"/>
         <source>Spell check</source>
         <translation>Kontrola pravopisu</translation>
     </message>
     <message>
-        <location filename="window.py" line="259"/>
-        <source>Default editing mode</source>
-        <translation>Štandardný režim úprav</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="262"/>
+        <location filename="window.py" line="261"/>
         <source>Formatting</source>
         <translation>Formátovanie</translation>
     </message>
     <message>
-        <location filename="window.py" line="300"/>
+        <location filename="window.py" line="298"/>
         <source>Search</source>
         <translation>Vyhľadávanie</translation>
     </message>
     <message>
-        <location filename="window.py" line="303"/>
+        <location filename="window.py" line="300"/>
         <source>Case sensitively</source>
         <translation>Rozlišovanie veľkosti písmen</translation>
     </message>
     <message>
-        <location filename="window.py" line="1123"/>
+        <location filename="window.py" line="1100"/>
         <source>New document</source>
         <translation>Nový dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="764"/>
+        <location filename="window.py" line="748"/>
         <source>Please, save the file somewhere.</source>
         <translation>Uložte prosím niekam súbor.</translation>
     </message>
     <message>
-        <location filename="window.py" line="753"/>
+        <location filename="window.py" line="737"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Web stránky uložené do priečinku &lt;code&gt;html&lt;/code&gt;.</translation>
     </message>
     <message>
-        <location filename="window.py" line="755"/>
+        <location filename="window.py" line="739"/>
         <source>Show directory</source>
         <translation>Zobraziť priečinok</translation>
     </message>
     <message>
-        <location filename="window.py" line="882"/>
+        <location filename="window.py" line="861"/>
         <source>Select one or several files to open</source>
         <translation>Vyberte jeden alebo viac súborov k otvoreniu</translation>
     </message>
     <message>
-        <location filename="window.py" line="882"/>
+        <location filename="window.py" line="861"/>
         <source>Supported files</source>
         <translation>Podporované súbory</translation>
     </message>
     <message>
-        <location filename="window.py" line="882"/>
+        <location filename="window.py" line="861"/>
         <source>All files (*)</source>
         <translation>Všetky súbory (*.*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="945"/>
+        <location filename="window.py" line="927"/>
         <source>Plain text (*.txt)</source>
         <translation>Jednoduchý text (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1021"/>
+        <location filename="window.py" line="1003"/>
         <source>Save file</source>
         <translation>Uložiť súbor</translation>
     </message>
     <message>
-        <location filename="window.py" line="966"/>
+        <location filename="window.py" line="948"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Nie je možné uložiť, pretože súbor je len nna čítanie!</translation>
     </message>
     <message>
-        <location filename="window.py" line="1011"/>
+        <location filename="window.py" line="993"/>
         <source>Export document to ODT</source>
         <translation>Exportovať dokument do ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="1011"/>
+        <location filename="window.py" line="993"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocument textové súbory (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1021"/>
+        <location filename="window.py" line="1003"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML súbory (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1042"/>
+        <location filename="window.py" line="1024"/>
         <source>Export document to PDF</source>
         <translation>Exportovať dokument do PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="1042"/>
+        <location filename="window.py" line="1024"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF súbory (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1058"/>
+        <location filename="window.py" line="1040"/>
         <source>Print document</source>
         <translation>Tlačiť dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="1079"/>
+        <location filename="window.py" line="1061"/>
         <source>Export document</source>
         <translation>Exportovať dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="1102"/>
+        <location filename="window.py" line="1079"/>
         <source>Failed to execute the command:</source>
         <translation>Nepodarilo sa spustiť príkaz:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1179"/>
+        <location filename="window.py" line="1156"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Dokument bol zmenený.
 Chcete uložiť vaše zmeny?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1212"/>
+        <location filename="window.py" line="1185"/>
         <source>HTML code</source>
         <translation>HTML kód</translation>
     </message>
     <message>
-        <location filename="window.py" line="1222"/>
+        <location filename="window.py" line="1196"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Autor: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1222"/>
+        <location filename="window.py" line="1196"/>
         <source>Website</source>
         <translation>Webová stránka</translation>
     </message>
     <message>
-        <location filename="window.py" line="1222"/>
+        <location filename="window.py" line="1196"/>
         <source>Markdown syntax</source>
         <translation>Markdown syntax</translation>
     </message>
     <message>
-        <location filename="window.py" line="156"/>
+        <location filename="window.py" line="159"/>
         <source>About %s</source>
         <comment>Example of final string: About ReText</comment>
         <translation>O %s</translation>
     </message>
     <message>
-        <location filename="window.py" line="749"/>
+        <location filename="window.py" line="733"/>
         <source>Failed to copy default template, please create template.html manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="948"/>
+        <location filename="window.py" line="930"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>Súbory %s</translation>
     </message>
     <message>
-        <location filename="window.py" line="1222"/>
+        <location filename="window.py" line="1196"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Jednoduchý a pritom efektívny editor pre Markdown a reStructuredText</translation>
     </message>
     <message>
-        <location filename="window.py" line="1222"/>
+        <location filename="window.py" line="1196"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText syntax</translation>
     </message>
     <message>
-        <location filename="window.py" line="650"/>
+        <location filename="window.py" line="643"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="window.py" line="258"/>
+        <source>Default markup</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
