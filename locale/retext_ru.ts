@@ -397,7 +397,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="258"/>
         <source>Default markup</source>
-        <translation type="unfinished"></translation>
+        <translation>Язык разметки по умолчанию</translation>
     </message>
 </context>
 </TS>
