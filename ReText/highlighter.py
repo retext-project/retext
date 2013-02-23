@@ -70,7 +70,6 @@ class ReTextHighlighter(QSyntaxHighlighter):
 		# Headers highlighter
 		highlightHeaders = (self.docType in (DOCTYPE_MARKDOWN, DOCTYPE_REST))
 		curBlock = self.currentBlock()
-		print(highlightHeaders)
 		if highlightHeaders and isHeaderLine(curBlock.text()):
 			charFormat = QTextCharFormat()
 			charFormat.setFontWeight(QFont.Black)
