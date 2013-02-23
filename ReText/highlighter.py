@@ -68,8 +68,10 @@ class ReTextHighlighter(QSyntaxHighlighter):
 				for match in re.finditer(pattern[0], text):
 					self.setFormat(match.start(), match.end() - match.start(), charFormat)
 		# Headers highlighter
+		highlightHeaders = (self.docType in (DOCTYPE_MARKDOWN, DOCTYPE_REST))
 		curBlock = self.currentBlock()
-		if isHeaderLine(curBlock.text()):
+		print(highlightHeaders)
+		if highlightHeaders and isHeaderLine(curBlock.text()):
 			charFormat = QTextCharFormat()
 			charFormat.setFontWeight(QFont.Black)
 			for block in (curBlock.previous(), curBlock.next()):
@@ -82,7 +84,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			while curBlock.blockNumber() and isHighlighted(curBlock.previous()):
 				curBlock = curBlock.previous()
 			for bl in (curBlock, curBlock.next(), curBlock.next().next()):
-				if not isPartOfHeader(bl):
+				if not (highlightHeaders and isPartOfHeader(bl)):
 					# Undo the header formatting
 					cursor = QTextCursor(bl)
 					cursor.select(QTextCursor.BlockUnderCursor)
