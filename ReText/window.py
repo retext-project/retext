@@ -44,7 +44,7 @@ class ReTextWindow(QMainWindow):
 			try:
 				gconf = Popen(['gconftool-2', '--get', '/desktop/gnome/interface/icon_theme'],
 				stdout=PIPE)
-			except: pass
+			except OSError: pass
 			else:
 				iconTheme = gconf.stdout.read().rstrip()
 				if iconTheme:
@@ -644,7 +644,7 @@ class ReTextWindow(QMainWindow):
 			'you have the <a href="%s">necessary module</a> installed!')
 			try:
 				errMsg %= markupClass.attributes[markups.MODULE_HOME_PAGE]
-			except:
+			except (AttributeError, KeyError):
 				# Remove the link if markupClass doesn't have the needed attribute
 				errMsg = errMsg.replace('<a href="%s">', '')
 				errMsg = errMsg.replace('</a>', '')
