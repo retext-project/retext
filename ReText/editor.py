@@ -12,6 +12,12 @@ class ReTextEdit(QTextEdit):
 		self.setAcceptRichText(False)
 		self.marginx = (self.cursorRect(self.cursorForPosition(QPoint())).topLeft().x()
 			+ self.fontMetrics().width(" "*parent.rightMargin))
+		if self.parent.lineNumbersEnabled:
+			self.lineNumberArea = LineNumberArea(self)
+			self.connect(self.document(), SIGNAL('blockCountChanged(int)'),
+				self.updateLineNumberAreaWidth)
+			self.connect(self, SIGNAL('updateRequest(QRect,int)'), self.updateLineNumberArea)
+			self.updateLineNumberAreaWidth()
 	
 	def paintEvent(self, event):
 		if not self.parent.rightMargin:
@@ -22,6 +28,25 @@ class ReTextEdit(QTextEdit):
 		y2 = self.rect().bottomLeft().y()
 		painter.drawLine(QLine(self.marginx, y1, self.marginx, y2))
 		QTextEdit.paintEvent(self, event)
+	
+	def lineNumberAreaPaintEvent(self, event):
+		painter = QPainter(self.lineNumberArea)
+		painter.fillRect(event.rect(), Qt.cyan)
+		cursor = QTextCursor(self.document())
+		cursor.movePosition(QTextCursor.Start)
+		atEnd = False
+		while not atEnd:
+			rect = self.cursorRect(cursor)
+			block = cursor.block()
+			if block.isVisible():
+				number = str(cursor.blockNumber() + 1)
+				painter.setPen(Qt.darkCyan)
+				painter.drawText(0, rect.top(), self.lineNumberArea.width()-2,
+					self.fontMetrics().height(), Qt.AlignRight, number)
+			cursor.movePosition(QTextCursor.EndOfBlock)
+			atEnd = cursor.atEnd()
+			if not atEnd:
+				cursor.movePosition(QTextCursor.NextBlock)
 	
 	def getHighlighter(self):
 		return self.parent.highlighters[self.parent.ind]
@@ -134,3 +159,41 @@ class ReTextEdit(QTextEdit):
 					cursor.deleteChar()
 			block = block.next()
 		cursor.endEditBlock()
+	
+	def lineNumberAreaWidth(self):
+		cursor = QTextCursor(self.document())
+		cursor.movePosition(QTextCursor.End)
+		digits = len(str(cursor.blockNumber() + 1))
+		return 5 + self.fontMetrics().width('9') * digits
+	
+	def updateLineNumberAreaWidth(self, blockcount=0):
+		self.lineNumberArea.repaint()
+		self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, 0)
+	
+	def updateLineNumberArea(self, rect, dy):
+		if dy:
+			self.lineNumberArea.scroll(0, dy)
+		else:
+			self.lineNumberArea.update(0, rect.y(),
+				self.lineNumberArea.width(), rect.height())
+		if rect.contains(viewport().rect()):
+			self.updateLineNumberAreaWidth()
+	
+	def resizeEvent(self, event):
+		QTextEdit.resizeEvent(self, event)
+		if not self.parent.lineNumbersEnabled:
+			return
+		rect = self.contentsRect()
+		self.lineNumberArea.setGeometry(rect.left(), rect.top(),
+			self.lineNumberAreaWidth(), rect.height())
+
+class LineNumberArea(QWidget):
+	def __init__(self, editor):
+		QWidget.__init__(self, editor)
+		self.editor = editor
+	
+	def sizeHint(self):
+		return QSize(self.editor.lineNumberAreaWidth(), 0)
+	
+	def paintEvent(self, event):
+		return self.editor.lineNumberAreaPaintEvent(event)

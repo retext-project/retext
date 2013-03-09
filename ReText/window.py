@@ -341,6 +341,8 @@ class ReTextWindow(QMainWindow):
 			default=False)
 		self.livePreviewEnabled = readFromSettings('previewState', bool,
 			default=False)
+		self.lineNumbersEnabled = readFromSettings('lineNumbersEnabled',
+			bool, default=False)
 	
 	def act(self, name, icon=None, trig=None, trigbool=None, shct=None):
 		if not isinstance(shct, QKeySequence):
