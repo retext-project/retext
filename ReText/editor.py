@@ -18,7 +18,8 @@ class ReTextEdit(QTextEdit):
 				self.updateLineNumberAreaWidth)
 			self.connect(self, SIGNAL('updateRequest(QRect,int)'), self.updateLineNumberArea)
 			self.updateLineNumberAreaWidth()
-		self.connect(self, SIGNAL('cursorPositionChanged()'), self.highlightCurrentLine)
+		if self.parent.highlightCurrentLine:
+			self.connect(self, SIGNAL('cursorPositionChanged()'), self.highlightCurrentLine)
 	
 	def paintEvent(self, event):
 		if not self.parent.rightMargin:

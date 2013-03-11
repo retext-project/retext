@@ -343,6 +343,8 @@ class ReTextWindow(QMainWindow):
 			default=False)
 		self.lineNumbersEnabled = readFromSettings('lineNumbersEnabled',
 			bool, default=False)
+		self.highlightCurrentLine = readFromSettings('highlightCurrentLine',
+			bool, default=True)
 	
 	def act(self, name, icon=None, trig=None, trigbool=None, shct=None):
 		if not isinstance(shct, QKeySequence):
