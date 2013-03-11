@@ -18,6 +18,7 @@ class ReTextEdit(QTextEdit):
 				self.updateLineNumberAreaWidth)
 			self.connect(self, SIGNAL('updateRequest(QRect,int)'), self.updateLineNumberArea)
 			self.updateLineNumberAreaWidth()
+		self.connect(self, SIGNAL('cursorPositionChanged()'), self.highlightCurrentLine)
 	
 	def paintEvent(self, event):
 		if not self.parent.rightMargin:
@@ -186,6 +187,15 @@ class ReTextEdit(QTextEdit):
 		rect = self.contentsRect()
 		self.lineNumberArea.setGeometry(rect.left(), rect.top(),
 			self.lineNumberAreaWidth(), rect.height())
+	
+	def highlightCurrentLine(self):
+		selection = QTextEdit.ExtraSelection();
+		lineColor = QColor(255, 255, 200)
+		selection.format.setBackground(lineColor)
+		selection.format.setProperty(QTextFormat.FullWidthSelection, True)
+		selection.cursor = self.textCursor()
+		selection.cursor.clearSelection()
+		self.setExtraSelections([selection])
 
 class LineNumberArea(QWidget):
 	def __init__(self, editor):
