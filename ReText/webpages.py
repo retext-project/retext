@@ -18,6 +18,8 @@ app_data = (
 templatesDir = os.path.abspath(os.path.dirname(sys.argv[0])) + "/templates/"
 if not os.path.exists(templatesDir):
 	templatesDir = "/usr/share/wpgen/"
+if not os.path.exists(templatesDir):
+	templatesDir = "/usr/local/share/wpgen/"
 
 def wpInit():
 	if not os.path.exists("html"):

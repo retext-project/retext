@@ -27,8 +27,9 @@ def main():
 	app.setOrganizationName("ReText project")
 	app.setApplicationName("ReText")
 	RtTranslator = QTranslator()
-	if not RtTranslator.load("retext_"+QLocale.system().name(), "locale"):
-		RtTranslator.load("retext_"+QLocale.system().name(), "/usr/share/retext/locale")
+	for path in datadirs:
+		if RtTranslator.load('retext_'+QLocale.system().name(), path+'/locale'):
+			break
 	QtTranslator = QTranslator()
 	QtTranslator.load("qt_"+QLocale.system().name(), QLibraryInfo.location(QLibraryInfo.TranslationsPath))
 	app.installTranslator(RtTranslator)
