@@ -950,7 +950,7 @@ class ReTextWindow(QMainWindow):
 				defaultExt = convertToUnicode(self.tr('%s files',
 					'Example of final string: Markdown files')) \
 					% markupClass.name + ' (' + str.join(' ',
-					['*'+ext for ext in markupClass.file_extensions]) + ')'
+					('*'+extension for extension in markupClass.file_extensions)) + ')'
 				ext = markupClass.default_extension
 			newFileName = QFileDialog.getSaveFileName(self, self.tr("Save file"), "", defaultExt)
 			if newFileName:
