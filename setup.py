@@ -35,19 +35,19 @@ class retext_sdist(sdist):
 		sdist.run(self)
 
 setup(name='ReText',
-	version=VERSION,
-	description='Simple editor for Markdown and reStructuredText',
-	long_description=long_description,
-	author='Dmitry Shachnev',
-	author_email='mitya57@gmail.com',
-	url='http://retext.sourceforge.net/',
-	packages=['ReText'],
-	scripts=['retext.py', 'wpgen.py'],
-	data_files=[
-		('share/locale', glob('locale/*.qm')),
-		('share/wpgen', glob('templates/*.css') + glob('templates/*.html'))
-	],
-	requires=['Markups', 'Markdown'],
-	cmdclass={'build': retext_build, 'sdist': retext_sdist},
-	license='GPL 2+'
+      version=VERSION,
+      description='Simple editor for Markdown and reStructuredText',
+      long_description=long_description,
+      author='Dmitry Shachnev',
+      author_email='mitya57@gmail.com',
+      url='http://retext.sourceforge.net/',
+      packages=['ReText'],
+      scripts=['retext.py', 'wpgen.py'],
+      data_files=[
+      	('share/locale', glob('locale/*.qm')),
+      	('share/wpgen', glob('templates/*.css') + glob('templates/*.html'))
+      ],
+      requires=['Markups', 'Markdown'],
+      cmdclass={'build': retext_build, 'sdist': retext_sdist},
+      license='GPL 2+'
 )
