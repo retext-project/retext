@@ -44,7 +44,7 @@ setup(name='ReText',
       packages=['ReText'],
       scripts=['retext.py', 'wpgen.py'],
       data_files=[
-      	('share/locale', glob('locale/*.qm')),
+      	('share/retext/locale', glob('locale/*.qm')),
       	('share/wpgen', glob('templates/*.css') + glob('templates/*.html'))
       ],
       requires=['Markups', 'Markdown', 'pyenchant'],

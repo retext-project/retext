@@ -85,7 +85,7 @@ if settings.contains('editorFontSize'):
 
 datadirs = (
 	'.',
-	'/usr/share',
-	'/usr/local/share',
-	QDir.homePath()+'/.local/share'
+	'/usr/share/retext',
+	'/usr/local/share/retext',
+	QDir.homePath()+'/.local/share/retext'
 )
