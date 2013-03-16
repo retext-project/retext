@@ -43,6 +43,11 @@ setup(name='ReText',
 	url='http://retext.sourceforge.net/',
 	packages=['ReText'],
 	scripts=['retext.py', 'wpgen.py'],
+	data_files=[
+		('share/locale', glob('locale/*.qm')),
+		('share/wpgen', glob('templates/*.css') + glob('templates/*.html'))
+	],
+	requires=['Markups', 'Markdown'],
 	cmdclass={'build': retext_build, 'sdist': retext_sdist},
 	license='GPL 2+'
 )

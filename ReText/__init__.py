@@ -82,3 +82,10 @@ monofont = QFont()
 monofont.setFamily(readFromSettings('editorFont', str, default='monospace'))
 if settings.contains('editorFontSize'):
 	monofont.setPointSize(readFromSettings('editorFontSize', int))
+
+datadirs = (
+	'.',
+	'/usr/share',
+	'/usr/local/share',
+	QDir.homePath()+'/.local/share'
+)

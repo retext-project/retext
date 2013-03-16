@@ -795,8 +795,8 @@ class ReTextWindow(QMainWindow):
 	
 	def getExportExtensionsList(self):
 		extensions = []
-		for extsprefix in ('/usr', QDir.homePath()+'/.local'):
-			extsdir = QDir(extsprefix+'/share/retext/export-extensions/')
+		for extsprefix in datadirs:
+			extsdir = QDir(extsprefix+'/retext/export-extensions/')
 			if extsdir.exists():
 				for fileInfo in extsdir.entryInfoList(['*.desktop', '*.ini'], QDir.Files | QDir.Readable):
 					extensions.append(self.readExtension(fileInfo.filePath()))
