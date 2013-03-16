@@ -47,7 +47,7 @@ setup(name='ReText',
       	('share/locale', glob('locale/*.qm')),
       	('share/wpgen', glob('templates/*.css') + glob('templates/*.html'))
       ],
-      requires=['Markups', 'Markdown'],
+      requires=['Markups', 'Markdown', 'pyenchant'],
       cmdclass={'build': retext_build, 'sdist': retext_sdist},
       license='GPL 2+'
 )
