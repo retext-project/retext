@@ -545,10 +545,7 @@ class ReTextWindow(QMainWindow):
 	
 	def enableWebKit(self, enable):
 		self.useWebKit = enable
-		if enable:
-			settings.setValue('useWebKit', True)
-		else:
-			settings.remove('useWebKit')
+		writeToSettings('useWebKit', enable, False)
 		oldind = self.ind
 		self.tabWidget.clear()
 		for self.ind in range(len(self.editBoxes)):
@@ -583,10 +580,9 @@ class ReTextWindow(QMainWindow):
 				self.setAllDictionaries(enchant.Dict(self.sl))
 			else:
 				self.setAllDictionaries(enchant.Dict())
-			settings.setValue('spellCheck', True)
 		else:
 			self.setAllDictionaries(None)
-			settings.remove('spellCheck')
+		writeToSettings('spellCheck', yes, False)
 	
 	def setAllDictionaries(self, dictionary):
 		for hl in self.highlighters:
@@ -611,13 +607,11 @@ class ReTextWindow(QMainWindow):
 			else:
 				self.sl = sl
 				self.enableSC(self.actionEnableSC.isChecked())
-				if setdefault:
-					settings.setValue('spellCheckLocale', sl)
 		else:
 			self.sl = None
 			self.enableSC(self.actionEnableSC.isChecked())
-			if setdefault:
-				settings.remove('spellCheckLocale')
+		if setdefault:
+			writeToSettings('spellCheckLocale', sl, '')
 	
 	def searchBarVisibilityChanged(self, visible):
 		self.actionSearch.setChecked(visible)
@@ -1178,10 +1172,7 @@ class ReTextWindow(QMainWindow):
 			if not self.maybeSave(self.ind):
 				return closeevent.ignore()
 		if self.restorePreviewState:
-			if self.livePreviewEnabled:
-				settings.setValue('previewState', True)
-			else:
-				settings.remove('previewState')
+			writeToSettings('previewState', self.livePreviewEnabled, False)
 		if self.saveWindowGeometry and not self.isMaximized():
 			settings.setValue('windowGeometry', self.saveGeometry())
 		closeevent.accept()
