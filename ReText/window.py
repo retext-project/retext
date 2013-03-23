@@ -5,6 +5,7 @@
 from ReText import *
 from ReText.webpages import wpInit, wpUpdateAll
 from ReText.htmldialog import HtmlDialog
+from ReText.config import ConfigDialog
 from ReText.highlighter import ReTextHighlighter
 from ReText.editor import ReTextEdit
 
@@ -114,6 +115,8 @@ class ReTextWindow(QMainWindow):
 		trigbool=self.enableLivePreview)
 		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), 'view-fullscreen',
 			shct=Qt.Key_F11, trigbool=self.enableFullScreen)
+		self.actionConfig = self.act(self.tr('Preferences'), icon='preferences-system',
+			trig=self.openConfigDialog)
 		self.actionPerfectHtml = self.act('HTML', 'text-html', self.saveFilePerfect)
 		self.actionPdf = self.act('PDF', 'application-pdf', self.savePdf)
 		self.actionOdf = self.act('ODT', 'x-office-document', self.saveOdf)
@@ -270,6 +273,7 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionPreview)
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionFullScreen)
+		menuEdit.addAction(self.actionConfig)
 		menuHelp.addAction(self.actionHelp)
 		menuHelp.addSeparator()
 		menuHelp.addAction(self.actionAbout)
@@ -569,6 +573,9 @@ class ReTextWindow(QMainWindow):
 			self.showFullScreen()
 		else:
 			self.showNormal()
+	
+	def openConfigDialog(self):
+		ConfigDialog(self).show()
 	
 	def enableSC(self, yes):
 		if yes:

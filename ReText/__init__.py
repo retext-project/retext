@@ -70,6 +70,12 @@ def readListFromSettings(key, settings=settings):
 	else:
 		return value
 
+def writeToSettings(key, value, default, settings=settings):
+	if value == default:
+		settings.remove(key)
+	else:
+		settings.setValue(key, value)
+
 def writeListToSettings(key, value, settings=settings):
 	if len(value) > 1:
 		settings.setValue(key, value)
