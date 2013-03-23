@@ -3,7 +3,6 @@ from ReText import *
 class ConfigDialog(QDialog):
 	def __init__(self, parent):
 		QDialog.__init__(self, parent)
-		self.setWindowTitle(self.tr('Preferences') + " \u2014 " + app_name)
 		self.initConfigOptions()
 		self.layout = QGridLayout(self)
 		buttonBox = QDialogButtonBox(self)

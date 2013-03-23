@@ -572,7 +572,9 @@ class ReTextWindow(QMainWindow):
 			self.showNormal()
 	
 	def openConfigDialog(self):
-		ConfigDialog(self).show()
+		dlg = ConfigDialog(self)
+		dlg.setWindowTitle(self.tr('Preferences') + ' \u2014 ' + app_name)
+		dlg.show()
 	
 	def enableSC(self, yes):
 		if yes:
