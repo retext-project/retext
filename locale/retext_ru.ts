@@ -1,76 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="ru_RU" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="ru_RU">
 <context>
     <name>ConfigDialog</name>
     <message>
         <location filename="config.py" line="18"/>
         <source>Behaviour</source>
-        <translation type="unfinished"></translation>
+        <translation>Поведение</translation>
     </message>
     <message>
         <location filename="config.py" line="18"/>
         <source>Automatically save documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматически сохранять документы</translation>
     </message>
     <message>
         <location filename="config.py" line="18"/>
         <source>Restore window geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранять геометрию окна</translation>
     </message>
     <message>
         <location filename="config.py" line="18"/>
         <source>Restore live preview state</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранять состояние живого просмотра</translation>
     </message>
     <message>
         <location filename="config.py" line="18"/>
         <source>Open external links in ReText window</source>
-        <translation type="unfinished"></translation>
+        <translation>Открывать внешние ссылки в окне ReText</translation>
     </message>
     <message>
         <location filename="config.py" line="18"/>
         <source>Open unknown files in plain text mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Открывать неизвестные файлы в режиме простого текста</translation>
     </message>
     <message>
         <location filename="config.py" line="18"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактор</translation>
     </message>
     <message>
         <location filename="config.py" line="18"/>
         <source>Highlight current line</source>
-        <translation type="unfinished"></translation>
+        <translation>Подсвечивать текущую строку</translation>
     </message>
     <message>
         <location filename="config.py" line="18"/>
         <source>Show line numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать номера строк</translation>
     </message>
     <message>
         <location filename="config.py" line="18"/>
         <source>Tab key inserts spaces</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab вставляет пробелы</translation>
     </message>
     <message>
         <location filename="config.py" line="18"/>
         <source>Tabulation width</source>
-        <translation type="unfinished"></translation>
+        <translation>Ширина табуляции</translation>
     </message>
     <message>
         <location filename="config.py" line="18"/>
         <source>Display right margin at column</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать разделитель в столбце</translation>
     </message>
     <message>
         <location filename="config.py" line="18"/>
         <source>Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Внешний вид</translation>
     </message>
     <message>
         <location filename="config.py" line="18"/>
         <source>Icon theme name</source>
-        <translation type="unfinished"></translation>
+        <translation>Тема значков</translation>
     </message>
 </context>
 <context>
@@ -475,7 +476,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="576"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
 </context>
 </TS>
