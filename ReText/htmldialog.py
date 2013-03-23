@@ -18,8 +18,5 @@ class HtmlDialog(QDialog):
 		verticalLayout.addWidget(self.textEdit)
 		buttonBox = QDialogButtonBox(self)
 		buttonBox.setStandardButtons(QDialogButtonBox.Close)
-		self.connect(buttonBox, SIGNAL("clicked(QAbstractButton*)"), self.doClose)
+		self.connect(buttonBox, SIGNAL("rejected()"), self.close)
 		verticalLayout.addWidget(buttonBox)
-	
-	def doClose(self):
-		self.close()
