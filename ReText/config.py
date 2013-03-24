@@ -16,7 +16,7 @@ class ConfigDialog(QDialog):
 	def initConfigOptions(self):
 		# options is a tuple containing (displayname, name, default) tuples
 		self.options = (
-			(self.tr('Behaviour'), None, None),
+			(self.tr('Behavior'), None, None),
 			(self.tr('Automatically save documents'), 'autoSave', False),
 			(self.tr('Restore window geometry'), 'saveWindowGeometry', False),
 			(self.tr('Restore live preview state'), 'restorePreviewState', False),

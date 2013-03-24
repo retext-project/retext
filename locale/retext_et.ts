@@ -4,7 +4,7 @@
     <name>ConfigDialog</name>
     <message>
         <location filename="config.py" line="18"/>
-        <source>Behaviour</source>
+        <source>Behavior</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
