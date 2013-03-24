@@ -47,7 +47,6 @@ setup(name='ReText',
 		('share/retext/locale', glob('locale/*.qm')),
 		('share/wpgen', glob('templates/*.css') + glob('templates/*.html'))
 	],
-	requires=['Markups', 'Markdown'],
 	cmdclass={'build': retext_build, 'sdist': retext_sdist},
 	license='GPL 2+'
 )
