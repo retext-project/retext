@@ -470,7 +470,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="261"/>
         <source>Default markup</source>
-        <translation type="unfinished"></translation>
+        <translation>デフォルトマークアップ</translation>
     </message>
     <message>
         <location filename="window.py" line="576"/>
