@@ -28,7 +28,7 @@ class ReTextEdit(QTextEdit):
 		painter.setPen(QColor(220, 210, 220))
 		y1 = self.rect().topLeft().y()
 		y2 = self.rect().bottomLeft().y()
-		painter.drawLine(QLine(self.marginx, y1, self.marginx, y2))
+		painter.drawLine(self.marginx, y1, self.marginx, y2)
 		QTextEdit.paintEvent(self, event)
 	
 	def lineNumberAreaPaintEvent(self, event):
