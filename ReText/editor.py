@@ -31,6 +31,11 @@ class ReTextEdit(QTextEdit):
 		painter.drawLine(self.marginx, y1, self.marginx, y2)
 		QTextEdit.paintEvent(self, event)
 	
+	def scrollContentsBy(self, dx, dy):
+		QTextEdit.scrollContentsBy(self, dx, dy)
+		if hasattr(self, 'lineNumberArea'):
+			self.lineNumberArea.repaint()
+
 	def lineNumberAreaPaintEvent(self, event):
 		painter = QPainter(self.lineNumberArea)
 		painter.fillRect(event.rect(), Qt.cyan)
