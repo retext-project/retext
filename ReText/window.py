@@ -163,7 +163,7 @@ class ReTextWindow(QMainWindow):
 			lambda: self.find(back=True), shct=QKeySequence.FindPrevious)
 		self.actionHelp = self.act(self.tr('Get help online'), 'help-contents', self.openHelp)
 		self.aboutWindowTitle = self.tr('About %s', 'Example of final string: About ReText')
-		self.aboutWindowTitle =  self.aboutWindowTitle % app_name
+		self.aboutWindowTitle = self.aboutWindowTitle % app_name
 		self.actionAbout = self.act(self.aboutWindowTitle, 'help-about', self.aboutDialog)
 		self.actionAbout.setMenuRole(QAction.AboutRole)
 		self.actionAboutQt = self.act(self.tr('About Qt'))
@@ -398,7 +398,7 @@ class ReTextWindow(QMainWindow):
 	
 	def linkClicked(self, url):
 		urlstr = url.toString()
-		if urlstr.startswith('file://') or not (':/' in urlstr):
+		if urlstr.startswith('file://') or ':/' not in urlstr:
 			self.previewBoxes[self.ind].load(url)
 		elif urlstr.startswith('about:blank#'):
 			self.previewBoxes[self.ind].page().mainFrame().scrollToAnchor(urlstr[12:])
