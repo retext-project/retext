@@ -16,7 +16,7 @@ else:
 	use_pyside = False
 
 app_name = "ReText"
-app_version = "4.0.0"
+app_version = "4.1.0 (Git)"
 
 settings = QSettings('ReText project', 'ReText')
 
