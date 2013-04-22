@@ -86,6 +86,9 @@ class ReTextWindow(QMainWindow):
 		self.actionOpen.setPriority(QAction.LowPriority)
 		self.actionSave = self.act(self.tr('Save'), 'document-save',
 			self.saveFile, shct=QKeySequence.Save)
+		self.actionSetEncoding = self.act(self.tr('Set encoding'),
+			trig=self.showEncodingDialog)
+		self.actionSetEncoding.setEnabled(False)
 		self.actionSave.setEnabled(False)
 		self.actionSave.setPriority(QAction.LowPriority)
 		self.actionSaveAs = self.act(self.tr('Save as'), 'document-save-as',
@@ -220,6 +223,7 @@ class ReTextWindow(QMainWindow):
 		menuFile.addAction(self.actionNew)
 		menuFile.addAction(self.actionOpen)
 		self.menuRecentFiles = menuFile.addMenu(self.tr('Open recent'))
+		menuFile.addAction(self.actionSetEncoding)
 		self.connect(self.menuRecentFiles, SIGNAL('aboutToShow()'), self.updateRecentFiles)
 		menuFile.addMenu(self.menuRecentFiles)
 		self.menuDir = menuFile.addMenu(self.tr('Directory'))
@@ -767,6 +771,8 @@ class ReTextWindow(QMainWindow):
 		writeListToSettings("recentFileList", files)
 		QDir.setCurrent(QFileInfo(self.fileNames[self.ind]).dir().path())
 		self.docTypeChanged()
+		self.actionSetEncoding.setEnabled(
+			bool(self.fileNames[self.ind]) and not self.autoSaveActive())
 	
 	def createNew(self):
 		self.tabWidget.addTab(self.createTab(""), self.tr("New document"))
@@ -893,10 +899,13 @@ class ReTextWindow(QMainWindow):
 			self.fileNames[self.ind] = fileName
 			self.openFileMain()
 	
-	def openFileMain(self):
+	def openFileMain(self, encoding=None):
 		openfile = QFile(self.fileNames[self.ind])
 		openfile.open(QIODevice.ReadOnly)
-		html = QTextStream(openfile).readAll()
+		stream = QTextStream(openfile)
+		if encoding:
+			stream.setCodec(encoding)
+		text = stream.readAll()
 		openfile.close()
 		markupClass = markups.get_markup_for_file_name(
 			self.fileNames[self.ind], return_class=True)
@@ -907,11 +916,24 @@ class ReTextWindow(QMainWindow):
 			pt = False
 			if self.defaultMarkup:
 				self.highlighters[self.ind].docType = self.defaultMarkup.name
-		self.editBoxes[self.ind].setPlainText(html)
+		editBox = self.editBoxes[self.ind]
+		modified = bool(encoding) and (editBox.toPlainText() != text)
+		editBox.setPlainText(text)
 		self.actionPlainText.setChecked(pt)
 		self.enablePlainText(pt)
 		self.setCurrentFile()
-		self.setWindowModified(False)
+		editBox.document().setModified(modified)
+		self.setWindowModified(modified)
+	
+	def showEncodingDialog(self):
+		if not self.maybeSave(self.ind):
+			return
+		encoding, ok = QInputDialog.getItem(self, app_name,
+			self.tr('Select file encoding from the list:'),
+			[bytes(b).decode() for b in QTextCodec.availableCodecs()],
+			0, False)
+		if ok:
+			self.openFileMain(encoding)
 	
 	def saveFile(self):
 		self.saveFileMain(dlg=False)
@@ -944,6 +966,7 @@ class ReTextWindow(QMainWindow):
 				if not QFileInfo(newFileName).suffix():
 					newFileName += ext
 				self.fileNames[self.ind] = newFileName
+				self.actionSetEncoding.setDisabled(self.autoSaveActive())
 		if self.fileNames[self.ind]:
 			result = self.saveFileCore(self.fileNames[self.ind])
 			if result:
