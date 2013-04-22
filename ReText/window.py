@@ -84,11 +84,11 @@ class ReTextWindow(QMainWindow):
 		self.actionOpen = self.act(self.tr('Open'), 'document-open',
 			self.openFile, shct=QKeySequence.Open)
 		self.actionOpen.setPriority(QAction.LowPriority)
-		self.actionSave = self.act(self.tr('Save'), 'document-save',
-			self.saveFile, shct=QKeySequence.Save)
 		self.actionSetEncoding = self.act(self.tr('Set encoding'),
 			trig=self.showEncodingDialog)
 		self.actionSetEncoding.setEnabled(False)
+		self.actionSave = self.act(self.tr('Save'), 'document-save',
+			self.saveFile, shct=QKeySequence.Save)
 		self.actionSave.setEnabled(False)
 		self.actionSave.setPriority(QAction.LowPriority)
 		self.actionSaveAs = self.act(self.tr('Save as'), 'document-save-as',
@@ -223,12 +223,12 @@ class ReTextWindow(QMainWindow):
 		menuFile.addAction(self.actionNew)
 		menuFile.addAction(self.actionOpen)
 		self.menuRecentFiles = menuFile.addMenu(self.tr('Open recent'))
-		menuFile.addAction(self.actionSetEncoding)
 		self.connect(self.menuRecentFiles, SIGNAL('aboutToShow()'), self.updateRecentFiles)
 		menuFile.addMenu(self.menuRecentFiles)
 		self.menuDir = menuFile.addMenu(self.tr('Directory'))
 		self.menuDir.addAction(self.actionShow)
 		self.menuDir.addAction(self.actionWpgen)
+		menuFile.addAction(self.actionSetEncoding)
 		menuFile.addSeparator()
 		menuFile.addAction(self.actionSave)
 		menuFile.addAction(self.actionSaveAs)
