@@ -33,14 +33,14 @@ class ReTextWindow(QMainWindow):
 		QMainWindow.__init__(self, parent)
 		self.initConfig()
 		self.resize(800, 600)
-		if settings.contains('windowGeometry'):
-			self.restoreGeometry(readFromSettings('windowGeometry', QByteArray))
+		if globalSettings.windowGeometry:
+			self.restoreGeometry(windowGeometry)
 		else:
 			screen = QDesktopWidget().screenGeometry()
 			size = self.geometry()
 			self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
-		if settings.contains('iconTheme'):
-			QIcon.setThemeName(readFromSettings('iconTheme', str))
+		if globalSettings.iconTheme:
+			QIcon.setThemeName(globalSettings.iconTheme)
 		if QIcon.themeName() in ('', 'hicolor'):
 			try:
 				gconf = Popen(['gconftool-2', '--get', '/desktop/gnome/interface/icon_theme'],
@@ -75,9 +75,8 @@ class ReTextWindow(QMainWindow):
 		self.addToolBar(Qt.TopToolBarArea, self.editBar)
 		self.searchBar = QToolBar(self.tr('Search toolbar'), self)
 		self.addToolBar(Qt.BottomToolBarArea, self.searchBar)
-		if readFromSettings('hideToolBar', bool, default=False):
-			toolBar.setVisible(False)
-			self.editBar.setVisible(False)
+		toolBar.setVisible(not globalSettings.hideToolBar)
+		self.editBar.setVisible(not globalSettings.hideToolBar)
 		self.actionNew = self.act(self.tr('New'), 'document-new',
 			self.createNew, shct=QKeySequence.New)
 		self.actionNew.setPriority(QAction.LowPriority)
@@ -150,11 +149,9 @@ class ReTextWindow(QMainWindow):
 		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
 		if webkit_available:
 			self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
-			self.useWebKit = readFromSettings('useWebKit', bool, default=False)
-			if self.useWebKit:
-				self.actionWebKit.setChecked(True)
+			self.actionWebKit.setChecked(globalSettings.useWebKit)
 		else:
-			self.useWebKit = False
+			globalSettings.useWebKit = False
 		self.actionWpgen = self.act(self.tr('Generate webpages'), trig=self.startWpgen)
 		self.actionShow = self.act(self.tr('Show'), 'system-file-manager', self.showInDir)
 		self.actionFind = self.act(self.tr('Next'), 'go-next', self.find,
@@ -173,9 +170,8 @@ class ReTextWindow(QMainWindow):
 		if not availableMarkups:
 			print('Warning: no markups are available!')
 		self.defaultMarkup = availableMarkups[0] if availableMarkups else None
-		if settings.contains('defaultMarkup'):
-			dm = str(readFromSettings('defaultMarkup', str))
-			mc = markups.find_markup_class_by_name(dm)
+		if globalSettings.defaultMarkup:
+			mc = markups.find_markup_class_by_name(globalSettings.defaultMarkup)
 			if mc and mc.available():
 				self.defaultMarkup = mc
 		if len(availableMarkups) > 1:
@@ -206,9 +202,8 @@ class ReTextWindow(QMainWindow):
 		self.symbolBox.addItem(self.tr('Symbols'))
 		self.symbolBox.addItems(self.usefulChars)
 		self.connect(self.symbolBox, SIGNAL('activated(int)'), self.insertSymbol)
-		if settings.contains('styleSheet'):
-			ssname = readFromSettings('styleSheet', str)
-			sheetfile = QFile(ssname)
+		if globalSettings.styleSheet:
+			sheetfile = QFile(globalSettings.styleSheet)
 			sheetfile.open(QIODevice.ReadOnly)
 			self.ss = QTextStream(sheetfile).readAll()
 			sheetfile.close()
@@ -312,47 +307,30 @@ class ReTextWindow(QMainWindow):
 		self.searchBar.addAction(self.actionFind)
 		self.searchBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 		self.searchBar.setVisible(False)
-		if self.autoSave:
+		if globalSettings.autoSave:
 			timer = QTimer(self)
 			timer.start(60000)
 			self.connect(timer, SIGNAL('timeout()'), self.saveAll)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if enchant_available:
-			self.sl = None
-			if settings.contains('spellCheckLocale'):
+			self.sl = globalSettings.spellCheckLocale
+			if self.sl:
 				try:
-					self.sl = str(readFromSettings('spellCheckLocale', str))
 					enchant.Dict(self.sl)
 				except Exception as e:
 					print(e)
 					self.sl = None
-			if readFromSettings('spellCheck', bool, default=False):
+			if globalSettings.spellCheck:
 				self.actionEnableSC.setChecked(True)
 				self.enableSC(True)
 	
 	def initConfig(self):
 		self.font = None
-		if settings.contains('font'):
-			self.font = QFont(readFromSettings('font', str))
-		if self.font and settings.contains('fontSize'):
-			self.font.setPointSize(readFromSettings('fontSize', int))
-		self.tabWidth = readFromSettings('tabWidth', int, default=4)
-		self.tabInsertsSpaces = readFromSettings('tabInsertsSpaces', bool,
-			default=True)
-		self.rightMargin = readFromSettings('rightMargin', int, default=0)
-		self.saveWindowGeometry = readFromSettings('saveWindowGeometry', bool,
-			default=False)
-		self.handleLinks = readFromSettings('handleWebLinks', bool, default=False)
-		self.autoSave = readFromSettings('autoSave', bool, default=False)
-		self.restorePreviewState = readFromSettings('restorePreviewState', bool,
-			default=False)
-		self.livePreviewEnabled = readFromSettings('previewState', bool,
-			default=False)
-		self.lineNumbersEnabled = readFromSettings('lineNumbersEnabled',
-			bool, default=False)
-		self.highlightCurrentLine = readFromSettings('highlightCurrentLine',
-			bool, default=True)
+		if globalSettings.font:
+			self.font = QFont(globalSettings.font)
+		if self.font and globalSettings.fontSize:
+			self.font.setPointSize(globalSettings.fontSize)
 	
 	def act(self, name, icon=None, trig=None, trigbool=None, shct=None):
 		if not isinstance(shct, QKeySequence):
@@ -391,7 +369,7 @@ class ReTextWindow(QMainWindow):
 	
 	def getWebView(self):
 		webView = QWebView()
-		if not self.handleLinks:
+		if not globalSettings.handleWebLinks:
 			webView.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
 			self.connect(webView.page(), SIGNAL("linkClicked(const QUrl&)"), self.linkClicked)
 		return webView
@@ -413,7 +391,7 @@ class ReTextWindow(QMainWindow):
 			self.highlighters[-1].dictionary = \
 			enchant.Dict(self.sl) if self.sl else enchant.Dict()
 			self.highlighters[-1].rehighlight()
-		if self.useWebKit:
+		if globalSettings.useWebKit:
 			self.previewBoxes.append(self.getWebView())
 		else:
 			self.previewBoxes.append(QTextBrowser())
@@ -423,12 +401,12 @@ class ReTextWindow(QMainWindow):
 		markupClass = self.getMarkupClass(fileName)
 		self.markups.append(self.getMarkup(fileName))
 		self.highlighters[-1].docType = (markupClass.name if markupClass else '')
-		liveMode = self.restorePreviewState and self.livePreviewEnabled
+		liveMode = globalSettings.restorePreviewState and globalSettings.previewState
 		self.apc.append(liveMode)
 		self.alpc.append(liveMode)
 		self.aptc.append(False)
 		metrics = QFontMetrics(self.editBoxes[-1].font())
-		self.editBoxes[-1].setTabStopWidth(self.tabWidth*metrics.width(' '))
+		self.editBoxes[-1].setTabStopWidth(globalSettings.tabWidth * metrics.width(' '))
 		self.connect(self.editBoxes[-1], SIGNAL('textChanged()'), self.updateLivePreviewBox)
 		self.connect(self.editBoxes[-1], SIGNAL('undoAvailable(bool)'), self.actionUndo,
 			SLOT('setEnabled(bool)'))
@@ -508,7 +486,8 @@ class ReTextWindow(QMainWindow):
 			self.setWindowTitle(self.tr('New document') + '[*] \u2014 ' + app_name)
 			self.docTypeChanged()
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
-		self.livePreviewEnabled = self.alpc[ind]
+		if globalSettings.restorePreviewState:
+			globalSettings.previewState = self.alpc[ind]
 		if self.alpc[ind]:
 			self.enableLivePreview(True)
 		self.editBoxes[self.ind].setFocus(Qt.OtherFocusReason)
@@ -537,7 +516,8 @@ class ReTextWindow(QMainWindow):
 			self.updatePreviewBox()
 	
 	def enableLivePreview(self, livemode):
-		self.livePreviewEnabled = livemode
+		if globalSettings.restorePreviewState:
+			globalSettings.previewState = livemode
 		self.alpc[self.ind] = livemode
 		self.apc[self.ind] = livemode
 		self.actionPreview.setChecked(livemode)
@@ -548,8 +528,7 @@ class ReTextWindow(QMainWindow):
 			self.updatePreviewBox()
 	
 	def enableWebKit(self, enable):
-		self.useWebKit = enable
-		writeToSettings('useWebKit', enable, False)
+		globalSettings.useWebKit = enable
 		oldind = self.ind
 		self.tabWidget.clear()
 		for self.ind in range(len(self.editBoxes)):
@@ -588,7 +567,7 @@ class ReTextWindow(QMainWindow):
 				self.setAllDictionaries(enchant.Dict())
 		else:
 			self.setAllDictionaries(None)
-		writeToSettings('spellCheck', yes, False)
+		globalSettings.spellCheck = yes
 	
 	def setAllDictionaries(self, dictionary):
 		for hl in self.highlighters:
@@ -617,7 +596,7 @@ class ReTextWindow(QMainWindow):
 			self.sl = None
 			self.enableSC(self.actionEnableSC.isChecked())
 		if setdefault:
-			writeToSettings('spellCheckLocale', sl, '')
+			globalSettings.spellCheckLocale = sl
 	
 	def searchBarVisibilityChanged(self, visible):
 		self.actionSearch.setChecked(visible)
@@ -912,7 +891,7 @@ class ReTextWindow(QMainWindow):
 		self.highlighters[self.ind].docType = (markupClass.name if markupClass else '')
 		self.markups[self.ind] = self.getMarkup()
 		pt = not markupClass
-		if not readFromSettings('autoPlainText', bool, default=True):
+		if not globalSettings.autoPlainText:
 			pt = False
 			if self.defaultMarkup:
 				self.highlighters[self.ind].docType = self.defaultMarkup.name
@@ -1036,7 +1015,7 @@ class ReTextWindow(QMainWindow):
 			self.saveHtml(fileName)
 	
 	def getDocumentForPrint(self):
-		if self.useWebKit:
+		if globalSettings.useWebKit:
 			return self.previewBoxes[self.ind]
 		try:
 			return self.textDocument()
@@ -1130,7 +1109,7 @@ class ReTextWindow(QMainWindow):
 		return self.tr("New document")
 	
 	def autoSaveActive(self):
-		return self.autoSave and self.fileNames[self.ind] and \
+		return globalSettings.autoSave and self.fileNames[self.ind] and \
 		QFileInfo(self.fileNames[self.ind]).isWritable()
 	
 	def modificationChanged(self, changed):
@@ -1196,10 +1175,8 @@ class ReTextWindow(QMainWindow):
 		for self.ind in range(self.tabWidget.count()):
 			if not self.maybeSave(self.ind):
 				return closeevent.ignore()
-		if self.restorePreviewState:
-			writeToSettings('previewState', self.livePreviewEnabled, False)
-		if self.saveWindowGeometry and not self.isMaximized():
-			settings.setValue('windowGeometry', self.saveGeometry())
+		if globalSettings.saveWindowGeometry and not self.isMaximized():
+			globalSettings.windowGeometry = self.saveGeometry()
 		closeevent.accept()
 	
 	def viewHtml(self):
@@ -1237,10 +1214,8 @@ class ReTextWindow(QMainWindow):
 	
 	def setDefaultMarkup(self, markup):
 		self.defaultMarkup = markup
-		if markup == markups.get_available_markups()[0]:
-			settings.remove('defaultMarkup')
-		else:
-			settings.setValue('defaultMarkup', markup.name)
+		defaultName = markups.get_available_markups()[0].name
+		writeToSettings('defaultMarkup', markup.name, defaultName)
 		oldind = self.ind
 		for self.ind in range(len(self.previewBoxes)):
 			self.docTypeChanged()

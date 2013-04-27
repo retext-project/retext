@@ -11,18 +11,18 @@ class ReTextEdit(QTextEdit):
 		self.setFont(monofont)
 		self.setAcceptRichText(False)
 		self.marginx = (self.cursorRect(self.cursorForPosition(QPoint())).topLeft().x()
-			+ self.fontMetrics().width(" "*parent.rightMargin))
-		if self.parent.lineNumbersEnabled:
+			+ self.fontMetrics().width(" "*globalSettings.rightMargin))
+		if globalSettings.lineNumbersEnabled:
 			self.lineNumberArea = LineNumberArea(self)
 			self.connect(self.document(), SIGNAL('blockCountChanged(int)'),
 				self.updateLineNumberAreaWidth)
 			self.connect(self, SIGNAL('updateRequest(QRect,int)'), self.updateLineNumberArea)
 			self.updateLineNumberAreaWidth()
-		if self.parent.highlightCurrentLine:
+		if globalSettings.highlightCurrentLine:
 			self.connect(self, SIGNAL('cursorPositionChanged()'), self.highlightCurrentLine)
 	
 	def paintEvent(self, event):
-		if not self.parent.rightMargin:
+		if not globalSettings.rightMargin:
 			return QTextEdit.paintEvent(self, event)
 		painter = QPainter(self.viewport())
 		painter.setPen(QColor(220, 210, 220))
@@ -130,16 +130,16 @@ class ReTextEdit(QTextEdit):
 			cursor.beginEditBlock()
 			while block != end:
 				cursor.setPosition(block.position())
-				if self.parent.tabInsertsSpaces:
-					cursor.insertText(' ' * self.parent.tabWidth)
+				if globalSettings.tabInsertsSpaces:
+					cursor.insertText(' ' * globalSettings.tabWidth)
 				else:
 					cursor.insertText('\t')
 				block = block.next()
 			cursor.endEditBlock()
 		else:
-			indent = self.parent.tabWidth - (cursor.positionInBlock()
-				% self.parent.tabWidth)
-			if self.parent.tabInsertsSpaces:
+			indent = globalSettings.tabWidth - (cursor.positionInBlock()
+				% globalSettings.tabWidth)
+			if globalSettings.tabInsertsSpaces:
 				cursor.insertText(' ' * indent)
 			else:
 				cursor.insertText('\t')
@@ -161,7 +161,7 @@ class ReTextEdit(QTextEdit):
 			else:
 				pos = 0
 				while document.characterAt(cursor.position()) == ' ' \
-				and pos < self.parent.tabWidth:
+				and pos < globalSettings.tabWidth:
 					pos += 1
 					cursor.deleteChar()
 			block = block.next()
@@ -188,7 +188,7 @@ class ReTextEdit(QTextEdit):
 	
 	def resizeEvent(self, event):
 		QTextEdit.resizeEvent(self, event)
-		if not self.parent.lineNumbersEnabled:
+		if not globalSettings.lineNumbersEnabled:
 			return
 		rect = self.contentsRect()
 		self.lineNumberArea.setGeometry(rect.left(), rect.top(),

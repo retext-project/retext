@@ -50,6 +50,33 @@ except ImportError:
 else:
 	webkit_available = True
 
+configOptions = {
+	'appStyleSheet': '',
+	'autoPlainText': True,
+	'autoSave': False,
+	'defaultMarkup': '',
+	'editorFont': 'monospace',
+	'editorFontSize': 0,
+	'font': '',
+	'fontSize': 0,
+	'iconTheme': '',
+	'handleWebLinks': False,
+	'hideToolBar': False,
+	'highlightCurrentLine': False,
+	'lineNumbersEnabled': False,
+	'previewState': False,
+	'restorePreviewState': False,
+	'rightMargin': 0,
+	'saveWindowGeometry': False,
+	'spellCheck': False,
+	'spellCheckLocale': '',
+	'styleSheet': False,
+	'tabInsertsSpaces': True,
+	'tabWidth': 4,
+	'useWebKit': False,
+	'windowGeometry': QByteArray(),
+}
+
 def readFromSettings(key, keytype, settings=settings, default=None):
 	if not settings.contains(key):
 		return default
@@ -84,10 +111,25 @@ def writeListToSettings(key, value, settings=settings):
 	else:
 		settings.remove(key)
 
+class ReTextSettings(object):
+	def __init__(self):
+		for option in configOptions:
+			value = configOptions[option]
+			setattr(self, option, readFromSettings(option,
+				type(value), default=value))
+	
+	def __setattr__(self, option, value):
+		if not option in configOptions:
+			raise AttrubuteError('Unknown attribute')
+		object.__setattr__(self, option, value)
+		writeToSettings(option, value, configOptions[option])
+
+globalSettings = ReTextSettings()
+
 monofont = QFont()
-monofont.setFamily(readFromSettings('editorFont', str, default='monospace'))
-if settings.contains('editorFontSize'):
-	monofont.setPointSize(readFromSettings('editorFontSize', int))
+monofont.setFamily(globalSettings.editorFont)
+if globalSettings.editorFontSize:
+	monofont.setPointSize(globalSettings.editorFontSize)
 
 datadirs = (
 	'.',
