@@ -70,7 +70,7 @@ configOptions = {
 	'saveWindowGeometry': False,
 	'spellCheck': False,
 	'spellCheckLocale': '',
-	'styleSheet': False,
+	'styleSheet': '',
 	'tabInsertsSpaces': True,
 	'tabWidth': 4,
 	'useWebKit': False,

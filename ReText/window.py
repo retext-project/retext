@@ -34,7 +34,7 @@ class ReTextWindow(QMainWindow):
 		self.initConfig()
 		self.resize(800, 600)
 		if globalSettings.windowGeometry:
-			self.restoreGeometry(windowGeometry)
+			self.restoreGeometry(globalSettings.windowGeometry)
 		else:
 			screen = QDesktopWidget().screenGeometry()
 			size = self.geometry()
