@@ -42,9 +42,9 @@ DOCTYPE_HTML = 'html'
 
 try:
 	if use_pyside:
-		from PySide.QtWebKit import QWebView, QWebPage
+		from PySide.QtWebKit import QWebView, QWebPage, QWebSettings
 	else:
-		from PyQt4.QtWebKit import QWebView, QWebPage
+		from PyQt4.QtWebKit import QWebView, QWebPage, QWebSettings
 except ImportError:
 	webkit_available = False
 else:
