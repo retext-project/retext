@@ -40,9 +40,10 @@ def main():
 		sheetfile.open(QIODevice.ReadOnly)
 		app.setStyleSheet(QTextStream(sheetfile).readAll())
 		sheetfile.close()
-	# A work-around for https://bugs.webkit.org/show_bug.cgi?id=114618
-	webSettings = QWebSettings.globalSettings()
-	webSettings.setFontFamily(QWebSettings.FixedFont, 'monospace')
+	if webkit_available:
+		# A work-around for https://bugs.webkit.org/show_bug.cgi?id=114618
+		webSettings = QWebSettings.globalSettings()
+		webSettings.setFontFamily(QWebSettings.FixedFont, 'monospace')
 	window = ReTextWindow()
 	window.show()
 	fileNames = [QFileInfo(arg).canonicalFilePath() for arg in sys.argv[1:]]
