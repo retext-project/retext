@@ -35,8 +35,8 @@ class ConfigDialog(QDialog):
 	
 	def initWidgets(self):
 		self.configurators = {}
-		for index in range(len(self.options)):
-			displayname, name = self.options[index]
+		for index, option in enumerate(self.options):
+			displayname, name = option
 			if name is None:
 				header = QLabel('<h3>%s</h3>' % displayname, self)
 				self.layout.addWidget(header, index, 0, 1, 2, Qt.AlignHCenter)
