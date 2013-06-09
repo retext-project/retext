@@ -5,25 +5,6 @@
 from ReText import *
 import re
 
-def isHeaderLine(text):
-	if len(text) < 3:
-		return False
-	return (text[0] in '=-*~^+') and (text == text[0] * len(text))
-
-def isHeader(block):
-	prevText = block.previous().text()
-	if prevText and not isHeaderLine(prevText):
-		return False
-	return block.text() and isHeaderLine(block.next().text())
-
-def isPartOfHeader(block):
-	return isHeader(block) or isHeader(block.next()) or isHeader(block.previous())
-
-def isHighlighted(block):
-	cursor = QTextCursor(block)
-	cursor.select(QTextCursor.BlockUnderCursor)
-	return (cursor.charFormat().fontWeight() == QFont.Black)
-
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
 	docType = DOCTYPE_NONE
@@ -67,29 +48,6 @@ class ReTextHighlighter(QSyntaxHighlighter):
 					charFormat.setFontUnderline(pattern[4])
 				for match in re.finditer(pattern[0], text):
 					self.setFormat(match.start(), match.end() - match.start(), charFormat)
-		# Headers highlighter
-		highlightHeaders = (self.docType in (DOCTYPE_MARKDOWN, DOCTYPE_REST))
-		curBlock = self.currentBlock()
-		if highlightHeaders and isHeaderLine(curBlock.text()):
-			charFormat = QTextCharFormat()
-			charFormat.setFontWeight(QFont.Black)
-			for block in (curBlock.previous(), curBlock.next()):
-				if isHeader(block):
-					for bl in (block, block.previous(), block.next()):
-						cursor = QTextCursor(bl)
-						cursor.select(QTextCursor.BlockUnderCursor)
-						cursor.mergeCharFormat(charFormat)
-		elif isHighlighted(curBlock):
-			while curBlock.blockNumber() and isHighlighted(curBlock.previous()):
-				curBlock = curBlock.previous()
-			for bl in (curBlock, curBlock.next(), curBlock.next().next()):
-				if not (highlightHeaders and isPartOfHeader(bl)):
-					# Undo the header formatting
-					cursor = QTextCursor(bl)
-					cursor.select(QTextCursor.BlockUnderCursor)
-					charFormat = QTextCharFormat()
-					charFormat.setFontWeight(QFont.Normal)
-					cursor.mergeCharFormat(charFormat)
 		# Spell checker
 		if self.dictionary:
 			charFormat = QTextCharFormat()
