@@ -147,11 +147,8 @@ class ReTextWindow(QMainWindow):
 			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSC)
 			self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
 		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
-		if webkit_available:
-			self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
-			self.actionWebKit.setChecked(globalSettings.useWebKit)
-		else:
-			globalSettings.useWebKit = False
+		self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
+		self.actionWebKit.setChecked(globalSettings.useWebKit)
 		self.actionWpgen = self.act(self.tr('Generate webpages'), trig=self.startWpgen)
 		self.actionShow = self.act(self.tr('Show'), 'system-file-manager', self.showInDir)
 		self.actionFind = self.act(self.tr('Next'), 'go-next', self.find,
@@ -264,8 +261,7 @@ class ReTextWindow(QMainWindow):
 		menuFormat.addAction(self.actionBold)
 		menuFormat.addAction(self.actionItalic)
 		menuFormat.addAction(self.actionUnderline)
-		if webkit_available:
-			menuEdit.addAction(self.actionWebKit)
+		menuEdit.addAction(self.actionWebKit)
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionViewHtml)
 		menuEdit.addAction(self.actionLivePreview)

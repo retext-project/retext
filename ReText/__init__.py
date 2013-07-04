@@ -40,15 +40,10 @@ DOCTYPE_MARKDOWN = markups.MarkdownMarkup.name
 DOCTYPE_REST = markups.ReStructuredTextMarkup.name
 DOCTYPE_HTML = 'html'
 
-try:
-	if use_pyside:
-		from PySide.QtWebKit import QWebView, QWebPage, QWebSettings
-	else:
-		from PyQt4.QtWebKit import QWebView, QWebPage, QWebSettings
-except ImportError:
-	webkit_available = False
+if use_pyside:
+	from PySide.QtWebKit import QWebView, QWebPage, QWebSettings
 else:
-	webkit_available = True
+	from PyQt4.QtWebKit import QWebView, QWebPage, QWebSettings
 
 configOptions = {
 	'appStyleSheet': '',
