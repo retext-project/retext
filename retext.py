@@ -454,7 +454,7 @@ class ReTextWindow(QMainWindow):
 			self.menuExport.addSeparator()
 			for action, mimetype in self.extensionActions:
 				self.menuExport.addAction(action)
-			self.connect(self.menuRecentFiles, SIGNAL('aboutToShow()'), self.updateExtensionsVisibility)
+			self.connect(self.menuExport, SIGNAL('aboutToShow()'), self.updateExtensionsVisibility)
 		if use_gdocs:
 			self.menuExport.addSeparator()
 			self.menuExport.addAction(self.actionSaveGDocs)
