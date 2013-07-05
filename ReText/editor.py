@@ -14,12 +14,11 @@ class ReTextEdit(QTextEdit):
 			+ self.fontMetrics().width(" "*globalSettings.rightMargin))
 		if globalSettings.lineNumbersEnabled:
 			self.lineNumberArea = LineNumberArea(self)
-			self.connect(self.document(), SIGNAL('blockCountChanged(int)'),
-				self.updateLineNumberAreaWidth)
-			self.connect(self, SIGNAL('updateRequest(QRect,int)'), self.updateLineNumberArea)
+			self.document().blockCountChanged.connect(self.updateLineNumberAreaWidth)
+			self.updateRequest.connect(self.updateLineNumberArea)
 			self.updateLineNumberAreaWidth()
 		if globalSettings.highlightCurrentLine:
-			self.connect(self, SIGNAL('cursorPositionChanged()'), self.highlightCurrentLine)
+			self.cursorPositionChanged.connect(self.highlightCurrentLine)
 	
 	def paintEvent(self, event):
 		if not globalSettings.rightMargin:
