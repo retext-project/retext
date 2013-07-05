@@ -8,8 +8,8 @@ class ConfigDialog(QDialog):
 		buttonBox = QDialogButtonBox(self)
 		buttonBox.setStandardButtons(QDialogButtonBox.Ok |
 			QDialogButtonBox.Cancel)
-		self.connect(buttonBox, SIGNAL('accepted()'), self.saveSettings)
-		self.connect(buttonBox, SIGNAL('rejected()'), self.close)
+		buttonBox.accepted.connect(self.saveSettings)
+		buttonBox.rejected.connect(self.close)
 		self.initWidgets()
 		self.layout.addWidget(buttonBox, len(self.options), 0, 1, 2)
 	

@@ -25,8 +25,8 @@ class LocaleDialog(QDialog):
 		buttonBox = QDialogButtonBox(self)
 		buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
 		verticalLayout.addWidget(buttonBox)
-		self.connect(buttonBox, SIGNAL('accepted()'), self.accept)
-		self.connect(buttonBox, SIGNAL('rejected()'), self.reject)
+		self.accepted.connect(self.accept)
+		self.rejected.connect(self.reject)
 
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
@@ -67,8 +67,8 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget = QTabWidget(self)
 		self.tabWidget.setTabsClosable(True)
 		self.setCentralWidget(self.tabWidget)
-		self.connect(self.tabWidget, SIGNAL('currentChanged(int)'), self.changeIndex)
-		self.connect(self.tabWidget, SIGNAL('tabCloseRequested(int)'), self.closeTab)
+		self.tabWidget.currentChanged.connect(self.changeIndex)
+		self.tabWidget.tabCloseRequested.connect(self.closeTab)
 		toolBar = QToolBar(self.tr('File toolbar'), self)
 		self.addToolBar(Qt.TopToolBarArea, toolBar)
 		self.editBar = QToolBar(self.tr('Edit toolbar'), self)
@@ -101,9 +101,8 @@ class ReTextWindow(QMainWindow):
 		self.actionChangeFont = self.act(self.tr('Change default font'), trig=self.changeFont)
 		self.actionSearch = self.act(self.tr('Find text'), 'edit-find', shct=QKeySequence.Find)
 		self.actionSearch.setCheckable(True)
-		self.connect(self.actionSearch, SIGNAL('triggered(bool)'), self.searchBar,
-			SLOT('setVisible(bool)'))
-		self.connect(self.searchBar, SIGNAL('visibilityChanged(bool)'), self.searchBarVisibilityChanged)
+		self.actionSearch.triggered.connect(self.searchBar.setVisible)
+		self.searchBar.visibilityChanged.connect(self.searchBarVisibilityChanged)
 		self.actionPreview = self.act(self.tr('Preview'), shct=Qt.CTRL+Qt.Key_E, trigbool=self.preview)
 		if QIcon.hasThemeIcon('document-preview'):
 			self.actionPreview.setIcon(QIcon.fromTheme('document-preview'))
@@ -125,7 +124,7 @@ class ReTextWindow(QMainWindow):
 		self.getExportExtensionsList()
 		self.actionQuit = self.act(self.tr('Quit'), 'application-exit', shct=QKeySequence.Quit)
 		self.actionQuit.setMenuRole(QAction.QuitRole)
-		self.connect(self.actionQuit, SIGNAL('triggered()'), self.close)
+		self.actionQuit.triggered.connect(self.close)
 		self.actionUndo = self.act(self.tr('Undo'), 'edit-undo',
 			lambda: self.editBoxes[self.ind].undo(), shct=QKeySequence.Undo)
 		self.actionRedo = self.act(self.tr('Redo'), 'edit-redo',
@@ -141,7 +140,7 @@ class ReTextWindow(QMainWindow):
 		self.actionCopy.setEnabled(False)
 		self.actionCut.setEnabled(False)
 		qApp = QCoreApplication.instance()
-		self.connect(qApp.clipboard(), SIGNAL('dataChanged()'), self.clipboardDataChanged)
+		qApp.clipboard().dataChanged.connect(self.clipboardDataChanged)
 		self.clipboardDataChanged()
 		if enchant_available:
 			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSC)
@@ -162,7 +161,7 @@ class ReTextWindow(QMainWindow):
 		self.actionAbout.setMenuRole(QAction.AboutRole)
 		self.actionAboutQt = self.act(self.tr('About Qt'))
 		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
-		self.connect(self.actionAboutQt, SIGNAL('triggered()'), qApp, SLOT('aboutQt()'))
+		self.actionAboutQt.triggered.connect(qApp.aboutQt)
 		availableMarkups = markups.get_available_markups()
 		if not availableMarkups:
 			print('Warning: no markups are available!')
@@ -194,11 +193,11 @@ class ReTextWindow(QMainWindow):
 		self.tagsBox = QComboBox(self.editBar)
 		self.tagsBox.addItem(self.tr('Tags'))
 		self.tagsBox.addItems(self.usefulTags)
-		self.connect(self.tagsBox, SIGNAL('activated(int)'), self.insertTag)
+		self.tagsBox.activated.connect(self.insertTag)
 		self.symbolBox = QComboBox(self.editBar)
 		self.symbolBox.addItem(self.tr('Symbols'))
 		self.symbolBox.addItems(self.usefulChars)
-		self.connect(self.symbolBox, SIGNAL('activated(int)'), self.insertSymbol)
+		self.symbolBox.activated.connect(self.insertSymbol)
 		if globalSettings.styleSheet:
 			sheetfile = QFile(globalSettings.styleSheet)
 			sheetfile.open(QIODevice.ReadOnly)
@@ -215,7 +214,7 @@ class ReTextWindow(QMainWindow):
 		menuFile.addAction(self.actionNew)
 		menuFile.addAction(self.actionOpen)
 		self.menuRecentFiles = menuFile.addMenu(self.tr('Open recent'))
-		self.connect(self.menuRecentFiles, SIGNAL('aboutToShow()'), self.updateRecentFiles)
+		self.menuRecentFiles.aboutToShow.connect(self.updateRecentFiles)
 		menuFile.addMenu(self.menuRecentFiles)
 		self.menuDir = menuFile.addMenu(self.tr('Directory'))
 		self.menuDir.addAction(self.actionShow)
@@ -233,7 +232,7 @@ class ReTextWindow(QMainWindow):
 			menuExport.addSeparator()
 			for action, mimetype in self.extensionActions:
 				menuExport.addAction(action)
-			self.connect(self.menuRecentFiles, SIGNAL('aboutToShow()'), self.updateExtensionsVisibility)
+			menuExport.aboutToShow.connect(self.updateExtensionsVisibility)
 		menuFile.addAction(self.actionPrint)
 		menuFile.addAction(self.actionPrintPreview)
 		menuFile.addSeparator()
@@ -295,7 +294,7 @@ class ReTextWindow(QMainWindow):
 		self.editBar.addWidget(self.symbolBox)
 		self.searchEdit = QLineEdit(self.searchBar)
 		self.searchEdit.setPlaceholderText(self.tr('Search'))
-		self.connect(self.searchEdit, SIGNAL('returnPressed()'), self.find)
+		self.searchEdit.returnPressed.connect(self.find)
 		self.csBox = QCheckBox(self.tr('Case sensitively'), self.searchBar)
 		self.searchBar.addWidget(self.searchEdit)
 		self.searchBar.addWidget(self.csBox)
@@ -306,7 +305,7 @@ class ReTextWindow(QMainWindow):
 		if globalSettings.autoSave:
 			timer = QTimer(self)
 			timer.start(60000)
-			self.connect(timer, SIGNAL('timeout()'), self.saveAll)
+			timer.timeout.connect(self.saveAll)
 		self.ind = 0
 		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
 		if enchant_available:
@@ -336,10 +335,10 @@ class ReTextWindow(QMainWindow):
 		else:
 			action = QAction(name, self)
 		if trig:
-			self.connect(action, SIGNAL('triggered()'), trig)
+			action.triggered.connect(trig)
 		elif trigbool:
 			action.setCheckable(True)
-			self.connect(action, SIGNAL('triggered(bool)'), trigbool)
+			action.triggered.connect(trigbool)
 		if shct:
 			action.setShortcut(shct)
 		return action
@@ -367,7 +366,7 @@ class ReTextWindow(QMainWindow):
 		webView = QWebView()
 		if not globalSettings.handleWebLinks:
 			webView.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
-			self.connect(webView.page(), SIGNAL("linkClicked(const QUrl&)"), self.linkClicked)
+			webView.page().linkClicked.connect(self.linkClicked)
 		return webView
 	
 	def linkClicked(self, url):
@@ -403,14 +402,11 @@ class ReTextWindow(QMainWindow):
 		self.aptc.append(False)
 		metrics = QFontMetrics(self.editBoxes[-1].font())
 		self.editBoxes[-1].setTabStopWidth(globalSettings.tabWidth * metrics.width(' '))
-		self.connect(self.editBoxes[-1], SIGNAL('textChanged()'), self.updateLivePreviewBox)
-		self.connect(self.editBoxes[-1], SIGNAL('undoAvailable(bool)'), self.actionUndo,
-			SLOT('setEnabled(bool)'))
-		self.connect(self.editBoxes[-1], SIGNAL('redoAvailable(bool)'), self.actionRedo,
-			SLOT('setEnabled(bool)'))
-		self.connect(self.editBoxes[-1], SIGNAL('copyAvailable(bool)'), self.enableCopy)
-		self.connect(self.editBoxes[-1].document(), SIGNAL('modificationChanged(bool)'),
-			self.modificationChanged)
+		self.editBoxes[-1].textChanged.connect(self.updateLivePreviewBox)
+		self.editBoxes[-1].undoAvailable.connect(self.actionUndo.setEnabled)
+		self.editBoxes[-1].redoAvailable.connect(self.actionRedo.setEnabled)
+		self.editBoxes[-1].copyAvailable.connect(self.enableCopy)
+		self.editBoxes[-1].document().modificationChanged.connect(self.modificationChanged)
 		return self.getSplitter(-1)
 	
 	def closeTab(self, ind):
@@ -691,8 +687,7 @@ class ReTextWindow(QMainWindow):
 				stream = QTextStream(tempFile)
 				stream << html
 				tempFile.close()
-				self.connect(pb, SIGNAL('loadFinished(bool)'),
-					lambda ok: tempFile.remove())
+				pb.loadFinished.connect(lambda ok: tempFile.remove())
 				pb.load(QUrl.fromLocalFile(tempFile.fileName()))
 			else:
 				pb.setHtml(html)
@@ -1054,7 +1049,7 @@ class ReTextWindow(QMainWindow):
 			return
 		printer = self.standardPrinter()
 		preview = QPrintPreviewDialog(printer, self)
-		self.connect(preview, SIGNAL("paintRequested(QPrinter*)"), document.print_)
+		preview.paintRequested.connect(document.print_)
 		preview.exec_()
 	
 	def runExtensionCommand(self, command, filefilter, defaultext):

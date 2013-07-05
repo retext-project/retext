@@ -18,5 +18,5 @@ class HtmlDialog(QDialog):
 		verticalLayout.addWidget(self.textEdit)
 		buttonBox = QDialogButtonBox(self)
 		buttonBox.setStandardButtons(QDialogButtonBox.Close)
-		self.connect(buttonBox, SIGNAL("rejected()"), self.close)
+		buttonBox.rejected.connect(self.close)
 		verticalLayout.addWidget(buttonBox)
