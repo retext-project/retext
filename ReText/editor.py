@@ -20,7 +20,6 @@ class ReTextEdit(QTextEdit):
 		if globalSettings.lineNumbersEnabled:
 			self.lineNumberArea = LineNumberArea(self)
 			self.document().blockCountChanged.connect(self.updateLineNumberAreaWidth)
-			#self.updateRequest.connect(self.updateLineNumberArea)
 			self.updateLineNumberAreaWidth()
 		if globalSettings.highlightCurrentLine:
 			self.cursorPositionChanged.connect(self.highlightCurrentLine)
@@ -180,15 +179,6 @@ class ReTextEdit(QTextEdit):
 	def updateLineNumberAreaWidth(self, blockcount=0):
 		self.lineNumberArea.repaint()
 		self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, 0)
-	
-	def updateLineNumberArea(self, rect, dy):
-		if dy:
-			self.lineNumberArea.scroll(0, dy)
-		else:
-			self.lineNumberArea.update(0, rect.y(),
-				self.lineNumberArea.width(), rect.height())
-		if rect.contains(self.viewport().rect()):
-			self.updateLineNumberAreaWidth()
 	
 	def resizeEvent(self, event):
 		QTextEdit.resizeEvent(self, event)
