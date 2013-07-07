@@ -19,7 +19,8 @@
 # MA 02110-1301, USA.
 
 import sys
-from ReText.webpages import *
+from ReText import app_name, app_version
+from ReText.webpages import wpUpdate, wpUpdateAll, wpInit, wpUseStyle
 
 def main(argv):
 	if len(argv) > 1:

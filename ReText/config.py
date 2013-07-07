@@ -1,4 +1,9 @@
-from ReText import *
+from ReText import QtCore, QtWidgets, globalSettings
+
+Qt = QtCore.Qt
+(QCheckBox, QDialog, QDialogButtonBox, QGridLayout, QLabel, QLineEdit, QSpinBox) = (
+ QtWidgets.QCheckBox, QtWidgets.QDialog, QtWidgets.QDialogButtonBox,
+ QtWidgets.QGridLayout, QtWidgets.QLabel, QtWidgets.QLineEdit, QtWidgets.QSpinBox)
 
 class ConfigDialog(QDialog):
 	def __init__(self, parent):

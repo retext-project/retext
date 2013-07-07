@@ -20,8 +20,14 @@
 
 import sys
 import signal
-from ReText import *
+from ReText import QtCore, QtWidgets, QtWebKit, datadirs, globalSettings
 from ReText.window import ReTextWindow
+
+(QFile, QFileInfo, QIODevice, QLibraryInfo, QLocale, QTextStream,
+ QTranslator) = (QtCore.QFile, QtCore.QFileInfo, QtCore.QIODevice,
+ QtCore.QLibraryInfo, QtCore.QLocale, QtCore.QTextStream, QtCore.QTranslator)
+QApplication = QtWidgets.QApplication
+QWebSettings = QtWebKit.QWebSettings
 
 def main():
 	app = QApplication(sys.argv)
@@ -47,11 +53,6 @@ def main():
 	window.show()
 	fileNames = [QFileInfo(arg).canonicalFilePath() for arg in sys.argv[1:]]
 	for fileName in fileNames:
-		try:
-			fileName = QString.fromUtf8(fileName)
-		except:
-			# Not needed for Python 3
-			pass
 		if QFile.exists(fileName):
 			window.openFileWrapper(fileName)
 	signal.signal(signal.SIGINT, lambda sig, frame: window.close())

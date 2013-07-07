@@ -2,12 +2,39 @@
 # Copyright: Dmitry Shachnev 2012
 # License: GNU GPL v2 or higher
 
-from ReText import *
+import markups
+from subprocess import Popen, PIPE
+from ReText import QtCore, QtPrintSupport, QtGui, QtWidgets, QtWebKitWidgets, \
+ icon_path, DOCTYPE_MARKDOWN, DOCTYPE_REST, app_name, app_version, globalSettings, \
+ settings, readListFromSettings, writeListToSettings, writeToSettings, \
+ datadirs, enchant, enchant_available
 from ReText.webpages import wpInit, wpUpdateAll
 from ReText.htmldialog import HtmlDialog
 from ReText.config import ConfigDialog
 from ReText.highlighter import ReTextHighlighter
 from ReText.editor import ReTextEdit
+
+(QCoreApplication, QDir, QFile, QFileInfo, QIODevice, QLocale, QRect, QTemporaryFile,
+ QTextCodec, QTextStream, QTimer, QUrl, Qt) = (QtCore.QCoreApplication, QtCore.QDir,
+ QtCore.QFile, QtCore.QFileInfo, QtCore.QIODevice, QtCore.QLocale, QtCore.QRect,
+ QtCore.QTemporaryFile, QtCore.QTextCodec, QtCore.QTextStream, QtCore.QTimer,
+ QtCore.QUrl, QtCore.Qt)
+(QDesktopServices, QFont, QFontMetrics, QIcon, QKeySequence, QTextCursor, QTextDocument,
+ QTextDocumentWriter) = (QtGui.QDesktopServices, QtGui.QFont, QtGui.QFontMetrics,
+ QtGui.QIcon, QtGui.QKeySequence, QtGui.QTextCursor, QtGui.QTextDocument,
+ QtGui.QTextDocumentWriter)
+(QAction, QActionGroup, QCheckBox, QComboBox, QDesktopWidget, QDialog, QDialogButtonBox,
+ QFileDialog, QFontDialog, QInputDialog, QLabel, QLineEdit, QMainWindow, QMenuBar,
+ QMessageBox, QSplitter, QTabWidget, QTextBrowser, QTextEdit, QToolBar, QVBoxLayout) = (
+ QtWidgets.QAction, QtWidgets.QActionGroup, QtWidgets.QCheckBox, QtWidgets.QComboBox,
+ QtWidgets.QDesktopWidget, QtWidgets.QDialog, QtWidgets.QDialogButtonBox,
+ QtWidgets.QFileDialog, QtWidgets.QFontDialog, QtWidgets.QInputDialog, QtWidgets.QLabel,
+ QtWidgets.QLineEdit, QtWidgets.QMainWindow, QtWidgets.QMenuBar, QtWidgets.QMessageBox,
+ QtWidgets.QSplitter, QtWidgets.QTabWidget, QtWidgets.QTextBrowser, QtWidgets.QTextEdit,
+ QtWidgets.QToolBar, QtWidgets.QVBoxLayout)
+(QPrintDialog, QPrintPreviewDialog, QPrinter) = (QtPrintSupport.QPrintDialog,
+ QtPrintSupport.QPrintPreviewDialog, QtPrintSupport.QPrinter)
+(QWebPage, QWebView) = (QtWebKitWidgets.QWebPage, QtWebKitWidgets.QWebView)
 
 class LocaleDialog(QDialog):
 	def __init__(self, parent, defaultText=""):

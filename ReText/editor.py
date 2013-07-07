@@ -2,7 +2,12 @@
 # Copyright: Dmitry Shachnev 2012
 # License: GNU GPL v2 or higher
 
-from ReText import *
+from ReText import QtCore, QtGui, QtWidgets, monofont, globalSettings, DOCTYPE_MARKDOWN
+
+(QPoint, QSize, Qt) = (QtCore.QPoint, QtCore.QSize, QtCore.Qt)
+(QColor, QPainter, QTextCursor, QTextFormat) = (QtGui.QColor, QtGui.QPainter,
+ QtGui.QTextCursor, QtGui.QTextFormat)
+(QTextEdit, QWidget) = (QtWidgets.QTextEdit, QtWidgets.QWidget)
 
 class ReTextEdit(QTextEdit):
 	def __init__(self, parent):
@@ -15,7 +20,7 @@ class ReTextEdit(QTextEdit):
 		if globalSettings.lineNumbersEnabled:
 			self.lineNumberArea = LineNumberArea(self)
 			self.document().blockCountChanged.connect(self.updateLineNumberAreaWidth)
-			self.updateRequest.connect(self.updateLineNumberArea)
+			#self.updateRequest.connect(self.updateLineNumberArea)
 			self.updateLineNumberAreaWidth()
 		if globalSettings.highlightCurrentLine:
 			self.cursorPositionChanged.connect(self.highlightCurrentLine)
@@ -182,7 +187,7 @@ class ReTextEdit(QTextEdit):
 		else:
 			self.lineNumberArea.update(0, rect.y(),
 				self.lineNumberArea.width(), rect.height())
-		if rect.contains(viewport().rect()):
+		if rect.contains(self.viewport().rect()):
 			self.updateLineNumberAreaWidth()
 	
 	def resizeEvent(self, event):

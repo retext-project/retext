@@ -2,8 +2,12 @@
 # Copyright: Dmitry Shachnev 2012
 # License: GNU GPL v2 or higher
 
-from ReText import *
+from ReText import QtCore, QtGui, DOCTYPE_NONE, DOCTYPE_MARKDOWN, DOCTYPE_REST, DOCTYPE_HTML
 import re
+
+Qt = QtCore.Qt
+(QFont, QSyntaxHighlighter, QTextCharFormat) = (QtGui.QFont, QtGui.QSyntaxHighlighter,
+ QtGui.QTextCharFormat)
 
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None

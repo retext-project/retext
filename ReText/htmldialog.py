@@ -2,8 +2,11 @@
 # Copyright: Dmitry Shachnev 2012
 # License: GNU GPL v2 or higher
 
-from ReText import *
+from ReText import QtWidgets, monofont, DOCTYPE_HTML
 from ReText.highlighter import ReTextHighlighter
+
+(QDialog, QDialogButtonBox, QTextEdit, QVBoxLayout) = (QtWidgets.QDialog,
+ QtWidgets.QDialogButtonBox, QtWidgets.QTextEdit, QtWidgets.QVBoxLayout)
 
 class HtmlDialog(QDialog):
 	def __init__(self, parent=None):

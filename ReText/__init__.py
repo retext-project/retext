@@ -3,17 +3,32 @@
 # License: GNU GPL v2 or higher
 
 import markups
-from subprocess import Popen, PIPE
+import sys
 
-try:
-	from PyQt4.QtCore import *
-	from PyQt4.QtGui import *
-except ImportError:
-	from PySide.QtCore import *
-	from PySide.QtGui import *
-	use_pyside = True
+if '--pyqt4' in sys.argv:
+        from PyQt4 import QtCore, QtGui, QtWebKit
+elif '--pyside' in sys.argv:
+        from PySide import QtCore, QtGui, QtWebKit
 else:
-	use_pyside = False
+	try:
+	        from PyQt5 import QtCore, QtPrintSupport, QtGui, QtWidgets, QtWebKit, QtWebKitWidgets
+	except ImportError:
+	        try:
+	                from PyQt4 import QtCore, QtGui, QtWebKit
+	        except ImportError:
+	                from PySide import QtCore, QtGui, QtWebKit
+
+if not 'QtWidgets' in locals():
+        # PyQt4 or PySide
+        QtPrintSupport, QtWidgets, QtWebKitWidgets = QtGui, QtGui, QtWebKit
+
+if not hasattr(QtCore, 'Signal'):
+	# We use PySide syntax
+	QtCore.Signal = QtCore.pyqtSignal
+	QtCore.Slot = QtCore.pyqtSlot
+
+(QByteArray, QDir, QSettings) = (QtCore.QByteArray, QtCore.QDir, QtCore.QSettings)
+QFont = QtGui.QFont
 
 app_name = "ReText"
 app_version = "4.1.0 (Git)"
@@ -30,6 +45,7 @@ try:
 	enchant.Dict()
 except:
 	enchant_available = False
+	enchant = None
 else:
 	enchant_available = True
 
@@ -39,11 +55,6 @@ DOCTYPE_NONE = ''
 DOCTYPE_MARKDOWN = markups.MarkdownMarkup.name
 DOCTYPE_REST = markups.ReStructuredTextMarkup.name
 DOCTYPE_HTML = 'html'
-
-if use_pyside:
-	from PySide.QtWebKit import QWebView, QWebPage, QWebSettings
-else:
-	from PyQt4.QtWebKit import QWebView, QWebPage, QWebSettings
 
 configOptions = {
 	'appStyleSheet': '',
@@ -115,7 +126,7 @@ class ReTextSettings(object):
 	
 	def __setattr__(self, option, value):
 		if not option in configOptions:
-			raise AttrubuteError('Unknown attribute')
+			raise AttributeError('Unknown attribute')
 		object.__setattr__(self, option, value)
 		writeToSettings(option, value, configOptions[option])
 
