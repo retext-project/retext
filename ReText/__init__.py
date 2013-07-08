@@ -22,11 +22,6 @@ if not 'QtWidgets' in locals():
         # PyQt4 or PySide
         QtPrintSupport, QtWidgets, QtWebKitWidgets = QtGui, QtGui, QtWebKit
 
-if not hasattr(QtCore, 'Signal'):
-	# We use PySide syntax
-	QtCore.Signal = QtCore.pyqtSignal
-	QtCore.Slot = QtCore.pyqtSlot
-
 (QByteArray, QDir, QSettings) = (QtCore.QByteArray, QtCore.QDir, QtCore.QSettings)
 QFont = QtGui.QFont
 
