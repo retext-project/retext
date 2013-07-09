@@ -19,10 +19,9 @@ from ReText.editor import ReTextEdit
  QtCore.QFile, QtCore.QFileInfo, QtCore.QIODevice, QtCore.QLocale, QtCore.QRect,
  QtCore.QTemporaryFile, QtCore.QTextCodec, QtCore.QTextStream, QtCore.QTimer,
  QtCore.QUrl, QtCore.Qt)
-(QDesktopServices, QFont, QFontMetrics, QIcon, QKeySequence, QTextCursor, QTextDocument,
- QTextDocumentWriter) = (QtGui.QDesktopServices, QtGui.QFont, QtGui.QFontMetrics,
- QtGui.QIcon, QtGui.QKeySequence, QtGui.QTextCursor, QtGui.QTextDocument,
- QtGui.QTextDocumentWriter)
+(QDesktopServices, QFont, QFontMetrics, QIcon, QKeySequence, QTextCursor,
+ QTextDocument) = (QtGui.QDesktopServices, QtGui.QFont, QtGui.QFontMetrics,
+ QtGui.QIcon, QtGui.QKeySequence, QtGui.QTextCursor, QtGui.QTextDocument)
 (QAction, QActionGroup, QCheckBox, QComboBox, QDesktopWidget, QDialog, QDialogButtonBox,
  QFileDialog, QFontDialog, QInputDialog, QLabel, QLineEdit, QMainWindow, QMenuBar,
  QMessageBox, QSplitter, QTabWidget, QTextBrowser, QTextEdit, QToolBar, QVBoxLayout) = (
@@ -253,7 +252,8 @@ class ReTextWindow(QMainWindow):
 		menuFile.addSeparator()
 		menuExport = menuFile.addMenu(self.tr('Export'))
 		menuExport.addAction(self.actionPerfectHtml)
-		menuExport.addAction(self.actionOdf)
+		if hasattr(QtGui, 'QTextDocumentWriter'): # PYSIDE-177
+			menuExport.addAction(self.actionOdf)
 		menuExport.addAction(self.actionPdf)
 		if self.extensionActions:
 			menuExport.addSeparator()
@@ -1021,7 +1021,7 @@ class ReTextWindow(QMainWindow):
 			self.tr("OpenDocument text files (*.odt)"))
 		if not QFileInfo(fileName).suffix():
 			fileName += ".odt"
-		writer = QTextDocumentWriter(fileName)
+		writer = QtGui.QTextDocumentWriter(fileName)
 		writer.setFormat("odf")
 		writer.write(document)
 	

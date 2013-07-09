@@ -6,21 +6,21 @@ import markups
 import sys
 
 if '--pyqt4' in sys.argv:
-        from PyQt4 import QtCore, QtGui, QtWebKit
+	from PyQt4 import QtCore, QtGui, QtWebKit
 elif '--pyside' in sys.argv:
-        from PySide import QtCore, QtGui, QtWebKit
+	from PySide import QtCore, QtGui, QtWebKit
 else:
 	try:
-	        from PyQt5 import QtCore, QtPrintSupport, QtGui, QtWidgets, QtWebKit, QtWebKitWidgets
+		from PyQt5 import QtCore, QtPrintSupport, QtGui, QtWidgets, QtWebKit, QtWebKitWidgets
 	except ImportError:
-	        try:
-	                from PyQt4 import QtCore, QtGui, QtWebKit
-	        except ImportError:
-	                from PySide import QtCore, QtGui, QtWebKit
+		try:
+			from PyQt4 import QtCore, QtGui, QtWebKit
+		except ImportError:
+			from PySide import QtCore, QtGui, QtWebKit
 
 if not 'QtWidgets' in locals():
-        # PyQt4 or PySide
-        QtPrintSupport, QtWidgets, QtWebKitWidgets = QtGui, QtGui, QtWebKit
+	# PyQt4 or PySide
+	QtPrintSupport, QtWidgets, QtWebKitWidgets = QtGui, QtGui, QtWebKit
 
 (QByteArray, QDir, QSettings) = (QtCore.QByteArray, QtCore.QDir, QtCore.QSettings)
 QFont = QtGui.QFont
@@ -82,7 +82,8 @@ def readFromSettings(key, keytype, settings=settings, default=None):
 	if not settings.contains(key):
 		return default
 	try:
-		return settings.value(key, type=keytype)
+		value = settings.value(key, type=keytype)
+		return value if isinstance(value, keytype) else keytype(value)
 	except TypeError as error:
 		# Type mismatch
 		print('Warning: '+str(error))
