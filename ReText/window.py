@@ -9,7 +9,7 @@ from ReText import QtCore, QtPrintSupport, QtGui, QtWidgets, QtWebKitWidgets, \
  settings, readListFromSettings, writeListToSettings, writeToSettings, \
  datadirs, enchant, enchant_available
 from ReText.webpages import wpInit, wpUpdateAll
-from ReText.htmldialog import HtmlDialog
+from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
 from ReText.highlighter import ReTextHighlighter
 from ReText.editor import ReTextEdit
@@ -22,37 +22,17 @@ from ReText.editor import ReTextEdit
 (QDesktopServices, QFont, QFontMetrics, QIcon, QKeySequence, QTextCursor,
  QTextDocument) = (QtGui.QDesktopServices, QtGui.QFont, QtGui.QFontMetrics,
  QtGui.QIcon, QtGui.QKeySequence, QtGui.QTextCursor, QtGui.QTextDocument)
-(QAction, QActionGroup, QCheckBox, QComboBox, QDesktopWidget, QDialog, QDialogButtonBox,
+(QAction, QActionGroup, QCheckBox, QComboBox, QDesktopWidget, QDialog,
  QFileDialog, QFontDialog, QInputDialog, QLabel, QLineEdit, QMainWindow, QMenuBar,
- QMessageBox, QSplitter, QTabWidget, QTextBrowser, QTextEdit, QToolBar, QVBoxLayout) = (
+ QMessageBox, QSplitter, QTabWidget, QTextBrowser, QTextEdit, QToolBar) = (
  QtWidgets.QAction, QtWidgets.QActionGroup, QtWidgets.QCheckBox, QtWidgets.QComboBox,
- QtWidgets.QDesktopWidget, QtWidgets.QDialog, QtWidgets.QDialogButtonBox,
- QtWidgets.QFileDialog, QtWidgets.QFontDialog, QtWidgets.QInputDialog, QtWidgets.QLabel,
- QtWidgets.QLineEdit, QtWidgets.QMainWindow, QtWidgets.QMenuBar, QtWidgets.QMessageBox,
- QtWidgets.QSplitter, QtWidgets.QTabWidget, QtWidgets.QTextBrowser, QtWidgets.QTextEdit,
- QtWidgets.QToolBar, QtWidgets.QVBoxLayout)
+ QtWidgets.QDesktopWidget, QtWidgets.QDialogButtonBox, QtWidgets.QFileDialog,
+ QtWidgets.QFontDialog, QtWidgets.QInputDialog, QtWidgets.QLabel, QtWidgets.QLineEdit,
+ QtWidgets.QMainWindow, QtWidgets.QMenuBar, QtWidgets.QMessageBox, QtWidgets.QSplitter,
+ QtWidgets.QTabWidget, QtWidgets.QTextBrowser, QtWidgets.QTextEdit, QtWidgets.QToolBar)
 (QPrintDialog, QPrintPreviewDialog, QPrinter) = (QtPrintSupport.QPrintDialog,
  QtPrintSupport.QPrintPreviewDialog, QtPrintSupport.QPrinter)
 (QWebPage, QWebView) = (QtWebKitWidgets.QWebPage, QtWebKitWidgets.QWebView)
-
-class LocaleDialog(QDialog):
-	def __init__(self, parent, defaultText=""):
-		QDialog.__init__(self, parent)
-		self.setWindowTitle(app_name)
-		verticalLayout = QVBoxLayout(self)
-		self.label = QLabel(self)
-		self.label.setText(self.tr('Enter locale name (example: en_US)'))
-		verticalLayout.addWidget(self.label)
-		self.localeEdit = QLineEdit(self)
-		self.localeEdit.setText(defaultText)
-		verticalLayout.addWidget(self.localeEdit)
-		self.checkBox = QCheckBox(self.tr('Set as default'), self)
-		verticalLayout.addWidget(self.checkBox)
-		buttonBox = QDialogButtonBox(self)
-		buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
-		verticalLayout.addWidget(buttonBox)
-		self.accepted.connect(self.accept)
-		self.rejected.connect(self.reject)
 
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
