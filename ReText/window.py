@@ -26,7 +26,7 @@ from ReText.editor import ReTextEdit
  QFileDialog, QFontDialog, QInputDialog, QLabel, QLineEdit, QMainWindow, QMenuBar,
  QMessageBox, QSplitter, QTabWidget, QTextBrowser, QTextEdit, QToolBar) = (
  QtWidgets.QAction, QtWidgets.QActionGroup, QtWidgets.QCheckBox, QtWidgets.QComboBox,
- QtWidgets.QDesktopWidget, QtWidgets.QDialogButtonBox, QtWidgets.QFileDialog,
+ QtWidgets.QDesktopWidget, QtWidgets.QDialog, QtWidgets.QFileDialog,
  QtWidgets.QFontDialog, QtWidgets.QInputDialog, QtWidgets.QLabel, QtWidgets.QLineEdit,
  QtWidgets.QMainWindow, QtWidgets.QMenuBar, QtWidgets.QMessageBox, QtWidgets.QSplitter,
  QtWidgets.QTabWidget, QtWidgets.QTextBrowser, QtWidgets.QTextEdit, QtWidgets.QToolBar)
