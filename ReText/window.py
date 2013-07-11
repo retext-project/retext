@@ -1077,8 +1077,8 @@ class ReTextWindow(QMainWindow):
 		else:
 			tmpname = basename+self.getMarkupClass().default_extension
 			self.saveFileCore(tmpname)
-		command = command.replace('%of', 'out'+defaultext)
-		command = command.replace('%html' if html else '%if', tmpname)
+		command = command.replace('%of', '"out'+defaultext+'"')
+		command = command.replace('%html' if html else '%if', '"'+tmpname+'"')
 		try:
 			Popen(str(command), shell=True).wait()
 		except Exception as error:
