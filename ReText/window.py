@@ -111,7 +111,7 @@ class ReTextWindow(QMainWindow):
 		self.actionChangeFont = self.act(self.tr('Change default font'), trig=self.changeFont)
 		self.actionSearch = self.act(self.tr('Find text'), 'edit-find', shct=QKeySequence.Find)
 		self.actionSearch.setCheckable(True)
-		self.actionSearch.triggered.connect(self.searchBar.setVisible)
+		self.actionSearch.triggered[bool].connect(self.searchBar.setVisible)
 		self.searchBar.visibilityChanged.connect(self.searchBarVisibilityChanged)
 		self.actionPreview = self.act(self.tr('Preview'), shct=Qt.CTRL+Qt.Key_E, trigbool=self.preview)
 		if QIcon.hasThemeIcon('document-preview'):
@@ -349,7 +349,7 @@ class ReTextWindow(QMainWindow):
 			action.triggered.connect(trig)
 		elif trigbool:
 			action.setCheckable(True)
-			action.triggered.connect(trigbool)
+			action.triggered[bool].connect(trigbool)
 		if shct:
 			action.setShortcut(shct)
 		return action
