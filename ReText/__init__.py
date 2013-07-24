@@ -3,6 +3,7 @@
 # License: GNU GPL v2 or higher
 
 import markups
+import markups.common
 import sys
 
 if '--pyqt4' in sys.argv:
@@ -66,6 +67,7 @@ configOptions = {
 	'highlightCurrentLine': False,
 	'lineNumbersEnabled': False,
 	'previewState': False,
+	'pygmentsStyle': 'default',
 	'restorePreviewState': False,
 	'rightMargin': 0,
 	'saveWindowGeometry': False,
@@ -127,6 +129,8 @@ class ReTextSettings(object):
 		writeToSettings(option, value, configOptions[option])
 
 globalSettings = ReTextSettings()
+
+markups.common.PYGMENTS_STYLE = globalSettings.pygmentsStyle
 
 monofont = QFont()
 monofont.setFamily(globalSettings.editorFont)
