@@ -1,3 +1,13 @@
+## 4.1
+
+* Added configuration dialog
+* Added current line highlighting and line numbers support
+* Added support for PyQt5 and PySide libraries
+* Use new signals/slots syntax
+* Added option to select file encoding
+* Dropped support for Python 2 and support for running
+  without WebKit installed
+
 ## 4.0
 
 * Switch to pymarkups backend
