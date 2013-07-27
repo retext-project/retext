@@ -74,6 +74,19 @@
     </message>
 </context>
 <context>
+    <name>LocaleDialog</name>
+    <message>
+        <location filename="dialogs.py" line="35"/>
+        <source>Enter locale name (example: en_US)</source>
+        <translation>Zadejte název lokalizace (např.: cs_CZ)</translation>
+    </message>
+    <message>
+        <location filename="dialogs.py" line="40"/>
+        <source>Set as default</source>
+        <translation>Nastavit jako výchozí</translation>
+    </message>
+</context>
+<context>
     <name>ReTextWindow</name>
     <message>
         <location filename="window.py" line="86"/>

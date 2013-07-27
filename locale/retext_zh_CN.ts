@@ -74,6 +74,19 @@
     </message>
 </context>
 <context>
+    <name>LocaleDialog</name>
+    <message>
+        <location filename="dialogs.py" line="35"/>
+        <source>Enter locale name (example: en_US)</source>
+        <translation>输入语言名称 (例如: en_US)</translation>
+    </message>
+    <message>
+        <location filename="dialogs.py" line="40"/>
+        <source>Set as default</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ReTextWindow</name>
     <message>
         <location filename="window.py" line="86"/>
