@@ -490,7 +490,7 @@ class ReTextWindow(QMainWindow):
 		if self.fileNames[ind]:
 			self.setCurrentFile()
 		else:
-			setWindowTitle(self, self.tr('New document'))
+			setWindowTitle(self, self.tr('New document') + '[*]')
 			self.docTypeChanged()
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
 		if globalSettings.restorePreviewState:
