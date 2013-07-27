@@ -3,72 +3,72 @@
 <context>
     <name>ConfigDialog</name>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Behavior</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Automatically save documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Restore window geometry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Restore live preview state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Open external links in ReText window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Open unknown files in plain text mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Highlight current line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Show line numbers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Tab key inserts spaces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Tabulation width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Display right margin at column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Interface</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="18"/>
+        <location filename="config.py" line="23"/>
         <source>Icon theme name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -76,12 +76,12 @@
 <context>
     <name>LocaleDialog</name>
     <message>
-        <location filename="window.py" line="18"/>
+        <location filename="dialogs.py" line="35"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation>Wprowadź kod lokalizacji (np. en_US)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="23"/>
+        <location filename="dialogs.py" line="40"/>
         <source>Set as default</source>
         <translation type="unfinished"></translation>
     </message>
@@ -89,402 +89,402 @@
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="window.py" line="72"/>
+        <location filename="window.py" line="86"/>
         <source>File toolbar</source>
         <translation>Pasek pliku</translation>
     </message>
     <message>
-        <location filename="window.py" line="74"/>
+        <location filename="window.py" line="88"/>
         <source>Edit toolbar</source>
         <translation>Pasek edycji</translation>
     </message>
     <message>
-        <location filename="window.py" line="76"/>
+        <location filename="window.py" line="90"/>
         <source>Search toolbar</source>
         <translation>Pasek wyszukiwania</translation>
     </message>
     <message>
-        <location filename="window.py" line="81"/>
+        <location filename="window.py" line="94"/>
         <source>New</source>
         <translation>Nowy</translation>
     </message>
     <message>
-        <location filename="window.py" line="84"/>
+        <location filename="window.py" line="97"/>
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
     <message>
-        <location filename="window.py" line="87"/>
+        <location filename="window.py" line="103"/>
         <source>Save</source>
         <translation>Zapisz</translation>
     </message>
     <message>
-        <location filename="window.py" line="94"/>
+        <location filename="window.py" line="107"/>
         <source>Save as</source>
         <translation>Zapisz jako</translation>
     </message>
     <message>
-        <location filename="window.py" line="96"/>
+        <location filename="window.py" line="109"/>
         <source>Print</source>
         <translation>Drukuj</translation>
     </message>
     <message>
-        <location filename="window.py" line="99"/>
+        <location filename="window.py" line="112"/>
         <source>Print preview</source>
         <translation>Podgląd wydruku</translation>
     </message>
     <message>
-        <location filename="window.py" line="101"/>
+        <location filename="window.py" line="114"/>
         <source>View HTML code</source>
         <translation>Zobacz źródło HTML</translation>
     </message>
     <message>
-        <location filename="window.py" line="102"/>
+        <location filename="window.py" line="115"/>
         <source>Change default font</source>
         <translation>Zmień domyślną czcionkę</translation>
     </message>
     <message>
-        <location filename="window.py" line="103"/>
+        <location filename="window.py" line="116"/>
         <source>Find text</source>
         <translation>Znajdź tekst</translation>
     </message>
     <message>
-        <location filename="window.py" line="108"/>
+        <location filename="window.py" line="120"/>
         <source>Preview</source>
         <translation>Podgląd</translation>
     </message>
     <message>
-        <location filename="window.py" line="117"/>
+        <location filename="window.py" line="129"/>
         <source>Live preview</source>
         <translation>Podgląd na żywo</translation>
     </message>
     <message>
-        <location filename="window.py" line="119"/>
+        <location filename="window.py" line="131"/>
         <source>Fullscreen mode</source>
         <translation>Pełny ekran</translation>
     </message>
     <message>
-        <location filename="window.py" line="127"/>
+        <location filename="window.py" line="139"/>
         <source>Quit</source>
         <translation>Zakończ</translation>
     </message>
     <message>
-        <location filename="window.py" line="130"/>
+        <location filename="window.py" line="142"/>
         <source>Undo</source>
         <translation>Cofnij</translation>
     </message>
     <message>
-        <location filename="window.py" line="132"/>
+        <location filename="window.py" line="144"/>
         <source>Redo</source>
         <translation>Ponów</translation>
     </message>
     <message>
-        <location filename="window.py" line="134"/>
+        <location filename="window.py" line="146"/>
         <source>Copy</source>
         <translation>Skopiuj</translation>
     </message>
     <message>
-        <location filename="window.py" line="136"/>
+        <location filename="window.py" line="148"/>
         <source>Cut</source>
         <translation>Wytnij</translation>
     </message>
     <message>
-        <location filename="window.py" line="138"/>
+        <location filename="window.py" line="150"/>
         <source>Paste</source>
         <translation>Wklej</translation>
     </message>
     <message>
-        <location filename="window.py" line="148"/>
+        <location filename="window.py" line="160"/>
         <source>Enable</source>
         <translation>Włącz</translation>
     </message>
     <message>
-        <location filename="window.py" line="149"/>
+        <location filename="window.py" line="161"/>
         <source>Set locale</source>
         <translation>Ustaw język</translation>
     </message>
     <message>
-        <location filename="window.py" line="150"/>
+        <location filename="window.py" line="162"/>
         <source>Plain text</source>
         <translation>Tryb tekstowy</translation>
     </message>
     <message>
-        <location filename="window.py" line="152"/>
+        <location filename="window.py" line="163"/>
         <source>Use WebKit renderer</source>
         <translation>Używaj silnika WebKit</translation>
     </message>
     <message>
-        <location filename="window.py" line="158"/>
+        <location filename="window.py" line="165"/>
         <source>Generate webpages</source>
         <translation>Generuj stronę internetową</translation>
     </message>
     <message>
-        <location filename="window.py" line="159"/>
+        <location filename="window.py" line="166"/>
         <source>Show</source>
         <translation>Pokaż</translation>
     </message>
     <message>
-        <location filename="window.py" line="160"/>
+        <location filename="window.py" line="167"/>
         <source>Next</source>
         <translation>Następny</translation>
     </message>
     <message>
-        <location filename="window.py" line="162"/>
+        <location filename="window.py" line="169"/>
         <source>Previous</source>
         <translation>Poprzedni</translation>
     </message>
     <message>
-        <location filename="window.py" line="164"/>
+        <location filename="window.py" line="171"/>
         <source>Get help online</source>
         <translation>Pomoc online</translation>
     </message>
     <message>
-        <location filename="window.py" line="165"/>
+        <location filename="window.py" line="172"/>
         <source>About %s</source>
         <comment>Example of final string: About ReText</comment>
         <translation>O %s</translation>
     </message>
     <message>
-        <location filename="window.py" line="169"/>
+        <location filename="window.py" line="176"/>
         <source>About Qt</source>
         <translation>O Qt</translation>
     </message>
     <message>
-        <location filename="window.py" line="190"/>
+        <location filename="window.py" line="196"/>
         <source>Bold</source>
         <translation>Pogrubienie</translation>
     </message>
     <message>
-        <location filename="window.py" line="192"/>
+        <location filename="window.py" line="198"/>
         <source>Italic</source>
         <translation>Kursywa</translation>
     </message>
     <message>
-        <location filename="window.py" line="194"/>
+        <location filename="window.py" line="200"/>
         <source>Underline</source>
         <translation>Podkreślenie</translation>
     </message>
     <message>
-        <location filename="window.py" line="202"/>
+        <location filename="window.py" line="208"/>
         <source>Tags</source>
         <translation>Tagi</translation>
     </message>
     <message>
-        <location filename="window.py" line="206"/>
+        <location filename="window.py" line="212"/>
         <source>Symbols</source>
         <translation>Symbole</translation>
     </message>
     <message>
-        <location filename="window.py" line="220"/>
+        <location filename="window.py" line="225"/>
         <source>File</source>
         <translation>Plik</translation>
     </message>
     <message>
-        <location filename="window.py" line="221"/>
+        <location filename="window.py" line="226"/>
         <source>Edit</source>
         <translation>Edycja</translation>
     </message>
     <message>
-        <location filename="window.py" line="222"/>
+        <location filename="window.py" line="227"/>
         <source>Help</source>
         <translation>Pomoc</translation>
     </message>
     <message>
-        <location filename="window.py" line="225"/>
+        <location filename="window.py" line="230"/>
         <source>Open recent</source>
         <translation>Otwórz ostatnie</translation>
     </message>
     <message>
-        <location filename="window.py" line="229"/>
+        <location filename="window.py" line="233"/>
         <source>Directory</source>
         <translation>Katalog</translation>
     </message>
     <message>
-        <location filename="window.py" line="236"/>
+        <location filename="window.py" line="241"/>
         <source>Export</source>
         <translation>Eksportuj</translation>
     </message>
     <message>
-        <location filename="window.py" line="257"/>
+        <location filename="window.py" line="263"/>
         <source>Spell check</source>
         <translation>Sprawdzanie pisowni</translation>
     </message>
     <message>
-        <location filename="window.py" line="268"/>
+        <location filename="window.py" line="274"/>
         <source>Formatting</source>
         <translation>Formatowanie</translation>
     </message>
     <message>
-        <location filename="window.py" line="306"/>
+        <location filename="window.py" line="311"/>
         <source>Search</source>
         <translation>Wyszukaj</translation>
     </message>
     <message>
-        <location filename="window.py" line="308"/>
+        <location filename="window.py" line="313"/>
         <source>Case sensitively</source>
         <translation>Rozróżnianie wielkości znaków</translation>
     </message>
     <message>
-        <location filename="window.py" line="1130"/>
+        <location filename="window.py" line="1114"/>
         <source>New document</source>
         <translation>Nowy dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="759"/>
+        <location filename="window.py" line="744"/>
         <source>Please, save the file somewhere.</source>
         <translation>Proszę najpierw zapisać plik.</translation>
     </message>
     <message>
-        <location filename="window.py" line="748"/>
+        <location filename="window.py" line="733"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Strony internetowe zapisywane są w katalogu &lt;code&gt;html&lt;/code&gt;.</translation>
     </message>
     <message>
-        <location filename="window.py" line="750"/>
+        <location filename="window.py" line="735"/>
         <source>Show directory</source>
         <translation>Pokaż katalog</translation>
     </message>
     <message>
-        <location filename="window.py" line="874"/>
+        <location filename="window.py" line="859"/>
         <source>Select one or several files to open</source>
         <translation>Zaznacz jeden lub więcej plików do otwarcia</translation>
     </message>
     <message>
-        <location filename="window.py" line="874"/>
+        <location filename="window.py" line="859"/>
         <source>Supported files</source>
         <translation>Obsługiwane pliki</translation>
     </message>
     <message>
-        <location filename="window.py" line="874"/>
+        <location filename="window.py" line="859"/>
         <source>All files (*)</source>
         <translation>Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="956"/>
+        <location filename="window.py" line="941"/>
         <source>Plain text (*.txt)</source>
         <translation>Zwykły tekst (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1033"/>
+        <location filename="window.py" line="1017"/>
         <source>Save file</source>
         <translation>Zapisz plik</translation>
     </message>
     <message>
-        <location filename="window.py" line="978"/>
+        <location filename="window.py" line="963"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Nie można zapisać pliku, ponieważ jest on tylko do odczytu!</translation>
     </message>
     <message>
-        <location filename="window.py" line="1023"/>
+        <location filename="window.py" line="1008"/>
         <source>Export document to ODT</source>
         <translation>Eksportuj do ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="1023"/>
+        <location filename="window.py" line="1008"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Dokumenty OpenDokument (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1033"/>
+        <location filename="window.py" line="1017"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Pliki HTML (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1054"/>
+        <location filename="window.py" line="1038"/>
         <source>Export document to PDF</source>
         <translation>Eksportuj do PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="1054"/>
+        <location filename="window.py" line="1038"/>
         <source>PDF files (*.pdf)</source>
         <translation>Pliki PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1070"/>
+        <location filename="window.py" line="1054"/>
         <source>Print document</source>
         <translation>Drukuj dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="1091"/>
+        <location filename="window.py" line="1075"/>
         <source>Export document</source>
         <translation>Eksportuj dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="1109"/>
+        <location filename="window.py" line="1093"/>
         <source>Failed to execute the command:</source>
         <translation>Błąd podczas wykonywania komendy:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1186"/>
+        <location filename="window.py" line="1170"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Dokument został zmieniony.
 Czy chcesz zapisać zmiany?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1212"/>
+        <location filename="window.py" line="1194"/>
         <source>HTML code</source>
         <translation>Kod HTML</translation>
     </message>
     <message>
-        <location filename="window.py" line="1223"/>
+        <location filename="window.py" line="1205"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Prosty, ale potężny edytor Markdown i reStructuredText</translation>
     </message>
     <message>
-        <location filename="window.py" line="1223"/>
+        <location filename="window.py" line="1205"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Autor: Dmitry Shachnev, 2011&lt;br&gt;
 Tłumaczenie: Kristian Kann, 2012</translation>
     </message>
     <message>
-        <location filename="window.py" line="1223"/>
+        <location filename="window.py" line="1205"/>
         <source>Website</source>
         <translation>Strona internetowa</translation>
     </message>
     <message>
-        <location filename="window.py" line="1223"/>
+        <location filename="window.py" line="1205"/>
         <source>Markdown syntax</source>
         <translation>Składnia Markdown</translation>
     </message>
     <message>
-        <location filename="window.py" line="1223"/>
+        <location filename="window.py" line="1205"/>
         <source>reStructuredText syntax</source>
         <translation>Składnia reStructuredText</translation>
     </message>
     <message>
-        <location filename="window.py" line="959"/>
+        <location filename="window.py" line="944"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>Pliki %s</translation>
     </message>
     <message>
-        <location filename="window.py" line="744"/>
+        <location filename="window.py" line="729"/>
         <source>Failed to copy default template, please create template.html manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="654"/>
+        <location filename="window.py" line="640"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="580"/>
+        <location filename="window.py" line="566"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="265"/>
+        <location filename="window.py" line="271"/>
         <source>Default markup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="89"/>
+        <location filename="window.py" line="100"/>
         <source>Set encoding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="931"/>
+        <location filename="window.py" line="916"/>
         <source>Select file encoding from the list:</source>
         <translation type="unfinished"></translation>
     </message>
