@@ -229,7 +229,7 @@
         <location filename="window.py" line="172"/>
         <source>About %s</source>
         <comment>Example of final string: About ReText</comment>
-        <translation type="unfinished"></translation>
+        <translation>关于 %s</translation>
     </message>
     <message>
         <location filename="window.py" line="176"/>
@@ -365,7 +365,7 @@
         <location filename="window.py" line="944"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
-        <translation type="unfinished"></translation>
+        <translation>%s 文件</translation>
     </message>
     <message>
         <location filename="window.py" line="1017"/>
