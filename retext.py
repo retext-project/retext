@@ -33,6 +33,8 @@ def main():
 	app = QApplication(sys.argv)
 	app.setOrganizationName("ReText project")
 	app.setApplicationName("ReText")
+	if hasattr(app, 'setApplicationDisplayName'):
+		app.setApplicationDisplayName("ReText")
 	RtTranslator = QTranslator()
 	for path in datadirs:
 		if RtTranslator.load('retext_'+QLocale.system().name(), path+'/locale'):

@@ -14,19 +14,18 @@ from ReText.config import ConfigDialog
 from ReText.highlighter import ReTextHighlighter
 from ReText.editor import ReTextEdit
 
-(QCoreApplication, QDir, QFile, QFileInfo, QIODevice, QLocale, QRect, QTemporaryFile,
- QTextCodec, QTextStream, QTimer, QUrl, Qt) = (QtCore.QCoreApplication, QtCore.QDir,
- QtCore.QFile, QtCore.QFileInfo, QtCore.QIODevice, QtCore.QLocale, QtCore.QRect,
- QtCore.QTemporaryFile, QtCore.QTextCodec, QtCore.QTextStream, QtCore.QTimer,
- QtCore.QUrl, QtCore.Qt)
+(QDir, QFile, QFileInfo, QIODevice, QLocale, QRect, QTemporaryFile, QTextCodec,
+ QTextStream, QTimer, QUrl, Qt) = (QtCore.QDir, QtCore.QFile, QtCore.QFileInfo,
+ QtCore.QIODevice, QtCore.QLocale, QtCore.QRect, QtCore.QTemporaryFile,
+ QtCore.QTextCodec, QtCore.QTextStream, QtCore.QTimer, QtCore.QUrl, QtCore.Qt)
 (QDesktopServices, QFont, QFontMetrics, QIcon, QKeySequence, QTextCursor,
  QTextDocument) = (QtGui.QDesktopServices, QtGui.QFont, QtGui.QFontMetrics,
  QtGui.QIcon, QtGui.QKeySequence, QtGui.QTextCursor, QtGui.QTextDocument)
-(QAction, QActionGroup, QCheckBox, QComboBox, QDesktopWidget, QDialog,
+(QAction, QActionGroup, QApplication, QCheckBox, QComboBox, QDesktopWidget, QDialog,
  QFileDialog, QFontDialog, QInputDialog, QLabel, QLineEdit, QMainWindow, QMenuBar,
  QMessageBox, QSplitter, QTabWidget, QTextBrowser, QTextEdit, QToolBar) = (
- QtWidgets.QAction, QtWidgets.QActionGroup, QtWidgets.QCheckBox, QtWidgets.QComboBox,
- QtWidgets.QDesktopWidget, QtWidgets.QDialog, QtWidgets.QFileDialog,
+ QtWidgets.QAction, QtWidgets.QActionGroup, QtWidgets.QApplication, QtWidgets.QCheckBox,
+ QtWidgets.QComboBox, QtWidgets.QDesktopWidget, QtWidgets.QDialog, QtWidgets.QFileDialog,
  QtWidgets.QFontDialog, QtWidgets.QInputDialog, QtWidgets.QLabel, QtWidgets.QLineEdit,
  QtWidgets.QMainWindow, QtWidgets.QMenuBar, QtWidgets.QMessageBox, QtWidgets.QSplitter,
  QtWidgets.QTabWidget, QtWidgets.QTextBrowser, QtWidgets.QTextEdit, QtWidgets.QToolBar)
@@ -37,6 +36,11 @@ from ReText.editor import ReTextEdit
 def getSaveFileName(*args):
 	result = QFileDialog.getSaveFileName(*args)
 	return result[0] if isinstance(result, tuple) else result
+
+def setWindowTitle(window, title):
+	if not hasattr(QApplication, 'applicationDisplayName'):
+		title += ' \u2014 ' + app_name
+	QMainWindow.setWindowTitle(window, title)
 
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
@@ -149,7 +153,7 @@ class ReTextWindow(QMainWindow):
 		self.actionRedo.setEnabled(False)
 		self.actionCopy.setEnabled(False)
 		self.actionCut.setEnabled(False)
-		qApp = QCoreApplication.instance()
+		qApp = QApplication.instance()
 		qApp.clipboard().dataChanged.connect(self.clipboardDataChanged)
 		self.clipboardDataChanged()
 		if enchant_available:
@@ -486,7 +490,7 @@ class ReTextWindow(QMainWindow):
 		if self.fileNames[ind]:
 			self.setCurrentFile()
 		else:
-			self.setWindowTitle(self.tr('New document') + '[*] \u2014 ' + app_name)
+			setWindowTitle(self, self.tr('New document'))
 			self.docTypeChanged()
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
 		if globalSettings.restorePreviewState:
@@ -559,7 +563,7 @@ class ReTextWindow(QMainWindow):
 	
 	def openConfigDialog(self):
 		dlg = ConfigDialog(self)
-		dlg.setWindowTitle(self.tr('Preferences') + ' \u2014 ' + app_name)
+		setWindowTitle(dlg, self.tr('Preferences'))
 		dlg.show()
 	
 	def enableSC(self, yes):
@@ -1047,7 +1051,7 @@ class ReTextWindow(QMainWindow):
 		self.updatePreviewBox()
 		printer = self.standardPrinter()
 		dlg = QPrintDialog(printer, self)
-		dlg.setWindowTitle(self.tr("Print document"))
+		setWindowTitle(dlg, self.tr("Print document"))
 		if (dlg.exec_() == QDialog.Accepted):
 			document = self.getDocumentForPrint()
 			if document != None:
@@ -1120,7 +1124,7 @@ class ReTextWindow(QMainWindow):
 		self.setWindowModified(changed)
 	
 	def clipboardDataChanged(self):
-		self.actionPaste.setEnabled(QCoreApplication.instance().clipboard().mimeData().hasText())
+		self.actionPaste.setEnabled(QApplication.instance().clipboard().mimeData().hasText())
 	
 	def insertChars(self, chars):
 		tc = self.editBoxes[self.ind].textCursor()
@@ -1187,7 +1191,7 @@ class ReTextWindow(QMainWindow):
 		except:
 			return self.printError()
 		winTitle = self.getDocumentTitle(baseName=True)
-		htmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+") \u2014 "+app_name)
+		setWindowTitle(htmlDlg, winTitle+" ("+self.tr("HTML code")+")")
 		htmlDlg.textEdit.setPlainText(htmltext.rstrip())
 		htmlDlg.hl.rehighlight()
 		htmlDlg.show()
