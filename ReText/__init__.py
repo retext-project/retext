@@ -38,12 +38,16 @@ if not str(settings.fileName()).endswith('.conf'):
 
 try:
 	import enchant
-	enchant.Dict()
-except:
+	import enchant.errors
+except ImportError:
 	enchant_available = False
 	enchant = None
 else:
 	enchant_available = True
+	try:
+		enchant.Dict()
+	except enchant.errors.Error:
+		enchant_available = False
 
 icon_path = "icons/"
 
