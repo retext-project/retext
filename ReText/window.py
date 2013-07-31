@@ -691,7 +691,7 @@ class ReTextWindow(QMainWindow):
 		else:
 			try:
 				html = self.getHtml(styleForWebKit=(not textedit))
-			except:
+			except Exception:
 				return self.printError()
 			if not textedit and ('<script ' in html):
 				# Work-around a bug in QtWebKit
@@ -979,7 +979,7 @@ class ReTextWindow(QMainWindow):
 		try:
 			htmltext = self.getHtml(includeStyleSheet=False, includeMeta=True, 
 			webenv=True)
-		except:
+		except Exception:
 			return self.printError()
 		htmlFile = QFile(fileName)
 		htmlFile.open(QIODevice.WriteOnly)
@@ -1003,7 +1003,7 @@ class ReTextWindow(QMainWindow):
 	def saveOdf(self):
 		try:
 			document = self.textDocument()
-		except:
+		except Exception:
 			return self.printError()
 		fileName = getSaveFileName(self, self.tr("Export document to ODT"), "",
 			self.tr("OpenDocument text files (*.odt)"))
@@ -1024,7 +1024,7 @@ class ReTextWindow(QMainWindow):
 			return self.previewBoxes[self.ind]
 		try:
 			return self.textDocument()
-		except:
+		except Exception:
 			self.printError()
 	
 	def standardPrinter(self):
@@ -1103,7 +1103,7 @@ class ReTextWindow(QMainWindow):
 			text = self.editBoxes[self.ind].toPlainText()
 			try:
 				realTitle = markup.get_document_title(text)
-			except:
+			except Exception:
 				self.printError()
 		if realTitle:
 			return realTitle
@@ -1188,7 +1188,7 @@ class ReTextWindow(QMainWindow):
 		htmlDlg = HtmlDialog(self)
 		try:
 			htmltext = self.getHtml(includeStyleSheet=False, includeTitle=False)
-		except:
+		except Exception:
 			return self.printError()
 		winTitle = self.getDocumentTitle(baseName=True)
 		setWindowTitle(htmlDlg, winTitle+" ("+self.tr("HTML code")+")")
