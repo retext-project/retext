@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-VERSION = '4.0.0'
+VERSION = '4.1~beta1'
 
 long_description = '''\
 ReText is simple text editor that supports Markdown and reStructuredText
@@ -50,7 +50,7 @@ setup(name='ReText',
       	('share/retext/locale', glob('locale/*.qm')),
       	('share/wpgen', glob('templates/*.css') + glob('templates/*.html'))
       ],
-      requires=['docutils', 'Markups', 'Markdown', 'pyenchant'],
+      requires=['docutils', 'Markdown', 'Markups', 'pyenchant', 'PyQt'],
       cmdclass={'build': retext_build, 'sdist': retext_sdist},
       license='GPL 2+'
 )
