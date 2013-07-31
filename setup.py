@@ -6,6 +6,7 @@ long_description = '''\
 ReText is simple text editor that supports Markdown and reStructuredText
 markup languages. It is written in Python using PyQt libraries.'''
 
+from os.path import join
 from distutils.core import setup
 from distutils.command.build import build
 from distutils.command.sdist import sdist
@@ -15,7 +16,7 @@ from glob import glob
 def build_translations():
 	print('running build_translations')
 	error = None
-	for ts_file in glob('locale/*.ts'):
+	for ts_file in glob(join('locale', '*.ts')):
 		try:
 			check_call(('lrelease', ts_file))
 		except OSError:
@@ -29,7 +30,7 @@ def build_translations():
 class retext_build(build):
 	def run(self):
 		build.run(self)
-		if not glob('locale/*.qm'):
+		if not glob(join('locale', '*.qm')):
 			build_translations()
 
 class retext_sdist(sdist):
