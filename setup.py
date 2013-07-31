@@ -7,9 +7,11 @@ ReText is simple text editor that supports Markdown and reStructuredText
 markup languages. It is written in Python using PyQt libraries.'''
 
 from os.path import join
+from distutils import log
 from distutils.core import setup
 from distutils.command.build import build
 from distutils.command.sdist import sdist
+from distutils.command.install_scripts import install_scripts
 from subprocess import check_call
 from glob import glob
 
@@ -38,6 +40,14 @@ class retext_sdist(sdist):
 		build_translations()
 		sdist.run(self)
 
+class retext_install_scripts(install_scripts):
+	def run(self):
+		import shutil
+		install_scripts.run(self)
+		for file in self.get_outputs():
+			log.info('renaming %s to %s', file, file[:-3])
+			shutil.move(file, file[:-3])
+
 setup(name='ReText',
       version=VERSION,
       description='Simple editor for Markdown and reStructuredText',
@@ -52,6 +62,10 @@ setup(name='ReText',
       	('share/wpgen', glob('templates/*.css') + glob('templates/*.html'))
       ],
       requires=['docutils', 'Markdown', 'Markups', 'pyenchant', 'PyQt'],
-      cmdclass={'build': retext_build, 'sdist': retext_sdist},
+      cmdclass={
+        'build': retext_build,
+        'sdist': retext_sdist,
+        'install_scripts': retext_install_scripts,
+      },
       license='GPL 2+'
 )
