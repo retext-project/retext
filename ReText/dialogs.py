@@ -42,5 +42,5 @@ class LocaleDialog(QDialog):
 		buttonBox = QDialogButtonBox(self)
 		buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
 		verticalLayout.addWidget(buttonBox)
-		self.accepted.connect(self.accept)
-		self.rejected.connect(self.reject)
+		buttonBox.accepted.connect(self.accept)
+		buttonBox.rejected.connect(self.reject)
