@@ -1,3 +1,4 @@
+include LICENSE_GPL
 include changelog.md
 recursive-include locale retext_*.ts retext_*.qm
 recursive-include icons *.png *.svg
