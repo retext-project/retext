@@ -2,7 +2,7 @@
 # Copyright: Dmitry Shachnev 2012
 # License: GNU GPL v2 or higher
 
-from ReText import QtWidgets, monofont, DOCTYPE_HTML, app_name
+from ReText import QtWidgets, monofont, DOCTYPE_HTML
 from ReText.highlighter import ReTextHighlighter
 
 (QCheckBox, QDialog, QDialogButtonBox, QLabel, QLineEdit, QTextEdit,
@@ -29,7 +29,6 @@ class HtmlDialog(QDialog):
 class LocaleDialog(QDialog):
 	def __init__(self, parent, defaultText=""):
 		QDialog.__init__(self, parent)
-		self.setWindowTitle(app_name)
 		verticalLayout = QVBoxLayout(self)
 		self.label = QLabel(self)
 		self.label.setText(self.tr('Enter locale name (example: en_US)'))

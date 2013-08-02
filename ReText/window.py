@@ -33,14 +33,18 @@ from ReText.editor import ReTextEdit
  QtPrintSupport.QPrintPreviewDialog, QtPrintSupport.QPrinter)
 (QWebPage, QWebView) = (QtWebKitWidgets.QWebPage, QtWebKitWidgets.QWebView)
 
+useAppDisplayName = hasattr(QApplication, 'applicationDisplayName')
+
 def getSaveFileName(*args):
 	result = QFileDialog.getSaveFileName(*args)
 	return result[0] if isinstance(result, tuple) else result
 
 def setWindowTitle(window, title):
-	if not hasattr(QApplication, 'applicationDisplayName'):
+	if not useAppDisplayName:
 		title += ' \u2014 ' + app_name
 	QMainWindow.setWindowTitle(window, title)
+
+dialogTitle = '' if useAppDisplayName else app_name
 
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
@@ -586,6 +590,7 @@ class ReTextWindow(QMainWindow):
 			localedlg = LocaleDialog(self, defaultText=self.sl)
 		else:
 			localedlg = LocaleDialog(self)
+		localedlg.setWindowTitle(dialogTitle)
 		if localedlg.exec_() != QDialog.Accepted:
 			return
 		sl = localedlg.localeEdit.text()
@@ -595,7 +600,7 @@ class ReTextWindow(QMainWindow):
 				sl = str(sl)
 				enchant.Dict(sl)
 			except Exception as e:
-				QMessageBox.warning(self, app_name, str(e))
+				QMessageBox.warning(self, dialogTitle, str(e))
 			else:
 				self.sl = sl
 				self.enableSC(self.actionEnableSC.isChecked())
@@ -720,17 +725,17 @@ class ReTextWindow(QMainWindow):
 	
 	def startWpgen(self):
 		if not self.fileNames[self.ind]:
-			return QMessageBox.warning(self, app_name, self.tr("Please, save the file somewhere."))
+			return QMessageBox.warning(self, dialogTitle, self.tr("Please, save the file somewhere."))
 		if not QFile.exists("template.html"):
 			try:
 				wpInit()
 			except IOError as e:
 				e = str(e)
-				return QMessageBox.warning(self, app_name, self.tr(
+				return QMessageBox.warning(self, dialogTitle, self.tr(
 				'Failed to copy default template, please create template.html manually.')
 				+ '\n\n' + e)
 		wpUpdateAll()
-		msgBox = QMessageBox(QMessageBox.Information, app_name,
+		msgBox = QMessageBox(QMessageBox.Information, dialogTitle,
 		self.tr("Webpages saved in <code>html</code> directory."), QMessageBox.Ok)
 		showButton = msgBox.addButton(self.tr("Show directory"), QMessageBox.AcceptRole)
 		msgBox.exec_()
@@ -741,7 +746,7 @@ class ReTextWindow(QMainWindow):
 		if self.fileNames[self.ind]:
 			QDesktopServices.openUrl(QUrl.fromLocalFile(QFileInfo(self.fileNames[self.ind]).path()))
 		else:
-			QMessageBox.warning(self, app_name, self.tr("Please, save the file somewhere."))
+			QMessageBox.warning(self, dialogTitle, self.tr("Please, save the file somewhere."))
 	
 	def setCurrentFile(self):
 		self.setWindowTitle("")
@@ -913,7 +918,7 @@ class ReTextWindow(QMainWindow):
 	def showEncodingDialog(self):
 		if not self.maybeSave(self.ind):
 			return
-		encoding, ok = QInputDialog.getItem(self, app_name,
+		encoding, ok = QInputDialog.getItem(self, dialogTitle,
 			self.tr('Select file encoding from the list:'),
 			[bytes(b).decode() for b in QTextCodec.availableCodecs()],
 			0, False)
@@ -960,7 +965,7 @@ class ReTextWindow(QMainWindow):
 				self.setWindowModified(False)
 				return True
 			else:
-				QMessageBox.warning(self, app_name,
+				QMessageBox.warning(self, dialogTitle,
 				self.tr("Cannot save to file because it is read-only!"))
 		return False
 	
@@ -1090,7 +1095,7 @@ class ReTextWindow(QMainWindow):
 			Popen(str(command), shell=True).wait()
 		except Exception as error:
 			errorstr = str(error)
-			QMessageBox.warning(self, app_name, self.tr('Failed to execute the command:')
+			QMessageBox.warning(self, dialogTitle, self.tr('Failed to execute the command:')
 			+ '\n' + errorstr)
 		QFile(tmpname).remove()
 		if of:
@@ -1167,7 +1172,7 @@ class ReTextWindow(QMainWindow):
 		if not self.editBoxes[ind].document().isModified():
 			return True
 		self.tabWidget.setCurrentIndex(ind)
-		ret = QMessageBox.warning(self, app_name,
+		ret = QMessageBox.warning(self, dialogTitle,
 			self.tr("The document has been modified.\nDo you want to save your changes?"),
 			QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel)
 		if ret == QMessageBox.Save:
