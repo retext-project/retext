@@ -72,6 +72,8 @@ class ReTextWindow(QMainWindow):
 					settings.setValue('iconTheme', iconTheme)
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
+		elif QFile.exists('/usr/share/pixmaps/retext.png'):
+			self.setWindowIcon(QIcon('/usr/share/pixmaps/retext.png'))
 		else:
 			self.setWindowIcon(QIcon.fromTheme('retext', QIcon.fromTheme('accessories-text-editor')))
 		self.editBoxes = []
