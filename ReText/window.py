@@ -85,7 +85,7 @@ class ReTextWindow(QMainWindow):
 		self.alpc = []
 		self.aptc = []
 		self.tabWidget = QTabWidget(self)
-		self.tabWidget.setTabsClosable(True)
+		self.initTabWidget()
 		self.setCentralWidget(self.tabWidget)
 		self.tabWidget.currentChanged.connect(self.changeIndex)
 		self.tabWidget.tabCloseRequested.connect(self.closeTab)
@@ -347,6 +347,19 @@ class ReTextWindow(QMainWindow):
 			self.font = QFont(globalSettings.font)
 		if self.font and globalSettings.fontSize:
 			self.font.setPointSize(globalSettings.fontSize)
+	
+	def initTabWidget(self):
+		def dragEnterEvent(e):
+			e.acceptProposedAction()
+		def dropEvent(e):
+			fn = bytes(e.mimeData().data('text/plain')).decode().rstrip()
+			if fn.startswith('file:'):
+				fn = QUrl(fn).toLocalFile()
+			self.openFileWrapper(fn)
+		self.tabWidget.setTabsClosable(True)
+		self.tabWidget.setAcceptDrops(True)
+		self.tabWidget.dragEnterEvent = dragEnterEvent
+		self.tabWidget.dropEvent = dropEvent
 	
 	def act(self, name, icon=None, trig=None, trigbool=None, shct=None):
 		if not isinstance(shct, QKeySequence):
