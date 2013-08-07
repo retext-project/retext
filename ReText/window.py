@@ -323,7 +323,8 @@ class ReTextWindow(QMainWindow):
 		self.searchBar.addAction(self.actionFind)
 		self.searchBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 		self.searchBar.setVisible(False)
-		if globalSettings.autoSave:
+		self.autoSaveEnabled = globalSettings.autoSave
+		if self.autoSaveEnabled:
 			timer = QTimer(self)
 			timer.start(60000)
 			timer.timeout.connect(self.saveAll)
@@ -1134,7 +1135,7 @@ class ReTextWindow(QMainWindow):
 		return self.tr("New document")
 	
 	def autoSaveActive(self):
-		return globalSettings.autoSave and self.fileNames[self.ind] and \
+		return self.autoSaveEnabled and self.fileNames[self.ind] and \
 		QFileInfo(self.fileNames[self.ind]).isWritable()
 	
 	def modificationChanged(self, changed):
