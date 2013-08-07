@@ -1,6 +1,7 @@
-from ReText import QtCore, QtWidgets, globalSettings
+from ReText import QtCore, QtGui, QtWidgets, globalSettings
 
 Qt = QtCore.Qt
+QIcon = QtGui.QIcon
 (QCheckBox, QDialog, QDialogButtonBox, QGridLayout, QLabel, QLineEdit, QSpinBox) = (
  QtWidgets.QCheckBox, QtWidgets.QDialog, QtWidgets.QDialogButtonBox,
  QtWidgets.QGridLayout, QtWidgets.QLabel, QtWidgets.QLineEdit, QtWidgets.QSpinBox)
@@ -76,4 +77,8 @@ class ConfigDialog(QDialog):
 			elif isinstance(configurator, QLineEdit):
 				value = configurator.text()
 			setattr(globalSettings, name, value)
+		self.applySettings()
 		self.close()
+	
+	def applySettings(self):
+		QIcon.setThemeName(globalSettings.iconTheme)
