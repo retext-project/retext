@@ -880,7 +880,7 @@ class ReTextWindow(QMainWindow):
 		fileNames = QFileDialog.getOpenFileNames(self, self.tr("Select one or several files to open"), "",
 		self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
 		if isinstance(fileNames, tuple):
-			# PySide
+			# PySide or PyQt5
 			fileNames = fileNames[0]
 		for fileName in fileNames:
 			self.openFileWrapper(fileName)
