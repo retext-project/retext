@@ -5,6 +5,7 @@
 import markups
 import markups.common
 import sys
+from os.path import join
 
 if '--pyqt4' in sys.argv:
 	from PyQt4 import QtCore, QtGui, QtWebKit
@@ -23,7 +24,8 @@ if not 'QtWidgets' in locals():
 	# PyQt4 or PySide
 	QtPrintSupport, QtWidgets, QtWebKitWidgets = QtGui, QtGui, QtWebKit
 
-(QByteArray, QDir, QSettings) = (QtCore.QByteArray, QtCore.QDir, QtCore.QSettings)
+(QByteArray, QDir, QSettings, QStandardPaths) = (QtCore.QByteArray, QtCore.QDir, QtCore.QSettings,
+ QtCore.QStandardPaths)
 QFont = QtGui.QFont
 
 app_name = "ReText"
@@ -141,9 +143,5 @@ monofont.setFamily(globalSettings.editorFont)
 if globalSettings.editorFontSize:
 	monofont.setPointSize(globalSettings.editorFontSize)
 
-datadirs = (
-	'.',
-	'/usr/share/retext',
-	'/usr/local/share/retext',
-	QDir.homePath()+'/.local/share/retext'
-)
+datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
+datadirs = [join(d, 'retext') for d in datadirs] + ['.']
