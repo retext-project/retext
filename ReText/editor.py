@@ -117,7 +117,8 @@ class ReTextEdit(QTextEdit):
 		text = cursor.selectedText()
 		length = len(text)
 		pos = 0
-		while pos < length and text[pos] in (' ', '\t'):
+		while pos < length and (text[pos] in (' ', '\t')
+		  or text[pos:pos+2] in ('* ', '- ')):
 			pos += 1
 		# Reset the cursor
 		cursor = self.textCursor()
