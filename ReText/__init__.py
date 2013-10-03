@@ -24,8 +24,7 @@ if not 'QtWidgets' in locals():
 	# PyQt4 or PySide
 	QtPrintSupport, QtWidgets, QtWebKitWidgets = QtGui, QtGui, QtWebKit
 
-(QByteArray, QDir, QSettings, QStandardPaths) = (QtCore.QByteArray, QtCore.QDir, QtCore.QSettings,
- QtCore.QStandardPaths)
+(QByteArray, QDir, QSettings) = (QtCore.QByteArray, QtCore.QDir, QtCore.QSettings)
 QFont = QtGui.QFont
 
 app_name = "ReText"
@@ -143,5 +142,13 @@ monofont.setFamily(globalSettings.editorFont)
 if globalSettings.editorFontSize:
 	monofont.setPointSize(globalSettings.editorFontSize)
 
-datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
-datadirs = [join(d, 'retext') for d in datadirs] + ['.']
+if hasattr(QtCore, 'QStandardPaths'):
+	datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
+	datadirs = [join(d, 'retext') for d in datadirs] + ['.']
+else:
+	datadirs = (
+		'.',
+		'/usr/share/retext',
+		'/usr/local/share/retext',
+		QDir.homePath()+'/.local/share/retext'
+	)
