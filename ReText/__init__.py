@@ -143,7 +143,8 @@ if globalSettings.editorFontSize:
 	monofont.setPointSize(globalSettings.editorFontSize)
 
 if hasattr(QtCore, 'QStandardPaths'):
-	datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
+	datadirs = QtCore.QStandardPaths.standardLocations(
+		QtCore.QStandardPaths.GenericDataLocation)
 	datadirs = [join(d, 'retext') for d in datadirs] + ['.']
 else:
 	datadirs = (
