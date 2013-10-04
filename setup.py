@@ -7,6 +7,7 @@ ReText is simple text editor that supports Markdown and reStructuredText
 markup languages. It is written in Python using PyQt libraries.'''
 requires = ['docutils', 'Markdown', 'Markups', 'pyenchant', 'Pygments']
 
+import sys
 from os.path import join
 from distutils import log
 from distutils.core import setup
@@ -48,6 +49,9 @@ class retext_install_scripts(install_scripts):
 		for file in self.get_outputs():
 			log.info('renaming %s to %s', file, file[:-3])
 			shutil.move(file, file[:-3])
+
+if '--no-rename' in sys.argv:
+	retext_install_scripts = install_scripts
 
 setup(name='ReText',
       version=VERSION,
