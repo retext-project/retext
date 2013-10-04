@@ -5,6 +5,7 @@ VERSION = '4.1.0'
 long_description = '''\
 ReText is simple text editor that supports Markdown and reStructuredText
 markup languages. It is written in Python using PyQt libraries.'''
+requires = ['docutils', 'Markdown', 'Markups', 'pyenchant', 'Pygments']
 
 from os.path import join
 from distutils import log
@@ -61,7 +62,8 @@ setup(name='ReText',
       	('share/retext/locale', glob('locale/*.qm')),
       	('share/wpgen', glob('templates/*.css') + glob('templates/*.html'))
       ],
-      requires=['docutils', 'Markdown', 'Markups', 'pyenchant', 'PyQt'],
+      requires=requires,
+      install_requires=requires,
       cmdclass={
         'build': retext_build,
         'sdist': retext_sdist,
