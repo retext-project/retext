@@ -16,6 +16,7 @@ from distutils.command.sdist import sdist
 from distutils.command.install_scripts import install_scripts
 from subprocess import check_call
 from glob import glob
+from warnings import filterwarnings
 
 def build_translations():
 	print('running build_translations')
@@ -52,6 +53,9 @@ class retext_install_scripts(install_scripts):
 
 if '--no-rename' in sys.argv:
 	retext_install_scripts = install_scripts
+	sys.argv.remove('--no-rename')
+
+filterwarnings('ignore', "Unknown distribution option: 'install_requires'")
 
 setup(name='ReText',
       version=VERSION,
