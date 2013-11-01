@@ -130,8 +130,8 @@ class ReTextSettings(object):
 	def __init__(self):
 		for option in configOptions:
 			value = configOptions[option]
-			setattr(self, option, readFromSettings(option,
-				type(value), default=value))
+			object.__setattr__(self, option, readFromSettings(
+				option, type(value), default=value))
 	
 	def __setattr__(self, option, value):
 		if not option in configOptions:
