@@ -28,7 +28,7 @@ if not 'QtWidgets' in locals():
 QFont = QtGui.QFont
 
 app_name = "ReText"
-app_version = "4.1.0"
+app_version = "4.1.1"
 
 settings = QSettings('ReText project', 'ReText')
 
