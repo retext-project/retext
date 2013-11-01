@@ -78,12 +78,12 @@
     <message>
         <location filename="dialogs.py" line="34"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation type="unfinished"></translation>
+        <translation>Escriba el nombre de la localidad (ejemplo: es_MX)</translation>
     </message>
     <message>
         <location filename="dialogs.py" line="39"/>
         <source>Set as default</source>
-        <translation type="unfinished"></translation>
+        <translation>Establecer como predeterminado</translation>
     </message>
 </context>
 <context>
