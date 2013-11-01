@@ -5,7 +5,7 @@
 import markups
 import markups.common
 import sys
-from os.path import join
+from os.path import join, abspath
 
 if '--pyqt4' in sys.argv:
 	from PyQt4 import QtCore, QtGui, QtWebKit
@@ -148,13 +148,14 @@ monofont.setFamily(globalSettings.editorFont)
 if globalSettings.editorFontSize:
 	monofont.setPointSize(globalSettings.editorFontSize)
 
+currentpath = abspath('.')
 if hasattr(QtCore, 'QStandardPaths'):
 	datadirs = QtCore.QStandardPaths.standardLocations(
 		QtCore.QStandardPaths.GenericDataLocation)
-	datadirs = [join(d, 'retext') for d in datadirs] + ['.']
+	datadirs = [currentpath] + [join(d, 'retext') for d in datadirs]
 else:
 	datadirs = (
-		'.',
+		currentpath,
 		'/usr/share/retext',
 		'/usr/local/share/retext',
 		QDir.homePath()+'/.local/share/retext'
