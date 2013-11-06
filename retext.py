@@ -29,6 +29,11 @@ from ReText.window import ReTextWindow
 QApplication = QtWidgets.QApplication
 QWebSettings = QtWebKit.QWebSettings
 
+def canonicalize(option):
+	if option == '--preview':
+		return option
+	return QFileInfo(option).canonicalFilePath()
+
 def main():
 	app = QApplication(sys.argv)
 	app.setOrganizationName("ReText project")
@@ -53,10 +58,17 @@ def main():
 	webSettings.setFontFamily(QWebSettings.FixedFont, 'monospace')
 	window = ReTextWindow()
 	window.show()
-	fileNames = [QFileInfo(arg).canonicalFilePath() for arg in sys.argv[1:]]
+	# ReText can change directory when loading files, so we
+	# need to have a list of canonical names before loading
+	fileNames = list(map(canonicalize, sys.argv[1:]))
+	previewMode = False
 	for fileName in fileNames:
 		if QFile.exists(fileName):
 			window.openFileWrapper(fileName)
+			if previewMode:
+				window.actionPreview.trigger()
+		elif fileName == '--preview':
+			previewMode = True
 	signal.signal(signal.SIGINT, lambda sig, frame: window.close())
 	sys.exit(app.exec_())
 
