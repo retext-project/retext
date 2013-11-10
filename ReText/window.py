@@ -723,7 +723,11 @@ class ReTextWindow(QMainWindow):
 				stream = QTextStream(tempFile)
 				stream << html
 				tempFile.close()
-				pb.loadFinished.connect(lambda ok: tempFile.remove())
+				def onSizeChanged(size):
+					tempFile.remove()
+					frame.setScrollPosition(scrollpos)
+					frame.contentsSizeChanged.disconnect()
+				frame.contentsSizeChanged.connect(onSizeChanged)
 				pb.load(QUrl.fromLocalFile(tempFile.fileName()))
 			else:
 				pb.setHtml(html)
