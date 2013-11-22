@@ -112,6 +112,10 @@ class ReTextWindow(QMainWindow):
 		self.actionSave.setPriority(QAction.LowPriority)
 		self.actionSaveAs = self.act(self.tr('Save as'), 'document-save-as',
 			self.saveFileAs, shct=QKeySequence.SaveAs)
+		self.actionNextTab = self.act(self.tr('Next tab'), 'go-next',
+			lambda: self.switchTab(1), shct=Qt.CTRL+Qt.Key_PageDown)
+		self.actionPrevTab = self.act(self.tr('Previous tab'), 'go-previous',
+			lambda: self.switchTab(-1), shct=Qt.CTRL+Qt.Key_PageUp)
 		self.actionPrint = self.act(self.tr('Print'), 'document-print',
 			self.printFile, shct=QKeySequence.Print)
 		self.actionPrint.setPriority(QAction.LowPriority)
@@ -243,6 +247,9 @@ class ReTextWindow(QMainWindow):
 		menuFile.addSeparator()
 		menuFile.addAction(self.actionSave)
 		menuFile.addAction(self.actionSaveAs)
+		menuFile.addSeparator()
+		menuFile.addAction(self.actionNextTab)
+		menuFile.addAction(self.actionPrevTab)
 		menuFile.addSeparator()
 		menuExport = menuFile.addMenu(self.tr('Export'))
 		menuExport.addAction(self.actionPerfectHtml)
@@ -788,6 +795,9 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.addTab(self.createTab(""), self.tr("New document"))
 		self.ind = self.tabWidget.count()-1
 		self.tabWidget.setCurrentIndex(self.ind)
+	
+	def switchTab(self, shift=1):
+		self.tabWidget.setCurrentIndex((self.ind + shift) % self.tabWidget.count())
 	
 	def updateRecentFiles(self):
 		self.menuRecentFiles.clear()
