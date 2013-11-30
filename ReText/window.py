@@ -503,6 +503,9 @@ class ReTextWindow(QMainWindow):
 		self.actionUnderline.setEnabled(dtMarkdown)
 		self.actionBold.setEnabled(dtMkdOrReST)
 		self.actionItalic.setEnabled(dtMkdOrReST)
+		canReload = bool(self.fileNames[self.ind]) and not self.autoSaveActive()
+		self.actionSetEncoding.setEnabled(canReload)
+		self.actionReload.setEnabled(canReload)
 	
 	def changeIndex(self, ind):
 		if ind > -1:
@@ -792,9 +795,6 @@ class ReTextWindow(QMainWindow):
 		writeListToSettings("recentFileList", files)
 		QDir.setCurrent(QFileInfo(self.fileNames[self.ind]).dir().path())
 		self.docTypeChanged()
-		canReload = bool(self.fileNames[self.ind]) and not self.autoSaveActive()
-		self.actionSetEncoding.setEnabled(canReload)
-		self.actionReload.setEnabled(canReload)
 	
 	def createNew(self):
 		self.tabWidget.addTab(self.createTab(""), self.tr("New document"))
