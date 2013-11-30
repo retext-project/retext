@@ -106,6 +106,8 @@ class ReTextWindow(QMainWindow):
 		self.actionSetEncoding = self.act(self.tr('Set encoding'),
 			trig=self.showEncodingDialog)
 		self.actionSetEncoding.setEnabled(False)
+		self.actionReload = self.act(self.tr('Reload'), 'view-refresh', trig=self.openFileMain)
+		self.actionReload.setEnabled(False)
 		self.actionSave = self.act(self.tr('Save'), 'document-save',
 			self.saveFile, shct=QKeySequence.Save)
 		self.actionSave.setEnabled(False)
@@ -244,6 +246,7 @@ class ReTextWindow(QMainWindow):
 		self.menuDir.addAction(self.actionShow)
 		self.menuDir.addAction(self.actionWpgen)
 		menuFile.addAction(self.actionSetEncoding)
+		menuFile.addAction(self.actionReload)
 		menuFile.addSeparator()
 		menuFile.addAction(self.actionSave)
 		menuFile.addAction(self.actionSaveAs)
@@ -788,8 +791,9 @@ class ReTextWindow(QMainWindow):
 		writeListToSettings("recentFileList", files)
 		QDir.setCurrent(QFileInfo(self.fileNames[self.ind]).dir().path())
 		self.docTypeChanged()
-		self.actionSetEncoding.setEnabled(
-			bool(self.fileNames[self.ind]) and not self.autoSaveActive())
+		canReload = bool(self.fileNames[self.ind]) and not self.autoSaveActive()
+		self.actionSetEncoding.setEnabled(canReload)
+		self.actionReload.setEnabled(canReload)
 	
 	def createNew(self):
 		self.tabWidget.addTab(self.createTab(""), self.tr("New document"))
