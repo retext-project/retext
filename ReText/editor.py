@@ -182,7 +182,7 @@ class ReTextEdit(QTextEdit):
 	
 	def resizeEvent(self, event):
 		QTextEdit.resizeEvent(self, event)
-		if not globalSettings.lineNumbersEnabled:
+		if not hasattr(self, 'lineNumberArea'):
 			return
 		rect = self.contentsRect()
 		self.lineNumberArea.setGeometry(rect.left(), rect.top(),
