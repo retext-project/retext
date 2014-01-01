@@ -85,8 +85,6 @@ class ReTextWindow(QMainWindow):
 		self.apc = []
 		self.alpc = []
 		self.aptc = []
-		self.undoRedoActive = False
-		self.tableModeEnabled = True
 		self.tabWidget = QTabWidget(self)
 		self.initTabWidget()
 		self.setCentralWidget(self.tabWidget)
@@ -154,8 +152,10 @@ class ReTextWindow(QMainWindow):
 		self.actionQuit = self.act(self.tr('Quit'), 'application-exit', shct=QKeySequence.Quit)
 		self.actionQuit.setMenuRole(QAction.QuitRole)
 		self.actionQuit.triggered.connect(self.close)
-		self.actionUndo = self.act(self.tr('Undo'), 'edit-undo', self.performUndo, shct=QKeySequence.Undo)
-		self.actionRedo = self.act(self.tr('Redo'), 'edit-redo', self.performRedo, shct=QKeySequence.Redo)
+		self.actionUndo = self.act(self.tr('Undo'), 'edit-undo',
+			lambda: self.editBoxes[self.ind].performUndo(), shct=QKeySequence.Undo)
+		self.actionRedo = self.act(self.tr('Redo'), 'edit-redo',
+			lambda: self.editBoxes[self.ind].performRedo(), shct=QKeySequence.Redo)
 		self.actionCopy = self.act(self.tr('Copy'), 'edit-copy',
 			lambda: self.editBoxes[self.ind].copy(), shct=QKeySequence.Copy)
 		self.actionCut = self.act(self.tr('Cut'), 'edit-cut',
@@ -353,33 +353,6 @@ class ReTextWindow(QMainWindow):
 				self.actionEnableSC.setChecked(True)
 				self.enableSC(True)
 
-	def performUndo(self):
-		self.undoRedoActive = True
-		print ('************************undoing')
-		self.editBoxes[self.ind].undo()
-		print ('done undoing********************')
-		self.undoRedoActive = False
-
-	def performRedo(self):
-		self.undoRedoActive = True
-		self.editBoxes[self.ind].redo()
-		self.undoRedoActive = False
-
-	def eventFilter(self, target, event):
-		# This function doesn't work. Fix it. And don't hardcode the keys. - G26
-		if event.type() == QEvent.KeyPress and \
-			event.key() == Qt.Key_Z:
-			if event.modifiers() == Qt.ControlModifier:
-				self.performUndo()
-				return True
-			elif event.modifiers() == (Qt.ControlModifier | Qt.ShiftModifier):
-				self.performRedo()
-				return True
-			else:
-				return False
-		return False
-
-	
 	def initConfig(self):
 		self.font = None
 		if globalSettings.font:
@@ -480,7 +453,6 @@ class ReTextWindow(QMainWindow):
 		self.editBoxes[-1].redoAvailable.connect(self.actionRedo.setEnabled)
 		self.editBoxes[-1].copyAvailable.connect(self.enableCopy)
 		self.editBoxes[-1].document().modificationChanged.connect(self.modificationChanged)
-		self.editBoxes[-1].document().contentsChange.connect(self.contentsChange)
 		return self.getSplitter(-1)
 	
 	def closeTab(self, ind):
@@ -781,174 +753,6 @@ class ReTextWindow(QMainWindow):
 		else:
 			frame.setScrollPosition(scrollpos)
 	
-	def reconstructLineBeforeEdit(self, text, relpos, editsize):
-		if editsize < 0:
-			insertpos = text.find('|', relpos)
-			if insertpos == -1:
-				insertpos = relpos
-			textbeforeedit = text[:insertpos] + -editsize * ' ' + text[insertpos:]
-		else:
-			textbeforeedit = text[:relpos] + text[relpos + editsize:]
-		return textbeforeedit
-
-	def getTableLines(self, doc, pos, editsize):
-		startblock = doc.findBlock(pos)
-		editedlineindex = 0
-		offset = pos - startblock.position()
-
-		starttext = startblock.text()
-		if editsize < 0:
-			starttext = ' ' * -editsize + starttext
-		else:
-			starttext = starttext[editsize:]
-
-		rows = [ { 'shift' : editsize,
-				   'block' : startblock,
-				   'line' : starttext,
-				   'editlist' : []} ]
-
-		block = startblock.previous()
-		while '|' in block.text():
-			rows.insert(0, { 'shift' : 0,
-							  'block' : block,
-							  'line'  : block.text(),
-							  'editlist' : [] })
-			editedlineindex += 1
-			block = block.previous()
-
-		block = startblock.next()
-		while '|' in block.text():
-			rows.append({ 'shift' : 0,
-						  'block' : block,
-						  'line'  : block.text(),
-						  'editlist' : [] })
-			block = block.next()
-
-		return rows, editedlineindex, offset
-
-	def backupCursorPositionOnLine(self, textedit):
-		return textedit.textCursor().positionInBlock()
-
-	def restoreCursorPositionOnLine(self, textedit, positionOnLine):
-		cursor = textedit.textCursor()
-		cursor.setPosition(cursor.block().position() + positionOnLine)
-		textedit.setTextCursor(cursor)
-
-	def determineRoomInCell(self, row, edge, separatorline, startposition=0):
-		if edge >= len(row['line']) or row['line'][edge] != '|':
-			room = 9999
-		else:
-			clearance = 0
-			cellwidth = 0
-			afterContent = True
-			for i in range(edge - 1, startposition - 1, -1):
-				if row['line'][i] == '|':
-					break
-				else:
-					if row['line'][i] == ' ' and afterContent:
-						clearance += 1
-					else:
-						afterContent = False
-					cellwidth += 1
-
-			if separatorline:
-				room = max(0, cellwidth - 4)
-			else:
-				room = clearance
-
-		print('line, edge, room', (row['line'], edge, room))
-		return room
-			
-
-	def performShift(self, row, edge, separatorLine, shift):
-		editList = []
-
-		if len(row['line']) > edge and row['line'][edge] == '|' and row['shift'] != shift:
-			editsize = -(row['shift'] - shift)
-			print ('inserting %d before edge %d' % (editsize, edge))
-			row['shift'] = shift
-
-			line = row['line']
-			if separatorLine and line[edge - 1] == ':':
-				edge -= 1
-
-			editList.append([edge, editsize])
-		else:
-			print ('shift ok before edge %d' % edge)
-
-		return editList
-
-	def determineNextEdge(self, rows, offset):
-		nextedge = None
-		for row in rows:
-			if row['shift'] != 0:
-				edge = row['line'].find('|', offset)
-				if edge != -1 and (nextedge == None or edge < nextedge):
-					nextedge = edge
-		return nextedge
-
-	def performEdits(self, rows, linewithoffset, offset):
-		cursor = QTextCursor(rows[0]['block'])
-		cursor.beginEditBlock()
-		for i, row in enumerate(rows):
-			print ('row', i)
-			if i == 1:
-				paddingchar = '-'
-			else:
-				paddingchar = ' '
-
-			for editpos, editsize in sorted(row['editlist'], reverse=True):
-
-				if i == linewithoffset:
-					editpos += offset
-
-				print (editpos, editsize)
-				cursor.setPosition(row['block'].position() + editpos)
-				if editsize > 0:
-					cursor.insertText(editsize * paddingchar)
-				else:
-					for _ in range(-editsize):
-						cursor.deletePreviousChar()
-		cursor.endEditBlock()
-
-
-	def contentsChange(self, pos, removed, added):
-		print ("pos, removed, added = ", pos, removed, added)
-
-		if not self.undoRedoActive and self.tableModeEnabled:
-			doc = self.editBoxes[self.ind].document()
-			editsize = added - removed
-			rows, editedlineindex, offset = self.getTableLines(doc, pos, editsize)
-
-			currentedge = self.determineNextEdge(rows, offset)
-
-			firstEdge = True
-
-			# code currently only for left shifts
-			while currentedge:
-
-				if editsize < 0:
-					leastLeftShift = 9999
-					for i, row in enumerate(rows):
-						leastLeftShift = min(leastLeftShift, -row['shift'] + self.determineRoomInCell(row, currentedge, i == 1))
-					
-					shift = max(editsize, -leastLeftShift)
-				else:
-					if firstEdge:
-						room = self.determineRoomInCell(rows[editedlineindex], currentedge, editedlineindex == 1, offset)
-						print ('room', room)
-						shift = max(0, editsize - room)
-
-				for i, row in enumerate(rows):
-					row['editlist'].extend(self.performShift(row, currentedge, i == 1, shift))
-
-				currentedge = self.determineNextEdge(rows, currentedge + 1)
-				firstEdge = False
-				
-			cursorPosition = self.backupCursorPositionOnLine(self.editBoxes[self.ind])
-			self.performEdits(rows, editedlineindex, editsize)
-			self.restoreCursorPositionOnLine(self.editBoxes[self.ind], cursorPosition)
-
 	def updateLivePreviewBox(self):
 		if self.actionLivePreview.isChecked() and self.previewBlocked == False:
 			self.previewBlocked = True
