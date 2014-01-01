@@ -15,7 +15,7 @@ class ReTextEdit(QTextEdit):
 		QTextEdit.__init__(self)
 		self.parent = parent
 		self.undoRedoActive = False
-		self.tableModeEnabled = True
+		self.tableModeEnabled = False
 		self.setFont(monofont)
 		self.setAcceptRichText(False)
 		self.marginx = (self.cursorRect(self.cursorForPosition(QPoint())).topLeft().x()
@@ -212,6 +212,9 @@ class ReTextEdit(QTextEdit):
 		selection.cursor = self.textCursor()
 		selection.cursor.clearSelection()
 		self.setExtraSelections([selection])
+
+	def enableTableMode(self, enable):
+		self.tableModeEnabled = enable
 
 	def backupCursorPositionOnLine(self):
 		return self.textCursor().positionInBlock()

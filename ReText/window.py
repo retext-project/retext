@@ -141,6 +141,8 @@ class ReTextWindow(QMainWindow):
 			self.actionPreview.setIcon(QIcon(icon_path+'document-preview.png'))
 		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.CTRL+Qt.Key_L,
 		trigbool=self.enableLivePreview)
+		self.actionTableMode = self.act(self.tr('Table mode'), shct=Qt.CTRL+Qt.Key_T,
+			trigbool=lambda x: self.editBoxes[self.ind].enableTableMode(x))
 		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), 'view-fullscreen',
 			shct=Qt.Key_F11, trigbool=self.enableFullScreen)
 		self.actionConfig = self.act(self.tr('Preferences'), icon='preferences-system',
@@ -297,6 +299,7 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionViewHtml)
 		menuEdit.addAction(self.actionLivePreview)
 		menuEdit.addAction(self.actionPreview)
+		menuEdit.addAction(self.actionTableMode)
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionFullScreen)
 		menuEdit.addAction(self.actionConfig)
@@ -321,6 +324,8 @@ class ReTextWindow(QMainWindow):
 		self.editBar.addAction(self.actionCut)
 		self.editBar.addAction(self.actionCopy)
 		self.editBar.addAction(self.actionPaste)
+		self.editBar.addSeparator()
+		self.editBar.addAction(self.actionTableMode)
 		self.editBar.addSeparator()
 		self.editBar.addWidget(self.tagsBox)
 		self.editBar.addWidget(self.symbolBox)
