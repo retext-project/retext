@@ -140,10 +140,8 @@ def adjustTableToChanges(doc, pos, editsize, docType):
 		while currentedge:
 
 			if editsize < 0:
-				leastLeftShift = LARGER_THAN_ANYTHING
-				for i, row in enumerate(rows):
-					leastLeftShift = min(leastLeftShift,
-						-row.shift + _determineRoomInCell(row, currentedge))
+				leastLeftShift = min((-row.shift + _determineRoomInCell(row, currentedge)
+					for row in rows))
 
 				shift = max(editsize, -leastLeftShift)
 			else:
