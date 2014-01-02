@@ -236,8 +236,11 @@ class ReTextEdit(QTextEdit):
 
 	def contentsChange(self, pos, removed, added):
 		if not self.undoRedoActive and self.tableModeEnabled:
+			markupClass = self.parent.getMarkupClass()
+			docType = markupClass.name if markupClass else None
+
 			cursorPosition = self.backupCursorPositionOnLine()
-			tablemode.adjustTableToChanges(self.document(), pos, added - removed)
+			tablemode.adjustTableToChanges(self.document(), pos, added - removed, docType)
 			self.restoreCursorPositionOnLine(cursorPosition)
 
 class LineNumberArea(QWidget):

@@ -3,21 +3,26 @@
 # Copyright: Maurice van der Pot 2014
 # License: GNU GPL v2 or higher
 
-from ReText import QtGui
+import sys
+from ReText import QtGui, DOCTYPE_MARKDOWN, DOCTYPE_REST
 
 QTextCursor = QtGui.QTextCursor
 
-def _reconstructLineBeforeEdit(text, relpos, editsize):
-	if editsize < 0:
-		insertpos = text.find('|', relpos)
-		if insertpos == -1:
-			insertpos = relpos
-		textbeforeedit = text[:insertpos] + -editsize * ' ' + text[insertpos:]
-	else:
-		textbeforeedit = text[:relpos] + text[relpos + editsize:]
-	return textbeforeedit
+LARGER_THAN_ANYTHING = sys.maxsize
 
-def _getTableLines(doc, pos, editsize):
+class Row:
+	def __init__(self, shift = 0, block = None, text = None, editlist = None, separatorline = False, paddingchar = ' '):
+		self.shift = shift
+		self.block = block
+		self.text = text
+		self.editlist = editlist if editlist else []
+		self.separatorline = separatorline
+		self.paddingchar = paddingchar
+
+	def __repr__(self):
+		return "<Row '%s' %s %s '%s' %s>" % (self.text, self.shift, self.separatorline, self.paddingchar, self.editlist)
+
+def _getTableLines(doc, pos, editsize, docType):
 	startblock = doc.findBlock(pos)
 	editedlineindex = 0
 	offset = pos - startblock.position()
@@ -28,48 +33,55 @@ def _getTableLines(doc, pos, editsize):
 	else:
 		starttext = starttext[editsize:]
 
-	rows = [ { 'shift' : editsize,
-			   'block' : startblock,
-			   'line' : starttext,
-			   'editlist' : []} ]
+	rows = [ Row(shift = editsize,
+			     block = startblock,
+				 text = starttext) ]
 
 	block = startblock.previous()
-	while '|' in block.text():
-		rows.insert(0, { 'shift' : 0,
-						  'block' : block,
-						  'line'  : block.text(),
-						  'editlist' : [] })
+	while any(c in block.text() for c in '+|'):
+		rows.insert(0, Row(block = block,
+					       text = block.text()))
 		editedlineindex += 1
 		block = block.previous()
 
 	block = startblock.next()
-	while '|' in block.text():
-		rows.append({ 'shift' : 0,
-					  'block' : block,
-					  'line'  : block.text(),
-					  'editlist' : [] })
+	while any(c in block.text() for c in '+|'):
+		rows.append(Row(block = block,
+					    text = block.text()))
 		block = block.next()
+
+	if docType == DOCTYPE_MARKDOWN:
+		for i, row in enumerate(rows):
+			if i == 1:
+				row.separatorline = True
+				row.paddingchar = '-'
+	elif docType == DOCTYPE_REST:
+		for i, row in enumerate(rows):
+			if i % 2 == 0:
+				row.separatorline = True
+				row.paddingchar = '=' if (i == 2) else '-'
+				row.text = row.text.replace('+', '|')
 
 	return rows, editedlineindex, offset
 
-def _determineRoomInCell(row, edge, separatorline, startposition=0):
-	if edge >= len(row['line']) or row['line'][edge] != '|':
-		room = 9999
+def _determineRoomInCell(row, edge, startposition=0):
+	if edge >= len(row.text) or row.text[edge] != '|':
+		room = LARGER_THAN_ANYTHING
 	else:
 		clearance = 0
 		cellwidth = 0
 		afterContent = True
 		for i in range(edge - 1, startposition - 1, -1):
-			if row['line'][i] == '|':
+			if row.text[i] == '|':
 				break
 			else:
-				if row['line'][i] == ' ' and afterContent:
+				if row.text[i] == ' ' and afterContent:
 					clearance += 1
 				else:
 					afterContent = False
 				cellwidth += 1
 
-		if separatorline:
+		if row.separatorline:
 			room = max(0, cellwidth - 4)
 		else:
 			room = clearance
@@ -77,79 +89,73 @@ def _determineRoomInCell(row, edge, separatorline, startposition=0):
 	return room
 		
 
-def _performShift(row, edge, separatorLine, shift):
-	editList = []
+def _performShift(row, edge, shift):
+	editlist = []
 
-	if len(row['line']) > edge and row['line'][edge] == '|' and row['shift'] != shift:
-		editsize = -(row['shift'] - shift)
-		row['shift'] = shift
+	if len(row.text) > edge and row.text[edge] == '|' and row.shift != shift:
+		editsize = -(row.shift - shift)
+		row.shift = shift
 
-		line = row['line']
-		if separatorLine and line[edge - 1] == ':':
+		if row.separatorline and row.text[edge - 1] == ':':
 			edge -= 1
 
-		editList.append([edge, editsize])
+		editlist.append([edge, editsize])
 
-	return editList
+	return editlist
 
 def _determineNextEdge(rows, offset):
 	nextedge = None
 	for row in rows:
-		if row['shift'] != 0:
-			edge = row['line'].find('|', offset)
+		if row.shift != 0:
+			edge = row.text.find('|', offset)
 			if edge != -1 and (nextedge == None or edge < nextedge):
 				nextedge = edge
 	return nextedge
 
 def _performEdits(rows, linewithoffset, offset):
-	cursor = QTextCursor(rows[0]['block'])
+	cursor = QTextCursor(rows[0].block)
 	cursor.beginEditBlock()
 	for i, row in enumerate(rows):
-		if i == 1:
-			paddingchar = '-'
-		else:
-			paddingchar = ' '
 
-		for editpos, editsize in sorted(row['editlist'], reverse=True):
+		for editpos, editsize in sorted(row.editlist, reverse=True):
 
 			if i == linewithoffset:
 				editpos += offset
 
-			cursor.setPosition(row['block'].position() + editpos)
+			cursor.setPosition(row.block.position() + editpos)
 			if editsize > 0:
-				cursor.insertText(editsize * paddingchar)
+				cursor.insertText(editsize * row.paddingchar)
 			else:
 				for _ in range(-editsize):
 					cursor.deletePreviousChar()
 	cursor.endEditBlock()
 
 
-def adjustTableToChanges(doc, pos, editsize):
-	rows, editedlineindex, offset = _getTableLines(doc, pos, editsize)
+def adjustTableToChanges(doc, pos, editsize, docType):
+	if docType in [DOCTYPE_MARKDOWN, DOCTYPE_REST]:
+		rows, editedlineindex, offset = _getTableLines(doc, pos, editsize, docType)
 
-	currentedge = _determineNextEdge(rows, offset)
+		currentedge = _determineNextEdge(rows, offset)
+		firstEdge = True
 
-	firstEdge = True
+		while currentedge:
 
-	# code currently only for left shifts
-	while currentedge:
+			if editsize < 0:
+				leastLeftShift = LARGER_THAN_ANYTHING
+				for i, row in enumerate(rows):
+					leastLeftShift = min(leastLeftShift, -row.shift + _determineRoomInCell(row, currentedge))
 
-		if editsize < 0:
-			leastLeftShift = 9999
+				shift = max(editsize, -leastLeftShift)
+			else:
+				if firstEdge:
+					room = _determineRoomInCell(rows[editedlineindex], currentedge, offset)
+					shift = max(0, editsize - room)
+
 			for i, row in enumerate(rows):
-				leastLeftShift = min(leastLeftShift, -row['shift'] + _determineRoomInCell(row, currentedge, i == 1))
-			
-			shift = max(editsize, -leastLeftShift)
-		else:
-			if firstEdge:
-				room = _determineRoomInCell(rows[editedlineindex], currentedge, editedlineindex == 1, offset)
-				shift = max(0, editsize - room)
+				row.editlist.extend(_performShift(row, currentedge, shift))
 
-		for i, row in enumerate(rows):
-			row['editlist'].extend(_performShift(row, currentedge, i == 1, shift))
+			currentedge = _determineNextEdge(rows, currentedge + 1)
+			firstEdge = False
 
-		currentedge = _determineNextEdge(rows, currentedge + 1)
-		firstEdge = False
-
-	_performEdits(rows, editedlineindex, editsize)
+		_performEdits(rows, editedlineindex, editsize)
 
