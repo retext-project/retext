@@ -99,7 +99,7 @@ def _performShift(row, edge, shift):
 		if row.separatorline and row.text[edge - 1] == ':':
 			edge -= 1
 
-		editlist.append([edge, editsize])
+		editlist.append((edge, editsize))
 
 	return editlist
 
@@ -131,7 +131,7 @@ def _performEdits(rows, linewithoffset, offset):
 	cursor.endEditBlock()
 
 def adjustTableToChanges(doc, pos, editsize, docType):
-	if docType in [DOCTYPE_MARKDOWN, DOCTYPE_REST]:
+	if docType in (DOCTYPE_MARKDOWN, DOCTYPE_REST):
 		rows, editedlineindex, offset = _getTableLines(doc, pos, editsize, docType)
 
 		currentedge = _determineNextEdge(rows, offset)
