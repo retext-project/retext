@@ -149,7 +149,7 @@ def adjustTableToChanges(doc, pos, editsize, docType):
 					room = _determineRoomInCell(rows[editedlineindex], currentedge, offset)
 					shift = max(0, editsize - room)
 
-			for i, row in enumerate(rows):
+			for row in rows:
 				row.editlist.extend(_performShift(row, currentedge, shift))
 
 			currentedge = _determineNextEdge(rows, currentedge + 1)
