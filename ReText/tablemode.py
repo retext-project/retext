@@ -58,7 +58,7 @@ def _getTableLines(doc, pos, editsize, docType):
 				row.paddingchar = '-'
 	elif docType == DOCTYPE_REST:
 		for i, row in enumerate(rows):
-			if i % 2 == 0:
+			if i & 1 == 0: # i is even
 				row.separatorline = True
 				row.paddingchar = '=' if (i == 2) else '-'
 				row.text = row.text.replace('+', '|')
