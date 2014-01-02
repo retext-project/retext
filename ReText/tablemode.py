@@ -65,7 +65,7 @@ def _getTableLines(doc, pos, editsize, docType):
 
 	return rows, editedlineindex, offset
 
-def _determineRoomInCell(row, edge, startposition=0):
+def _determineRoomInCell(row, edge, shrinking, startposition=0):
 	if edge >= len(row.text) or row.text[edge] != '|':
 		room = LARGER_THAN_ANYTHING
 	else:
@@ -76,14 +76,19 @@ def _determineRoomInCell(row, edge, startposition=0):
 			if row.text[i] == '|':
 				break
 			else:
-				if row.text[i] == ' ' and afterContent:
+				if row.text[i] == row.paddingchar and afterContent:
 					clearance += 1
 				else:
 					afterContent = False
 				cellwidth += 1
 
 		if row.separatorline:
-			room = max(0, cellwidth - 4)
+			if shrinking:
+				# do not shrink separator cells below 4
+				room = max(0, cellwidth - 4)
+			else:
+				# start expanding the cell if only the space for a right-align marker is left
+				room = max(0, cellwidth - 1)
 		else:
 			room = clearance
 
@@ -140,13 +145,13 @@ def adjustTableToChanges(doc, pos, editsize, docType):
 		while currentedge:
 
 			if editsize < 0:
-				leastLeftShift = min((-row.shift + _determineRoomInCell(row, currentedge)
+				leastLeftShift = min((-row.shift + _determineRoomInCell(row, currentedge, True)
 					for row in rows))
 
 				shift = max(editsize, -leastLeftShift)
 			else:
 				if firstEdge:
-					room = _determineRoomInCell(rows[editedlineindex], currentedge, offset)
+					room = _determineRoomInCell(rows[editedlineindex], currentedge, False, offset)
 					shift = max(0, editsize - room)
 
 			for row in rows:
