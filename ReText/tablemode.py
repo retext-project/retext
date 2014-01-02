@@ -11,7 +11,7 @@ QTextCursor = QtGui.QTextCursor
 LARGER_THAN_ANYTHING = sys.maxsize
 
 class Row:
-	def __init__(self, shift = 0, block = None, text = None, editlist = None, separatorline = False, paddingchar = ' '):
+	def __init__(self, shift=0, block=None, text=None, editlist=None, separatorline=False, paddingchar=' '):
 		self.shift = shift
 		self.block = block
 		self.text = text
@@ -20,7 +20,8 @@ class Row:
 		self.paddingchar = paddingchar
 
 	def __repr__(self):
-		return "<Row '%s' %s %s '%s' %s>" % (self.text, self.shift, self.separatorline, self.paddingchar, self.editlist)
+		return "<Row '%s' %s %s '%s' %s>" % (self.text, self.shift,
+			self.separatorline, self.paddingchar, self.editlist)
 
 def _getTableLines(doc, pos, editsize, docType):
 	startblock = doc.findBlock(pos)
@@ -34,20 +35,20 @@ def _getTableLines(doc, pos, editsize, docType):
 		starttext = starttext[editsize:]
 
 	rows = [ Row(shift = editsize,
-			     block = startblock,
-				 text = starttext) ]
+	             block = startblock,
+	             text = starttext) ]
 
 	block = startblock.previous()
 	while any(c in block.text() for c in '+|'):
 		rows.insert(0, Row(block = block,
-					       text = block.text()))
+		                   text = block.text()))
 		editedlineindex += 1
 		block = block.previous()
 
 	block = startblock.next()
 	while any(c in block.text() for c in '+|'):
 		rows.append(Row(block = block,
-					    text = block.text()))
+		                text = block.text()))
 		block = block.next()
 
 	if docType == DOCTYPE_MARKDOWN:
@@ -87,7 +88,6 @@ def _determineRoomInCell(row, edge, startposition=0):
 			room = clearance
 
 	return room
-		
 
 def _performShift(row, edge, shift):
 	editlist = []
@@ -130,7 +130,6 @@ def _performEdits(rows, linewithoffset, offset):
 					cursor.deletePreviousChar()
 	cursor.endEditBlock()
 
-
 def adjustTableToChanges(doc, pos, editsize, docType):
 	if docType in [DOCTYPE_MARKDOWN, DOCTYPE_REST]:
 		rows, editedlineindex, offset = _getTableLines(doc, pos, editsize, docType)
@@ -143,7 +142,8 @@ def adjustTableToChanges(doc, pos, editsize, docType):
 			if editsize < 0:
 				leastLeftShift = LARGER_THAN_ANYTHING
 				for i, row in enumerate(rows):
-					leastLeftShift = min(leastLeftShift, -row.shift + _determineRoomInCell(row, currentedge))
+					leastLeftShift = min(leastLeftShift,
+						-row.shift + _determineRoomInCell(row, currentedge))
 
 				shift = max(editsize, -leastLeftShift)
 			else:
@@ -158,4 +158,3 @@ def adjustTableToChanges(doc, pos, editsize, docType):
 			firstEdge = False
 
 		_performEdits(rows, editedlineindex, editsize)
-
