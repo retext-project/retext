@@ -1017,7 +1017,7 @@ class ReTextWindow(QMainWindow):
 		if not QFileInfo(fileName).suffix():
 			fileName += ".html"
 		try:
-			htmltext = self.getHtml(includeStyleSheet=False, includeMeta=True, 
+			htmltext = self.getHtml(includeStyleSheet=False, includeMeta=True,
 			webenv=True)
 		except Exception:
 			return self.printError()
@@ -1182,7 +1182,7 @@ class ReTextWindow(QMainWindow):
 	def insertTag(self, num):
 		if num:
 			ut = self.usefulTags[num-1]
-			arg = ' style=""' if ut == 'span' else '' 
+			arg = ' style=""' if ut == 'span' else ''
 			tc = self.editBoxes[self.ind].textCursor()
 			if ut == 'img':
 				toinsert = ('<a href="' + tc.selectedText() +

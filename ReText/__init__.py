@@ -34,7 +34,7 @@ settings = QSettings('ReText project', 'ReText')
 
 if not str(settings.fileName()).endswith('.conf'):
 	# We are on Windows probably
-	settings = QSettings(QSettings.IniFormat, QSettings.UserScope, 
+	settings = QSettings(QSettings.IniFormat, QSettings.UserScope,
 		'ReText project', 'ReText')
 
 try:

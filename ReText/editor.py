@@ -85,7 +85,7 @@ class ReTextEdit(QTextEdit):
 		menu = self.createStandardContextMenu()
 		menu.insertSeparator(menu.actions()[0])
 		for action in actions[::-1]:
-			menu.insertAction(menu.actions()[0], action) 
+			menu.insertAction(menu.actions()[0], action)
 		menu.exec_(event.globalPos())
 	
 	def fixWord(self, correctword):
