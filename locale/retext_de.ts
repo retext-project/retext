@@ -5,72 +5,72 @@
     <message>
         <location filename="config.py" line="24"/>
         <source>Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>Verhalten</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Automatically save documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichere Dokumente automatisch</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Restore window geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>Merke den Fenster-Zustand</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Restore live preview state</source>
-        <translation type="unfinished"></translation>
+        <translation>Merke den Live-Vorschau-Zustand</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Open external links in ReText window</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne externe Verweise im ReText-Fenster</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Open unknown files in plain text mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne unbekannte Dateien im Klartextmodus</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Highlight current line</source>
-        <translation type="unfinished"></translation>
+        <translation>Hebe aktuelle Zeile hervor</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Show line numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige die Zeilennummer</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Tab key inserts spaces</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabulator fügt Leerzeichen ein</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Tabulation width</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabulator-Breite</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Display right margin at column</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige rechten Abstand bei Spalte</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Oberfläche</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Icon theme name</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolschema-Name</translation>
     </message>
 </context>
 <context>
@@ -78,12 +78,12 @@
     <message>
         <location filename="dialogs.py" line="34"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabe der Lokalisierung (z.B.: de_DE)</translation>
     </message>
     <message>
         <location filename="dialogs.py" line="39"/>
         <source>Set as default</source>
-        <translation type="unfinished"></translation>
+        <translation>Als Standard setzen</translation>
     </message>
 </context>
 <context>
@@ -475,17 +475,17 @@ Sollen die Änderungen gespeichert werden?</translation>
     <message>
         <location filename="window.py" line="586"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschaften</translation>
     </message>
     <message>
         <location filename="window.py" line="106"/>
         <source>Set encoding</source>
-        <translation type="unfinished"></translation>
+        <translation>Setze Zeichensatz</translation>
     </message>
     <message>
         <location filename="window.py" line="937"/>
         <source>Select file encoding from the list:</source>
-        <translation type="unfinished"></translation>
+        <translation>Setze Zeichensatz aus Liste:</translation>
     </message>
 </context>
 </TS>
