@@ -291,7 +291,8 @@ class ReTextWindow(QMainWindow):
 		menuFormat.addAction(self.actionBold)
 		menuFormat.addAction(self.actionItalic)
 		menuFormat.addAction(self.actionUnderline)
-		menuEdit.addAction(self.actionWebKit)
+		if QtCore.__package__ != 'PySide': # PYSIDE-213
+			menuEdit.addAction(self.actionWebKit)
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionViewHtml)
 		menuEdit.addAction(self.actionLivePreview)
