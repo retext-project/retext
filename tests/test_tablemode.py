@@ -9,6 +9,14 @@ from ReText import tablemode
 
 class TestTableMode(unittest.TestCase):
 
+	def performEdit(self, text, offset, editSize, paddingchar=None, fragment=None):
+		if editSize < 0:
+			text = text[:offset + editSize] + text[offset:]
+		else:
+			fragment = paddingchar * editSize if not fragment else fragment
+			text = text[:offset] + fragment + text[offset:]
+		return text
+
 	def checkDetermineEditLists(self, paddingChars, before, edit, after):
 		class Row():
 			def __init__(self, text, separatorLine, paddingChar):
@@ -31,19 +39,28 @@ class TestTableMode(unittest.TestCase):
 		for paddingChar, text in zip(paddingChars, before):
 			rows.append(Row(text, (paddingChar != ' '), paddingChar))
 
+		editedline = edit[0]
+		editstripped = edit[1].strip()
+		editsize = len(editstripped)
 
-		editline = edit[0]
-		editstripped = edit[1].lstrip()
-		offset = len(edit[1]) - len(editstripped)
-		try:
-			editsize = editstripped.index(' ')
-		except ValueError:
-			editsize = len(editstripped)
+		# The offset passed to _determineEditLists is the one received from the
+		# contentsChange signal and is always the start of the set of chars
+		# that are added or removed.
+		contentsChangeOffset = edit[1].index(editstripped[0])
+
+		# However, the editoffset indicates the position before which chars
+		# must be deleted or after which they must be added (just like the
+		# offset used in the edits returned by _determineEditLists),
+		# so for deletions we'll need to add the size of the edit to it
 		if editstripped[0] == 'd':
 			editsize = -editsize
+			editoffset = contentsChangeOffset + len(editstripped)
+		else:
+			editoffset = contentsChangeOffset
+
+		editLists = tablemode._determineEditLists(rows, edit[0], contentsChangeOffset, editsize)
 
 
-		editLists = tablemode._determineEditLists(rows, edit[0], offset, editsize)
 		editedRows = []
 
 		self.assertEqual(len(editLists), len(rows))
@@ -51,23 +68,12 @@ class TestTableMode(unittest.TestCase):
 		for i, (row, editList) in enumerate(zip(rows, editLists)):
 			editedText = row.text
 
-			if i == editline:
-				if editsize < 0:
-					editedText = editedText[:offset] + editedText[offset - editsize:]
-				else:
-					editedText = editedText[:offset] + editstripped.rstrip() + editedText[offset:]
-
 			for editEntry in editList:
-				editOffset = editEntry[0]
+				editedText = self.performEdit(editedText, editEntry[0], editEntry[1], paddingchar=row.paddingchar)
 
-				if i == editline:
-					editOffset += editsize
-
-				if editEntry[1] < 0:
-					editedText = editedText[:editOffset + editEntry[1]] + editedText[editOffset:]
-				else:
-					editedText = editedText[:editOffset] + editEntry[1] * row.paddingchar + editedText[editOffset:]
 			editedRows.append(editedText)
+
+		editedRows[editedline] = self.performEdit(editedRows[editedline], editoffset, editsize, fragment=editstripped)
 
 		if editedRows != after:
 			assertMessage = ["Output differs.",
