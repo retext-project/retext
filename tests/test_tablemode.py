@@ -77,18 +77,18 @@ class TestTableMode(unittest.TestCase):
 
 		if editedRows != after:
 			assertMessage = ["Output differs.",
-							 "",
-							 "Input:"] + \
-							["%3d '%s'" % (i, line) for i, line in enumerate(before)] + \
-							["",
-							 "Edit:",
-							 "%3d '%s'" % edit,
-							 "",
-							 "Expected output:"] + \
-							["%3d '%s'" % (i, line) for i, line in enumerate(after)] + \
-							["",
-							 "Actual output:"] + \
-							["%3d '%s'" % (i, line) for i, line in enumerate(editedRows)]
+			                 "",
+			                 "Input:"] + \
+			                ["%3d '%s'" % (i, line) for i, line in enumerate(before)] + \
+					["",
+					 "Edit:",
+					 "%3d '%s'" % edit,
+					 "",
+					 "Expected output:"] + \
+					["%3d '%s'" % (i, line) for i, line in enumerate(after)] + \
+					["",
+					 "Actual output:"] + \
+					["%3d '%s'" % (i, line) for i, line in enumerate(editedRows)]
 
 			self.fail('\n'.join(assertMessage))
 
@@ -322,13 +322,13 @@ class TestTableMode(unittest.TestCase):
 		separatorChars = '   '
 		before  = ['|    |',
 		           '     |    |',
-				   '       |  |    |']
+		           '       |  |    |']
 
 		edit = (0, '     a')
 
 		after   = ['|    a|',
 		           '      |    |',
-				   '       |   |    |']
+		           '       |   |    |']
 
 		self.checkDetermineEditLists(separatorChars, before, edit, after)
 
