@@ -175,7 +175,6 @@ def adjustTableToChanges(doc, pos, editsize, docType):
 
 		_sortaUndoEdit(rows, editedlineindex, editsize)
 
-		print ('offset, editsize', offset, editsize)
 		editLists = _determineEditLists(rows, editedlineindex, offset, editsize)
 
 		cursor = QTextCursor(doc)
