@@ -1,18 +1,21 @@
+# vim: noexpandtab:ts=4:sw=4
 # This file is part of ReText
 # Copyright: Dmitry Shachnev 2012
 # License: GNU GPL v2 or higher
 
-from ReText import QtCore, QtGui, QtWidgets, monofont, globalSettings, DOCTYPE_MARKDOWN
+from ReText import QtCore, QtGui, QtWidgets, monofont, globalSettings, tablemode, DOCTYPE_MARKDOWN
 
-(QPoint, QSize, Qt) = (QtCore.QPoint, QtCore.QSize, QtCore.Qt)
-(QColor, QPainter, QTextCursor, QTextFormat) = (QtGui.QColor, QtGui.QPainter,
- QtGui.QTextCursor, QtGui.QTextFormat)
+(QEvent, QObject, QPoint, QSize, Qt) = (QtCore.QEvent, QtCore.QObject, QtCore.QPoint, QtCore.QSize, QtCore.Qt)
+(QColor, QKeySequence, QPainter, QTextCursor, QTextFormat) = (QtGui.QColor, QtGui.QKeySequence,
+ QtGui.QPainter, QtGui.QTextCursor, QtGui.QTextFormat)
 (QTextEdit, QWidget) = (QtWidgets.QTextEdit, QtWidgets.QWidget)
 
 class ReTextEdit(QTextEdit):
 	def __init__(self, parent):
 		QTextEdit.__init__(self)
 		self.parent = parent
+		self.undoRedoActive = False
+		self.tableModeEnabled = False
 		self.setFont(monofont)
 		self.setAcceptRichText(False)
 		self.marginx = (self.cursorRect(self.cursorForPosition(QPoint())).topLeft().x()
@@ -22,6 +25,17 @@ class ReTextEdit(QTextEdit):
 			self.document().blockCountChanged.connect(self.updateLineNumberAreaWidth)
 			self.updateLineNumberAreaWidth()
 		self.cursorPositionChanged.connect(self.highlightCurrentLine)
+		self.document().contentsChange.connect(self.contentsChange)
+		self.installEventFilter(self)
+
+	def eventFilter(self, widget, event):
+		if event.type() == QEvent.ShortcutOverride:
+			if event.matches(QKeySequence.Undo) or \
+			   event.matches(QKeySequence.Redo):
+				# avoid the default undo/redo handling so we can route undo/redo through our own functions
+				return True
+
+		return QTextEdit.eventFilter(self, widget, event)
 	
 	def paintEvent(self, event):
 		if not globalSettings.rightMargin:
@@ -198,6 +212,36 @@ class ReTextEdit(QTextEdit):
 		selection.cursor = self.textCursor()
 		selection.cursor.clearSelection()
 		self.setExtraSelections([selection])
+
+	def enableTableMode(self, enable):
+		self.tableModeEnabled = enable
+
+	def backupCursorPositionOnLine(self):
+		return self.textCursor().positionInBlock()
+
+	def restoreCursorPositionOnLine(self, positionOnLine):
+		cursor = self.textCursor()
+		cursor.setPosition(cursor.block().position() + positionOnLine)
+		self.setTextCursor(cursor)
+
+	def performUndo(self):
+		self.undoRedoActive = True
+		self.undo()
+		self.undoRedoActive = False
+
+	def performRedo(self):
+		self.undoRedoActive = True
+		self.redo()
+		self.undoRedoActive = False
+
+	def contentsChange(self, pos, removed, added):
+		if not self.undoRedoActive and self.tableModeEnabled:
+			markupClass = self.parent.getMarkupClass()
+			docType = markupClass.name if markupClass else None
+
+			cursorPosition = self.backupCursorPositionOnLine()
+			tablemode.adjustTableToChanges(self.document(), pos, added - removed, docType)
+			self.restoreCursorPositionOnLine(cursorPosition)
 
 class LineNumberArea(QWidget):
 	def __init__(self, editor):

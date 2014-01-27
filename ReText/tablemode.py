@@ -1,0 +1,183 @@
+# vim: noexpandtab:ts=4:sw=4
+# This file is part of ReText
+# Copyright: Maurice van der Pot 2014
+# License: GNU GPL v2 or higher
+
+import sys
+from ReText import QtGui, DOCTYPE_MARKDOWN, DOCTYPE_REST
+
+QTextCursor = QtGui.QTextCursor
+
+LARGER_THAN_ANYTHING = sys.maxsize
+
+class Row:
+	def __init__(self, block=None, text=None, separatorline=False, paddingchar=' '):
+		self.block = block
+		self.text = text
+		self.separatorline = separatorline
+		self.paddingchar = paddingchar
+
+	def __repr__(self):
+		return "<Row '%s' %s '%s'>" % (self.text, self.separatorline, self.paddingchar)
+
+def _getTableLines(doc, pos, docType):
+	startblock = doc.findBlock(pos)
+	editedlineindex = 0
+	offset = pos - startblock.position()
+
+	rows = [ Row(block = startblock,
+	             text = startblock.text()) ]
+
+	block = startblock.previous()
+	while any(c in block.text() for c in '+|'):
+		rows.insert(0, Row(block = block,
+		                   text = block.text()))
+		editedlineindex += 1
+		block = block.previous()
+
+	block = startblock.next()
+	while any(c in block.text() for c in '+|'):
+		rows.append(Row(block = block,
+		                text = block.text()))
+		block = block.next()
+
+	if docType == DOCTYPE_MARKDOWN:
+		for i, row in enumerate(rows):
+			if i == 1:
+				row.separatorline = True
+				row.paddingchar = '-'
+	elif docType == DOCTYPE_REST:
+		for i, row in enumerate(rows):
+			if i & 1 == 0: # i is even
+				row.separatorline = True
+				row.paddingchar = '=' if (i == 2) else '-'
+				row.text = row.text.replace('+', '|')
+
+	return rows, editedlineindex, offset
+
+def _sortaUndoEdit(rows, editedlineindex, editsize):
+	aftertext = rows[editedlineindex].text
+	if editsize < 0:
+		beforetext = ' ' * -editsize + aftertext
+	else:
+		beforetext = aftertext[editsize:]
+
+	rows[editedlineindex].text = beforetext
+
+def _determineRoomInCell(row, edge, shrinking, startposition=0):
+	if edge >= len(row.text) or row.text[edge] != '|':
+		room = LARGER_THAN_ANYTHING
+	else:
+		clearance = 0
+		cellwidth = 0
+		afterContent = True
+		for i in range(edge - 1, startposition - 1, -1):
+			if row.text[i] == '|':
+				break
+			else:
+				if row.text[i] == row.paddingchar and afterContent:
+					clearance += 1
+				else:
+					afterContent = False
+				cellwidth += 1
+
+		if row.separatorline:
+			if shrinking:
+				# do not shrink separator cells below 3
+				room = max(0, cellwidth - 3)
+			else:
+				# start expanding the cell if only the space for a right-align marker is left
+				room = max(0, cellwidth - 1)
+		else:
+			room = clearance
+
+	return room
+
+def _performShift(row, rowShift, edge, shift):
+	editlist = []
+
+	if len(row.text) > edge and row.text[edge] == '|' and rowShift != shift:
+		editsize = -(rowShift - shift)
+		rowShift = shift
+
+		# Insert one position further to the left on separator lines, because
+		# there may be a space (for esthetical reasons) or an alignment marker
+		# on the last position before the edge and that should stay next to the
+		# edge.
+		if row.separatorline:
+			edge -= 1
+
+		editlist.append((edge, editsize))
+
+	return editlist, rowShift
+
+def _determineNextEdge(rows, rowShifts, offset):
+	nextedge = None
+	for row, rowShift in zip(rows, rowShifts):
+		if rowShift != 0:
+			edge = row.text.find('|', offset)
+			if edge != -1 and (nextedge == None or edge < nextedge):
+				nextedge = edge
+	return nextedge
+
+def _determineEditLists(rows, editedlineindex, offset, editsize):
+	rowShifts = [0 for _ in rows]
+	rowShifts[editedlineindex] = editsize
+
+	editLists = [[] for _ in rows]
+
+	currentedge = _determineNextEdge(rows, rowShifts, offset)
+	firstEdge = True
+
+
+	while currentedge:
+
+		if editsize < 0:
+			leastLeftShift = min((-rowShift + _determineRoomInCell(row, currentedge, True)
+				for row, rowShift in zip(rows, rowShifts)))
+
+			shift = max(editsize, -leastLeftShift)
+		else:
+			if firstEdge:
+				room = _determineRoomInCell(rows[editedlineindex], currentedge, False, offset)
+				shift = max(0, editsize - room)
+
+		for i, row in enumerate(rows):
+			editList, newRowShift = _performShift(row, rowShifts[i], currentedge, shift)
+			rowShifts[i] = newRowShift
+			editLists[i].extend(editList)
+
+		currentedge = _determineNextEdge(rows, rowShifts, currentedge + 1)
+		firstEdge = False
+
+	return editLists
+
+def _performEdits(cursor, rows, editLists, linewithoffset, offset):
+	cursor.beginEditBlock()
+	for i, (row, editList) in enumerate(zip(rows, editLists)):
+
+		for editpos, editsize in sorted(editList, reverse=True):
+
+			if i == linewithoffset:
+				editpos += offset
+
+			cursor.setPosition(row.block.position() + editpos)
+			if editsize > 0:
+				cursor.insertText(editsize * row.paddingchar)
+			else:
+				for _ in range(-editsize):
+					cursor.deletePreviousChar()
+	cursor.endEditBlock()
+
+def adjustTableToChanges(doc, pos, editsize, docType):
+	if docType in (DOCTYPE_MARKDOWN, DOCTYPE_REST):
+		rows, editedlineindex, offset = _getTableLines(doc, pos, docType)
+
+		_sortaUndoEdit(rows, editedlineindex, editsize)
+
+		print ('offset, editsize', offset, editsize)
+		editLists = _determineEditLists(rows, editedlineindex, offset, editsize)
+
+		cursor = QTextCursor(doc)
+		_performEdits(cursor, rows, editLists, editedlineindex, editsize)
+

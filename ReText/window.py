@@ -1,3 +1,4 @@
+# vim: noexpandtab:ts=4:sw=4
 # This file is part of ReText
 # Copyright: Dmitry Shachnev 2012
 # License: GNU GPL v2 or higher
@@ -140,6 +141,8 @@ class ReTextWindow(QMainWindow):
 			self.actionPreview.setIcon(QIcon(icon_path+'document-preview.png'))
 		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.CTRL+Qt.Key_L,
 		trigbool=self.enableLivePreview)
+		self.actionTableMode = self.act(self.tr('Table mode'), shct=Qt.CTRL+Qt.Key_T,
+			trigbool=lambda x: self.editBoxes[self.ind].enableTableMode(x))
 		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), 'view-fullscreen',
 			shct=Qt.Key_F11, trigbool=self.enableFullScreen)
 		self.actionConfig = self.act(self.tr('Preferences'), icon='preferences-system',
@@ -152,9 +155,9 @@ class ReTextWindow(QMainWindow):
 		self.actionQuit.setMenuRole(QAction.QuitRole)
 		self.actionQuit.triggered.connect(self.close)
 		self.actionUndo = self.act(self.tr('Undo'), 'edit-undo',
-			lambda: self.editBoxes[self.ind].undo(), shct=QKeySequence.Undo)
+			lambda: self.editBoxes[self.ind].performUndo(), shct=QKeySequence.Undo)
 		self.actionRedo = self.act(self.tr('Redo'), 'edit-redo',
-			lambda: self.editBoxes[self.ind].redo(), shct=QKeySequence.Redo)
+			lambda: self.editBoxes[self.ind].performRedo(), shct=QKeySequence.Redo)
 		self.actionCopy = self.act(self.tr('Copy'), 'edit-copy',
 			lambda: self.editBoxes[self.ind].copy(), shct=QKeySequence.Copy)
 		self.actionCut = self.act(self.tr('Cut'), 'edit-cut',
@@ -297,6 +300,7 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionViewHtml)
 		menuEdit.addAction(self.actionLivePreview)
 		menuEdit.addAction(self.actionPreview)
+		menuEdit.addAction(self.actionTableMode)
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionFullScreen)
 		menuEdit.addAction(self.actionConfig)
@@ -321,6 +325,8 @@ class ReTextWindow(QMainWindow):
 		self.editBar.addAction(self.actionCut)
 		self.editBar.addAction(self.actionCopy)
 		self.editBar.addAction(self.actionPaste)
+		self.editBar.addSeparator()
+		self.editBar.addAction(self.actionTableMode)
 		self.editBar.addSeparator()
 		self.editBar.addWidget(self.tagsBox)
 		self.editBar.addWidget(self.symbolBox)
@@ -352,7 +358,7 @@ class ReTextWindow(QMainWindow):
 			if globalSettings.spellCheck:
 				self.actionEnableSC.setChecked(True)
 				self.enableSC(True)
-	
+
 	def initConfig(self):
 		self.font = None
 		if globalSettings.font:
