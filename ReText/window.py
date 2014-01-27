@@ -326,8 +326,6 @@ class ReTextWindow(QMainWindow):
 		self.editBar.addAction(self.actionCopy)
 		self.editBar.addAction(self.actionPaste)
 		self.editBar.addSeparator()
-		self.editBar.addAction(self.actionTableMode)
-		self.editBar.addSeparator()
 		self.editBar.addWidget(self.tagsBox)
 		self.editBar.addWidget(self.symbolBox)
 		self.searchEdit = QLineEdit(self.searchBar)
