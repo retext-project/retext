@@ -1,10 +1,13 @@
 from ReText import QtCore, QtGui, QtWidgets, globalSettings
+from markups.common import CONFIGURATION_DIR
+from os.path import join
 
 Qt = QtCore.Qt
 QIcon = QtGui.QIcon
 (QCheckBox, QDialog, QDialogButtonBox, QGridLayout, QLabel, QLineEdit, QSpinBox) = (
  QtWidgets.QCheckBox, QtWidgets.QDialog, QtWidgets.QDialogButtonBox,
  QtWidgets.QGridLayout, QtWidgets.QLabel, QtWidgets.QLineEdit, QtWidgets.QSpinBox)
+MKD_EXTS_FILE = join(CONFIGURATION_DIR, 'markdown-extensions.txt')
 
 class ConfigDialog(QDialog):
 	def __init__(self, parent):
@@ -28,6 +31,7 @@ class ConfigDialog(QDialog):
 			(self.tr('Restore live preview state'), 'restorePreviewState'),
 			(self.tr('Open external links in ReText window'), 'handleWebLinks'),
 			(self.tr('Open unknown files in plain text mode'), 'autoPlainText'),
+			(self.tr('Markdown extensions (comma-separated)'), 'markdownExtensions'), (None, 'markdownExtensions'),
 			(self.tr('Editor'), None),
 			(self.tr('Highlight current line'), 'highlightCurrentLine'),
 			(self.tr('Show line numbers'), 'lineNumbersEnabled'),
@@ -47,8 +51,23 @@ class ConfigDialog(QDialog):
 				header = QLabel('<h3>%s</h3>' % displayname, self)
 				self.layout.addWidget(header, index, 0, 1, 2, Qt.AlignHCenter)
 				continue
+			if displayname:
+				label = QLabel(displayname + ':', self)
+			if name == 'markdownExtensions':
+				if displayname:
+					self.layout.addWidget(label, index, 0, 1, 2)
+					continue
+				try:
+					extsFile = open(MKD_EXTS_FILE)
+					value = extsFile.read().rstrip().replace(extsFile.newlines, ', ')
+					extsFile.close()
+				except Exception:
+					value = ''
+				self.configurators[name] = QLineEdit(self)
+				self.configurators[name].setText(value)
+				self.layout.addWidget(self.configurators[name], index, 0, 1, 2)
+				continue
 			value = getattr(globalSettings, name)
-			label = QLabel(displayname, self)
 			if isinstance(value, bool):
 				self.configurators[name] = QCheckBox(self)
 				self.configurators[name].setChecked(value)
@@ -67,7 +86,7 @@ class ConfigDialog(QDialog):
 
 	def saveSettings(self):
 		for displayname, name in self.options:
-			if name is None:
+			if name is None or name == 'markdownExtensions':
 				continue
 			configurator = self.configurators[name]
 			if isinstance(configurator, QCheckBox):
@@ -82,3 +101,10 @@ class ConfigDialog(QDialog):
 	
 	def applySettings(self):
 		QIcon.setThemeName(globalSettings.iconTheme)
+		try:
+			extsFile = open(MKD_EXTS_FILE, 'w')
+			for ext in self.configurators['markdownExtensions'].text().split(','):
+				extsFile.write(ext.strip() + '\n')
+			extsFile.close()
+		except Exception as e:
+			print(e)
