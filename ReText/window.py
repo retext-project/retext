@@ -422,6 +422,8 @@ class ReTextWindow(QMainWindow):
 		urlstr = url.toString()
 		if urlstr.startswith('file://') or ':/' not in urlstr:
 			self.previewBoxes[self.ind].load(url)
+		elif urlstr.startswith('#'):
+			self.previewBoxes[self.ind].page().mainFrame().scrollToAnchor(urlstr[1:])
 		elif urlstr.startswith('about:blank#'):
 			self.previewBoxes[self.ind].page().mainFrame().scrollToAnchor(urlstr[12:])
 		else:
