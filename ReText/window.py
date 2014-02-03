@@ -343,8 +343,7 @@ class ReTextWindow(QMainWindow):
 			timer = QTimer(self)
 			timer.start(60000)
 			timer.timeout.connect(self.saveAll)
-		self.ind = 0
-		self.tabWidget.addTab(self.createTab(""), self.tr('New document'))
+		self.ind = None
 		if enchant_available:
 			self.sl = globalSettings.spellCheckLocale
 			if self.sl:
@@ -921,8 +920,13 @@ class ReTextWindow(QMainWindow):
 		if exists:
 			self.tabWidget.setCurrentIndex(ex)
 		elif QFile.exists(fileName):
-			if self.fileNames[self.ind] or self.editBoxes[self.ind].toPlainText() \
-			or self.editBoxes[self.ind].document().isModified():
+			noEmptyTab = (
+				(self.ind is None) or
+				self.fileNames[self.ind] or
+				self.editBoxes[self.ind].toPlainText() or
+				self.editBoxes[self.ind].document().isModified()
+			)
+			if noEmptyTab:
 				self.tabWidget.addTab(self.createTab(fileName), "")
 				self.ind = self.tabWidget.count()-1
 				self.tabWidget.setCurrentIndex(self.ind)

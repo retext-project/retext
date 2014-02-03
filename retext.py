@@ -69,6 +69,8 @@ def main():
 				window.actionPreview.trigger()
 		elif fileName == '--preview':
 			previewMode = True
+	if not window.tabWidget.count():
+		window.createNew()
 	signal.signal(signal.SIGINT, lambda sig, frame: window.close())
 	sys.exit(app.exec_())
 
