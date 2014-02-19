@@ -733,24 +733,10 @@ class ReTextWindow(QMainWindow):
 				html = self.getHtml(styleForWebKit=(not textedit))
 			except Exception:
 				return self.printError()
-			if not textedit and ('<script ' in html):
-				# Work-around a bug in QtWebKit
-				# by saving the html locally
-				tempFile = QTemporaryFile('retext-XXXXXX.html')
-				tempFile.setAutoRemove(False)
-				tempFile.open(QIODevice.WriteOnly)
-				stream = QTextStream(tempFile)
-				stream << html
-				tempFile.close()
-				def callback(tempFile):
-					tempFile.remove()
-					frame.setScrollPosition(scrollpos)
-					frame.contentsSizeChanged.disconnect()
-				onSizeChanged = lambda size: callback(tempFile)
-				frame.contentsSizeChanged.connect(onSizeChanged)
-				pb.load(QUrl.fromLocalFile(tempFile.fileName()))
-			else:
+			if textedit:
 				pb.setHtml(html)
+			else:
+				pb.setHtml(html, QUrl.fromLocalFile(QDir.currentPath()))
 		if self.font and textedit:
 			pb.document().setDefaultFont(self.font)
 		if textedit:
