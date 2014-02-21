@@ -736,7 +736,7 @@ class ReTextWindow(QMainWindow):
 			if textedit:
 				pb.setHtml(html)
 			else:
-				pb.setHtml(html, QUrl.fromLocalFile(QDir.currentPath()))
+				pb.setHtml(html, QUrl.fromLocalFile(self.fileNames[self.ind]))
 		if self.font and textedit:
 			pb.document().setDefaultFont(self.font)
 		if textedit:
