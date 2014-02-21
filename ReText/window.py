@@ -788,10 +788,12 @@ class ReTextWindow(QMainWindow):
 		QDir.setCurrent(QFileInfo(self.fileNames[self.ind]).dir().path())
 		self.docTypeChanged()
 	
-	def createNew(self):
+	def createNew(self, text=None):
 		self.tabWidget.addTab(self.createTab(""), self.tr("New document"))
 		self.ind = self.tabWidget.count()-1
 		self.tabWidget.setCurrentIndex(self.ind)
+		if text:
+			self.editBoxes[self.ind].textCursor().insertText(text)
 	
 	def switchTab(self, shift=1):
 		self.tabWidget.setCurrentIndex((self.ind + shift) % self.tabWidget.count())
