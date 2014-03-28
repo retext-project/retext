@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="">
+<!DOCTYPE TS><TS version="2.0" language="fr_FR" sourcelanguage="">
 <context>
     <name>ConfigDialog</name>
     <message>
         <location filename="config.py" line="24"/>
         <source>Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>Comportement</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Automatically save documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarde automatique des documents</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Restore window geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>Restaurer la taille de la fenêtre</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Restore live preview state</source>
-        <translation type="unfinished"></translation>
+        <translation>Restaurer l&apos;état de l&apos;aperçu direct</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Open external links in ReText window</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir les liens externes dans la fenêtre de ReText</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Open unknown files in plain text mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir les fichiers de type inconnu en mode texte</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editeur</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Highlight current line</source>
-        <translation type="unfinished"></translation>
+        <translation>Surligner la ligne courante</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Show line numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les numéros de ligne</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Tab key inserts spaces</source>
-        <translation type="unfinished"></translation>
+        <translation>La touche Tab insert des espaces</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Tabulation width</source>
-        <translation type="unfinished"></translation>
+        <translation>Largeur de tabulation</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Display right margin at column</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher la marge de droite à la colonne</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Interface</translation>
     </message>
     <message>
         <location filename="config.py" line="24"/>
         <source>Icon theme name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom du thème d’icônes</translation>
     </message>
 </context>
 <context>
@@ -78,12 +78,12 @@
     <message>
         <location filename="dialogs.py" line="34"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrez le préfix pour la langue (exemple: fr_FR)</translation>
     </message>
     <message>
         <location filename="dialogs.py" line="39"/>
         <source>Set as default</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir par défaut</translation>
     </message>
 </context>
 <context>
@@ -117,6 +117,11 @@
         <location filename="window.py" line="109"/>
         <source>Save</source>
         <translation>Enregistrer</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="106"/>
+        <source>Set encoding</source>
+        <translation>Définir l&apos;encodage</translation>
     </message>
     <message>
         <location filename="window.py" line="113"/>
@@ -162,6 +167,11 @@
         <location filename="window.py" line="137"/>
         <source>Fullscreen mode</source>
         <translation>Mode plein écran</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="591"/>
+        <source>Preferences</source>
+        <translation>Préférences</translation>
     </message>
     <message>
         <location filename="window.py" line="145"/>
@@ -275,217 +285,207 @@
         <translation>Symboles</translation>
     </message>
     <message>
-        <location filename="window.py" line="231"/>
+        <location filename="window.py" line="232"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="window.py" line="232"/>
+        <location filename="window.py" line="233"/>
         <source>Edit</source>
         <translation>Édition</translation>
     </message>
     <message>
-        <location filename="window.py" line="233"/>
+        <location filename="window.py" line="234"/>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
     <message>
-        <location filename="window.py" line="236"/>
+        <location filename="window.py" line="237"/>
         <source>Open recent</source>
         <translation>Ouvrir les fichiers récents</translation>
     </message>
     <message>
-        <location filename="window.py" line="239"/>
+        <location filename="window.py" line="240"/>
         <source>Directory</source>
         <translation>Répertoire</translation>
     </message>
     <message>
-        <location filename="window.py" line="247"/>
+        <location filename="window.py" line="248"/>
         <source>Export</source>
         <translation>Exporter</translation>
     </message>
     <message>
-        <location filename="window.py" line="269"/>
+        <location filename="window.py" line="270"/>
         <source>Spell check</source>
         <translation>Vérifier l&apos;orthographe</translation>
     </message>
     <message>
-        <location filename="window.py" line="280"/>
+        <location filename="window.py" line="278"/>
+        <source>Default markup</source>
+        <translation>Balisage par défaut</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="281"/>
         <source>Formatting</source>
         <translation>Formatage</translation>
     </message>
     <message>
-        <location filename="window.py" line="317"/>
+        <location filename="window.py" line="319"/>
         <source>Search</source>
         <translation>Rechercher</translation>
     </message>
     <message>
-        <location filename="window.py" line="319"/>
+        <location filename="window.py" line="321"/>
         <source>Case sensitively</source>
         <translation>Sensible à la casse</translation>
     </message>
     <message>
-        <location filename="window.py" line="1135"/>
+        <location filename="window.py" line="1145"/>
         <source>New document</source>
         <translation>Nouveau document</translation>
     </message>
     <message>
-        <location filename="window.py" line="765"/>
+        <location filename="window.py" line="666"/>
+        <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
+        <translation>Impossible d&apos;analyser le contenu du fichier, vérifier si les &lt;a href=&quot;%s&quot;&gt;modules nécessaires&lt;/a&gt; sont installés!</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="773"/>
         <source>Please, save the file somewhere.</source>
         <translation>Veuillez enregistrer le fichier quelque part.</translation>
     </message>
     <message>
-        <location filename="window.py" line="754"/>
+        <location filename="window.py" line="758"/>
+        <source>Failed to copy default template, please create template.html manually.</source>
+        <translation>Impossible de copier le modèle par défaut, merci de créer le fichier template.html manuellement.</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="762"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
         <translation>Pages web enregistrées dans le répertoire &lt;code&gt;html&lt;/code&gt;.</translation>
     </message>
     <message>
-        <location filename="window.py" line="756"/>
+        <location filename="window.py" line="764"/>
         <source>Show directory</source>
         <translation>Afficher le répertoire</translation>
     </message>
     <message>
-        <location filename="window.py" line="880"/>
+        <location filename="window.py" line="889"/>
         <source>Select one or several files to open</source>
         <translation>Choisir un ou plusieurs fichiers à ouvrir</translation>
     </message>
     <message>
-        <location filename="window.py" line="880"/>
+        <location filename="window.py" line="889"/>
         <source>Supported files</source>
         <translation>Formats acceptés</translation>
     </message>
     <message>
-        <location filename="window.py" line="880"/>
+        <location filename="window.py" line="889"/>
         <source>All files (*)</source>
         <translation>Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="962"/>
-        <source>Plain text (*.txt)</source>
-        <translation>Fichier text (*.txt)</translation>
+        <location filename="window.py" line="946"/>
+        <source>Select file encoding from the list:</source>
+        <translation>Choisir l&apos;encodage du fichier dans la liste</translation>
     </message>
     <message>
-        <location filename="window.py" line="1038"/>
+        <location filename="window.py" line="971"/>
+        <source>Plain text (*.txt)</source>
+        <translation>Fichiers texte (*.txt)</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="974"/>
+        <source>%s files</source>
+        <comment>Example of final string: Markdown files</comment>
+        <translation>Fichiers %s</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1047"/>
         <source>Save file</source>
         <translation>Enregistrer le fichier</translation>
     </message>
     <message>
-        <location filename="window.py" line="984"/>
+        <location filename="window.py" line="993"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Impossible d&apos;enregistrer le fichier car il est en lecture seule !</translation>
     </message>
     <message>
-        <location filename="window.py" line="1029"/>
+        <location filename="window.py" line="1038"/>
         <source>Export document to ODT</source>
         <translation>Exporter le document au format ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="1029"/>
+        <location filename="window.py" line="1038"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Fichiers OpenDocument texte (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1038"/>
+        <location filename="window.py" line="1047"/>
         <source>HTML files (*.html *.htm)</source>
-        <translation>Fichier HTML (*.html, *.htm)</translation>
+        <translation>Fichiers HTML (*.html, *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1059"/>
+        <location filename="window.py" line="1068"/>
         <source>Export document to PDF</source>
         <translation>Exporter le document au format PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="1059"/>
+        <location filename="window.py" line="1068"/>
         <source>PDF files (*.pdf)</source>
         <translation>Fichiers PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1075"/>
+        <location filename="window.py" line="1084"/>
         <source>Print document</source>
         <translation>Imprimer le document</translation>
     </message>
     <message>
-        <location filename="window.py" line="1096"/>
+        <location filename="window.py" line="1105"/>
         <source>Export document</source>
         <translation>Exporter le document</translation>
     </message>
     <message>
-        <location filename="window.py" line="1114"/>
+        <location filename="window.py" line="1123"/>
         <source>Failed to execute the command:</source>
         <translation>Échec lors de l&apos;exécution de la commande :</translation>
     </message>
     <message>
-        <location filename="window.py" line="1191"/>
+        <location filename="window.py" line="1201"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Le document a modifié.
 Voulez vous enregistrer vos changements ?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1215"/>
+        <location filename="window.py" line="1225"/>
         <source>HTML code</source>
         <translation>Code HTML</translation>
     </message>
     <message>
-        <location filename="window.py" line="1226"/>
+        <location filename="window.py" line="1236"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>Éditeur simple mais puissant pour Markdown et reStructuredText</translation>
+        <translation>Éditeur de Markdown et ReStructuredText simple mais puissant</translation>
     </message>
     <message>
-        <location filename="window.py" line="1226"/>
+        <location filename="window.py" line="1236"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Auteur: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1226"/>
+        <location filename="window.py" line="1236"/>
         <source>Website</source>
         <translation>Site Web</translation>
     </message>
     <message>
-        <location filename="window.py" line="1226"/>
+        <location filename="window.py" line="1236"/>
         <source>Markdown syntax</source>
         <translation>Syntaxe Markdown</translation>
     </message>
     <message>
-        <location filename="window.py" line="1226"/>
+        <location filename="window.py" line="1236"/>
         <source>reStructuredText syntax</source>
         <translation>Syntaxe reStructuredText</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="965"/>
-        <source>%s files</source>
-        <comment>Example of final string: Markdown files</comment>
-        <translation>Fichiers %s</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="750"/>
-        <source>Failed to copy default template, please create template.html manually.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="661"/>
-        <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="277"/>
-        <source>Default markup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="586"/>
-        <source>Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="106"/>
-        <source>Set encoding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="937"/>
-        <source>Select file encoding from the list:</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
