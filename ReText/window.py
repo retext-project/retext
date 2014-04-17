@@ -4,7 +4,7 @@
 # License: GNU GPL v2 or higher
 
 import markups
-from subprocess import Popen, PIPE
+from subprocess import Popen
 from ReText import QtCore, QtPrintSupport, QtGui, QtWidgets, QtWebKitWidgets, \
  icon_path, DOCTYPE_MARKDOWN, DOCTYPE_REST, app_name, app_version, globalSettings, \
  settings, readListFromSettings, writeListToSettings, writeToSettings, \
@@ -60,17 +60,6 @@ class ReTextWindow(QMainWindow):
 			self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
 		if globalSettings.iconTheme:
 			QIcon.setThemeName(globalSettings.iconTheme)
-		if QIcon.themeName() in ('', 'hicolor'):
-			try:
-				gconf = Popen(['gconftool-2', '--get', '/desktop/gnome/interface/icon_theme'],
-				stdout=PIPE)
-			except OSError: pass
-			else:
-				iconTheme = gconf.stdout.read().rstrip()
-				if iconTheme:
-					iconTheme = iconTheme.decode()
-					QIcon.setThemeName(iconTheme)
-					settings.setValue('iconTheme', iconTheme)
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
 		elif QFile.exists('/usr/share/pixmaps/retext.png'):
