@@ -9,28 +9,60 @@ Qt = QtCore.Qt
 (QFont, QSyntaxHighlighter, QTextCharFormat) = (QtGui.QFont, QtGui.QSyntaxHighlighter,
  QtGui.QTextCharFormat)
 
+reHtmlTags     = re.compile('<[^<>@]*>')
+reHtmlSymbols  = re.compile('&[^; ]*;')
+reHtmlStrings  = re.compile('"[^"<]*"(?=[^<]*>)')
+reHtmlComments = re.compile('<!--[^<>]*-->')
+reItalics1     = re.compile(r'(?<!\*)\*[^ \*][^\*]*\*')
+reItalics2     = re.compile(r'(?<!_|\w)_[^_]+_(?!\w)')
+reBold1        = re.compile(r'(?<!\*)\*\*((?!\*\*).)*\*\*')
+reBold2        = re.compile(r'(?<!_|\w)__[^_]+__(?!\w)')
+reBoldItalics1 = re.compile(r'\*{3,3}[^\*]+\*{3,3}')
+reBoldItalics2 = re.compile('___[^_]+___')
+reMkdHeaders   = re.compile('^#.+')
+reMkdLinksImgs = re.compile(r'(?<=\[)[^\[\]]*(?=\])')
+reMkdLinkRefs  = re.compile(r'(?<=\]\()[^\(\)]*(?=\))')
+reBlockQuotes  = re.compile('^ *>.+')
+reReSTDirects  = re.compile(r'\.\. [a-z]+::')
+reReSTRoles    = re.compile(':[a-z]+:')
+reWords        = re.compile('[^_\\W]+', flags=re.UNICODE)
+
+defaultColorScheme = (
+	Qt.darkMagenta,  # HTML tags
+	Qt.darkCyan,     # HTML symbols
+	Qt.darkYellow,   # HTML Quotes symbols inside tags
+	Qt.gray,         # HTML comments
+	Qt.blue,         # Markdown links and images
+	Qt.darkGray,     # Blockquotes
+	Qt.darkMagenta,  # reStructuredText directives
+	Qt.darkRed,      # reStructuredText roles
+)
+
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
 	docType = DOCTYPE_NONE
 	
-	def highlightBlock(self, text):
+	def highlightBlock(self, text, colorScheme=None):
+		if colorScheme is None:
+			colorScheme = defaultColorScheme
 		patterns = (
-			('<[^<>@]*>', Qt.darkMagenta, QFont.Bold),         # 0: HTML tags
-			('&[^; ]*;', Qt.darkCyan, QFont.Bold),             # 1: HTML symbols
-			('"[^"<]*"(?=[^<]*>)', Qt.darkYellow, QFont.Bold), # 2: Quoted strings inside tags
-			('<!--[^<>]*-->', Qt.gray, QFont.Normal),          # 3: HTML comments
-			(r'(?<!\*)\*[^ \*][^\*]*\*', None, QFont.Normal, True), # 4: *Italics*
-			(r'(?<!_|\w)_[^_]+_(?!\w)', None, QFont.Normal, True),  # 5: _Italics_
-			(r'(?<!\*)\*\*((?!\*\*).)*\*\*', None, QFont.Bold), # 6: **Bold**
-			(r'(?<!_|\w)__[^_]+__(?!\w)', None, QFont.Bold),   # 7: __Bold__
-			(r'\*{3,3}[^\*]+\*{3,3}', None, QFont.Bold, True), # 8: ***BoldItalics***
-			('___[^_]+___', None, QFont.Bold, True),           # 9: ___BoldItalics___
-			('^#.+', None, QFont.Black),                       # 10: Headers
-			(r'(?<=\[)[^\[\]]*(?=\])', Qt.blue, QFont.Normal), # 11: Links and images
-			(r'(?<=\]\()[^\(\)]*(?=\))', None, QFont.Normal, True, True), # 12: Link references
-			('^ *>.+', Qt.darkGray, QFont.Normal),             # 13: Blockquotes
-			(r'\.\. [a-z]+::', Qt.darkMagenta, QFont.Normal),  # 14: reStructuredText directives
-			(':[a-z]+:', Qt.darkRed, QFont.Normal)             # 15: reStructuredText roles
+			# regex,         color,          font style,    italic, underline
+			(reHtmlTags,     colorScheme[0], QFont.Bold),
+			(reHtmlSymbols,  colorScheme[1], QFont.Bold),
+			(reHtmlStrings,  colorScheme[2], QFont.Bold),
+			(reHtmlComments, colorScheme[3], QFont.Normal),
+			(reItalics1,     None,           QFont.Normal,  True),
+			(reItalics2,     None,           QFont.Normal,  True),
+			(reBold1,        None,           QFont.Bold),
+			(reBold2,        None,           QFont.Bold),
+			(reBoldItalics1, None,           QFont.Bold,    True),
+			(reBoldItalics2, None,           QFont.Bold,    True),
+			(reMkdHeaders,   None,           QFont.Black),
+			(reMkdLinksImgs, colorScheme[4], QFont.Normal),
+			(reMkdLinkRefs,  None,           QFont.Normal,  True,   True),
+			(reBlockQuotes,  colorScheme[5], QFont.Normal),
+			(reReSTDirects,  colorScheme[6], QFont.Normal),
+			(reReSTRoles,    colorScheme[7], QFont.Normal)
 		)
 		patternsDict = {
 			DOCTYPE_NONE: (),
@@ -50,14 +82,14 @@ class ReTextHighlighter(QSyntaxHighlighter):
 					charFormat.setFontItalic(pattern[3])
 				if len(pattern) >= 5:
 					charFormat.setFontUnderline(pattern[4])
-				for match in re.finditer(pattern[0], text):
+				for match in pattern[0].finditer(text):
 					self.setFormat(match.start(), match.end() - match.start(), charFormat)
 		# Spell checker
 		if self.dictionary:
 			charFormat = QTextCharFormat()
 			charFormat.setUnderlineColor(Qt.red)
 			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
-			for match in re.finditer('[^_\\W]+', text, flags=re.UNICODE):
+			for match in reWords.finditer(text):
 				finalFormat = QTextCharFormat()
 				finalFormat.merge(charFormat)
 				finalFormat.merge(self.format(match.start()))
