@@ -24,11 +24,8 @@ def build_translations():
 	for ts_file in glob(join('locale', '*.ts')):
 		try:
 			check_call(('lrelease', ts_file))
-		except OSError:
-			try:
-				check_call(('lrelease-qt4', ts_file))
-			except Exception as e:
-				error = e
+		except Exception as e:
+			error = e
 	if error:
 		print('Failed to build translations:', error)
 
