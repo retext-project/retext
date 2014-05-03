@@ -20,14 +20,13 @@
 
 import sys
 import signal
-from ReText import QtCore, QtWidgets, QtWebKit, datadirs, globalSettings
+from ReText import datadirs, globalSettings
 from ReText.window import ReTextWindow
 
-(QFile, QFileInfo, QIODevice, QLibraryInfo, QLocale, QTextStream,
- QTranslator) = (QtCore.QFile, QtCore.QFileInfo, QtCore.QIODevice,
- QtCore.QLibraryInfo, QtCore.QLocale, QtCore.QTextStream, QtCore.QTranslator)
-QApplication = QtWidgets.QApplication
-QWebSettings = QtWebKit.QWebSettings
+from PyQt5.QtCore import QFile, QFileInfo, QIODevice, QLibraryInfo, \
+ QLocale, QTextStream, QTranslator
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWebKit import QWebSettings
 
 def canonicalize(option):
 	if option == '--preview':

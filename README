@@ -10,8 +10,8 @@ or in the [wiki](http://sourceforge.net/p/retext/wiki/).
 
 ReText requires the following packages to run:
 
-* [python](http://python.org/) — we recommend using version 3.2 or higher
-* [python-qt4](http://www.riverbankcomputing.co.uk/software/pyqt/intro)
+* [python](http://python.org/) — version 3.2 or higher
+* [pyqt5](http://www.riverbankcomputing.co.uk/software/pyqt/intro)
 * [python-markups](http://pypi.python.org/pypi/Markups)
 
 We also recommend having these packages installed:

@@ -4,9 +4,9 @@
 # License: GNU GPL v2 or higher
 
 import sys
-from ReText import QtGui, DOCTYPE_MARKDOWN, DOCTYPE_REST
+from ReText import DOCTYPE_MARKDOWN, DOCTYPE_REST
 
-QTextCursor = QtGui.QTextCursor
+from PyQt5.QtGui import QTextCursor
 
 LARGER_THAN_ANYTHING = sys.maxsize
 

@@ -2,12 +2,11 @@
 # Copyright: Dmitry Shachnev 2012
 # License: GNU GPL v2 or higher
 
-from ReText import QtCore, QtGui, DOCTYPE_NONE, DOCTYPE_MARKDOWN, DOCTYPE_REST, DOCTYPE_HTML
+from ReText import DOCTYPE_NONE, DOCTYPE_MARKDOWN, DOCTYPE_REST, DOCTYPE_HTML
 import re
 
-Qt = QtCore.Qt
-(QFont, QSyntaxHighlighter, QTextCharFormat) = (QtGui.QFont, QtGui.QSyntaxHighlighter,
- QtGui.QTextCharFormat)
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont, QSyntaxHighlighter, QTextCharFormat
 
 reHtmlTags     = re.compile('<[^<>@]*>')
 reHtmlSymbols  = re.compile('&[^; ]*;')

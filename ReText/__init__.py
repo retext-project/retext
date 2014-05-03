@@ -4,28 +4,10 @@
 
 import markups
 import markups.common
-import sys
 from os.path import join, abspath
 
-if '--pyqt4' in sys.argv:
-	from PyQt4 import QtCore, QtGui, QtWebKit
-elif '--pyside' in sys.argv:
-	from PySide import QtCore, QtGui, QtWebKit
-else:
-	try:
-		from PyQt5 import QtCore, QtPrintSupport, QtGui, QtWidgets, QtWebKit, QtWebKitWidgets
-	except ImportError:
-		try:
-			from PyQt4 import QtCore, QtGui, QtWebKit
-		except ImportError:
-			from PySide import QtCore, QtGui, QtWebKit
-
-if not 'QtWidgets' in locals():
-	# PyQt4 or PySide
-	QtPrintSupport, QtWidgets, QtWebKitWidgets = QtGui, QtGui, QtWebKit
-
-(QByteArray, QDir, QSettings) = (QtCore.QByteArray, QtCore.QDir, QtCore.QSettings)
-QFont = QtGui.QFont
+from PyQt5.QtCore import QByteArray, QSettings, QStandardPaths
+from PyQt5.QtGui import QFont
 
 app_name = "ReText"
 app_version = "4.2.0 (Git)"
@@ -148,15 +130,5 @@ monofont.setFamily(globalSettings.editorFont)
 if globalSettings.editorFontSize:
 	monofont.setPointSize(globalSettings.editorFontSize)
 
-currentpath = abspath('.')
-if hasattr(QtCore, 'QStandardPaths'):
-	datadirs = QtCore.QStandardPaths.standardLocations(
-		QtCore.QStandardPaths.GenericDataLocation)
-	datadirs = [currentpath] + [join(d, 'retext') for d in datadirs]
-else:
-	datadirs = (
-		currentpath,
-		'/usr/share/retext',
-		'/usr/local/share/retext',
-		QDir.homePath()+'/.local/share/retext'
-	)
+datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
+datadirs = [abspath('.')] + [join(d, 'retext') for d in datadirs]

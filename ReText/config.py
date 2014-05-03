@@ -1,12 +1,12 @@
-from ReText import QtCore, QtGui, QtWidgets, globalSettings
+from ReText import globalSettings
 from markups.common import CONFIGURATION_DIR
 from os.path import join
 
-Qt = QtCore.Qt
-QIcon = QtGui.QIcon
-(QCheckBox, QDialog, QDialogButtonBox, QGridLayout, QLabel, QLineEdit, QSpinBox) = (
- QtWidgets.QCheckBox, QtWidgets.QDialog, QtWidgets.QDialogButtonBox,
- QtWidgets.QGridLayout, QtWidgets.QLabel, QtWidgets.QLineEdit, QtWidgets.QSpinBox)
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
+ QGridLayout, QLabel, QLineEdit, QSpinBox
+
 MKD_EXTS_FILE = join(CONFIGURATION_DIR, 'markdown-extensions.txt')
 
 class ConfigDialog(QDialog):

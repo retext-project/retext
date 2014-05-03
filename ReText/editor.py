@@ -3,12 +3,11 @@
 # Copyright: Dmitry Shachnev 2012
 # License: GNU GPL v2 or higher
 
-from ReText import QtCore, QtGui, QtWidgets, monofont, globalSettings, tablemode, DOCTYPE_MARKDOWN
+from ReText import monofont, globalSettings, tablemode, DOCTYPE_MARKDOWN
 
-(QEvent, QObject, QPoint, QSize, Qt) = (QtCore.QEvent, QtCore.QObject, QtCore.QPoint, QtCore.QSize, QtCore.Qt)
-(QColor, QKeySequence, QPainter, QTextCursor, QTextFormat) = (QtGui.QColor, QtGui.QKeySequence,
- QtGui.QPainter, QtGui.QTextCursor, QtGui.QTextFormat)
-(QTextEdit, QWidget) = (QtWidgets.QTextEdit, QtWidgets.QWidget)
+from PyQt5.QtCore import QEvent, QPoint, QSize, Qt
+from PyQt5.QtGui import QColor, QKeySequence, QPainter, QTextCursor, QTextFormat
+from PyQt5.QtWidgets import QTextEdit, QWidget
 
 class ReTextEdit(QTextEdit):
 	def __init__(self, parent):

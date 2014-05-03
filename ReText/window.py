@@ -5,47 +5,29 @@
 
 import markups
 from subprocess import Popen
-from ReText import QtCore, QtPrintSupport, QtGui, QtWidgets, QtWebKitWidgets, \
- icon_path, DOCTYPE_MARKDOWN, DOCTYPE_REST, app_name, app_version, globalSettings, \
- settings, readListFromSettings, writeListToSettings, writeToSettings, \
- datadirs, enchant, enchant_available
+from ReText import icon_path, DOCTYPE_MARKDOWN, DOCTYPE_REST, app_name, \
+ app_version, globalSettings, settings, readListFromSettings, \
+ writeListToSettings, writeToSettings, datadirs, enchant, enchant_available
 from ReText.webpages import wpInit, wpUpdateAll
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
 from ReText.highlighter import ReTextHighlighter
 from ReText.editor import ReTextEdit
 
-(QDir, QFile, QFileInfo, QIODevice, QLocale, QRect, QTemporaryFile, QTextCodec,
- QTextStream, QTimer, QUrl, Qt) = (QtCore.QDir, QtCore.QFile, QtCore.QFileInfo,
- QtCore.QIODevice, QtCore.QLocale, QtCore.QRect, QtCore.QTemporaryFile,
- QtCore.QTextCodec, QtCore.QTextStream, QtCore.QTimer, QtCore.QUrl, QtCore.Qt)
-(QDesktopServices, QFont, QFontMetrics, QIcon, QKeySequence, QTextCursor,
- QTextDocument) = (QtGui.QDesktopServices, QtGui.QFont, QtGui.QFontMetrics,
- QtGui.QIcon, QtGui.QKeySequence, QtGui.QTextCursor, QtGui.QTextDocument)
-(QAction, QActionGroup, QApplication, QCheckBox, QComboBox, QDesktopWidget, QDialog,
- QFileDialog, QFontDialog, QInputDialog, QLabel, QLineEdit, QMainWindow, QMenuBar,
- QMessageBox, QSplitter, QTabWidget, QTextBrowser, QTextEdit, QToolBar) = (
- QtWidgets.QAction, QtWidgets.QActionGroup, QtWidgets.QApplication, QtWidgets.QCheckBox,
- QtWidgets.QComboBox, QtWidgets.QDesktopWidget, QtWidgets.QDialog, QtWidgets.QFileDialog,
- QtWidgets.QFontDialog, QtWidgets.QInputDialog, QtWidgets.QLabel, QtWidgets.QLineEdit,
- QtWidgets.QMainWindow, QtWidgets.QMenuBar, QtWidgets.QMessageBox, QtWidgets.QSplitter,
- QtWidgets.QTabWidget, QtWidgets.QTextBrowser, QtWidgets.QTextEdit, QtWidgets.QToolBar)
-(QPrintDialog, QPrintPreviewDialog, QPrinter) = (QtPrintSupport.QPrintDialog,
- QtPrintSupport.QPrintPreviewDialog, QtPrintSupport.QPrinter)
-(QWebPage, QWebView) = (QtWebKitWidgets.QWebPage, QtWebKitWidgets.QWebView)
-
-useAppDisplayName = hasattr(QApplication, 'applicationDisplayName')
+from PyQt5.QtCore import QDir, QFile, QFileInfo, QIODevice, QLocale, QRect, \
+ QTextCodec, QTextStream, QTimer, QUrl, Qt
+from PyQt5.QtGui import QDesktopServices, QFont, QFontMetrics, QIcon, \
+ QKeySequence, QTextCursor, QTextDocument, QTextDocumentWriter
+from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
+ QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
+ QLineEdit, QMainWindow, QMenuBar, QMessageBox, QSplitter, QTabWidget, \
+ QTextBrowser, QTextEdit, QToolBar
+from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
+from PyQt5.QtWebKitWidgets import QWebPage, QWebView
 
 def getSaveFileName(*args):
 	result = QFileDialog.getSaveFileName(*args)
 	return result[0] if isinstance(result, tuple) else result
-
-def setWindowTitle(window, title):
-	if not useAppDisplayName:
-		title += ' \u2014 ' + app_name
-	QMainWindow.setWindowTitle(window, title)
-
-dialogTitle = '' if useAppDisplayName else app_name
 
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
@@ -248,8 +230,7 @@ class ReTextWindow(QMainWindow):
 		menuFile.addSeparator()
 		menuExport = menuFile.addMenu(self.tr('Export'))
 		menuExport.addAction(self.actionPerfectHtml)
-		if hasattr(QtGui, 'QTextDocumentWriter'): # PYSIDE-177
-			menuExport.addAction(self.actionOdf)
+		menuExport.addAction(self.actionOdf)
 		menuExport.addAction(self.actionPdf)
 		if self.extensionActions:
 			menuExport.addSeparator()
@@ -283,8 +264,7 @@ class ReTextWindow(QMainWindow):
 		menuFormat.addAction(self.actionBold)
 		menuFormat.addAction(self.actionItalic)
 		menuFormat.addAction(self.actionUnderline)
-		if QtCore.__package__ != 'PySide': # PYSIDE-213
-			menuEdit.addAction(self.actionWebKit)
+		menuEdit.addAction(self.actionWebKit)
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionViewHtml)
 		menuEdit.addAction(self.actionLivePreview)
@@ -518,7 +498,7 @@ class ReTextWindow(QMainWindow):
 		if self.fileNames[ind]:
 			self.setCurrentFile()
 		else:
-			setWindowTitle(self, self.tr('New document') + '[*]')
+			self.setWindowTitle(self.tr('New document') + '[*]')
 			self.docTypeChanged()
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
 		if globalSettings.restorePreviewState:
@@ -591,7 +571,7 @@ class ReTextWindow(QMainWindow):
 	
 	def openConfigDialog(self):
 		dlg = ConfigDialog(self)
-		setWindowTitle(dlg, self.tr('Preferences'))
+		dlg.setWindowTitle(self.tr('Preferences'))
 		dlg.show()
 	
 	def enableSC(self, yes):
@@ -614,7 +594,6 @@ class ReTextWindow(QMainWindow):
 			localedlg = LocaleDialog(self, defaultText=self.sl)
 		else:
 			localedlg = LocaleDialog(self)
-		localedlg.setWindowTitle(dialogTitle)
 		if localedlg.exec_() != QDialog.Accepted:
 			return
 		sl = localedlg.localeEdit.text()
@@ -624,7 +603,7 @@ class ReTextWindow(QMainWindow):
 				sl = str(sl)
 				enchant.Dict(sl)
 			except Exception as e:
-				QMessageBox.warning(self, dialogTitle, str(e))
+				QMessageBox.warning(self, '', str(e))
 			else:
 				self.sl = sl
 				self.enableSC(self.actionEnableSC.isChecked())
@@ -740,17 +719,17 @@ class ReTextWindow(QMainWindow):
 	
 	def startWpgen(self):
 		if not self.fileNames[self.ind]:
-			return QMessageBox.warning(self, dialogTitle, self.tr("Please, save the file somewhere."))
+			return QMessageBox.warning(self, '', self.tr("Please, save the file somewhere."))
 		if not QFile.exists("template.html"):
 			try:
 				wpInit()
 			except IOError as e:
 				e = str(e)
-				return QMessageBox.warning(self, dialogTitle, self.tr(
+				return QMessageBox.warning(self, '', self.tr(
 				'Failed to copy default template, please create template.html manually.')
 				+ '\n\n' + e)
 		wpUpdateAll()
-		msgBox = QMessageBox(QMessageBox.Information, dialogTitle,
+		msgBox = QMessageBox(QMessageBox.Information, '',
 		self.tr("Webpages saved in <code>html</code> directory."), QMessageBox.Ok)
 		showButton = msgBox.addButton(self.tr("Show directory"), QMessageBox.AcceptRole)
 		msgBox.exec_()
@@ -761,7 +740,7 @@ class ReTextWindow(QMainWindow):
 		if self.fileNames[self.ind]:
 			QDesktopServices.openUrl(QUrl.fromLocalFile(QFileInfo(self.fileNames[self.ind]).path()))
 		else:
-			QMessageBox.warning(self, dialogTitle, self.tr("Please, save the file somewhere."))
+			QMessageBox.warning(self, '', self.tr("Please, save the file somewhere."))
 	
 	def setCurrentFile(self):
 		self.setWindowTitle("")
@@ -880,11 +859,8 @@ class ReTextWindow(QMainWindow):
 			supportedExtensions += markup.file_extensions
 		fileFilter = ' (' + str.join(' ', ['*'+ext for ext in supportedExtensions]) + ');;'
 		fileNames = QFileDialog.getOpenFileNames(self, self.tr("Select one or several files to open"), "",
-		self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
-		if isinstance(fileNames, tuple):
-			# PySide or PyQt5
-			fileNames = fileNames[0]
-		for fileName in fileNames:
+			self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
+		for fileName in fileNames[0]:
 			self.openFileWrapper(fileName)
 	
 	def openFileWrapper(self, fileName):
@@ -941,7 +917,7 @@ class ReTextWindow(QMainWindow):
 	def showEncodingDialog(self):
 		if not self.maybeSave(self.ind):
 			return
-		encoding, ok = QInputDialog.getItem(self, dialogTitle,
+		encoding, ok = QInputDialog.getItem(self, '',
 			self.tr('Select file encoding from the list:'),
 			[bytes(b).decode() for b in QTextCodec.availableCodecs()],
 			0, False)
@@ -988,7 +964,7 @@ class ReTextWindow(QMainWindow):
 				self.setWindowModified(False)
 				return True
 			else:
-				QMessageBox.warning(self, dialogTitle,
+				QMessageBox.warning(self, '',
 				self.tr("Cannot save to file because it is read-only!"))
 		return False
 	
@@ -1037,7 +1013,7 @@ class ReTextWindow(QMainWindow):
 			self.tr("OpenDocument text files (*.odt)"))
 		if not QFileInfo(fileName).suffix():
 			fileName += ".odt"
-		writer = QtGui.QTextDocumentWriter(fileName)
+		writer = QTextDocumentWriter(fileName)
 		writer.setFormat("odf")
 		writer.write(document)
 	
@@ -1079,7 +1055,7 @@ class ReTextWindow(QMainWindow):
 		self.updatePreviewBox()
 		printer = self.standardPrinter()
 		dlg = QPrintDialog(printer, self)
-		setWindowTitle(dlg, self.tr("Print document"))
+		dlg.setWindowTitle(self.tr("Print document"))
 		if (dlg.exec_() == QDialog.Accepted):
 			document = self.getDocumentForPrint()
 			if document != None:
@@ -1118,7 +1094,7 @@ class ReTextWindow(QMainWindow):
 			Popen(str(command), shell=True).wait()
 		except Exception as error:
 			errorstr = str(error)
-			QMessageBox.warning(self, dialogTitle, self.tr('Failed to execute the command:')
+			QMessageBox.warning(self, '', self.tr('Failed to execute the command:')
 			+ '\n' + errorstr)
 		QFile(tmpname).remove()
 		if of:
@@ -1195,7 +1171,7 @@ class ReTextWindow(QMainWindow):
 		if not self.editBoxes[ind].document().isModified():
 			return True
 		self.tabWidget.setCurrentIndex(ind)
-		ret = QMessageBox.warning(self, dialogTitle,
+		ret = QMessageBox.warning(self, '',
 			self.tr("The document has been modified.\nDo you want to save your changes?"),
 			QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel)
 		if ret == QMessageBox.Save:
@@ -1219,7 +1195,7 @@ class ReTextWindow(QMainWindow):
 		except Exception:
 			return self.printError()
 		winTitle = self.getDocumentTitle(baseName=True)
-		setWindowTitle(htmlDlg, winTitle+" ("+self.tr("HTML code")+")")
+		htmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+")")
 		htmlDlg.textEdit.setPlainText(htmltext.rstrip())
 		htmlDlg.hl.rehighlight()
 		htmlDlg.show()

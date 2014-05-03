@@ -2,13 +2,11 @@
 # Copyright: Dmitry Shachnev 2012
 # License: GNU GPL v2 or higher
 
-from ReText import QtWidgets, monofont, DOCTYPE_HTML
+from ReText import monofont, DOCTYPE_HTML
 from ReText.highlighter import ReTextHighlighter
 
-(QCheckBox, QDialog, QDialogButtonBox, QLabel, QLineEdit, QTextEdit,
- QVBoxLayout) = (QtWidgets.QCheckBox, QtWidgets.QDialog,
- QtWidgets.QDialogButtonBox, QtWidgets.QLabel, QtWidgets.QLineEdit,
- QtWidgets.QTextEdit, QtWidgets.QVBoxLayout)
+from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
+ QLabel, QLineEdit, QTextEdit, QVBoxLayout
 
 class HtmlDialog(QDialog):
 	def __init__(self, parent=None):
