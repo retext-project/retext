@@ -25,10 +25,6 @@ from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
 from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
 from PyQt5.QtWebKitWidgets import QWebPage, QWebView
 
-def getSaveFileName(*args):
-	result = QFileDialog.getSaveFileName(*args)
-	return result[0] if isinstance(result, tuple) else result
-
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
 		QMainWindow.__init__(self, parent)
@@ -950,7 +946,8 @@ class ReTextWindow(QMainWindow):
 					% markupClass.name + ' (' + str.join(' ',
 					('*'+extension for extension in markupClass.file_extensions)) + ')'
 				ext = markupClass.default_extension
-			newFileName = getSaveFileName(self, self.tr("Save file"), "", defaultExt)
+			newFileName = QFileDialog.getSaveFileName(self,
+				self.tr("Save file"), "", defaultExt)[0]
 			if newFileName:
 				if not QFileInfo(newFileName).suffix():
 					newFileName += ext
@@ -1009,8 +1006,9 @@ class ReTextWindow(QMainWindow):
 			document = self.textDocument()
 		except Exception:
 			return self.printError()
-		fileName = getSaveFileName(self, self.tr("Export document to ODT"), "",
-			self.tr("OpenDocument text files (*.odt)"))
+		fileName = QFileDialog.getSaveFileName(self,
+			self.tr("Export document to ODT"), "",
+			self.tr("OpenDocument text files (*.odt)"))[0]
 		if not QFileInfo(fileName).suffix():
 			fileName += ".odt"
 		writer = QTextDocumentWriter(fileName)
@@ -1018,8 +1016,9 @@ class ReTextWindow(QMainWindow):
 		writer.write(document)
 	
 	def saveFilePerfect(self):
-		fileName = getSaveFileName(self, self.tr("Save file"), "",
-			self.tr("HTML files (*.html *.htm)"))
+		fileName = QFileDialog.getSaveFileName(self,
+			self.tr("Save file"), "",
+			self.tr("HTML files (*.html *.htm)"))[0]
 		if fileName:
 			self.saveHtml(fileName)
 	
@@ -1039,8 +1038,9 @@ class ReTextWindow(QMainWindow):
 	
 	def savePdf(self):
 		self.updatePreviewBox()
-		fileName = getSaveFileName(self, self.tr("Export document to PDF"),
-			"", self.tr("PDF files (*.pdf)"))
+		fileName = QFileDialog.getSaveFileName(self,
+			self.tr("Export document to PDF"),
+			"", self.tr("PDF files (*.pdf)"))[0]
 		if fileName:
 			if not QFileInfo(fileName).suffix():
 				fileName += ".pdf"
@@ -1076,7 +1076,8 @@ class ReTextWindow(QMainWindow):
 		if of:
 			if defaultext and not filefilter:
 				filefilter = '*'+defaultext
-			fileName = getSaveFileName(self, self.tr('Export document'), '', filefilter)
+			fileName = QFileDialog.getSaveFileName(self,
+				self.tr('Export document'), '', filefilter)[0]
 			if not fileName:
 				return
 			if defaultext and not QFileInfo(fileName).suffix():

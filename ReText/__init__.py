@@ -74,10 +74,6 @@ def readFromSettings(key, keytype, settings=settings, default=None):
 		value = settings.value(key, type=keytype)
 		if isinstance(value, keytype):
 			return value
-		# PySide returns strings instead of ints and bools
-		if (isinstance(value, str) and value.lower() == 'false'
-		and keytype is bool):
-			return False
 		return keytype(value)
 	except TypeError as error:
 		# Type mismatch
