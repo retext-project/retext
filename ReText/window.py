@@ -22,11 +22,11 @@ from ReText.editor import ReTextEdit
  QTextDocument) = (QtGui.QDesktopServices, QtGui.QFont, QtGui.QFontMetrics,
  QtGui.QIcon, QtGui.QKeySequence, QtGui.QTextCursor, QtGui.QTextDocument)
 (QAction, QActionGroup, QApplication, QCheckBox, QComboBox, QDesktopWidget, QDialog,
- QFileDialog, QFontDialog, QInputDialog, QLabel, QLineEdit, QMainWindow, QMenuBar,
+ QFileDialog, QFontDialog, QInputDialog, QLineEdit, QMainWindow, QMenuBar,
  QMessageBox, QSplitter, QTabWidget, QTextBrowser, QTextEdit, QToolBar) = (
  QtWidgets.QAction, QtWidgets.QActionGroup, QtWidgets.QApplication, QtWidgets.QCheckBox,
  QtWidgets.QComboBox, QtWidgets.QDesktopWidget, QtWidgets.QDialog, QtWidgets.QFileDialog,
- QtWidgets.QFontDialog, QtWidgets.QInputDialog, QtWidgets.QLabel, QtWidgets.QLineEdit,
+ QtWidgets.QFontDialog, QtWidgets.QInputDialog, QtWidgets.QLineEdit,
  QtWidgets.QMainWindow, QtWidgets.QMenuBar, QtWidgets.QMessageBox, QtWidgets.QSplitter,
  QtWidgets.QTabWidget, QtWidgets.QTextBrowser, QtWidgets.QTextEdit, QtWidgets.QToolBar)
 (QPrintDialog, QPrintPreviewDialog, QPrinter) = (QtPrintSupport.QPrintDialog,
