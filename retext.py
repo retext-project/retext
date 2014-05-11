@@ -26,7 +26,6 @@ from ReText.window import ReTextWindow
 from PyQt5.QtCore import QFile, QFileInfo, QIODevice, QLibraryInfo, \
  QLocale, QTextStream, QTranslator
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWebKit import QWebSettings
 
 def canonicalize(option):
 	if option == '--preview':
@@ -51,9 +50,6 @@ def main():
 		sheetfile.open(QIODevice.ReadOnly)
 		app.setStyleSheet(QTextStream(sheetfile).readAll())
 		sheetfile.close()
-	# A work-around for https://bugs.webkit.org/show_bug.cgi?id=114618
-	webSettings = QWebSettings.globalSettings()
-	webSettings.setFontFamily(QWebSettings.FixedFont, 'monospace')
 	window = ReTextWindow()
 	window.show()
 	# ReText can change directory when loading files, so we
