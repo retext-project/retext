@@ -114,7 +114,7 @@ class ReTextWindow(QMainWindow):
 			shct=Qt.Key_F11, trigbool=self.enableFullScreen)
 		self.actionConfig = self.act(self.tr('Preferences'), icon='preferences-system',
 			trig=self.openConfigDialog)
-		self.actionPerfectHtml = self.act('HTML', 'text-html', self.saveFilePerfect)
+		self.actionSaveHtml = self.act('HTML', 'text-html', self.saveFileHtml)
 		self.actionPdf = self.act('PDF', 'application-pdf', self.savePdf)
 		self.actionOdf = self.act('ODT', 'x-office-document', self.saveOdf)
 		self.getExportExtensionsList()
@@ -225,7 +225,7 @@ class ReTextWindow(QMainWindow):
 		menuFile.addAction(self.actionPrevTab)
 		menuFile.addSeparator()
 		menuExport = menuFile.addMenu(self.tr('Export'))
-		menuExport.addAction(self.actionPerfectHtml)
+		menuExport.addAction(self.actionSaveHtml)
 		menuExport.addAction(self.actionOdf)
 		menuExport.addAction(self.actionPdf)
 		if self.extensionActions:
@@ -481,7 +481,7 @@ class ReTextWindow(QMainWindow):
 	def changeIndex(self, ind):
 		if ind > -1:
 			self.actionPlainText.setChecked(self.aptc[ind])
-			self.actionPerfectHtml.setDisabled(self.aptc[ind])
+			self.actionSaveHtml.setDisabled(self.aptc[ind])
 			self.actionViewHtml.setDisabled(self.aptc[ind])
 			self.actionUndo.setEnabled(self.editBoxes[ind].document().isUndoAvailable())
 			self.actionRedo.setEnabled(self.editBoxes[ind].document().isRedoAvailable())
@@ -1015,7 +1015,7 @@ class ReTextWindow(QMainWindow):
 		writer.setFormat("odf")
 		writer.write(document)
 	
-	def saveFilePerfect(self):
+	def saveFileHtml(self):
 		fileName = QFileDialog.getSaveFileName(self,
 			self.tr("Save file"), "",
 			self.tr("HTML files (*.html *.htm)"))[0]
@@ -1218,7 +1218,7 @@ class ReTextWindow(QMainWindow):
 	
 	def enablePlainText(self, value):
 		self.aptc[self.ind] = value
-		self.actionPerfectHtml.setDisabled(value)
+		self.actionSaveHtml.setDisabled(value)
 		self.actionViewHtml.setDisabled(value)
 		self.docTypeChanged()
 	
