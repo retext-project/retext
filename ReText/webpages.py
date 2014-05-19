@@ -7,14 +7,6 @@ import sys
 import shutil
 from functools import wraps
 from markups.web import WebLibrary
-from ReText import app_version
-
-app_name = "ReText Webpages generator"
-app_data = (
-	app_name,
-	app_version,
-	"http://sourceforge.net/p/retext/"
-)
 
 templatesDir = os.path.abspath(os.path.dirname(sys.argv[0])) + "/templates/"
 if not os.path.exists(templatesDir):
@@ -40,13 +32,13 @@ def wpInit():
 
 @handleErrors
 def wpUpdate(pages):
-	wl = WebLibrary(app_data=app_data)
+	wl = WebLibrary()
 	for page in pages:
 		wl.update(page)
 
 @handleErrors
 def wpUpdateAll():
-	wl = WebLibrary(app_data=app_data)
+	wl = WebLibrary()
 	wl.update_all()
 
 def wpUseStyle(styleName):
