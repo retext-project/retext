@@ -666,7 +666,7 @@ class ReTextWindow(QMainWindow):
 		cssFileName = self.getDocumentTitle(baseName=True)+'.css'
 		if QFile(cssFileName).exists():
 			headers += '<link rel="stylesheet" type="text/css" href="%s">\n' \
-			% QUrl.fromLocalFile(QFileInfo(cssFileName).absoluteFilePath()).toString()
+			% cssFileName
 		if includeMeta:
 			headers += '<meta name="generator" content="%s %s">\n' % \
 			(app_name, app_version)
