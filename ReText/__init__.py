@@ -81,6 +81,7 @@ def readFromSettings(key, keytype, settings=settings, default=None):
 		# Return an instance of keytype
 		return default if (default is not None) else keytype()
 
+# TODO: for PyQt ≥ 5.3.1, this can be simplified or dropped
 def readListFromSettings(key, settings=settings):
 	if not settings.contains(key):
 		return []
