@@ -1,5 +1,5 @@
 # This file is part of ReText
-# Copyright: Dmitry Shachnev 2012
+# Copyright: Dmitry Shachnev 2012-2014
 # License: GNU GPL v2 or higher
 
 import os

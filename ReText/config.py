@@ -1,3 +1,7 @@
+# This file is part of ReText
+# Copyright: Dmitry Shachnev 2013-2014
+# License: GNU GPL v2 or higher
+
 from ReText import globalSettings
 from markups.common import CONFIGURATION_DIR
 from os.path import join
