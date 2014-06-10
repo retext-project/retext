@@ -18,6 +18,9 @@ from subprocess import check_call
 from glob import glob
 from warnings import filterwarnings
 
+if sys.version_info[0] < 3:
+	sys.exit('Error: Python 3.x is required.')
+
 def build_translations():
 	print('running build_translations')
 	error = None
