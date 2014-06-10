@@ -10,7 +10,7 @@ requires = ['docutils', 'Markdown', 'Markups', 'pyenchant', 'Pygments']
 import sys
 from os.path import join
 from distutils import log
-from distutils.core import setup
+from distutils.core import setup, Command
 from distutils.command.build import build
 from distutils.command.sdist import sdist
 from distutils.command.install_scripts import install_scripts
@@ -48,6 +48,22 @@ class retext_install_scripts(install_scripts):
 			log.info('renaming %s to %s', file, file[:-3])
 			shutil.move(file, file[:-3])
 
+class retext_test(Command):
+	user_options = []
+
+	def initialize_options(self): pass
+	def finalize_options(self): pass
+
+	def run(self):
+		import tests
+		oldargv, sys.argv = sys.argv, ['setup.py test', '-v']
+		try:
+			tests.main(module=None)
+		except SystemExit as e:
+			if e.code:
+				raise
+		sys.argv = oldargv
+
 if '--no-rename' in sys.argv:
 	retext_install_scripts = install_scripts
 	sys.argv.remove('--no-rename')
@@ -73,6 +89,7 @@ setup(name='ReText',
         'build': retext_build,
         'sdist': retext_sdist,
         'install_scripts': retext_install_scripts,
+        'test': retext_test,
       },
       license='GPL 2+'
 )
