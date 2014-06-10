@@ -6,7 +6,7 @@ import markups
 import markups.common
 from os.path import join, abspath
 
-from PyQt5.QtCore import QByteArray, QSettings, QStandardPaths
+from PyQt5.QtCore import QByteArray, QLocale, QSettings, QStandardPaths
 from PyQt5.QtGui import QFont
 
 app_name = "ReText"
@@ -63,6 +63,7 @@ configOptions = {
 	'styleSheet': '',
 	'tabInsertsSpaces': True,
 	'tabWidth': 4,
+	'uiLanguage': QLocale.system().name(),
 	'useWebKit': False,
 	'windowGeometry': QByteArray(),
 }

@@ -20,11 +20,12 @@
 
 import sys
 import signal
+from os.path import join
 from ReText import datadirs, globalSettings
 from ReText.window import ReTextWindow
 
 from PyQt5.QtCore import QFile, QFileInfo, QIODevice, QLibraryInfo, \
- QLocale, QTextStream, QTranslator
+ QTextStream, QTranslator
 from PyQt5.QtWidgets import QApplication
 
 def canonicalize(option):
@@ -39,10 +40,12 @@ def main():
 	app.setApplicationDisplayName("ReText")
 	RtTranslator = QTranslator()
 	for path in datadirs:
-		if RtTranslator.load('retext_'+QLocale.system().name(), path+'/locale'):
+		if RtTranslator.load('retext_' + globalSettings.uiLanguage,
+		                     join(path, 'locale')):
 			break
 	QtTranslator = QTranslator()
-	QtTranslator.load("qt_"+QLocale.system().name(), QLibraryInfo.location(QLibraryInfo.TranslationsPath))
+	QtTranslator.load("qt_" + globalSettings.uiLanguage,
+		QLibraryInfo.location(QLibraryInfo.TranslationsPath))
 	app.installTranslator(RtTranslator)
 	app.installTranslator(QtTranslator)
 	if globalSettings.appStyleSheet:
