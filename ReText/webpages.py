@@ -47,4 +47,4 @@ def wpUseStyle(styleName):
 			os.mkdir("html")
 		shutil.copy(templatesDir+"style_%s.css" % styleName, "html/style.css")
 	else:
-		print('Error: no such file!')
+		print('Error: no such file!', file=sys.stderr)

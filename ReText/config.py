@@ -2,6 +2,7 @@
 # Copyright: Dmitry Shachnev 2013-2014
 # License: GNU GPL v2 or higher
 
+import sys
 from ReText import globalSettings
 from markups.common import CONFIGURATION_DIR
 from os.path import join
@@ -111,4 +112,4 @@ class ConfigDialog(QDialog):
 				extsFile.write(ext.strip() + '\n')
 			extsFile.close()
 		except Exception as e:
-			print(e)
+			print(e, file=sys.stderr)

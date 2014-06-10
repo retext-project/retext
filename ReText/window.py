@@ -4,6 +4,7 @@
 # License: GNU GPL v2 or higher
 
 import markups
+import sys
 from subprocess import Popen
 from ReText import icon_path, DOCTYPE_MARKDOWN, DOCTYPE_REST, app_name, \
  app_version, globalSettings, settings, readListFromSettings, \
@@ -315,7 +316,7 @@ class ReTextWindow(QMainWindow):
 				try:
 					enchant.Dict(self.sl)
 				except Exception as e:
-					print(e)
+					print(e, file=sys.stderr)
 					self.sl = None
 			if globalSettings.spellCheck:
 				self.actionEnableSC.setChecked(True)
@@ -362,7 +363,7 @@ class ReTextWindow(QMainWindow):
 	
 	def printError(self):
 		import traceback
-		print('Exception occured while parsing document:')
+		print('Exception occured while parsing document:', file=sys.stderr)
 		traceback.print_exc()
 	
 	def getSplitter(self, index):
@@ -815,7 +816,7 @@ class ReTextWindow(QMainWindow):
 					action.setIcon(self.actIcon(extension['Icon']))
 				mimetype = extension['MimeType'] if 'MimeType' in extension else None
 			except KeyError:
-				print('Failed to parse extension: Name is required')
+				print('Failed to parse extension: Name is required', file=sys.stderr)
 			else:
 				self.extensionActions.append((action, mimetype))
 	
