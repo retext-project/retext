@@ -2,7 +2,8 @@
 # Copyright: Dmitry Shachnev 2012-2014
 # License: GNU GPL v2 or higher
 
-from ReText import DOCTYPE_NONE, DOCTYPE_MARKDOWN, DOCTYPE_REST, DOCTYPE_HTML
+from ReText import globalSettings, DOCTYPE_NONE, DOCTYPE_MARKDOWN, \
+ DOCTYPE_REST, DOCTYPE_HTML
 import re
 
 from PyQt5.QtCore import Qt
@@ -26,6 +27,10 @@ reReSTDirects  = re.compile(r'\.\. [a-z]+::')
 reReSTRoles    = re.compile(':[a-z]+:')
 reWords        = re.compile('[^_\\W]+', flags=re.UNICODE)
 
+colorNames = ('htmltags', 'htmlsymbols', 'htmlquotes', 'htmlcomments',
+              'markdownlinks', 'blockquotes',
+              'restdirectives', 'restroles')
+
 defaultColorScheme = (
 	Qt.darkMagenta,  # HTML tags
 	Qt.darkCyan,     # HTML symbols
@@ -37,13 +42,38 @@ defaultColorScheme = (
 	Qt.darkRed,      # reStructuredText roles
 )
 
+colorScheme = defaultColorScheme
+colorSchemeFile = None
+
+def readColorSchemeFromFile(filename):
+	colors = {}
+	schemefile = open(filename)
+	for line in schemefile:
+		parts = line.split['=']
+		if len(parts) == 2:
+			colors[parts[0]] = parts[1]
+	schemefile.close()
+	return [colors[colorname] if colorname in colors
+	        else defaultColorScheme[index]
+	        for index, colorname in enumerate(colorNames)]
+
+def updateColorScheme():
+	global colorScheme
+	newSchemeFile = globalSettings.colorSchemeFile
+	if newSchemeFile and newSchemeFile != colorSchemeFile:
+		colorScheme = readColorSchemeFromFile(newSchemeFile)
+	if not newSchemeFile:
+		colorScheme = defaultColorScheme
+
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
-	docType = DOCTYPE_NONE
+	doctype = None
+
+	def __init__(self, document):
+		QSyntaxHighlighter.__init__(self, document)
+		updateColorScheme()
 	
-	def highlightBlock(self, text, colorScheme=None):
-		if colorScheme is None:
-			colorScheme = defaultColorScheme
+	def highlightBlock(self, text):
 		patterns = (
 			# regex,         color,          font style,    italic, underline
 			(reHtmlTags,     colorScheme[0], QFont.Bold),
