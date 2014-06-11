@@ -67,7 +67,7 @@ def updateColorScheme():
 
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
-	doctype = None
+	docType = DOCTYPE_NONE
 
 	def __init__(self, document):
 		QSyntaxHighlighter.__init__(self, document)
