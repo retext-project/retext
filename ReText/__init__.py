@@ -39,14 +39,11 @@ DOCTYPE_MARKDOWN = markups.MarkdownMarkup.name
 DOCTYPE_REST = markups.ReStructuredTextMarkup.name
 DOCTYPE_HTML = 'html'
 
-class FileName(str):
-	pass
-
 configOptions = {
 	'appStyleSheet': '',
 	'autoPlainText': True,
 	'autoSave': False,
-	'colorSchemeFile': FileName(),
+	'colorSchemeFile': '',
 	'defaultMarkup': '',
 	'editorFont': 'monospace',
 	'editorFontSize': 0,
@@ -64,7 +61,7 @@ configOptions = {
 	'saveWindowGeometry': False,
 	'spellCheck': False,
 	'spellCheckLocale': '',
-	'styleSheet': FileName(),
+	'styleSheet': '',
 	'tabInsertsSpaces': True,
 	'tabWidth': 4,
 	'uiLanguage': QLocale.system().name(),
