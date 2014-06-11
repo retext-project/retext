@@ -204,7 +204,7 @@ class ReTextWindow(QMainWindow):
 		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.Italic,
 			trig=lambda: self.insertChars('*'))
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
-			trig=lambda: self.insertTag(9)) # <u>...</u>
+			trig=lambda: self.insertTag(11)) # <u>...</u>
 		self.usefulTags = ('a', 'big', 'center', 'img', 's', 'small', 'span',
 			'table', 'td', 'tr', 'u')
 		self.usefulChars = ('deg', 'divide', 'dollar', 'hellip', 'laquo', 'larr',
