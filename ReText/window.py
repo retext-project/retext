@@ -181,7 +181,7 @@ class ReTextWindow(QMainWindow):
 		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.Italic,
 			trig=lambda: self.insertChars('*'))
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
-			trig=lambda: self.insertTag(9)) # <u>...</u>
+			trig=lambda: self.insertTag('u'))
 		self.usefulTags = ('a', 'big', 'center', 'img', 's', 'small', 'span',
 			'table', 'td', 'tr', 'u')
 		self.usefulChars = ('deg', 'divide', 'dollar', 'hellip', 'laquo', 'larr',
@@ -1145,20 +1145,22 @@ class ReTextWindow(QMainWindow):
 		else:
 			tc.insertText(chars)
 	
-	def insertTag(self, num):
-		if num:
-			ut = self.usefulTags[num-1]
-			arg = ' style=""' if ut == 'span' else ''
-			tc = self.editBoxes[self.ind].textCursor()
-			if ut == 'img':
-				toinsert = ('<a href="' + tc.selectedText() +
-				'" target="_blank"><img src="' + tc.selectedText() + '"/></a>')
-			elif ut == 'a':
-				toinsert = ('<a href="' + tc.selectedText() +
-				'" target="_blank">' + tc.selectedText() + '</a>')
-			else:
-				toinsert = '<'+ut+arg+'>'+tc.selectedText()+'</'+ut+'>'
-			tc.insertText(toinsert)
+	def insertTag(self, ut):
+		if not ut:
+			return
+		if isinstance(ut, int):
+			ut = self.usefulTags[ut - 1]
+		arg = ' style=""' if ut == 'span' else ''
+		tc = self.editBoxes[self.ind].textCursor()
+		if ut == 'img':
+			toinsert = ('<a href="' + tc.selectedText() +
+			'" target="_blank"><img src="' + tc.selectedText() + '"/></a>')
+		elif ut == 'a':
+			toinsert = ('<a href="' + tc.selectedText() +
+			'" target="_blank">' + tc.selectedText() + '</a>')
+		else:
+			toinsert = '<'+ut+arg+'>'+tc.selectedText()+'</'+ut+'>'
+		tc.insertText(toinsert)
 		self.tagsBox.setCurrentIndex(0)
 	
 	def insertSymbol(self, num):
