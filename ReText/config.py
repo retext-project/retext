@@ -7,12 +7,33 @@ from ReText import globalSettings
 from markups.common import CONFIGURATION_DIR
 from os.path import join
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QFileInfo, Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
- QGridLayout, QLabel, QLineEdit, QSpinBox
+ QFileDialog, QGridLayout, QLabel, QLineEdit, QPushButton, QSpinBox
 
 MKD_EXTS_FILE = join(CONFIGURATION_DIR, 'markdown-extensions.txt')
+
+class FileSelectButton(QPushButton):
+	def __init__(self, parent, fileName):
+		QPushButton.__init__(self, parent)
+		self.fileName = fileName
+		self.defaultText = self.tr('(none)')
+		self.updateButtonText()
+		self.clicked.connect(self.processClick)
+
+	def processClick(self):
+		startDir = (QFileInfo(self.fileName).absolutePath()
+		            if self.fileName else '')
+		self.fileName = QFileDialog.getOpenFileName(
+			self, self.tr('Select file to open'), startDir)[0]
+		self.updateButtonText()
+
+	def updateButtonText(self):
+		if self.fileName:
+			self.setText(QFileInfo(self.fileName).fileName())
+		else:
+			self.setText(self.defaultText)
 
 class ConfigDialog(QDialog):
 	def __init__(self, parent):
@@ -44,14 +65,15 @@ class ConfigDialog(QDialog):
 			(self.tr('Tabulation width'), 'tabWidth'),
 			(self.tr('Display right margin at column'), 'rightMargin'),
 			(self.tr('Interface'), None),
-			(self.tr('Icon theme name'), 'iconTheme')
+			(self.tr('Icon theme name'), 'iconTheme'),
 			# Ideas for future: styleSheet, editorFont
 		)
 	
 	def initWidgets(self):
 		self.configurators = {}
 		for index, option in enumerate(self.options):
-			displayname, name = option
+			displayname, name = option[:2]
+			fileselector = option[2] if len(option) > 2 else False
 			if name is None:
 				header = QLabel('<h3>%s</h3>' % displayname, self)
 				self.layout.addWidget(header, index, 0, 1, 2, Qt.AlignHCenter)
@@ -83,6 +105,8 @@ class ConfigDialog(QDialog):
 				else:
 					self.configurators[name].setMaximum(100)
 				self.configurators[name].setValue(value)
+			elif isinstance(value, str) and fileselector:
+				self.configurators[name] = FileSelectButton(self, value)
 			elif isinstance(value, str):
 				self.configurators[name] = QLineEdit(self)
 				self.configurators[name].setText(value)
@@ -90,7 +114,8 @@ class ConfigDialog(QDialog):
 			self.layout.addWidget(self.configurators[name], index, 1, Qt.AlignRight)
 
 	def saveSettings(self):
-		for displayname, name in self.options:
+		for option in self.options:
+			name = option[1]
 			if name is None or name == 'markdownExtensions':
 				continue
 			configurator = self.configurators[name]
@@ -100,6 +125,8 @@ class ConfigDialog(QDialog):
 				value = configurator.value()
 			elif isinstance(configurator, QLineEdit):
 				value = configurator.text()
+			elif isinstance(configurator, FileSelectButton):
+				value = configurator.fileName
 			setattr(globalSettings, name, value)
 		self.applySettings()
 		self.close()
