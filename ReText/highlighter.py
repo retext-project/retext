@@ -7,7 +7,7 @@ from ReText import globalSettings, DOCTYPE_NONE, DOCTYPE_MARKDOWN, \
 import re
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont, QSyntaxHighlighter, QTextCharFormat
+from PyQt5.QtGui import QColor, QFont, QSyntaxHighlighter, QTextCharFormat
 
 reHtmlTags     = re.compile('<[^<>@]*>')
 reHtmlSymbols  = re.compile('&[^; ]*;')
@@ -49,9 +49,9 @@ def readColorSchemeFromFile(filename):
 	colors = {}
 	schemefile = open(filename)
 	for line in schemefile:
-		parts = line.split['=']
+		parts = line.split('=')
 		if len(parts) == 2:
-			colors[parts[0]] = parts[1]
+			colors[parts[0].rstrip()] = QColor(parts[1].strip())
 	schemefile.close()
 	return [colors[colorname] if colorname in colors
 	        else defaultColorScheme[index]
