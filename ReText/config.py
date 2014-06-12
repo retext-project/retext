@@ -66,6 +66,8 @@ class ConfigDialog(QDialog):
 			(self.tr('Display right margin at column'), 'rightMargin'),
 			(self.tr('Interface'), None),
 			(self.tr('Icon theme name'), 'iconTheme'),
+			(self.tr('Color scheme file', 'colorSchemeFile', True),
+			(self.tr('Stylesheet file', 'styleSheet', True),
 			# Ideas for future: styleSheet, editorFont
 		)
 	
