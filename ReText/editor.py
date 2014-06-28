@@ -9,6 +9,48 @@ from PyQt5.QtCore import QPoint, QSize, Qt
 from PyQt5.QtGui import QColor, QPainter, QTextCursor, QTextFormat
 from PyQt5.QtWidgets import QTextEdit, QWidget
 
+def documentIndentMore(document, cursor, globalSettings=globalSettings):
+	if cursor.hasSelection():
+		block = document.findBlock(cursor.selectionStart())
+		end = document.findBlock(cursor.selectionEnd()).next()
+		cursor.beginEditBlock()
+		while block != end:
+			cursor.setPosition(block.position())
+			if globalSettings.tabInsertsSpaces:
+				cursor.insertText(' ' * globalSettings.tabWidth)
+			else:
+				cursor.insertText('\t')
+			block = block.next()
+		cursor.endEditBlock()
+	else:
+		indent = globalSettings.tabWidth - (cursor.positionInBlock()
+			% globalSettings.tabWidth)
+		if globalSettings.tabInsertsSpaces:
+			cursor.insertText(' ' * indent)
+		else:
+			cursor.insertText('\t')
+
+def documentIndentLess(document, cursor, globalSettings=globalSettings):
+	if cursor.hasSelection():
+		block = document.findBlock(cursor.selectionStart())
+		end = document.findBlock(cursor.selectionEnd()).next()
+	else:
+		block = document.findBlock(cursor.position())
+		end = block.next()
+	cursor.beginEditBlock()
+	while block != end:
+		cursor.setPosition(block.position())
+		if document.characterAt(cursor.position()) == '\t':
+			cursor.deleteChar()
+		else:
+			pos = 0
+			while document.characterAt(cursor.position()) == ' ' \
+			and pos < globalSettings.tabWidth:
+				pos += 1
+				cursor.deleteChar()
+		block = block.next()
+	cursor.endEditBlock()
+
 class ReTextEdit(QTextEdit):
 	def __init__(self, parent):
 		QTextEdit.__init__(self)
@@ -100,9 +142,9 @@ class ReTextEdit(QTextEdit):
 		if event.text() and self.tableModeEnabled:
 			cursor.beginEditBlock()
 		if key == Qt.Key_Tab:
-			self.indentMore()
+			documentIndentMore(self.document(), cursor)
 		elif key == Qt.Key_Backtab:
-			self.indentLess()
+			documentIndentLess(self.document(), cursor)
 		elif key == Qt.Key_Return and not cursor.hasSelection():
 			if event.modifiers() & Qt.ShiftModifier:
 				# Insert Markdown-style line break
@@ -131,51 +173,6 @@ class ReTextEdit(QTextEdit):
 		cursor = self.textCursor()
 		cursor.insertText('\n'+text[:pos])
 		self.ensureCursorVisible()
-	
-	def indentMore(self):
-		cursor = self.textCursor()
-		if cursor.hasSelection():
-			block = self.document().findBlock(cursor.selectionStart())
-			end = self.document().findBlock(cursor.selectionEnd()).next()
-			cursor.beginEditBlock()
-			while block != end:
-				cursor.setPosition(block.position())
-				if globalSettings.tabInsertsSpaces:
-					cursor.insertText(' ' * globalSettings.tabWidth)
-				else:
-					cursor.insertText('\t')
-				block = block.next()
-			cursor.endEditBlock()
-		else:
-			indent = globalSettings.tabWidth - (cursor.positionInBlock()
-				% globalSettings.tabWidth)
-			if globalSettings.tabInsertsSpaces:
-				cursor.insertText(' ' * indent)
-			else:
-				cursor.insertText('\t')
-	
-	def indentLess(self):
-		cursor = self.textCursor()
-		document = self.document()
-		if cursor.hasSelection():
-			block = document.findBlock(cursor.selectionStart())
-			end = document.findBlock(cursor.selectionEnd()).next()
-		else:
-			block = document.findBlock(cursor.position())
-			end = block.next()
-		cursor.beginEditBlock()
-		while block != end:
-			cursor.setPosition(block.position())
-			if document.characterAt(cursor.position()) == '\t':
-				cursor.deleteChar()
-			else:
-				pos = 0
-				while document.characterAt(cursor.position()) == ' ' \
-				and pos < globalSettings.tabWidth:
-					pos += 1
-					cursor.deleteChar()
-			block = block.next()
-		cursor.endEditBlock()
 	
 	def lineNumberAreaWidth(self):
 		cursor = QTextCursor(self.document())
