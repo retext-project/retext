@@ -3,15 +3,24 @@
 # License: GNU GPL v2 or higher
 
 import unittest
+import tempfile
 
-from PyQt5.QtCore import QSettings, QTemporaryFile
+from os.path import basename, dirname, splitext
+from PyQt5.QtCore import QSettings
 from ReText import readListFromSettings, writeListToSettings, \
  readFromSettings, writeToSettings
 
 class TestSettings(unittest.TestCase):
 	def setUp(self):
-		tempFile = QTemporaryFile('settings-XXXXXX.ini')
-		self.settings = QSettings(tempFile.fileName())
+		self.tempFile = tempfile.NamedTemporaryFile(prefix='retext-', suffix='.ini')
+		baseName = splitext(basename(self.tempFile.name))[0]
+		QSettings.setPath(QSettings.IniFormat, QSettings.UserScope,
+		                  dirname(self.tempFile.name))
+		self.settings = QSettings(QSettings.IniFormat,
+		                          QSettings.UserScope, baseName)
+
+	def tearDown(self):
+		del self.settings # this should be deleted before tempFile
 
 	def test_storingLists(self):
 		data = (
