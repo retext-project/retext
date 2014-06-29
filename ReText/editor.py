@@ -5,8 +5,8 @@
 
 from ReText import monofont, globalSettings, tablemode, DOCTYPE_MARKDOWN
 
-from PyQt5.QtCore import QEvent, QPoint, QSize, Qt
-from PyQt5.QtGui import QColor, QKeySequence, QPainter, QTextCursor, QTextFormat
+from PyQt5.QtCore import QPoint, QSize, Qt
+from PyQt5.QtGui import QColor, QPainter, QTextCursor, QTextFormat
 from PyQt5.QtWidgets import QTextEdit, QWidget
 
 class ReTextEdit(QTextEdit):
@@ -25,17 +25,7 @@ class ReTextEdit(QTextEdit):
 			self.updateLineNumberAreaWidth()
 		self.cursorPositionChanged.connect(self.highlightCurrentLine)
 		self.document().contentsChange.connect(self.contentsChange)
-		self.installEventFilter(self)
 
-	def eventFilter(self, widget, event):
-		if event.type() == QEvent.ShortcutOverride:
-			if event.matches(QKeySequence.Undo) or \
-			   event.matches(QKeySequence.Redo):
-				# avoid the default undo/redo handling so we can route undo/redo through our own functions
-				return True
-
-		return QTextEdit.eventFilter(self, widget, event)
-	
 	def paintEvent(self, event):
 		if not globalSettings.rightMargin:
 			return QTextEdit.paintEvent(self, event)
@@ -107,6 +97,8 @@ class ReTextEdit(QTextEdit):
 	def keyPressEvent(self, event):
 		key = event.key()
 		cursor = self.textCursor()
+		if event.text() and self.tableModeEnabled:
+			cursor.beginEditBlock()
 		if key == Qt.Key_Tab:
 			self.indentMore()
 		elif key == Qt.Key_Backtab:
@@ -123,6 +115,8 @@ class ReTextEdit(QTextEdit):
 				self.handleReturn(cursor)
 		else:
 			QTextEdit.keyPressEvent(self, event)
+		if event.text() and self.tableModeEnabled:
+			cursor.endEditBlock()
 	
 	def handleReturn(self, cursor):
 		# Select text between the cursor and the line start
@@ -223,18 +217,8 @@ class ReTextEdit(QTextEdit):
 		cursor.setPosition(cursor.block().position() + positionOnLine)
 		self.setTextCursor(cursor)
 
-	def performUndo(self):
-		self.undoRedoActive = True
-		self.undo()
-		self.undoRedoActive = False
-
-	def performRedo(self):
-		self.undoRedoActive = True
-		self.redo()
-		self.undoRedoActive = False
-
 	def contentsChange(self, pos, removed, added):
-		if not self.undoRedoActive and self.tableModeEnabled:
+		if self.tableModeEnabled:
 			markupClass = self.parent.getMarkupClass()
 			docType = markupClass.name if markupClass else None
 

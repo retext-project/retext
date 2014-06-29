@@ -123,9 +123,9 @@ class ReTextWindow(QMainWindow):
 		self.actionQuit.setMenuRole(QAction.QuitRole)
 		self.actionQuit.triggered.connect(self.close)
 		self.actionUndo = self.act(self.tr('Undo'), 'edit-undo',
-			lambda: self.editBoxes[self.ind].performUndo(), shct=QKeySequence.Undo)
+			lambda: self.editBoxes[self.ind].undo(), shct=QKeySequence.Undo)
 		self.actionRedo = self.act(self.tr('Redo'), 'edit-redo',
-			lambda: self.editBoxes[self.ind].performRedo(), shct=QKeySequence.Redo)
+			lambda: self.editBoxes[self.ind].redo(), shct=QKeySequence.Redo)
 		self.actionCopy = self.act(self.tr('Copy'), 'edit-copy',
 			lambda: self.editBoxes[self.ind].copy(), shct=QKeySequence.Copy)
 		self.actionCut = self.act(self.tr('Cut'), 'edit-cut',

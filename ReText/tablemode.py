@@ -153,7 +153,7 @@ def _determineEditLists(rows, editedlineindex, offset, editsize):
 	return editLists
 
 def _performEdits(cursor, rows, editLists, linewithoffset, offset):
-	cursor.beginEditBlock()
+	cursor.joinPreviousEditBlock()
 	for i, (row, editList) in enumerate(zip(rows, editLists)):
 
 		for editpos, editsize in sorted(editList, reverse=True):
@@ -179,4 +179,3 @@ def adjustTableToChanges(doc, pos, editsize, docType):
 
 		cursor = QTextCursor(doc)
 		_performEdits(cursor, rows, editLists, editedlineindex, editsize)
-
