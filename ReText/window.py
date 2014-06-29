@@ -490,6 +490,7 @@ class ReTextWindow(QMainWindow):
 			self.actionCut.setEnabled(self.editBoxes[ind].textCursor().hasSelection())
 			self.actionPreview.setChecked(self.apc[ind])
 			self.actionLivePreview.setChecked(self.alpc[ind])
+			self.actionTableMode.setChecked(self.editBoxes[ind].tableModeEnabled)
 			self.editBar.setDisabled(self.apc[ind])
 		self.ind = ind
 		if self.fileNames[ind]:
