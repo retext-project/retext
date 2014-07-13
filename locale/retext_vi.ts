@@ -1,91 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="ru_RU" sourcelanguage="">
+<!DOCTYPE TS><TS version="2.0" language="vi" sourcelanguage="">
 <context>
     <name>ConfigDialog</name>
     <message>
         <location filename="config.py" line="53"/>
         <source>Behavior</source>
-        <translation>Поведение</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Automatically save documents</source>
-        <translation>Автоматически сохранять документы</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Restore window geometry</source>
-        <translation>Сохранять геометрию окна</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Restore live preview state</source>
-        <translation>Сохранять состояние живого просмотра</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Open external links in ReText window</source>
-        <translation>Открывать внешние ссылки в окне ReText</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Open unknown files in plain text mode</source>
-        <translation>Открывать неизвестные файлы в режиме простого текста</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Markdown extensions (comma-separated)</source>
-        <translation>Расширения Markdown (разделённые запятыми)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Editor</source>
-        <translation>Редактор</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Highlight current line</source>
-        <translation>Подсвечивать текущую строку</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Show line numbers</source>
-        <translation>Показывать номера строк</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Tab key inserts spaces</source>
-        <translation>Tab вставляет пробелы</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Tabulation width</source>
-        <translation>Ширина табуляции</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Display right margin at column</source>
-        <translation>Показывать разделитель в столбце</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Interface</source>
-        <translation>Внешний вид</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Icon theme name</source>
-        <translation>Тема значков</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Color scheme file</source>
-        <translation>Файл с цветовой схемой</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="53"/>
         <source>Stylesheet file</source>
-        <translation>Файл стиля Qt</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -93,12 +93,12 @@
     <message>
         <location filename="config.py" line="21"/>
         <source>(none)</source>
-        <translation>(не выбран)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="28"/>
         <source>Select file to open</source>
-        <translation>Выберите файл для открытия</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -106,12 +106,12 @@
     <message>
         <location filename="dialogs.py" line="32"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation>Введите код локали (например: en_US)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dialogs.py" line="37"/>
         <source>Set as default</source>
-        <translation>Установить по умолчанию</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -119,421 +119,421 @@
     <message>
         <location filename="window.py" line="61"/>
         <source>File toolbar</source>
-        <translation>Панель файла</translation>
+        <translation>Thanh công cụ tập tin</translation>
     </message>
     <message>
         <location filename="window.py" line="63"/>
         <source>Edit toolbar</source>
-        <translation>Панель редактирования</translation>
+        <translation>Thanh công cụ chỉnh sửa</translation>
     </message>
     <message>
         <location filename="window.py" line="65"/>
         <source>Search toolbar</source>
-        <translation>Панель поиска</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="69"/>
         <source>New</source>
-        <translation>Новый</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="72"/>
         <source>Open</source>
-        <translation>Открыть</translation>
+        <translation>Mở</translation>
     </message>
     <message>
         <location filename="window.py" line="75"/>
         <source>Set encoding</source>
-        <translation>Установить кодировку</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="78"/>
         <source>Reload</source>
-        <translation>Загрузить заново</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="80"/>
         <source>Save</source>
-        <translation>Сохранить</translation>
+        <translation>Lưu lại</translation>
     </message>
     <message>
         <location filename="window.py" line="84"/>
         <source>Save as</source>
-        <translation>Сохранить как</translation>
+        <translation>Lưu thành</translation>
     </message>
     <message>
         <location filename="window.py" line="86"/>
         <source>Next tab</source>
-        <translation>Следующая вкладка</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="88"/>
         <source>Previous tab</source>
-        <translation>Предыдущая вкладка</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="90"/>
         <source>Print</source>
-        <translation>Распечатать</translation>
+        <translation>In</translation>
     </message>
     <message>
         <location filename="window.py" line="93"/>
         <source>Print preview</source>
-        <translation>Предпросмотр печати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="95"/>
         <source>View HTML code</source>
-        <translation>Просмотр кода HTML</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="96"/>
         <source>Change default font</source>
-        <translation>Изменить стандартный шрифт</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="97"/>
         <source>Find text</source>
-        <translation>Поиск текста</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="101"/>
         <source>Preview</source>
-        <translation>Просмотр</translation>
+        <translation>Xem trước</translation>
     </message>
     <message>
         <location filename="window.py" line="110"/>
         <source>Live preview</source>
-        <translation>Живой просмотр</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="112"/>
         <source>Table mode</source>
-        <translation>Режим редактирования таблиц</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="114"/>
         <source>Fullscreen mode</source>
-        <translation>Полноэкранный режим</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="574"/>
         <source>Preferences</source>
-        <translation>Настройки</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="122"/>
         <source>Quit</source>
-        <translation>Выход</translation>
+        <translation>Thoát</translation>
     </message>
     <message>
         <location filename="window.py" line="125"/>
         <source>Undo</source>
-        <translation>Отменить действие</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="127"/>
         <source>Redo</source>
-        <translation>Повторить действие</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="129"/>
         <source>Copy</source>
-        <translation>Копировать</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="131"/>
         <source>Cut</source>
-        <translation>Вырезать</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="133"/>
         <source>Paste</source>
-        <translation>Вставить</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="143"/>
         <source>Enable</source>
-        <translation>Включить</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="144"/>
         <source>Set locale</source>
-        <translation>Установить локаль</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="145"/>
         <source>Plain text</source>
-        <translation>Простой текст</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="146"/>
         <source>Use WebKit renderer</source>
-        <translation>Использовать движок WebKit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="148"/>
         <source>Generate webpages</source>
-        <translation>Создать веб-страницы</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="149"/>
         <source>Show</source>
-        <translation>Показать</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="150"/>
         <source>Next</source>
-        <translation>Следующее</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="152"/>
         <source>Previous</source>
-        <translation>Предыдущее</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="154"/>
         <source>Get help online</source>
-        <translation>Получить помощь в интернете</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="155"/>
         <source>About %s</source>
         <comment>Example of final string: About ReText</comment>
-        <translation>О %s</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="159"/>
         <source>About Qt</source>
-        <translation>О Qt</translation>
+        <translation>Về Qt</translation>
     </message>
     <message>
         <location filename="window.py" line="179"/>
         <source>Bold</source>
-        <translation>Полужирный</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="181"/>
         <source>Italic</source>
-        <translation>Курсив</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="183"/>
         <source>Underline</source>
-        <translation>Подчёркивание</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="191"/>
         <source>Tags</source>
-        <translation>Теги</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="195"/>
         <source>Symbols</source>
-        <translation>Символы</translation>
+        <translation>Kí hiệu</translation>
     </message>
     <message>
         <location filename="window.py" line="209"/>
         <source>File</source>
-        <translation>Файл</translation>
+        <translation>Tập tin</translation>
     </message>
     <message>
         <location filename="window.py" line="210"/>
         <source>Edit</source>
-        <translation>Правка</translation>
+        <translation>Chỉnh sửa</translation>
     </message>
     <message>
         <location filename="window.py" line="211"/>
         <source>Help</source>
-        <translation>Справка</translation>
+        <translation>Trợ giúp</translation>
     </message>
     <message>
         <location filename="window.py" line="214"/>
         <source>Open recent</source>
-        <translation>Открыть последние</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="217"/>
         <source>Directory</source>
-        <translation>Папка</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="229"/>
         <source>Export</source>
-        <translation>Экспорт</translation>
+        <translation>Kết xuất</translation>
     </message>
     <message>
         <location filename="window.py" line="250"/>
         <source>Spell check</source>
-        <translation>Проверка орфографии</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="258"/>
         <source>Default markup</source>
-        <translation>Язык разметки по умолчанию</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="261"/>
         <source>Formatting</source>
-        <translation>Форматирование</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="299"/>
         <source>Search</source>
-        <translation>Поиск</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="301"/>
         <source>Case sensitively</source>
-        <translation>Учитывать регистр</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1128"/>
         <source>New document</source>
-        <translation>Новый документ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="648"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation>Не удалось обработать содержимое файла, убедитесь, что установлен &lt;a href=&quot;%s&quot;&gt;необходимый модуль&lt;/a&gt;!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="746"/>
         <source>Please, save the file somewhere.</source>
-        <translation>Сначала сохраните файл.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="731"/>
         <source>Failed to copy default template, please create template.html manually.</source>
-        <translation>Не удалось скопировать шаблон по умолчанию, создайте template.html вручную.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="735"/>
         <source>Webpages saved in &lt;code&gt;html&lt;/code&gt; directory.</source>
-        <translation>Веб-страницы сохранены в папке &lt;code&gt;html&lt;/code&gt;.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="737"/>
         <source>Show directory</source>
-        <translation>Открыть папку</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="865"/>
         <source>Select one or several files to open</source>
-        <translation>Выберите один или несколько файлов для открытия</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="865"/>
         <source>Supported files</source>
-        <translation>Поддерживаемые файлы</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="865"/>
         <source>All files (*)</source>
-        <translation>Все файлы (*)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="924"/>
         <source>Select file encoding from the list:</source>
-        <translation>Выберите кодировку файла из списка:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="949"/>
         <source>Plain text (*.txt)</source>
-        <translation>Простой текст (*.txt)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="952"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
-        <translation>Файлы %s</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1027"/>
         <source>Save file</source>
-        <translation>Сохранить файл</translation>
+        <translation>Lưu tập tin</translation>
     </message>
     <message>
         <location filename="window.py" line="972"/>
         <source>Cannot save to file because it is read-only!</source>
-        <translation>Невозможно сохранить в файл, так как он доступен только для чтения!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1017"/>
         <source>Export document to ODT</source>
-        <translation>Экспортировать документ как ODT</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1017"/>
         <source>OpenDocument text files (*.odt)</source>
-        <translation>Файлы текста OpenDocument (*.odt)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1027"/>
         <source>HTML files (*.html *.htm)</source>
-        <translation>Файлы HTML (*.html *.htm)</translation>
+        <translation>Tập tin HTML (*.html, *.htm)</translation>
     </message>
     <message>
         <location filename="window.py" line="1049"/>
         <source>Export document to PDF</source>
-        <translation>Экспортировать документ как PDF</translation>
+        <translation>Xuất tài liệu ra PDF</translation>
     </message>
     <message>
         <location filename="window.py" line="1049"/>
         <source>PDF files (*.pdf)</source>
-        <translation>Файлы PDF (*.pdf)</translation>
+        <translation>Tập tin PDF (*.pdf)</translation>
     </message>
     <message>
         <location filename="window.py" line="1066"/>
         <source>Print document</source>
-        <translation>Распечатать документ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1087"/>
         <source>Export document</source>
-        <translation>Экспортировать документ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1106"/>
         <source>Failed to execute the command:</source>
-        <translation>Невозможно запустить команду:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1187"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
-        <translation>Документ был изменён.
-Сохранить изменения?</translation>
+        <translation>Tài liệu này mới được thay đổi.
+Bạn có muốn lưu lại thay đổi đó không?</translation>
     </message>
     <message>
         <location filename="window.py" line="1211"/>
         <source>HTML code</source>
-        <translation>код HTML</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1222"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>Простой, но мощный редактор для Markdown и reStructuredText</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1222"/>
         <source>Author: Dmitry Shachnev, 2011</source>
-        <translation>Автор: Dmitry Shachnev, 2011</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1222"/>
         <source>Website</source>
-        <translation>Веб-сайт</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1222"/>
         <source>Markdown syntax</source>
-        <translation>Синтаксис Markdown</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1222"/>
         <source>reStructuredText syntax</source>
-        <translation>Синтаксис reStructuredText</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
