@@ -138,7 +138,8 @@ class ConfigDialog(QDialog):
 		try:
 			extsFile = open(MKD_EXTS_FILE, 'w')
 			for ext in self.configurators['markdownExtensions'].text().split(','):
-				extsFile.write(ext.strip() + '\n')
+				if ext.strip():
+					extsFile.write(ext.strip() + '\n')
 			extsFile.close()
 		except Exception as e:
 			print(e, file=sys.stderr)
