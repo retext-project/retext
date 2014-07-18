@@ -61,10 +61,9 @@ class ReTextEdit(QTextEdit):
 		self.setAcceptRichText(False)
 		self.marginx = (self.cursorRect(self.cursorForPosition(QPoint())).topLeft().x()
 			+ self.fontMetrics().width(" "*globalSettings.rightMargin))
-		if globalSettings.lineNumbersEnabled:
-			self.lineNumberArea = LineNumberArea(self)
-			self.document().blockCountChanged.connect(self.updateLineNumberAreaWidth)
-			self.updateLineNumberAreaWidth()
+		self.lineNumberArea = LineNumberArea(self)
+		self.document().blockCountChanged.connect(self.updateLineNumberAreaWidth)
+		self.updateLineNumberAreaWidth()
 		self.cursorPositionChanged.connect(self.highlightCurrentLine)
 		self.document().contentsChange.connect(self.contentsChange)
 
@@ -80,8 +79,7 @@ class ReTextEdit(QTextEdit):
 	
 	def scrollContentsBy(self, dx, dy):
 		QTextEdit.scrollContentsBy(self, dx, dy)
-		if hasattr(self, 'lineNumberArea'):
-			self.lineNumberArea.repaint()
+		self.lineNumberArea.repaint()
 
 	def lineNumberAreaPaintEvent(self, event):
 		painter = QPainter(self.lineNumberArea)
@@ -175,6 +173,8 @@ class ReTextEdit(QTextEdit):
 		self.ensureCursorVisible()
 	
 	def lineNumberAreaWidth(self):
+		if not globalSettings.lineNumbersEnabled:
+			return 0
 		cursor = QTextCursor(self.document())
 		cursor.movePosition(QTextCursor.End)
 		digits = len(str(cursor.blockNumber() + 1))
@@ -186,8 +186,6 @@ class ReTextEdit(QTextEdit):
 	
 	def resizeEvent(self, event):
 		QTextEdit.resizeEvent(self, event)
-		if not hasattr(self, 'lineNumberArea'):
-			return
 		rect = self.contentsRect()
 		self.lineNumberArea.setGeometry(rect.left(), rect.top(),
 			self.lineNumberAreaWidth(), rect.height())
@@ -232,4 +230,5 @@ class LineNumberArea(QWidget):
 		return QSize(self.editor.lineNumberAreaWidth(), 0)
 	
 	def paintEvent(self, event):
-		return self.editor.lineNumberAreaPaintEvent(event)
+		if globalSettings.lineNumbersEnabled:
+			return self.editor.lineNumberAreaPaintEvent(event)
