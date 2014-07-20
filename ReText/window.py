@@ -17,8 +17,8 @@ from ReText.editor import ReTextEdit
 
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QIODevice, QLocale, QRect, \
  QTextCodec, QTextStream, QTimer, QUrl, Qt
-from PyQt5.QtGui import QDesktopServices, QFont, QFontMetrics, QIcon, \
- QKeySequence, QTextCursor, QTextDocument, QTextDocumentWriter
+from PyQt5.QtGui import QColor, QDesktopServices, QFont, QFontMetrics, QIcon, \
+ QKeySequence, QPalette, QTextCursor, QTextDocument, QTextDocumentWriter
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
  QLineEdit, QMainWindow, QMenuBar, QMessageBox, QSplitter, QTabWidget, \
@@ -617,11 +617,19 @@ class ReTextWindow(QMainWindow):
 		newCursor = editBox.document().find(text, cursor, flags)
 		if not newCursor.isNull():
 			editBox.setTextCursor(newCursor)
-			return
+			return self.setSearchEditColor(True)
 		cursor.movePosition(QTextCursor.End if back else QTextCursor.Start)
 		newCursor = editBox.document().find(text, cursor, flags)
 		if not newCursor.isNull():
 			editBox.setTextCursor(newCursor)
+			return self.setSearchEditColor(True)
+		self.setSearchEditColor(False)
+
+	def setSearchEditColor(self, found):
+		palette = self.searchEdit.palette()
+		palette.setColor(QPalette.Active, QPalette.Base,
+		                 Qt.white if found else QColor(255, 102, 102))
+		self.searchEdit.setPalette(palette)
 
 	def getHtml(self, includeStyleSheet=True, includeTitle=True,
 	            includeMeta=False, styleForWebKit=False, webenv=False):
