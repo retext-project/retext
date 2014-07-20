@@ -50,9 +50,9 @@ class ReTextWindow(QMainWindow):
 		self.highlighters = []
 		self.markups = []
 		self.fileNames = []
-		self.apc = []
-		self.alpc = []
-		self.aptc = []
+		self.actionPreviewChecked = []
+		self.actionLivePreviewChecked = []
+		self.actionPlainTextChecked = []
 		self.tabWidget = QTabWidget(self)
 		self.initTabWidget()
 		self.setCentralWidget(self.tabWidget)
@@ -403,9 +403,9 @@ class ReTextWindow(QMainWindow):
 		self.markups.append(self.getMarkup(fileName))
 		self.highlighters[-1].docType = (markupClass.name if markupClass else '')
 		liveMode = globalSettings.restorePreviewState and globalSettings.previewState
-		self.apc.append(liveMode)
-		self.alpc.append(liveMode)
-		self.aptc.append(False)
+		self.actionPreviewChecked.append(liveMode)
+		self.actionLivePreviewChecked.append(liveMode)
+		self.actionPlainTextChecked.append(False)
 		metrics = QFontMetrics(self.editBoxes[-1].font())
 		self.editBoxes[-1].setTabStopWidth(globalSettings.tabWidth * metrics.width(' '))
 		self.editBoxes[-1].textChanged.connect(self.updateLivePreviewBox)
@@ -424,9 +424,9 @@ class ReTextWindow(QMainWindow):
 			del self.highlighters[ind]
 			del self.markups[ind]
 			del self.fileNames[ind]
-			del self.apc[ind]
-			del self.alpc[ind]
-			del self.aptc[ind]
+			del self.actionPreviewChecked[ind]
+			del self.actionLivePreviewChecked[ind]
+			del self.actionPlainTextChecked[ind]
 			self.tabWidget.removeTab(ind)
 	
 	def getMarkupClass(self, fileName=None):
@@ -470,17 +470,17 @@ class ReTextWindow(QMainWindow):
 	
 	def changeIndex(self, ind):
 		if ind > -1:
-			self.actionPlainText.setChecked(self.aptc[ind])
-			self.actionSaveHtml.setDisabled(self.aptc[ind])
-			self.actionViewHtml.setDisabled(self.aptc[ind])
+			self.actionPlainText.setChecked(self.actionPlainTextChecked[ind])
+			self.actionSaveHtml.setDisabled(self.actionPlainTextChecked[ind])
+			self.actionViewHtml.setDisabled(self.actionPlainTextChecked[ind])
 			self.actionUndo.setEnabled(self.editBoxes[ind].document().isUndoAvailable())
 			self.actionRedo.setEnabled(self.editBoxes[ind].document().isRedoAvailable())
 			self.actionCopy.setEnabled(self.editBoxes[ind].textCursor().hasSelection())
 			self.actionCut.setEnabled(self.editBoxes[ind].textCursor().hasSelection())
-			self.actionPreview.setChecked(self.apc[ind])
-			self.actionLivePreview.setChecked(self.alpc[ind])
+			self.actionPreview.setChecked(self.actionPreviewChecked[ind])
+			self.actionLivePreview.setChecked(self.actionLivePreviewChecked[ind])
 			self.actionTableMode.setChecked(self.editBoxes[ind].tableModeEnabled)
-			self.editBar.setDisabled(self.apc[ind])
+			self.editBar.setDisabled(self.actionPreviewChecked[ind])
 		self.ind = ind
 		if self.fileNames[ind]:
 			self.setCurrentFile()
@@ -489,8 +489,8 @@ class ReTextWindow(QMainWindow):
 			self.docTypeChanged()
 		self.modificationChanged(self.editBoxes[ind].document().isModified())
 		if globalSettings.restorePreviewState:
-			globalSettings.previewState = self.alpc[ind]
-		if self.alpc[ind]:
+			globalSettings.previewState = self.actionLivePreviewChecked[ind]
+		if self.actionLivePreviewChecked[ind]:
 			self.enableLivePreview(True)
 		self.editBoxes[self.ind].setFocus(Qt.OtherFocusReason)
 	
@@ -507,7 +507,7 @@ class ReTextWindow(QMainWindow):
 			self.updatePreviewBox()
 	
 	def preview(self, viewmode):
-		self.apc[self.ind] = viewmode
+		self.actionPreviewChecked[self.ind] = viewmode
 		if self.actionLivePreview.isChecked():
 			self.actionLivePreview.setChecked(False)
 			return self.enableLivePreview(False)
@@ -520,8 +520,8 @@ class ReTextWindow(QMainWindow):
 	def enableLivePreview(self, livemode):
 		if globalSettings.restorePreviewState:
 			globalSettings.previewState = livemode
-		self.alpc[self.ind] = livemode
-		self.apc[self.ind] = livemode
+		self.actionLivePreviewChecked[self.ind] = livemode
+		self.actionPreviewChecked[self.ind] = livemode
 		self.actionPreview.setChecked(livemode)
 		self.editBar.setEnabled(True)
 		self.previewBoxes[self.ind].setVisible(livemode)
@@ -542,7 +542,7 @@ class ReTextWindow(QMainWindow):
 			splitter = self.getSplitter(self.ind)
 			self.tabWidget.addTab(splitter, self.getDocumentTitle(baseName=True))
 			self.updatePreviewBox()
-			self.previewBoxes[self.ind].setVisible(self.apc[self.ind])
+			self.previewBoxes[self.ind].setVisible(self.actionPreviewChecked[self.ind])
 		self.ind = oldind
 		self.tabWidget.setCurrentIndex(self.ind)
 	
@@ -1210,7 +1210,7 @@ class ReTextWindow(QMainWindow):
 		+self.tr('reStructuredText syntax')+'</a></p>')
 	
 	def enablePlainText(self, value):
-		self.aptc[self.ind] = value
+		self.actionPlainTextChecked[self.ind] = value
 		self.actionSaveHtml.setDisabled(value)
 		self.actionViewHtml.setDisabled(value)
 		self.docTypeChanged()
