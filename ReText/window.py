@@ -606,27 +606,22 @@ class ReTextWindow(QMainWindow):
 			self.searchEdit.setFocus(Qt.ShortcutFocusReason)
 
 	def find(self, back=False):
-		flags = 0
+		flags = QTextDocument.FindFlags()
 		if back:
-			flags = QTextDocument.FindBackward
+			flags |= QTextDocument.FindBackward
 		if self.csBox.isChecked():
-			flags = flags | QTextDocument.FindCaseSensitively
+			flags |= QTextDocument.FindCaseSensitively
 		text = self.searchEdit.text()
-		if not self.findMain(text, flags):
-			if text in self.editBoxes[self.ind].toPlainText():
-				cursor = self.editBoxes[self.ind].textCursor()
-				if back:
-					cursor.movePosition(QTextCursor.End)
-				else:
-					cursor.movePosition(QTextCursor.Start)
-				self.editBoxes[self.ind].setTextCursor(cursor)
-				self.findMain(text, flags)
-
-	def findMain(self, text, flags):
-		if flags:
-			return self.editBoxes[self.ind].find(text, flags)
-		else:
-			return self.editBoxes[self.ind].find(text)
+		editBox = self.editBoxes[self.ind]
+		cursor = editBox.textCursor()
+		newCursor = editBox.document().find(text, cursor, flags)
+		if not newCursor.isNull():
+			editBox.setTextCursor(newCursor)
+			return
+		cursor.movePosition(QTextCursor.End if back else QTextCursor.Start)
+		newCursor = editBox.document().find(text, cursor, flags)
+		if not newCursor.isNull():
+			editBox.setTextCursor(newCursor)
 
 	def getHtml(self, includeStyleSheet=True, includeTitle=True,
 	            includeMeta=False, styleForWebKit=False, webenv=False):
