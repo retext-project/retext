@@ -70,7 +70,7 @@ def main():
 	if inputData or not window.tabWidget.count():
 		window.createNew(inputData)
 	signal.signal(signal.SIGINT, lambda sig, frame: window.close())
-	sys.exit(app.exec_())
+	sys.exit(app.exec())
 
 if __name__ == '__main__':
 	main()

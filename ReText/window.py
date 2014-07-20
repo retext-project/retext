@@ -581,7 +581,7 @@ class ReTextWindow(QMainWindow):
 			localedlg = LocaleDialog(self, defaultText=self.sl)
 		else:
 			localedlg = LocaleDialog(self)
-		if localedlg.exec_() != QDialog.Accepted:
+		if localedlg.exec() != QDialog.Accepted:
 			return
 		sl = localedlg.localeEdit.text()
 		setdefault = localedlg.checkBox.isChecked()
@@ -714,7 +714,7 @@ class ReTextWindow(QMainWindow):
 		msgBox = QMessageBox(QMessageBox.Information, '',
 		self.tr("Webpages saved in <code>html</code> directory."), QMessageBox.Ok)
 		showButton = msgBox.addButton(self.tr("Show directory"), QMessageBox.AcceptRole)
-		msgBox.exec_()
+		msgBox.exec()
 		if msgBox.clickedButton() == showButton:
 			QDesktopServices.openUrl(QUrl.fromLocalFile(QDir('html').absolutePath()))
 
@@ -1035,17 +1035,17 @@ class ReTextWindow(QMainWindow):
 			printer.setOutputFileName(fileName)
 			document = self.getDocumentForPrint()
 			if document != None:
-				document.print_(printer)
+				document.print(printer)
 
 	def printFile(self):
 		self.updatePreviewBox()
 		printer = self.standardPrinter()
 		dlg = QPrintDialog(printer, self)
 		dlg.setWindowTitle(self.tr("Print document"))
-		if (dlg.exec_() == QDialog.Accepted):
+		if (dlg.exec() == QDialog.Accepted):
 			document = self.getDocumentForPrint()
 			if document != None:
-				document.print_(printer)
+				document.print(printer)
 
 	def printPreview(self):
 		document = self.getDocumentForPrint()
@@ -1053,8 +1053,8 @@ class ReTextWindow(QMainWindow):
 			return
 		printer = self.standardPrinter()
 		preview = QPrintPreviewDialog(printer, self)
-		preview.paintRequested.connect(document.print_)
-		preview.exec_()
+		preview.paintRequested.connect(document.print)
+		preview.exec()
 
 	def runExtensionCommand(self, command, filefilter, defaultext):
 		of = ('%of' in command)
