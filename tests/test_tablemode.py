@@ -30,7 +30,7 @@ class TestTableMode(unittest.TestCase):
 		                 'The number of padding chars should be equal to the number of rows')
 		self.assertEqual(len(before), len(after),
 		                 'The number of rows before and after should be the same')
-		# Apart from spacing edit only contains a's or d's 
+		# Apart from spacing edit only contains a's or d's
 		self.assertTrue(edit[1].strip(' d') == '' or
 		                edit[1].strip(' a') == '',
 						"An edit should be a sequence of a's or d's surrounded by spaces")

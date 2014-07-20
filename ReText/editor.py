@@ -76,7 +76,7 @@ class ReTextEdit(QTextEdit):
 		y2 = self.rect().bottomLeft().y()
 		painter.drawLine(self.marginx, y1, self.marginx, y2)
 		QTextEdit.paintEvent(self, event)
-	
+
 	def scrollContentsBy(self, dx, dy):
 		QTextEdit.scrollContentsBy(self, dx, dy)
 		self.lineNumberArea.repaint()
@@ -99,10 +99,10 @@ class ReTextEdit(QTextEdit):
 			atEnd = cursor.atEnd()
 			if not atEnd:
 				cursor.movePosition(QTextCursor.NextBlock)
-	
+
 	def getHighlighter(self):
 		return self.parent.highlighters[self.parent.ind]
-	
+
 	def contextMenuEvent(self, event):
 		text = self.toPlainText()
 		dictionary = self.getHighlighter().dictionary
@@ -130,10 +130,10 @@ class ReTextEdit(QTextEdit):
 		for action in actions[::-1]:
 			menu.insertAction(menu.actions()[0], action)
 		menu.exec_(event.globalPos())
-	
+
 	def fixWord(self, correctword):
 		return lambda: self.insertPlainText(correctword)
-	
+
 	def keyPressEvent(self, event):
 		key = event.key()
 		cursor = self.textCursor()
@@ -157,7 +157,7 @@ class ReTextEdit(QTextEdit):
 			QTextEdit.keyPressEvent(self, event)
 		if event.text() and self.tableModeEnabled:
 			cursor.endEditBlock()
-	
+
 	def handleReturn(self, cursor):
 		# Select text between the cursor and the line start
 		cursor.movePosition(QTextCursor.StartOfBlock, QTextCursor.KeepAnchor)
@@ -171,7 +171,7 @@ class ReTextEdit(QTextEdit):
 		cursor = self.textCursor()
 		cursor.insertText('\n'+text[:pos])
 		self.ensureCursorVisible()
-	
+
 	def lineNumberAreaWidth(self):
 		if not globalSettings.lineNumbersEnabled:
 			return 0
@@ -179,17 +179,17 @@ class ReTextEdit(QTextEdit):
 		cursor.movePosition(QTextCursor.End)
 		digits = len(str(cursor.blockNumber() + 1))
 		return 5 + self.fontMetrics().width('9') * digits
-	
+
 	def updateLineNumberAreaWidth(self, blockcount=0):
 		self.lineNumberArea.repaint()
 		self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, 0)
-	
+
 	def resizeEvent(self, event):
 		QTextEdit.resizeEvent(self, event)
 		rect = self.contentsRect()
 		self.lineNumberArea.setGeometry(rect.left(), rect.top(),
 			self.lineNumberAreaWidth(), rect.height())
-	
+
 	def highlightCurrentLine(self):
 		if not globalSettings.highlightCurrentLine:
 			return self.setExtraSelections([])
@@ -225,10 +225,10 @@ class LineNumberArea(QWidget):
 	def __init__(self, editor):
 		QWidget.__init__(self, editor)
 		self.editor = editor
-	
+
 	def sizeHint(self):
 		return QSize(self.editor.lineNumberAreaWidth(), 0)
-	
+
 	def paintEvent(self, event):
 		if globalSettings.lineNumbersEnabled:
 			return self.editor.lineNumberAreaPaintEvent(event)

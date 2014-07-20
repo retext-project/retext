@@ -72,7 +72,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 	def __init__(self, document):
 		QSyntaxHighlighter.__init__(self, document)
 		updateColorScheme()
-	
+
 	def highlightBlock(self, text):
 		patterns = (
 			# regex,         color,          font style,    italic, underline

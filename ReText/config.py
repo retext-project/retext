@@ -47,7 +47,7 @@ class ConfigDialog(QDialog):
 		buttonBox.rejected.connect(self.close)
 		self.initWidgets()
 		self.layout.addWidget(buttonBox, len(self.options), 0, 1, 2)
-	
+
 	def initConfigOptions(self):
 		# options is a tuple containing (displayname, name) tuples
 		self.options = (
@@ -70,7 +70,7 @@ class ConfigDialog(QDialog):
 			(self.tr('Stylesheet file'), 'styleSheet', True),
 			# Ideas for future: styleSheet, editorFont
 		)
-	
+
 	def initWidgets(self):
 		self.configurators = {}
 		for index, option in enumerate(self.options):
@@ -132,7 +132,7 @@ class ConfigDialog(QDialog):
 			setattr(globalSettings, name, value)
 		self.applySettings()
 		self.close()
-	
+
 	def applySettings(self):
 		QIcon.setThemeName(globalSettings.iconTheme)
 		try:

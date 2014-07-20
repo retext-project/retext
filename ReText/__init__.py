@@ -113,7 +113,7 @@ class ReTextSettings(object):
 			value = configOptions[option]
 			object.__setattr__(self, option, readFromSettings(
 				option, type(value), default=value))
-	
+
 	def __setattr__(self, option, value):
 		if not option in configOptions:
 			raise AttributeError('Unknown attribute')
