@@ -41,15 +41,15 @@ def main(argv):
 		printUsage()
 
 def printUsage():
-	print(app_name + ", version " + app_version)
-	print("Usage: wpgen COMMAND <ARGUMENTS>")
-	print("")
+	print(app_name + " WebPages generator, version " + app_version)
+	print("Usage: wpgen COMMAND [ARGUMENTS]")
+	print()
 	print("Available commands:")
-	print("  init - create new web library")
-	print("  updateall - generate html pages from all files")
-	print("  update [filename1] [filename2] ... - generate html pages from given files")
-	print("  liststyles - list available styles")
-	print("  usestyle [stylename] - use the given style (example: Default, Simple)")
+	print("  init                                create new web library")
+	print("  updateall                           generate html pages from all files")
+	print("  update [filename1] [filename2] ...  generate html pages from given files")
+	print("  liststyles                          list available styles")
+	print("  usestyle [stylename]                use the given style")
 
 if __name__ == '__main__':
 	main(sys.argv)
