@@ -5,6 +5,7 @@
 import os
 import sys
 import shutil
+from glob import glob1
 from functools import wraps
 from markups.web import WebLibrary
 
@@ -47,4 +48,8 @@ def wpUseStyle(styleName):
 			os.mkdir("html")
 		shutil.copy(templatesDir+"style_%s.css" % styleName, "html/style.css")
 	else:
-		print('Error: no such file!', file=sys.stderr)
+		print('Error: no such style!', file=sys.stderr)
+
+def wpListStyles():
+	for fileName in glob1(templatesDir, "style_*.css"):
+		print(fileName[6:-4])
