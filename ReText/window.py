@@ -299,6 +299,7 @@ class ReTextWindow(QMainWindow):
 		self.searchEdit.returnPressed.connect(self.find)
 		self.csBox = QCheckBox(self.tr('Case sensitively'), self.searchBar)
 		self.searchBar.addWidget(self.searchEdit)
+		self.searchBar.addSeparator()
 		self.searchBar.addWidget(self.csBox)
 		self.searchBar.addAction(self.actionFindPrev)
 		self.searchBar.addAction(self.actionFind)
