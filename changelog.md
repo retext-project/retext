@@ -1,4 +1,4 @@
-## 4.1
+## ReText 4.1 (2013-08-18)
 
 * Added configuration dialog
 * Added current line highlighting and line numbers support
@@ -8,7 +8,7 @@
 * Dropped support for Python 2 and support for running
   without WebKit installed
 
-## 4.0
+## ReText 4.0 (2012-12-06)
 
 * Switch to pymarkups backend
 * Switch to python3 by default
@@ -19,14 +19,14 @@
 * External links are now opened in a web browser by default
 * Support for per-document CSS stylesheets
 
-## 3.1
+## ReText 3.1 (2012-06-07)
 
 * Spell checker suggestions
 * Markup-specifing highlighting
 * Re-written parser & document-type logic
 * Lots of code clean-up
 
-## 3.0
+## ReText 3.0 (2012-03-08)
 
 * Python 3 support
 * Improved highlighter
@@ -36,7 +36,7 @@
 * Shortcuts for formatting
 * WebKit engine improvements
 
-## 2.1
+## ReText 2.1 (2011-10-02)
 
 * Ability to use QtWebKit
 * Splitter between edit and preview boxes
@@ -44,7 +44,7 @@
 * Support for GData 3 API and replacing existing document in Google Docs
 * Help page
 
-## 2.0
+## ReText 2.0 (2011-08-04)
 
 * Support for reStructuredText, with a GUI option to switch between
   Markdown and reStructuredText
@@ -56,26 +56,26 @@
 * Changed the default extension for Markdown to .mkd
 * New “About” dialog
 
-## 1.1
+## ReText 1.1 (2011-05-28)
 
 * Added spell checker based on enchant
 * Added fullscreen mode
 
-## 1.0
+## ReText 1.0 (2011-04-24)
 
 * First stable release
 * Add “Select default font” option
 * Use HTML input when Markdown is not loaded
 * Add Ctrl+Shift+E sequence for Live preview
 
-## 0.8
+## ReText 0.8 (2011-04-09)
 
 * Add “Show folder”, “Markdown syntax exapmles" actions
 * Start even if Markdown is not installed
 * Do not highlight quotes outside the tags
 * Save plain text documents with `*.txt` format
 
-## 0.7
+## ReText 0.7 (2011-04-05)
 
 * Tabs support
 * GUI for WpGen
