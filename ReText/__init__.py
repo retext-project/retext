@@ -10,7 +10,7 @@ from PyQt5.QtCore import QByteArray, QLocale, QSettings, QStandardPaths
 from PyQt5.QtGui import QFont
 
 app_name = "ReText"
-app_version = "4.2.0 (Git)"
+app_version = "5.0.0"
 
 settings = QSettings('ReText project', 'ReText')
 

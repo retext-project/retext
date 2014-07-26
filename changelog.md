@@ -1,3 +1,12 @@
+## ReText 5.0 (2014-07-26)
+
+* Table editing mode
+* New settings: colorSchemeFile and uiLanguage
+* More settings are now configurable from GUI
+* Code base simplification and modernization
+* Dropped support for Qt 4
+* Added testsuite
+
 ## ReText 4.1 (2013-08-18)
 
 * Added configuration dialog
