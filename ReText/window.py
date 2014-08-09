@@ -15,6 +15,11 @@ from ReText.config import ConfigDialog
 from ReText.highlighter import ReTextHighlighter
 from ReText.editor import ReTextEdit
 
+try:
+	from ReText.fakevimeditor import ReTextFakeVimHandler, FakeVimMode
+except ImportError:
+	ReTextFakeVimHandler = None
+
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QIODevice, QLocale, QRect, \
  QTextCodec, QTextStream, QTimer, QUrl, Qt
 from PyQt5.QtGui import QColor, QDesktopServices, QFont, QFontMetrics, QIcon, \
@@ -111,6 +116,12 @@ class ReTextWindow(QMainWindow):
 		trigbool=self.enableLivePreview)
 		self.actionTableMode = self.act(self.tr('Table mode'), shct=Qt.CTRL+Qt.Key_T,
 			trigbool=lambda x: self.editBoxes[self.ind].enableTableMode(x))
+		if ReTextFakeVimHandler:
+			self.actionFakeVimMode = self.act(self.tr('FakeVim mode'), shct=Qt.CTRL+Qt.ALT+Qt.Key_V,
+				trigbool=self.enableFakeVimMode)
+			if globalSettings.useFakeVim:
+				self.actionFakeVimMode.setChecked(True)
+				self.enableFakeVimMode(True)
 		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), 'view-fullscreen',
 			shct=Qt.Key_F11, trigbool=self.enableFullScreen)
 		self.actionConfig = self.act(self.tr('Preferences'), icon='preferences-system',
@@ -267,6 +278,8 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionLivePreview)
 		menuEdit.addAction(self.actionPreview)
 		menuEdit.addAction(self.actionTableMode)
+		if ReTextFakeVimHandler:
+			menuEdit.addAction(self.actionFakeVimMode)
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionFullScreen)
 		menuEdit.addAction(self.actionConfig)
@@ -414,6 +427,8 @@ class ReTextWindow(QMainWindow):
 		self.editBoxes[-1].redoAvailable.connect(self.actionRedo.setEnabled)
 		self.editBoxes[-1].copyAvailable.connect(self.enableCopy)
 		self.editBoxes[-1].document().modificationChanged.connect(self.modificationChanged)
+		if globalSettings.useFakeVim:
+			self.installFakeVimHandler(self.editBoxes[-1])
 		return self.getSplitter(-1)
 
 	def closeTab(self, ind):
@@ -561,6 +576,22 @@ class ReTextWindow(QMainWindow):
 		dlg = ConfigDialog(self)
 		dlg.setWindowTitle(self.tr('Preferences'))
 		dlg.show()
+
+	def installFakeVimHandler(self, editor):
+		if ReTextFakeVimHandler:
+			fakeVimEditor = ReTextFakeVimHandler(editor, self)
+			fakeVimEditor.setSaveAction(self.actionSave)
+			fakeVimEditor.setQuitAction(self.actionQuit)
+			self.actionFakeVimMode.triggered.connect(fakeVimEditor.remove)
+
+	def enableFakeVimMode(self, yes):
+		globalSettings.useFakeVim = yes
+		if yes:
+			FakeVimMode.init(self)
+			for editor in self.editBoxes:
+				self.installFakeVimHandler(editor)
+		else:
+			FakeVimMode.exit(self)
 
 	def enableSC(self, yes):
 		if yes:

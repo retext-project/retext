@@ -66,6 +66,7 @@ configOptions = {
 	'tabWidth': 4,
 	'uiLanguage': QLocale.system().name(),
 	'useWebKit': False,
+	'useFakeVim': False,
 	'windowGeometry': QByteArray(),
 }
 
