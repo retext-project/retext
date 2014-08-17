@@ -65,8 +65,8 @@ configOptions = {
 	'tabInsertsSpaces': True,
 	'tabWidth': 4,
 	'uiLanguage': QLocale.system().name(),
-	'useWebKit': False,
 	'useFakeVim': False,
+	'useWebKit': False,
 	'windowGeometry': QByteArray(),
 }
 
