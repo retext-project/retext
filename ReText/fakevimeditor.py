@@ -6,7 +6,7 @@ from FakeVim import FakeVimProxy, FakeVimHandler, FAKEVIM_PYQT_VERSION, \
 	MessageError
 
 if FAKEVIM_PYQT_VERSION != 5:
-	raise Exception("FakeVim must be compiled with Qt 5")
+	raise ImportError("FakeVim must be compiled with Qt 5")
 
 from PyQt5.QtCore import QDir, QRegExp, QObject, Qt
 from PyQt5.QtGui import QPainter, QPen, QTextCursor
