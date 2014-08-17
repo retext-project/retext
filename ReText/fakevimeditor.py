@@ -3,15 +3,15 @@
 # Copyright: Lukas Holecek 2014
 # License: GNU GPL v2 or higher
 from FakeVim import FakeVimProxy, FakeVimHandler, FAKEVIM_PYQT_VERSION, \
-		MessageError, MessageInfo
+	MessageError
 
 if FAKEVIM_PYQT_VERSION != 5:
 	raise Exception("FakeVim must be compiled with Qt 5")
 
-from PyQt5.QtCore import QDir, QRect, QRegExp, QObject, Qt
-from PyQt5.QtGui import QPainter, QPalette, QPen, QTextCursor
+from PyQt5.QtCore import QDir, QRegExp, QObject, Qt
+from PyQt5.QtGui import QPainter, QPen, QTextCursor
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, \
-		QMessageBox, QStatusBar, QTextEdit
+	QMessageBox, QStatusBar, QTextEdit
 
 class FakeVimMode:
 	@staticmethod
