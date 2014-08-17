@@ -288,4 +288,3 @@ class StatusBar (QStatusBar):
 			self.__statusMessageLabel.setText(statusMessage)
 
 		self.__statusDataLabel.setText(statusData)
-
