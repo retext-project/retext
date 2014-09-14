@@ -8,14 +8,16 @@ markup languages. It is written in Python using PyQt libraries.'''
 requires = ['docutils', 'Markdown', 'Markups', 'pyenchant', 'Pygments']
 
 import sys
-from os.path import join
+from os.path import basename, join
 from distutils import log
 from distutils.core import setup, Command
 from distutils.command.build import build
 from distutils.command.sdist import sdist
 from distutils.command.install_scripts import install_scripts
+from distutils.command.upload import upload
 from subprocess import check_call
 from glob import glob
+from re import match
 from warnings import filterwarnings
 
 if sys.version_info[0] < 3:
@@ -63,6 +65,19 @@ class retext_test(Command):
 		if not testprogram.result.wasSuccessful():
 			sys.exit(1)
 
+class retext_upload(upload):
+	def run(self):
+		self.sign = True
+		self.identity = '0x2f1c8ae0'
+		upload.run(self)
+		for command, pyversion, filename in self.distribution.dist_files:
+			full_version = match(r'ReText-([\d\.]+)\.tar\.gz', filename).group(1)
+			new_path = ('mandriver@frs.sourceforge.net:/home/frs/project/ReText/ReText-%s/%s' %
+			            (full_version[:-2], basename(filename)))
+			args = ['scp', filename, new_path]
+			print('calling process', args)
+			check_call(args)
+
 if '--no-rename' in sys.argv:
 	retext_install_scripts = install_scripts
 	sys.argv.remove('--no-rename')
@@ -89,6 +104,7 @@ setup(name='ReText',
         'sdist': retext_sdist,
         'install_scripts': retext_install_scripts,
         'test': retext_test,
+        'upload': retext_upload
       },
       license='GPL 2+'
 )
