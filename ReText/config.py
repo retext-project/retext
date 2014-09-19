@@ -38,6 +38,7 @@ class FileSelectButton(QPushButton):
 class ConfigDialog(QDialog):
 	def __init__(self, parent):
 		QDialog.__init__(self, parent)
+		self.parent = parent
 		self.initConfigOptions()
 		self.layout = QGridLayout(self)
 		buttonBox = QDialogButtonBox(self)
@@ -143,3 +144,5 @@ class ConfigDialog(QDialog):
 			extsFile.close()
 		except Exception as e:
 			print(e, file=sys.stderr)
+		for editBox in self.parent.editBoxes:
+			editBox.updateLineNumberAreaWidth()
