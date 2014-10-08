@@ -106,7 +106,7 @@ class ConfigDialog(QDialog):
 				if name == 'tabWidth':
 					self.configurators[name].setRange(1, 10)
 				else:
-					self.configurators[name].setMaximum(100)
+					self.configurators[name].setMaximum(200)
 				self.configurators[name].setValue(value)
 			elif isinstance(value, str) and fileselector:
 				self.configurators[name] = FileSelectButton(self, value)
