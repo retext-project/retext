@@ -34,6 +34,11 @@
     </message>
     <message>
         <location filename="config.py" line="54"/>
+        <source>Markdown extensions (comma-separated)</source>
+        <translation>Extensions Markdown (séparées par une virgule)</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="54"/>
         <source>Editor</source>
         <translation>Editeur</translation>
     </message>
@@ -74,18 +79,13 @@
     </message>
     <message>
         <location filename="config.py" line="54"/>
-        <source>Markdown extensions (comma-separated)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="54"/>
         <source>Color scheme file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier de thème de couleur</translation>
     </message>
     <message>
         <location filename="config.py" line="54"/>
         <source>Stylesheet file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier de feuille de style</translation>
     </message>
 </context>
 <context>
@@ -93,12 +93,12 @@
     <message>
         <location filename="config.py" line="21"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(aucun)</translation>
     </message>
     <message>
         <location filename="config.py" line="28"/>
         <source>Select file to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisir le fichier à ouvrir</translation>
     </message>
 </context>
 <context>
@@ -106,7 +106,7 @@
     <message>
         <location filename="dialogs.py" line="32"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation>Entrez le préfix pour la langue (exemple: fr_FR)</translation>
+        <translation>Entrez le préfixe pour la langue (exemple: fr_FR)</translation>
     </message>
     <message>
         <location filename="dialogs.py" line="37"/>
@@ -142,19 +142,34 @@
         <translation>Ouvrir</translation>
     </message>
     <message>
-        <location filename="window.py" line="80"/>
-        <source>Save</source>
-        <translation>Enregistrer</translation>
-    </message>
-    <message>
         <location filename="window.py" line="75"/>
         <source>Set encoding</source>
         <translation>Définir l&apos;encodage</translation>
     </message>
     <message>
+        <location filename="window.py" line="78"/>
+        <source>Reload</source>
+        <translation>Recherger</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="80"/>
+        <source>Save</source>
+        <translation>Enregistrer</translation>
+    </message>
+    <message>
         <location filename="window.py" line="84"/>
         <source>Save as</source>
         <translation>Enregistrer Sous</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="86"/>
+        <source>Next tab</source>
+        <translation>Onglet suivant</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="88"/>
+        <source>Previous tab</source>
+        <translation>Onglet précédent</translation>
     </message>
     <message>
         <location filename="window.py" line="90"/>
@@ -190,6 +205,11 @@
         <location filename="window.py" line="110"/>
         <source>Live preview</source>
         <translation>Aperçu direct</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="112"/>
+        <source>Table mode</source>
+        <translation>Mode table</translation>
     </message>
     <message>
         <location filename="window.py" line="114"/>
@@ -426,7 +446,7 @@
         <location filename="window.py" line="945"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
-        <translation>Fichiers %s</translation>
+        <translation>Fichers %s</translation>
     </message>
     <message>
         <location filename="window.py" line="1020"/>
@@ -482,7 +502,7 @@
         <location filename="window.py" line="1180"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
-        <translation>Le document a modifié.
+        <translation>Le document a été modifié.
 Voulez vous enregistrer vos changements ?</translation>
     </message>
     <message>
@@ -514,26 +534,6 @@ Voulez vous enregistrer vos changements ?</translation>
         <location filename="window.py" line="1215"/>
         <source>reStructuredText syntax</source>
         <translation>Syntaxe reStructuredText</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="78"/>
-        <source>Reload</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="86"/>
-        <source>Next tab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="88"/>
-        <source>Previous tab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="112"/>
-        <source>Table mode</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
