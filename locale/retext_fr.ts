@@ -35,7 +35,7 @@
     <message>
         <location filename="config.py" line="54"/>
         <source>Markdown extensions (comma-separated)</source>
-        <translation>Extensions Mardown (séparées par une virgule)</translation>
+        <translation>Extensions Markdown (séparées par une virgule)</translation>
     </message>
     <message>
         <location filename="config.py" line="54"/>
