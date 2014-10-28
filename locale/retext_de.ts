@@ -446,7 +446,7 @@
         <location filename="window.py" line="1180"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
-        <translation>Das Dokument wurde verändert.⏎
+        <translation>Das Dokument wurde verändert.
 Sollen die Änderungen gespeichert werden?</translation>
     </message>
     <message>
