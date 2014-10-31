@@ -20,8 +20,8 @@ try:
 except ImportError:
 	ReTextFakeVimHandler = None
 
-from PyQt5.QtCore import QDir, QFile, QFileInfo, QIODevice, QLocale, QRect, \
- QTextCodec, QTextStream, QTimer, QUrl, Qt
+from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
+ QIODevice, QLocale, QRect, QTextCodec, QTextStream, QTimer, QUrl, Qt
 from PyQt5.QtGui import QColor, QDesktopServices, QFont, QFontMetrics, QIcon, \
  QKeySequence, QPalette, QTextCursor, QTextDocument, QTextDocumentWriter
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
@@ -335,6 +335,8 @@ class ReTextWindow(QMainWindow):
 			if globalSettings.spellCheck:
 				self.actionEnableSC.setChecked(True)
 				self.enableSC(True)
+		self.fileSystemWatcher = QFileSystemWatcher()
+		self.fileSystemWatcher.fileChanged.connect(self.fileChanged)
 
 	def initConfig(self):
 		self.font = None
@@ -435,6 +437,8 @@ class ReTextWindow(QMainWindow):
 		if self.maybeSave(ind):
 			if self.tabWidget.count() == 1:
 				self.tabWidget.addTab(self.createTab(""), self.tr("New document"))
+			if self.fileNames[ind]:
+				self.fileSystemWatcher.removePath(self.fileNames[ind])
 			del self.editBoxes[ind]
 			del self.previewBoxes[ind]
 			del self.highlighters[ind]
@@ -907,6 +911,8 @@ class ReTextWindow(QMainWindow):
 				self.tabWidget.addTab(self.createTab(fileName), "")
 				self.ind = self.tabWidget.count()-1
 				self.tabWidget.setCurrentIndex(self.ind)
+			if fileName:
+				self.fileSystemWatcher.addPath(fileName)
 			self.fileNames[self.ind] = fileName
 			self.openFileMain()
 
@@ -977,6 +983,8 @@ class ReTextWindow(QMainWindow):
 			if newFileName:
 				if not QFileInfo(newFileName).suffix():
 					newFileName += ext
+				if self.fileNames[self.ind]:
+					self.fileSystemWatcher.removePath(self.fileNames[self.ind])
 				self.fileNames[self.ind] = newFileName
 				self.actionSetEncoding.setDisabled(self.autoSaveActive())
 		if self.fileNames[self.ind]:
@@ -992,12 +1000,14 @@ class ReTextWindow(QMainWindow):
 		return False
 
 	def saveFileCore(self, fn):
+		self.fileSystemWatcher.removePath(fn)
 		savefile = QFile(fn)
 		result = savefile.open(QIODevice.WriteOnly)
 		if result:
 			savestream = QTextStream(savefile)
 			savestream << self.editBoxes[self.ind].toPlainText()
 			savefile.close()
+		self.fileSystemWatcher.addPath(fn)
 		return result
 
 	def saveHtml(self, fileName):
@@ -1192,6 +1202,32 @@ class ReTextWindow(QMainWindow):
 		if num:
 			self.editBoxes[self.ind].insertPlainText('&'+self.usefulChars[num-1]+';')
 		self.symbolBox.setCurrentIndex(0)
+
+	def fileChanged(self, fileName):
+		ind = self.fileNames.index(fileName)
+		self.tabWidget.setCurrentIndex(ind)
+		if not QFile.exists(fileName):
+			self.editBoxes[ind].document().setModified(True)
+			return QMessageBox.warning(self, '', self.tr(
+				'This file has been deleted by other application.\n'
+				'Please make sure you save the file before exit.'))
+		text = self.tr(
+			'This document has been modified by other application.\n'
+			'Do you want to reload the file (this will discard all'
+			'your changes)?\n')
+		if self.autoSaveEnabled:
+			text += self.tr(
+				'If you choose to not reload the file, auto save mode will'
+				'be disabled for this session to prevent data loss.')
+		messageBox = QMessageBox(QMessageBox.Warning, '', text)
+		reloadButton = messageBox.addButton('Reload', QMessageBox.YesRole)
+		messageBox.addButton(QMessageBox.Cancel)
+		messageBox.exec()
+		if messageBox.clickedButton() is reloadButton:
+			self.openFileMain()
+		else:
+			self.autoSaveEnabled = False
+			self.editBoxes[ind].document().setModified(True)
 
 	def maybeSave(self, ind):
 		if self.autoSaveActive():
