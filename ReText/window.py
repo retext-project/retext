@@ -35,13 +35,14 @@ class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
 		QMainWindow.__init__(self, parent)
 		self.initConfig()
-		self.resize(800, 600)
+		self.resize(950, 700)
+		screenRect = QDesktopWidget().screenGeometry()
 		if globalSettings.windowGeometry:
 			self.restoreGeometry(globalSettings.windowGeometry)
 		else:
-			screen = QDesktopWidget().screenGeometry()
-			size = self.geometry()
-			self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
+			self.move((screenRect.width()-self.width())/2, (screenRect.height()-self.height())/2)
+		if not screenRect.contains(self.geometry()):
+			self.showMaximized()
 		if globalSettings.iconTheme:
 			QIcon.setThemeName(globalSettings.iconTheme)
 		if QFile.exists(icon_path+'retext.png'):
