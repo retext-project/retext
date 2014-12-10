@@ -127,6 +127,7 @@ class ReTextWindow(QMainWindow):
 			shct=Qt.Key_F11, trigbool=self.enableFullScreen)
 		self.actionConfig = self.act(self.tr('Preferences'), icon='preferences-system',
 			trig=self.openConfigDialog)
+		self.actionConfig.setMenuRole(QAction.PreferencesRole)
 		self.actionSaveHtml = self.act('HTML', 'text-html', self.saveFileHtml)
 		self.actionPdf = self.act('PDF', 'application-pdf', self.savePdf)
 		self.actionOdf = self.act('ODT', 'x-office-document', self.saveOdf)
