@@ -1167,7 +1167,9 @@ class ReTextWindow(QMainWindow):
 		self.setWindowModified(changed)
 
 	def clipboardDataChanged(self):
-		self.actionPaste.setEnabled(QApplication.instance().clipboard().mimeData().hasText())
+		mimeData = QApplication.instance().clipboard().mimeData()
+		if mimeData is not None:
+			self.actionPaste.setEnabled(mimeData.hasText())
 
 	def insertChars(self, chars):
 		tc = self.editBoxes[self.ind].textCursor()
