@@ -7,8 +7,8 @@ from ReText import globalSettings
 from markups.common import CONFIGURATION_DIR
 from os.path import join
 
-from PyQt5.QtCore import QFileInfo, Qt
-from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QFileInfo, QUrl, Qt
+from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
  QFileDialog, QGridLayout, QLabel, QLineEdit, QPushButton, QSpinBox
 
@@ -85,7 +85,11 @@ class ConfigDialog(QDialog):
 				label = QLabel(displayname + ':', self)
 			if name == 'markdownExtensions':
 				if displayname:
-					self.layout.addWidget(label, index, 0, 1, 2)
+					url = QUrl('http://pythonhosted.org/Markdown/extensions/')
+					helpButton = QPushButton(self.parent.tr('Help'), self)
+					helpButton.clicked.connect(lambda: QDesktopServices.openUrl(url))
+					self.layout.addWidget(label, index, 0)
+					self.layout.addWidget(helpButton, index, 1)
 					continue
 				try:
 					extsFile = open(MKD_EXTS_FILE)
