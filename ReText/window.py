@@ -157,7 +157,7 @@ class ReTextWindow(QMainWindow):
 		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
 		self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
 		self.actionWebKit.setChecked(globalSettings.useWebKit)
-		self.actionShow = self.act(self.tr('Show'), 'system-file-manager', self.showInDir)
+		self.actionShow = self.act(self.tr('Show directory'), 'system-file-manager', self.showInDir)
 		self.actionFind = self.act(self.tr('Next'), 'go-next', self.find,
 			shct=QKeySequence.FindNext)
 		self.actionFindPrev = self.act(self.tr('Previous'), 'go-previous',
