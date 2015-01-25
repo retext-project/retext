@@ -9,7 +9,6 @@ from subprocess import Popen
 from ReText import icon_path, DOCTYPE_MARKDOWN, DOCTYPE_REST, app_name, \
  app_version, globalSettings, settings, readListFromSettings, \
  writeListToSettings, writeToSettings, datadirs, enchant, enchant_available
-from ReText.webpages import wpInit, wpUpdateAll
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
 from ReText.highlighter import ReTextHighlighter
@@ -158,7 +157,6 @@ class ReTextWindow(QMainWindow):
 		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
 		self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
 		self.actionWebKit.setChecked(globalSettings.useWebKit)
-		self.actionWpgen = self.act(self.tr('Generate webpages'), trig=self.startWpgen)
 		self.actionShow = self.act(self.tr('Show'), 'system-file-manager', self.showInDir)
 		self.actionFind = self.act(self.tr('Next'), 'go-next', self.find,
 			shct=QKeySequence.FindNext)
@@ -226,9 +224,7 @@ class ReTextWindow(QMainWindow):
 		self.menuRecentFiles = menuFile.addMenu(self.tr('Open recent'))
 		self.menuRecentFiles.aboutToShow.connect(self.updateRecentFiles)
 		menuFile.addMenu(self.menuRecentFiles)
-		self.menuDir = menuFile.addMenu(self.tr('Directory'))
-		self.menuDir.addAction(self.actionShow)
-		self.menuDir.addAction(self.actionWpgen)
+		menuFile.addAction(self.actionShow)
 		menuFile.addAction(self.actionSetEncoding)
 		menuFile.addAction(self.actionReload)
 		menuFile.addSeparator()
@@ -683,9 +679,6 @@ class ReTextWindow(QMainWindow):
 				errMsg = errMsg.replace('</a>', '')
 			return '<p style="color: red">%s</p>' % errMsg
 		text = self.editBoxes[self.ind].toPlainText()
-		# WpGen directives
-		text = text.replace('%HTMLDIR%', 'html')
-		text = text.replace('%\\HTMLDIR%', '%HTMLDIR%')
 		headers = ''
 		if includeStyleSheet:
 			fontline = ''
@@ -744,25 +737,6 @@ class ReTextWindow(QMainWindow):
 		if self.actionLivePreview.isChecked() and self.previewBlocked == False:
 			self.previewBlocked = True
 			QTimer.singleShot(1000, self.updatePreviewBox)
-
-	def startWpgen(self):
-		if not self.fileNames[self.ind]:
-			return QMessageBox.warning(self, '', self.tr("Please, save the file somewhere."))
-		if not QFile.exists("template.html"):
-			try:
-				wpInit()
-			except IOError as e:
-				e = str(e)
-				return QMessageBox.warning(self, '', self.tr(
-				'Failed to copy default template, please create template.html manually.')
-				+ '\n\n' + e)
-		wpUpdateAll()
-		msgBox = QMessageBox(QMessageBox.Information, '',
-		self.tr("Webpages saved in <code>html</code> directory."), QMessageBox.Ok)
-		showButton = msgBox.addButton(self.tr("Show directory"), QMessageBox.AcceptRole)
-		msgBox.exec()
-		if msgBox.clickedButton() == showButton:
-			QDesktopServices.openUrl(QUrl.fromLocalFile(QDir('html').absolutePath()))
 
 	def showInDir(self):
 		if self.fileNames[self.ind]:

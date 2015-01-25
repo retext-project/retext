@@ -92,10 +92,9 @@ setup(name='ReText',
       author_email='mitya57@gmail.com',
       url='http://retext.sourceforge.net/',
       packages=['ReText'],
-      scripts=['retext.py', 'wpgen.py'],
+      scripts=['retext.py'],
       data_files=[
-      	('share/retext/locale', glob('locale/*.qm')),
-      	('share/wpgen', glob('templates/*.css') + glob('templates/*.html'))
+      	('share/retext/locale', glob('locale/*.qm'))
       ],
       requires=requires,
       install_requires=requires,
