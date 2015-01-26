@@ -1,6 +1,6 @@
 # vim: noexpandtab:ts=4:sw=4
 # This file is part of ReText
-# Copyright: Dmitry Shachnev 2012-2014
+# Copyright: Dmitry Shachnev 2012-2015
 # License: GNU GPL v2 or higher
 
 from ReText import monofont, globalSettings, tablemode, DOCTYPE_MARKDOWN
