@@ -6,8 +6,8 @@
 from ReText import monofont, globalSettings, tablemode, DOCTYPE_MARKDOWN
 
 from PyQt5.QtCore import QPoint, QSize, Qt
-from PyQt5.QtGui import QColor, QPainter, QTextCursor, QTextFormat
-from PyQt5.QtWidgets import QTextEdit, QWidget
+from PyQt5.QtGui import QColor, QPainter, QPalette, QTextCursor, QTextFormat
+from PyQt5.QtWidgets import QLabel, QTextEdit, QWidget
 
 def documentIndentMore(document, cursor, globalSettings=globalSettings):
 	if cursor.hasSelection():
@@ -62,6 +62,7 @@ class ReTextEdit(QTextEdit):
 		self.marginx = (self.cursorRect(self.cursorForPosition(QPoint())).topLeft().x()
 			+ self.fontMetrics().width(" "*globalSettings.rightMargin))
 		self.lineNumberArea = LineNumberArea(self)
+		self.infoArea = InfoArea(self)
 		self.document().blockCountChanged.connect(self.updateLineNumberAreaWidth)
 		self.updateLineNumberAreaWidth()
 		self.cursorPositionChanged.connect(self.highlightCurrentLine)
@@ -189,6 +190,7 @@ class ReTextEdit(QTextEdit):
 		rect = self.contentsRect()
 		self.lineNumberArea.setGeometry(rect.left(), rect.top(),
 			self.lineNumberAreaWidth(), rect.height())
+		self.infoArea.updateTextAndGeometry()
 
 	def highlightCurrentLine(self):
 		if not globalSettings.highlightCurrentLine:
@@ -232,3 +234,32 @@ class LineNumberArea(QWidget):
 	def paintEvent(self, event):
 		if globalSettings.lineNumbersEnabled:
 			return self.editor.lineNumberAreaPaintEvent(event)
+
+class InfoArea(QLabel):
+	def __init__(self, editor):
+		QWidget.__init__(self, editor)
+		self.editor = editor
+		self.editor.cursorPositionChanged.connect(self.updateTextAndGeometry)
+		self.updateTextAndGeometry()
+		self.setAutoFillBackground(True)
+		palette = self.palette()
+		palette.setColor(QPalette.Window, QColor(0xaa, 0xff, 0x55, 0xaa))
+		self.setPalette(palette)
+
+	def updateTextAndGeometry(self):
+		text = self.getText()
+		self.setText(text)
+		viewport = self.editor.viewport()
+		metrics = self.fontMetrics()
+		width = metrics.width(text)
+		height = metrics.height()
+		self.resize(width, height)
+		rightSide = viewport.width() + self.editor.lineNumberAreaWidth()
+		self.move(rightSide - width, viewport.height() - height)
+
+	def getText(self):
+		template = '%d : %d'
+		cursor = self.editor.textCursor()
+		block = cursor.blockNumber() + 1
+		position = cursor.positionInBlock()
+		return template % (block, position)
