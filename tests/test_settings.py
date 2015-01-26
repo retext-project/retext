@@ -4,11 +4,15 @@
 
 import unittest
 import tempfile
+import sys
 
 from os.path import basename, dirname, splitext
-from PyQt5.QtCore import QSettings
+from PyQt5.QtCore import QCoreApplication, QSettings
 from ReText import readListFromSettings, writeListToSettings, \
  readFromSettings, writeToSettings
+
+# Keep a reference so it is not garbage collected
+app = QCoreApplication(sys.argv)
 
 class TestSettings(unittest.TestCase):
 	def setUp(self):
