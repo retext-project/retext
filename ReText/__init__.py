@@ -45,6 +45,7 @@ configOptions = {
 	'autoSave': False,
 	'colorSchemeFile': '',
 	'defaultMarkup': '',
+	'defaultCodec': '',
 	'editorFont': 'monospace',
 	'editorFontSize': 0,
 	'font': '',

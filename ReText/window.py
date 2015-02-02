@@ -898,6 +898,8 @@ class ReTextWindow(QMainWindow):
 		stream = QTextStream(openfile)
 		if encoding:
 			stream.setCodec(encoding)
+		elif globalSettings.defaultCodec:
+			stream.setCodec(globalSettings.defaultCodec)
 		text = stream.readAll()
 		openfile.close()
 		markupClass = markups.get_markup_for_file_name(
@@ -981,6 +983,8 @@ class ReTextWindow(QMainWindow):
 		result = savefile.open(QIODevice.WriteOnly)
 		if result:
 			savestream = QTextStream(savefile)
+			if globalSettings.defaultCodec:
+				savestream.setCodec(globalSettings.defaultCodec)
 			savestream << self.editBoxes[self.ind].toPlainText()
 			savefile.close()
 		self.fileSystemWatcher.addPath(fn)
@@ -997,6 +1001,8 @@ class ReTextWindow(QMainWindow):
 		htmlFile = QFile(fileName)
 		htmlFile.open(QIODevice.WriteOnly)
 		html = QTextStream(htmlFile)
+		if globalSettings.defaultCodec:
+			html.setCodec(globalSettings.defaultCodec)
 		html << htmltext
 		htmlFile.close()
 
