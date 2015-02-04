@@ -27,6 +27,7 @@ from ReText.window import ReTextWindow
 from PyQt5.QtCore import QFile, QFileInfo, QIODevice, QLibraryInfo, \
  QTextStream, QTranslator
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtNetwork import QNetworkProxyFactory
 
 def canonicalize(option):
 	if option == '--preview':
@@ -38,6 +39,7 @@ def main():
 	app.setOrganizationName("ReText project")
 	app.setApplicationName("ReText")
 	app.setApplicationDisplayName("ReText")
+	QNetworkProxyFactory.setUseSystemConfiguration(True)
 	RtTranslator = QTranslator()
 	for path in datadirs:
 		if RtTranslator.load('retext_' + globalSettings.uiLanguage,
