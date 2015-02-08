@@ -4,4 +4,3 @@ recursive-include tests *.py
 recursive-include data *.desktop
 recursive-include locale retext_*.ts retext_*.qm
 recursive-include icons *.png *.svg
-recursive-include templates *.html *.css
