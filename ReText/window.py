@@ -152,7 +152,7 @@ class ReTextWindow(QMainWindow):
 		qApp.clipboard().dataChanged.connect(self.clipboardDataChanged)
 		self.clipboardDataChanged()
 		if enchant_available:
-			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSC)
+			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSpellCheck)
 			self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
 		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
 		self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
@@ -332,7 +332,7 @@ class ReTextWindow(QMainWindow):
 					self.sl = None
 			if globalSettings.spellCheck:
 				self.actionEnableSC.setChecked(True)
-				self.enableSC(True)
+				self.enableSpellCheck(True)
 		self.fileSystemWatcher = QFileSystemWatcher()
 		self.fileSystemWatcher.fileChanged.connect(self.fileChanged)
 
@@ -595,7 +595,7 @@ class ReTextWindow(QMainWindow):
 		else:
 			FakeVimMode.exit(self)
 
-	def enableSC(self, yes):
+	def enableSpellCheck(self, yes):
 		if yes:
 			if self.sl:
 				self.setAllDictionaries(enchant.Dict(self.sl))
@@ -627,10 +627,10 @@ class ReTextWindow(QMainWindow):
 				QMessageBox.warning(self, '', str(e))
 			else:
 				self.sl = sl
-				self.enableSC(self.actionEnableSC.isChecked())
+				self.enableSpellCheck(self.actionEnableSC.isChecked())
 		else:
 			self.sl = None
-			self.enableSC(self.actionEnableSC.isChecked())
+			self.enableSpellCheck(self.actionEnableSC.isChecked())
 		if setdefault:
 			globalSettings.spellCheckLocale = sl
 
