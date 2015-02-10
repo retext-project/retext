@@ -6,6 +6,7 @@
 import markups
 import sys
 from subprocess import Popen
+from markups.common import MODULE_HOME_PAGE
 from ReText import icon_path, DOCTYPE_MARKDOWN, DOCTYPE_REST, app_name, \
  app_version, globalSettings, settings, readListFromSettings, \
  writeListToSettings, writeToSettings, datadirs, enchant, enchant_available
@@ -672,7 +673,7 @@ class ReTextWindow(QMainWindow):
 			errMsg = self.tr('Could not parse file contents, check if '
 			'you have the <a href="%s">necessary module</a> installed!')
 			try:
-				errMsg %= markupClass.attributes[markups.MODULE_HOME_PAGE]
+				errMsg %= markupClass.attributes[MODULE_HOME_PAGE]
 			except (AttributeError, KeyError):
 				# Remove the link if markupClass doesn't have the needed attribute
 				errMsg = errMsg.replace('<a href="%s">', '')
