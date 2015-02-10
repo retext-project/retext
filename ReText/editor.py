@@ -256,6 +256,7 @@ class InfoArea(QLabel):
 		self.resize(width, height)
 		rightSide = viewport.width() + self.editor.lineNumberAreaWidth()
 		self.move(rightSide - width, viewport.height() - height)
+		self.setVisible(not globalSettings.useFakeVim)
 
 	def getText(self):
 		template = '%d : %d'
