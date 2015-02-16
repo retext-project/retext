@@ -87,7 +87,7 @@ class ConfigDialog(QDialog):
 			if name == 'markdownExtensions':
 				if displayname:
 					url = QUrl('http://pythonhosted.org/Markdown/extensions/')
-					helpButton = QPushButton(self.parent.tr('Help'), self)
+					helpButton = QPushButton(self.tr('Help'), self)
 					helpButton.clicked.connect(lambda: QDesktopServices.openUrl(url))
 					self.layout.addWidget(label, index, 0)
 					self.layout.addWidget(helpButton, index, 1)
