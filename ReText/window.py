@@ -1198,11 +1198,11 @@ class ReTextWindow(QMainWindow):
 				'Please make sure you save the file before exit.'))
 		text = self.tr(
 			'This document has been modified by other application.\n'
-			'Do you want to reload the file (this will discard all'
+			'Do you want to reload the file (this will discard all '
 			'your changes)?\n')
 		if self.autoSaveEnabled:
 			text += self.tr(
-				'If you choose to not reload the file, auto save mode will'
+				'If you choose to not reload the file, auto save mode will '
 				'be disabled for this session to prevent data loss.')
 		messageBox = QMessageBox(QMessageBox.Warning, '', text)
 		reloadButton = messageBox.addButton('Reload', QMessageBox.YesRole)
