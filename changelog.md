@@ -1,3 +1,11 @@
+## ReText 5.1 (2015-??-??)
+
+* Editor now displays cursor position in bottom-right corner
+* Added FakeVim mode (contributed by Lukas Holecek)
+* ReText now shows a notification when the file was modified
+  by another application, to prevent data loss
+* WebPages generator removed (as better alternatives exist)
+
 ## ReText 5.0 (2014-07-26)
 
 * Table editing mode
