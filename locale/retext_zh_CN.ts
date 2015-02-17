@@ -1,4 +1,5 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="">
 <context>
     <name>ConfigDialog</name>
     <message>
@@ -34,7 +35,7 @@
     <message>
         <location filename="config.py" line="54"/>
         <source>Markdown syntax extensions (comma-separated)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="config.py" line="54"/>
@@ -89,7 +90,7 @@
     <message>
         <location filename="config.py" line="90"/>
         <source>Help</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">帮助</translation>
     </message>
 </context>
 <context>
@@ -123,12 +124,12 @@
     <message>
         <location filename="fakevimeditor.py" line="52"/>
         <source>No write since last change (add ! to override)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="fakevimeditor.py" line="109"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -231,7 +232,7 @@
     <message>
         <location filename="window.py" line="121"/>
         <source>FakeVim mode</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="126"/>
@@ -499,19 +500,19 @@
         <location filename="window.py" line="1204"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1207"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1212"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1232"/>
