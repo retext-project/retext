@@ -207,13 +207,7 @@ class ReTextWindow(QMainWindow):
 		self.symbolBox.addItem(self.tr('Symbols'))
 		self.symbolBox.addItems(self.usefulChars)
 		self.symbolBox.activated.connect(self.insertSymbol)
-		if globalSettings.styleSheet:
-			sheetfile = QFile(globalSettings.styleSheet)
-			sheetfile.open(QIODevice.ReadOnly)
-			self.ss = QTextStream(sheetfile).readAll()
-			sheetfile.close()
-		else:
-			self.ss = ''
+		self.updateStyleSheet()
 		menubar = QMenuBar(self)
 		menubar.setGeometry(QRect(0, 0, 800, 25))
 		self.setMenuBar(menubar)
@@ -343,6 +337,15 @@ class ReTextWindow(QMainWindow):
 			self.font = QFont(globalSettings.font)
 		if self.font and globalSettings.fontSize:
 			self.font.setPointSize(globalSettings.fontSize)
+
+	def updateStyleSheet(self):
+		if globalSettings.styleSheet:
+			sheetfile = QFile(globalSettings.styleSheet)
+			sheetfile.open(QIODevice.ReadOnly)
+			self.ss = QTextStream(sheetfile).readAll()
+			sheetfile.close()
+		else:
+			self.ss = ''
 
 	def initTabWidget(self):
 		def dragEnterEvent(e):

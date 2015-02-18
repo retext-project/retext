@@ -151,3 +151,4 @@ class ConfigDialog(QDialog):
 			print(e, file=sys.stderr)
 		for editBox in self.parent.editBoxes:
 			editBox.updateLineNumberAreaWidth()
+		self.parent.updateStyleSheet()
