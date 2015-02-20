@@ -1208,7 +1208,7 @@ class ReTextWindow(QMainWindow):
 				'If you choose to not reload the file, auto save mode will '
 				'be disabled for this session to prevent data loss.')
 		messageBox = QMessageBox(QMessageBox.Warning, '', text)
-		reloadButton = messageBox.addButton('Reload', QMessageBox.YesRole)
+		reloadButton = messageBox.addButton(self.tr('Reload'), QMessageBox.YesRole)
 		messageBox.addButton(QMessageBox.Cancel)
 		messageBox.exec()
 		if messageBox.clickedButton() is reloadButton:
