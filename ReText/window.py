@@ -1199,9 +1199,6 @@ class ReTextWindow(QMainWindow):
 			return QMessageBox.warning(self, '', self.tr(
 				'This file has been deleted by other application.\n'
 				'Please make sure you save the file before exit.'))
-		if fileName not in self.fileSystemWatcher.files():
-			# https://sourceforge.net/p/retext/tickets/137/
-			self.fileSystemWatcher.addPath(fileName)
 		text = self.tr(
 			'This document has been modified by other application.\n'
 			'Do you want to reload the file (this will discard all '
@@ -1216,9 +1213,13 @@ class ReTextWindow(QMainWindow):
 		messageBox.exec()
 		if messageBox.clickedButton() is reloadButton:
 			self.openFileMain()
+			self.updatePreviewBox()
 		else:
 			self.autoSaveEnabled = False
 			self.editBoxes[ind].document().setModified(True)
+		if fileName not in self.fileSystemWatcher.files():
+			# https://sourceforge.net/p/retext/tickets/137/
+			self.fileSystemWatcher.addPath(fileName)
 
 	def maybeSave(self, ind):
 		if self.autoSaveActive():
