@@ -1196,27 +1196,32 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.setCurrentIndex(ind)
 		if not QFile.exists(fileName):
 			self.editBoxes[ind].document().setModified(True)
-			return QMessageBox.warning(self, '', self.tr(
+			QMessageBox.warning(self, '', self.tr(
 				'This file has been deleted by other application.\n'
 				'Please make sure you save the file before exit.'))
-		text = self.tr(
-			'This document has been modified by other application.\n'
-			'Do you want to reload the file (this will discard all '
-			'your changes)?\n')
-		if self.autoSaveEnabled:
-			text += self.tr(
-				'If you choose to not reload the file, auto save mode will '
-				'be disabled for this session to prevent data loss.')
-		messageBox = QMessageBox(QMessageBox.Warning, '', text)
-		reloadButton = messageBox.addButton(self.tr('Reload'), QMessageBox.YesRole)
-		messageBox.addButton(QMessageBox.Cancel)
-		messageBox.exec()
-		if messageBox.clickedButton() is reloadButton:
+		elif not self.editBoxes[ind].document().isModified():
+			# File was not modified in ReText, reload silently
 			self.openFileMain()
 			self.updatePreviewBox()
 		else:
-			self.autoSaveEnabled = False
-			self.editBoxes[ind].document().setModified(True)
+			text = self.tr(
+				'This document has been modified by other application.\n'
+				'Do you want to reload the file (this will discard all '
+				'your changes)?\n')
+			if self.autoSaveEnabled:
+				text += self.tr(
+					'If you choose to not reload the file, auto save mode will '
+					'be disabled for this session to prevent data loss.')
+			messageBox = QMessageBox(QMessageBox.Warning, '', text)
+			reloadButton = messageBox.addButton(self.tr('Reload'), QMessageBox.YesRole)
+			messageBox.addButton(QMessageBox.Cancel)
+			messageBox.exec()
+			if messageBox.clickedButton() is reloadButton:
+				self.openFileMain()
+				self.updatePreviewBox()
+			else:
+				self.autoSaveEnabled = False
+				self.editBoxes[ind].document().setModified(True)
 		if fileName not in self.fileSystemWatcher.files():
 			# https://sourceforge.net/p/retext/tickets/137/
 			self.fileSystemWatcher.addPath(fileName)
