@@ -21,7 +21,7 @@
 import sys
 import signal
 from os.path import join
-from ReText import datadirs, globalSettings
+from ReText import datadirs, globalSettings, app_version
 from ReText.window import ReTextWindow
 
 from PyQt5.QtCore import QFile, QFileInfo, QIODevice, QLibraryInfo, \
@@ -39,6 +39,7 @@ def main():
 	app.setOrganizationName("ReText project")
 	app.setApplicationName("ReText")
 	app.setApplicationDisplayName("ReText")
+	app.setApplicationVersion(app_version)
 	QNetworkProxyFactory.setUseSystemConfiguration(True)
 	RtTranslator = QTranslator()
 	for path in datadirs:
