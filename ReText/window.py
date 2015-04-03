@@ -29,6 +29,7 @@ from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QLineEdit, QMainWindow, QMenuBar, QMessageBox, QSplitter, QTabWidget, \
  QTextBrowser, QTextEdit, QToolBar
 from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
+from PyQt5.QtWebKit import QWebSecurityOrigin
 from PyQt5.QtWebKitWidgets import QWebPage, QWebView
 
 class ReTextWindow(QMainWindow):
@@ -713,6 +714,8 @@ class ReTextWindow(QMainWindow):
 			disttobottom = scrollbar.maximum() - scrollbar.value()
 		else:
 			frame = pb.page().mainFrame()
+			frame.securityOrigin().addAccessWhitelistEntry('https',
+				'cdn.mathjax.org', QWebSecurityOrigin.DisallowSubdomains)
 			scrollpos = frame.scrollPosition()
 		if self.actionPlainText.isChecked():
 			if textedit:
@@ -726,10 +729,7 @@ class ReTextWindow(QMainWindow):
 				html = self.getHtml(styleForWebKit=(not textedit))
 			except Exception:
 				return self.printError()
-			if textedit:
-				pb.setHtml(html)
-			else:
-				pb.setHtml(html, QUrl.fromLocalFile(self.fileNames[self.ind]))
+			pb.setHtml(html)
 		if self.font and textedit:
 			pb.document().setDefaultFont(self.font)
 		if textedit:
