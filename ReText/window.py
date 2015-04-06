@@ -29,7 +29,7 @@ from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QLineEdit, QMainWindow, QMenuBar, QMessageBox, QSplitter, QTabWidget, \
  QTextBrowser, QTextEdit, QToolBar
 from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
-from PyQt5.QtWebKit import QWebSecurityOrigin
+from PyQt5.QtWebKit import QWebSecurityOrigin, QWebSettings
 from PyQt5.QtWebKitWidgets import QWebPage, QWebView
 
 class ReTextWindow(QMainWindow):
@@ -401,6 +401,7 @@ class ReTextWindow(QMainWindow):
 		if not globalSettings.handleWebLinks:
 			webView.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
 			webView.page().linkClicked.connect(QDesktopServices.openUrl)
+		webView.settings().setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
 		return webView
 
 	def createTab(self, fileName):
