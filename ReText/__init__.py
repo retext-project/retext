@@ -41,7 +41,6 @@ DOCTYPE_HTML = 'html'
 
 configOptions = {
 	'appStyleSheet': '',
-	'autoPlainText': True,
 	'autoSave': False,
 	'colorSchemeFile': '',
 	'defaultMarkup': '',

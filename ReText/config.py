@@ -57,7 +57,6 @@ class ConfigDialog(QDialog):
 			(self.tr('Restore window geometry'), 'saveWindowGeometry'),
 			(self.tr('Restore live preview state'), 'restorePreviewState'),
 			(self.tr('Open external links in ReText window'), 'handleWebLinks'),
-			(self.tr('Open unknown files in plain text mode'), 'autoPlainText'),
 			(self.tr('Markdown syntax extensions (comma-separated)'), 'markdownExtensions'),
 			(None, 'markdownExtensions'),
 			(self.tr('Editor'), None),

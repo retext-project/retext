@@ -59,7 +59,6 @@ class ReTextWindow(QMainWindow):
 		self.fileNames = []
 		self.actionPreviewChecked = []
 		self.actionLivePreviewChecked = []
-		self.actionPlainTextChecked = []
 		self.tabWidget = QTabWidget(self)
 		self.initTabWidget()
 		self.setCentralWidget(self.tabWidget)
@@ -157,7 +156,6 @@ class ReTextWindow(QMainWindow):
 		if enchant_available:
 			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSpellCheck)
 			self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
-		self.actionPlainText = self.act(self.tr('Plain text'), trigbool=self.enablePlainText)
 		self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
 		self.actionWebKit.setChecked(globalSettings.useWebKit)
 		self.actionShow = self.act(self.tr('Show directory'), 'system-file-manager', self.showInDir)
@@ -256,7 +254,6 @@ class ReTextWindow(QMainWindow):
 			menuSC.addAction(self.actionEnableSC)
 			menuSC.addAction(self.actionSetLocale)
 		menuEdit.addAction(self.actionSearch)
-		menuEdit.addAction(self.actionPlainText)
 		menuEdit.addAction(self.actionChangeFont)
 		menuEdit.addSeparator()
 		if len(availableMarkups) > 1:
@@ -427,7 +424,6 @@ class ReTextWindow(QMainWindow):
 		liveMode = globalSettings.restorePreviewState and globalSettings.previewState
 		self.actionPreviewChecked.append(liveMode)
 		self.actionLivePreviewChecked.append(liveMode)
-		self.actionPlainTextChecked.append(False)
 		metrics = QFontMetrics(self.editBoxes[-1].font())
 		self.editBoxes[-1].setTabStopWidth(globalSettings.tabWidth * metrics.width(' '))
 		self.editBoxes[-1].textChanged.connect(self.updateLivePreviewBox)
@@ -452,14 +448,11 @@ class ReTextWindow(QMainWindow):
 			del self.fileNames[ind]
 			del self.actionPreviewChecked[ind]
 			del self.actionLivePreviewChecked[ind]
-			del self.actionPlainTextChecked[ind]
 			self.tabWidget.removeTab(ind)
 
 	def getMarkupClass(self, fileName=None):
 		if fileName is None:
 			fileName = self.fileNames[self.ind]
-		if self.actionPlainText.isChecked():
-			return
 		if fileName:
 			markupClass = markups.get_markup_for_file_name(
 				fileName, return_class=True)
@@ -496,9 +489,6 @@ class ReTextWindow(QMainWindow):
 
 	def changeIndex(self, ind):
 		if ind > -1:
-			self.actionPlainText.setChecked(self.actionPlainTextChecked[ind])
-			self.actionSaveHtml.setDisabled(self.actionPlainTextChecked[ind])
-			self.actionViewHtml.setDisabled(self.actionPlainTextChecked[ind])
 			self.actionUndo.setEnabled(self.editBoxes[ind].document().isUndoAvailable())
 			self.actionRedo.setEnabled(self.editBoxes[ind].document().isRedoAvailable())
 			self.actionCopy.setEnabled(self.editBoxes[ind].textCursor().hasSelection())
@@ -718,22 +708,14 @@ class ReTextWindow(QMainWindow):
 		else:
 			frame = pb.page().mainFrame()
 			scrollpos = frame.scrollPosition()
-		if self.actionPlainText.isChecked():
-			if textedit:
-				pb.setPlainText(self.editBoxes[self.ind].toPlainText())
-			else:
-				td = QTextDocument()
-				td.setPlainText(self.editBoxes[self.ind].toPlainText())
-				pb.setHtml(td.toHtml())
+		try:
+			html = self.getHtml(styleForWebKit=(not textedit))
+		except Exception:
+			return self.printError()
+		if textedit:
+			pb.setHtml(html)
 		else:
-			try:
-				html = self.getHtml(styleForWebKit=(not textedit))
-			except Exception:
-				return self.printError()
-			if textedit:
-				pb.setHtml(html)
-			else:
-				pb.setHtml(html, QUrl.fromLocalFile(self.fileNames[self.ind]))
+			pb.setHtml(html, QUrl.fromLocalFile(self.fileNames[self.ind]))
 		if self.font and textedit:
 			pb.document().setDefaultFont(self.font)
 		if textedit:
@@ -914,16 +896,11 @@ class ReTextWindow(QMainWindow):
 			self.fileNames[self.ind], return_class=True)
 		self.highlighters[self.ind].docType = (markupClass.name if markupClass else '')
 		self.markups[self.ind] = self.getMarkup()
-		pt = not markupClass
-		if not globalSettings.autoPlainText:
-			pt = False
-			if self.defaultMarkup:
-				self.highlighters[self.ind].docType = self.defaultMarkup.name
+		if self.defaultMarkup:
+			self.highlighters[self.ind].docType = self.defaultMarkup.name
 		editBox = self.editBoxes[self.ind]
 		modified = bool(encoding) and (editBox.toPlainText() != text)
 		editBox.setPlainText(text)
-		self.actionPlainText.setChecked(pt)
-		self.enablePlainText(pt)
 		self.setCurrentFile()
 		editBox.document().setModified(modified)
 		self.setWindowModified(modified)
@@ -1019,10 +996,7 @@ class ReTextWindow(QMainWindow):
 		td.setMetaInformation(QTextDocument.DocumentTitle, self.getDocumentTitle())
 		if self.ss:
 			td.setDefaultStyleSheet(self.ss)
-		if self.actionPlainText.isChecked():
-			td.setPlainText(self.editBoxes[self.ind].toPlainText())
-		else:
-			td.setHtml(self.getHtml())
+		td.setHtml(self.getHtml())
 		if self.font:
 			td.setDefaultFont(self.font)
 		return td
@@ -1280,12 +1254,6 @@ class ReTextWindow(QMainWindow):
 		+'</a> | <a href="http://daringfireball.net/projects/markdown/syntax">'+self.tr('Markdown syntax')
 		+'</a> | <a href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">'
 		+self.tr('reStructuredText syntax')+'</a></p>')
-
-	def enablePlainText(self, value):
-		self.actionPlainTextChecked[self.ind] = value
-		self.actionSaveHtml.setDisabled(value)
-		self.actionViewHtml.setDisabled(value)
-		self.docTypeChanged()
 
 	def setDefaultMarkup(self, markup):
 		self.defaultMarkup = markup
