@@ -126,6 +126,7 @@ class ReTextWindow(QMainWindow):
 				self.enableFakeVimMode(True)
 		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), 'view-fullscreen',
 			shct=Qt.Key_F11, trigbool=self.enableFullScreen)
+		self.actionFullScreen.setPriority(QAction.LowPriority)
 		self.actionConfig = self.act(self.tr('Preferences'), icon='preferences-system',
 			trig=self.openConfigDialog)
 		self.actionConfig.setMenuRole(QAction.PreferencesRole)
@@ -292,6 +293,7 @@ class ReTextWindow(QMainWindow):
 		toolBar.addAction(self.actionPrint)
 		toolBar.addSeparator()
 		toolBar.addAction(self.actionPreview)
+		toolBar.addAction(self.actionFullScreen)
 		self.editBar.addAction(self.actionUndo)
 		self.editBar.addAction(self.actionRedo)
 		self.editBar.addSeparator()
