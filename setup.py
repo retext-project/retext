@@ -74,7 +74,7 @@ class retext_upload(upload):
 			full_version = re.search(r'ReText-([\d\.]+)\.tar\.gz', filename).group(1)
 			new_path = ('mandriver@frs.sourceforge.net:/home/frs/project/r/re/retext/ReText-%s/%s' %
 			            (full_version[:-2], basename(filename)))
-			args = ['scp', filename, new_path]
+			args = ['scp', filename, filename + '.asc', new_path]
 			print('calling process', args)
 			check_call(args)
 
