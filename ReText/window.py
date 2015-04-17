@@ -728,7 +728,10 @@ class ReTextWindow(QMainWindow):
 				html = self.getHtml(styleForWebKit=(not textedit))
 			except Exception:
 				return self.printError()
-			pb.setHtml(html)
+			if textedit:
+				pb.setHtml(html)
+			else:
+				pb.setHtml(html, QUrl.fromLocalFile(self.fileNames[self.ind]))
 		if self.font and textedit:
 			pb.document().setDefaultFont(self.font)
 		if textedit:
