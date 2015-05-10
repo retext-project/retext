@@ -5,6 +5,7 @@
 * ReText now shows a notification when the file was modified by another
   application, to prevent data loss.
 * WebPages generator removed (as better alternatives exist).
+* Plain text mode removed.
 
 ## ReText 5.0 (2014-07-26)
 
