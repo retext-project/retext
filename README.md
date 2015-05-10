@@ -10,17 +10,17 @@ or in the [wiki](http://sourceforge.net/p/retext/wiki/).
 
 ReText requires the following packages to run:
 
-* [python](http://python.org/) — version 3.2 or higher
+* [python](https://www.python.org/) — version 3.2 or higher
 * [pyqt5](http://www.riverbankcomputing.co.uk/software/pyqt/intro)
-* [python-markups](http://pypi.python.org/pypi/Markups)
+* [python-markups](https://pypi.python.org/pypi/Markups)
 
 We also recommend having these packages installed:
 
-* [python-markdown](http://packages.python.org/Markdown/) — for Markdown
+* [python-markdown](https://pypi.python.org/pypi/Markdown) — for Markdown
   language support
-* [python-docutils](http://docutils.sourceforge.net/) — for reStructuredText
+* [python-docutils](https://pypi.python.org/pypi/docutils) — for reStructuredText
   language support
-* [python-enchant](http://pypi.python.org/pypi/pyenchant) — for spell checking
+* [python-enchant](https://pypi.python.org/pypi/pyenchant) — for spell checking
   support
 
 Translation files are already compiled for release tarballs and will be
