@@ -29,11 +29,6 @@
     </message>
     <message>
         <location filename="config.py" line="54"/>
-        <source>Open unknown files in plain text mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="54"/>
         <source>Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -88,7 +83,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="90"/>
+        <location filename="config.py" line="89"/>
         <source>Help</source>
         <translation type="unfinished">Ajuda</translation>
     </message>
@@ -210,49 +205,44 @@
         <translation>Mode de pantalla completa</translation>
     </message>
     <message>
-        <location filename="window.py" line="135"/>
+        <location filename="window.py" line="136"/>
         <source>Quit</source>
         <translation>Surt</translation>
     </message>
     <message>
-        <location filename="window.py" line="138"/>
+        <location filename="window.py" line="139"/>
         <source>Undo</source>
         <translation>Desfés</translation>
     </message>
     <message>
-        <location filename="window.py" line="140"/>
+        <location filename="window.py" line="141"/>
         <source>Redo</source>
         <translation>Refés</translation>
     </message>
     <message>
-        <location filename="window.py" line="142"/>
+        <location filename="window.py" line="143"/>
         <source>Copy</source>
         <translation>Copia</translation>
     </message>
     <message>
-        <location filename="window.py" line="144"/>
+        <location filename="window.py" line="145"/>
         <source>Cut</source>
         <translation>Retalla</translation>
     </message>
     <message>
-        <location filename="window.py" line="146"/>
+        <location filename="window.py" line="147"/>
         <source>Paste</source>
         <translation>Enganxa</translation>
     </message>
     <message>
-        <location filename="window.py" line="156"/>
+        <location filename="window.py" line="157"/>
         <source>Enable</source>
         <translation>Activa</translation>
     </message>
     <message>
-        <location filename="window.py" line="157"/>
+        <location filename="window.py" line="158"/>
         <source>Set locale</source>
         <translation>Estableix l&apos;idioma</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="158"/>
-        <source>Plain text</source>
-        <translation>Text pla</translation>
     </message>
     <message>
         <location filename="window.py" line="159"/>
@@ -311,62 +301,62 @@
         <translation>Símbols</translation>
     </message>
     <message>
-        <location filename="window.py" line="221"/>
+        <location filename="window.py" line="214"/>
         <source>File</source>
         <translation>Fitxer</translation>
     </message>
     <message>
-        <location filename="window.py" line="222"/>
+        <location filename="window.py" line="215"/>
         <source>Edit</source>
         <translation>Edita</translation>
     </message>
     <message>
-        <location filename="window.py" line="223"/>
+        <location filename="window.py" line="216"/>
         <source>Help</source>
         <translation>Ajuda</translation>
     </message>
     <message>
-        <location filename="window.py" line="226"/>
+        <location filename="window.py" line="219"/>
         <source>Open recent</source>
         <translation>Obre recents</translation>
     </message>
     <message>
-        <location filename="window.py" line="239"/>
+        <location filename="window.py" line="232"/>
         <source>Export</source>
         <translation>Exporta</translation>
     </message>
     <message>
-        <location filename="window.py" line="260"/>
+        <location filename="window.py" line="253"/>
         <source>Spell check</source>
         <translation>Comprova l&apos;ortografia</translation>
     </message>
     <message>
-        <location filename="window.py" line="271"/>
+        <location filename="window.py" line="263"/>
         <source>Formatting</source>
         <translation>Formata</translation>
     </message>
     <message>
-        <location filename="window.py" line="311"/>
+        <location filename="window.py" line="304"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
     <message>
-        <location filename="window.py" line="313"/>
+        <location filename="window.py" line="306"/>
         <source>Case sensitively</source>
         <translation>Majúscules i minúscules</translation>
     </message>
     <message>
-        <location filename="window.py" line="1145"/>
+        <location filename="window.py" line="1126"/>
         <source>New document</source>
         <translation>Document nou</translation>
     </message>
     <message>
-        <location filename="window.py" line="675"/>
+        <location filename="window.py" line="672"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation>No s&apos;ha pogut analitzar el contingut del fitxer. Comproveu que teniu instal·lat el  &lt;a href=&quot;%s&quot;&gt;mòdul  necessari&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="window.py" line="751"/>
+        <location filename="window.py" line="740"/>
         <source>Please, save the file somewhere.</source>
         <translation>deseu el fitxer en algun directori</translation>
     </message>
@@ -376,125 +366,125 @@
         <translation>Mostra el directori</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="859"/>
         <source>Select one or several files to open</source>
         <translation>Seleccioneu un o més fitxers per obrir</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="859"/>
         <source>Supported files</source>
         <translation>Fitxers suportats</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="859"/>
         <source>All files (*)</source>
         <translation>Tots els fitxers (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="958"/>
+        <location filename="window.py" line="942"/>
         <source>Plain text (*.txt)</source>
         <translation>Text pla (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="961"/>
+        <location filename="window.py" line="945"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s fitxers</translation>
     </message>
     <message>
-        <location filename="window.py" line="1044"/>
+        <location filename="window.py" line="1025"/>
         <source>Save file</source>
         <translation>Desa el fitxer</translation>
     </message>
     <message>
-        <location filename="window.py" line="983"/>
+        <location filename="window.py" line="967"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>No s&apos;ha pogut desar el fitxer perquè només és de lectura</translation>
     </message>
     <message>
-        <location filename="window.py" line="1034"/>
+        <location filename="window.py" line="1015"/>
         <source>Export document to ODT</source>
         <translation>Exporta el document a ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="1034"/>
+        <location filename="window.py" line="1015"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Fitxers de text OpenDocument (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1044"/>
+        <location filename="window.py" line="1025"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Fitxers HTML (*.html *htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1066"/>
+        <location filename="window.py" line="1047"/>
         <source>Export document to PDF</source>
         <translation>Exporta document com a PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="1066"/>
+        <location filename="window.py" line="1047"/>
         <source>PDF files (*.pdf)</source>
         <translation>Fitxers PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1083"/>
+        <location filename="window.py" line="1064"/>
         <source>Print document</source>
         <translation>Imprimeix document</translation>
     </message>
     <message>
-        <location filename="window.py" line="1104"/>
+        <location filename="window.py" line="1085"/>
         <source>Export document</source>
         <translation>Exporta document</translation>
     </message>
     <message>
-        <location filename="window.py" line="1123"/>
+        <location filename="window.py" line="1104"/>
         <source>Failed to execute the command:</source>
         <translation>S&apos;ha produït un error a l&apos;executar el comandament:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1232"/>
+        <location filename="window.py" line="1222"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>S&apos;ha modificat el document.
 Voleu desar els canvis?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1256"/>
+        <location filename="window.py" line="1246"/>
         <source>HTML code</source>
         <translation>Codi HTML</translation>
     </message>
     <message>
-        <location filename="window.py" line="1267"/>
+        <location filename="window.py" line="1257"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Editor de Markdown i reStructuredText senzill alhora que potent</translation>
     </message>
     <message>
-        <location filename="window.py" line="1267"/>
+        <location filename="window.py" line="1257"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Autor: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1267"/>
+        <location filename="window.py" line="1257"/>
         <source>Website</source>
         <translation>Lloc web</translation>
     </message>
     <message>
-        <location filename="window.py" line="1267"/>
+        <location filename="window.py" line="1257"/>
         <source>Markdown syntax</source>
         <translation>Sintaxi markdown</translation>
     </message>
     <message>
-        <location filename="window.py" line="1267"/>
+        <location filename="window.py" line="1257"/>
         <source>reStructuredText syntax</source>
         <translation>Sintaxi reStructuredText</translation>
     </message>
     <message>
-        <location filename="window.py" line="268"/>
+        <location filename="window.py" line="260"/>
         <source>Default markup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="582"/>
+        <location filename="window.py" line="579"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
@@ -504,12 +494,12 @@ Voleu desar els canvis?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="933"/>
+        <location filename="window.py" line="917"/>
         <source>Select file encoding from the list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="84"/>
+        <location filename="window.py" line="1202"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
@@ -534,20 +524,20 @@ Voleu desar els canvis?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1204"/>
+        <location filename="window.py" line="1185"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1207"/>
+        <location filename="window.py" line="1193"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1212"/>
+        <location filename="window.py" line="1198"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation type="unfinished"></translation>
     </message>
