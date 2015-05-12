@@ -31,7 +31,7 @@ automatically loaded. For development snapshots, compile translations using
 If you want to translate ReText into your language, follow the instructions in
 ReText wiki.
 
-ReText is Copyright 2011–2012 [Dmitry Shachnev](https://launchpad.net/~mitya57)
+ReText is Copyright 2011–2015 [Dmitry Shachnev](http://mitya57.me)
 and is licensed under GNU GPL (v2+) license, the current version is available in
 `LICENSE_GPL` file.
 
