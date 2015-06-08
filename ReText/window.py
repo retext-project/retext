@@ -940,7 +940,12 @@ class ReTextWindow(QMainWindow):
 					'Example of final string: Markdown files') \
 					% markupClass.name + ' (' + str.join(' ',
 					('*'+extension for extension in markupClass.file_extensions)) + ')'
-				ext = markupClass.default_extension
+				if markupClass == markups.MarkdownMarkup:
+					ext = globalSettings.markdownDefaultFileExtension
+				elif markupClass == markups.ReStructuredTextMarkup:
+					ext = globalSettings.restDefaultFileExtension
+				else:
+					ext = markupClass.default_extension
 			newFileName = QFileDialog.getSaveFileName(self,
 				self.tr("Save file"), "", defaultExt)[0]
 			if newFileName:
