@@ -1,4 +1,4 @@
-## ReText 5.1 (2015-??-??)
+## ReText 5.1 (2015-06-30)
 
 * Editor now displays cursor position in bottom-right corner.
 * Added FakeVim mode (contributed by Lukas Holecek).
@@ -6,6 +6,8 @@
   application, to prevent data loss.
 * WebPages generator removed (as better alternatives exist).
 * Plain text mode removed.
+* Added ability to configure file extensions for Markdown and
+  reStructuredText.
 
 ## ReText 5.0 (2014-07-26)
 
