@@ -83,7 +83,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="89"/>
+        <location filename="config.py" line="91"/>
         <source>Help</source>
         <translation type="unfinished">Súgó</translation>
     </message>
@@ -130,414 +130,414 @@
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="window.py" line="67"/>
+        <location filename="window.py" line="68"/>
         <source>File toolbar</source>
         <translation>Fájl eszköztár</translation>
     </message>
     <message>
-        <location filename="window.py" line="69"/>
+        <location filename="window.py" line="70"/>
         <source>Edit toolbar</source>
         <translation>Szerkesztés eszköztár</translation>
     </message>
     <message>
-        <location filename="window.py" line="71"/>
+        <location filename="window.py" line="72"/>
         <source>Search toolbar</source>
         <translation>Keresés eszköztár</translation>
     </message>
     <message>
-        <location filename="window.py" line="75"/>
+        <location filename="window.py" line="76"/>
         <source>New</source>
         <translation>Új</translation>
     </message>
     <message>
-        <location filename="window.py" line="78"/>
+        <location filename="window.py" line="79"/>
         <source>Open</source>
         <translation>Megnyitás</translation>
     </message>
     <message>
-        <location filename="window.py" line="86"/>
+        <location filename="window.py" line="87"/>
         <source>Save</source>
         <translation>Mentés</translation>
     </message>
     <message>
-        <location filename="window.py" line="81"/>
+        <location filename="window.py" line="82"/>
         <source>Set encoding</source>
         <translation>Kódolás</translation>
     </message>
     <message>
-        <location filename="window.py" line="90"/>
+        <location filename="window.py" line="91"/>
         <source>Save as</source>
         <translation>Mentés másként...</translation>
     </message>
     <message>
-        <location filename="window.py" line="96"/>
+        <location filename="window.py" line="97"/>
         <source>Print</source>
         <translation>Nyomtatás</translation>
     </message>
     <message>
-        <location filename="window.py" line="99"/>
+        <location filename="window.py" line="100"/>
         <source>Print preview</source>
         <translation>Nyomtatási előnézet</translation>
     </message>
     <message>
-        <location filename="window.py" line="101"/>
+        <location filename="window.py" line="102"/>
         <source>View HTML code</source>
         <translation>HTML kód megtekintése</translation>
     </message>
     <message>
-        <location filename="window.py" line="102"/>
+        <location filename="window.py" line="103"/>
         <source>Change default font</source>
         <translation>Alapértelmezett betűtípus megváltoztatása</translation>
     </message>
     <message>
-        <location filename="window.py" line="103"/>
+        <location filename="window.py" line="104"/>
         <source>Find text</source>
         <translation>Szöveg keresése</translation>
     </message>
     <message>
-        <location filename="window.py" line="107"/>
+        <location filename="window.py" line="108"/>
         <source>Preview</source>
         <translation>Előnézet</translation>
     </message>
     <message>
-        <location filename="window.py" line="116"/>
+        <location filename="window.py" line="118"/>
         <source>Live preview</source>
         <translation>Élő előnézet</translation>
     </message>
     <message>
-        <location filename="window.py" line="126"/>
+        <location filename="window.py" line="128"/>
         <source>Fullscreen mode</source>
         <translation>Teljes képernyő</translation>
     </message>
     <message>
-        <location filename="window.py" line="579"/>
+        <location filename="window.py" line="581"/>
         <source>Preferences</source>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location filename="window.py" line="136"/>
+        <location filename="window.py" line="138"/>
         <source>Quit</source>
         <translation>Kilépés</translation>
     </message>
     <message>
-        <location filename="window.py" line="139"/>
+        <location filename="window.py" line="141"/>
         <source>Undo</source>
         <translation>Visszavonás</translation>
     </message>
     <message>
-        <location filename="window.py" line="141"/>
+        <location filename="window.py" line="143"/>
         <source>Redo</source>
         <translation>Újra végrehajtás</translation>
     </message>
     <message>
-        <location filename="window.py" line="143"/>
+        <location filename="window.py" line="145"/>
         <source>Copy</source>
         <translation>Másolás</translation>
     </message>
     <message>
-        <location filename="window.py" line="145"/>
+        <location filename="window.py" line="147"/>
         <source>Cut</source>
         <translation>Kivágás</translation>
     </message>
     <message>
-        <location filename="window.py" line="147"/>
+        <location filename="window.py" line="149"/>
         <source>Paste</source>
         <translation>Beillesztés</translation>
     </message>
     <message>
-        <location filename="window.py" line="157"/>
+        <location filename="window.py" line="159"/>
         <source>Enable</source>
         <translation>Engedélyezés</translation>
     </message>
     <message>
-        <location filename="window.py" line="158"/>
+        <location filename="window.py" line="160"/>
         <source>Set locale</source>
         <translation>Nyelv beállítása</translation>
     </message>
     <message>
-        <location filename="window.py" line="159"/>
+        <location filename="window.py" line="161"/>
         <source>Use WebKit renderer</source>
         <translation>Használja a WebKit megjelenítőt</translation>
     </message>
     <message>
-        <location filename="window.py" line="162"/>
+        <location filename="window.py" line="164"/>
         <source>Next</source>
         <translation>Következő</translation>
     </message>
     <message>
-        <location filename="window.py" line="164"/>
+        <location filename="window.py" line="166"/>
         <source>Previous</source>
         <translation>Előző</translation>
     </message>
     <message>
-        <location filename="window.py" line="166"/>
+        <location filename="window.py" line="168"/>
         <source>Get help online</source>
         <translation>Online súgó</translation>
     </message>
     <message>
-        <location filename="window.py" line="167"/>
+        <location filename="window.py" line="169"/>
         <source>About %s</source>
         <comment>Example of final string: About ReText</comment>
         <translation>Névjegy: %s</translation>
     </message>
     <message>
-        <location filename="window.py" line="171"/>
+        <location filename="window.py" line="173"/>
         <source>About Qt</source>
         <translation>Névjegy: Qt</translation>
     </message>
     <message>
-        <location filename="window.py" line="191"/>
+        <location filename="window.py" line="193"/>
         <source>Bold</source>
         <translation>Félkövér</translation>
     </message>
     <message>
-        <location filename="window.py" line="193"/>
+        <location filename="window.py" line="195"/>
         <source>Italic</source>
         <translation>Dőlt</translation>
     </message>
     <message>
-        <location filename="window.py" line="195"/>
+        <location filename="window.py" line="197"/>
         <source>Underline</source>
         <translation>Aláhúzás</translation>
     </message>
     <message>
-        <location filename="window.py" line="203"/>
+        <location filename="window.py" line="205"/>
         <source>Tags</source>
         <translation>Tag-ek</translation>
     </message>
     <message>
-        <location filename="window.py" line="207"/>
+        <location filename="window.py" line="209"/>
         <source>Symbols</source>
         <translation>Szimbólumok</translation>
     </message>
     <message>
-        <location filename="window.py" line="214"/>
+        <location filename="window.py" line="216"/>
         <source>File</source>
         <translation>Fájl</translation>
     </message>
     <message>
-        <location filename="window.py" line="215"/>
+        <location filename="window.py" line="217"/>
         <source>Edit</source>
         <translation>Szerkesztés</translation>
     </message>
     <message>
-        <location filename="window.py" line="216"/>
+        <location filename="window.py" line="218"/>
         <source>Help</source>
         <translation>Súgó</translation>
     </message>
     <message>
-        <location filename="window.py" line="219"/>
+        <location filename="window.py" line="221"/>
         <source>Open recent</source>
         <translation>Legutóbbi megnyitása</translation>
     </message>
     <message>
-        <location filename="window.py" line="232"/>
+        <location filename="window.py" line="234"/>
         <source>Export</source>
         <translation>Exportálás</translation>
     </message>
     <message>
-        <location filename="window.py" line="253"/>
+        <location filename="window.py" line="255"/>
         <source>Spell check</source>
         <translation>Helyesírás-ellenőrzés</translation>
     </message>
     <message>
-        <location filename="window.py" line="260"/>
+        <location filename="window.py" line="262"/>
         <source>Default markup</source>
         <translation>Alapértelmezett formátum</translation>
     </message>
     <message>
-        <location filename="window.py" line="263"/>
+        <location filename="window.py" line="265"/>
         <source>Formatting</source>
         <translation>Formázás</translation>
     </message>
     <message>
-        <location filename="window.py" line="304"/>
+        <location filename="window.py" line="306"/>
         <source>Search</source>
         <translation>Keresés</translation>
     </message>
     <message>
-        <location filename="window.py" line="306"/>
+        <location filename="window.py" line="308"/>
         <source>Case sensitively</source>
         <translation>Betűérzékeny</translation>
     </message>
     <message>
-        <location filename="window.py" line="1126"/>
+        <location filename="window.py" line="1136"/>
         <source>New document</source>
         <translation>Új dokumentum</translation>
     </message>
     <message>
-        <location filename="window.py" line="672"/>
+        <location filename="window.py" line="674"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation>Nem tudtuk elemezni a fájl tartalmát, kérjük ellenőrizze, hogy a &lt;a href=&quot;%s&quot;&gt;szükséges modul&lt;/a&gt; telepítve van-e!</translation>
     </message>
     <message>
-        <location filename="window.py" line="740"/>
+        <location filename="window.py" line="743"/>
         <source>Please, save the file somewhere.</source>
         <translation>Kérjük mentse el a fájlt másik helyre.</translation>
     </message>
     <message>
-        <location filename="window.py" line="161"/>
+        <location filename="window.py" line="163"/>
         <source>Show directory</source>
         <translation>Mappa mutatása</translation>
     </message>
     <message>
-        <location filename="window.py" line="859"/>
+        <location filename="window.py" line="863"/>
         <source>Select one or several files to open</source>
         <translation>Jelöljön ki egy vagy több fájlt megnyitásra</translation>
     </message>
     <message>
-        <location filename="window.py" line="859"/>
+        <location filename="window.py" line="863"/>
         <source>Supported files</source>
         <translation>Támogatott fájltípusok</translation>
     </message>
     <message>
-        <location filename="window.py" line="859"/>
+        <location filename="window.py" line="863"/>
         <source>All files (*)</source>
         <translation>Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="917"/>
+        <location filename="window.py" line="922"/>
         <source>Select file encoding from the list:</source>
         <translation>Válassza ki a kódolást a listából:</translation>
     </message>
     <message>
-        <location filename="window.py" line="942"/>
+        <location filename="window.py" line="947"/>
         <source>Plain text (*.txt)</source>
         <translation>Egyszerű szöveg (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="945"/>
+        <location filename="window.py" line="950"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s fájlok</translation>
     </message>
     <message>
-        <location filename="window.py" line="1025"/>
+        <location filename="window.py" line="1035"/>
         <source>Save file</source>
         <translation>Fájl mentése</translation>
     </message>
     <message>
-        <location filename="window.py" line="967"/>
+        <location filename="window.py" line="977"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Nem menthető, mert a fájl írásvédett!</translation>
     </message>
     <message>
-        <location filename="window.py" line="1015"/>
+        <location filename="window.py" line="1025"/>
         <source>Export document to ODT</source>
         <translation>Dokumentum exportálása ODT formátumba</translation>
     </message>
     <message>
-        <location filename="window.py" line="1015"/>
+        <location filename="window.py" line="1025"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocument szöveg fájlok (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1025"/>
+        <location filename="window.py" line="1035"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML fájlok (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1047"/>
+        <location filename="window.py" line="1057"/>
         <source>Export document to PDF</source>
         <translation>Dokumentum exportálása PDF-be</translation>
     </message>
     <message>
-        <location filename="window.py" line="1047"/>
+        <location filename="window.py" line="1057"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF fájlok (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1064"/>
+        <location filename="window.py" line="1074"/>
         <source>Print document</source>
         <translation>Dokumentum nyomtatása</translation>
     </message>
     <message>
-        <location filename="window.py" line="1085"/>
+        <location filename="window.py" line="1095"/>
         <source>Export document</source>
         <translation>Dokumentum exportálása</translation>
     </message>
     <message>
-        <location filename="window.py" line="1104"/>
+        <location filename="window.py" line="1114"/>
         <source>Failed to execute the command:</source>
         <translation>Nem tudtuk végrehajtani ezt a parancsot:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1222"/>
+        <location filename="window.py" line="1232"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Ezt a dokumentumot ön módosította.
 El kívánja menteni a változtatásokat?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1246"/>
+        <location filename="window.py" line="1256"/>
         <source>HTML code</source>
         <translation>HTML kód</translation>
     </message>
     <message>
-        <location filename="window.py" line="1257"/>
+        <location filename="window.py" line="1267"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Egyszerű, de nagy tudású Markdown és reStructuredText szerkesztő</translation>
     </message>
     <message>
-        <location filename="window.py" line="1257"/>
+        <location filename="window.py" line="1267"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Szerző: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1257"/>
+        <location filename="window.py" line="1267"/>
         <source>Website</source>
         <translation>Weboldal</translation>
     </message>
     <message>
-        <location filename="window.py" line="1257"/>
+        <location filename="window.py" line="1267"/>
         <source>Markdown syntax</source>
         <translation>Markdown szintaxis</translation>
     </message>
     <message>
-        <location filename="window.py" line="1257"/>
+        <location filename="window.py" line="1267"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText szintaxis</translation>
     </message>
     <message>
-        <location filename="window.py" line="1202"/>
+        <location filename="window.py" line="1212"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="92"/>
+        <location filename="window.py" line="93"/>
         <source>Next tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="94"/>
+        <location filename="window.py" line="95"/>
         <source>Previous tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="118"/>
+        <location filename="window.py" line="120"/>
         <source>Table mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="121"/>
+        <location filename="window.py" line="123"/>
         <source>FakeVim mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1185"/>
+        <location filename="window.py" line="1195"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1193"/>
+        <location filename="window.py" line="1203"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1198"/>
+        <location filename="window.py" line="1208"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation type="unfinished"></translation>
     </message>
