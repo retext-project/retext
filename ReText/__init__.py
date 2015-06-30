@@ -4,6 +4,7 @@
 
 import markups
 import markups.common
+import sys
 from os.path import join, abspath
 
 from PyQt5.QtCore import QByteArray, QLocale, QSettings, QStandardPaths
@@ -13,6 +14,7 @@ app_name = "ReText"
 app_version = "5.1.0"
 
 settings = QSettings('ReText project', 'ReText')
+print('Using configuration file:', settings.fileName())
 
 if not str(settings.fileName()).endswith('.conf'):
 	# We are on Windows probably
