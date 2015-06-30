@@ -9,7 +9,7 @@ requires = ['docutils', 'Markdown', 'Markups', 'pyenchant', 'Pygments']
 
 import re
 import sys
-from os.path import basename, join
+from os.path import join
 from distutils import log
 from distutils.core import setup, Command
 from distutils.command.build import build
@@ -72,8 +72,8 @@ class retext_upload(upload):
 		upload.run(self)
 		for command, pyversion, filename in self.distribution.dist_files:
 			full_version = re.search(r'ReText-([\d\.]+)\.tar\.gz', filename).group(1)
-			new_path = ('mandriver@frs.sourceforge.net:/home/frs/project/r/re/retext/ReText-%s/%s' %
-			            (full_version[:-2], basename(filename)))
+			new_path = ('mandriver@frs.sourceforge.net:/home/frs/project/r/re/retext/ReText-%s/' %
+			            full_version[:-2])
 			args = ['scp', filename, filename + '.asc', new_path]
 			print('calling process', args)
 			check_call(args)
