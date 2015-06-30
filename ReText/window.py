@@ -51,7 +51,8 @@ class ReTextWindow(QMainWindow):
 		elif QFile.exists('/usr/share/pixmaps/retext.png'):
 			self.setWindowIcon(QIcon('/usr/share/pixmaps/retext.png'))
 		else:
-			self.setWindowIcon(QIcon.fromTheme('retext', QIcon.fromTheme('accessories-text-editor')))
+			self.setWindowIcon(QIcon.fromTheme('retext',
+				QIcon.fromTheme('accessories-text-editor')))
 		self.editBoxes = []
 		self.previewBoxes = []
 		self.highlighters = []
@@ -104,7 +105,8 @@ class ReTextWindow(QMainWindow):
 		self.actionSearch.setCheckable(True)
 		self.actionSearch.triggered[bool].connect(self.searchBar.setVisible)
 		self.searchBar.visibilityChanged.connect(self.searchBarVisibilityChanged)
-		self.actionPreview = self.act(self.tr('Preview'), shct=Qt.CTRL+Qt.Key_E, trigbool=self.preview)
+		self.actionPreview = self.act(self.tr('Preview'), shct=Qt.CTRL+Qt.Key_E,
+			trigbool=self.preview)
 		if QIcon.hasThemeIcon('document-preview'):
 			self.actionPreview.setIcon(QIcon.fromTheme('document-preview'))
 		elif QIcon.hasThemeIcon('preview-file'):
@@ -118,8 +120,8 @@ class ReTextWindow(QMainWindow):
 		self.actionTableMode = self.act(self.tr('Table mode'), shct=Qt.CTRL+Qt.Key_T,
 			trigbool=lambda x: self.editBoxes[self.ind].enableTableMode(x))
 		if ReTextFakeVimHandler:
-			self.actionFakeVimMode = self.act(self.tr('FakeVim mode'), shct=Qt.CTRL+Qt.ALT+Qt.Key_V,
-				trigbool=self.enableFakeVimMode)
+			self.actionFakeVimMode = self.act(self.tr('FakeVim mode'),
+				shct=Qt.CTRL+Qt.ALT+Qt.Key_V, trigbool=self.enableFakeVimMode)
 			if globalSettings.useFakeVim:
 				self.actionFakeVimMode.setChecked(True)
 				self.enableFakeVimMode(True)
@@ -730,7 +732,8 @@ class ReTextWindow(QMainWindow):
 
 	def showInDir(self):
 		if self.fileNames[self.ind]:
-			QDesktopServices.openUrl(QUrl.fromLocalFile(QFileInfo(self.fileNames[self.ind]).path()))
+			path = QFileInfo(self.fileNames[self.ind]).path()
+			QDesktopServices.openUrl(QUrl.fromLocalFile(path))
 		else:
 			QMessageBox.warning(self, '', self.tr("Please, save the file somewhere."))
 
@@ -786,7 +789,8 @@ class ReTextWindow(QMainWindow):
 		for extsprefix in datadirs:
 			extsdir = QDir(extsprefix+'/export-extensions/')
 			if extsdir.exists():
-				for fileInfo in extsdir.entryInfoList(['*.desktop', '*.ini'], QDir.Files | QDir.Readable):
+				for fileInfo in extsdir.entryInfoList(['*.desktop', '*.ini'],
+				QDir.Files | QDir.Readable):
 					extensions.append(self.readExtension(fileInfo.filePath()))
 		locale = QLocale.system().name()
 		self.extensionActions = []
@@ -850,7 +854,8 @@ class ReTextWindow(QMainWindow):
 		for markup in markups.get_all_markups():
 			supportedExtensions += markup.file_extensions
 		fileFilter = ' (' + str.join(' ', ['*'+ext for ext in supportedExtensions]) + ');;'
-		fileNames = QFileDialog.getOpenFileNames(self, self.tr("Select one or several files to open"), "",
+		fileNames = QFileDialog.getOpenFileNames(self,
+			self.tr("Select one or several files to open"), "",
 			self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
 		for fileName in fileNames[0]:
 			self.openFileWrapper(fileName)
@@ -1256,7 +1261,8 @@ class ReTextWindow(QMainWindow):
 		' for Markdown and reStructuredText')
 		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011').replace('2011', '2011\u2013' '2015')
 		+'<br><a href="http://sourceforge.net/p/retext/">'+self.tr('Website')
-		+'</a> | <a href="http://daringfireball.net/projects/markdown/syntax">'+self.tr('Markdown syntax')
+		+'</a> | <a href="http://daringfireball.net/projects/markdown/syntax">'
+		+self.tr('Markdown syntax')
 		+'</a> | <a href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">'
 		+self.tr('reStructuredText syntax')+'</a></p>')
 
