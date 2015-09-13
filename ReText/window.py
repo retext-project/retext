@@ -1211,7 +1211,7 @@ class ReTextWindow(QMainWindow):
 				self.autoSaveEnabled = False
 				self.editBoxes[ind].document().setModified(True)
 		if fileName not in self.fileSystemWatcher.files():
-			# https://sourceforge.net/p/retext/tickets/137/
+			# https://github.com/retext-project/retext/issues/137
 			self.fileSystemWatcher.addPath(fileName)
 
 	def maybeSave(self, ind):
@@ -1253,7 +1253,7 @@ class ReTextWindow(QMainWindow):
 		htmlDlg.activateWindow()
 
 	def openHelp(self):
-		QDesktopServices.openUrl(QUrl('http://sourceforge.net/p/retext/home/Help and Support'))
+		QDesktopServices.openUrl(QUrl('https://github.com/retext-project/retext/issues/'))
 
 	def aboutDialog(self):
 		QMessageBox.about(self, self.aboutWindowTitle,
@@ -1261,7 +1261,7 @@ class ReTextWindow(QMainWindow):
 		+'</b></p>' + self.tr('Simple but powerful editor'
 		' for Markdown and reStructuredText')
 		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011').replace('2011', '2011\u2013' '2015')
-		+'<br><a href="http://sourceforge.net/p/retext/">'+self.tr('Website')
+		+'<br><a href="https://github.com/retext-project/retext">'+self.tr('Website')
 		+'</a> | <a href="http://daringfireball.net/projects/markdown/syntax">'
 		+self.tr('Markdown syntax')
 		+'</a> | <a href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">'

@@ -5,8 +5,7 @@ ReText is a simple but powerful editor for Markdown and reStructuredText markup
 languages. ReText is written in Python language and works on Linux and other
 POSIX-compatible platforms. To install ReText, use `setup.py install` command.
 
-You can read more about ReText on [our website](http://retext.sourceforge.net/)
-or in the [wiki](http://sourceforge.net/p/retext/wiki/).
+You can read more about ReText in the [wiki].
 
 ReText requires the following packages to run:
 
@@ -29,10 +28,12 @@ automatically loaded. For development snapshots, compile translations using
 `/usr/share/retext/` directory.
 
 If you want to translate ReText into your language, follow the instructions in
-ReText wiki.
+ReText [wiki].
 
 ReText is Copyright 2011–2015 [Dmitry Shachnev](http://mitya57.me)
 and is licensed under GNU GPL (v2+) license, the current version is available in
 `LICENSE_GPL` file.
 
 ReText icon is based on `accessories-text-editor` icon from the Faenza theme.
+
+[wiki]: https://github.com/retext-project/retext/wiki
