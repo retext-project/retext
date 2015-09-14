@@ -521,7 +521,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1267"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>简单高效的 Markdown 与 ReStructuredText 编辑器</translation>
+        <translation>简单高效的 Markdown 与 reStructuredText 编辑器</translation>
     </message>
     <message>
         <location filename="window.py" line="1267"/>

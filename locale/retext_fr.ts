@@ -522,7 +522,7 @@ Voulez vous enregistrer vos changements ?</translation>
     <message>
         <location filename="window.py" line="1267"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>Éditeur de Markdown et ReStructuredText simple mais puissant</translation>
+        <translation>Éditeur de Markdown et reStructuredText simple mais puissant</translation>
     </message>
     <message>
         <location filename="window.py" line="1267"/>
