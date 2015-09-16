@@ -983,7 +983,7 @@ class ReTextWindow(QMainWindow):
 				self.tr("Cannot save to file because it is read-only!"))
 		return False
 
-	def saveFileCore(self, fn):
+	def saveFileCore(self, fn, addToWatcher=True):
 		self.fileSystemWatcher.removePath(fn)
 		savefile = QFile(fn)
 		result = savefile.open(QIODevice.WriteOnly)
@@ -993,7 +993,8 @@ class ReTextWindow(QMainWindow):
 				savestream.setCodec(globalSettings.defaultCodec)
 			savestream << self.editBoxes[self.ind].toPlainText()
 			savefile.close()
-		self.fileSystemWatcher.addPath(fn)
+		if result and addToWatcher:
+			self.fileSystemWatcher.addPath(fn)
 		return result
 
 	def saveHtml(self, fileName):
@@ -1109,7 +1110,7 @@ class ReTextWindow(QMainWindow):
 			self.saveHtml(tmpname)
 		else:
 			tmpname = basename+self.getMarkupClass().default_extension
-			self.saveFileCore(tmpname)
+			self.saveFileCore(tmpname, addToWatcher=False)
 		command = command.replace('%of', '"out'+defaultext+'"')
 		command = command.replace('%html' if html else '%if', '"'+tmpname+'"')
 		try:
