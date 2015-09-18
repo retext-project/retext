@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from ReText import monofont, globalSettings, tablemode, DOCTYPE_MARKDOWN
+from ReText import globalSettings, tablemode, DOCTYPE_MARKDOWN
 
 from PyQt5.QtCore import QPoint, QSize, Qt
 from PyQt5.QtGui import QColor, QPainter, QPalette, QTextCursor, QTextFormat
@@ -68,7 +68,7 @@ class ReTextEdit(QTextEdit):
 		self.parent = parent
 		self.undoRedoActive = False
 		self.tableModeEnabled = False
-		self.setFont(monofont)
+		self.setFont(globalSettings.editorFont)
 		self.setAcceptRichText(False)
 		self.marginx = (self.cursorRect(self.cursorForPosition(QPoint())).topLeft().x()
 			+ self.fontMetrics().width(" "*globalSettings.rightMargin))

@@ -59,10 +59,8 @@ configOptions = {
 	'colorSchemeFile': '',
 	'defaultCodec': '',
 	'defaultMarkup': '',
-	'editorFont': 'monospace',
-	'editorFontSize': 0,
-	'font': '',
-	'fontSize': 0,
+	'editorFont': QFont('monospace'),
+	'font': QFont(),
 	'handleWebLinks': False,
 	'hideToolBar': False,
 	'highlightCurrentLine': False,
@@ -87,6 +85,10 @@ configOptions = {
 }
 
 def readFromSettings(key, keytype, settings=settings, default=None):
+	if isinstance(default, QFont):
+		family = readFromSettings(key, str, settings, default.family())
+		size = readFromSettings(key + 'Size', int, settings, 0)
+		return QFont(family, size)
 	if not settings.contains(key):
 		return default
 	try:
@@ -110,7 +112,10 @@ def readListFromSettings(key, settings=settings):
 		return value
 
 def writeToSettings(key, value, default, settings=settings):
-	if value == default:
+	if isinstance(value, QFont):
+		writeToSettings(key, value.family(), '', settings)
+		writeToSettings(key + 'Size', max(value.pointSize(), 0), 0, settings)
+	elif value == default:
 		settings.remove(key)
 	else:
 		settings.setValue(key, value)
@@ -139,11 +144,6 @@ class ReTextSettings(object):
 globalSettings = ReTextSettings()
 
 markups.common.PYGMENTS_STYLE = globalSettings.pygmentsStyle
-
-monofont = QFont()
-monofont.setFamily(globalSettings.editorFont)
-if globalSettings.editorFontSize:
-	monofont.setPointSize(globalSettings.editorFontSize)
 
 datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
 datadirs = [abspath('.')] + [join(d, 'retext') for d in datadirs]

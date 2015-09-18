@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from ReText import monofont, DOCTYPE_HTML
+from ReText import globalSettings, DOCTYPE_HTML
 from ReText.highlighter import ReTextHighlighter
 
 from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
@@ -27,7 +27,7 @@ class HtmlDialog(QDialog):
 		verticalLayout = QVBoxLayout(self)
 		self.textEdit = QTextEdit(self)
 		self.textEdit.setReadOnly(True)
-		self.textEdit.setFont(monofont)
+		self.textEdit.setFont(globalSettings.editorFont)
 		self.hl = ReTextHighlighter(self.textEdit.document())
 		self.hl.docType = DOCTYPE_HTML
 		verticalLayout.addWidget(self.textEdit)

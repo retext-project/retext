@@ -46,7 +46,6 @@ from PyQt5.QtWebKitWidgets import QWebPage, QWebView
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
 		QMainWindow.__init__(self, parent)
-		self.initConfig()
 		self.resize(950, 700)
 		screenRect = QDesktopWidget().screenGeometry()
 		if globalSettings.windowGeometry:
@@ -344,13 +343,6 @@ class ReTextWindow(QMainWindow):
 		self.fileSystemWatcher = QFileSystemWatcher()
 		self.fileSystemWatcher.fileChanged.connect(self.fileChanged)
 
-	def initConfig(self):
-		self.font = None
-		if globalSettings.font:
-			self.font = QFont(globalSettings.font)
-		if self.font and globalSettings.fontSize:
-			self.font.setPointSize(globalSettings.fontSize)
-
 	def updateStyleSheet(self):
 		if globalSettings.styleSheet:
 			sheetfile = QFile(globalSettings.styleSheet)
@@ -524,15 +516,9 @@ class ReTextWindow(QMainWindow):
 		self.editBoxes[self.ind].setFocus(Qt.OtherFocusReason)
 
 	def changeFont(self):
-		if not self.font:
-			self.font = QFont()
-		fd = QFontDialog.getFont(self.font, self)
-		if fd[1]:
-			self.font = QFont()
-			self.font.setFamily(fd[0].family())
-			settings.setValue('font', fd[0].family())
-			self.font.setPointSize(fd[0].pointSize())
-			settings.setValue('fontSize', fd[0].pointSize())
+		font, ok = QFontDialog.getFont(globalSettings.font, self)
+		if ok:
+			globalSettings.font = font
 			self.updatePreviewBox()
 
 	def preview(self, viewmode):
@@ -723,9 +709,8 @@ class ReTextWindow(QMainWindow):
 			pb.setHtml(html)
 		else:
 			pb.setHtml(html, QUrl.fromLocalFile(self.fileNames[self.ind]))
-		if self.font and textedit:
-			pb.document().setDefaultFont(self.font)
 		if textedit:
+			pb.document().setDefaultFont(globalSettings.font)
 			scrollbar.setValue(scrollbar.maximum() - disttobottom)
 		else:
 			frame.setScrollPosition(scrollpos)
@@ -1013,8 +998,7 @@ class ReTextWindow(QMainWindow):
 		if self.ss:
 			td.setDefaultStyleSheet(self.ss)
 		td.setHtml(self.getHtml())
-		if self.font:
-			td.setDefaultFont(self.font)
+		td.setDefaultFont(globalSettings.font)
 		return td
 
 	def saveOdf(self):
