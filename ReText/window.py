@@ -707,12 +707,14 @@ class ReTextWindow(QMainWindow):
 			return self.printError()
 		if textedit:
 			pb.setHtml(html)
-		else:
-			pb.setHtml(html, QUrl.fromLocalFile(self.fileNames[self.ind]))
-		if textedit:
 			pb.document().setDefaultFont(globalSettings.font)
 			scrollbar.setValue(scrollbar.maximum() - disttobottom)
 		else:
+			pb.settings().setFontFamily(QWebSettings.StandardFont,
+			                            globalSettings.font.family())
+			pb.settings().setFontSize(QWebSettings.DefaultFontSize,
+			                          globalSettings.font.pointSize())
+			pb.setHtml(html, QUrl.fromLocalFile(self.fileNames[self.ind]))
 			frame.setScrollPosition(scrollpos)
 
 	def updateLivePreviewBox(self):
