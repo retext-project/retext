@@ -677,7 +677,7 @@ class ReTextWindow(QMainWindow):
 		self.searchEdit.setPalette(palette)
 
 	def getHtml(self, includeStyleSheet=True, includeTitle=True,
-	            includeMeta=False, styleForWebKit=False, webenv=False):
+	            includeMeta=False, webenv=False):
 		if self.markups[self.ind] is None:
 			markupClass = self.getMarkupClass()
 			errMsg = self.tr('Could not parse file contents, check if '
@@ -692,13 +692,7 @@ class ReTextWindow(QMainWindow):
 		text = self.editBoxes[self.ind].toPlainText()
 		headers = ''
 		if includeStyleSheet:
-			fontline = ''
-			if styleForWebKit:
-				fontname = self.font.family() if self.font else 'Sans'
-				fontsize = (self.font if self.font else QFont()).pointSize()
-				fontline = 'body { font-family: %s; font-size: %spt }\n' % \
-					(fontname, fontsize)
-			headers += '<style type="text/css">\n' + fontline + self.ss + '</style>\n'
+			headers += '<style type="text/css">\n' + self.ss + '</style>\n'
 		cssFileName = self.getDocumentTitle(baseName=True)+'.css'
 		if QFile(cssFileName).exists():
 			headers += '<link rel="stylesheet" type="text/css" href="%s">\n' \
@@ -722,7 +716,7 @@ class ReTextWindow(QMainWindow):
 			frame = pb.page().mainFrame()
 			scrollpos = frame.scrollPosition()
 		try:
-			html = self.getHtml(styleForWebKit=(not textedit))
+			html = self.getHtml()
 		except Exception:
 			return self.printError()
 		if textedit:
