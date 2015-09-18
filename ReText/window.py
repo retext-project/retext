@@ -25,6 +25,7 @@ from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
 from ReText.highlighter import ReTextHighlighter
 from ReText.editor import ReTextEdit
+from ReText.icontheme import get_icon_theme
 
 try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler, FakeVimMode
@@ -56,6 +57,8 @@ class ReTextWindow(QMainWindow):
 			self.showMaximized()
 		if globalSettings.iconTheme:
 			QIcon.setThemeName(globalSettings.iconTheme)
+		if QIcon.themeName() in ('hicolor', ''):
+			QIcon.setThemeName(get_icon_theme())
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
 		elif QFile.exists('/usr/share/pixmaps/retext.png'):
