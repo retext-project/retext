@@ -16,7 +16,6 @@
 
 import markups
 import markups.common
-import sys
 from os.path import join, abspath
 
 from PyQt5.QtCore import QByteArray, QLocale, QSettings, QStandardPaths

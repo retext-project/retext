@@ -19,7 +19,7 @@ import sys
 from subprocess import Popen
 from markups.common import MODULE_HOME_PAGE
 from ReText import icon_path, DOCTYPE_MARKDOWN, DOCTYPE_REST, app_name, \
- app_version, globalSettings, settings, readListFromSettings, \
+ app_version, globalSettings, readListFromSettings, \
  writeListToSettings, writeToSettings, datadirs, enchant, enchant_available
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
@@ -33,7 +33,7 @@ except ImportError:
 
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
  QIODevice, QLocale, QRect, QTextCodec, QTextStream, QTimer, QUrl, Qt
-from PyQt5.QtGui import QColor, QDesktopServices, QFont, QFontMetrics, QIcon, \
+from PyQt5.QtGui import QColor, QDesktopServices, QFontMetrics, QIcon, \
  QKeySequence, QPalette, QTextCursor, QTextDocument, QTextDocumentWriter
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
