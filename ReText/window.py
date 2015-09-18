@@ -1265,7 +1265,7 @@ class ReTextWindow(QMainWindow):
 		htmlDlg.activateWindow()
 
 	def openHelp(self):
-		QDesktopServices.openUrl(QUrl('https://github.com/retext-project/retext/issues/'))
+		QDesktopServices.openUrl(QUrl('https://github.com/retext-project/retext/wiki'))
 
 	def aboutDialog(self):
 		QMessageBox.about(self, self.aboutWindowTitle,
