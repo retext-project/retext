@@ -110,7 +110,10 @@ class ReTextWindow(QMainWindow):
 		self.actionPrintPreview = self.act(self.tr('Print preview'), 'document-print-preview',
 			self.printPreview)
 		self.actionViewHtml = self.act(self.tr('View HTML code'), 'text-html', self.viewHtml)
-		self.actionChangeFont = self.act(self.tr('Change default font'), trig=self.changeFont)
+		self.actionChangeEditorFont = self.act(self.tr('Change editor font'),
+			trig=self.changeEditorFont)
+		self.actionChangePreviewFont = self.act(self.tr('Change preview font'),
+			trig=self.changePreviewFont)
 		self.actionSearch = self.act(self.tr('Find text'), 'edit-find', shct=QKeySequence.Find)
 		self.actionSearch.setCheckable(True)
 		self.actionSearch.triggered[bool].connect(self.searchBar.setVisible)
@@ -266,7 +269,8 @@ class ReTextWindow(QMainWindow):
 			menuSC.addAction(self.actionEnableSC)
 			menuSC.addAction(self.actionSetLocale)
 		menuEdit.addAction(self.actionSearch)
-		menuEdit.addAction(self.actionChangeFont)
+		menuEdit.addAction(self.actionChangeEditorFont)
+		menuEdit.addAction(self.actionChangePreviewFont)
 		menuEdit.addSeparator()
 		if len(availableMarkups) > 1:
 			self.menuMode = menuEdit.addMenu(self.tr('Default markup'))
@@ -515,7 +519,14 @@ class ReTextWindow(QMainWindow):
 			self.enableLivePreview(True)
 		self.editBoxes[self.ind].setFocus(Qt.OtherFocusReason)
 
-	def changeFont(self):
+	def changeEditorFont(self):
+		font, ok = QFontDialog.getFont(globalSettings.editorFont, self)
+		if ok:
+			globalSettings.editorFont = font
+			for editor in self.editBoxes:
+				editor.updateFont()
+
+	def changePreviewFont(self):
 		font, ok = QFontDialog.getFont(globalSettings.font, self)
 		if ok:
 			globalSettings.font = font

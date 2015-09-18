@@ -68,16 +68,22 @@ class ReTextEdit(QTextEdit):
 		self.parent = parent
 		self.undoRedoActive = False
 		self.tableModeEnabled = False
-		self.setFont(globalSettings.editorFont)
 		self.setAcceptRichText(False)
-		self.marginx = (self.cursorRect(self.cursorForPosition(QPoint())).topLeft().x()
-			+ self.fontMetrics().width(" "*globalSettings.rightMargin))
 		self.lineNumberArea = LineNumberArea(self)
 		self.infoArea = InfoArea(self)
+		self.updateFont()
 		self.document().blockCountChanged.connect(self.updateLineNumberAreaWidth)
-		self.updateLineNumberAreaWidth()
 		self.cursorPositionChanged.connect(self.highlightCurrentLine)
 		self.document().contentsChange.connect(self.contentsChange)
+
+	def updateFont(self):
+		self.setFont(globalSettings.editorFont)
+		metrics = self.fontMetrics()
+		self.marginx = (self.cursorRect(self.cursorForPosition(QPoint())).topLeft().x()
+			+ metrics.width(' ' * globalSettings.rightMargin))
+		self.setTabStopWidth(globalSettings.tabWidth * self.fontMetrics().width(' '))
+		self.updateLineNumberAreaWidth()
+		self.infoArea.updateTextAndGeometry()
 
 	def paintEvent(self, event):
 		if not globalSettings.rightMargin:
