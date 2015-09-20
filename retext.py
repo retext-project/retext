@@ -38,6 +38,7 @@ def main():
 	app.setApplicationName("ReText")
 	app.setApplicationDisplayName("ReText")
 	app.setApplicationVersion(app_version)
+	app.setOrganizationDomain('mitya57.me')
 	QNetworkProxyFactory.setUseSystemConfiguration(True)
 	RtTranslator = QTranslator()
 	for path in datadirs:
