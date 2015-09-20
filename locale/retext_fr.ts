@@ -306,9 +306,8 @@
     </message>
     <message>
         <location filename="window.py" line="169"/>
-        <source>About %s</source>
-        <comment>Example of final string: About ReText</comment>
-        <translation>À propos de %s</translation>
+        <source>About ReText</source>
+        <translation>À propos de ReText</translation>
     </message>
     <message>
         <location filename="window.py" line="173"/>

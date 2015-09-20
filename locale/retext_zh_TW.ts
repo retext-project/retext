@@ -452,9 +452,8 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <location filename="window.py" line="169"/>
-        <source>About %s</source>
-        <comment>Example of final string: About ReText</comment>
-        <translation>關於 %s</translation>
+        <source>About ReText</source>
+        <translation>關於 ReText</translation>
     </message>
     <message>
         <location filename="window.py" line="161"/>

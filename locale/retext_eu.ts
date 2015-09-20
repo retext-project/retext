@@ -453,9 +453,8 @@ Aldaketak gorde nahi duzu?</translation>
     </message>
     <message>
         <location filename="window.py" line="169"/>
-        <source>About %s</source>
-        <comment>Example of final string: About ReText</comment>
-        <translation type="unfinished"></translation>
+        <source>About ReText</source>
+        <translation>ReText-i buruz</translation>
     </message>
     <message>
         <location filename="window.py" line="161"/>
