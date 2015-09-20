@@ -18,7 +18,7 @@ import markups
 import sys
 from subprocess import Popen
 from markups.common import MODULE_HOME_PAGE
-from ReText import icon_path, DOCTYPE_MARKDOWN, DOCTYPE_REST, app_name, \
+from ReText import icon_path, DOCTYPE_MARKDOWN, DOCTYPE_REST, \
  app_version, globalSettings, readListFromSettings, \
  writeListToSettings, writeToSettings, datadirs, enchant, enchant_available
 from ReText.dialogs import HtmlDialog, LocaleDialog
@@ -182,8 +182,7 @@ class ReTextWindow(QMainWindow):
 		self.actionFindPrev = self.act(self.tr('Previous'), 'go-previous',
 			lambda: self.find(back=True), shct=QKeySequence.FindPrevious)
 		self.actionHelp = self.act(self.tr('Get help online'), 'help-contents', self.openHelp)
-		self.aboutWindowTitle = self.tr('About %s', 'Example of final string: About ReText')
-		self.aboutWindowTitle = self.aboutWindowTitle % app_name
+		self.aboutWindowTitle = self.tr('About ReText')
 		self.actionAbout = self.act(self.aboutWindowTitle, 'help-about', self.aboutDialog)
 		self.actionAbout.setMenuRole(QAction.AboutRole)
 		self.actionAboutQt = self.act(self.tr('About Qt'))
@@ -698,8 +697,8 @@ class ReTextWindow(QMainWindow):
 			headers += '<link rel="stylesheet" type="text/css" href="%s">\n' \
 			% cssFileName
 		if includeMeta:
-			headers += '<meta name="generator" content="%s %s">\n' % \
-			(app_name, app_version)
+			headers += ('<meta name="generator" content="ReText %s">\n' %
+			            app_version)
 		fallbackTitle = self.getDocumentTitle() if includeTitle else ''
 		return self.markups[self.ind].get_whole_html(text,
 			custom_headers=headers, include_stylesheet=includeStyleSheet,
@@ -1049,7 +1048,7 @@ class ReTextWindow(QMainWindow):
 	def standardPrinter(self):
 		printer = QPrinter(QPrinter.HighResolution)
 		printer.setDocName(self.getDocumentTitle())
-		printer.setCreator(app_name+" "+app_version)
+		printer.setCreator('ReText %s' % app_version)
 		return printer
 
 	def savePdf(self):
