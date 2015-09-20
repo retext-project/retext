@@ -1,0 +1,41 @@
+<!-- Copyright 2015 Dmitry Shachnev -->
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+  <id type="desktop">me.mitya57.ReText.desktop</id>
+  <name>ReText</name>
+  <summary>Simple text editor for Markdown and reStructuredText</summary>
+  <summary xml:lang="ca">Editor de Markdown i reStructuredText senzill alhora que potent</summary>
+  <summary xml:lang="cs">Jednoduchý editor pro Markdown a reStructuredText</summary>
+  <summary xml:lang="cy">Golygydd testun syml ar gyfer Markdown a reStructuredText</summary>
+  <summary xml:lang="da">Enkel editor til Markdown og reStructuredText</summary>
+  <summary xml:lang="de">Einfacher Texteditor für Markdown und reStructuredText</summary>
+  <summary xml:lang="es">Editor básico de texto para Markdown y reStructuredText</summary>
+  <summary xml:lang="et">Lihtne tekstiredaktor Markdown ning reStructuredText süntaksitele</summary>
+  <summary xml:lang="eu">Markdown et reStructuredText-erako editore sinple</summary>
+  <summary xml:lang="fr">Éditeur de texte simple pour Markdown et reStructuredText</summary>
+  <summary xml:lang="hu">Egyszerű Markdown és reStructuredText szövegszerkesztő</summary>
+  <summary xml:lang="it">Semplice editor di testo per Markdown e reStructuredText</summary>
+  <summary xml:lang="ja">MarkdownとreStructuredTextのためのシンプルで強力なエディタ</summary>
+  <summary xml:lang="pl">Prosty edytor Markdown i reStructuredText</summary>
+  <summary xml:lang="pt_BR">Editor simples para Markdown e reStructuredText</summary>
+  <summary xml:lang="ru">Простой редактор для Markdown и reStructuredText</summary>
+  <summary xml:lang="sr">Једноставан уређивач за Markdown и reStructuredText</summary>
+  <summary xml:lang="sr@latin">Jednostavan uređivač za Markdown i reStructuredText</summary>
+  <summary xml:lang="uk">Простий текстовий редактор для Markdown та reStructuredText</summary>
+  <summary xml:lang="sk">Jednoduchý textový editor pre Markdown a reStructuredText</summary>
+  <summary xml:lang="zh_CN">支持 Markdown 和 reStructuredText 语法的简易文本编辑器</summary>
+  <summary xml:lang="zh_TW">簡單高效的 Markdown 與 reStructuredText 編輯器</summary>
+  <url type="homepage">https://github.com/retext-project/retext</url>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <provides>
+    <binary>retext</binary>
+  </provides>
+  <screenshots>
+    <screenshot type="default">
+      <image width="806" height="560">https://a.fsdn.com/con/app/proj/retext/screenshots/retext-kde.png</image>
+    </screenshot>
+  </screenshots>
+  <developer_name>Dmitry Shachnev</developer_name>
+  <updatecontact>mitya57_AT_gmail.com</updatecontact>
+</application>
