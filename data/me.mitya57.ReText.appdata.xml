@@ -33,7 +33,7 @@
   </provides>
   <screenshots>
     <screenshot type="default">
-      <image width="806" height="560">https://a.fsdn.com/con/app/proj/retext/screenshots/retext-kde.png</image>
+      <image width="1116" height="650">https://a.fsdn.com/con/app/proj/retext/screenshots/retext-kde5.png</image>
     </screenshot>
   </screenshots>
   <developer_name>Dmitry Shachnev</developer_name>
