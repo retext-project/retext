@@ -4,7 +4,16 @@ VERSION = '5.1.0'
 
 long_description = '''\
 ReText is simple text editor that supports Markdown and reStructuredText
-markup languages. It is written in Python using PyQt libraries.'''
+markup languages. It is written in Python using PyQt libraries.
+
+It supports live preview, tabs, math formulas, export to various formats
+including PDF and HTML.
+
+For more details, please go to the `home page`_ or to the `wiki`_.
+
+.. _`home page`: https://github.com/retext-project/retext
+.. _`wiki`: https://github.com/retext-project/retext/wiki'''
+
 requires = ['docutils', 'Markdown', 'Markups', 'pyenchant', 'Pygments']
 
 import re
