@@ -103,7 +103,9 @@ setup(name='ReText',
       packages=['ReText'],
       scripts=['retext.py'],
       data_files=[
-      	('share/retext/locale', glob('locale/*.qm'))
+        ('share/appdata', ['data/me.mitya57.ReText.appdata.xml']),
+        ('share/applications', ['data/me.mitya57.ReText.desktop']),
+        ('share/retext/locale', glob('locale/*.qm'))
       ],
       requires=requires,
       install_requires=requires,
