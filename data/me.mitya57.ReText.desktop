@@ -28,3 +28,4 @@ Exec=/usr/bin/retext %F
 Type=Application
 Icon=retext
 MimeType=text/x-markdown;text/x-rst;
+Keywords=Text;Editor;Markdown;reStructuredText;
