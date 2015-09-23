@@ -5,87 +5,87 @@
     <message>
         <location filename="config.py" line="66"/>
         <source>Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>動作設定</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Automatically save documents</source>
-        <translation type="unfinished"></translation>
+        <translation>文書を自動保存する</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Restore window geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィンドウの表示位置を記憶する</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Restore live preview state</source>
-        <translation type="unfinished"></translation>
+        <translation>ライブプレビューの状態を記憶する</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Open external links in ReText window</source>
-        <translation type="unfinished"></translation>
+        <translation>外部リンクを ReText ウィンドウ内で開く</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Markdown syntax extensions (comma-separated)</source>
-        <translation type="unfinished"></translation>
+        <translation>Markdown記法の拡張(カンマ区切り)</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>エディタ</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Highlight current line</source>
-        <translation type="unfinished"></translation>
+        <translation>カーソル行をハイライト表示する</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Show line numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>行番号を表示する</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Tab key inserts spaces</source>
-        <translation type="unfinished"></translation>
+        <translation>タブをスペースに展開</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Tabulation width</source>
-        <translation type="unfinished"></translation>
+        <translation>タブの桁数</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Display right margin at column</source>
-        <translation type="unfinished"></translation>
+        <translation>右マージン表示桁</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>外観</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Icon theme name</source>
-        <translation type="unfinished"></translation>
+        <translation>アイコンテーマ名</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Color scheme file</source>
-        <translation type="unfinished"></translation>
+        <translation>カラースキーマファイル</translation>
     </message>
     <message>
         <location filename="config.py" line="66"/>
         <source>Stylesheet file</source>
-        <translation type="unfinished"></translation>
+        <translation>スタイルシートファイル</translation>
     </message>
     <message>
         <location filename="config.py" line="102"/>
         <source>Help</source>
-        <translation type="unfinished">ヘルプ</translation>
+        <translation>ヘルプ</translation>
     </message>
 </context>
 <context>
@@ -93,12 +93,12 @@
     <message>
         <location filename="config.py" line="33"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>（未設定）</translation>
     </message>
     <message>
         <location filename="config.py" line="40"/>
         <source>Select file to open</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを開く</translation>
     </message>
 </context>
 <context>
@@ -155,6 +155,16 @@
         <translation>開く</translation>
     </message>
     <message>
+        <location filename="window.py" line="95"/>
+        <source>Set encoding</source>
+        <translation>文字エンコーディング</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1216"/>
+        <source>Reload</source>
+        <translation>再読み込み</translation>
+    </message>
+    <message>
         <location filename="window.py" line="100"/>
         <source>Save</source>
         <translation>保存</translation>
@@ -163,6 +173,16 @@
         <location filename="window.py" line="104"/>
         <source>Save as</source>
         <translation>名前を付けて保存</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="106"/>
+        <source>Next tab</source>
+        <translation>次のタブへ</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="108"/>
+        <source>Previous tab</source>
+        <translation>前のタブへ</translation>
     </message>
     <message>
         <location filename="window.py" line="110"/>
@@ -180,6 +200,16 @@
         <translation>HTMLコードを表示</translation>
     </message>
     <message>
+        <location filename="window.py" line="116"/>
+        <source>Change editor font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="window.py" line="118"/>
+        <source>Change preview font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="window.py" line="120"/>
         <source>Find text</source>
         <translation>テキストを検索</translation>
@@ -195,9 +225,24 @@
         <translation>ライブプレビュー</translation>
     </message>
     <message>
+        <location filename="window.py" line="136"/>
+        <source>Table mode</source>
+        <translation>表組みモード</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="139"/>
+        <source>FakeVim mode</source>
+        <translation>擬似Vimモード</translation>
+    </message>
+    <message>
         <location filename="window.py" line="144"/>
         <source>Fullscreen mode</source>
         <translation>フルスクリーンモード</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="591"/>
+        <source>Preferences</source>
+        <translation>設定</translation>
     </message>
     <message>
         <location filename="window.py" line="154"/>
@@ -243,6 +288,11 @@
         <location filename="window.py" line="177"/>
         <source>Use WebKit renderer</source>
         <translation>WebKitレンダラーを使用</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="179"/>
+        <source>Show directory</source>
+        <translation>ディレクトリを表示</translation>
     </message>
     <message>
         <location filename="window.py" line="180"/>
@@ -325,6 +375,11 @@
         <translation>スペルチェック</translation>
     </message>
     <message>
+        <location filename="window.py" line="278"/>
+        <source>Default markup</source>
+        <translation>デフォルトマークアップ</translation>
+    </message>
+    <message>
         <location filename="window.py" line="281"/>
         <source>Formatting</source>
         <translation>書式</translation>
@@ -352,17 +407,12 @@
     <message>
         <location filename="window.py" line="747"/>
         <source>Please, save the file somewhere.</source>
-        <translation>どこかにファイルを保存してください.</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="179"/>
-        <source>Show directory</source>
-        <translation>ディレクトリを表示</translation>
+        <translation>どこかにファイルを保存してください。</translation>
     </message>
     <message>
         <location filename="window.py" line="867"/>
         <source>Select one or several files to open</source>
-        <translation>開くには一つまたは複数のファイルを選択します</translation>
+        <translation>開きたいファイル（複数可）を選択してください</translation>
     </message>
     <message>
         <location filename="window.py" line="867"/>
@@ -375,6 +425,11 @@
         <translation>すべてのファイル (*)</translation>
     </message>
     <message>
+        <location filename="window.py" line="926"/>
+        <source>Select file encoding from the list:</source>
+        <translation>ファイルの文字エンコーディングを選んでください：</translation>
+    </message>
+    <message>
         <location filename="window.py" line="951"/>
         <source>Plain text (*.txt)</source>
         <translation>プレーンテキスト (*.txt)</translation>
@@ -383,7 +438,7 @@
         <location filename="window.py" line="954"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
-        <translation>%s 個のファイル</translation>
+        <translation>%s ファイル</translation>
     </message>
     <message>
         <location filename="window.py" line="1039"/>
@@ -393,7 +448,7 @@
     <message>
         <location filename="window.py" line="981"/>
         <source>Cannot save to file because it is read-only!</source>
-        <translation>読み取り専用ファイルなので保存できません!</translation>
+        <translation>読み取り専用ファイルのため保存できません。</translation>
     </message>
     <message>
         <location filename="window.py" line="1029"/>
@@ -436,16 +491,42 @@
         <translation>コマンドの実行に失敗しました:</translation>
     </message>
     <message>
+        <location filename="window.py" line="1199"/>
+        <source>This file has been deleted by other application.
+Please make sure you save the file before exit.</source>
+        <translation>このファイルは他のアプリケーションによって削除されました。
+終了する前にファイルを保存して下さい。</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1207"/>
+        <source>This document has been modified by other application.
+Do you want to reload the file (this will discard all your changes)?
+</source>
+        <translation>この文書は他のアプリケーションによって変更されました。
+再読み込みを行いますか(全ての変更は失われます)?
+</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1212"/>
+        <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
+        <translation>再読み込みを選択しない場合、データの消失を避けるために自動保存機能はこのセッションで無効になります。</translation>
+    </message>
+    <message>
         <location filename="window.py" line="1236"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
-        <translation>文書は変更されています.
-変更内容を保存しますか?</translation>
+        <translation>文書は変更されています。
+変更内容を保存しますか？</translation>
     </message>
     <message>
         <location filename="window.py" line="1260"/>
         <source>HTML code</source>
         <translation>HTMLコード</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1271"/>
+        <source>ReText %s (using PyMarkups %s)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1271"/>
@@ -465,90 +546,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1271"/>
         <source>Markdown syntax</source>
-        <translation>Markdown記法</translation>
+        <translation>Markdown 記法</translation>
     </message>
     <message>
         <location filename="window.py" line="1271"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText 文法</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="95"/>
-        <source>Set encoding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1216"/>
-        <source>Reload</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="106"/>
-        <source>Next tab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="108"/>
-        <source>Previous tab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="136"/>
-        <source>Table mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="139"/>
-        <source>FakeVim mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="591"/>
-        <source>Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="278"/>
-        <source>Default markup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="926"/>
-        <source>Select file encoding from the list:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1199"/>
-        <source>This file has been deleted by other application.
-Please make sure you save the file before exit.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1207"/>
-        <source>This document has been modified by other application.
-Do you want to reload the file (this will discard all your changes)?
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1212"/>
-        <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="116"/>
-        <source>Change editor font</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="118"/>
-        <source>Change preview font</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1271"/>
-        <source>ReText %s (using PyMarkups %s)</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

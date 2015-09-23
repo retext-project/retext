@@ -29,6 +29,11 @@
     </message>
     <message>
         <location filename="config.py" line="66"/>
+        <source>Markdown syntax extensions (comma-separated)</source>
+        <translation>Расширения синтаксиса Markdown (разделённые запятыми)</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="66"/>
         <source>Editor</source>
         <translation>Редактор</translation>
     </message>
@@ -76,11 +81,6 @@
         <location filename="config.py" line="66"/>
         <source>Stylesheet file</source>
         <translation>Файл стиля Qt</translation>
-    </message>
-    <message>
-        <location filename="config.py" line="66"/>
-        <source>Markdown syntax extensions (comma-separated)</source>
-        <translation>Расширения синтаксиса Markdown (разделённые запятыми)</translation>
     </message>
     <message>
         <location filename="config.py" line="102"/>
@@ -200,6 +200,16 @@
         <translation>Просмотр кода HTML</translation>
     </message>
     <message>
+        <location filename="window.py" line="116"/>
+        <source>Change editor font</source>
+        <translation>Изменить шрифт редактора</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="118"/>
+        <source>Change preview font</source>
+        <translation>Изменить шрифт просмотра</translation>
+    </message>
+    <message>
         <location filename="window.py" line="120"/>
         <source>Find text</source>
         <translation>Поиск текста</translation>
@@ -218,6 +228,11 @@
         <location filename="window.py" line="136"/>
         <source>Table mode</source>
         <translation>Режим редактирования таблиц</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="139"/>
+        <source>FakeVim mode</source>
+        <translation>Режим FakeVim</translation>
     </message>
     <message>
         <location filename="window.py" line="144"/>
@@ -273,6 +288,11 @@
         <location filename="window.py" line="177"/>
         <source>Use WebKit renderer</source>
         <translation>Использовать движок WebKit</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="179"/>
+        <source>Show directory</source>
+        <translation>Открыть папку</translation>
     </message>
     <message>
         <location filename="window.py" line="180"/>
@@ -390,11 +410,6 @@
         <translation>Сначала сохраните файл.</translation>
     </message>
     <message>
-        <location filename="window.py" line="179"/>
-        <source>Show directory</source>
-        <translation>Открыть папку</translation>
-    </message>
-    <message>
         <location filename="window.py" line="867"/>
         <source>Select one or several files to open</source>
         <translation>Выберите один или несколько файлов для открытия</translation>
@@ -476,6 +491,27 @@
         <translation>Невозможно запустить команду:</translation>
     </message>
     <message>
+        <location filename="window.py" line="1199"/>
+        <source>This file has been deleted by other application.
+Please make sure you save the file before exit.</source>
+        <translation>Этот файл был удалён другим приложением.
+Пожалуйста, убедитесь перед выходом, что вы сохранили файл.</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1207"/>
+        <source>This document has been modified by other application.
+Do you want to reload the file (this will discard all your changes)?
+</source>
+        <translation>Этот документ был изменён другим приложением.
+Хотите ли вы загрузить файл заново (это отменит все ваши изменения)?
+</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1212"/>
+        <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
+        <translation>Если вы решите не перезагружать файл, режим автоматического сохранения будет отключён для этого сеанса в целях предотвращения потери данных.</translation>
+    </message>
+    <message>
         <location filename="window.py" line="1236"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
@@ -486,6 +522,11 @@ Do you want to save your changes?</source>
         <location filename="window.py" line="1260"/>
         <source>HTML code</source>
         <translation>код HTML</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1271"/>
+        <source>ReText %s (using PyMarkups %s)</source>
+        <translation>ReText %s (использует PyMarkups %s)</translation>
     </message>
     <message>
         <location filename="window.py" line="1271"/>
@@ -511,47 +552,6 @@ Do you want to save your changes?</source>
         <location filename="window.py" line="1271"/>
         <source>reStructuredText syntax</source>
         <translation>Синтаксис reStructuredText</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="139"/>
-        <source>FakeVim mode</source>
-        <translation>Режим FakeVim</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1199"/>
-        <source>This file has been deleted by other application.
-Please make sure you save the file before exit.</source>
-        <translation>Этот файл был удалён другим приложением.
-Пожалуйста, убедитесь перед выходом, что вы сохранили файл.</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1207"/>
-        <source>This document has been modified by other application.
-Do you want to reload the file (this will discard all your changes)?
-</source>
-        <translation>Этот документ был изменён другим приложением.
-Хотите ли вы загрузить файл заново (это отменит все ваши изменения)?
-</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1212"/>
-        <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
-        <translation>Если вы решите не перезагружать файл, режим автоматического сохранения будет отключён для этого сеанса в целях предотвращения потери данных.</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="116"/>
-        <source>Change editor font</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="118"/>
-        <source>Change preview font</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1271"/>
-        <source>ReText %s (using PyMarkups %s)</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
