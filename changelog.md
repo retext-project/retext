@@ -1,3 +1,10 @@
+## ReText 5.2 (2015-09-23)
+
+* ReText now tries to load the icon theme from system settings if
+  Qt cannot auto-detect it.
+* Added a GUI option to change the editor font.
+* Added appdata file for appstream.
+
 ## ReText 5.1 (2015-06-30)
 
 * Editor now displays cursor position in bottom-right corner.
