@@ -93,6 +93,15 @@ if '--no-rename' in sys.argv:
 
 filterwarnings('ignore', "Unknown distribution option: 'install_requires'")
 
+classifiers = [
+	'Development Status :: 5 - Production/Stable',
+	'Environment :: X11 Applications :: Qt',
+	'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
+	'Programming Language :: Python :: 3 :: Only',
+	'Topic :: Text Editors',
+	'Topic :: Text Processing :: Markup'
+]
+
 setup(name='ReText',
       version=VERSION,
       description='Simple editor for Markdown and reStructuredText',
@@ -116,5 +125,6 @@ setup(name='ReText',
         'test': retext_test,
         'upload': retext_upload
       },
+      classifiers=classifiers,
       license='GPL 2+'
 )
