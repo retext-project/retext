@@ -32,8 +32,7 @@ automatically loaded. For development snapshots, compile translations using
 `lrelease locale/*.ts` command. Translation files can also be loaded from
 `/usr/share/retext/` directory.
 
-If you want to translate ReText into your language, follow the instructions in
-ReText [wiki].
+You can translate ReText into your language on [Transifex].
 
 ReText is Copyright 2011–2015 [Dmitry Shachnev](http://mitya57.me)
 and is licensed under GNU GPL (v2+) license, the current version is available in
@@ -43,3 +42,4 @@ ReText icon is based on `accessories-text-editor` icon from the Faenza theme.
 
 [wiki]: https://github.com/retext-project/retext/wiki
 [PyPI]: https://pypi.python.org/pypi/ReText
+[Transifex]: https://www.transifex.com/mitya57/ReText/
