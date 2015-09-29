@@ -211,8 +211,8 @@ class ReTextWindow(QMainWindow):
 			trig=lambda: self.insertChars('*'))
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
 			trig=lambda: self.insertTag('u'))
-		self.usefulTags = ('a', 'big', 'center', 'img', 's', 'small', 'span',
-			'table', 'td', 'tr', 'u')
+		self.usefulTags = ('header', 'italic', 'bold', 'numbering', 'bullets', 'image', 'link',
+			'code', 'blockquote')
 		self.usefulChars = ('deg', 'divide', 'dollar', 'hellip', 'laquo', 'larr',
 			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
 			'rarr', 'rsquo', 'times')
@@ -697,7 +697,7 @@ class ReTextWindow(QMainWindow):
 			headers += '<link rel="stylesheet" type="text/css" href="%s">\n' \
 			% cssFileName
 		if includeMeta:
-			headers += ('<meta name="generator" content="ReText %s">\n' %
+			headers += ('<meta name="generator" content="Bluefish 2.2.7" >\n' %
 			            app_version)
 		fallbackTitle = self.getDocumentTitle() if includeTitle else ''
 		return self.markups[self.ind].get_whole_html(text,
@@ -1161,23 +1161,48 @@ class ReTextWindow(QMainWindow):
 		else:
 			tc.insertText(chars)
 
+	# 	ut can be 'header', 'italic', 'bold', 'numbering', 'bullets', 'image', 'link', 'code', 'blockquote'
 	def insertTag(self, ut):
 		if not ut:
 			return
 		if isinstance(ut, int):
-			ut = self.usefulTags[ut - 1]
-		arg = ' style=""' if ut == 'span' else ''
+			ut = self.usefulTags[ut - 1]	
+			
 		tc = self.editBoxes[self.ind].textCursor()
-		if ut == 'img':
-			toinsert = ('<a href="' + tc.selectedText() +
-			'" target="_blank"><img src="' + tc.selectedText() + '"/></a>')
-		elif ut == 'a':
-			toinsert = ('<a href="' + tc.selectedText() +
-			'" target="_blank">' + tc.selectedText() + '</a>')
+		
+		if ut == 'header':
+			toinsert = ('# ' + tc.selectedText())
+		elif ut == 'italic':
+			toinsert = ('*' + tc.selectedText() + '*')
+		elif ut == 'bold':
+			toinsert = ('**' + tc.selectedText() + '**')
+		elif ut == 'numbering':
+			toinsert = ('\n * ' + tc.selectedText())
+		elif ut == 'bullets':
+			toinsert = ('\n 1. ' + tc.selectedText())
+		elif ut == 'image':
+			selectedText = tc.selectedText()
+			if not selectedText:
+				selectedText = 'alt text'
+			toinsert = ('!['+ selectedText +'](url)')
+		elif ut == 'link':
+			selectedText = tc.selectedText()
+			if not selectedText:
+				selectedText = 'alt text'
+			toinsert = ('['+ selectedText +'](url)')
+		elif ut == 'code':
+			selectedText = tc.selectedText()
+			if not selectedText:
+				toinsert = '\n\n\t'
+			else: 
+				toinsert = ('`'+ selectedText +'`')
 		else:
-			toinsert = '<'+ut+arg+'>'+tc.selectedText()+'</'+ut+'>'
+			toinsert = '\n > '+tc.selectedText()
+			
 		tc.insertText(toinsert)
 		self.tagsBox.setCurrentIndex(0)
+		# Bring back the focus on the editor
+		self.editBoxes[self.ind].setFocus(Qt.OtherFocusReason)
 
 	def insertSymbol(self, num):
 		if num:
