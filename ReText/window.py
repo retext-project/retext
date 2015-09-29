@@ -1177,9 +1177,9 @@ class ReTextWindow(QMainWindow):
 		elif ut == 'bold':
 			toinsert = ('**' + tc.selectedText() + '**')
 		elif ut == 'numbering':
-			toinsert = ('\n * ' + tc.selectedText())
-		elif ut == 'bullets':
 			toinsert = ('\n 1. ' + tc.selectedText())
+		elif ut == 'bullets':
+			toinsert = ('\n * ' + tc.selectedText())
 		elif ut == 'image':
 			selectedText = tc.selectedText()
 			if not selectedText:
