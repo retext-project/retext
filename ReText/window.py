@@ -697,7 +697,7 @@ class ReTextWindow(QMainWindow):
 			headers += '<link rel="stylesheet" type="text/css" href="%s">\n' \
 			% cssFileName
 		if includeMeta:
-			headers += ('<meta name="generator" content="Bluefish 2.2.7" >\n' %
+			headers += ('<meta name="generator" content="ReText %s" >\n' %
 			            app_version)
 		fallbackTitle = self.getDocumentTitle() if includeTitle else ''
 		return self.markups[self.ind].get_whole_html(text,
@@ -1166,10 +1166,10 @@ class ReTextWindow(QMainWindow):
 		if not ut:
 			return
 		if isinstance(ut, int):
-			ut = self.usefulTags[ut - 1]	
-			
+			ut = self.usefulTags[ut - 1]
+
 		tc = self.editBoxes[self.ind].textCursor()
-		
+
 		if ut == 'header':
 			toinsert = ('# ' + tc.selectedText())
 		elif ut == 'italic':
