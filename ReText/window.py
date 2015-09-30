@@ -212,7 +212,7 @@ class ReTextWindow(QMainWindow):
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
 			trig=lambda: self.insertTag('u'))
 		self.usefulTags = ('header', 'italic', 'bold', 'numbering', 'bullets', 'image', 'link',
-			'code', 'blockquote')
+			'inline code', 'code block', 'blockquote')
 		self.usefulChars = ('deg', 'divide', 'dollar', 'hellip', 'laquo', 'larr',
 			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
 			'rarr', 'rsquo', 'times')
@@ -697,7 +697,7 @@ class ReTextWindow(QMainWindow):
 			headers += '<link rel="stylesheet" type="text/css" href="%s">\n' \
 			% cssFileName
 		if includeMeta:
-			headers += ('<meta name="generator" content="ReText %s" >\n' %
+			headers += ('<meta name="generator" content="ReText %s">\n' %
 			            app_version)
 		fallbackTitle = self.getDocumentTitle() if includeTitle else ''
 		return self.markups[self.ind].get_whole_html(text,
@@ -1161,7 +1161,7 @@ class ReTextWindow(QMainWindow):
 		else:
 			tc.insertText(chars)
 
-	# 	ut can be 'header', 'italic', 'bold', 'numbering', 'bullets', 'image', 'link', 'code', 'blockquote'
+	# usefulTags = ('header', 'italic', 'bold', 'numbering', 'bullets', 'image', 'link',	'inline code', 'code block', 'blockquote')
 	def insertTag(self, ut):
 		if not ut:
 			return
@@ -1171,31 +1171,29 @@ class ReTextWindow(QMainWindow):
 		tc = self.editBoxes[self.ind].textCursor()
 
 		if ut == 'header':
-			toinsert = ('# ' + tc.selectedText())
+			toinsert = '# ' + tc.selectedText()
 		elif ut == 'italic':
-			toinsert = ('*' + tc.selectedText() + '*')
+			toinsert = '*' + tc.selectedText() + '*'
 		elif ut == 'bold':
-			toinsert = ('**' + tc.selectedText() + '**')
+			toinsert = '**' + tc.selectedText() + '**'
 		elif ut == 'numbering':
-			toinsert = ('\n 1. ' + tc.selectedText())
+			toinsert = '\n\n 1. ' + tc.selectedText()
 		elif ut == 'bullets':
-			toinsert = ('\n * ' + tc.selectedText())
+			toinsert = '\n\n * ' + tc.selectedText()
 		elif ut == 'image':
 			selectedText = tc.selectedText()
 			if not selectedText:
 				selectedText = 'alt text'
-			toinsert = ('!['+ selectedText +'](url)')
+			toinsert = '!['+ selectedText +'](url)'
 		elif ut == 'link':
 			selectedText = tc.selectedText()
 			if not selectedText:
 				selectedText = 'alt text'
-			toinsert = ('['+ selectedText +'](url)')
-		elif ut == 'code':
-			selectedText = tc.selectedText()
-			if not selectedText:
-				toinsert = '\n\n\t'
-			else: 
-				toinsert = ('`'+ selectedText +'`')
+			toinsert = '['+ selectedText +'](url)'
+		elif ut == 'inline code':
+			toinsert = '`'+ tc.selectedText() +'`'
+		elif ut == 'code block':
+			toinsert = '\n\n    '
 		else:
 			toinsert = '\n > '+tc.selectedText()
 			
