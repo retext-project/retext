@@ -28,7 +28,7 @@ class _xcb_reply_t(ctypes.Structure):
 	            ('pad0',          ctypes.c_uint8),
 	            ('sequence',      ctypes.c_uint16),
 	            ('length',        ctypes.c_uint32),
-		    ('payload',       ctypes.c_uint32)]
+	            ('payload',       ctypes.c_uint32)]
 
 _xcb_error_messages = [
 	None,
