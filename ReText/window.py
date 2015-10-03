@@ -39,7 +39,7 @@ from PyQt5.QtGui import QColor, QDesktopServices, QFontMetrics, QIcon, \
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
  QLineEdit, QMainWindow, QMenuBar, QMessageBox, QSplitter, QTabWidget, \
- QTextBrowser, QTextEdit, QToolBar
+ QTextBrowser, QTextEdit, QToolBar, QShortcut
 from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
 from PyQt5.QtWebKit import QWebSettings
 from PyQt5.QtWebKitWidgets import QWebPage, QWebView
@@ -205,13 +205,14 @@ class ReTextWindow(QMainWindow):
 					markupAction.setChecked(True)
 				self.chooseGroup.addAction(markupAction)
 				markupActions.append(markupAction)
+		#Menu and shortcut for common Formatting
 		self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.Bold,
-			trig=lambda: self.insertChars('**'))
+			trig=lambda: self.insertTag('bold'))
 		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.Italic,
-			trig=lambda: self.insertChars('*'))
+			trig=lambda: self.insertTag('italic'))
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
-			trig=lambda: self.insertTag('u'))
-		self.usefulTags = ('header', 'italic', 'bold', 'numbering', 'bullets', 'image', 'link',
+			trig=lambda: self.insertTag('underline'))
+		self.usefulTags = ('header', 'italic', 'bold', 'underline', 'numbering', 'bullets', 'image', 'link',
 			'inline code', 'code block', 'blockquote')
 		self.usefulChars = ('deg', 'divide', 'dollar', 'hellip', 'laquo', 'larr',
 			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
@@ -278,6 +279,7 @@ class ReTextWindow(QMainWindow):
 			self.menuMode = menuEdit.addMenu(self.tr('Default markup'))
 			for markupAction in markupActions:
 				self.menuMode.addAction(markupAction)
+		#Formatting menu
 		menuFormat = menuEdit.addMenu(self.tr('Formatting'))
 		menuFormat.addAction(self.actionBold)
 		menuFormat.addAction(self.actionItalic)
@@ -1161,7 +1163,7 @@ class ReTextWindow(QMainWindow):
 		else:
 			tc.insertText(chars)
 
-	# usefulTags = ('header', 'italic', 'bold', 'numbering', 'bullets', 'image', 'link',	'inline code', 'code block', 'blockquote')
+	# usefulTags = ('header', 'italic', 'bold', 'underline', 'numbering', 'bullets', 'image', 'link',	'inline code', 'code block', 'blockquote')
 	def insertTag(self, ut):
 		if not ut:
 			return
@@ -1176,6 +1178,8 @@ class ReTextWindow(QMainWindow):
 			toinsert = '*' + tc.selectedText() + '*'
 		elif ut == 'bold':
 			toinsert = '**' + tc.selectedText() + '**'
+		elif ut == 'underline':
+			toinsert = '<u>' + tc.selectedText() + '</u>'
 		elif ut == 'numbering':
 			toinsert = '\n\n 1. ' + tc.selectedText()
 		elif ut == 'bullets':
