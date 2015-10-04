@@ -1171,40 +1171,50 @@ class ReTextWindow(QMainWindow):
 			ut = self.usefulTags[ut - 1]
 
 		tc = self.editBoxes[self.ind].textCursor()
+		selectedText = tc.selectedText()
+		cursorBack = 0
 
 		if ut == 'header':
-			toinsert = '# ' + tc.selectedText()
+			toinsert = '# ' + selectedText
 		elif ut == 'italic':
-			toinsert = '*' + tc.selectedText() + '*'
+			toinsert = '*' + selectedText + '*'
+			cursorBack = 1
 		elif ut == 'bold':
-			toinsert = '**' + tc.selectedText() + '**'
+			toinsert = '**' + selectedText + '**'
+			cursorBack = 2
 		elif ut == 'underline':
-			toinsert = '<u>' + tc.selectedText() + '</u>'
+			toinsert = '<u>' + selectedText + '</u>'
+			cursorBack = 4
 		elif ut == 'numbering':
-			toinsert = '\n\n 1. ' + tc.selectedText()
+			toinsert = '\n\n 1. ' + selectedText
 		elif ut == 'bullets':
-			toinsert = '\n\n * ' + tc.selectedText()
+			toinsert = '\n\n * ' + selectedText
 		elif ut == 'image':
-			selectedText = tc.selectedText()
 			if not selectedText:
 				selectedText = 'alt text'
 			toinsert = '!['+ selectedText +'](url)'
 		elif ut == 'link':
-			selectedText = tc.selectedText()
 			if not selectedText:
 				selectedText = 'alt text'
 			toinsert = '['+ selectedText +'](url)'
 		elif ut == 'inline code':
-			toinsert = '`'+ tc.selectedText() +'`'
+			toinsert = '`'+ selectedText +'`'
+			cursorBack = 1
 		elif ut == 'code block':
 			toinsert = '\n\n    '
 		else:
-			toinsert = '\n > '+tc.selectedText()
+			toinsert = '\n > '+selectedText
 			
 		tc.insertText(toinsert)
+
 		self.tagsBox.setCurrentIndex(0)
 		# Bring back the focus on the editor
-		self.editBoxes[self.ind].setFocus(Qt.OtherFocusReason)
+		self.editBoxes[self.ind].setFocus(Qt.OtherFocusReason)		
+
+		# if no text is selected place the cursor among tags (only for container tags)
+		if not selectedText and cursorBack > 0:
+			tc.movePosition(QTextCursor.PreviousCharacter, n = cursorBack)
+			self.editBoxes[self.ind].setTextCursor(tc)
 
 	def insertSymbol(self, num):
 		if num:
