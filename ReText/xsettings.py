@@ -95,8 +95,8 @@ def get_raw_xsettings(display=0):
 		raise XSettingsError(_xcb_error_messages[error])
 
 	# get selection atom cookie
-	buffer = ctypes.create_string_buffer(('_XSETTINGS_S%d' % display).encode())
-	cookie = xcb.xcb_intern_atom(connection, 0, len(buffer) - 1, buffer)
+	buffer = ('_XSETTINGS_S%d' % display).encode()
+	cookie = xcb.xcb_intern_atom(connection, 0, len(buffer), buffer)
 
 	# get selection atom reply
 	reply = xcb.xcb_intern_atom_reply(connection, cookie, None)
@@ -112,8 +112,8 @@ def get_raw_xsettings(display=0):
 	c.free(reply)
 
 	# get settings atom cookie
-	buffer = ctypes.create_string_buffer(b'_XSETTINGS_SETTINGS')
-	cookie = xcb.xcb_intern_atom(connection, 0, len(buffer) - 1, buffer)
+	buffer = b'_XSETTINGS_SETTINGS'
+	cookie = xcb.xcb_intern_atom(connection, 0, len(buffer), buffer)
 
 	# get settings atom reply
 	reply = xcb.xcb_intern_atom_reply(connection, cookie, None)
