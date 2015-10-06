@@ -128,6 +128,7 @@ def get_raw_xsettings(display=0):
 	if reply is not None:
 		length = xcb.xcb_get_property_value_length(reply)
 		pointer = xcb.xcb_get_property_value(reply) if length else None
+		result = ctypes.string_at(pointer, length)
 		c.free(reply)
 
 	# close the connection
@@ -137,8 +138,7 @@ def get_raw_xsettings(display=0):
 	if reply is None or not length:
 		raise XSettingsError('XSettings not available')
 
-	# prepare data and return it
-	return ctypes.string_at(pointer, length)
+	return result
 
 def parse_xsettings(raw_xsettings):
 	if len(raw_xsettings) < 12:
