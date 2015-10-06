@@ -202,12 +202,12 @@
     <message>
         <location filename="window.py" line="117"/>
         <source>Change editor font</source>
-        <translation type="unfinished"></translation>
+        <translation>エディターのフォントを変更</translation>
     </message>
     <message>
         <location filename="window.py" line="119"/>
         <source>Change preview font</source>
-        <translation type="unfinished"></translation>
+        <translation>プレビューのフォントを変更</translation>
     </message>
     <message>
         <location filename="window.py" line="121"/>
@@ -312,7 +312,7 @@
     <message>
         <location filename="window.py" line="186"/>
         <source>About ReText</source>
-        <translation>ReText について</translation>
+        <translation>ReTextについて</translation>
     </message>
     <message>
         <location filename="window.py" line="189"/>
@@ -526,7 +526,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1272"/>
         <source>ReText %s (using PyMarkups %s)</source>
-        <translation type="unfinished"></translation>
+        <translation>ReText %s(PyMarkups %s 利用)</translation>
     </message>
     <message>
         <location filename="window.py" line="1272"/>
