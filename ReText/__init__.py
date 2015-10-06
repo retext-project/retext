@@ -21,7 +21,7 @@ from os.path import join, abspath
 from PyQt5.QtCore import QByteArray, QLocale, QSettings, QStandardPaths
 from PyQt5.QtGui import QFont
 
-app_version = "5.2.0"
+app_version = "5.2.1"
 
 settings = QSettings('ReText project', 'ReText')
 print('Using configuration file:', settings.fileName())
