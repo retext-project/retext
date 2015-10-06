@@ -30,6 +30,11 @@ class _xcb_reply_t(ctypes.Structure):
 	            ('length',        ctypes.c_uint32),
 	            ('payload',       ctypes.c_uint32)]
 
+class _xcb_cookie_t(ctypes.Structure):
+	# this can be used instead of xcb_intern_atom_cookie_t,
+	# xcb_get_selection_owner_cookie_t, etc
+	_fields_ = [('sequence',      ctypes.c_uint)]
+
 _xcb_error_messages = [
 	None,
 	'XCB error: socket, pipe and other stream error',
@@ -66,16 +71,17 @@ def get_raw_xsettings(display=0):
 	xcb.xcb_disconnect.argtypes = [ctypes.c_void_p]
 	xcb.xcb_disconnect.restype = None
 	xcb.xcb_intern_atom.argtypes = [ctypes.c_void_p, ctypes.c_uint8, ctypes.c_uint16, ctypes.c_char_p]
-	xcb.xcb_intern_atom.restype = ctypes.c_uint
-	xcb.xcb_intern_atom_reply.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_void_p]
+	xcb.xcb_intern_atom.restype = _xcb_cookie_t
+	xcb.xcb_intern_atom_reply.argtypes = [ctypes.c_void_p, _xcb_cookie_t, ctypes.c_void_p]
 	xcb.xcb_intern_atom_reply.restype = ctypes.POINTER(_xcb_reply_t)
 	xcb.xcb_get_selection_owner.argtypes = [ctypes.c_void_p, ctypes.c_uint32]
-	xcb.xcb_get_selection_owner.restype = ctypes.c_uint
-	xcb.xcb_get_selection_owner_reply.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_void_p]
+	xcb.xcb_get_selection_owner.restype = _xcb_cookie_t
+	xcb.xcb_get_selection_owner_reply.argtypes = [ctypes.c_void_p, _xcb_cookie_t, ctypes.c_void_p]
 	xcb.xcb_get_selection_owner_reply.restype = ctypes.POINTER(_xcb_reply_t)
-	xcb.xcb_get_property.argtypes = [ctypes.c_void_p, ctypes.c_uint32]
-	xcb.xcb_get_property.restype = ctypes.c_uint
-	xcb.xcb_get_property_reply.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_void_p]
+	xcb.xcb_get_property.argtypes = [ctypes.c_void_p, ctypes.c_uint8, ctypes.c_uint32, ctypes.c_uint32,
+	                                 ctypes.c_uint32, ctypes.c_uint32]
+	xcb.xcb_get_property.restype = _xcb_cookie_t
+	xcb.xcb_get_property_reply.argtypes = [ctypes.c_void_p, _xcb_cookie_t, ctypes.c_void_p]
 	xcb.xcb_get_property_reply.restype = ctypes.c_void_p
 	xcb.xcb_get_property_value_length.argtypes = [ctypes.c_void_p]
 	xcb.xcb_get_property_value_length.restype = ctypes.c_int
