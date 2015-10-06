@@ -22,7 +22,7 @@ import ctypes.util
 import struct
 
 class _xcb_reply_t(ctypes.Structure):
-	# this can be used instead of xcb_get_selection_owner_reply_t,
+	# this can be used instead of xcb_intern_atom_reply_t,
 	# xcb_get_selection_owner_reply_t, etc
 	_fields_ = [('response_type', ctypes.c_uint8),
 	            ('pad0',          ctypes.c_uint8),
