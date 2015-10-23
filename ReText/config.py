@@ -15,11 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from ReText import globalSettings
+from ReText import globalSettings, icon_path
+from ReText.icontheme import get_icon_theme
 from markups.common import CONFIGURATION_DIR
 from os.path import join
 
-from PyQt5.QtCore import QFileInfo, QUrl, Qt
+from PyQt5.QtCore import QFile, QFileInfo, QUrl, Qt
 from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
  QFileDialog, QGridLayout, QLabel, QLineEdit, QPushButton, QSpinBox
@@ -153,6 +154,9 @@ class ConfigDialog(QDialog):
 
 	def applySettings(self):
 		QIcon.setThemeName(globalSettings.iconTheme)
+		if QIcon.themeName() in ('hicolor', ''):
+			if not QFile.exists(icon_path + 'document-new.png'):
+				QIcon.setThemeName(get_icon_theme())
 		try:
 			extsFile = open(MKD_EXTS_FILE, 'w')
 			for ext in self.configurators['markdownExtensions'].text().split(','):
