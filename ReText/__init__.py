@@ -16,7 +16,7 @@
 
 import markups
 import markups.common
-from os.path import join, abspath
+from os.path import abspath, dirname, join
 
 from PyQt5.QtCore import QByteArray, QLocale, QSettings, QStandardPaths
 from PyQt5.QtGui import QFont
@@ -44,7 +44,10 @@ else:
 	except enchant.errors.Error:
 		enchant_available = False
 
-icon_path = "icons/"
+try:
+	icon_path = join(dirname(dirname(__file__)), "icons/")
+except NameError:  # __file__ not defined
+	icon_path = "icons/"
 
 DOCTYPE_NONE = ''
 DOCTYPE_MARKDOWN = markups.MarkdownMarkup.name
