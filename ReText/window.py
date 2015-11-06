@@ -412,7 +412,9 @@ class ReTextWindow(QMainWindow):
 		if not globalSettings.handleWebLinks:
 			webView.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
 			webView.page().linkClicked.connect(QDesktopServices.openUrl)
-		webView.settings().setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
+		settings = webView.settings()
+		settings.setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
+		settings.setDefaultTextEncoding('utf-8')
 		return webView
 
 	def createTab(self, fileName):
