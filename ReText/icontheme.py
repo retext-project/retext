@@ -15,35 +15,35 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 def get_from_xsettings():
-	from ReText.xsettings import get_xsettings, XSettingsError
-	try:
-		xsettings = get_xsettings()
-	except XSettingsError:
-		return
-	if b'Net/IconThemeName' in xsettings:
-		return xsettings[b'Net/IconThemeName'].decode()
-	if b'Net/FallbackIconTheme' in xsettings:
-		return xsettings[b'Net/FallbackIconTheme'].decode()
+    from ReText.xsettings import get_xsettings, XSettingsError
+    try:
+        xsettings = get_xsettings()
+    except XSettingsError:
+        return
+    if b'Net/IconThemeName' in xsettings:
+        return xsettings[b'Net/IconThemeName'].decode()
+    if b'Net/FallbackIconTheme' in xsettings:
+        return xsettings[b'Net/FallbackIconTheme'].decode()
 
 def get_from_gsettings():
-	try:
-		from gi.repository import Gio
-	except ImportError:
-		return
-	schema = 'org.gnome.desktop.interface'
-	if schema in Gio.Settings.list_schemas():
-		settings = Gio.Settings.new(schema)
-		return settings.get_string('icon-theme')
+    try:
+        from gi.repository import Gio
+    except ImportError:
+        return
+    schema = 'org.gnome.desktop.interface'
+    if schema in Gio.Settings.list_schemas():
+        settings = Gio.Settings.new(schema)
+        return settings.get_string('icon-theme')
 
 def get_from_gtk():
-	try:
-		from gi.repository import Gtk
-	except ImportError:
-		return
-	settings = Gtk.Settings.get_default()
-	return settings.get_property('gtk-icon-theme-name')
+    try:
+        from gi.repository import Gtk
+    except ImportError:
+        return
+    settings = Gtk.Settings.get_default()
+    return settings.get_property('gtk-icon-theme-name')
 
 def get_icon_theme():
-	return (get_from_xsettings()
-	     or get_from_gsettings()
-	     or get_from_gtk())
+    return (get_from_xsettings()
+         or get_from_gsettings()
+         or get_from_gtk())

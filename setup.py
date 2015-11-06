@@ -30,76 +30,76 @@ from glob import glob
 from warnings import filterwarnings
 
 if sys.version_info[0] < 3:
-	sys.exit('Error: Python 3.x is required.')
+    sys.exit('Error: Python 3.x is required.')
 
 def build_translations():
-	print('running build_translations')
-	error = None
-	for ts_file in glob(join('locale', '*.ts')):
-		try:
-			check_call(('lrelease', ts_file))
-		except Exception as e:
-			error = e
-	if error:
-		print('Failed to build translations:', error)
+    print('running build_translations')
+    error = None
+    for ts_file in glob(join('locale', '*.ts')):
+        try:
+            check_call(('lrelease', ts_file))
+        except Exception as e:
+            error = e
+    if error:
+        print('Failed to build translations:', error)
 
 class retext_build(build):
-	def run(self):
-		build.run(self)
-		if not glob(join('locale', '*.qm')):
-			build_translations()
+    def run(self):
+        build.run(self)
+        if not glob(join('locale', '*.qm')):
+            build_translations()
 
 class retext_sdist(sdist):
-	def run(self):
-		build_translations()
-		sdist.run(self)
+    def run(self):
+        build_translations()
+        sdist.run(self)
 
 class retext_install_scripts(install_scripts):
-	def run(self):
-		import shutil
-		install_scripts.run(self)
-		for file in self.get_outputs():
-			log.info('renaming %s to %s', file, file[:-3])
-			shutil.move(file, file[:-3])
+    def run(self):
+        import shutil
+        install_scripts.run(self)
+        for file in self.get_outputs():
+            log.info('renaming %s to %s', file, file[:-3])
+            shutil.move(file, file[:-3])
 
 class retext_test(Command):
-	user_options = []
+    user_options = []
 
-	def initialize_options(self): pass
-	def finalize_options(self): pass
+    def initialize_options(self): pass
+    def finalize_options(self): pass
 
-	def run(self):
-		from tests import main
-		testprogram = main(module=None, argv=sys.argv[:1], verbosity=2, exit=False)
-		if not testprogram.result.wasSuccessful():
-			sys.exit(1)
+    def run(self):
+        from tests import main
+        testprogram = main(module=None, argv=sys.argv[:1], verbosity=2, exit=False)
+        if not testprogram.result.wasSuccessful():
+            sys.exit(1)
 
 class retext_upload(upload):
-	def run(self):
-		self.sign = True
-		self.identity = '0x2f1c8ae0'
-		upload.run(self)
-		for command, pyversion, filename in self.distribution.dist_files:
-			full_version = re.search(r'ReText-([\d\.]+)\.tar\.gz', filename).group(1)
-			new_path = ('mandriver@frs.sourceforge.net:/home/frs/project/r/re/retext/ReText-%s/' %
-			            full_version[:-2])
-			args = ['scp', filename, filename + '.asc', new_path]
-			print('calling process', args)
-			check_call(args)
+    def run(self):
+        self.sign = True
+        self.identity = '0x2f1c8ae0'
+        upload.run(self)
+        for command, pyversion, filename in self.distribution.dist_files:
+            full_version = re.search(r'ReText-([\d\.]+)\.tar\.gz', filename).group(1)
+            new_path = ('mandriver@frs.sourceforge.net:/home/frs/project/r/re/retext/ReText-%s/' %
+                        full_version[:-2])
+            args = ['scp', filename, filename + '.asc', new_path]
+            print('calling process', args)
+            check_call(args)
 
 if '--no-rename' in sys.argv:
-	retext_install_scripts = install_scripts
-	sys.argv.remove('--no-rename')
+    retext_install_scripts = install_scripts
+    sys.argv.remove('--no-rename')
 
 filterwarnings('ignore', "Unknown distribution option: 'install_requires'")
 
 classifiers = [
-	'Development Status :: 5 - Production/Stable',
-	'Environment :: X11 Applications :: Qt',
-	'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
-	'Programming Language :: Python :: 3 :: Only',
-	'Topic :: Text Editors',
-	'Topic :: Text Processing :: Markup'
+    'Development Status :: 5 - Production/Stable',
+    'Environment :: X11 Applications :: Qt',
+    'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
+    'Programming Language :: Python :: 3 :: Only',
+    'Topic :: Text Editors',
+    'Topic :: Text Processing :: Markup'
 ]
 
 setup(name='ReText',
