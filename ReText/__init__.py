@@ -27,27 +27,27 @@ settings = QSettings('ReText project', 'ReText')
 print('Using configuration file:', settings.fileName())
 
 if not str(settings.fileName()).endswith('.conf'):
-	# We are on Windows probably
-	settings = QSettings(QSettings.IniFormat, QSettings.UserScope,
-		'ReText project', 'ReText')
+    # We are on Windows probably
+    settings = QSettings(QSettings.IniFormat, QSettings.UserScope,
+        'ReText project', 'ReText')
 
 try:
-	import enchant
-	import enchant.errors
+    import enchant
+    import enchant.errors
 except ImportError:
-	enchant_available = False
-	enchant = None
+    enchant_available = False
+    enchant = None
 else:
-	enchant_available = True
-	try:
-		enchant.Dict()
-	except enchant.errors.Error:
-		enchant_available = False
+    enchant_available = True
+    try:
+        enchant.Dict()
+    except enchant.errors.Error:
+        enchant_available = False
 
 try:
-	icon_path = join(dirname(dirname(__file__)), "icons/")
+    icon_path = join(dirname(dirname(__file__)), "icons/")
 except NameError:  # __file__ not defined
-	icon_path = "icons/"
+    icon_path = "icons/"
 
 DOCTYPE_NONE = ''
 DOCTYPE_MARKDOWN = markups.MarkdownMarkup.name
@@ -55,92 +55,92 @@ DOCTYPE_REST = markups.ReStructuredTextMarkup.name
 DOCTYPE_HTML = 'html'
 
 configOptions = {
-	'appStyleSheet': '',
-	'autoSave': False,
-	'colorSchemeFile': '',
-	'defaultCodec': '',
-	'defaultMarkup': '',
-	'editorFont': QFont('monospace'),
-	'font': QFont(),
-	'handleWebLinks': False,
-	'hideToolBar': False,
-	'highlightCurrentLine': False,
-	'iconTheme': '',
-	'lineNumbersEnabled': False,
-	'markdownDefaultFileExtension': '.mkd',
-	'previewState': False,
-	'pygmentsStyle': 'default',
-	'restDefaultFileExtension': '.rst',
-	'restorePreviewState': False,
-	'rightMargin': 0,
-	'saveWindowGeometry': False,
-	'spellCheck': False,
-	'spellCheckLocale': '',
-	'styleSheet': '',
-	'tabInsertsSpaces': True,
-	'tabWidth': 4,
-	'uiLanguage': QLocale.system().name(),
-	'useFakeVim': False,
-	'useWebKit': False,
-	'windowGeometry': QByteArray(),
+    'appStyleSheet': '',
+    'autoSave': False,
+    'colorSchemeFile': '',
+    'defaultCodec': '',
+    'defaultMarkup': '',
+    'editorFont': QFont('monospace'),
+    'font': QFont(),
+    'handleWebLinks': False,
+    'hideToolBar': False,
+    'highlightCurrentLine': False,
+    'iconTheme': '',
+    'lineNumbersEnabled': False,
+    'markdownDefaultFileExtension': '.mkd',
+    'previewState': False,
+    'pygmentsStyle': 'default',
+    'restDefaultFileExtension': '.rst',
+    'restorePreviewState': False,
+    'rightMargin': 0,
+    'saveWindowGeometry': False,
+    'spellCheck': False,
+    'spellCheckLocale': '',
+    'styleSheet': '',
+    'tabInsertsSpaces': True,
+    'tabWidth': 4,
+    'uiLanguage': QLocale.system().name(),
+    'useFakeVim': False,
+    'useWebKit': False,
+    'windowGeometry': QByteArray(),
 }
 
 def readFromSettings(key, keytype, settings=settings, default=None):
-	if isinstance(default, QFont):
-		family = readFromSettings(key, str, settings, default.family())
-		size = readFromSettings(key + 'Size', int, settings, 0)
-		return QFont(family, size)
-	if not settings.contains(key):
-		return default
-	try:
-		value = settings.value(key, type=keytype)
-		if isinstance(value, keytype):
-			return value
-		return keytype(value)
-	except TypeError as error:
-		# Type mismatch
-		print('Warning: '+str(error))
-		# Return an instance of keytype
-		return default if (default is not None) else keytype()
+    if isinstance(default, QFont):
+        family = readFromSettings(key, str, settings, default.family())
+        size = readFromSettings(key + 'Size', int, settings, 0)
+        return QFont(family, size)
+    if not settings.contains(key):
+        return default
+    try:
+        value = settings.value(key, type=keytype)
+        if isinstance(value, keytype):
+            return value
+        return keytype(value)
+    except TypeError as error:
+        # Type mismatch
+        print('Warning: '+str(error))
+        # Return an instance of keytype
+        return default if (default is not None) else keytype()
 
 def readListFromSettings(key, settings=settings):
-	if not settings.contains(key):
-		return []
-	value = settings.value(key)
-	if isinstance(value, str):
-		return [value]
-	else:
-		return value
+    if not settings.contains(key):
+        return []
+    value = settings.value(key)
+    if isinstance(value, str):
+        return [value]
+    else:
+        return value
 
 def writeToSettings(key, value, default, settings=settings):
-	if isinstance(value, QFont):
-		writeToSettings(key, value.family(), '', settings)
-		writeToSettings(key + 'Size', max(value.pointSize(), 0), 0, settings)
-	elif value == default:
-		settings.remove(key)
-	else:
-		settings.setValue(key, value)
+    if isinstance(value, QFont):
+        writeToSettings(key, value.family(), '', settings)
+        writeToSettings(key + 'Size', max(value.pointSize(), 0), 0, settings)
+    elif value == default:
+        settings.remove(key)
+    else:
+        settings.setValue(key, value)
 
 def writeListToSettings(key, value, settings=settings):
-	if len(value) > 1:
-		settings.setValue(key, value)
-	elif len(value) == 1:
-		settings.setValue(key, value[0])
-	else:
-		settings.remove(key)
+    if len(value) > 1:
+        settings.setValue(key, value)
+    elif len(value) == 1:
+        settings.setValue(key, value[0])
+    else:
+        settings.remove(key)
 
 class ReTextSettings(object):
-	def __init__(self):
-		for option in configOptions:
-			value = configOptions[option]
-			object.__setattr__(self, option, readFromSettings(
-				option, type(value), default=value))
+    def __init__(self):
+        for option in configOptions:
+            value = configOptions[option]
+            object.__setattr__(self, option, readFromSettings(
+                option, type(value), default=value))
 
-	def __setattr__(self, option, value):
-		if not option in configOptions:
-			raise AttributeError('Unknown attribute')
-		object.__setattr__(self, option, value)
-		writeToSettings(option, value, configOptions[option])
+    def __setattr__(self, option, value):
+        if not option in configOptions:
+            raise AttributeError('Unknown attribute')
+        object.__setattr__(self, option, value)
+        writeToSettings(option, value, configOptions[option])
 
 globalSettings = ReTextSettings()
 
