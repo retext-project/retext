@@ -14,10 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import markups
 import sys
 from subprocess import Popen
+
+import markups
 from markups.common import MODULE_HOME_PAGE
+
 from ReText import icon_path, DOCTYPE_MARKDOWN, DOCTYPE_REST, \
  app_version, globalSettings, readListFromSettings, \
  writeListToSettings, writeToSettings, datadirs, enchant, enchant_available
@@ -412,7 +414,9 @@ class ReTextWindow(QMainWindow):
         if not globalSettings.handleWebLinks:
             webView.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
             webView.page().linkClicked.connect(QDesktopServices.openUrl)
-        webView.settings().setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
+        settings = webView.settings()
+        settings.setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
+        settings.setDefaultTextEncoding('utf-8')
         return webView
 
     def createTab(self, fileName):
