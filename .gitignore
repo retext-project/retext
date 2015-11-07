@@ -4,3 +4,4 @@ MANIFEST
 build
 dist
 tests/__pycache__
+.idea/workspace.xml
