@@ -2,6 +2,7 @@ Welcome to ReText!
 ==================
 
 *This project forks from [ReText], and is improved to work on Windows platform.*
+
 ReText is a simple but powerful editor for Markdown and reStructuredText markup
 languages. ReText is written in Python language and works on Linux and other
 POSIX-compatible platforms. To install ReText, use `setup.py install` command.
