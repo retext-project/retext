@@ -1,48 +1,3 @@
-欢迎来到ReText！
-==================
-
-*本项目从[ReText]上fork而来，并针对Windows平台进行适配。*
-
-ReText是一个简单但又强大的编辑器，它用来处理Markdown和reStructuredText标记语言。
-ReText使用Python编写，运行Linux及其他POSIX兼容的平台上。要安装ReText，使用 
-`setup.py install`命令。
-
-![在KDE 5下的ReText](https://a.fsdn.com/con/app/proj/retext/screenshots/retext-kde5.png)
-
-你可以通过[wiki]了解更多关于ReText的内容。
-
-ReText需要下列包来运行：
-
-* [python] —3.2 版或更新
-* [pyqt5]
-* [python-markups]
-
-我们还建议你安装以下包：
-
-* [python-markdown] — 用于Markdown语言支持
-* [python-docutils] — 用于reStructuredText语言支持
-* [python-enchant] — 用于拼写检查支持
-
-The latest stable version of ReText can be downloaded from [PyPI]. You can
-also use `pip install ReText` command to install it from there.
-
-Translation files are already compiled for release tarballs and will be
-automatically loaded. For development snapshots, compile translations using
-`lrelease locale/*.ts` command. Translation files can also be loaded from
-`/usr/share/retext/` directory.
-
-You can translate ReText into your language on [Transifex].
-
-ReText is Copyright 2011–2015 [Dmitry Shachnev](http://mitya57.me)
-and is licensed under GNU GPL (v2+) license, the current version is available in
-`LICENSE_GPL` file.
-
-ReText icon is based on `accessories-text-editor` icon from the Faenza theme.
-
-[wiki]: https://github.com/retext-project/retext/wiki
-[PyPI]: https://pypi.python.org/pypi/ReText
-[Transifex]: https://www.transifex.com/mitya57/ReText/
-
 Welcome to ReText!
 ==================
 
@@ -85,6 +40,45 @@ and is licensed under GNU GPL (v2+) license, the current version is available in
 `LICENSE_GPL` file.
 
 ReText icon is based on `accessories-text-editor` icon from the Faenza theme.
+
+
+欢迎来到ReText！
+==================
+
+*本项目从[ReText]上fork而来，并针对Windows平台进行适配。*
+
+ReText是一个简单但又强大的编辑器，它用来处理Markdown和reStructuredText标记语言。
+ReText使用Python编写，运行Linux及其他POSIX兼容的平台上。要安装ReText，使用 
+`setup.py install`命令。
+
+![在KDE 5下的ReText](https://a.fsdn.com/con/app/proj/retext/screenshots/retext-kde5.png)
+
+你可以通过[wiki]了解更多关于ReText的内容。
+
+ReText需要下列包来运行：
+
+* [python] —3.2 版或更新
+* [pyqt5]
+* [python-markups]
+
+我们还建议你安装以下包：
+
+* [python-markdown] — 用于Markdown语言支持
+* [python-docutils] — 用于reStructuredText语言支持
+* [python-enchant] — 用于拼写检查支持
+
+最新的稳定版本可以从[PyPI]下载。你也可以使用 `pip install ReText` 指令来安装。
+
+翻译文件已被编译为发布原始码，并且会自动载入。对于开发快照，使用`lrelease locale/*.ts`
+命令编译翻译文件。翻译文件也能从`/usr/share/retext/`目录中载入。
+
+你可以在[Transifex]上将ReText翻译为你的语言。
+
+ReText 版权 2011–2015 [Dmitry Shachnev](http://mitya57.me)
+使用GNU GPL (v2+) 许可证, 当前的版本在`LICENSE_GPL`文件中可以获取到。
+
+ReText的图标是基于来自Faenza主题的`accessories-text-editor`图标。
+
 
 [ReText]: https://github.com/retext-project/retext
 [wiki]: https://github.com/retext-project/retext/wiki
