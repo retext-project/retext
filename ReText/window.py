@@ -38,7 +38,7 @@ from PyQt5.QtGui import QColor, QDesktopServices, QFontMetrics, QIcon, \
  QKeySequence, QPalette, QTextCursor, QTextDocument, QTextDocumentWriter
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
- QLineEdit, QMainWindow, QMenuBar, QMessageBox, QSplitter, QTabWidget, \
+ QLineEdit, QMainWindow, QMenu, QMenuBar, QMessageBox, QSplitter, QTabWidget, \
  QTextBrowser, QTextEdit, QToolBar
 from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
 from PyQt5.QtWebKit import QWebSettings
@@ -134,6 +134,9 @@ class ReTextWindow(QMainWindow):
 			self.actionPreview.setIcon(QIcon(icon_path+'document-preview.png'))
 		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.CTRL+Qt.Key_L,
 		trigbool=self.enableLivePreview)
+		menuPreview = QMenu()
+		menuPreview.addAction(self.actionLivePreview)
+		self.actionPreview.setMenu(menuPreview)
 		self.actionTableMode = self.act(self.tr('Table mode'), shct=Qt.CTRL+Qt.Key_T,
 			trigbool=lambda x: self.editBoxes[self.ind].enableTableMode(x))
 		if ReTextFakeVimHandler:
@@ -286,7 +289,6 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionWebKit)
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionViewHtml)
-		menuEdit.addAction(self.actionLivePreview)
 		menuEdit.addAction(self.actionPreview)
 		menuEdit.addAction(self.actionTableMode)
 		if ReTextFakeVimHandler:
