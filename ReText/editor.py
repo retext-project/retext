@@ -65,7 +65,7 @@ def documentIndentLess(document, cursor, globalSettings=globalSettings):
 class ReTextEdit(QTextEdit):
 	def __init__(self, parent):
 		QTextEdit.__init__(self)
-		self.parent = parent
+		self.parent = parent.p
 		self.undoRedoActive = False
 		self.tableModeEnabled = False
 		self.setAcceptRichText(False)
@@ -118,12 +118,9 @@ class ReTextEdit(QTextEdit):
 			if not atEnd:
 				cursor.movePosition(QTextCursor.NextBlock)
 
-	def getHighlighter(self):
-		return self.parent.highlighters[self.parent.ind]
-
 	def contextMenuEvent(self, event):
 		text = self.toPlainText()
-		dictionary = self.getHighlighter().dictionary
+		dictionary = self.highlighter.dictionary
 		if (dictionary is None) or not text:
 			return QTextEdit.contextMenuEvent(self, event)
 		oldcursor = self.textCursor()
