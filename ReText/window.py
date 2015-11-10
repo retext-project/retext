@@ -34,7 +34,7 @@ except ImportError:
 
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
  QIODevice, QLocale, QRect, QTextCodec, QTextStream, QTimer, QUrl, Qt
-from PyQt5.QtGui import QColor, QDesktopServices, QFontMetrics, QIcon, \
+from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
  QKeySequence, QPalette, QTextCursor, QTextDocument, QTextDocumentWriter
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
@@ -440,8 +440,6 @@ class ReTextWindow(QMainWindow):
 		liveMode = globalSettings.restorePreviewState and globalSettings.previewState
 		self.actionPreviewChecked.append(liveMode)
 		self.actionLivePreviewChecked.append(liveMode)
-		metrics = QFontMetrics(self.editBoxes[-1].font())
-		self.editBoxes[-1].setTabStopWidth(globalSettings.tabWidth * metrics.width(' '))
 		self.editBoxes[-1].textChanged.connect(self.updateLivePreviewBox)
 		self.editBoxes[-1].undoAvailable.connect(self.actionUndo.setEnabled)
 		self.editBoxes[-1].redoAvailable.connect(self.actionRedo.setEnabled)
