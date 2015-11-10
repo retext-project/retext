@@ -983,9 +983,10 @@ class ReTextWindow(QMainWindow):
 		if of:
 			QFile('out'+defaultext).rename(fileName)
 
-	def autoSaveActive(self):
-		return self.autoSaveEnabled and self.currentTab.fileName and \
-		QFileInfo(self.currenTab.fileName).isWritable()
+	def autoSaveActive(self, ind=None):
+		tab = self.currentTab if ind is None else self.tabs[ind]
+		return (self.autoSaveEnabled and tab.fileName and
+			QFileInfo(tab.fileName).isWritable())
 
 	def modificationChanged(self, changed):
 		if self.autoSaveActive():
@@ -1075,7 +1076,7 @@ class ReTextWindow(QMainWindow):
 			self.fileSystemWatcher.addPath(fileName)
 
 	def maybeSave(self, ind):
-		if self.autoSaveActive():
+		if self.autoSaveActive(ind):
 			self.tabs[ind].saveTextToFile()
 			return True
 		if not self.tabs[ind].editBox.document().isModified():
