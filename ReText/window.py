@@ -488,7 +488,8 @@ class ReTextWindow(QMainWindow):
 		font, ok = QFontDialog.getFont(globalSettings.font, self)
 		if ok:
 			globalSettings.font = font
-			self.currentTab.updatePreviewBox()
+			for tab in self.tabs:
+				tab.updatePreviewBox()
 
 	def preview(self, viewmode):
 		self.currentTab.previewState = viewmode * 2
