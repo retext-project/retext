@@ -129,7 +129,7 @@ class ReTextWindow(QMainWindow):
 		menuPreview.addAction(self.actionLivePreview)
 		self.actionPreview.setMenu(menuPreview)
 		self.actionTableMode = self.act(self.tr('Table mode'), shct=Qt.CTRL+Qt.Key_T,
-			trigbool=lambda x: self.currentTab.enableTableMode(x))
+			trigbool=lambda x: self.currentTab.editBox.enableTableMode(x))
 		if ReTextFakeVimHandler:
 			self.actionFakeVimMode = self.act(self.tr('FakeVim mode'),
 				shct=Qt.CTRL+Qt.ALT+Qt.Key_V, trigbool=self.enableFakeVimMode)
