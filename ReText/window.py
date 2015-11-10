@@ -400,16 +400,14 @@ class ReTextWindow(QMainWindow):
 		return webView
 
 	def createTab(self, fileName):
-		tab = ReTextTab(self, fileName)
-		self.tabs.append(tab)
-		return tab
+		self.currentTab = ReTextTab(self, fileName)
+		self.tabs.append(self.currentTab)
+		self.tabWidget.addTab(self.currentTab.getSplitter(), self.tr("New document"))
 
 	def closeTab(self, ind):
 		if self.maybeSave(ind):
 			if self.tabWidget.count() == 1:
-				self.currentTab = self.createTab("")
-				self.tabWidget.addTab(self.currentTab.getSplitter(),
-				                      self.tr("New document"))
+				self.createTab("")
 			if self.currentTab.fileName:
 				self.fileSystemWatcher.removePath(self.currentTab.fileName)
 			del self.tabs[ind]
@@ -638,8 +636,7 @@ class ReTextWindow(QMainWindow):
 		self.docTypeChanged()
 
 	def createNew(self, text=None):
-		self.currentTab = self.createTab("")
-		self.tabWidget.addTab(self.currentTab.getSplitter(), self.tr("New document"))
+		self.createTab("")
 		self.ind = self.tabWidget.count()-1
 		self.tabWidget.setCurrentIndex(self.ind)
 		if text:
@@ -766,8 +763,7 @@ class ReTextWindow(QMainWindow):
 				self.currentTab.editBox.document().isModified()
 			)
 			if noEmptyTab:
-				self.currentTab = self.createTab(fileName)
-				self.tabWidget.addTab(self.currentTab.getSplitter(), "")
+				self.createTab(fileName)
 				self.ind = self.tabWidget.count()-1
 				self.tabWidget.setCurrentIndex(self.ind)
 			if fileName:
