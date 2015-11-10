@@ -505,7 +505,8 @@ class ReTextWindow(QMainWindow):
 		self.actionPreview.setChecked(livemode)
 		self.editBar.setEnabled(True)
 		self.currentTab.updateBoxesVisibility()
-		self.currentTab.updateLivePreviewBox()
+		if livemode:
+			self.currentTab.updatePreviewBox()
 
 	def enableWebKit(self, enable):
 		globalSettings.useWebKit = enable
