@@ -64,7 +64,6 @@ class ReTextWindow(QMainWindow):
 		else:
 			self.setWindowIcon(QIcon.fromTheme('retext',
 				QIcon.fromTheme('accessories-text-editor')))
-		self.tabs = []
 		self.tabWidget = QTabWidget(self)
 		self.initTabWidget()
 		self.setCentralWidget(self.tabWidget)
@@ -343,6 +342,10 @@ class ReTextWindow(QMainWindow):
 		self.fileSystemWatcher = QFileSystemWatcher()
 		self.fileSystemWatcher.fileChanged.connect(self.fileChanged)
 
+	def iterateTabs(self):
+		for i in range(self.tabWidget.count()):
+			yield self.tabWidget.widget(i).tab
+
 	def updateStyleSheet(self):
 		if globalSettings.styleSheet:
 			sheetfile = QFile(globalSettings.styleSheet)
@@ -362,6 +365,7 @@ class ReTextWindow(QMainWindow):
 			self.openFileWrapper(fn)
 		self.tabWidget.setTabsClosable(True)
 		self.tabWidget.setAcceptDrops(True)
+		self.tabWidget.setMovable(True)
 		self.tabWidget.dragEnterEvent = dragEnterEvent
 		self.tabWidget.dropEvent = dropEvent
 
@@ -401,7 +405,6 @@ class ReTextWindow(QMainWindow):
 
 	def createTab(self, fileName):
 		self.currentTab = ReTextTab(self, fileName)
-		self.tabs.append(self.currentTab)
 		self.tabWidget.addTab(self.currentTab.getSplitter(), self.tr("New document"))
 
 	def closeTab(self, ind):
@@ -410,7 +413,7 @@ class ReTextWindow(QMainWindow):
 				self.createTab("")
 			if self.currentTab.fileName:
 				self.fileSystemWatcher.removePath(self.currentTab.fileName)
-			del self.tabs[ind]
+			del self.tabWidget.widget(ind).tab
 			self.tabWidget.removeTab(ind)
 
 	def getMarkupClass(self, fileName=None):
@@ -453,7 +456,7 @@ class ReTextWindow(QMainWindow):
 	def changeIndex(self, ind):
 		if ind < 0:  # This can happen when enableWebKit is called
 			return
-		self.currentTab = self.tabs[ind]
+		self.currentTab = self.tabWidget.currentWidget().tab
 		editBox = self.currentTab.editBox
 		previewState = self.currentTab.previewState
 		self.actionUndo.setEnabled(editBox.document().isUndoAvailable())
@@ -479,14 +482,14 @@ class ReTextWindow(QMainWindow):
 		font, ok = QFontDialog.getFont(globalSettings.editorFont, self)
 		if ok:
 			globalSettings.editorFont = font
-			for tab in self.tabs:
+			for tab in self.iterateTabs():
 				tab.editBox.updateFont()
 
 	def changePreviewFont(self):
 		font, ok = QFontDialog.getFont(globalSettings.font, self)
 		if ok:
 			globalSettings.font = font
-			for tab in self.tabs:
+			for tab in self.iterateTabs():
 				tab.updatePreviewBox()
 
 	def preview(self, viewmode):
@@ -511,7 +514,7 @@ class ReTextWindow(QMainWindow):
 		globalSettings.useWebKit = enable
 		restoreInd = self.ind
 		self.tabWidget.clear()
-		for tab in self.tabs:
+		for tab in self.iterateTabs():
 			tab.previewBox = tab.createPreviewBox()
 			splitter = tab.getSplitter()
 			self.tabWidget.addTab(splitter, tab.getDocumentTitle(baseName=True))
@@ -539,7 +542,7 @@ class ReTextWindow(QMainWindow):
 		globalSettings.useFakeVim = yes
 		if yes:
 			FakeVimMode.init(self)
-			for tab in self.tabs:
+			for tab in self.iterateTabs():
 				tab.installFakeVimHandler()
 		else:
 			FakeVimMode.exit(self)
@@ -749,8 +752,8 @@ class ReTextWindow(QMainWindow):
 			return
 		fileName = QFileInfo(fileName).canonicalFilePath()
 		exists = False
-		for i in range(self.tabWidget.count()):
-			if self.tabs[i].fileName == fileName:
+		for i, tab in enumerate(self.iterateTabs()):
+			if tab.fileName == fileName:
 				exists = True
 				ex = i
 		if exists:
@@ -811,7 +814,7 @@ class ReTextWindow(QMainWindow):
 		self.saveFileMain(dlg=True)
 
 	def saveAll(self):
-		for tab in self.tabs:
+		for tab in self.iterateTabs():
 			if tab.fileName and QFileInfo(tab.fileName).isWritable():
 				tab.saveTextToFile()
 				tab.editBox.document().setModified(False)
@@ -980,7 +983,7 @@ class ReTextWindow(QMainWindow):
 			QFile('out'+defaultext).rename(fileName)
 
 	def autoSaveActive(self, ind=None):
-		tab = self.currentTab if ind is None else self.tabs[ind]
+		tab = self.currentTab if ind is None else self.tabWidget.widget(ind).tab
 		return (self.autoSaveEnabled and tab.fileName and
 			QFileInfo(tab.fileName).isWritable())
 
@@ -1033,21 +1036,21 @@ class ReTextWindow(QMainWindow):
 
 	def fileChanged(self, fileName):
 		ind = None
-		for testind, tab in enumerate(self.tabs):
+		for testind, tab in enumerate(self.iterateTabs()):
 			if tab.fileName == fileName:
 				ind = testind
 		if ind is None:
 			self.fileSystemWatcher.removePath(fileName)
 		self.tabWidget.setCurrentIndex(ind)
 		if not QFile.exists(fileName):
-			self.tabs[ind].editBox.document().setModified(True)
+			self.currentTab.editBox.document().setModified(True)
 			QMessageBox.warning(self, '', self.tr(
 				'This file has been deleted by other application.\n'
 				'Please make sure you save the file before exit.'))
-		elif not self.tabs[ind].editBox.document().isModified():
+		elif not self.currentTab.editBox.document().isModified():
 			# File was not modified in ReText, reload silently
 			self.openFileMain()
-			self.tabs[ind].updatePreviewBox()
+			self.currentTab.updatePreviewBox()
 		else:
 			text = self.tr(
 				'This document has been modified by other application.\n'
@@ -1063,19 +1066,20 @@ class ReTextWindow(QMainWindow):
 			messageBox.exec()
 			if messageBox.clickedButton() is reloadButton:
 				self.openFileMain()
-				self.tabs[ind].updatePreviewBox()
+				self.currentTab.updatePreviewBox()
 			else:
 				self.autoSaveEnabled = False
-				self.tabs[ind].editBox.document().setModified(True)
+				self.currentTab.editBox.document().setModified(True)
 		if fileName not in self.fileSystemWatcher.files():
 			# https://github.com/retext-project/retext/issues/137
 			self.fileSystemWatcher.addPath(fileName)
 
 	def maybeSave(self, ind):
+		tab = self.tabWidget.widget(ind).tab
 		if self.autoSaveActive(ind):
-			self.tabs[ind].saveTextToFile()
+			tab.saveTextToFile()
 			return True
-		if not self.tabs[ind].editBox.document().isModified():
+		if not tab.editBox.document().isModified():
 			return True
 		self.tabWidget.setCurrentIndex(ind)
 		ret = QMessageBox.warning(self, '',
@@ -1129,6 +1133,6 @@ class ReTextWindow(QMainWindow):
 		self.defaultMarkup = markup
 		defaultName = markups.get_available_markups()[0].name
 		writeToSettings('defaultMarkup', markup.name, defaultName)
-		for self.currentTab in self.tabs:
+		for self.currentTab in self.iterateTabs():
 			self.docTypeChanged()
-		self.currentTab = self.tabs[self.ind]
+		self.currentTab = self.currentWidget.widget(self.ind).tab

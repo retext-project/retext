@@ -86,6 +86,7 @@ class ReTextTab(QObject):
 			splitter.addWidget(widget)
 		splitter.setSizes((50, 50))
 		splitter.setChildrenCollapsible(False)
+		splitter.tab = self
 		return splitter
 
 	def getDocumentTitle(self, baseName=False):
