@@ -72,9 +72,7 @@ class ReTextTab(QObject):
 	def createPreviewBox(self):
 		if globalSettings.useWebKit:
 			return self.createWebView()
-		browser = QTextBrowser()
-		# TODO: honor globalSettings.handleWebLinks?
-		browser.setOpenExternalLinks(True)
+		browser = ReTextPreview(self)
 		return browser
 
 	def getSplitter(self):
@@ -188,3 +186,30 @@ class ReTextTab(QObject):
 			fakeVimEditor.setQuitAction(self.actionQuit)
 			# TODO: action is bool, really call remove?
 			self.p.actionFakeVimMode.triggered.connect(fakeVimEditor.remove)
+
+
+class ReTextPreview(QTextBrowser):
+	"""
+	When links like [test](test) are clicked, the file test.md is opened.
+	It has to be located next to the current opened file.
+	Relative pathes like [test](../test) or [test](folder/test) are also possible.
+	"""
+
+	def __init__(self, tab):
+		QTextBrowser.__init__(self)
+		self.tab = tab
+		# TODO: honor globalSettings.handleWebLinks?
+		# if set to True, links to other files will unsuccesfully be opened as anchors
+		self.setOpenLinks(False)
+		self.anchorClicked.connect(self.openInternal)
+
+	def openInternal(self, link):
+		if link.isRelative():
+			currentFileInfo = QFileInfo(self.tab.fileName)
+			fileToOpenFileInfo = QFileInfo(currentFileInfo.absoluteDir(), link.url())
+			if not fileToOpenFileInfo.completeSuffix():
+				fileToOpenFileInfo = QFileInfo(currentFileInfo.absoluteDir(),
+				                               link.url() + '.' + currentFileInfo.completeSuffix())
+			self.tab.p.openFileWrapper(fileToOpenFileInfo)
+		else:
+			QDesktopServices.openUrl(link)
