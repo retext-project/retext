@@ -204,7 +204,10 @@ class ReTextPreview(QTextBrowser):
 		self.anchorClicked.connect(self.openInternal)
 
 	def openInternal(self, link):
-		if link.isRelative():
+		url = link.url()
+		if url.startswith('#'):
+			self.scrollToAnchor(url[1:])
+		elif link.isRelative():
 			currentFileInfo = QFileInfo(self.tab.fileName)
 			fileToOpenFileInfo = QFileInfo(currentFileInfo.absoluteDir(), link.url())
 			if not fileToOpenFileInfo.completeSuffix():
