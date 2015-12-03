@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from markups import get_markup_for_file_name
 from markups.common import MODULE_HOME_PAGE
 
 from ReText import app_version, enchant, enchant_available, globalSettings
@@ -25,7 +26,7 @@ try:
 except ImportError:
 	ReTextFakeVimHandler = None
 
-from PyQt5.QtCore import Qt, QFile, QFileInfo, QObject, QTextStream, QTimer, QUrl
+from PyQt5.QtCore import Qt, QDir, QFile, QFileInfo, QObject, QTextStream, QTimer, QUrl
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtWidgets import QTextBrowser, QTextEdit, QSplitter
 from PyQt5.QtWebKit import QWebSettings
@@ -198,21 +199,21 @@ class ReTextPreview(QTextBrowser):
 	def __init__(self, tab):
 		QTextBrowser.__init__(self)
 		self.tab = tab
-		# TODO: honor globalSettings.handleWebLinks?
 		# if set to True, links to other files will unsuccessfully be opened as anchors
 		self.setOpenLinks(False)
 		self.anchorClicked.connect(self.openInternal)
 
 	def openInternal(self, link):
 		url = link.url()
+		isLocalHtml = (link.scheme() in ('file', '') and url.endswith('.html'))
 		if url.startswith('#'):
 			self.scrollToAnchor(url[1:])
-		elif link.isRelative():
-			currentFileInfo = QFileInfo(self.tab.fileName)
-			fileToOpenFileInfo = QFileInfo(currentFileInfo.absoluteDir(), link.url())
-			if not fileToOpenFileInfo.completeSuffix():
-				fileToOpenFileInfo = QFileInfo(currentFileInfo.absoluteDir(),
-				                               link.url() + '.' + currentFileInfo.completeSuffix())
-			self.tab.p.openFileWrapper(fileToOpenFileInfo)
+		elif link.isRelative() and get_markup_for_file_name(url, return_class=True):
+			fileToOpen = QDir.current().filePath(url)
+			if not QFileInfo(fileToOpen).completeSuffix() and self.fileName:
+				fileToOpen += '.' + QFileInfo(self.tab.fileName).completeSuffix()
+			self.tab.p.openFileWrapper(fileToOpen)
+		elif globalSettings.handleWebLinks and isLocalHtml:
+			self.setSource(link)
 		else:
 			QDesktopServices.openUrl(link)
