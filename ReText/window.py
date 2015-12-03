@@ -38,8 +38,6 @@ from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
  QLineEdit, QMainWindow, QMenu, QMenuBar, QMessageBox, QTabWidget, QToolBar
 from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
-from PyQt5.QtWebKit import QWebSettings
-from PyQt5.QtWebKitWidgets import QWebPage, QWebView
 
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
@@ -392,16 +390,6 @@ class ReTextWindow(QMainWindow):
 		import traceback
 		print('Exception occured while parsing document:', file=sys.stderr)
 		traceback.print_exc()
-
-	def getWebView(self):
-		webView = QWebView()
-		if not globalSettings.handleWebLinks:
-			webView.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
-			webView.page().linkClicked.connect(QDesktopServices.openUrl)
-		settings = webView.settings()
-		settings.setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
-		settings.setDefaultTextEncoding('utf-8')
-		return webView
 
 	def createTab(self, fileName):
 		self.currentTab = ReTextTab(self, fileName)
