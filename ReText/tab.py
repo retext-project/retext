@@ -199,7 +199,7 @@ class ReTextPreview(QTextBrowser):
 		QTextBrowser.__init__(self)
 		self.tab = tab
 		# TODO: honor globalSettings.handleWebLinks?
-		# if set to True, links to other files will unsuccesfully be opened as anchors
+		# if set to True, links to other files will unsuccessfully be opened as anchors
 		self.setOpenLinks(False)
 		self.anchorClicked.connect(self.openInternal)
 
