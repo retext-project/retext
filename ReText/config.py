@@ -165,6 +165,6 @@ class ConfigDialog(QDialog):
 			extsFile.close()
 		except Exception as e:
 			print(e, file=sys.stderr)
-		for tab in self.parent.tabs:
+		for tab in self.parent.iterateTabs():
 			tab.editBox.updateLineNumberAreaWidth()
 		self.parent.updateStyleSheet()
