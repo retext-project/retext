@@ -134,7 +134,8 @@ class ReTextTab(QObject):
 		self.previewBlocked = False
 		if isinstance(self.previewBox, QTextEdit):
 			scrollbar = self.previewBox.verticalScrollBar()
-			disttobottom = scrollbar.maximum() - scrollbar.value()
+			scrollbarValue = scrollbar.value()
+			distToBottom = scrollbar.maximum() - scrollbarValue
 		else:
 			frame = self.previewBox.page().mainFrame()
 			scrollpos = frame.scrollPosition()
@@ -145,7 +146,11 @@ class ReTextTab(QObject):
 		if isinstance(self.previewBox, QTextEdit):
 			self.previewBox.setHtml(html)
 			self.previewBox.document().setDefaultFont(globalSettings.font)
-			scrollbar.setValue(scrollbar.maximum() - disttobottom)
+			# If scrollbar was at bottom (and that was not the same as top),
+			# set it to bottom again
+			if scrollbarValue:
+				newValue = scrollbar.maximum() - distToBottom
+				scrollbar.setValue(newValue)
 		else:
 			settings = self.previewBox.settings()
 			settings.setFontFamily(QWebSettings.StandardFont,
