@@ -500,16 +500,17 @@ class ReTextWindow(QMainWindow):
 
 	def enableWebKit(self, enable):
 		globalSettings.useWebKit = enable
-		restoreInd = self.ind
-		self.tabWidget.clear()
-		for tab in self.iterateTabs():
+		for i in range(self.tabWidget.count()):
+			splitter = self.tabWidget.widget(i)
+			tab = splitter.tab
+			tab.previewBox.setParent(None)
+			tab.previewBox.deleteLater()
 			tab.previewBox = tab.createPreviewBox()
-			splitter = tab.getSplitter()
-			self.tabWidget.addTab(splitter, tab.getDocumentTitle(baseName=True))
+			tab.previewBox.setMinimumWidth(125)
+			splitter.addWidget(tab.previewBox)
+			splitter.setSizes((50, 50))
 			tab.updatePreviewBox()
 			tab.updateBoxesVisibility()
-		self.ind = restoreInd
-		self.tabWidget.setCurrentIndex(self.ind)
 
 	def enableCopy(self, copymode):
 		self.actionCopy.setEnabled(copymode)
