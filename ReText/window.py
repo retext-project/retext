@@ -546,7 +546,8 @@ class ReTextWindow(QMainWindow):
 		globalSettings.spellCheck = yes
 
 	def setAllDictionaries(self, dictionary):
-		for hl in self.highlighters:
+		for tab in self.iterateTabs():
+			hl = tab.highlighter
 			hl.dictionary = dictionary
 			hl.rehighlight()
 
