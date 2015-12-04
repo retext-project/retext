@@ -17,7 +17,7 @@
 from ReText import globalSettings, tablemode, DOCTYPE_MARKDOWN
 
 from PyQt5.QtCore import QPoint, QSize, Qt
-from PyQt5.QtGui import QColor, QPainter, QPalette, QTextCursor, QTextFormat
+from PyQt5.QtGui import QColor, QKeyEvent, QPainter, QPalette, QTextCursor, QTextFormat
 from PyQt5.QtWidgets import QLabel, QTextEdit, QWidget
 
 def documentIndentMore(document, cursor, globalSettings=globalSettings):
@@ -154,6 +154,10 @@ class ReTextEdit(QTextEdit):
 		cursor = self.textCursor()
 		if event.text() and self.tableModeEnabled:
 			cursor.beginEditBlock()
+		if key == Qt.Key_Backspace and event.modifiers() & Qt.GroupSwitchModifier:
+			# Workaround for https://bugreports.qt.io/browse/QTBUG-49771
+			event = QKeyEvent(event.type(), event.key(),
+				event.modifiers() ^ Qt.GroupSwitchModifier)
 		if key == Qt.Key_Tab:
 			documentIndentMore(self.document(), cursor)
 		elif key == Qt.Key_Backtab:
