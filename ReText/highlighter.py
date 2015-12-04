@@ -83,7 +83,6 @@ class ReTextHighlighter(QSyntaxHighlighter):
 
 	def __init__(self, document):
 		QSyntaxHighlighter.__init__(self, document)
-		document.highlighter = self
 		updateColorScheme()
 
 	def highlightBlock(self, text):
