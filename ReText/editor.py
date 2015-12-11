@@ -80,7 +80,7 @@ class ReTextEdit(QTextEdit):
 	def updateFont(self):
 		self.setFont(globalSettings.editorFont)
 		metrics = self.fontMetrics()
-		self.marginx = (self.cursorRect(self.cursorForPosition(QPoint())).topLeft().x()
+		self.marginx = (self.document().documentMargin()
 			+ metrics.width(' ' * globalSettings.rightMargin))
 		self.setTabStopWidth(globalSettings.tabWidth * self.fontMetrics().width(' '))
 		self.updateLineNumberAreaWidth()
