@@ -99,7 +99,7 @@ class ConfigDialog(QDialog):
 				label = QLabel(displayname + ':', self)
 			if name == 'markdownExtensions':
 				if displayname:
-					url = QUrl('http://pythonhosted.org/Markdown/extensions/')
+					url = QUrl('https://github.com/retext-project/retext/wiki/Markdown-extensions')
 					helpButton = QPushButton(self.tr('Help'), self)
 					helpButton.clicked.connect(lambda: QDesktopServices.openUrl(url))
 					self.layout.addWidget(label, index, 0)
