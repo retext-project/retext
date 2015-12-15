@@ -38,6 +38,7 @@ reBlockQuotes  = re.compile('^ *>.+')
 reReSTDirects  = re.compile(r'\.\. [a-z]+::')
 reReSTRoles    = re.compile(':[a-z]+:')
 reWords        = re.compile('[^_\\W]+', flags=re.UNICODE)
+reSpacesOnEnd  = re.compile(r'\s+$', flags=re.UNICODE)
 
 colorNames = ('htmltags', 'htmlsymbols', 'htmlquotes', 'htmlcomments',
               'markdownlinks', 'blockquotes',
@@ -125,6 +126,10 @@ class ReTextHighlighter(QSyntaxHighlighter):
 					charFormat.setFontUnderline(pattern[4])
 				for match in pattern[0].finditer(text):
 					self.setFormat(match.start(), match.end() - match.start(), charFormat)
+		for match in reSpacesOnEnd.finditer(text):
+			charFormat = QTextCharFormat()
+			charFormat.setBackground(QColor(240, 240, 210))
+			self.setFormat(match.start(), match.end() - match.start(), charFormat)
 		# Spell checker
 		if self.dictionary:
 			charFormat = QTextCharFormat()
