@@ -426,10 +426,7 @@ class ReTextWindow(QMainWindow):
 		markupClass = self.getMarkupClass()
 		newType = markupClass.name if markupClass else ''
 		if oldType != newType:
-			self.currentTab.markup = self.getMarkup()
-			self.currentTab.updatePreviewBox()
-			self.currentTab.highlighter.docType = newType
-			self.currentTab.highlighter.rehighlight()
+			self.currentTab.setMarkupClass(markupClass)
 		dtMarkdown = (newType == DOCTYPE_MARKDOWN)
 		dtMkdOrReST = (newType in (DOCTYPE_MARKDOWN, DOCTYPE_REST))
 		self.tagsBox.setEnabled(dtMarkdown)
@@ -1119,10 +1116,10 @@ class ReTextWindow(QMainWindow):
 		+'</a> | <a href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">'
 		+self.tr('reStructuredText syntax')+'</a></p>')
 
-	def setDefaultMarkup(self, markup):
-		self.defaultMarkup = markup
+	def setDefaultMarkup(self, markupClass):
+		self.defaultMarkup = markupClass
 		defaultName = markups.get_available_markups()[0].name
-		writeToSettings('defaultMarkup', markup.name, defaultName)
-		for self.currentTab in self.iterateTabs():
-			self.docTypeChanged()
-		self.currentTab = self.currentWidget.widget(self.ind).tab
+		writeToSettings('defaultMarkup', markupClass.name, defaultName)
+		for tab in self.iterateTabs():
+			if not tab.fileName:
+				tab.setMarkupClass(markupClass)

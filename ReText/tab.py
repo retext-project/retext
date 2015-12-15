@@ -169,6 +169,14 @@ class ReTextTab(QObject):
 		self.editBox.setVisible(self.previewState < PreviewNormal)
 		self.previewBox.setVisible(self.previewState > PreviewDisabled)
 
+	def setMarkupClass(self, markupClass):
+		self.markup = None
+		if markupClass and markupClass.available:
+			self.markup = markupClass(filename=self.fileName)
+		self.updatePreviewBox()
+		self.highlighter.docType = markupClass.name
+		self.highlighter.rehighlight()
+
 	def saveTextToFile(self, fileName=None, addToWatcher=True):
 		if fileName is None:
 			fileName = self.fileName
