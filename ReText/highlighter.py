@@ -88,22 +88,22 @@ class ReTextHighlighter(QSyntaxHighlighter):
 	def highlightBlock(self, text):
 		patterns = (
 			# regex,         color,          font style,    italic, underline
-			(reHtmlTags,     colorScheme[0], QFont.Bold),
-			(reHtmlSymbols,  colorScheme[1], QFont.Bold),
-			(reHtmlStrings,  colorScheme[2], QFont.Bold),
-			(reHtmlComments, colorScheme[3], QFont.Normal),
-			(reItalics1,     None,           QFont.Normal,  True),
-			(reItalics2,     None,           QFont.Normal,  True),
-			(reBold1,        None,           QFont.Bold),
-			(reBold2,        None,           QFont.Bold),
-			(reBoldItalics1, None,           QFont.Bold,    True),
-			(reBoldItalics2, None,           QFont.Bold,    True),
-			(reMkdHeaders,   None,           QFont.Black),
-			(reMkdLinksImgs, colorScheme[4], QFont.Normal),
-			(reMkdLinkRefs,  None,           QFont.Normal,  True,   True),
-			(reBlockQuotes,  colorScheme[5], QFont.Normal),
-			(reReSTDirects,  colorScheme[6], QFont.Bold),
-			(reReSTRoles,    colorScheme[7], QFont.Bold)
+			(reHtmlTags,     colorScheme[0], QFont.Bold),                     # 0
+			(reHtmlSymbols,  colorScheme[1], QFont.Bold),                     # 1
+			(reHtmlStrings,  colorScheme[2], QFont.Bold),                     # 2
+			(reHtmlComments, colorScheme[3], QFont.Normal),                   # 3
+			(reItalics1,     None,           QFont.Normal,  True),            # 4
+			(reItalics2,     None,           QFont.Normal,  True),            # 5
+			(reBold1,        None,           QFont.Bold),                     # 6
+			(reBold2,        None,           QFont.Bold),                     # 7
+			(reBoldItalics1, None,           QFont.Bold,    True),            # 8
+			(reBoldItalics2, None,           QFont.Bold,    True),            # 9
+			(reMkdHeaders,   None,           QFont.Black),                    # 10
+			(reMkdLinksImgs, colorScheme[4], QFont.Normal),                   # 11
+			(reMkdLinkRefs,  None,           QFont.Normal,  True,   True),    # 12
+			(reBlockQuotes,  colorScheme[5], QFont.Normal),                   # 13
+			(reReSTDirects,  colorScheme[6], QFont.Bold),                     # 14
+			(reReSTRoles,    colorScheme[7], QFont.Bold),                     # 15
 		)
 		patternsDict = {
 			'Markdown': (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13),
