@@ -760,25 +760,10 @@ class ReTextWindow(QMainWindow):
 			self.openFileMain()
 
 	def openFileMain(self, encoding=None):
-		openfile = QFile(self.currentTab.fileName)
-		openfile.open(QIODevice.ReadOnly)
-		stream = QTextStream(openfile)
-		if encoding:
-			stream.setCodec(encoding)
-		elif globalSettings.defaultCodec:
-			stream.setCodec(globalSettings.defaultCodec)
-		text = stream.readAll()
-		openfile.close()
-		markupClass = markups.get_markup_for_file_name(
-			self.currentTab.fileName, return_class=True)
-		self.currentTab.highlighter.docType = (markupClass.name if markupClass else '')
-		self.currentTab.markup = self.getMarkup()
+		self.currentTab.readTextFromFile(encoding)
 		editBox = self.currentTab.editBox
-		modified = bool(encoding) and (editBox.toPlainText() != text)
-		editBox.setPlainText(text)
 		self.setCurrentFile()
-		editBox.document().setModified(modified)
-		self.setWindowModified(modified)
+		self.setWindowModified(editBox.document().isModified())
 
 	def showEncodingDialog(self):
 		if not self.maybeSave(self.ind):

@@ -176,6 +176,21 @@ class ReTextTab(QObject):
 		self.highlighter.docType = markupClass.name if markupClass else None
 		self.highlighter.rehighlight()
 
+	def readTextFromFile(self, encoding=None):
+		openfile = QFile(self.fileName)
+		openfile.open(QFile.ReadOnly)
+		stream = QTextStream(openfile)
+		encoding = encoding or globalSettings.defaultCodec
+		if encoding:
+			stream.setCodec(encoding)
+		text = stream.readAll()
+		openfile.close()
+		markupClass = get_markup_for_file_name(self.fileName, return_class=True)
+		self.setMarkupClass(markupClass)
+		self.editBox.setPlainText(text)
+		modified = bool(encoding) and (self.editBox.toPlainText() != text)
+		self.editBox.document().setModified(modified)
+
 	def saveTextToFile(self, fileName=None, addToWatcher=True):
 		if fileName is None:
 			fileName = self.fileName
