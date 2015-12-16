@@ -424,6 +424,7 @@ class ReTextWindow(QMainWindow):
 		markupClass = self.getMarkupClass()
 		if type(self.currentTab.markup) != markupClass:
 			self.currentTab.setMarkupClass(markupClass)
+			self.currentTab.updatePreviewBox()
 		dtMarkdown = (markupClass == markups.MarkdownMarkup)
 		dtMkdOrReST = dtMarkdown or (markupClass == markups.ReStructuredTextMarkup)
 		self.tagsBox.setEnabled(dtMarkdown)
@@ -1118,3 +1119,4 @@ class ReTextWindow(QMainWindow):
 		for tab in self.iterateTabs():
 			if not tab.fileName:
 				tab.setMarkupClass(markupClass)
+				tab.updatePreviewBox()

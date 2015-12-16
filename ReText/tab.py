@@ -173,7 +173,6 @@ class ReTextTab(QObject):
 		self.markup = None
 		if markupClass and markupClass.available:
 			self.markup = markupClass(filename=self.fileName)
-		self.updatePreviewBox()
 		self.highlighter.docType = markupClass.name if markupClass else None
 		self.highlighter.rehighlight()
 
