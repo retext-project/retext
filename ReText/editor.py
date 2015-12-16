@@ -17,7 +17,7 @@
 from markups import MarkdownMarkup
 from ReText import globalSettings, tablemode
 
-from PyQt5.QtCore import QPoint, QSize, Qt
+from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QColor, QKeyEvent, QPainter, QPalette, QTextCursor, QTextFormat
 from PyQt5.QtWidgets import QLabel, QTextEdit, QWidget
 
