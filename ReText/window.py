@@ -83,7 +83,8 @@ class ReTextWindow(QMainWindow):
 		self.actionSetEncoding = self.act(self.tr('Set encoding'),
 			trig=self.showEncodingDialog)
 		self.actionSetEncoding.setEnabled(False)
-		self.actionReload = self.act(self.tr('Reload'), 'view-refresh', trig=self.openFileMain)
+		self.actionReload = self.act(self.tr('Reload'), 'view-refresh',
+			lambda: self.currentTab.readTextFromFile())
 		self.actionReload.setEnabled(False)
 		self.actionSave = self.act(self.tr('Save'), 'document-save',
 			self.saveFile, shct=QKeySequence.Save)
@@ -757,13 +758,10 @@ class ReTextWindow(QMainWindow):
 			if fileName:
 				self.fileSystemWatcher.addPath(fileName)
 			self.currentTab.fileName = fileName
-			self.openFileMain()
-
-	def openFileMain(self, encoding=None):
-		self.currentTab.readTextFromFile(encoding)
-		editBox = self.currentTab.editBox
-		self.setCurrentFile()
-		self.setWindowModified(editBox.document().isModified())
+			self.currentTab.readTextFromFile()
+			editBox = self.currentTab.editBox
+			self.setCurrentFile()
+			self.setWindowModified(editBox.document().isModified())
 
 	def showEncodingDialog(self):
 		if not self.maybeSave(self.ind):
@@ -773,7 +771,7 @@ class ReTextWindow(QMainWindow):
 			[bytes(b).decode() for b in QTextCodec.availableCodecs()],
 			0, False)
 		if ok:
-			self.openFileMain(encoding)
+			self.currentTab.readTextFromFile(encoding)
 
 	def saveFile(self):
 		self.saveFileMain(dlg=False)
@@ -1017,7 +1015,7 @@ class ReTextWindow(QMainWindow):
 				'Please make sure you save the file before exit.'))
 		elif not self.currentTab.editBox.document().isModified():
 			# File was not modified in ReText, reload silently
-			self.openFileMain()
+			self.currentTab.readTextFromFile()
 			self.currentTab.updatePreviewBox()
 		else:
 			text = self.tr(
@@ -1033,7 +1031,7 @@ class ReTextWindow(QMainWindow):
 			messageBox.addButton(QMessageBox.Cancel)
 			messageBox.exec()
 			if messageBox.clickedButton() is reloadButton:
-				self.openFileMain()
+				self.currentTab.readTextFromFile()
 				self.currentTab.updatePreviewBox()
 			else:
 				self.autoSaveEnabled = False
