@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from ReText import globalSettings, tablemode, DOCTYPE_MARKDOWN
+from markups import MarkdownMarkup
+from ReText import globalSettings, tablemode
 
 from PyQt5.QtCore import QPoint, QSize, Qt
 from PyQt5.QtGui import QColor, QKeyEvent, QPainter, QPalette, QTextCursor, QTextFormat
@@ -167,7 +168,7 @@ class ReTextEdit(QTextEdit):
 			if event.modifiers() & Qt.ShiftModifier:
 				# Insert Markdown-style line break
 				markupClass = self.parent.getMarkupClass()
-				if markupClass and markupClass.name == DOCTYPE_MARKDOWN:
+				if markupClass and markupClass == MarkdownMarkup:
 					cursor.insertText('  ')
 			if event.modifiers() & Qt.ControlModifier:
 				cursor.insertText('\n')
@@ -236,10 +237,9 @@ class ReTextEdit(QTextEdit):
 	def contentsChange(self, pos, removed, added):
 		if self.tableModeEnabled:
 			markupClass = self.parent.getMarkupClass()
-			docType = markupClass.name if markupClass else None
 
 			cursorPosition = self.backupCursorPositionOnLine()
-			tablemode.adjustTableToChanges(self.document(), pos, added - removed, docType)
+			tablemode.adjustTableToChanges(self.document(), pos, added - removed, markupClass)
 			self.restoreCursorPositionOnLine(cursorPosition)
 
 class LineNumberArea(QWidget):

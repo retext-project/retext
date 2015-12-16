@@ -49,11 +49,6 @@ try:
 except NameError:  # __file__ not defined
 	icon_path = "icons/"
 
-DOCTYPE_NONE = ''
-DOCTYPE_MARKDOWN = markups.MarkdownMarkup.name
-DOCTYPE_REST = markups.ReStructuredTextMarkup.name
-DOCTYPE_HTML = 'html'
-
 configOptions = {
 	'appStyleSheet': '',
 	'autoSave': False,

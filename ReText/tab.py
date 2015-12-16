@@ -174,7 +174,7 @@ class ReTextTab(QObject):
 		if markupClass and markupClass.available:
 			self.markup = markupClass(filename=self.fileName)
 		self.updatePreviewBox()
-		self.highlighter.docType = markupClass.name
+		self.highlighter.docType = markupClass.name if markupClass else None
 		self.highlighter.rehighlight()
 
 	def saveTextToFile(self, fileName=None, addToWatcher=True):

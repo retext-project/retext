@@ -17,8 +17,7 @@
 import markups
 import sys
 from subprocess import Popen
-from ReText import icon_path, DOCTYPE_MARKDOWN, DOCTYPE_REST, \
- app_version, globalSettings, readListFromSettings, \
+from ReText import icon_path, app_version, globalSettings, readListFromSettings, \
  writeListToSettings, writeToSettings, datadirs, enchant, enchant_available
 from ReText.tab import ReTextTab, PreviewNormal, PreviewLive
 from ReText.dialogs import HtmlDialog, LocaleDialog
@@ -422,13 +421,11 @@ class ReTextWindow(QMainWindow):
 			return markupClass(filename=fileName)
 
 	def docTypeChanged(self):
-		oldType = self.currentTab.highlighter.docType
 		markupClass = self.getMarkupClass()
-		newType = markupClass.name if markupClass else ''
-		if oldType != newType:
+		if type(self.currentTab.markup) != markupClass:
 			self.currentTab.setMarkupClass(markupClass)
-		dtMarkdown = (newType == DOCTYPE_MARKDOWN)
-		dtMkdOrReST = (newType in (DOCTYPE_MARKDOWN, DOCTYPE_REST))
+		dtMarkdown = (markupClass == markups.MarkdownMarkup)
+		dtMkdOrReST = dtMarkdown or (markupClass == markups.ReStructuredTextMarkup)
 		self.tagsBox.setEnabled(dtMarkdown)
 		self.symbolBox.setEnabled(dtMarkdown)
 		self.actionUnderline.setEnabled(dtMarkdown)
@@ -775,8 +772,6 @@ class ReTextWindow(QMainWindow):
 			self.currentTab.fileName, return_class=True)
 		self.currentTab.highlighter.docType = (markupClass.name if markupClass else '')
 		self.currentTab.markup = self.getMarkup()
-		if self.defaultMarkup:
-			self.currentTab.highlighter.docType = self.defaultMarkup.name
 		editBox = self.currentTab.editBox
 		modified = bool(encoding) and (editBox.toPlainText() != text)
 		editBox.setPlainText(text)

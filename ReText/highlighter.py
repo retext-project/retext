@@ -14,8 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from ReText import globalSettings, DOCTYPE_NONE, DOCTYPE_MARKDOWN, \
- DOCTYPE_REST, DOCTYPE_HTML
+from ReText import globalSettings
 import re
 
 from PyQt5.QtCore import Qt
@@ -80,7 +79,7 @@ def updateColorScheme():
 
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
-	docType = DOCTYPE_NONE
+	docType = None
 
 	def __init__(self, document):
 		QSyntaxHighlighter.__init__(self, document)
@@ -107,10 +106,9 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			(reReSTRoles,    colorScheme[7], QFont.Normal)
 		)
 		patternsDict = {
-			DOCTYPE_NONE: (),
-			DOCTYPE_MARKDOWN: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13),
-			DOCTYPE_REST: (4, 6, 14, 15),
-			DOCTYPE_HTML: (0, 1, 2, 3)
+			'Markdown': (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13),
+			'reStructuredText': (4, 6, 14, 15),
+			'html': (0, 1, 2, 3)
 		}
 		# Syntax highlighter
 		if self.docType in patternsDict:
