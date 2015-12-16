@@ -102,8 +102,8 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			(reMkdLinksImgs, colorScheme[4], QFont.Normal),
 			(reMkdLinkRefs,  None,           QFont.Normal,  True,   True),
 			(reBlockQuotes,  colorScheme[5], QFont.Normal),
-			(reReSTDirects,  colorScheme[6], QFont.Normal),
-			(reReSTRoles,    colorScheme[7], QFont.Normal)
+			(reReSTDirects,  colorScheme[6], QFont.Bold),
+			(reReSTRoles,    colorScheme[7], QFont.Bold)
 		)
 		patternsDict = {
 			'Markdown': (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13),
