@@ -52,7 +52,6 @@ except NameError:  # __file__ not defined
 configOptions = {
 	'appStyleSheet': '',
 	'autoSave': False,
-	'colorSchemeFile': '',
 	'defaultCodec': '',
 	'defaultMarkup': '',
 	'editorFont': QFont('monospace'),

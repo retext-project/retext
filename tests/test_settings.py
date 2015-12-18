@@ -19,10 +19,11 @@ import tempfile
 import sys
 
 from os.path import basename, dirname, splitext
-from PyQt5.QtCore import QCoreApplication, QSettings
-from PyQt5.QtGui import QFont
+from PyQt5.QtCore import Qt, QCoreApplication, QSettings
+from PyQt5.QtGui import QColor, QFont
 from ReText import readListFromSettings, writeListToSettings, \
  readFromSettings, writeToSettings
+from ReText.highlighter import colorScheme, updateColorScheme
 
 # Keep a reference so it is not garbage collected
 app = QCoreApplication(sys.argv)
@@ -72,6 +73,16 @@ class TestSettings(unittest.TestCase):
 		newFont = readFromSettings('testFont', QFont, self.settings, QFont())
 		self.assertEqual(newFont.family(), family)
 		self.assertEqual(newFont.pointSize(), size)
+
+	def test_storingColors(self):
+		self.settings.setValue('ColorScheme/htmlTags', 'green')
+		self.settings.setValue('ColorScheme/htmlSymbols', '#ff8800')
+		self.settings.setValue('ColorScheme/htmlComments', '#abc')
+		updateColorScheme(self.settings)
+		self.assertEqual(colorScheme['htmlTags'], QColor(0x00, 0x80, 0x00))
+		self.assertEqual(colorScheme['htmlSymbols'], QColor(0xff, 0x88, 0x00))
+		self.assertEqual(colorScheme['htmlStrings'], Qt.darkYellow) # default
+		self.assertEqual(colorScheme['htmlComments'], QColor(0xaa, 0xbb, 0xcc))
 
 if __name__ == '__main__':
 	unittest.main()
