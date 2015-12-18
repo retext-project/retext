@@ -56,15 +56,28 @@ the gtk platformtheme is used).
 If you don't know name of your icon theme, look at the names of
 subdirectories in `/usr/share/icons/` directory.
 
-Color scheme files
-==================
+Color scheme setting
+====================
 
 It is possible to configure ReText highlighter to use custom colors set,
-by providing a color scheme file. The syntax of a such file is as follows:
+by providing these colors in a separate section in the configuration file.
 
-    htmltags = green
-    htmlsymbols = #ff8800
-    htmlcomments = #abc
+The example of such section is:
 
-Possible color names: `htmltags`, `htmlsymbols`, `htmlquotes`, `htmlcomments`,
-`markdownlinks`, `blockquotes`, `restdirectives`, `restroles`.
+    [ColorScheme]
+    htmlTags=green
+    htmlSymbols=#ff8800
+    htmlComments=#abc
+
+Possible color names are:
+
+color name     | description
+----------     | -----------
+htmlTags       | HTML tags, i.e. `<foo>`
+htmlStrings    | String properties inside HTML tags, i.e. `"baz"` inside `<foo bar="baz">`
+htmlSymbols    | HTML symbols, i.e. `&bar;`
+htmlComments   | HTML comments, i.e. `<!-- comment -->`
+markdownLinks  | Markdown links and images text, i.e. `foo` inside `[foo](http://example.com)`
+blockquotes    | Blockquotes, i.e. `> quote` in Markdown
+restDirectives | reStructuredText directives, i.e. `.. math::`
+restRoles      | reStructuredText roles, i.e. `:math:`
