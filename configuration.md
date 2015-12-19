@@ -10,7 +10,6 @@ option name                    | type      | description
 -----------                    | ----      | -----------
 `appStyleSheet`                | file path | file containing a Qt stylesheet file
 `autoSave`                     | boolean   | whether to automatically save documents (default: false)
-`colorSchemeFile`              | file path | file containing a highlighter color scheme
 `defaultCodec`                 | string    | name of encoding to use by default (default: use system encoding)
 `defaultMarkup`                | string    | name of markup to use for unknown files
 `editorFont`                   | string    | font to use for editor: name (default: `monospace`)
