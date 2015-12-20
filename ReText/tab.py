@@ -187,8 +187,8 @@ class ReTextTab(QObject):
 		openfile.close()
 		markupClass = get_markup_for_file_name(self.fileName, return_class=True)
 		self.setMarkupClass(markupClass)
-		self.editBox.setPlainText(text)
 		modified = bool(encoding) and (self.editBox.toPlainText() != text)
+		self.editBox.setPlainText(text)
 		self.editBox.document().setModified(modified)
 
 	def saveTextToFile(self, fileName=None, addToWatcher=True):
