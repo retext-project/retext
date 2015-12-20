@@ -1039,8 +1039,8 @@ class ReTextWindow(QMainWindow):
 		return True
 
 	def closeEvent(self, closeevent):
-		for self.ind in range(self.tabWidget.count()):
-			if not self.maybeSave(self.ind):
+		for ind in range(self.tabWidget.count()):
+			if not self.maybeSave(ind):
 				return closeevent.ignore()
 		if globalSettings.saveWindowGeometry and not self.isMaximized():
 			globalSettings.windowGeometry = self.saveGeometry()
