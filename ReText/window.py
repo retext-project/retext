@@ -635,7 +635,7 @@ class ReTextWindow(QMainWindow):
 	def openFunction(self, fileName):
 		return lambda: self.openFileWrapper(fileName)
 
-	def extensionFuntion(self, data):
+	def extensionFunction(self, data):
 		return lambda: \
 		self.runExtensionCommand(data['Exec'], data['FileFilter'], data['DefaultExtension'])
 
@@ -665,7 +665,7 @@ class ReTextWindow(QMainWindow):
 						data[prop] = extension[prop]
 					else:
 						data[prop] = ''
-				action = self.act(name, trig=self.extensionFuntion(data))
+				action = self.act(name, trig=self.extensionFunction(data))
 				if 'Icon' in extension:
 					action.setIcon(self.actIcon(extension['Icon']))
 				mimetype = extension['MimeType'] if 'MimeType' in extension else None
