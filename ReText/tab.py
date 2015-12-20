@@ -13,6 +13,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import atexit
+import subprocess
 
 from markups import get_markup_for_file_name
 from markups.common import MODULE_HOME_PAGE
@@ -20,6 +22,8 @@ from markups.common import MODULE_HOME_PAGE
 from ReText import app_version, enchant, enchant_available, globalSettings
 from ReText.editor import ReTextEdit
 from ReText.highlighter import ReTextHighlighter
+
+JEKYLL_BASE_URL = 'http://127.0.0.1:4000'
 
 try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler
@@ -73,8 +77,9 @@ class ReTextTab(QObject):
 	def createPreviewBox(self):
 		if globalSettings.useWebKit:
 			return self.createWebView()
-		browser = ReTextPreview(self)
-		return browser
+		if globalSettings.useJekyllPreview:
+			return JekyllPreview(self)
+		return ReTextPreview(self)
 
 	def getSplitter(self):
 		splitter = QSplitter(Qt.Horizontal)
@@ -149,6 +154,47 @@ class ReTextTab(QObject):
 			scrollbar = self.previewBox.verticalScrollBar()
 			scrollbarValue = scrollbar.value()
 			distToBottom = scrollbar.maximum() - scrollbarValue
+		elif isinstance(self.previewBox, JekyllPreview) and self.editBox.toPlainText().startswith('---') \
+				and QFileInfo(self.fileName).exists():
+			def loadPreview():
+				fileToLoad = self.fileName.replace(self.p.jekyll_path, JEKYLL_BASE_URL)
+				fileToLoad = fileToLoad.replace('.' + QFileInfo(self.fileName).completeSuffix(), '.html')
+				self.previewBox.load(QUrl(fileToLoad))
+				self.previewBox.reload()
+
+			# run one Jekyll server process for all tabs
+			if not hasattr(self.p, 'jekyll_process'):
+				def getJekyllFolder(dir):
+					if QFileInfo(dir, '_config.yml').exists():
+						return dir
+					if dir.cdUp():
+						return getJekyllFolder(dir)
+					return None
+
+				self.p.jekyll_path = getJekyllFolder(QFileInfo(self.fileName).absoluteDir()).absolutePath()
+				cmd = ['jekyll', 'serve', '--source', self.p.jekyll_path, '--destination',
+				       self.p.jekyll_path + '/_site', '--incremental']
+				self.p.jekyll_process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+				atexit.register(self.p.jekyll_process.terminate)  # kill the process at exit
+
+				def load(check_string):
+					line = self.p.jekyll_process.stdout.readline()
+					if check_string in line:
+						loadPreview()
+					else:
+						self.previewBox.setHtml(str(line))
+						QTimer.singleShot(20, lambda: load(check_string))
+
+				load(b'Server running')
+
+			# if the document was changed: give Jekyll some time to rebuild
+			if hasattr(self, 'opened_before'):
+				self.saveTextToFile()
+				QTimer.singleShot(300, loadPreview)
+			else:
+				loadPreview()
+				self.opened_before = True
+			return
 		else:
 			frame = self.previewBox.page().mainFrame()
 			scrollpos = frame.scrollPosition()
@@ -227,6 +273,23 @@ class ReTextTab(QObject):
 			fakeVimEditor.setQuitAction(self.actionQuit)
 			# TODO: action is bool, really call remove?
 			self.p.actionFakeVimMode.triggered.connect(fakeVimEditor.remove)
+
+
+class JekyllPreview(QWebView):
+	def __init__(self, tab):
+		super(JekyllPreview, self).__init__()
+		self.tab = tab
+		self.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
+		self.linkClicked.connect(self.openInternal)
+
+	def openInternal(self, link):
+		url = link.url()
+		if JEKYLL_BASE_URL in url:
+			fileToOpen = url.replace(JEKYLL_BASE_URL, self.tab.p.jekyll_path)
+			fileToOpen = fileToOpen.replace('.html', '.' + QFileInfo(self.tab.fileName).completeSuffix())
+			self.tab.p.openFileWrapper(fileToOpen)
+		else:
+			QDesktopServices.openUrl(link)
 
 
 class ReTextPreview(QTextBrowser):
