@@ -74,16 +74,11 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
-        <source>Color scheme file</source>
-        <translation>カラースキーマファイル</translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
         <source>Stylesheet file</source>
         <translation>スタイルシートファイル</translation>
     </message>
     <message>
-        <location filename="config.py" line="103"/>
+        <location filename="config.py" line="102"/>
         <source>Help</source>
         <translation>ヘルプ</translation>
     </message>
@@ -130,12 +125,12 @@
 <context>
     <name>ReTextTab</name>
     <message>
-        <location filename="tab.py" line="102"/>
+        <location filename="tab.py" line="115"/>
         <source>New document</source>
         <translation>新規文書</translation>
     </message>
     <message>
-        <location filename="tab.py" line="108"/>
+        <location filename="tab.py" line="121"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation>ファイルの内容を解析できません。&lt;a href=&quot;%s&quot;&gt;必要なモジュール&lt;/a&gt; がインストールされているか確認してください。</translation>
     </message>
@@ -143,37 +138,37 @@
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="window.py" line="70"/>
+        <location filename="window.py" line="69"/>
         <source>File toolbar</source>
         <translation>ファイルツールバー</translation>
     </message>
     <message>
-        <location filename="window.py" line="72"/>
+        <location filename="window.py" line="71"/>
         <source>Edit toolbar</source>
         <translation>編集ツールバー</translation>
     </message>
     <message>
-        <location filename="window.py" line="74"/>
+        <location filename="window.py" line="73"/>
         <source>Search toolbar</source>
         <translation>検索ツールバー</translation>
     </message>
     <message>
-        <location filename="window.py" line="78"/>
+        <location filename="window.py" line="77"/>
         <source>New</source>
         <translation>新規</translation>
     </message>
     <message>
-        <location filename="window.py" line="81"/>
+        <location filename="window.py" line="80"/>
         <source>Open</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location filename="window.py" line="84"/>
+        <location filename="window.py" line="83"/>
         <source>Set encoding</source>
         <translation>文字エンコーディング</translation>
     </message>
     <message>
-        <location filename="window.py" line="1058"/>
+        <location filename="window.py" line="1012"/>
         <source>Reload</source>
         <translation>再読み込み</translation>
     </message>
@@ -253,7 +248,7 @@
         <translation>フルスクリーンモード</translation>
     </message>
     <message>
-        <location filename="window.py" line="529"/>
+        <location filename="window.py" line="506"/>
         <source>Preferences</source>
         <translation>設定</translation>
     </message>
@@ -408,105 +403,105 @@
         <translation>大文字と小文字を区別</translation>
     </message>
     <message>
-        <location filename="window.py" line="464"/>
+        <location filename="window.py" line="441"/>
         <source>New document</source>
         <translation>新規文書</translation>
     </message>
     <message>
-        <location filename="window.py" line="617"/>
+        <location filename="window.py" line="594"/>
         <source>Please, save the file somewhere.</source>
         <translation>どこかにファイルを保存してください。</translation>
     </message>
     <message>
-        <location filename="window.py" line="737"/>
+        <location filename="window.py" line="714"/>
         <source>Select one or several files to open</source>
         <translation>開きたいファイル（複数可）を選択してください</translation>
     </message>
     <message>
-        <location filename="window.py" line="737"/>
+        <location filename="window.py" line="714"/>
         <source>Supported files</source>
         <translation>サポートされているファイル</translation>
     </message>
     <message>
-        <location filename="window.py" line="737"/>
+        <location filename="window.py" line="714"/>
         <source>All files (*)</source>
         <translation>すべてのファイル (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="796"/>
+        <location filename="window.py" line="753"/>
         <source>Select file encoding from the list:</source>
         <translation>ファイルの文字エンコーディングを選んでください：</translation>
     </message>
     <message>
-        <location filename="window.py" line="819"/>
+        <location filename="window.py" line="773"/>
         <source>Plain text (*.txt)</source>
         <translation>プレーンテキスト (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="822"/>
+        <location filename="window.py" line="776"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s ファイル</translation>
     </message>
     <message>
-        <location filename="window.py" line="893"/>
+        <location filename="window.py" line="847"/>
         <source>Save file</source>
         <translation>ファイルを保存</translation>
     </message>
     <message>
-        <location filename="window.py" line="848"/>
+        <location filename="window.py" line="802"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>読み取り専用ファイルのため保存できません。</translation>
     </message>
     <message>
-        <location filename="window.py" line="883"/>
+        <location filename="window.py" line="837"/>
         <source>Export document to ODT</source>
         <translation>文書をODTにエクスポート</translation>
     </message>
     <message>
-        <location filename="window.py" line="883"/>
+        <location filename="window.py" line="837"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocumentテキストファイル (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="893"/>
+        <location filename="window.py" line="847"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTMLファイル (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="915"/>
+        <location filename="window.py" line="869"/>
         <source>Export document to PDF</source>
         <translation>文書をPDFにエクスポート</translation>
     </message>
     <message>
-        <location filename="window.py" line="915"/>
+        <location filename="window.py" line="869"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDFファイル (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="932"/>
+        <location filename="window.py" line="886"/>
         <source>Print document</source>
         <translation>文書を印刷</translation>
     </message>
     <message>
-        <location filename="window.py" line="953"/>
+        <location filename="window.py" line="907"/>
         <source>Export document</source>
         <translation>文書をエクスポート</translation>
     </message>
     <message>
-        <location filename="window.py" line="972"/>
+        <location filename="window.py" line="926"/>
         <source>Failed to execute the command:</source>
         <translation>コマンドの実行に失敗しました:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1041"/>
+        <location filename="window.py" line="995"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation>このファイルは他のアプリケーションによって削除されました。
 終了する前にファイルを保存して下さい。</translation>
     </message>
     <message>
-        <location filename="window.py" line="1049"/>
+        <location filename="window.py" line="1003"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
@@ -515,49 +510,49 @@ Do you want to reload the file (this will discard all your changes)?
 </translation>
     </message>
     <message>
-        <location filename="window.py" line="1054"/>
+        <location filename="window.py" line="1008"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation>再読み込みを選択しない場合、データの消失を避けるために自動保存機能はこのセッションで無効になります。</translation>
     </message>
     <message>
-        <location filename="window.py" line="1079"/>
+        <location filename="window.py" line="1033"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>文書は変更されています。
 変更内容を保存しますか？</translation>
     </message>
     <message>
-        <location filename="window.py" line="1104"/>
+        <location filename="window.py" line="1058"/>
         <source>HTML code</source>
         <translation>HTMLコード</translation>
     </message>
     <message>
-        <location filename="window.py" line="1115"/>
+        <location filename="window.py" line="1069"/>
         <source>ReText %s (using PyMarkups %s)</source>
         <translation>ReText %s(PyMarkups %s 利用)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1115"/>
+        <location filename="window.py" line="1069"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Markdown と reStructuredText のためのシンプルでパワフルなエディタ</translation>
     </message>
     <message>
-        <location filename="window.py" line="1115"/>
+        <location filename="window.py" line="1069"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1115"/>
+        <location filename="window.py" line="1069"/>
         <source>Website</source>
         <translation>Webサイト</translation>
     </message>
     <message>
-        <location filename="window.py" line="1115"/>
+        <location filename="window.py" line="1069"/>
         <source>Markdown syntax</source>
         <translation>Markdown 記法</translation>
     </message>
     <message>
-        <location filename="window.py" line="1115"/>
+        <location filename="window.py" line="1069"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText 文法</translation>
     </message>
