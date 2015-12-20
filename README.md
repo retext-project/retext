@@ -34,7 +34,7 @@ automatically loaded. For development snapshots, compile translations using
 
 You can translate ReText into your language on [Transifex].
 
-ReText is Copyright 2011–2015 [Dmitry Shachnev](http://mitya57.me)
+ReText is Copyright 2011–2015 [Dmitry Shachnev](https://mitya57.me)
 and is licensed under GNU GPL (v2+) license, the current version is available in
 `LICENSE_GPL` file.
 
