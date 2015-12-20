@@ -421,8 +421,6 @@ class ReTextWindow(QMainWindow):
 		self.actionReload.setEnabled(canReload)
 
 	def changeIndex(self, ind):
-		if ind < 0:  # This can happen when enableWebKit is called
-			return
 		self.currentTab = self.tabWidget.currentWidget().tab
 		editBox = self.currentTab.editBox
 		previewState = self.currentTab.previewState
