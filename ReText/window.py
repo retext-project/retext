@@ -399,9 +399,10 @@ class ReTextWindow(QMainWindow):
 		if self.maybeSave(ind):
 			if self.tabWidget.count() == 1:
 				self.createTab("")
-			if self.currentTab.fileName:
-				self.fileSystemWatcher.removePath(self.currentTab.fileName)
-			del self.tabWidget.widget(ind).tab
+			currentWidget = self.tabWidget.widget(ind)
+			if currentWidget.tab.fileName:
+				self.fileSystemWatcher.removePath(currentWidget.tab.fileName)
+			del currentWidget.tab
 			self.tabWidget.removeTab(ind)
 
 	def docTypeChanged(self):
