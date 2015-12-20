@@ -114,6 +114,7 @@ setup(name='ReText',
       data_files=[
         ('share/appdata', ['data/me.mitya57.ReText.appdata.xml']),
         ('share/applications', ['data/me.mitya57.ReText.desktop']),
+        ('share/retext/icons', glob('icons/*')),
         ('share/retext/locale', glob('locale/*.qm'))
       ],
       requires=requires,

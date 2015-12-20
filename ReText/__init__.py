@@ -16,7 +16,7 @@
 
 import markups
 import markups.common
-from os.path import abspath, dirname, join
+from os.path import dirname, exists, join
 
 from PyQt5.QtCore import QByteArray, QLocale, QSettings, QStandardPaths
 from PyQt5.QtGui import QFont
@@ -44,10 +44,17 @@ else:
 	except enchant.errors.Error:
 		enchant_available = False
 
-try:
-	icon_path = join(dirname(dirname(__file__)), "icons/")
-except NameError:  # __file__ not defined
-	icon_path = "icons/"
+datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
+datadirs = [join(d, 'retext') for d in datadirs]
+
+if '__file__' in locals():
+	datadirs = [dirname(dirname(__file__))] + datadirs
+
+icon_path = 'icons/'
+for dir in datadirs:
+	if exists(join(dir, 'icons')):
+		icon_path = join(dir, 'icons/')
+		break
 
 configOptions = {
 	'appStyleSheet': '',
@@ -139,6 +146,3 @@ class ReTextSettings(object):
 globalSettings = ReTextSettings()
 
 markups.common.PYGMENTS_STYLE = globalSettings.pygmentsStyle
-
-datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
-datadirs = [abspath('.')] + [join(d, 'retext') for d in datadirs]
