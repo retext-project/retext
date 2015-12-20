@@ -414,13 +414,6 @@ class ReTextWindow(QMainWindow):
 				return markupClass
 		return self.defaultMarkup
 
-	def getMarkup(self, fileName=None):
-		if fileName is None:
-			fileName = self.currentTab.fileName
-		markupClass = self.getMarkupClass(fileName=fileName)
-		if markupClass and markupClass.available():
-			return markupClass(filename=fileName)
-
 	def docTypeChanged(self):
 		markupClass = self.getMarkupClass()
 		if type(self.currentTab.markup) != markupClass:

@@ -41,7 +41,7 @@ class ReTextTab(QObject):
 		self.fileName = fileName
 		self.editBox = ReTextEdit(self)
 		self.previewBox = self.createPreviewBox()
-		self.markup = parent.getMarkup(fileName)
+		self.markup = self.getMarkup()
 		self.previewState = previewState
 		self.previewBlocked = False
 
@@ -87,6 +87,11 @@ class ReTextTab(QObject):
 		splitter.setChildrenCollapsible(False)
 		splitter.tab = self
 		return splitter
+
+	def getMarkup(self):
+		markupClass = self.p.getMarkupClass(fileName=self.fileName)
+		if markupClass and markupClass.available():
+			return markupClass(filename=self.fileName)
 
 	def getDocumentTitle(self, baseName=False):
 		if self.markup and not baseName:
