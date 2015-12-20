@@ -21,7 +21,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QFont, QSyntaxHighlighter, QTextCharFormat
 
 reHtmlTags     = re.compile('<[^<>@]*>')
-reHtmlSymbols  = re.compile('&[^; ]*;')
+reHtmlSymbols  = re.compile(r'&#?\w+;')
 reHtmlStrings  = re.compile('"[^"<]*"(?=[^<]*>)')
 reHtmlComments = re.compile('<!--[^<>]*-->')
 reAsterisks    = re.compile(r'(?<!\*)\*[^ \*][^\*]*\*')
