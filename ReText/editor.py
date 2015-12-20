@@ -99,7 +99,7 @@ class ReTextEdit(QTextEdit):
 
 	def scrollContentsBy(self, dx, dy):
 		QTextEdit.scrollContentsBy(self, dx, dy)
-		self.lineNumberArea.repaint()
+		self.lineNumberArea.update()
 
 	def lineNumberAreaPaintEvent(self, event):
 		painter = QPainter(self.lineNumberArea)
@@ -202,7 +202,7 @@ class ReTextEdit(QTextEdit):
 		return 5 + self.fontMetrics().width('9') * digits
 
 	def updateLineNumberAreaWidth(self, blockcount=0):
-		self.lineNumberArea.repaint()
+		self.lineNumberArea.update()
 		self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, 0)
 
 	def resizeEvent(self, event):
