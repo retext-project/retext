@@ -1,3 +1,17 @@
+## ReText 5.3 (2015-12-20)
+
+* Tabs are now reorderable.
+* All colors used in editor and highlighter are now configurable via the
+  configuration file.
+* Links referencing other source files are now opened in ReText as new tabs
+  (feature contributed by Jan Korte).
+* Code refactoring: some code moved to the new tab.py module, and some old
+  hacks dropped.
+* The ReText logo is now installed to the data directory.
+* Appstream metadata updated to a newer format.
+* The desktop file no longer hardcodes the executable path (fix contributed
+  by Buo-Ren Lin).
+
 ## ReText 5.2 (2015-09-23)
 
 * ReText now tries to load the icon theme from system settings if
