@@ -37,7 +37,7 @@ def build_translations():
 	error = None
 	for ts_file in glob(join('locale', '*.ts')):
 		try:
-			check_call(('lrelease', ts_file))
+			check_call(('lrelease', ts_file), env={'QT_SELECT': 'qt5'})
 		except Exception as e:
 			error = e
 	if error:
