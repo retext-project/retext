@@ -740,6 +740,8 @@ class ReTextWindow(QMainWindow):
 			editBox = self.currentTab.editBox
 			self.setCurrentFile()
 			self.setWindowModified(editBox.document().isModified())
+			if globalSettings.livePreviewForNewDocs:
+				self.enableLivePreview(True)
 
 	def showEncodingDialog(self):
 		if not self.maybeSave(self.ind):
