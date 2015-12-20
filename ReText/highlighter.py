@@ -50,6 +50,7 @@ defaultColorScheme = {
 	'blockquotes': Qt.darkGray,
 	'restDirectives': Qt.darkMagenta,
 	'restRoles': Qt.darkRed,
+	'whitespaceOnEnd': QColor(0xf0, 0xf0, 0xd2)
 }
 colorScheme = {}
 
@@ -114,7 +115,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 					self.setFormat(match.start(), match.end() - match.start(), charFormat)
 		for match in reSpacesOnEnd.finditer(text):
 			charFormat = QTextCharFormat()
-			charFormat.setBackground(QColor(240, 240, 210))
+			charFormat.setBackground(colorScheme['whitespaceOnEnd'])
 			self.setFormat(match.start(), match.end() - match.start(), charFormat)
 		# Spell checker
 		if self.dictionary:

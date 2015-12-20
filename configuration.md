@@ -80,13 +80,14 @@ color name             | main setting           | description
 
 Color names for the highlighter:
 
-color name     | description
-----------     | -----------
-htmlTags       | HTML tags, i.e. `<foo>`
-htmlStrings    | String properties inside HTML tags, i.e. `"baz"` inside `<foo bar="baz">`
-htmlSymbols    | HTML symbols, i.e. `&bar;`
-htmlComments   | HTML comments, i.e. `<!-- comment -->`
-markdownLinks  | Markdown links and images text, i.e. `foo` inside `[foo](http://example.com)`
-blockquotes    | Blockquotes, i.e. `> quote` in Markdown
-restDirectives | reStructuredText directives, i.e. `.. math::`
-restRoles      | reStructuredText roles, i.e. `:math:`
+color name        | description
+----------        | -----------
+`htmlTags`        | HTML tags, i.e. `<foo>`
+`htmlStrings`     | string properties inside HTML tags, i.e. `"baz"` inside `<foo bar="baz">`
+`htmlSymbols`     | HTML symbols, i.e. `&bar;`
+`htmlComments`    | HTML comments, i.e. `<!-- comment -->`
+`markdownLinks`   | Markdown links and images text, i.e. `foo` inside `[foo](http://example.com)`
+`blockquotes`     | blockquotes, i.e. `> quote` in Markdown
+`restDirectives`  | reStructuredText directives, i.e. `.. math::`
+`restRoles`       | reStructuredText roles, i.e. `:math:`
+`whitespaceOnEnd` | whitespace at line endings
