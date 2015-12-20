@@ -15,11 +15,25 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from markups import MarkdownMarkup
-from ReText import globalSettings, tablemode
+from ReText import globalSettings, tablemode, readFromSettings
 
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QColor, QKeyEvent, QPainter, QPalette, QTextCursor, QTextFormat
 from PyQt5.QtWidgets import QLabel, QTextEdit, QWidget
+
+colors = {
+	'marginLine': QColor(0xdc, 0xd2, 0xdc),
+	'currentLineHighlight': QColor(0xff, 0xff, 0xc8),
+	'infoArea': QColor(0xaa, 0xff, 0x55, 0xaa),
+	'lineNumberArea': Qt.cyan,
+	'lineNumberAreaText': Qt.darkCyan
+}
+
+colorValues = {
+	colorName: readFromSettings(
+		'ColorScheme/' + colorName, QColor, default=colors[colorName])
+	for colorName in colors
+}
 
 def documentIndentMore(document, cursor, globalSettings=globalSettings):
 	if cursor.hasSelection():
@@ -91,7 +105,7 @@ class ReTextEdit(QTextEdit):
 		if not globalSettings.rightMargin:
 			return QTextEdit.paintEvent(self, event)
 		painter = QPainter(self.viewport())
-		painter.setPen(QColor(220, 210, 220))
+		painter.setPen(colorValues['marginLine'])
 		y1 = self.rect().topLeft().y()
 		y2 = self.rect().bottomLeft().y()
 		painter.drawLine(self.marginx, y1, self.marginx, y2)
@@ -103,7 +117,7 @@ class ReTextEdit(QTextEdit):
 
 	def lineNumberAreaPaintEvent(self, event):
 		painter = QPainter(self.lineNumberArea)
-		painter.fillRect(event.rect(), Qt.cyan)
+		painter.fillRect(event.rect(), colorValues['lineNumberArea'])
 		cursor = QTextCursor(self.document())
 		cursor.movePosition(QTextCursor.Start)
 		atEnd = False
@@ -112,7 +126,7 @@ class ReTextEdit(QTextEdit):
 			block = cursor.block()
 			if block.isVisible():
 				number = str(cursor.blockNumber() + 1)
-				painter.setPen(Qt.darkCyan)
+				painter.setPen(colorValues['lineNumberAreaText'])
 				painter.drawText(0, rect.top(), self.lineNumberArea.width()-2,
 					self.fontMetrics().height(), Qt.AlignRight, number)
 			cursor.movePosition(QTextCursor.EndOfBlock)
@@ -216,8 +230,7 @@ class ReTextEdit(QTextEdit):
 		if not globalSettings.highlightCurrentLine:
 			return self.setExtraSelections([])
 		selection = QTextEdit.ExtraSelection();
-		lineColor = QColor(255, 255, 200)
-		selection.format.setBackground(lineColor)
+		selection.format.setBackground(colorValues['currentLineHighlight'])
 		selection.format.setProperty(QTextFormat.FullWidthSelection, True)
 		selection.cursor = self.textCursor()
 		selection.cursor.clearSelection()
@@ -262,7 +275,7 @@ class InfoArea(QLabel):
 		self.updateTextAndGeometry()
 		self.setAutoFillBackground(True)
 		palette = self.palette()
-		palette.setColor(QPalette.Window, QColor(0xaa, 0xff, 0x55, 0xaa))
+		palette.setColor(QPalette.Window, colorValues['infoArea'])
 		self.setPalette(palette)
 
 	def updateTextAndGeometry(self):

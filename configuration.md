@@ -68,7 +68,17 @@ The example of such section is:
     htmlSymbols=#ff8800
     htmlComments=#abc
 
-Possible color names are:
+Color names for the text editor:
+
+color name             | main setting           | description
+----------             | ------------           | -----------
+`marginLine`           | `rightMargin`          | the vertical right margin line
+`currentLineHighlight` | `highlightCurrentLine` | highlighting of the text line being edited
+`infoArea`             |                        | the info box in the bottom-right corner
+`lineNumberArea`       | `lineNumbersEnabled`   | the line numbers area background
+`lineNumberAreaText`   | `lineNumbersEnabled`   | the line numbers area foreground
+
+Color names for the highlighter:
 
 color name     | description
 ----------     | -----------
