@@ -837,7 +837,7 @@ class ReTextWindow(QMainWindow):
 		if not QFileInfo(fileName).suffix():
 			fileName += ".odt"
 		writer = QTextDocumentWriter(fileName)
-		writer.setFormat("odf")
+		writer.setFormat(b"odf")
 		writer.write(document)
 
 	def saveFileHtml(self):
