@@ -754,11 +754,8 @@ class ReTextWindow(QMainWindow):
 		if ok:
 			self.currentTab.readTextFromFile(encoding)
 
-	def saveFile(self):
-		self.saveFileMain(dlg=False)
-
 	def saveFileAs(self):
-		self.saveFileMain(dlg=True)
+		self.saveFile(dlg=True)
 
 	def saveAll(self):
 		for tab in self.iterateTabs():
@@ -766,7 +763,7 @@ class ReTextWindow(QMainWindow):
 				tab.saveTextToFile()
 				tab.editBox.document().setModified(False)
 
-	def saveFileMain(self, dlg):
+	def saveFile(self, dlg=False):
 		if (not self.currentTab.fileName) or dlg:
 			markupClass = self.currentTab.getMarkupClass()
 			if (markupClass is None) or not hasattr(markupClass, 'default_extension'):
@@ -1033,7 +1030,7 @@ class ReTextWindow(QMainWindow):
 			self.tr("The document has been modified.\nDo you want to save your changes?"),
 			QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel)
 		if ret == QMessageBox.Save:
-			return self.saveFileMain(False)
+			return self.saveFile(False)
 		elif ret == QMessageBox.Cancel:
 			return False
 		return True
