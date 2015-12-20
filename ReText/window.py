@@ -404,18 +404,8 @@ class ReTextWindow(QMainWindow):
 			del self.tabWidget.widget(ind).tab
 			self.tabWidget.removeTab(ind)
 
-	def getMarkupClass(self, fileName=None):
-		if fileName is None:
-			fileName = self.currentTab.fileName
-		if fileName:
-			markupClass = markups.get_markup_for_file_name(
-				fileName, return_class=True)
-			if markupClass:
-				return markupClass
-		return self.defaultMarkup
-
 	def docTypeChanged(self):
-		markupClass = self.getMarkupClass()
+		markupClass = self.currentTab.getMarkupClass()
 		if type(self.currentTab.markup) != markupClass:
 			self.currentTab.setMarkupClass(markupClass)
 			self.currentTab.updatePreviewBox()
@@ -686,7 +676,7 @@ class ReTextWindow(QMainWindow):
 				self.extensionActions.append((action, mimetype))
 
 	def updateExtensionsVisibility(self):
-		markupClass = self.getMarkupClass()
+		markupClass = self.currentTab.getMarkupClass()
 		for action in self.extensionActions:
 			if markupClass is None:
 				action[0].setEnabled(False)
@@ -780,7 +770,7 @@ class ReTextWindow(QMainWindow):
 
 	def saveFileMain(self, dlg):
 		if (not self.currentTab.fileName) or dlg:
-			markupClass = self.getMarkupClass()
+			markupClass = self.currentTab.getMarkupClass()
 			if (markupClass is None) or not hasattr(markupClass, 'default_extension'):
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
@@ -927,7 +917,7 @@ class ReTextWindow(QMainWindow):
 			tmpname = basename+'.html'
 			self.saveHtml(tmpname)
 		else:
-			tmpname = basename+self.getMarkupClass().default_extension
+			tmpname = basename + self.currentTab.getMarkupClass().default_extension
 			self.currentTab.saveTextToFile(fileName=tmpname, addToWatcher=False)
 		command = command.replace('%of', '"out'+defaultext+'"')
 		command = command.replace('%html' if html else '%if', '"'+tmpname+'"')

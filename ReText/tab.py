@@ -88,8 +88,16 @@ class ReTextTab(QObject):
 		splitter.tab = self
 		return splitter
 
+	def getMarkupClass(self):
+		if self.fileName:
+			markupClass = get_markup_for_file_name(
+				self.fileName, return_class=True)
+			if markupClass:
+				return markupClass
+		return self.p.defaultMarkup
+
 	def getMarkup(self):
-		markupClass = self.p.getMarkupClass(fileName=self.fileName)
+		markupClass = self.getMarkupClass()
 		if markupClass and markupClass.available():
 			return markupClass(filename=self.fileName)
 
@@ -109,7 +117,7 @@ class ReTextTab(QObject):
 	def getHtml(self, includeStyleSheet=True, includeTitle=True,
 	            includeMeta=False, webenv=False):
 		if self.markup is None:
-			markupClass = self.p.getMarkupClass(self.fileName)
+			markupClass = self.getMarkupClass()
 			errMsg = self.tr('Could not parse file contents, check if '
 			                 'you have the <a href="%s">necessary module</a> '
 			                 'installed!')
