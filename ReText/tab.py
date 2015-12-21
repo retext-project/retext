@@ -158,7 +158,7 @@ class ReTextTab(QObject):
 				and QFileInfo(self.fileName).exists():
 			def loadPreview():
 				fileToLoad = self.fileName.replace(self.p.jekyll_path, JEKYLL_BASE_URL)
-				fileToLoad = fileToLoad.replace('.' + QFileInfo(self.fileName).completeSuffix(), '.html')
+				fileToLoad = fileToLoad.replace('.' + QFileInfo(self.fileName).completeSuffix(), '')
 				self.previewBox.load(QUrl(fileToLoad))
 				self.previewBox.reload()
 
@@ -286,8 +286,11 @@ class JekyllPreview(QWebView):
 		url = link.url()
 		if JEKYLL_BASE_URL in url:
 			fileToOpen = url.replace(JEKYLL_BASE_URL, self.tab.p.jekyll_path)
-			fileToOpen = fileToOpen.replace('.html', '.' + QFileInfo(self.tab.fileName).completeSuffix())
-			self.tab.p.openFileWrapper(fileToOpen)
+			if fileToOpen.endswith('/'):
+				fileToOpen = fileToOpen[:-1]
+			if fileToOpen == self.tab.p.jekyll_path:
+				fileToOpen += '/index'
+			self.tab.p.openFileWrapper(fileToOpen + '.' + QFileInfo(self.tab.fileName).completeSuffix())
 		else:
 			QDesktopServices.openUrl(link)
 
