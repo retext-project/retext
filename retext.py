@@ -18,7 +18,12 @@
 
 import sys
 import signal
+import logging
+import os
 from os.path import join
+import markdown
+import markups.mdx_mathjax
+import markups
 from ReText import datadirs, globalSettings, app_version
 from ReText.window import ReTextWindow
 
@@ -26,6 +31,10 @@ from PyQt5.QtCore import QFile, QFileInfo, QIODevice, QLibraryInfo, \
  QTextStream, QTranslator
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtNetwork import QNetworkProxyFactory
+
+logging.basicConfig(filename=os.path.dirname(os.path.realpath(__file__)) + os.sep + 'retext.log',
+                    format='%(asctime)s - %(levelname)s - %(message)s', level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 def canonicalize(option):
 	if option == '--preview':
@@ -70,11 +79,15 @@ def main():
 				window.actionPreview.trigger()
 		elif fileName == '--preview':
 			previewMode = True
-	inputData = '' if sys.stdin.isatty() else sys.stdin.read()
-	if inputData or not window.tabWidget.count():
-		window.createNew(inputData)
+	if sys.stdin:
+		inputData = '' if sys.stdin.isatty() else sys.stdin.read()
+		if inputData or not window.tabWidget.count():
+			window.createNew(inputData)
 	signal.signal(signal.SIGINT, lambda sig, frame: window.close())
 	sys.exit(app.exec())
 
 if __name__ == '__main__':
-	main()
+	try:
+		main()
+	except Exception as e:
+		logger.exception(e)
