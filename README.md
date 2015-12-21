@@ -1,3 +1,18 @@
+Differences to the original ReText:
+- Jekyll static website generator support: Preview the whole website
+- Option to open the live preview automatically for new files.
+- Is deployable with pyinstaller
+
+## Deployment
+
+* Download the lastest sources of the [pyinstallers develop branch](https://github.com/pyinstaller/pyinstaller)
+* Enter `python pyinstaller.py --windowed visual-logic.py` in terminal / cmd.exe
+	* On Windows the folder /dist/retext/ containing an .exe file is created
+	* On Mac the folder /dist/ will contain an an .app file
+	* Copy the [icon folder](https://github.com/retext-project/retext/wiki/Installing-ReText#for-users-of-windows-and-mac-os-x) into the new retext folder resp. into the app file
+	
+	
+
 Welcome to ReText!
 ==================
 
@@ -43,12 +58,3 @@ ReText icon is based on `accessories-text-editor` icon from the Faenza theme.
 [wiki]: https://github.com/retext-project/retext/wiki
 [PyPI]: https://pypi.python.org/pypi/ReText
 [Transifex]: https://www.transifex.com/mitya57/ReText/
-
-
-## Deployment
-
-* Download the lastest sources of the [pyinstallers develop branch](https://github.com/pyinstaller/pyinstaller)
-* Enter `python pyinstaller.py --windowed visual-logic.py` in terminal / cmd.exe
-	* On Windows the folder /dist/retext/ containing an .exe file is created
-	* On Mac the folder /dist/ will contain an an .app file
-	* Copy the [icon folder](https://github.com/retext-project/retext/wiki/Installing-ReText#for-users-of-windows-and-mac-os-x) into the new retext folder resp. into the app file
