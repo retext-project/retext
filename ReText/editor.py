@@ -186,6 +186,7 @@ class ReTextEdit(QTextEdit):
 					cursor.insertText('  ')
 			if event.modifiers() & Qt.ControlModifier:
 				cursor.insertText('\n')
+				self.ensureCursorVisible()
 			else:
 				self.handleReturn(cursor)
 		else:
