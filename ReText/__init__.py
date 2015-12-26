@@ -73,6 +73,8 @@ configOptions = {
 	'pygmentsStyle': 'default',
 	'restDefaultFileExtension': '.rst',
 	'restorePreviewState': False,
+	'livePreviewForNewDocs': False,
+	'useJekyllPreview': False,
 	'rightMargin': 0,
 	'saveWindowGeometry': False,
 	'spellCheck': False,

@@ -69,6 +69,8 @@ class ConfigDialog(QDialog):
 			(self.tr('Automatically save documents'), 'autoSave'),
 			(self.tr('Restore window geometry'), 'saveWindowGeometry'),
 			(self.tr('Restore live preview state'), 'restorePreviewState'),
+			(self.tr('Automatically open live preview for new documents'), 'livePreviewForNewDocs'),
+			(self.tr('Preview Jekyll documents with the Jekyll server (static website generator)'), 'useJekyllPreview'),
 			(self.tr('Open external links in ReText window'), 'handleWebLinks'),
 			(self.tr('Markdown syntax extensions (comma-separated)'), 'markdownExtensions'),
 			(None, 'markdownExtensions'),
