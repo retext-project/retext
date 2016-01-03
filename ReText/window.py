@@ -591,6 +591,7 @@ class ReTextWindow(QMainWindow):
 	def setCurrentFile(self):
 		self.setWindowTitle("")
 		self.tabWidget.setTabText(self.ind, self.currentTab.getDocumentTitle(baseName=True))
+		self.tabWidget.setTabToolTip(self.ind, self.currentTab.fileName or '')
 		self.setWindowFilePath(self.currentTab.fileName)
 		files = readListFromSettings("recentFileList")
 		while self.currentTab.fileName in files:
