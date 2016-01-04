@@ -173,6 +173,9 @@ class ReTextWindow(QMainWindow):
 			shct=QKeySequence.FindNext)
 		self.actionFindPrev = self.act(self.tr('Previous'), 'go-previous',
 			lambda: self.find(back=True), shct=QKeySequence.FindPrevious)
+		self.actionCloseSearch = self.act(self.tr('Close'), 'window-close',
+			lambda: self.searchBar.setVisible(False))
+		self.actionCloseSearch.setPriority(QAction.LowPriority)
 		self.actionHelp = self.act(self.tr('Get help online'), 'help-contents', self.openHelp)
 		self.aboutWindowTitle = self.tr('About ReText')
 		self.actionAbout = self.act(self.aboutWindowTitle, 'help-about', self.aboutDialog)
@@ -314,6 +317,7 @@ class ReTextWindow(QMainWindow):
 		self.searchBar.addWidget(self.csBox)
 		self.searchBar.addAction(self.actionFindPrev)
 		self.searchBar.addAction(self.actionFind)
+		self.searchBar.addAction(self.actionCloseSearch)
 		self.searchBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 		self.searchBar.setVisible(False)
 		self.autoSaveEnabled = globalSettings.autoSave
