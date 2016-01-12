@@ -142,7 +142,8 @@ class ReTextEdit(QTextEdit):
 		oldcursor = self.textCursor()
 		cursor = self.cursorForPosition(event.pos())
 		pos = cursor.positionInBlock()
-		if pos == len(text): pos -= 1
+		if pos == len(text):
+			pos -= 1
 		curchar = text[pos]
 		isalpha = curchar.isalpha()
 		cursor.select(QTextCursor.WordUnderCursor)
