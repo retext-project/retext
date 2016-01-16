@@ -48,8 +48,15 @@ class XSettingsParseError(XSettingsError):
 
 def get_raw_xsettings(display=0):
 	# initialize the libraries
-	xcb = ctypes.CDLL(ctypes.util.find_library('xcb'))
-	c = ctypes.CDLL(ctypes.util.find_library('c'))
+	xcb_library_name = ctypes.util.find_library('xcb')
+	if xcb_library_name is None:
+		raise XSettingsError('Xcb library not found')
+	xcb = ctypes.CDLL(xcb_library_name)
+
+	c_library_name = ctypes.util.find_library('c')
+	if c_library_name is None:
+		raise XSettingsError('C library not found')
+	c = ctypes.CDLL(c_library_name)
 
 	# set some args and return types
 	xcb.xcb_connect.argtypes = [ctypes.c_char_p, ctypes.POINTER(ctypes.c_int)]

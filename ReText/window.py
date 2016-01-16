@@ -58,7 +58,8 @@ class ReTextWindow(QMainWindow):
 		if globalSettings.iconTheme:
 			QIcon.setThemeName(globalSettings.iconTheme)
 		if QIcon.themeName() in ('hicolor', ''):
-			QIcon.setThemeName(get_icon_theme())
+			if not QFile.exists(icon_path + 'document-new.png'):
+				QIcon.setThemeName(get_icon_theme())
 		if QFile.exists(icon_path+'retext.png'):
 			self.setWindowIcon(QIcon(icon_path+'retext.png'))
 		elif QFile.exists('/usr/share/pixmaps/retext.png'):
