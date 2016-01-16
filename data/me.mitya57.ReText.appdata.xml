@@ -1,7 +1,6 @@
-<!-- Copyright 2015 Dmitry Shachnev -->
 <?xml version="1.0" encoding="UTF-8"?>
-<application>
-  <id type="desktop">me.mitya57.ReText.desktop</id>
+<component type="desktop">
+  <id>me.mitya57.ReText.desktop</id>
   <name>ReText</name>
   <summary>Simple text editor for Markdown and reStructuredText</summary>
   <summary xml:lang="ca">Editor de Markdown i reStructuredText senzill alhora que potent</summary>
@@ -38,4 +37,4 @@
   </screenshots>
   <developer_name>Dmitry Shachnev</developer_name>
   <updatecontact>mitya57_AT_gmail.com</updatecontact>
-</application>
+</component>

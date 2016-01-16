@@ -14,11 +14,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from ReText import globalSettings, tablemode, DOCTYPE_MARKDOWN
+from markups import MarkdownMarkup
+from ReText import globalSettings, tablemode, readFromSettings
 
-from PyQt5.QtCore import QPoint, QSize, Qt
-from PyQt5.QtGui import QColor, QPainter, QPalette, QTextCursor, QTextFormat
+from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtGui import QColor, QKeyEvent, QPainter, QPalette, QTextCursor, QTextFormat
 from PyQt5.QtWidgets import QLabel, QTextEdit, QWidget
+
+colors = {
+	'marginLine': QColor(0xdc, 0xd2, 0xdc),
+	'currentLineHighlight': QColor(0xff, 0xff, 0xc8),
+	'infoArea': QColor(0xaa, 0xff, 0x55, 0xaa),
+	'lineNumberArea': Qt.cyan,
+	'lineNumberAreaText': Qt.darkCyan
+}
+
+colorValues = {
+	colorName: readFromSettings(
+		'ColorScheme/' + colorName, QColor, default=colors[colorName])
+	for colorName in colors
+}
 
 def documentIndentMore(document, cursor, globalSettings=globalSettings):
 	if cursor.hasSelection():
@@ -65,7 +80,8 @@ def documentIndentLess(document, cursor, globalSettings=globalSettings):
 class ReTextEdit(QTextEdit):
 	def __init__(self, parent):
 		QTextEdit.__init__(self)
-		self.parent = parent
+		self.tab = parent
+		self.parent = parent.p
 		self.undoRedoActive = False
 		self.tableModeEnabled = False
 		self.setAcceptRichText(False)
@@ -79,7 +95,7 @@ class ReTextEdit(QTextEdit):
 	def updateFont(self):
 		self.setFont(globalSettings.editorFont)
 		metrics = self.fontMetrics()
-		self.marginx = (self.cursorRect(self.cursorForPosition(QPoint())).topLeft().x()
+		self.marginx = (self.document().documentMargin()
 			+ metrics.width(' ' * globalSettings.rightMargin))
 		self.setTabStopWidth(globalSettings.tabWidth * self.fontMetrics().width(' '))
 		self.updateLineNumberAreaWidth()
@@ -89,7 +105,7 @@ class ReTextEdit(QTextEdit):
 		if not globalSettings.rightMargin:
 			return QTextEdit.paintEvent(self, event)
 		painter = QPainter(self.viewport())
-		painter.setPen(QColor(220, 210, 220))
+		painter.setPen(colorValues['marginLine'])
 		y1 = self.rect().topLeft().y()
 		y2 = self.rect().bottomLeft().y()
 		painter.drawLine(self.marginx, y1, self.marginx, y2)
@@ -97,11 +113,11 @@ class ReTextEdit(QTextEdit):
 
 	def scrollContentsBy(self, dx, dy):
 		QTextEdit.scrollContentsBy(self, dx, dy)
-		self.lineNumberArea.repaint()
+		self.lineNumberArea.update()
 
 	def lineNumberAreaPaintEvent(self, event):
 		painter = QPainter(self.lineNumberArea)
-		painter.fillRect(event.rect(), Qt.cyan)
+		painter.fillRect(event.rect(), colorValues['lineNumberArea'])
 		cursor = QTextCursor(self.document())
 		cursor.movePosition(QTextCursor.Start)
 		atEnd = False
@@ -110,7 +126,7 @@ class ReTextEdit(QTextEdit):
 			block = cursor.block()
 			if block.isVisible():
 				number = str(cursor.blockNumber() + 1)
-				painter.setPen(Qt.darkCyan)
+				painter.setPen(colorValues['lineNumberAreaText'])
 				painter.drawText(0, rect.top(), self.lineNumberArea.width()-2,
 					self.fontMetrics().height(), Qt.AlignRight, number)
 			cursor.movePosition(QTextCursor.EndOfBlock)
@@ -118,18 +134,16 @@ class ReTextEdit(QTextEdit):
 			if not atEnd:
 				cursor.movePosition(QTextCursor.NextBlock)
 
-	def getHighlighter(self):
-		return self.parent.highlighters[self.parent.ind]
-
 	def contextMenuEvent(self, event):
 		text = self.toPlainText()
-		dictionary = self.getHighlighter().dictionary
+		dictionary = self.tab.highlighter.dictionary
 		if (dictionary is None) or not text:
 			return QTextEdit.contextMenuEvent(self, event)
 		oldcursor = self.textCursor()
 		cursor = self.cursorForPosition(event.pos())
 		pos = cursor.positionInBlock()
-		if pos == len(text): pos -= 1
+		if pos == len(text):
+			pos -= 1
 		curchar = text[pos]
 		isalpha = curchar.isalpha()
 		cursor.select(QTextCursor.WordUnderCursor)
@@ -157,6 +171,10 @@ class ReTextEdit(QTextEdit):
 		cursor = self.textCursor()
 		if event.text() and self.tableModeEnabled:
 			cursor.beginEditBlock()
+		if key == Qt.Key_Backspace and event.modifiers() & Qt.GroupSwitchModifier:
+			# Workaround for https://bugreports.qt.io/browse/QTBUG-49771
+			event = QKeyEvent(event.type(), event.key(),
+				event.modifiers() ^ Qt.GroupSwitchModifier)
 		if key == Qt.Key_Tab:
 			documentIndentMore(self.document(), cursor)
 		elif key == Qt.Key_Backtab:
@@ -164,11 +182,12 @@ class ReTextEdit(QTextEdit):
 		elif key == Qt.Key_Return and not cursor.hasSelection():
 			if event.modifiers() & Qt.ShiftModifier:
 				# Insert Markdown-style line break
-				markupClass = self.parent.getMarkupClass()
-				if markupClass and markupClass.name == DOCTYPE_MARKDOWN:
+				markupClass = self.tab.getMarkupClass()
+				if markupClass and markupClass == MarkdownMarkup:
 					cursor.insertText('  ')
 			if event.modifiers() & Qt.ControlModifier:
 				cursor.insertText('\n')
+				self.ensureCursorVisible()
 			else:
 				self.handleReturn(cursor)
 		else:
@@ -199,7 +218,7 @@ class ReTextEdit(QTextEdit):
 		return 5 + self.fontMetrics().width('9') * digits
 
 	def updateLineNumberAreaWidth(self, blockcount=0):
-		self.lineNumberArea.repaint()
+		self.lineNumberArea.update()
 		self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, 0)
 
 	def resizeEvent(self, event):
@@ -213,8 +232,7 @@ class ReTextEdit(QTextEdit):
 		if not globalSettings.highlightCurrentLine:
 			return self.setExtraSelections([])
 		selection = QTextEdit.ExtraSelection();
-		lineColor = QColor(255, 255, 200)
-		selection.format.setBackground(lineColor)
+		selection.format.setBackground(colorValues['currentLineHighlight'])
 		selection.format.setProperty(QTextFormat.FullWidthSelection, True)
 		selection.cursor = self.textCursor()
 		selection.cursor.clearSelection()
@@ -233,11 +251,10 @@ class ReTextEdit(QTextEdit):
 
 	def contentsChange(self, pos, removed, added):
 		if self.tableModeEnabled:
-			markupClass = self.parent.getMarkupClass()
-			docType = markupClass.name if markupClass else None
+			markupClass = self.tab.getMarkupClass()
 
 			cursorPosition = self.backupCursorPositionOnLine()
-			tablemode.adjustTableToChanges(self.document(), pos, added - removed, docType)
+			tablemode.adjustTableToChanges(self.document(), pos, added - removed, markupClass)
 			self.restoreCursorPositionOnLine(cursorPosition)
 
 class LineNumberArea(QWidget):
@@ -260,7 +277,7 @@ class InfoArea(QLabel):
 		self.updateTextAndGeometry()
 		self.setAutoFillBackground(True)
 		palette = self.palette()
-		palette.setColor(QPalette.Window, QColor(0xaa, 0xff, 0x55, 0xaa))
+		palette.setColor(QPalette.Window, colorValues['infoArea'])
 		self.setPalette(palette)
 
 	def updateTextAndGeometry(self):

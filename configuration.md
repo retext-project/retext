@@ -10,7 +10,6 @@ option name                    | type      | description
 -----------                    | ----      | -----------
 `appStyleSheet`                | file path | file containing a Qt stylesheet file
 `autoSave`                     | boolean   | whether to automatically save documents (default: false)
-`colorSchemeFile`              | file path | file containing a highlighter color scheme
 `defaultCodec`                 | string    | name of encoding to use by default (default: use system encoding)
 `defaultMarkup`                | string    | name of markup to use for unknown files
 `editorFont`                   | string    | font to use for editor: name (default: `monospace`)
@@ -56,15 +55,39 @@ the gtk platformtheme is used).
 If you don't know name of your icon theme, look at the names of
 subdirectories in `/usr/share/icons/` directory.
 
-Color scheme files
-==================
+Color scheme setting
+====================
 
 It is possible to configure ReText highlighter to use custom colors set,
-by providing a color scheme file. The syntax of a such file is as follows:
+by providing these colors in a separate section in the configuration file.
 
-    htmltags = green
-    htmlsymbols = #ff8800
-    htmlcomments = #abc
+The example of such section is:
 
-Possible color names: `htmltags`, `htmlsymbols`, `htmlquotes`, `htmlcomments`,
-`markdownlinks`, `blockquotes`, `restdirectives`, `restroles`.
+    [ColorScheme]
+    htmlTags=green
+    htmlSymbols=#ff8800
+    htmlComments=#abc
+
+Color names for the text editor:
+
+color name             | main setting           | description
+----------             | ------------           | -----------
+`marginLine`           | `rightMargin`          | the vertical right margin line
+`currentLineHighlight` | `highlightCurrentLine` | highlighting of the text line being edited
+`infoArea`             |                        | the info box in the bottom-right corner
+`lineNumberArea`       | `lineNumbersEnabled`   | the line numbers area background
+`lineNumberAreaText`   | `lineNumbersEnabled`   | the line numbers area foreground
+
+Color names for the highlighter:
+
+color name        | description
+----------        | -----------
+`htmlTags`        | HTML tags, i.e. `<foo>`
+`htmlStrings`     | string properties inside HTML tags, i.e. `"baz"` inside `<foo bar="baz">`
+`htmlSymbols`     | HTML symbols, i.e. `&bar;`
+`htmlComments`    | HTML comments, i.e. `<!-- comment -->`
+`markdownLinks`   | Markdown links and images text, i.e. `foo` inside `[foo](http://example.com)`
+`blockquotes`     | blockquotes, i.e. `> quote` in Markdown
+`restDirectives`  | reStructuredText directives, i.e. `.. math::`
+`restRoles`       | reStructuredText roles, i.e. `:math:`
+`whitespaceOnEnd` | whitespace at line endings
