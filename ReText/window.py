@@ -39,7 +39,7 @@ from PyQt5.QtGui import QColor, QDesktopServices, QFontMetrics, QIcon, \
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
  QLineEdit, QMainWindow, QMenuBar, QMessageBox, QSplitter, QTabWidget, \
- QTextBrowser, QTextEdit, QToolBar, QShortcut
+ QTextBrowser, QTextEdit, QToolBar
 from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
 from PyQt5.QtWebKit import QWebSettings
 from PyQt5.QtWebKitWidgets import QWebPage, QWebView
@@ -358,7 +358,7 @@ class ReTextWindow(QMainWindow):
 			self.ss = QTextStream(sheetfile).readAll()
 			sheetfile.close()
 		else:
-			self.ss = ''
+			self.ss = 'table, th, td {  border: 1px solid black;}'
 
 	def initTabWidget(self):
 		def dragEnterEvent(e):
