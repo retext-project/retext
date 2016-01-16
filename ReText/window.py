@@ -17,14 +17,11 @@
 import markups
 import sys
 from subprocess import Popen
-from markups.common import MODULE_HOME_PAGE
-from ReText import icon_path, DOCTYPE_MARKDOWN, DOCTYPE_REST, \
- app_version, globalSettings, readListFromSettings, \
+from ReText import icon_path, app_version, globalSettings, readListFromSettings, \
  writeListToSettings, writeToSettings, datadirs, enchant, enchant_available
+from ReText.tab import ReTextTab, PreviewNormal, PreviewLive
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
-from ReText.highlighter import ReTextHighlighter
-from ReText.editor import ReTextEdit
 from ReText.icontheme import get_icon_theme
 
 try:
@@ -34,15 +31,12 @@ except ImportError:
 
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
  QIODevice, QLocale, QRect, QTextCodec, QTextStream, QTimer, QUrl, Qt
-from PyQt5.QtGui import QColor, QDesktopServices, QFontMetrics, QIcon, \
+from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
  QKeySequence, QPalette, QTextCursor, QTextDocument, QTextDocumentWriter
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
- QLineEdit, QMainWindow, QMenuBar, QMessageBox, QSplitter, QTabWidget, \
- QTextBrowser, QTextEdit, QToolBar
+ QLineEdit, QMainWindow, QMenu, QMenuBar, QMessageBox, QTabWidget, QToolBar
 from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
-from PyQt5.QtWebKit import QWebSettings
-from PyQt5.QtWebKitWidgets import QWebPage, QWebView
 
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
@@ -67,13 +61,6 @@ class ReTextWindow(QMainWindow):
 		else:
 			self.setWindowIcon(QIcon.fromTheme('retext',
 				QIcon.fromTheme('accessories-text-editor')))
-		self.editBoxes = []
-		self.previewBoxes = []
-		self.highlighters = []
-		self.markups = []
-		self.fileNames = []
-		self.actionPreviewChecked = []
-		self.actionLivePreviewChecked = []
 		self.tabWidget = QTabWidget(self)
 		self.initTabWidget()
 		self.setCentralWidget(self.tabWidget)
@@ -96,7 +83,8 @@ class ReTextWindow(QMainWindow):
 		self.actionSetEncoding = self.act(self.tr('Set encoding'),
 			trig=self.showEncodingDialog)
 		self.actionSetEncoding.setEnabled(False)
-		self.actionReload = self.act(self.tr('Reload'), 'view-refresh', trig=self.openFileMain)
+		self.actionReload = self.act(self.tr('Reload'), 'view-refresh',
+			lambda: self.currentTab.readTextFromFile())
 		self.actionReload.setEnabled(False)
 		self.actionSave = self.act(self.tr('Save'), 'document-save',
 			self.saveFile, shct=QKeySequence.Save)
@@ -134,8 +122,11 @@ class ReTextWindow(QMainWindow):
 			self.actionPreview.setIcon(QIcon(icon_path+'document-preview.png'))
 		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.CTRL+Qt.Key_L,
 		trigbool=self.enableLivePreview)
+		menuPreview = QMenu()
+		menuPreview.addAction(self.actionLivePreview)
+		self.actionPreview.setMenu(menuPreview)
 		self.actionTableMode = self.act(self.tr('Table mode'), shct=Qt.CTRL+Qt.Key_T,
-			trigbool=lambda x: self.editBoxes[self.ind].enableTableMode(x))
+			trigbool=lambda x: self.currentTab.editBox.enableTableMode(x))
 		if ReTextFakeVimHandler:
 			self.actionFakeVimMode = self.act(self.tr('FakeVim mode'),
 				shct=Qt.CTRL+Qt.ALT+Qt.Key_V, trigbool=self.enableFakeVimMode)
@@ -156,15 +147,15 @@ class ReTextWindow(QMainWindow):
 		self.actionQuit.setMenuRole(QAction.QuitRole)
 		self.actionQuit.triggered.connect(self.close)
 		self.actionUndo = self.act(self.tr('Undo'), 'edit-undo',
-			lambda: self.editBoxes[self.ind].undo(), shct=QKeySequence.Undo)
+			lambda: self.currentTab.editBox.undo(), shct=QKeySequence.Undo)
 		self.actionRedo = self.act(self.tr('Redo'), 'edit-redo',
-			lambda: self.editBoxes[self.ind].redo(), shct=QKeySequence.Redo)
+			lambda: self.currentTab.editBox.redo(), shct=QKeySequence.Redo)
 		self.actionCopy = self.act(self.tr('Copy'), 'edit-copy',
-			lambda: self.editBoxes[self.ind].copy(), shct=QKeySequence.Copy)
+			lambda: self.currentTab.editBox.copy(), shct=QKeySequence.Copy)
 		self.actionCut = self.act(self.tr('Cut'), 'edit-cut',
-			lambda: self.editBoxes[self.ind].cut(), shct=QKeySequence.Cut)
+			lambda: self.currentTab.editBox.cut(), shct=QKeySequence.Cut)
 		self.actionPaste = self.act(self.tr('Paste'), 'edit-paste',
-			lambda: self.editBoxes[self.ind].paste(), shct=QKeySequence.Paste)
+			lambda: self.currentTab.editBox.paste(), shct=QKeySequence.Paste)
 		self.actionUndo.setEnabled(False)
 		self.actionRedo.setEnabled(False)
 		self.actionCopy.setEnabled(False)
@@ -182,6 +173,9 @@ class ReTextWindow(QMainWindow):
 			shct=QKeySequence.FindNext)
 		self.actionFindPrev = self.act(self.tr('Previous'), 'go-previous',
 			lambda: self.find(back=True), shct=QKeySequence.FindPrevious)
+		self.actionCloseSearch = self.act(self.tr('Close'), 'window-close',
+			lambda: self.searchBar.setVisible(False))
+		self.actionCloseSearch.setPriority(QAction.LowPriority)
 		self.actionHelp = self.act(self.tr('Get help online'), 'help-contents', self.openHelp)
 		self.aboutWindowTitle = self.tr('About ReText')
 		self.actionAbout = self.act(self.aboutWindowTitle, 'help-about', self.aboutDialog)
@@ -237,7 +231,6 @@ class ReTextWindow(QMainWindow):
 		menuFile.addAction(self.actionOpen)
 		self.menuRecentFiles = menuFile.addMenu(self.tr('Open recent'))
 		self.menuRecentFiles.aboutToShow.connect(self.updateRecentFiles)
-		menuFile.addMenu(self.menuRecentFiles)
 		menuFile.addAction(self.actionShow)
 		menuFile.addAction(self.actionSetEncoding)
 		menuFile.addAction(self.actionReload)
@@ -288,7 +281,6 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionWebKit)
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionViewHtml)
-		menuEdit.addAction(self.actionLivePreview)
 		menuEdit.addAction(self.actionPreview)
 		menuEdit.addAction(self.actionTableMode)
 		if ReTextFakeVimHandler:
@@ -300,9 +292,6 @@ class ReTextWindow(QMainWindow):
 		menuHelp.addSeparator()
 		menuHelp.addAction(self.actionAbout)
 		menuHelp.addAction(self.actionAboutQt)
-		menubar.addMenu(menuFile)
-		menubar.addMenu(menuEdit)
-		menubar.addMenu(menuHelp)
 		toolBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 		toolBar.addAction(self.actionNew)
 		toolBar.addSeparator()
@@ -330,6 +319,7 @@ class ReTextWindow(QMainWindow):
 		self.searchBar.addWidget(self.csBox)
 		self.searchBar.addAction(self.actionFindPrev)
 		self.searchBar.addAction(self.actionFind)
+		self.searchBar.addAction(self.actionCloseSearch)
 		self.searchBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 		self.searchBar.setVisible(False)
 		self.autoSaveEnabled = globalSettings.autoSave
@@ -352,6 +342,10 @@ class ReTextWindow(QMainWindow):
 		self.fileSystemWatcher = QFileSystemWatcher()
 		self.fileSystemWatcher.fileChanged.connect(self.fileChanged)
 
+	def iterateTabs(self):
+		for i in range(self.tabWidget.count()):
+			yield self.tabWidget.widget(i).tab
+
 	def updateStyleSheet(self):
 		if globalSettings.styleSheet:
 			sheetfile = QFile(globalSettings.styleSheet)
@@ -371,6 +365,7 @@ class ReTextWindow(QMainWindow):
 			self.openFileWrapper(fn)
 		self.tabWidget.setTabsClosable(True)
 		self.tabWidget.setAcceptDrops(True)
+		self.tabWidget.setMovable(True)
 		self.tabWidget.dragEnterEvent = dragEnterEvent
 		self.tabWidget.dropEvent = dropEvent
 
@@ -398,184 +393,104 @@ class ReTextWindow(QMainWindow):
 		print('Exception occured while parsing document:', file=sys.stderr)
 		traceback.print_exc()
 
-	def getSplitter(self, index):
-		splitter = QSplitter(Qt.Horizontal)
-		# Give both boxes a minimum size so the minimumSizeHint will be
-		# ignored when splitter.setSizes is called below
-		for widget in self.editBoxes[index], self.previewBoxes[index]:
-			widget.setMinimumWidth(125)
-			splitter.addWidget(widget)
-		splitter.setSizes((50, 50))
-		splitter.setChildrenCollapsible(False)
-		return splitter
-
-	def getWebView(self):
-		webView = QWebView()
-		if not globalSettings.handleWebLinks:
-			webView.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
-			webView.page().linkClicked.connect(QDesktopServices.openUrl)
-		webView.settings().setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
-		return webView
-
 	def createTab(self, fileName):
-		self.previewBlocked = False
-		self.editBoxes.append(ReTextEdit(self))
-		self.highlighters.append(ReTextHighlighter(self.editBoxes[-1].document()))
-		if enchant_available and self.actionEnableSC.isChecked():
-			self.highlighters[-1].dictionary = \
-			enchant.Dict(self.sl) if self.sl else enchant.Dict()
-			self.highlighters[-1].rehighlight()
-		if globalSettings.useWebKit:
-			self.previewBoxes.append(self.getWebView())
-		else:
-			self.previewBoxes.append(QTextBrowser())
-			self.previewBoxes[-1].setOpenExternalLinks(True)
-		self.previewBoxes[-1].setVisible(False)
-		self.fileNames.append(fileName)
-		markupClass = self.getMarkupClass(fileName)
-		self.markups.append(self.getMarkup(fileName))
-		self.highlighters[-1].docType = (markupClass.name if markupClass else '')
-		liveMode = globalSettings.restorePreviewState and globalSettings.previewState
-		self.actionPreviewChecked.append(liveMode)
-		self.actionLivePreviewChecked.append(liveMode)
-		metrics = QFontMetrics(self.editBoxes[-1].font())
-		self.editBoxes[-1].setTabStopWidth(globalSettings.tabWidth * metrics.width(' '))
-		self.editBoxes[-1].textChanged.connect(self.updateLivePreviewBox)
-		self.editBoxes[-1].undoAvailable.connect(self.actionUndo.setEnabled)
-		self.editBoxes[-1].redoAvailable.connect(self.actionRedo.setEnabled)
-		self.editBoxes[-1].copyAvailable.connect(self.enableCopy)
-		self.editBoxes[-1].document().modificationChanged.connect(self.modificationChanged)
-		if globalSettings.useFakeVim:
-			self.installFakeVimHandler(self.editBoxes[-1])
-		return self.getSplitter(-1)
+		self.currentTab = ReTextTab(self, fileName)
+		self.tabWidget.addTab(self.currentTab.getSplitter(), self.tr("New document"))
 
 	def closeTab(self, ind):
 		if self.maybeSave(ind):
 			if self.tabWidget.count() == 1:
-				self.tabWidget.addTab(self.createTab(""), self.tr("New document"))
-			if self.fileNames[ind]:
-				self.fileSystemWatcher.removePath(self.fileNames[ind])
-			del self.editBoxes[ind]
-			del self.previewBoxes[ind]
-			del self.highlighters[ind]
-			del self.markups[ind]
-			del self.fileNames[ind]
-			del self.actionPreviewChecked[ind]
-			del self.actionLivePreviewChecked[ind]
+				self.createTab("")
+			currentWidget = self.tabWidget.widget(ind)
+			if currentWidget.tab.fileName:
+				self.fileSystemWatcher.removePath(currentWidget.tab.fileName)
+			del currentWidget.tab
 			self.tabWidget.removeTab(ind)
 
-	def getMarkupClass(self, fileName=None):
-		if fileName is None:
-			fileName = self.fileNames[self.ind]
-		if fileName:
-			markupClass = markups.get_markup_for_file_name(
-				fileName, return_class=True)
-			if markupClass:
-				return markupClass
-		return self.defaultMarkup
-
-	def getMarkup(self, fileName=None):
-		if fileName is None:
-			fileName = self.fileNames[self.ind]
-		markupClass = self.getMarkupClass(fileName=fileName)
-		if markupClass and markupClass.available():
-			return markupClass(filename=fileName)
-
 	def docTypeChanged(self):
-		oldType = self.highlighters[self.ind].docType
-		markupClass = self.getMarkupClass()
-		newType = markupClass.name if markupClass else ''
-		if oldType != newType:
-			self.markups[self.ind] = self.getMarkup()
-			self.updatePreviewBox()
-			self.highlighters[self.ind].docType = newType
-			self.highlighters[self.ind].rehighlight()
-		dtMarkdown = (newType == DOCTYPE_MARKDOWN)
-		dtMkdOrReST = (newType in (DOCTYPE_MARKDOWN, DOCTYPE_REST))
+		markupClass = self.currentTab.getMarkupClass()
+		if type(self.currentTab.markup) != markupClass:
+			self.currentTab.setMarkupClass(markupClass)
+			self.currentTab.updatePreviewBox()
+		dtMarkdown = (markupClass == markups.MarkdownMarkup)
+		dtMkdOrReST = dtMarkdown or (markupClass == markups.ReStructuredTextMarkup)
 		self.tagsBox.setEnabled(dtMarkdown)
 		self.symbolBox.setEnabled(dtMarkdown)
 		self.actionUnderline.setEnabled(dtMarkdown)
 		self.actionBold.setEnabled(dtMkdOrReST)
 		self.actionItalic.setEnabled(dtMkdOrReST)
-		canReload = bool(self.fileNames[self.ind]) and not self.autoSaveActive()
+		canReload = bool(self.currentTab.fileName) and not self.autoSaveActive()
 		self.actionSetEncoding.setEnabled(canReload)
 		self.actionReload.setEnabled(canReload)
 
 	def changeIndex(self, ind):
-		if ind > -1:
-			self.actionUndo.setEnabled(self.editBoxes[ind].document().isUndoAvailable())
-			self.actionRedo.setEnabled(self.editBoxes[ind].document().isRedoAvailable())
-			self.actionCopy.setEnabled(self.editBoxes[ind].textCursor().hasSelection())
-			self.actionCut.setEnabled(self.editBoxes[ind].textCursor().hasSelection())
-			self.actionPreview.setChecked(self.actionPreviewChecked[ind])
-			self.actionLivePreview.setChecked(self.actionLivePreviewChecked[ind])
-			self.actionTableMode.setChecked(self.editBoxes[ind].tableModeEnabled)
-			self.editBar.setDisabled(self.actionPreviewChecked[ind])
+		self.currentTab = self.tabWidget.currentWidget().tab
+		editBox = self.currentTab.editBox
+		previewState = self.currentTab.previewState
+		self.actionUndo.setEnabled(editBox.document().isUndoAvailable())
+		self.actionRedo.setEnabled(editBox.document().isRedoAvailable())
+		self.actionCopy.setEnabled(editBox.textCursor().hasSelection())
+		self.actionCut.setEnabled(editBox.textCursor().hasSelection())
+		self.actionPreview.setChecked(previewState >= PreviewLive)
+		self.actionLivePreview.setChecked(previewState == PreviewLive)
+		self.actionTableMode.setChecked(editBox.tableModeEnabled)
+		self.editBar.setEnabled(previewState < PreviewNormal)
 		self.ind = ind
-		if self.fileNames[ind]:
+		if self.currentTab.fileName:
 			self.setCurrentFile()
 		else:
 			self.setWindowTitle(self.tr('New document') + '[*]')
 			self.docTypeChanged()
-		self.modificationChanged(self.editBoxes[ind].document().isModified())
+		self.modificationChanged(editBox.document().isModified())
 		if globalSettings.restorePreviewState:
-			globalSettings.previewState = self.actionLivePreviewChecked[ind]
-		if self.actionLivePreviewChecked[ind]:
-			self.enableLivePreview(True)
-		self.editBoxes[self.ind].setFocus(Qt.OtherFocusReason)
+			globalSettings.previewState = (previewState >= PreviewLive)
+		editBox.setFocus(Qt.OtherFocusReason)
 
 	def changeEditorFont(self):
 		font, ok = QFontDialog.getFont(globalSettings.editorFont, self)
 		if ok:
 			globalSettings.editorFont = font
-			for editor in self.editBoxes:
-				editor.updateFont()
+			for tab in self.iterateTabs():
+				tab.editBox.updateFont()
 
 	def changePreviewFont(self):
 		font, ok = QFontDialog.getFont(globalSettings.font, self)
 		if ok:
 			globalSettings.font = font
-			self.updatePreviewBox()
+			for tab in self.iterateTabs():
+				tab.updatePreviewBox()
 
 	def preview(self, viewmode):
-		self.actionPreviewChecked[self.ind] = viewmode
-		if self.actionLivePreview.isChecked():
-			self.actionLivePreview.setChecked(False)
-			return self.enableLivePreview(False)
+		self.currentTab.previewState = viewmode * 2
+		self.actionLivePreview.setChecked(False)
 		self.editBar.setDisabled(viewmode)
-		self.editBoxes[self.ind].setVisible(not viewmode)
-		self.previewBoxes[self.ind].setVisible(viewmode)
+		self.currentTab.updateBoxesVisibility()
 		if viewmode:
-			self.updatePreviewBox()
+			self.currentTab.updatePreviewBox()
 
 	def enableLivePreview(self, livemode):
 		if globalSettings.restorePreviewState:
 			globalSettings.previewState = livemode
-		self.actionLivePreviewChecked[self.ind] = livemode
-		self.actionPreviewChecked[self.ind] = livemode
+		self.currentTab.previewState = int(livemode)
 		self.actionPreview.setChecked(livemode)
 		self.editBar.setEnabled(True)
-		self.previewBoxes[self.ind].setVisible(livemode)
-		self.editBoxes[self.ind].setVisible(True)
+		self.currentTab.updateBoxesVisibility()
 		if livemode:
-			self.updatePreviewBox()
+			self.currentTab.updatePreviewBox()
 
 	def enableWebKit(self, enable):
 		globalSettings.useWebKit = enable
-		oldind = self.ind
-		self.tabWidget.clear()
-		for self.ind in range(len(self.editBoxes)):
-			if enable:
-				self.previewBoxes[self.ind] = self.getWebView()
-			else:
-				self.previewBoxes[self.ind] = QTextBrowser()
-				self.previewBoxes[self.ind].setOpenExternalLinks(True)
-			splitter = self.getSplitter(self.ind)
-			self.tabWidget.addTab(splitter, self.getDocumentTitle(baseName=True))
-			self.updatePreviewBox()
-			self.previewBoxes[self.ind].setVisible(self.actionPreviewChecked[self.ind])
-		self.ind = oldind
-		self.tabWidget.setCurrentIndex(self.ind)
+		for i in range(self.tabWidget.count()):
+			splitter = self.tabWidget.widget(i)
+			tab = splitter.tab
+			tab.previewBox.setParent(None)
+			tab.previewBox.deleteLater()
+			tab.previewBox = tab.createPreviewBox()
+			tab.previewBox.setMinimumWidth(125)
+			splitter.addWidget(tab.previewBox)
+			splitter.setSizes((50, 50))
+			tab.updatePreviewBox()
+			tab.updateBoxesVisibility()
 
 	def enableCopy(self, copymode):
 		self.actionCopy.setEnabled(copymode)
@@ -592,19 +507,12 @@ class ReTextWindow(QMainWindow):
 		dlg.setWindowTitle(self.tr('Preferences'))
 		dlg.show()
 
-	def installFakeVimHandler(self, editor):
-		if ReTextFakeVimHandler:
-			fakeVimEditor = ReTextFakeVimHandler(editor, self)
-			fakeVimEditor.setSaveAction(self.actionSave)
-			fakeVimEditor.setQuitAction(self.actionQuit)
-			self.actionFakeVimMode.triggered.connect(fakeVimEditor.remove)
-
 	def enableFakeVimMode(self, yes):
 		globalSettings.useFakeVim = yes
 		if yes:
 			FakeVimMode.init(self)
-			for editor in self.editBoxes:
-				self.installFakeVimHandler(editor)
+			for tab in self.iterateTabs():
+				tab.installFakeVimHandler()
 		else:
 			FakeVimMode.exit(self)
 
@@ -619,7 +527,8 @@ class ReTextWindow(QMainWindow):
 		globalSettings.spellCheck = yes
 
 	def setAllDictionaries(self, dictionary):
-		for hl in self.highlighters:
+		for tab in self.iterateTabs():
+			hl = tab.highlighter
 			hl.dictionary = dictionary
 			hl.rehighlight()
 
@@ -659,7 +568,7 @@ class ReTextWindow(QMainWindow):
 		if self.csBox.isChecked():
 			flags |= QTextDocument.FindCaseSensitively
 		text = self.searchEdit.text()
-		editBox = self.editBoxes[self.ind]
+		editBox = self.currentTab.editBox
 		cursor = editBox.textCursor()
 		newCursor = editBox.document().find(text, cursor, flags)
 		if not newCursor.isNull():
@@ -678,93 +587,34 @@ class ReTextWindow(QMainWindow):
 		                 Qt.white if found else QColor(255, 102, 102))
 		self.searchEdit.setPalette(palette)
 
-	def getHtml(self, includeStyleSheet=True, includeTitle=True,
-	            includeMeta=False, webenv=False):
-		if self.markups[self.ind] is None:
-			markupClass = self.getMarkupClass()
-			errMsg = self.tr('Could not parse file contents, check if '
-			'you have the <a href="%s">necessary module</a> installed!')
-			try:
-				errMsg %= markupClass.attributes[MODULE_HOME_PAGE]
-			except (AttributeError, KeyError):
-				# Remove the link if markupClass doesn't have the needed attribute
-				errMsg = errMsg.replace('<a href="%s">', '')
-				errMsg = errMsg.replace('</a>', '')
-			return '<p style="color: red">%s</p>' % errMsg
-		text = self.editBoxes[self.ind].toPlainText()
-		headers = ''
-		if includeStyleSheet:
-			headers += '<style type="text/css">\n' + self.ss + '</style>\n'
-		cssFileName = self.getDocumentTitle(baseName=True)+'.css'
-		if QFile(cssFileName).exists():
-			headers += '<link rel="stylesheet" type="text/css" href="%s">\n' \
-			% cssFileName
-		if includeMeta:
-			headers += ('<meta name="generator" content="ReText %s">\n' %
-			            app_version)
-		fallbackTitle = self.getDocumentTitle() if includeTitle else ''
-		return self.markups[self.ind].get_whole_html(text,
-			custom_headers=headers, include_stylesheet=includeStyleSheet,
-			fallback_title=fallbackTitle, webenv=webenv)
-
-	def updatePreviewBox(self):
-		self.previewBlocked = False
-		pb = self.previewBoxes[self.ind]
-		textedit = isinstance(pb, QTextEdit)
-		if textedit:
-			scrollbar = pb.verticalScrollBar()
-			disttobottom = scrollbar.maximum() - scrollbar.value()
-		else:
-			frame = pb.page().mainFrame()
-			scrollpos = frame.scrollPosition()
-		try:
-			html = self.getHtml()
-		except Exception:
-			return self.printError()
-		if textedit:
-			pb.setHtml(html)
-			pb.document().setDefaultFont(globalSettings.font)
-			scrollbar.setValue(scrollbar.maximum() - disttobottom)
-		else:
-			pb.settings().setFontFamily(QWebSettings.StandardFont,
-			                            globalSettings.font.family())
-			pb.settings().setFontSize(QWebSettings.DefaultFontSize,
-			                          globalSettings.font.pointSize())
-			pb.setHtml(html, QUrl.fromLocalFile(self.fileNames[self.ind]))
-			frame.setScrollPosition(scrollpos)
-
-	def updateLivePreviewBox(self):
-		if self.actionLivePreview.isChecked() and self.previewBlocked == False:
-			self.previewBlocked = True
-			QTimer.singleShot(1000, self.updatePreviewBox)
-
 	def showInDir(self):
-		if self.fileNames[self.ind]:
-			path = QFileInfo(self.fileNames[self.ind]).path()
+		if self.currentTab.fileName:
+			path = QFileInfo(self.currentTab.fileName).path()
 			QDesktopServices.openUrl(QUrl.fromLocalFile(path))
 		else:
 			QMessageBox.warning(self, '', self.tr("Please, save the file somewhere."))
 
 	def setCurrentFile(self):
 		self.setWindowTitle("")
-		self.tabWidget.setTabText(self.ind, self.getDocumentTitle(baseName=True))
-		self.setWindowFilePath(self.fileNames[self.ind])
+		self.tabWidget.setTabText(self.ind, self.currentTab.getDocumentTitle(baseName=True))
+		self.tabWidget.setTabToolTip(self.ind, self.currentTab.fileName or '')
+		self.setWindowFilePath(self.currentTab.fileName)
 		files = readListFromSettings("recentFileList")
-		while self.fileNames[self.ind] in files:
-			files.remove(self.fileNames[self.ind])
-		files.insert(0, self.fileNames[self.ind])
+		while self.currentTab.fileName in files:
+			files.remove(self.currentTab.fileName)
+		files.insert(0, self.currentTab.fileName)
 		if len(files) > 10:
 			del files[10:]
 		writeListToSettings("recentFileList", files)
-		QDir.setCurrent(QFileInfo(self.fileNames[self.ind]).dir().path())
+		QDir.setCurrent(QFileInfo(self.currentTab.fileName).dir().path())
 		self.docTypeChanged()
 
 	def createNew(self, text=None):
-		self.tabWidget.addTab(self.createTab(""), self.tr("New document"))
+		self.createTab("")
 		self.ind = self.tabWidget.count()-1
 		self.tabWidget.setCurrentIndex(self.ind)
 		if text:
-			self.editBoxes[self.ind].textCursor().insertText(text)
+			self.currentTab.editBox.textCursor().insertText(text)
 
 	def switchTab(self, shift=1):
 		self.tabWidget.setCurrentIndex((self.ind + shift) % self.tabWidget.count())
@@ -788,7 +638,7 @@ class ReTextWindow(QMainWindow):
 	def openFunction(self, fileName):
 		return lambda: self.openFileWrapper(fileName)
 
-	def extensionFuntion(self, data):
+	def extensionFunction(self, data):
 		return lambda: \
 		self.runExtensionCommand(data['Exec'], data['FileFilter'], data['DefaultExtension'])
 
@@ -818,7 +668,7 @@ class ReTextWindow(QMainWindow):
 						data[prop] = extension[prop]
 					else:
 						data[prop] = ''
-				action = self.act(name, trig=self.extensionFuntion(data))
+				action = self.act(name, trig=self.extensionFunction(data))
 				if 'Icon' in extension:
 					action.setIcon(self.actIcon(extension['Icon']))
 				mimetype = extension['MimeType'] if 'MimeType' in extension else None
@@ -828,7 +678,7 @@ class ReTextWindow(QMainWindow):
 				self.extensionActions.append((action, mimetype))
 
 	def updateExtensionsVisibility(self):
-		markupClass = self.getMarkupClass()
+		markupClass = self.currentTab.getMarkupClass()
 		for action in self.extensionActions:
 			if markupClass is None:
 				action[0].setEnabled(False)
@@ -873,8 +723,8 @@ class ReTextWindow(QMainWindow):
 			return
 		fileName = QFileInfo(fileName).canonicalFilePath()
 		exists = False
-		for i in range(self.tabWidget.count()):
-			if self.fileNames[i] == fileName:
+		for i, tab in enumerate(self.iterateTabs()):
+			if tab.fileName == fileName:
 				exists = True
 				ex = i
 		if exists:
@@ -882,41 +732,21 @@ class ReTextWindow(QMainWindow):
 		elif QFile.exists(fileName):
 			noEmptyTab = (
 				(self.ind is None) or
-				self.fileNames[self.ind] or
-				self.editBoxes[self.ind].toPlainText() or
-				self.editBoxes[self.ind].document().isModified()
+				self.currentTab.fileName or
+				self.currentTab.editBox.toPlainText() or
+				self.currentTab.editBox.document().isModified()
 			)
 			if noEmptyTab:
-				self.tabWidget.addTab(self.createTab(fileName), "")
+				self.createTab(fileName)
 				self.ind = self.tabWidget.count()-1
 				self.tabWidget.setCurrentIndex(self.ind)
 			if fileName:
 				self.fileSystemWatcher.addPath(fileName)
-			self.fileNames[self.ind] = fileName
-			self.openFileMain()
-
-	def openFileMain(self, encoding=None):
-		openfile = QFile(self.fileNames[self.ind])
-		openfile.open(QIODevice.ReadOnly)
-		stream = QTextStream(openfile)
-		if encoding:
-			stream.setCodec(encoding)
-		elif globalSettings.defaultCodec:
-			stream.setCodec(globalSettings.defaultCodec)
-		text = stream.readAll()
-		openfile.close()
-		markupClass = markups.get_markup_for_file_name(
-			self.fileNames[self.ind], return_class=True)
-		self.highlighters[self.ind].docType = (markupClass.name if markupClass else '')
-		self.markups[self.ind] = self.getMarkup()
-		if self.defaultMarkup:
-			self.highlighters[self.ind].docType = self.defaultMarkup.name
-		editBox = self.editBoxes[self.ind]
-		modified = bool(encoding) and (editBox.toPlainText() != text)
-		editBox.setPlainText(text)
-		self.setCurrentFile()
-		editBox.document().setModified(modified)
-		self.setWindowModified(modified)
+			self.currentTab.fileName = fileName
+			self.currentTab.readTextFromFile()
+			editBox = self.currentTab.editBox
+			self.setCurrentFile()
+			self.setWindowModified(editBox.document().isModified())
 
 	def showEncodingDialog(self):
 		if not self.maybeSave(self.ind):
@@ -926,7 +756,7 @@ class ReTextWindow(QMainWindow):
 			[bytes(b).decode() for b in QTextCodec.availableCodecs()],
 			0, False)
 		if ok:
-			self.openFileMain(encoding)
+			self.currentTab.readTextFromFile(encoding)
 
 	def saveFile(self):
 		self.saveFileMain(dlg=False)
@@ -935,16 +765,14 @@ class ReTextWindow(QMainWindow):
 		self.saveFileMain(dlg=True)
 
 	def saveAll(self):
-		oldind = self.ind
-		for self.ind in range(self.tabWidget.count()):
-			if self.fileNames[self.ind] and QFileInfo(self.fileNames[self.ind]).isWritable():
-				self.saveFileCore(self.fileNames[self.ind])
-				self.editBoxes[self.ind].document().setModified(False)
-		self.ind = oldind
+		for tab in self.iterateTabs():
+			if tab.fileName and QFileInfo(tab.fileName).isWritable():
+				tab.saveTextToFile()
+				tab.editBox.document().setModified(False)
 
 	def saveFileMain(self, dlg):
-		if (not self.fileNames[self.ind]) or dlg:
-			markupClass = self.getMarkupClass()
+		if (not self.currentTab.fileName) or dlg:
+			markupClass = self.currentTab.getMarkupClass()
 			if (markupClass is None) or not hasattr(markupClass, 'default_extension'):
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
@@ -964,15 +792,14 @@ class ReTextWindow(QMainWindow):
 			if newFileName:
 				if not QFileInfo(newFileName).suffix():
 					newFileName += ext
-				if self.fileNames[self.ind]:
-					self.fileSystemWatcher.removePath(self.fileNames[self.ind])
-				self.fileNames[self.ind] = newFileName
+				if self.currentTab.fileName:
+					self.fileSystemWatcher.removePath(self.currentTab.fileName)
+				self.currentTab.fileName = newFileName
 				self.actionSetEncoding.setDisabled(self.autoSaveActive())
-		if self.fileNames[self.ind]:
-			result = self.saveFileCore(self.fileNames[self.ind])
-			if result:
+		if self.currentTab.fileName:
+			if self.currentTab.saveTextToFile():
 				self.setCurrentFile()
-				self.editBoxes[self.ind].document().setModified(False)
+				self.currentTab.editBox.document().setModified(False)
 				self.setWindowModified(False)
 				return True
 			else:
@@ -980,26 +807,12 @@ class ReTextWindow(QMainWindow):
 				self.tr("Cannot save to file because it is read-only!"))
 		return False
 
-	def saveFileCore(self, fn, addToWatcher=True):
-		self.fileSystemWatcher.removePath(fn)
-		savefile = QFile(fn)
-		result = savefile.open(QIODevice.WriteOnly)
-		if result:
-			savestream = QTextStream(savefile)
-			if globalSettings.defaultCodec:
-				savestream.setCodec(globalSettings.defaultCodec)
-			savestream << self.editBoxes[self.ind].toPlainText()
-			savefile.close()
-		if result and addToWatcher:
-			self.fileSystemWatcher.addPath(fn)
-		return result
-
 	def saveHtml(self, fileName):
 		if not QFileInfo(fileName).suffix():
 			fileName += ".html"
 		try:
-			htmltext = self.getHtml(includeStyleSheet=False, includeMeta=True,
-			webenv=True)
+			htmltext = self.currentTab.getHtml(includeStyleSheet=False,
+				includeMeta=True, webenv=True)
 		except Exception:
 			return self.printError()
 		htmlFile = QFile(fileName)
@@ -1012,10 +825,11 @@ class ReTextWindow(QMainWindow):
 
 	def textDocument(self):
 		td = QTextDocument()
-		td.setMetaInformation(QTextDocument.DocumentTitle, self.getDocumentTitle())
+		td.setMetaInformation(QTextDocument.DocumentTitle,
+		                      self.currentTab.getDocumentTitle())
 		if self.ss:
 			td.setDefaultStyleSheet(self.ss)
-		td.setHtml(self.getHtml())
+		td.setHtml(self.currentTab.getHtml())
 		td.setDefaultFont(globalSettings.font)
 		return td
 
@@ -1030,7 +844,7 @@ class ReTextWindow(QMainWindow):
 		if not QFileInfo(fileName).suffix():
 			fileName += ".odt"
 		writer = QTextDocumentWriter(fileName)
-		writer.setFormat("odf")
+		writer.setFormat(b"odf")
 		writer.write(document)
 
 	def saveFileHtml(self):
@@ -1042,7 +856,7 @@ class ReTextWindow(QMainWindow):
 
 	def getDocumentForPrint(self):
 		if globalSettings.useWebKit:
-			return self.previewBoxes[self.ind]
+			return self.currentTab.previewBox
 		try:
 			return self.textDocument()
 		except Exception:
@@ -1050,12 +864,12 @@ class ReTextWindow(QMainWindow):
 
 	def standardPrinter(self):
 		printer = QPrinter(QPrinter.HighResolution)
-		printer.setDocName(self.getDocumentTitle())
+		printer.setDocName(self.currentTab.getDocumentTitle())
 		printer.setCreator('ReText %s' % app_version)
 		return printer
 
 	def savePdf(self):
-		self.updatePreviewBox()
+		self.currentTab.updatePreviewBox()
 		fileName = QFileDialog.getSaveFileName(self,
 			self.tr("Export document to PDF"),
 			"", self.tr("PDF files (*.pdf)"))[0]
@@ -1070,7 +884,7 @@ class ReTextWindow(QMainWindow):
 				document.print(printer)
 
 	def printFile(self):
-		self.updatePreviewBox()
+		self.currentTab.updatePreviewBox()
 		printer = self.standardPrinter()
 		dlg = QPrintDialog(printer, self)
 		dlg.setWindowTitle(self.tr("Print document"))
@@ -1100,13 +914,13 @@ class ReTextWindow(QMainWindow):
 				return
 			if defaultext and not QFileInfo(fileName).suffix():
 				fileName += defaultext
-		basename = '.%s.retext-temp' % self.getDocumentTitle(baseName=True)
+		basename = '.%s.retext-temp' % self.currentTab.getDocumentTitle(baseName=True)
 		if html:
 			tmpname = basename+'.html'
 			self.saveHtml(tmpname)
 		else:
-			tmpname = basename+self.getMarkupClass().default_extension
-			self.saveFileCore(tmpname, addToWatcher=False)
+			tmpname = basename + self.currentTab.getMarkupClass().default_extension
+			self.currentTab.saveTextToFile(fileName=tmpname, addToWatcher=False)
 		command = command.replace('%of', '"out'+defaultext+'"')
 		command = command.replace('%html' if html else '%if', '"'+tmpname+'"')
 		try:
@@ -1119,26 +933,10 @@ class ReTextWindow(QMainWindow):
 		if of:
 			QFile('out'+defaultext).rename(fileName)
 
-	def getDocumentTitle(self, baseName=False):
-		markup = self.markups[self.ind]
-		realTitle = ''
-		if markup and not baseName:
-			text = self.editBoxes[self.ind].toPlainText()
-			try:
-				realTitle = markup.get_document_title(text)
-			except Exception:
-				self.printError()
-		if realTitle:
-			return realTitle
-		elif self.fileNames[self.ind]:
-			fileinfo = QFileInfo(self.fileNames[self.ind])
-			basename = fileinfo.completeBaseName()
-			return (basename if basename else fileinfo.fileName())
-		return self.tr("New document")
-
-	def autoSaveActive(self):
-		return self.autoSaveEnabled and self.fileNames[self.ind] and \
-		QFileInfo(self.fileNames[self.ind]).isWritable()
+	def autoSaveActive(self, ind=None):
+		tab = self.currentTab if ind is None else self.tabWidget.widget(ind).tab
+		return (self.autoSaveEnabled and tab.fileName and
+			QFileInfo(tab.fileName).isWritable())
 
 	def modificationChanged(self, changed):
 		if self.autoSaveActive():
@@ -1152,7 +950,7 @@ class ReTextWindow(QMainWindow):
 			self.actionPaste.setEnabled(mimeData.hasText())
 
 	def insertChars(self, chars):
-		tc = self.editBoxes[self.ind].textCursor()
+		tc = self.currentTab.editBox.textCursor()
 		if tc.hasSelection():
 			selection = tc.selectedText()
 			if selection.startswith(chars) and selection.endswith(chars):
@@ -1170,8 +968,8 @@ class ReTextWindow(QMainWindow):
 			return
 		if isinstance(ut, int):
 			ut = self.usefulTags[ut - 1]
-
-		tc = self.editBoxes[self.ind].textCursor()
+			
+		tc = self.currentTab.editBox.textCursor()
 		selectedText = tc.selectedText()
 		cursorBack = 0
 
@@ -1210,30 +1008,35 @@ class ReTextWindow(QMainWindow):
 
 		self.tagsBox.setCurrentIndex(0)
 		# Bring back the focus on the editor
-		self.editBoxes[self.ind].setFocus(Qt.OtherFocusReason)		
+		self.currentTab.editBox.setFocus(Qt.OtherFocusReason)		
 
 		# if no text is selected place the cursor among tags (only for container tags)
 		if not selectedText and cursorBack > 0:
 			tc.movePosition(QTextCursor.PreviousCharacter, n = cursorBack)
-			self.editBoxes[self.ind].setTextCursor(tc)
+			self.currentTab.editBox.setTextCursor(tc)
 
 	def insertSymbol(self, num):
 		if num:
-			self.editBoxes[self.ind].insertPlainText('&'+self.usefulChars[num-1]+';')
+			self.currentTab.editBox.insertPlainText('&'+self.usefulChars[num-1]+';')
 		self.symbolBox.setCurrentIndex(0)
 
 	def fileChanged(self, fileName):
-		ind = self.fileNames.index(fileName)
+		ind = None
+		for testind, tab in enumerate(self.iterateTabs()):
+			if tab.fileName == fileName:
+				ind = testind
+		if ind is None:
+			self.fileSystemWatcher.removePath(fileName)
 		self.tabWidget.setCurrentIndex(ind)
 		if not QFile.exists(fileName):
-			self.editBoxes[ind].document().setModified(True)
+			self.currentTab.editBox.document().setModified(True)
 			QMessageBox.warning(self, '', self.tr(
 				'This file has been deleted by other application.\n'
 				'Please make sure you save the file before exit.'))
-		elif not self.editBoxes[ind].document().isModified():
+		elif not self.currentTab.editBox.document().isModified():
 			# File was not modified in ReText, reload silently
-			self.openFileMain()
-			self.updatePreviewBox()
+			self.currentTab.readTextFromFile()
+			self.currentTab.updatePreviewBox()
 		else:
 			text = self.tr(
 				'This document has been modified by other application.\n'
@@ -1248,20 +1051,21 @@ class ReTextWindow(QMainWindow):
 			messageBox.addButton(QMessageBox.Cancel)
 			messageBox.exec()
 			if messageBox.clickedButton() is reloadButton:
-				self.openFileMain()
-				self.updatePreviewBox()
+				self.currentTab.readTextFromFile()
+				self.currentTab.updatePreviewBox()
 			else:
 				self.autoSaveEnabled = False
-				self.editBoxes[ind].document().setModified(True)
+				self.currentTab.editBox.document().setModified(True)
 		if fileName not in self.fileSystemWatcher.files():
 			# https://github.com/retext-project/retext/issues/137
 			self.fileSystemWatcher.addPath(fileName)
 
 	def maybeSave(self, ind):
-		if self.autoSaveActive():
-			self.saveFileCore(self.fileNames[self.ind])
+		tab = self.tabWidget.widget(ind).tab
+		if self.autoSaveActive(ind):
+			tab.saveTextToFile()
 			return True
-		if not self.editBoxes[ind].document().isModified():
+		if not tab.editBox.document().isModified():
 			return True
 		self.tabWidget.setCurrentIndex(ind)
 		ret = QMessageBox.warning(self, '',
@@ -1274,8 +1078,8 @@ class ReTextWindow(QMainWindow):
 		return True
 
 	def closeEvent(self, closeevent):
-		for self.ind in range(self.tabWidget.count()):
-			if not self.maybeSave(self.ind):
+		for ind in range(self.tabWidget.count()):
+			if not self.maybeSave(ind):
 				return closeevent.ignore()
 		if globalSettings.saveWindowGeometry and not self.isMaximized():
 			globalSettings.windowGeometry = self.saveGeometry()
@@ -1284,10 +1088,11 @@ class ReTextWindow(QMainWindow):
 	def viewHtml(self):
 		htmlDlg = HtmlDialog(self)
 		try:
-			htmltext = self.getHtml(includeStyleSheet=False, includeTitle=False)
+			htmltext = self.currentTab.getHtml(includeStyleSheet=False,
+				includeTitle=False)
 		except Exception:
 			return self.printError()
-		winTitle = self.getDocumentTitle(baseName=True)
+		winTitle = self.currentTab.getDocumentTitle(baseName=True)
 		htmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+")")
 		htmlDlg.textEdit.setPlainText(htmltext.rstrip())
 		htmlDlg.hl.rehighlight()
@@ -1303,18 +1108,18 @@ class ReTextWindow(QMainWindow):
 		'<p><b>' + (self.tr('ReText %s (using PyMarkups %s)') % (app_version, markups.__version__))
 		+'</b></p>' + self.tr('Simple but powerful editor'
 		' for Markdown and reStructuredText')
-		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011').replace('2011', '2011\u2013' '2015')
+		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011').replace('2011', '2011–2016')
 		+'<br><a href="https://github.com/retext-project/retext">'+self.tr('Website')
 		+'</a> | <a href="http://daringfireball.net/projects/markdown/syntax">'
 		+self.tr('Markdown syntax')
 		+'</a> | <a href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">'
 		+self.tr('reStructuredText syntax')+'</a></p>')
 
-	def setDefaultMarkup(self, markup):
-		self.defaultMarkup = markup
+	def setDefaultMarkup(self, markupClass):
+		self.defaultMarkup = markupClass
 		defaultName = markups.get_available_markups()[0].name
-		writeToSettings('defaultMarkup', markup.name, defaultName)
-		oldind = self.ind
-		for self.ind in range(len(self.previewBoxes)):
-			self.docTypeChanged()
-		self.ind = oldind
+		writeToSettings('defaultMarkup', markupClass.name, defaultName)
+		for tab in self.iterateTabs():
+			if not tab.fileName:
+				tab.setMarkupClass(markupClass)
+				tab.updatePreviewBox()

@@ -16,12 +16,12 @@
 
 import markups
 import markups.common
-from os.path import join, abspath
+from os.path import dirname, exists, join
 
 from PyQt5.QtCore import QByteArray, QLocale, QSettings, QStandardPaths
 from PyQt5.QtGui import QFont
 
-app_version = "5.2.0"
+app_version = "5.3.0"
 
 settings = QSettings('ReText project', 'ReText')
 print('Using configuration file:', settings.fileName())
@@ -44,17 +44,21 @@ else:
 	except enchant.errors.Error:
 		enchant_available = False
 
-icon_path = "icons/"
+datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
+datadirs = [join(d, 'retext') for d in datadirs]
 
-DOCTYPE_NONE = ''
-DOCTYPE_MARKDOWN = markups.MarkdownMarkup.name
-DOCTYPE_REST = markups.ReStructuredTextMarkup.name
-DOCTYPE_HTML = 'html'
+if '__file__' in locals():
+	datadirs = [dirname(dirname(__file__))] + datadirs
+
+icon_path = 'icons/'
+for dir in datadirs:
+	if exists(join(dir, 'icons')):
+		icon_path = join(dir, 'icons/')
+		break
 
 configOptions = {
 	'appStyleSheet': '',
 	'autoSave': False,
-	'colorSchemeFile': '',
 	'defaultCodec': '',
 	'defaultMarkup': '',
 	'editorFont': QFont('monospace'),
@@ -142,6 +146,3 @@ class ReTextSettings(object):
 globalSettings = ReTextSettings()
 
 markups.common.PYGMENTS_STYLE = globalSettings.pygmentsStyle
-
-datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
-datadirs = [abspath('.')] + [join(d, 'retext') for d in datadirs]

@@ -15,11 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from ReText import globalSettings
+from ReText import globalSettings, icon_path
+from ReText.icontheme import get_icon_theme
 from markups.common import CONFIGURATION_DIR
 from os.path import join
 
-from PyQt5.QtCore import QFileInfo, QUrl, Qt
+from PyQt5.QtCore import QFile, QFileInfo, QUrl, Qt
 from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
  QFileDialog, QGridLayout, QLabel, QLineEdit, QPushButton, QSpinBox
@@ -81,7 +82,6 @@ class ConfigDialog(QDialog):
 			(self.tr('Display right margin at column'), 'rightMargin'),
 			(self.tr('Interface'), None),
 			(self.tr('Icon theme name'), 'iconTheme'),
-			(self.tr('Color scheme file'), 'colorSchemeFile', True),
 			(self.tr('Stylesheet file'), 'styleSheet', True),
 		)
 
@@ -98,7 +98,7 @@ class ConfigDialog(QDialog):
 				label = QLabel(displayname + ':', self)
 			if name == 'markdownExtensions':
 				if displayname:
-					url = QUrl('http://pythonhosted.org/Markdown/extensions/')
+					url = QUrl('https://github.com/retext-project/retext/wiki/Markdown-extensions')
 					helpButton = QPushButton(self.tr('Help'), self)
 					helpButton.clicked.connect(lambda: QDesktopServices.openUrl(url))
 					self.layout.addWidget(label, index, 0)
@@ -153,6 +153,9 @@ class ConfigDialog(QDialog):
 
 	def applySettings(self):
 		QIcon.setThemeName(globalSettings.iconTheme)
+		if QIcon.themeName() in ('hicolor', ''):
+			if not QFile.exists(icon_path + 'document-new.png'):
+				QIcon.setThemeName(get_icon_theme())
 		try:
 			extsFile = open(MKD_EXTS_FILE, 'w')
 			for ext in self.configurators['markdownExtensions'].text().split(','):
@@ -161,6 +164,6 @@ class ConfigDialog(QDialog):
 			extsFile.close()
 		except Exception as e:
 			print(e, file=sys.stderr)
-		for editBox in self.parent.editBoxes:
-			editBox.updateLineNumberAreaWidth()
+		for tab in self.parent.iterateTabs():
+			tab.editBox.updateFont()
 		self.parent.updateStyleSheet()

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from ReText import DOCTYPE_MARKDOWN, DOCTYPE_REST
+from markups import MarkdownMarkup, ReStructuredTextMarkup
 
 from PyQt5.QtGui import QTextCursor
 
@@ -31,7 +31,7 @@ class Row:
 	def __repr__(self):
 		return "<Row '%s' %s '%s'>" % (self.text, self.separatorline, self.paddingchar)
 
-def _getTableLines(doc, pos, docType):
+def _getTableLines(doc, pos, markupClass):
 	startblock = doc.findBlock(pos)
 	editedlineindex = 0
 	offset = pos - startblock.position()
@@ -52,12 +52,12 @@ def _getTableLines(doc, pos, docType):
 		                text = block.text()))
 		block = block.next()
 
-	if docType == DOCTYPE_MARKDOWN:
+	if markupClass == MarkdownMarkup:
 		for i, row in enumerate(rows):
 			if i == 1:
 				row.separatorline = True
 				row.paddingchar = '-'
-	elif docType == DOCTYPE_REST:
+	elif markupClass == ReStructuredTextMarkup:
 		for i, row in enumerate(rows):
 			if i & 1 == 0: # i is even
 				row.separatorline = True
@@ -180,9 +180,9 @@ def _performEdits(cursor, rows, editLists, linewithoffset, offset):
 					cursor.deletePreviousChar()
 	cursor.endEditBlock()
 
-def adjustTableToChanges(doc, pos, editsize, docType):
-	if docType in (DOCTYPE_MARKDOWN, DOCTYPE_REST):
-		rows, editedlineindex, offset = _getTableLines(doc, pos, docType)
+def adjustTableToChanges(doc, pos, editsize, markupClass):
+	if markupClass in (MarkdownMarkup, ReStructuredTextMarkup):
+		rows, editedlineindex, offset = _getTableLines(doc, pos, markupClass)
 
 		_sortaUndoEdit(rows, editedlineindex, editsize)
 

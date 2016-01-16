@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-VERSION = '5.2.0'
+VERSION = '5.3.0'
 
 long_description = '''\
 ReText is simple text editor that supports Markdown and reStructuredText
@@ -37,7 +37,7 @@ def build_translations():
 	error = None
 	for ts_file in glob(join('locale', '*.ts')):
 		try:
-			check_call(('lrelease', ts_file))
+			check_call(('lrelease', ts_file), env={'QT_SELECT': 'qt5'})
 		except Exception as e:
 			error = e
 	if error:
@@ -114,6 +114,7 @@ setup(name='ReText',
       data_files=[
         ('share/appdata', ['data/me.mitya57.ReText.appdata.xml']),
         ('share/applications', ['data/me.mitya57.ReText.desktop']),
+        ('share/retext/icons', glob('icons/*')),
         ('share/retext/locale', glob('locale/*.qm'))
       ],
       requires=requires,

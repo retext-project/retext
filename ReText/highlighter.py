@@ -14,102 +14,90 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from ReText import globalSettings, DOCTYPE_NONE, DOCTYPE_MARKDOWN, \
- DOCTYPE_REST, DOCTYPE_HTML
+from ReText import settings
 import re
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QFont, QSyntaxHighlighter, QTextCharFormat
 
 reHtmlTags     = re.compile('<[^<>@]*>')
-reHtmlSymbols  = re.compile('&[^; ]*;')
+reHtmlSymbols  = re.compile(r'&#?\w+;')
 reHtmlStrings  = re.compile('"[^"<]*"(?=[^<]*>)')
 reHtmlComments = re.compile('<!--[^<>]*-->')
-reItalics1     = re.compile(r'(?<!\*)\*[^ \*][^\*]*\*')
-reItalics2     = re.compile(r'(?<!_|\w)_[^_]+_(?!\w)')
-reBold1        = re.compile(r'(?<!\*)\*\*((?!\*\*).)*\*\*')
-reBold2        = re.compile(r'(?<!_|\w)__[^_]+__(?!\w)')
-reBoldItalics1 = re.compile(r'\*{3,3}[^\*]+\*{3,3}')
-reBoldItalics2 = re.compile('___[^_]+___')
+reAsterisks    = re.compile(r'(?<!\*)\*[^ \*][^\*]*\*')
+reUnderline    = re.compile(r'(?<!_|\w)_[^_]+_(?!\w)')
+reDblAsterisks = re.compile(r'(?<!\*)\*\*((?!\*\*).)*\*\*')
+reDblUnderline = re.compile(r'(?<!_|\w)__[^_]+__(?!\w)')
+reTrpAsterisks = re.compile(r'\*{3,3}[^\*]+\*{3,3}')
+reTrpUnderline = re.compile('___[^_]+___')
 reMkdHeaders   = re.compile('^#.+')
 reMkdLinksImgs = re.compile(r'(?<=\[)[^\[\]]*(?=\])')
 reMkdLinkRefs  = re.compile(r'(?<=\]\()[^\(\)]*(?=\))')
 reBlockQuotes  = re.compile('^ *>.+')
 reReSTDirects  = re.compile(r'\.\. [a-z]+::')
 reReSTRoles    = re.compile(':[a-z]+:')
+reTextileHdrs  = re.compile(r'^h[1-6][()<>=]*\.\s.+')
+reTextileQuot  = re.compile(r'^bq\.\s.+')
 reWords        = re.compile('[^_\\W]+', flags=re.UNICODE)
+reSpacesOnEnd  = re.compile(r'\s+$', flags=re.UNICODE)
 
-colorNames = ('htmltags', 'htmlsymbols', 'htmlquotes', 'htmlcomments',
-              'markdownlinks', 'blockquotes',
-              'restdirectives', 'restroles')
+defaultColorScheme = {
+	'htmlTags': Qt.darkMagenta,
+	'htmlSymbols': Qt.darkCyan,
+	'htmlStrings': Qt.darkYellow,
+	'htmlComments': Qt.gray,
+	'markdownLinks': Qt.blue,
+	'blockquotes': Qt.darkGray,
+	'restDirectives': Qt.darkMagenta,
+	'restRoles': Qt.darkRed,
+	'whitespaceOnEnd': QColor(0xf0, 0xf0, 0xd2)
+}
+colorScheme = {}
 
-defaultColorScheme = (
-	Qt.darkMagenta,  # HTML tags
-	Qt.darkCyan,     # HTML symbols
-	Qt.darkYellow,   # HTML Quotes symbols inside tags
-	Qt.gray,         # HTML comments
-	Qt.blue,         # Markdown links and images
-	Qt.darkGray,     # Blockquotes
-	Qt.darkMagenta,  # reStructuredText directives
-	Qt.darkRed,      # reStructuredText roles
-)
+def updateColorScheme(settings=settings):
+	settings.beginGroup('ColorScheme')
+	for key in defaultColorScheme:
+		if settings.contains(key):
+			colorScheme[key] = settings.value(key, type=QColor)
+		else:
+			colorScheme[key] = defaultColorScheme[key]
+	settings.endGroup()
 
-colorScheme = defaultColorScheme
-colorSchemeFile = None
-
-def readColorSchemeFromFile(filename):
-	colors = {}
-	schemefile = open(filename)
-	for line in schemefile:
-		parts = line.split('=')
-		if len(parts) == 2:
-			colors[parts[0].rstrip()] = QColor(parts[1].strip())
-	schemefile.close()
-	return [colors[colorname] if colorname in colors
-	        else defaultColorScheme[index]
-	        for index, colorname in enumerate(colorNames)]
-
-def updateColorScheme():
-	global colorScheme
-	newSchemeFile = globalSettings.colorSchemeFile
-	if newSchemeFile and newSchemeFile != colorSchemeFile:
-		colorScheme = readColorSchemeFromFile(newSchemeFile)
-	if not newSchemeFile:
-		colorScheme = defaultColorScheme
+updateColorScheme()
 
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
-	docType = DOCTYPE_NONE
-
-	def __init__(self, document):
-		QSyntaxHighlighter.__init__(self, document)
-		updateColorScheme()
+	docType = None
 
 	def highlightBlock(self, text):
 		patterns = (
-			# regex,         color,          font style,    italic, underline
-			(reHtmlTags,     colorScheme[0], QFont.Bold),
-			(reHtmlSymbols,  colorScheme[1], QFont.Bold),
-			(reHtmlStrings,  colorScheme[2], QFont.Bold),
-			(reHtmlComments, colorScheme[3], QFont.Normal),
-			(reItalics1,     None,           QFont.Normal,  True),
-			(reItalics2,     None,           QFont.Normal,  True),
-			(reBold1,        None,           QFont.Bold),
-			(reBold2,        None,           QFont.Bold),
-			(reBoldItalics1, None,           QFont.Bold,    True),
-			(reBoldItalics2, None,           QFont.Bold,    True),
-			(reMkdHeaders,   None,           QFont.Black),
-			(reMkdLinksImgs, colorScheme[4], QFont.Normal),
-			(reMkdLinkRefs,  None,           QFont.Normal,  True,   True),
-			(reBlockQuotes,  colorScheme[5], QFont.Normal),
-			(reReSTDirects,  colorScheme[6], QFont.Normal),
-			(reReSTRoles,    colorScheme[7], QFont.Normal)
+			# regex,         color,            font style,    italic, underline
+			(reHtmlTags,     'htmlTags',       QFont.Bold),                     # 0
+			(reHtmlSymbols,  'htmlSymbols',    QFont.Bold),                     # 1
+			(reHtmlStrings,  'htmlStrings',    QFont.Bold),                     # 2
+			(reHtmlComments, 'htmlComments',   QFont.Normal),                   # 3
+			(reAsterisks,    None,             QFont.Normal,  True),            # 4
+			(reUnderline,    None,             QFont.Normal,  True),            # 5
+			(reDblAsterisks, None,             QFont.Bold),                     # 6
+			(reDblUnderline, None,             QFont.Bold),                     # 7
+			(reTrpAsterisks, None,             QFont.Bold,    True),            # 8
+			(reTrpUnderline, None,             QFont.Bold,    True),            # 9
+			(reMkdHeaders,   None,             QFont.Black),                    # 10
+			(reMkdLinksImgs, 'markdownLinks',  QFont.Normal),                   # 11
+			(reMkdLinkRefs,  None,             QFont.Normal,  True,   True),    # 12
+			(reBlockQuotes,  'blockquotes',    QFont.Normal),                   # 13
+			(reReSTDirects,  'restDirectives', QFont.Bold),                     # 14
+			(reReSTRoles,    'restRoles',      QFont.Bold),                     # 15
+			(reTextileHdrs,  None,             QFont.Black),                    # 16
+			(reTextileQuot,  'blockquotes',    QFont.Normal),                   # 17
+			(reAsterisks,    None,             QFont.Bold),                     # 18
+			(reDblUnderline, None,             QFont.Normal,  True),            # 19
 		)
 		patternsDict = {
-			DOCTYPE_NONE: (),
-			DOCTYPE_MARKDOWN: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13),
-			DOCTYPE_REST: (4, 6, 14, 15),
-			DOCTYPE_HTML: (0, 1, 2, 3)
+			'Markdown': (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13),
+			'reStructuredText': (4, 6, 14, 15),
+			'Textile': (0, 5, 6, 16, 17, 18, 19),
+			'html': (0, 1, 2, 3)
 		}
 		# Syntax highlighter
 		if self.docType in patternsDict:
@@ -118,13 +106,17 @@ class ReTextHighlighter(QSyntaxHighlighter):
 				charFormat = QTextCharFormat()
 				charFormat.setFontWeight(pattern[2])
 				if pattern[1] != None:
-					charFormat.setForeground(pattern[1])
+					charFormat.setForeground(colorScheme[pattern[1]])
 				if len(pattern) >= 4:
 					charFormat.setFontItalic(pattern[3])
 				if len(pattern) >= 5:
 					charFormat.setFontUnderline(pattern[4])
 				for match in pattern[0].finditer(text):
 					self.setFormat(match.start(), match.end() - match.start(), charFormat)
+		for match in reSpacesOnEnd.finditer(text):
+			charFormat = QTextCharFormat()
+			charFormat.setBackground(colorScheme['whitespaceOnEnd'])
+			self.setFormat(match.start(), match.end() - match.start(), charFormat)
 		# Spell checker
 		if self.dictionary:
 			charFormat = QTextCharFormat()

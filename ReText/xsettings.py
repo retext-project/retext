@@ -22,13 +22,18 @@ import ctypes.util
 import struct
 
 class _xcb_reply_t(ctypes.Structure):
-	# this can be used instead of xcb_get_selection_owner_reply_t,
+	# this can be used instead of xcb_intern_atom_reply_t,
 	# xcb_get_selection_owner_reply_t, etc
 	_fields_ = [('response_type', ctypes.c_uint8),
 	            ('pad0',          ctypes.c_uint8),
 	            ('sequence',      ctypes.c_uint16),
 	            ('length',        ctypes.c_uint32),
-		    ('payload',       ctypes.c_uint32)]
+	            ('payload',       ctypes.c_uint32)]
+
+class _xcb_cookie_t(ctypes.Structure):
+	# this can be used instead of xcb_intern_atom_cookie_t,
+	# xcb_get_selection_owner_cookie_t, etc
+	_fields_ = [('sequence',      ctypes.c_uint)]
 
 _xcb_error_messages = [
 	None,
@@ -66,16 +71,17 @@ def get_raw_xsettings(display=0):
 	xcb.xcb_disconnect.argtypes = [ctypes.c_void_p]
 	xcb.xcb_disconnect.restype = None
 	xcb.xcb_intern_atom.argtypes = [ctypes.c_void_p, ctypes.c_uint8, ctypes.c_uint16, ctypes.c_char_p]
-	xcb.xcb_intern_atom.restype = ctypes.c_uint
-	xcb.xcb_intern_atom_reply.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_void_p]
+	xcb.xcb_intern_atom.restype = _xcb_cookie_t
+	xcb.xcb_intern_atom_reply.argtypes = [ctypes.c_void_p, _xcb_cookie_t, ctypes.c_void_p]
 	xcb.xcb_intern_atom_reply.restype = ctypes.POINTER(_xcb_reply_t)
 	xcb.xcb_get_selection_owner.argtypes = [ctypes.c_void_p, ctypes.c_uint32]
-	xcb.xcb_get_selection_owner.restype = ctypes.c_uint
-	xcb.xcb_get_selection_owner_reply.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_void_p]
+	xcb.xcb_get_selection_owner.restype = _xcb_cookie_t
+	xcb.xcb_get_selection_owner_reply.argtypes = [ctypes.c_void_p, _xcb_cookie_t, ctypes.c_void_p]
 	xcb.xcb_get_selection_owner_reply.restype = ctypes.POINTER(_xcb_reply_t)
-	xcb.xcb_get_property.argtypes = [ctypes.c_void_p, ctypes.c_uint32]
-	xcb.xcb_get_property.restype = ctypes.c_uint
-	xcb.xcb_get_property_reply.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_void_p]
+	xcb.xcb_get_property.argtypes = [ctypes.c_void_p, ctypes.c_uint8, ctypes.c_uint32, ctypes.c_uint32,
+	                                 ctypes.c_uint32, ctypes.c_uint32]
+	xcb.xcb_get_property.restype = _xcb_cookie_t
+	xcb.xcb_get_property_reply.argtypes = [ctypes.c_void_p, _xcb_cookie_t, ctypes.c_void_p]
 	xcb.xcb_get_property_reply.restype = ctypes.c_void_p
 	xcb.xcb_get_property_value_length.argtypes = [ctypes.c_void_p]
 	xcb.xcb_get_property_value_length.restype = ctypes.c_int
@@ -89,8 +95,8 @@ def get_raw_xsettings(display=0):
 		raise XSettingsError(_xcb_error_messages[error])
 
 	# get selection atom cookie
-	buffer = ctypes.create_string_buffer(('_XSETTINGS_S%d' % display).encode())
-	cookie = xcb.xcb_intern_atom(connection, 0, len(buffer) - 1, buffer)
+	buffer = ('_XSETTINGS_S%d' % display).encode()
+	cookie = xcb.xcb_intern_atom(connection, 0, len(buffer), buffer)
 
 	# get selection atom reply
 	reply = xcb.xcb_intern_atom_reply(connection, cookie, None)
@@ -106,8 +112,8 @@ def get_raw_xsettings(display=0):
 	c.free(reply)
 
 	# get settings atom cookie
-	buffer = ctypes.create_string_buffer(b'_XSETTINGS_SETTINGS')
-	cookie = xcb.xcb_intern_atom(connection, 0, len(buffer) - 1, buffer)
+	buffer = b'_XSETTINGS_SETTINGS'
+	cookie = xcb.xcb_intern_atom(connection, 0, len(buffer), buffer)
 
 	# get settings atom reply
 	reply = xcb.xcb_intern_atom_reply(connection, cookie, None)
@@ -122,6 +128,7 @@ def get_raw_xsettings(display=0):
 	if reply is not None:
 		length = xcb.xcb_get_property_value_length(reply)
 		pointer = xcb.xcb_get_property_value(reply) if length else None
+		result = ctypes.string_at(pointer, length)
 		c.free(reply)
 
 	# close the connection
@@ -131,8 +138,7 @@ def get_raw_xsettings(display=0):
 	if reply is None or not length:
 		raise XSettingsError('XSettings not available')
 
-	# prepare data and return it
-	return ctypes.string_at(pointer, length)
+	return result
 
 def parse_xsettings(raw_xsettings):
 	if len(raw_xsettings) < 12:
