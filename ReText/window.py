@@ -970,6 +970,7 @@ class ReTextWindow(QMainWindow):
 			ut = self.usefulTags[ut - 1]
 			
 		tc = self.currentTab.editBox.textCursor()
+
 		selectedText = tc.selectedText()
 		cursorBack = 0
 
