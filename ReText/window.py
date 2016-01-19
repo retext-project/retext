@@ -1082,3 +1082,4 @@ class ReTextWindow(QMainWindow):
 			if not tab.fileName:
 				tab.setMarkupClass(markupClass)
 				tab.updatePreviewBox()
+		self.docTypeChanged()
