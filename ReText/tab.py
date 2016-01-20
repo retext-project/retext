@@ -27,7 +27,7 @@ except ImportError:
 	ReTextFakeVimHandler = None
 
 from PyQt5.QtCore import Qt, QDir, QFile, QFileInfo, QObject, QTextStream, QTimer, QUrl
-from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtGui import QDesktopServices, QGuiApplication
 from PyQt5.QtWidgets import QTextBrowser, QTextEdit, QSplitter
 from PyQt5.QtWebKit import QWebSettings
 from PyQt5.QtWebKitWidgets import QWebPage, QWebView
@@ -131,6 +131,8 @@ class ReTextTab(QObject):
 		headers = ''
 		if includeStyleSheet:
 			headers += '<style type="text/css">\n' + self.p.ss + '</style>\n'
+		headers += '<style type="text/css">\nhtml{color: %s;}</style>\n' % \
+			       QGuiApplication.palette().text().color().name()
 		cssFileName = self.getDocumentTitle(baseName=True) + '.css'
 		if QFile(cssFileName).exists():
 			headers += ('<link rel="stylesheet" type="text/css" href="%s">\n'
