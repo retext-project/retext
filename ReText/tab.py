@@ -132,7 +132,7 @@ class ReTextTab(QObject):
 		if includeStyleSheet:
 			headers += '<style type="text/css">\n' + self.p.ss + '</style>\n'
 		cssFileName = self.getDocumentTitle(baseName=True) + '.css'
-		if QFile(cssFileName).exists():
+		if QFile.exists(cssFileName):
 			headers += ('<link rel="stylesheet" type="text/css" href="%s">\n'
 			% cssFileName)
 		if includeMeta:
