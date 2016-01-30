@@ -21,10 +21,10 @@ option name                    | type      | description
 `highlightCurrentLine`         | boolean   | whether to highlight current line in editor (default: false)
 `iconTheme`                    | string    | name of the system icon theme to use (see below)
 `lineNumbersEnabled`           | boolean   | whether to show column with line numbers in editor (default: false)
+`livePreviewByDefault`         | boolean   | whether new tabs and windows should open in live preview mode (default: false)
 `markdownDefaultFileExtension` | string    | default file extension for Markdown files (default: `.mkd`)
 `pygmentsStyle`                | string    | name of Pygments syntax highlighting style to use (default: `default`)
 `restDefaultFileExtension`     | string    | default file extension for reStructuredText files (default: `.rst`)
-`restorePreviewState`          | boolean   | whether to restore preview state from previous session (default: false)
 `rightMargin`                  | integer   | enable drawing of vertical line on defined position (or 0 to disable)
 `saveWindowGeometry`           | boolean   | whether to restore window geometry from previous session (default: false)
 `spellCheck`                   | boolean   | whether to enable spell checking
@@ -40,7 +40,7 @@ If the type is 'file path', then the value should be an absolute path
 to a file.
 
 These options can be set internally by ReText and should never be set
-manually: `previewState`, `recentFileList` and `windowGeometry`.
+manually: `recentFileList` and `windowGeometry`.
 
 Icon themes
 ===========
