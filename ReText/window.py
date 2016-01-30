@@ -351,7 +351,8 @@ class ReTextWindow(QMainWindow):
 			self.ss = QTextStream(sheetfile).readAll()
 			sheetfile.close()
 		else:
-			self.ss = ''
+			palette = QApplication.palette()
+			self.ss = 'html { color: %s; }\n' % palette.color(QPalette.WindowText).name()
 
 	def initTabWidget(self):
 		def dragEnterEvent(e):
