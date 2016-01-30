@@ -201,20 +201,20 @@ class ReTextWindow(QMainWindow):
 				self.chooseGroup.addAction(markupAction)
 				markupActions.append(markupAction)
 		self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.Bold,
-			trig=lambda: self.insertChars('**'))
+			trig=lambda: self.insertFormatting('bold'))
 		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.Italic,
-			trig=lambda: self.insertChars('*'))
+			trig=lambda: self.insertFormatting('italic'))
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
-			trig=lambda: self.insertTag('u'))
-		self.usefulTags = ('a', 'big', 'center', 'img', 's', 'small', 'span',
-			'table', 'td', 'tr', 'u')
+			trig=lambda: self.insertFormatting('underline'))
+		self.usefulTags = ('header', 'italic', 'bold', 'underline', 'numbering',
+			'bullets', 'image', 'link', 'inline code', 'code block', 'blockquote')
 		self.usefulChars = ('deg', 'divide', 'dollar', 'hellip', 'laquo', 'larr',
 			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
 			'rarr', 'rsquo', 'times')
-		self.tagsBox = QComboBox(self.editBar)
-		self.tagsBox.addItem(self.tr('Tags'))
-		self.tagsBox.addItems(self.usefulTags)
-		self.tagsBox.activated.connect(self.insertTag)
+		self.formattingBox = QComboBox(self.editBar)
+		self.formattingBox.addItem(self.tr('Formatting'))
+		self.formattingBox.addItems(self.usefulTags)
+		self.formattingBox.activated[str].connect(self.insertFormatting)
 		self.symbolBox = QComboBox(self.editBar)
 		self.symbolBox.addItem(self.tr('Symbols'))
 		self.symbolBox.addItems(self.usefulChars)
@@ -306,7 +306,7 @@ class ReTextWindow(QMainWindow):
 		self.editBar.addAction(self.actionCopy)
 		self.editBar.addAction(self.actionPaste)
 		self.editBar.addSeparator()
-		self.editBar.addWidget(self.tagsBox)
+		self.editBar.addWidget(self.formattingBox)
 		self.editBar.addWidget(self.symbolBox)
 		self.searchEdit = QLineEdit(self.searchBar)
 		self.searchEdit.setPlaceholderText(self.tr('Search'))
@@ -413,7 +413,7 @@ class ReTextWindow(QMainWindow):
 			self.currentTab.updatePreviewBox()
 		dtMarkdown = (markupClass == markups.MarkdownMarkup)
 		dtMkdOrReST = dtMarkdown or (markupClass == markups.ReStructuredTextMarkup)
-		self.tagsBox.setEnabled(dtMarkdown)
+		self.formattingBox.setEnabled(dtMarkdown)
 		self.symbolBox.setEnabled(dtMarkdown)
 		self.actionUnderline.setEnabled(dtMarkdown)
 		self.actionBold.setEnabled(dtMkdOrReST)
@@ -948,36 +948,51 @@ class ReTextWindow(QMainWindow):
 		if mimeData is not None:
 			self.actionPaste.setEnabled(mimeData.hasText())
 
-	def insertChars(self, chars):
-		tc = self.currentTab.editBox.textCursor()
-		if tc.hasSelection():
-			selection = tc.selectedText()
-			if selection.startswith(chars) and selection.endswith(chars):
-				if len(selection) > 2*len(chars):
-					selection = selection[len(chars):-len(chars)]
-					tc.insertText(selection)
-			else:
-				tc.insertText(chars+tc.selectedText()+chars)
-		else:
-			tc.insertText(chars)
+	def insertFormatting(self, formatting):
+		cursor = self.currentTab.editBox.textCursor()
+		text = cursor.selectedText()
+		moveCursorTo = None
 
-	def insertTag(self, ut):
-		if not ut:
+		def c(cursor):
+			nonlocal moveCursorTo
+			moveCursorTo = cursor.position()
+
+		def ensurenl(cursor):
+			if not cursor.atBlockStart():
+				cursor.insertText('\n\n')
+
+		toinsert = {
+			'header': (ensurenl, '# ', text),
+			'italic': ('*', text, c, '*'),
+			'bold': ('**', text, c, '**'),
+			'underline': ('<u>', text, c, '</u>'),
+			'numbering': (ensurenl, ' 1. ', text),
+			'bullets': (ensurenl, '  * ', text),
+			'image': ('![', text or self.tr('Alt text'), c, '](', self.tr('URL'), ')'),
+			'link': ('[', text or self.tr('Link text'), c, '](', self.tr('URL'), ')'),
+			'inline code': ('`', text, c, '`'),
+			'code block': (ensurenl, '    ', text),
+			'blockquote': (ensurenl, '> ', text),
+		}
+
+		if formatting not in toinsert:
 			return
-		if isinstance(ut, int):
-			ut = self.usefulTags[ut - 1]
-		arg = ' style=""' if ut == 'span' else ''
-		tc = self.currentTab.editBox.textCursor()
-		if ut == 'img':
-			toinsert = ('<a href="' + tc.selectedText() +
-			'" target="_blank"><img src="' + tc.selectedText() + '"/></a>')
-		elif ut == 'a':
-			toinsert = ('<a href="' + tc.selectedText() +
-			'" target="_blank">' + tc.selectedText() + '</a>')
-		else:
-			toinsert = '<'+ut+arg+'>'+tc.selectedText()+'</'+ut+'>'
-		tc.insertText(toinsert)
-		self.tagsBox.setCurrentIndex(0)
+
+		cursor.beginEditBlock()
+		for token in toinsert[formatting]:
+			if callable(token):
+				token(cursor)
+			else:
+				cursor.insertText(token)
+		cursor.endEditBlock()
+
+		self.formattingBox.setCurrentIndex(0)
+		# Bring back the focus on the editor
+		self.currentTab.editBox.setFocus(Qt.OtherFocusReason)
+
+		if moveCursorTo:
+			cursor.setPosition(moveCursorTo)
+			self.currentTab.editBox.setTextCursor(cursor)
 
 	def insertSymbol(self, num):
 		if num:
