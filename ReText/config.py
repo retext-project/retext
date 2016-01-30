@@ -68,7 +68,7 @@ class ConfigDialog(QDialog):
 			(self.tr('Behavior'), None),
 			(self.tr('Automatically save documents'), 'autoSave'),
 			(self.tr('Restore window geometry'), 'saveWindowGeometry'),
-			(self.tr('Restore live preview state'), 'restorePreviewState'),
+			(self.tr('Use live preview by default'), 'livePreviewByDefault'),
 			(self.tr('Open external links in ReText window'), 'handleWebLinks'),
 			(self.tr('Markdown syntax extensions (comma-separated)'), 'markdownExtensions'),
 			(None, 'markdownExtensions'),

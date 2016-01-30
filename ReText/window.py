@@ -392,7 +392,8 @@ class ReTextWindow(QMainWindow):
 		traceback.print_exc()
 
 	def createTab(self, fileName):
-		self.currentTab = ReTextTab(self, fileName)
+		self.currentTab = ReTextTab(self, fileName,
+			previewState=int(globalSettings.livePreviewByDefault))
 		self.tabWidget.addTab(self.currentTab.getSplitter(), self.tr("New document"))
 
 	def closeTab(self, ind):
@@ -440,8 +441,6 @@ class ReTextWindow(QMainWindow):
 			self.setWindowTitle(self.tr('New document') + '[*]')
 			self.docTypeChanged()
 		self.modificationChanged(editBox.document().isModified())
-		if globalSettings.restorePreviewState:
-			globalSettings.previewState = (previewState >= PreviewLive)
 		editBox.setFocus(Qt.OtherFocusReason)
 
 	def changeEditorFont(self):
@@ -467,8 +466,6 @@ class ReTextWindow(QMainWindow):
 			self.currentTab.updatePreviewBox()
 
 	def enableLivePreview(self, livemode):
-		if globalSettings.restorePreviewState:
-			globalSettings.previewState = livemode
 		self.currentTab.previewState = int(livemode)
 		self.actionPreview.setChecked(livemode)
 		self.editBar.setEnabled(True)
