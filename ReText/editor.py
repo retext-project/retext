@@ -204,6 +204,8 @@ class ReTextEdit(QTextEdit):
 		while pos < length and (text[pos] in (' ', '\t')
 		  or text[pos:pos+2] in ('* ', '- ')):
 			pos += 1
+		if pos == length:
+			cursor.removeSelectedText()
 		# Reset the cursor
 		cursor = self.textCursor()
 		cursor.insertText(('\n' + text[:pos]) if pos < length else '\n')
