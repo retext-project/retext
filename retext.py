@@ -67,7 +67,8 @@ def main():
 		if QFile.exists(fileName):
 			window.openFileWrapper(fileName)
 			if previewMode:
-				window.actionPreview.trigger()
+				window.actionPreview.setChecked(True)
+				window.preview(True)
 		elif fileName == '--preview':
 			previewMode = True
 	inputData = '' if sys.stdin.isatty() else sys.stdin.read()
