@@ -200,14 +200,15 @@ class ReTextWindow(QMainWindow):
 					markupAction.setChecked(True)
 				self.chooseGroup.addAction(markupAction)
 				markupActions.append(markupAction)
+		#Menu and shortcut for common Formatting
 		self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.Bold,
-			trig=lambda: self.insertChars('**'))
+			trig=lambda: self.insertTag('bold'))
 		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.Italic,
-			trig=lambda: self.insertChars('*'))
+			trig=lambda: self.insertTag('italic'))
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
-			trig=lambda: self.insertTag('u'))
-		self.usefulTags = ('a', 'big', 'center', 'img', 's', 'small', 'span',
-			'table', 'td', 'tr', 'u')
+			trig=lambda: self.insertTag('underline'))
+		self.usefulTags = ('header', 'italic', 'bold', 'underline', 'numbering', 'bullets', 'image', 'link',
+			'inline code', 'code block', 'blockquote')
 		self.usefulChars = ('deg', 'divide', 'dollar', 'hellip', 'laquo', 'larr',
 			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
 			'rarr', 'rsquo', 'times')
@@ -272,6 +273,7 @@ class ReTextWindow(QMainWindow):
 			self.menuMode = menuEdit.addMenu(self.tr('Default markup'))
 			for markupAction in markupActions:
 				self.menuMode.addAction(markupAction)
+		#Formatting menu
 		menuFormat = menuEdit.addMenu(self.tr('Formatting'))
 		menuFormat.addAction(self.actionBold)
 		menuFormat.addAction(self.actionItalic)
@@ -351,7 +353,7 @@ class ReTextWindow(QMainWindow):
 			self.ss = QTextStream(sheetfile).readAll()
 			sheetfile.close()
 		else:
-			self.ss = ''
+			self.ss = 'table, th, td {  border: 1px solid black;}'
 
 	def initTabWidget(self):
 		def dragEnterEvent(e):
@@ -960,23 +962,59 @@ class ReTextWindow(QMainWindow):
 		else:
 			tc.insertText(chars)
 
+	# usefulTags = ('header', 'italic', 'bold', 'underline', 'numbering', 'bullets', 'image', 'link',	'inline code', 'code block', 'blockquote')
 	def insertTag(self, ut):
 		if not ut:
 			return
 		if isinstance(ut, int):
 			ut = self.usefulTags[ut - 1]
-		arg = ' style=""' if ut == 'span' else ''
+			
 		tc = self.currentTab.editBox.textCursor()
-		if ut == 'img':
-			toinsert = ('<a href="' + tc.selectedText() +
-			'" target="_blank"><img src="' + tc.selectedText() + '"/></a>')
-		elif ut == 'a':
-			toinsert = ('<a href="' + tc.selectedText() +
-			'" target="_blank">' + tc.selectedText() + '</a>')
+
+		selectedText = tc.selectedText()
+		cursorBack = 0
+
+		if ut == 'header':
+			toinsert = '# ' + selectedText
+		elif ut == 'italic':
+			toinsert = '*' + selectedText + '*'
+			cursorBack = 1
+		elif ut == 'bold':
+			toinsert = '**' + selectedText + '**'
+			cursorBack = 2
+		elif ut == 'underline':
+			toinsert = '<u>' + selectedText + '</u>'
+			cursorBack = 4
+		elif ut == 'numbering':
+			toinsert = '\n\n 1. ' + selectedText
+		elif ut == 'bullets':
+			toinsert = '\n\n * ' + selectedText
+		elif ut == 'image':
+			if not selectedText:
+				selectedText = 'alt text'
+			toinsert = '!['+ selectedText +'](url)'
+		elif ut == 'link':
+			if not selectedText:
+				selectedText = 'alt text'
+			toinsert = '['+ selectedText +'](url)'
+		elif ut == 'inline code':
+			toinsert = '`'+ selectedText +'`'
+			cursorBack = 1
+		elif ut == 'code block':
+			toinsert = '\n\n    '
 		else:
-			toinsert = '<'+ut+arg+'>'+tc.selectedText()+'</'+ut+'>'
+			toinsert = '\n > '+selectedText
+			
 		tc.insertText(toinsert)
+
 		self.tagsBox.setCurrentIndex(0)
+		# Bring back the focus on the editor
+		self.currentTab.editBox.setFocus(Qt.OtherFocusReason)		
+
+		# if no text is selected place the cursor among tags (only for container tags)
+		if not selectedText and cursorBack > 0:
+			tc.movePosition(QTextCursor.PreviousCharacter, n = cursorBack)
+			self.currentTab.editBox.setTextCursor(tc)
 
 	def insertSymbol(self, num):
 		if num:
