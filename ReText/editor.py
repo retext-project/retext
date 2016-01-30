@@ -206,7 +206,7 @@ class ReTextEdit(QTextEdit):
 			pos += 1
 		# Reset the cursor
 		cursor = self.textCursor()
-		cursor.insertText('\n'+text[:pos])
+		cursor.insertText(('\n' + text[:pos]) if pos < length else '\n')
 		self.ensureCursorVisible()
 
 	def lineNumberAreaWidth(self):
