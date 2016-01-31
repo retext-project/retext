@@ -26,7 +26,7 @@ from distutils.command.sdist import sdist
 from distutils.command.install_scripts import install_scripts
 from distutils.command.upload import upload
 from subprocess import check_call
-from glob import glob
+from glob import glob, iglob
 from warnings import filterwarnings
 
 if sys.version_info[0] < 3:
@@ -115,7 +115,7 @@ setup(name='ReText',
         ('share/appdata', ['data/me.mitya57.ReText.appdata.xml']),
         ('share/applications', ['data/me.mitya57.ReText.desktop']),
         ('share/retext/icons', glob('icons/*')),
-        ('share/retext/locale', glob('locale/*.qm'))
+        ('share/retext/locale', iglob('locale/*.qm'))
       ],
       requires=requires,
       install_requires=requires,
