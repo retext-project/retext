@@ -43,6 +43,9 @@ def build_translations():
 	if error:
 		print('Failed to build translations:', error)
 
+def glob_lazy(path):
+    yield from glob(path)
+
 class retext_build(build):
 	def run(self):
 		build.run(self)
@@ -115,7 +118,7 @@ setup(name='ReText',
         ('share/appdata', ['data/me.mitya57.ReText.appdata.xml']),
         ('share/applications', ['data/me.mitya57.ReText.desktop']),
         ('share/retext/icons', glob('icons/*')),
-        ('share/retext/locale', glob('locale/*.qm'))
+        ('share/retext/locale', glob_lazy('locale/*.qm'))
       ],
       requires=requires,
       install_requires=requires,
