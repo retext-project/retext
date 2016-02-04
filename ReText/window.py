@@ -336,7 +336,6 @@ class ReTextWindow(QMainWindow):
 					self.sl = None
 			if globalSettings.spellCheck:
 				self.actionEnableSC.setChecked(True)
-				self.enableSpellCheck(True)
 		self.fileSystemWatcher = QFileSystemWatcher()
 		self.fileSystemWatcher.fileChanged.connect(self.fileChanged)
 
@@ -516,10 +515,7 @@ class ReTextWindow(QMainWindow):
 
 	def enableSpellCheck(self, yes):
 		if yes:
-			if self.sl:
-				self.setAllDictionaries(enchant.Dict(self.sl))
-			else:
-				self.setAllDictionaries(enchant.Dict())
+			self.setAllDictionaries(enchant.Dict(self.sl or None))
 		else:
 			self.setAllDictionaries(None)
 		globalSettings.spellCheck = yes
