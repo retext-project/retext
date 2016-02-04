@@ -48,7 +48,7 @@ class ReTextTab(QObject):
 		textDocument = self.editBox.document()
 		self.highlighter = ReTextHighlighter(textDocument)
 		if enchant_available and parent.actionEnableSC.isChecked():
-			self.highlighter.dictionary = enchant.Dict(parent.sl)
+			self.highlighter.dictionary = enchant.Dict(parent.sl or None)
 			self.highlighter.rehighlight()
 		self.highlighter.docType = self.markup.name
 
