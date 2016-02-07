@@ -47,6 +47,7 @@ class ReTextTab(QObject):
 		self.previewState = previewState
 		self.previewBlocked = False
 		self.previewScrollPosition = QPoint()
+		self.posmap = {}
 
 		textDocument = self.editBox.document()
 		self.highlighter = ReTextHighlighter(textDocument)
@@ -55,6 +56,7 @@ class ReTextTab(QObject):
 			self.highlighter.rehighlight()
 		self.highlighter.docType = self.markup.name
 
+		self.editBox.cursorPositionChanged.connect(self.scrollPreviewToCursorPosition)
 		self.editBox.textChanged.connect(self.updateLivePreviewBox)
 		self.editBox.undoAvailable.connect(parent.actionUndo.setEnabled)
 		self.editBox.redoAvailable.connect(parent.actionRedo.setEnabled)
@@ -177,6 +179,64 @@ class ReTextTab(QObject):
 			self.previewBox.setHtml(html, QUrl.fromLocalFile(self.fileName))
 
 	def restorePreviewScrollPosition(self):
+		frame = self.previewBox.page().mainFrame()
+
+		# Create a list of input line positions mapped to vertical pixel positions
+		# in the preview
+		self.posmap = {}
+		elements = frame.findAllElements('[data-posmap]')
+
+		if elements:
+			# If there are posmap attributes, then build a posmap
+			# dictionary from them that will be used whenever the
+			# cursor is moved.
+			for el in elements:
+				value = el.attribute('data-posmap', 'invalid')
+				self.posmap[int(value)] = el.geometry().bottom()
+
+			nr_of_lines = self.editBox.document().blockCount()
+			self.posmap[0] = 0
+			self.posmap[nr_of_lines] = frame.contentsSize().height()
+			self.scrollPreviewToCursorPosition()
+		else:
+			# If there are no posmap attributes in the HTML then just
+			# restore the scroll position that we had before the
+			# new content was loaded
+			frame = self.previewBox.page().mainFrame()
+			frame.setScrollPosition(self.previewScrollPosition)
+
+	def scrollPreviewToCursorPosition(self):
+		if not self.posmap:
+			return
+
+		# Do a binary search through the posmap to find the nearest
+		# line above and below the current cursor position for which
+		# the rendered position is known.
+		cursor = self.editBox.textCursor()
+		cursor_line = cursor.blockNumber()
+		nr_of_lines = self.editBox.document().blockCount()
+		posmap_lines = [0] + sorted(self.posmap.keys()) + [nr_of_lines]
+		min_index = 0
+		max_index = len(posmap_lines) - 1
+		while max_index - min_index > 1:
+			current_index = int((min_index + max_index) / 2)
+			if posmap_lines[current_index] > cursor_line:
+				max_index = current_index
+			else:
+				min_index = current_index
+
+		min_line = posmap_lines[min_index]
+		max_line = posmap_lines[max_index]
+
+		min_pos = self.posmap[min_line]
+		max_pos = self.posmap[max_line]
+
+		fraction_below_min_line = (cursor_line - min_line) / (max_line - min_line)
+		cursor_pos = (max_pos - min_pos) * fraction_below_min_line + min_pos
+
+		half_viewport_height = self.previewBox.page().viewportSize().height() / 2
+		self.previewScrollPosition.setY(cursor_pos - half_viewport_height)
+
 		frame = self.previewBox.page().mainFrame()
 		frame.setScrollPosition(self.previewScrollPosition)
 
