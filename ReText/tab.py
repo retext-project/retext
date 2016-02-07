@@ -1,3 +1,5 @@
+# vim: ts=8:sts=8:sw=8:noexpandtab
+#
 # This file is part of ReText
 # Copyright: 2015 Dmitry Shachnev
 #
@@ -26,7 +28,7 @@ try:
 except ImportError:
 	ReTextFakeVimHandler = None
 
-from PyQt5.QtCore import Qt, QDir, QFile, QFileInfo, QObject, QTextStream, QTimer, QUrl
+from PyQt5.QtCore import Qt, QDir, QFile, QFileInfo, QObject, QPoint, QTextStream, QTimer, QUrl
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtWidgets import QTextBrowser, QTextEdit, QSplitter
 from PyQt5.QtWebKit import QWebSettings
@@ -44,6 +46,7 @@ class ReTextTab(QObject):
 		self.markup = self.getMarkup()
 		self.previewState = previewState
 		self.previewBlocked = False
+		self.previewScrollPosition = QPoint()
 
 		textDocument = self.editBox.document()
 		self.highlighter = ReTextHighlighter(textDocument)
@@ -68,6 +71,7 @@ class ReTextTab(QObject):
 		settings = webView.settings()
 		settings.setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
 		settings.setDefaultTextEncoding('utf-8')
+		webView.loadFinished.connect(self.restorePreviewScrollPosition)
 		return webView
 
 	def createPreviewBox(self):
@@ -151,7 +155,7 @@ class ReTextTab(QObject):
 			distToBottom = scrollbar.maximum() - scrollbarValue
 		else:
 			frame = self.previewBox.page().mainFrame()
-			scrollpos = frame.scrollPosition()
+			self.previewScrollPosition = frame.scrollPosition()
 		try:
 			html = self.getHtml()
 		except Exception:
@@ -171,7 +175,10 @@ class ReTextTab(QObject):
 			settings.setFontSize(QWebSettings.DefaultFontSize,
 			                     globalSettings.font.pointSize())
 			self.previewBox.setHtml(html, QUrl.fromLocalFile(self.fileName))
-			frame.setScrollPosition(scrollpos)
+
+	def restorePreviewScrollPosition(self):
+		frame = self.previewBox.page().mainFrame()
+		frame.setScrollPosition(self.previewScrollPosition)
 
 	def updateLivePreviewBox(self):
 		if self.previewState == PreviewLive and not self.previewBlocked:
