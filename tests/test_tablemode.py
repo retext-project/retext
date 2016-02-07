@@ -1,3 +1,5 @@
+# vim: noexpandtab:ts=4:sw=4
+#
 # This file is part of ReText
 # Copyright: 2014 Maurice van der Pot
 #
@@ -44,7 +46,7 @@ class TestTableMode(unittest.TestCase):
 		# Apart from spacing edit only contains a's or d's
 		self.assertTrue(edit[1].strip(' d') == '' or
 		                edit[1].strip(' a') == '',
-						"An edit should be a sequence of a's or d's surrounded by spaces")
+		                "An edit should be a sequence of a's or d's surrounded by spaces")
 
 		rows = []
 		for paddingChar, text in zip(paddingChars, before):
@@ -91,15 +93,15 @@ class TestTableMode(unittest.TestCase):
 			                 "",
 			                 "Input:"] + \
 			                ["%3d '%s'" % (i, line) for i, line in enumerate(before)] + \
-					["",
-					 "Edit:",
-					 "%3d '%s'" % edit,
-					 "",
-					 "Expected output:"] + \
-					["%3d '%s'" % (i, line) for i, line in enumerate(after)] + \
-					["",
-					 "Actual output:"] + \
-					["%3d '%s'" % (i, line) for i, line in enumerate(editedRows)]
+			                ["",
+			                 "Edit:",
+			                 "%3d '%s'" % edit,
+			                 "",
+			                 "Expected output:"] + \
+			                ["%3d '%s'" % (i, line) for i, line in enumerate(after)] + \
+			                ["",
+			                 "Actual output:"] + \
+			                ["%3d '%s'" % (i, line) for i, line in enumerate(editedRows)]
 
 			self.fail('\n'.join(assertMessage))
 
@@ -317,15 +319,15 @@ class TestTableMode(unittest.TestCase):
 		separatorChars = '    '
 		before  = ['|    |',
 		           '     |    |',
-				   '          |    |',
-				   '     |']
+		           '          |    |',
+		           '     |']
 
 		edit = (0, '     a')
 
 		after   = ['|    a|',
 		           '      |    |',
-				   '           |    |',
-				   '      |']
+		           '           |    |',
+		           '      |']
 
 		self.checkDetermineEditLists(separatorChars, before, edit, after)
 
