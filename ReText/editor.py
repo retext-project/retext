@@ -169,8 +169,6 @@ class ReTextEdit(QTextEdit):
 	def keyPressEvent(self, event):
 		key = event.key()
 		cursor = self.textCursor()
-		if event.text() and self.tableModeEnabled:
-			cursor.beginEditBlock()
 		if key == Qt.Key_Backspace and event.modifiers() & Qt.GroupSwitchModifier:
 			# Workaround for https://bugreports.qt.io/browse/QTBUG-49771
 			event = QKeyEvent(event.type(), event.key(),
@@ -191,9 +189,11 @@ class ReTextEdit(QTextEdit):
 			else:
 				self.handleReturn(cursor)
 		else:
+			if event.text() and self.tableModeEnabled:
+				cursor.beginEditBlock()
 			QTextEdit.keyPressEvent(self, event)
-		if event.text() and self.tableModeEnabled:
-			cursor.endEditBlock()
+			if event.text() and self.tableModeEnabled:
+				cursor.endEditBlock()
 
 	def handleReturn(self, cursor):
 		# Select text between the cursor and the line start
