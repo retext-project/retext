@@ -1,3 +1,5 @@
+# vim: ts=8:sts=8:sw=8:noexpandtab
+#
 # This file is part of ReText
 # Copyright: 2012-2015 Dmitry Shachnev
 #
@@ -17,9 +19,9 @@
 from markups import MarkdownMarkup
 from ReText import globalSettings, tablemode, readFromSettings
 
-from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtCore import pyqtSignal, QRect, QSize, Qt
 from PyQt5.QtGui import QColor, QKeyEvent, QMouseEvent, QPainter, QPalette, \
-QTextCursor, QTextFormat
+QTextCursor, QTextFormat, QWheelEvent
 from PyQt5.QtWidgets import QLabel, QTextEdit, QWidget
 
 colors = {
@@ -79,6 +81,9 @@ def documentIndentLess(document, cursor, globalSettings=globalSettings):
 	cursor.endEditBlock()
 
 class ReTextEdit(QTextEdit):
+	resized = pyqtSignal(QRect)
+	scrollLimitReached = pyqtSignal(QWheelEvent)
+
 	def __init__(self, parent):
 		QTextEdit.__init__(self)
 		self.tab = parent
@@ -111,6 +116,17 @@ class ReTextEdit(QTextEdit):
 		y2 = self.rect().bottomLeft().y()
 		painter.drawLine(self.marginx, y1, self.marginx, y2)
 		QTextEdit.paintEvent(self, event)
+
+	def wheelEvent(self, event):
+		QTextEdit.wheelEvent(self, event)
+
+		if event.angleDelta().y() < 0:
+			scrollBarLimit = self.verticalScrollBar().maximum()
+		else:
+			scrollBarLimit = self.verticalScrollBar().minimum()
+
+		if self.verticalScrollBar().value() == scrollBarLimit:
+			self.scrollLimitReached.emit(event)
 
 	def scrollContentsBy(self, dx, dy):
 		QTextEdit.scrollContentsBy(self, dx, dy)
@@ -208,6 +224,7 @@ class ReTextEdit(QTextEdit):
 	def resizeEvent(self, event):
 		QTextEdit.resizeEvent(self, event)
 		rect = self.contentsRect()
+		self.resized.emit(rect)
 		self.lineNumberArea.setGeometry(rect.left(), rect.top(),
 			self.lineNumberAreaWidth(), rect.height())
 		self.infoArea.updateTextAndGeometry()

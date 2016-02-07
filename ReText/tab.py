@@ -22,6 +22,7 @@ from markups.common import MODULE_HOME_PAGE
 from ReText import app_version, enchant, enchant_available, globalSettings
 from ReText.editor import ReTextEdit
 from ReText.highlighter import ReTextHighlighter
+from ReText.syncscroll import SyncScroll
 
 try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler
@@ -42,12 +43,10 @@ class ReTextTab(QObject):
 		self.p = parent
 		self.fileName = fileName
 		self.editBox = ReTextEdit(self)
-		self.previewBox = self.createPreviewBox()
+		self.previewBox = self.createPreviewBox(self.editBox)
 		self.markup = self.getMarkup()
 		self.previewState = previewState
 		self.previewBlocked = False
-		self.previewScrollPosition = QPoint()
-		self.posmap = {}
 
 		textDocument = self.editBox.document()
 		self.highlighter = ReTextHighlighter(textDocument)
@@ -56,31 +55,35 @@ class ReTextTab(QObject):
 			self.highlighter.rehighlight()
 		self.highlighter.docType = self.markup.name
 
-		self.editBox.cursorPositionChanged.connect(self.scrollPreviewToCursorPosition)
 		self.editBox.textChanged.connect(self.updateLivePreviewBox)
 		self.editBox.undoAvailable.connect(parent.actionUndo.setEnabled)
 		self.editBox.redoAvailable.connect(parent.actionRedo.setEnabled)
 		self.editBox.copyAvailable.connect(parent.actionCopy.setEnabled)
+
 		textDocument.modificationChanged.connect(parent.modificationChanged)
 
 		self.updateBoxesVisibility()
 
-	def createWebView(self):
-		webView = QWebView()
-		if not globalSettings.handleWebLinks:
-			webView.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
-			webView.page().linkClicked.connect(QDesktopServices.openUrl)
-		settings = webView.settings()
-		settings.setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
-		settings.setDefaultTextEncoding('utf-8')
-		webView.loadFinished.connect(self.restorePreviewScrollPosition)
-		return webView
+	def editorPositionToSourceLine(self, editorPosition):
+		viewportPosition = editorPosition - self.editBox.verticalScrollBar().value()
+		sourceLine = self.editBox.cursorForPosition(QPoint(0,viewportPosition)).blockNumber()
+		return sourceLine
 
-	def createPreviewBox(self):
+	def sourceLineToEditorPosition(self, sourceLine):
+		doc = self.editBox.document()
+		block = doc.findBlockByNumber(sourceLine)
+		rect = doc.documentLayout().blockBoundingRect(block)
+		return rect.top()
+
+	def createPreviewBox(self, editBox):
 		if globalSettings.useWebKit:
-			return self.createWebView()
-		browser = ReTextPreview(self)
-		return browser
+			preview = ReTextWebPreview(editBox,
+			                           self.editorPositionToSourceLine,
+						   self.sourceLineToEditorPosition)
+		else:
+			preview = ReTextPreview(self)
+
+		return preview
 
 	def getSplitter(self):
 		splitter = QSplitter(Qt.Horizontal)
@@ -155,9 +158,6 @@ class ReTextTab(QObject):
 			scrollbar = self.previewBox.verticalScrollBar()
 			scrollbarValue = scrollbar.value()
 			distToBottom = scrollbar.maximum() - scrollbarValue
-		else:
-			frame = self.previewBox.page().mainFrame()
-			self.previewScrollPosition = frame.scrollPosition()
 		try:
 			html = self.getHtml()
 		except Exception:
@@ -177,68 +177,6 @@ class ReTextTab(QObject):
 			settings.setFontSize(QWebSettings.DefaultFontSize,
 			                     globalSettings.font.pointSize())
 			self.previewBox.setHtml(html, QUrl.fromLocalFile(self.fileName))
-
-	def restorePreviewScrollPosition(self):
-		frame = self.previewBox.page().mainFrame()
-
-		# Create a list of input line positions mapped to vertical pixel positions
-		# in the preview
-		self.posmap = {}
-		elements = frame.findAllElements('[data-posmap]')
-
-		if elements:
-			# If there are posmap attributes, then build a posmap
-			# dictionary from them that will be used whenever the
-			# cursor is moved.
-			for el in elements:
-				value = el.attribute('data-posmap', 'invalid')
-				self.posmap[int(value)] = el.geometry().bottom()
-
-			nr_of_lines = self.editBox.document().blockCount()
-			self.posmap[0] = 0
-			self.posmap[nr_of_lines] = frame.contentsSize().height()
-			self.scrollPreviewToCursorPosition()
-		else:
-			# If there are no posmap attributes in the HTML then just
-			# restore the scroll position that we had before the
-			# new content was loaded
-			frame = self.previewBox.page().mainFrame()
-			frame.setScrollPosition(self.previewScrollPosition)
-
-	def scrollPreviewToCursorPosition(self):
-		if not self.posmap:
-			return
-
-		# Do a binary search through the posmap to find the nearest
-		# line above and below the current cursor position for which
-		# the rendered position is known.
-		cursor = self.editBox.textCursor()
-		cursor_line = cursor.blockNumber()
-		nr_of_lines = self.editBox.document().blockCount()
-		posmap_lines = [0] + sorted(self.posmap.keys()) + [nr_of_lines]
-		min_index = 0
-		max_index = len(posmap_lines) - 1
-		while max_index - min_index > 1:
-			current_index = int((min_index + max_index) / 2)
-			if posmap_lines[current_index] > cursor_line:
-				max_index = current_index
-			else:
-				min_index = current_index
-
-		min_line = posmap_lines[min_index]
-		max_line = posmap_lines[max_index]
-
-		min_pos = self.posmap[min_line]
-		max_pos = self.posmap[max_line]
-
-		fraction_below_min_line = (cursor_line - min_line) / (max_line - min_line)
-		cursor_pos = (max_pos - min_pos) * fraction_below_min_line + min_pos
-
-		half_viewport_height = self.previewBox.page().viewportSize().height() / 2
-		self.previewScrollPosition.setY(cursor_pos - half_viewport_height)
-
-		frame = self.previewBox.page().mainFrame()
-		frame.setScrollPosition(self.previewScrollPosition)
 
 	def updateLivePreviewBox(self):
 		if self.previewState == PreviewLive and not self.previewBlocked:
@@ -295,6 +233,58 @@ class ReTextTab(QObject):
 			# TODO: action is bool, really call remove?
 			self.p.actionFakeVimMode.triggered.connect(fakeVimEditor.remove)
 
+class ReTextWebPreview(QWebView):
+
+	def __init__(self, editBox,
+	             editorPositionToSourceLineFunc,
+	             sourceLineToEditorPositionFunc):
+
+		QWebView.__init__(self)
+
+		self.editBox = editBox
+
+		if not globalSettings.handleWebLinks:
+			self.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
+			self.page().linkClicked.connect(QDesktopServices.openUrl)
+		self.settings().setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
+		self.settings().setDefaultTextEncoding('utf-8')
+
+		self.syncscroll = SyncScroll(self.page().mainFrame(),
+					     editorPositionToSourceLineFunc,
+					     sourceLineToEditorPositionFunc)
+
+		# Events relevant to sync scrolling
+		self.editBox.cursorPositionChanged.connect(self._handleCursorPositionChanged)
+		self.editBox.verticalScrollBar().valueChanged.connect(self.syncscroll.handleEditorScrolled)
+		self.editBox.resized.connect(self._handleEditorResized)
+
+		# Scroll the preview when the mouse wheel is used to scroll
+		# beyond the beginning/end of the editor
+		self.editBox.scrollLimitReached.connect(self._handleWheelEvent)
+
+	def disconnectExternalSignals(self):
+		self.editBox.cursorPositionChanged.disconnect(self._handleCursorPositionChanged)
+		self.editBox.verticalScrollBar().valueChanged.disconnect(self.syncscroll.handleEditorScrolled)
+		self.editBox.resized.disconnect(self._handleEditorResized)
+
+		self.editBox.scrollLimitReached.disconnect(self._handleWheelEvent)
+
+	def _handleWheelEvent(self, event):
+		"""
+		Use this intermediate function because it is not possible to
+		disconnect a built-in method. It would generate the following error:
+		  TypeError: 'builtin_function_or_method' object is not connected
+		"""
+		self.wheelEvent(event)
+
+	def _handleCursorPositionChanged(self):
+		editorCursorPosition = self.editBox.verticalScrollBar().value() + \
+				       self.editBox.cursorRect().top()
+		self.syncscroll.handleCursorPositionChanged(editorCursorPosition)
+
+	def _handleEditorResized(self, rect):
+		self.syncscroll.handleEditorResized(rect.height())
+
 
 class ReTextPreview(QTextBrowser):
 	"""
@@ -309,6 +299,9 @@ class ReTextPreview(QTextBrowser):
 		# if set to True, links to other files will unsuccessfully be opened as anchors
 		self.setOpenLinks(False)
 		self.anchorClicked.connect(self.openInternal)
+
+	def disconnectExternalSignals(self):
+		pass
 
 	def openInternal(self, link):
 		url = link.url()

@@ -1,3 +1,5 @@
+# vim: ts=8:sts=8:sw=8:noexpandtab
+#
 # This file is part of ReText
 # Copyright: 2012-2015 Dmitry Shachnev
 #
@@ -480,9 +482,10 @@ class ReTextWindow(QMainWindow):
 		for i in range(self.tabWidget.count()):
 			splitter = self.tabWidget.widget(i)
 			tab = splitter.tab
+			tab.previewBox.disconnectExternalSignals()
 			tab.previewBox.setParent(None)
 			tab.previewBox.deleteLater()
-			tab.previewBox = tab.createPreviewBox()
+			tab.previewBox = tab.createPreviewBox(tab.editBox)
 			tab.previewBox.setMinimumWidth(125)
 			splitter.addWidget(tab.previewBox)
 			splitter.setSizes((50, 50))
