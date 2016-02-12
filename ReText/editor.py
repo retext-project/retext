@@ -116,25 +116,6 @@ class ReTextEdit(QTextEdit):
 		QTextEdit.scrollContentsBy(self, dx, dy)
 		self.lineNumberArea.update()
 
-	def lineNumberAreaPaintEvent(self, event):
-		painter = QPainter(self.lineNumberArea)
-		painter.fillRect(event.rect(), colorValues['lineNumberArea'])
-		cursor = QTextCursor(self.document())
-		cursor.movePosition(QTextCursor.Start)
-		atEnd = False
-		while not atEnd:
-			rect = self.cursorRect(cursor)
-			block = cursor.block()
-			if block.isVisible():
-				number = str(cursor.blockNumber() + 1)
-				painter.setPen(colorValues['lineNumberAreaText'])
-				painter.drawText(0, rect.top(), self.lineNumberArea.width()-2,
-					self.fontMetrics().height(), Qt.AlignRight, number)
-			cursor.movePosition(QTextCursor.EndOfBlock)
-			atEnd = cursor.atEnd()
-			if not atEnd:
-				cursor.movePosition(QTextCursor.NextBlock)
-
 	def contextMenuEvent(self, event):
 		text = self.toPlainText()
 		dictionary = self.tab.highlighter.dictionary
@@ -269,8 +250,25 @@ class LineNumberArea(QWidget):
 		return QSize(self.editor.lineNumberAreaWidth(), 0)
 
 	def paintEvent(self, event):
-		if globalSettings.lineNumbersEnabled:
-			return self.editor.lineNumberAreaPaintEvent(event)
+		if not globalSettings.lineNumbersEnabled:
+			return QWidget.paintEvent(self, event)
+		painter = QPainter(self)
+		painter.fillRect(event.rect(), colorValues['lineNumberArea'])
+		cursor = QTextCursor(self.editor.document())
+		cursor.movePosition(QTextCursor.Start)
+		atEnd = False
+		while not atEnd:
+			rect = self.editor.cursorRect(cursor)
+			block = cursor.block()
+			if block.isVisible():
+				number = str(cursor.blockNumber() + 1)
+				painter.setPen(colorValues['lineNumberAreaText'])
+				painter.drawText(0, rect.top(), self.width() - 2,
+					self.fontMetrics().height(), Qt.AlignRight, number)
+			cursor.movePosition(QTextCursor.EndOfBlock)
+			atEnd = cursor.atEnd()
+			if not atEnd:
+				cursor.movePosition(QTextCursor.NextBlock)
 
 class InfoArea(QLabel):
 	def __init__(self, editor):
