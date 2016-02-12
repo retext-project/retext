@@ -300,3 +300,20 @@ class InfoArea(QLabel):
 		block = cursor.blockNumber() + 1
 		position = cursor.positionInBlock()
 		return template % (block, position)
+
+	def enterEvent(self, *args):
+		palette = self.palette()
+		windowColor = QColor(colorValues['infoArea'])
+		windowColor.setAlpha(0x20)
+		palette.setColor(QPalette.Window, windowColor)
+		textColor = palette.color(QPalette.WindowText)
+		textColor.setAlpha(0x20)
+		palette.setColor(QPalette.WindowText, textColor)
+		self.setPalette(palette)
+
+	def leaveEvent(self, *args):
+		palette = self.palette()
+		palette.setColor(QPalette.Window, colorValues['infoArea'])
+		palette.setColor(QPalette.WindowText,
+			self.editor.palette().color(QPalette.WindowText))
+		self.setPalette(palette)
