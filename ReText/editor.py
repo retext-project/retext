@@ -18,7 +18,8 @@ from markups import MarkdownMarkup
 from ReText import globalSettings, tablemode, readFromSettings
 
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtGui import QColor, QKeyEvent, QPainter, QPalette, QTextCursor, QTextFormat
+from PyQt5.QtGui import QColor, QKeyEvent, QMouseEvent, QPainter, QPalette, \
+QTextCursor, QTextFormat
 from PyQt5.QtWidgets import QLabel, QTextEdit, QWidget
 
 colors = {
@@ -281,6 +282,7 @@ class InfoArea(QLabel):
 		palette = self.palette()
 		palette.setColor(QPalette.Window, colorValues['infoArea'])
 		self.setPalette(palette)
+		self.setCursor(Qt.IBeamCursor)
 
 	def updateTextAndGeometry(self):
 		text = self.getText()
@@ -317,3 +319,17 @@ class InfoArea(QLabel):
 		palette.setColor(QPalette.WindowText,
 			self.editor.palette().color(QPalette.WindowText))
 		self.setPalette(palette)
+
+	def forwardMouseEvent():
+		def newHandler(self, event):
+			pos = self.mapToParent(event.pos())
+			newEvent = QMouseEvent(event.type(), pos,
+			                       event.button(), event.buttons(),
+			                       event.modifiers())
+			self.editor.mousePressEvent(newEvent)
+		return newHandler
+
+	mousePressEvent = forwardMouseEvent()
+	mouseReleaseEvent = forwardMouseEvent()
+	mouseDoubleClickEvent = forwardMouseEvent()
+	mouseMoveEvent = forwardMouseEvent()
