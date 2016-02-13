@@ -248,6 +248,8 @@ class ReTextWebPreview(QWebView):
 			self.page().linkClicked.connect(QDesktopServices.openUrl)
 		self.settings().setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
 		self.settings().setDefaultTextEncoding('utf-8')
+		# Avoid caching of CSS
+		self.settings().setObjectCacheCapacities(0,0,0)
 
 		self.syncscroll = SyncScroll(self.page().mainFrame(),
 					     editorPositionToSourceLineFunc,
