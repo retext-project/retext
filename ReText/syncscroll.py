@@ -27,7 +27,7 @@ class SyncScroll:
         self.sourceLineToEditorPosition = sourceLineToEditorPositionFunc
 
         self.lastPreviewPosition = QPoint()
-        self.scrollPositionNeedsRestore = False
+        self.scrollPositionNeedsRestoreAfterLoad = False
 
         self.editorViewportHeight = 0
         self.editorViewportOffset = 0
@@ -35,6 +35,7 @@ class SyncScroll:
 
         self.frame.contentsSizeChanged.connect(self._handlePreviewResized)
         self.frame.loadStarted.connect(self._handleLoadStarted)
+        self.frame.loadFinished.connect(self._handleLoadFinished)
 
     def handleEditorResized(self, editorViewportHeight):
         self.editorViewportHeight = editorViewportHeight
@@ -50,7 +51,12 @@ class SyncScroll:
 
     def _handleLoadStarted(self):
         self.lastPreviewPosition = self.frame.scrollPosition()
-        self.scrollPositionNeedsRestore = True
+        self.scrollPositionNeedsRestoreAfterLoad = True
+
+    def _handleLoadFinished(self):
+        if self.scrollPositionNeedsRestoreAfterLoad:
+            self.frame.setScrollPosition(self.lastPreviewPosition)
+            self.scrollPositionNeedsRestoreAfterLoad= False
 
     def _handlePreviewResized(self):
         self._recalculatePositionMap()
@@ -69,10 +75,6 @@ class SyncScroll:
 
     def _updatePreviewScrollPosition(self):
         if not self.posmap:
-
-            if self.scrollPositionNeedsRestore:
-                self.frame.setScrollPosition(self.lastPreviewPosition)
-                self.scrollPositionNeedsRestore = False
             return
 
         textedit_pixel_to_scroll_to = self.editorCursorPosition
