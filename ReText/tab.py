@@ -277,7 +277,10 @@ class ReTextWebPreview(QWebView):
 		disconnect a built-in method. It would generate the following error:
 		  TypeError: 'builtin_function_or_method' object is not connected
 		"""
-		self.wheelEvent(event)
+		# Only pass wheelEvents on to the preview if syncscroll is
+		# controlling the position of the preview
+		if self.syncscroll.isActive():
+			self.wheelEvent(event)
 
 	def _handleCursorPositionChanged(self):
 		editorCursorPosition = self.editBox.verticalScrollBar().value() + \

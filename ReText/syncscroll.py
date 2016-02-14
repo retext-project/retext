@@ -37,6 +37,9 @@ class SyncScroll:
         self.frame.loadStarted.connect(self._handleLoadStarted)
         self.frame.loadFinished.connect(self._handleLoadFinished)
 
+    def isActive(self):
+        return bool(self.posmap)
+
     def handleEditorResized(self, editorViewportHeight):
         self.editorViewportHeight = editorViewportHeight
         self._updatePreviewScrollPosition()
