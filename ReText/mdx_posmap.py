@@ -72,3 +72,4 @@ class PosMapBlockProcessor(BlockProcessor):
 
 def makeExtension(*args, **kwargs):
     return PosMapExtension(*args, **kwargs)
+
