@@ -123,7 +123,7 @@ class ReTextTab(QObject):
 			return (basename if basename else fileinfo.fileName())
 		return self.tr("New document")
 
-	def getHtml(self, includeStyleSheet=True, includeMeta=False, webenv=False):
+	def getHtml(self, includeStyleSheet=True, webenv=False):
 		if self.markup is None:
 			markupClass = self.getMarkupClass()
 			errMsg = self.tr('Could not parse file contents, check if '
@@ -144,9 +144,7 @@ class ReTextTab(QObject):
 		if QFile.exists(cssFileName):
 			headers += ('<link rel="stylesheet" type="text/css" href="%s">\n'
 			% cssFileName)
-		if includeMeta:
-			headers += ('<meta name="generator" content="ReText %s">\n'
-			% app_version)
+		headers += ('<meta name="generator" content="ReText %s">\n' % app_version)
 		return self.markup.get_whole_html(text,
 			custom_headers=headers, include_stylesheet=includeStyleSheet,
 			fallback_title=baseName, webenv=webenv)

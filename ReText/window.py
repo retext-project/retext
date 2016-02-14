@@ -809,7 +809,7 @@ class ReTextWindow(QMainWindow):
 			fileName += ".html"
 		try:
 			htmltext = self.currentTab.getHtml(includeStyleSheet=False,
-				includeMeta=True, webenv=True)
+				webenv=True)
 		except Exception:
 			return self.printError()
 		htmlFile = QFile(fileName)
