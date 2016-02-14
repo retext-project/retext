@@ -72,6 +72,7 @@ class ConfigDialog(QDialog):
 			(self.tr('Open external links in ReText window'), 'handleWebLinks'),
 			(self.tr('Markdown syntax extensions (comma-separated)'), 'markdownExtensions'),
 			(None, 'markdownExtensions'),
+			(self.tr('Enable synchronized scrolling for Markdown'), 'syncScroll'),
 		#	(self.tr('Default Markdown file extension'), 'markdownDefaultFileExtension'),
 		#	(self.tr('Default reStructuredText file extension'), 'restDefaultFileExtension'),
 			(self.tr('Editor'), None),

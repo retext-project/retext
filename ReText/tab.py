@@ -123,7 +123,7 @@ class ReTextTab(QObject):
 			return (basename if basename else fileinfo.fileName())
 		return self.tr("New document")
 
-	def getHtml(self, includeStyleSheet=True, webenv=False):
+	def getHtml(self, includeStyleSheet=True, webenv=False, syncScroll=False):
 		if self.markup is None:
 			markupClass = self.getMarkupClass()
 			errMsg = self.tr('Could not parse file contents, check if '
@@ -145,6 +145,9 @@ class ReTextTab(QObject):
 			headers += ('<link rel="stylesheet" type="text/css" href="%s">\n'
 			% cssFileName)
 		headers += ('<meta name="generator" content="ReText %s">\n' % app_version)
+		self.markup.requested_extensions = []
+		if syncScroll:
+			self.markup.requested_extensions.append('ReText.mdx_posmap')
 		return self.markup.get_whole_html(text,
 			custom_headers=headers, include_stylesheet=includeStyleSheet,
 			fallback_title=baseName, webenv=webenv)
@@ -156,7 +159,7 @@ class ReTextTab(QObject):
 			scrollbarValue = scrollbar.value()
 			distToBottom = scrollbar.maximum() - scrollbarValue
 		try:
-			html = self.getHtml()
+			html = self.getHtml(syncScroll=globalSettings.syncScroll)
 		except Exception:
 			return self.p.printError()
 		if isinstance(self.previewBox, QTextEdit):

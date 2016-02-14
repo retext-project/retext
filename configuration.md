@@ -30,6 +30,7 @@ option name                    | type      | description
 `spellCheck`                   | boolean   | whether to enable spell checking
 `spellCheckLocale`             | string    | short name of spell check locale to use (examples: `en_US`, `ru`, `pt_BR`)
 `styleSheet`                   | file path | CSS file to use in preview area
+`syncScroll`                   | boolean   | whether to enable synchronized scrolling for Markdown (default: true)
 `tabInsertsSpaces`             | boolean   | whether Tab key should insert spaces instead of tabs (default: true)
 `tabWidth`                     | integer   | the width of tab character (default: 4)
 `uiLanguage`                   | string    | short name of locale to use for interface (examples: `en_US, `ru, `pt_BR`)
