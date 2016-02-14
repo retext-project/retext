@@ -50,6 +50,17 @@ class SyncScroll:
         self._recalculatePositionMap()
         self._updatePreviewScrollPosition()
 
+    def linearScale(self, fromValue, fromMin, fromMax, toMin, toMax):
+        fromRange = fromMax - fromMin
+        toRange = toMax - toMin
+
+        toValue = toMin
+
+        if fromRange:
+            toValue += ((fromValue - fromMin) * toRange) / float(fromRange)
+
+        return toValue
+
     def _updatePreviewScrollPosition(self):
         if not self.posmap:
             return
@@ -63,11 +74,7 @@ class SyncScroll:
         if textedit_pixel_to_scroll_to > last_viewport_pixel:
             textedit_pixel_to_scroll_to = last_viewport_pixel
 
-        #print('decided to scroll to pixel position', textedit_pixel_to_scroll_to)
-
         line_to_scroll_to = self.editorPositionToSourceLine(textedit_pixel_to_scroll_to)
-
-        #print('this corresponds to source line', line_to_scroll_to)
 
         # Do a binary search through the posmap to find the nearest line above
         # and below the line to scroll to for which the rendered position is
@@ -89,21 +96,18 @@ class SyncScroll:
         min_textedit_pos = self.sourceLineToEditorPosition(min_line)
         max_textedit_pos = self.sourceLineToEditorPosition(max_line)
 
-        #print('posmap marker above is at line %d (at pixel position %d)' % (min_line, min_textedit_pos))
-        #print('posmap marker below is at line %d (at pixel position %d)' % (max_line, max_textedit_pos))
-
         # rendered pixel position of nearest line above and below
         min_preview_pos = self.posmap[min_line]
         max_preview_pos = self.posmap[max_line]
 
-        #print('posmap marker above is rendered at pixel position %d' % min_preview_pos)
-        #print('posmap marker below is rendered at pixel position %d' % max_preview_pos)
-
         # calculate rendered pixel position of line corresponding to cursor
         # (0 == top of document)
-        fraction_below_min_textedit_pos = (textedit_pixel_to_scroll_to - min_textedit_pos) / (max_textedit_pos - min_textedit_pos)
-        preview_pixel_to_scroll_to = (fraction_below_min_textedit_pos * (max_preview_pos - min_preview_pos)) + min_preview_pos
-        preview_scroll_offset = preview_pixel_to_scroll_to - (textedit_pixel_to_scroll_to - self.editorViewportOffset)
+        preview_pixel_to_scroll_to = self.linearScale(textedit_pixel_to_scroll_to,
+                                                      min_textedit_pos, max_textedit_pos,
+                                                      min_preview_pos, max_preview_pos)
+
+        distance_to_top_of_viewport = textedit_pixel_to_scroll_to - self.editorViewportOffset
+        preview_scroll_offset = preview_pixel_to_scroll_to - distance_to_top_of_viewport
 
         self.lastPreviewPosition = self.frame.scrollPosition()
         self.lastPreviewPosition.setY(preview_scroll_offset)
@@ -114,16 +118,19 @@ class SyncScroll:
         self.posmap = {}
         elements = self.frame.findAllElements('[data-posmap]')
 
-        if elements.count() != 0:
+        if elements:
             # If there are posmap attributes, then build a posmap
             # dictionary from them that will be used whenever the
             # cursor is moved.
-            for i in range(elements.count()):
-                el = elements.at(i)
+            for el in elements:
                 value = el.attribute('data-posmap', 'invalid')
-                #print('Value of element %s is %s' % (el, value))
                 bottom = el.geometry().bottom()
-                self.posmap[int(value)] = bottom
+
+                # Ignore data-posmap entries that do not have integer values
+                try:
+                    self.posmap[int(value)] = bottom
+                except ValueError:
+                    pass
 
             self.posmap[0] = 0
 
