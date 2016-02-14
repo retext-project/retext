@@ -79,7 +79,7 @@ class ReTextTab(QObject):
 		if globalSettings.useWebKit:
 			preview = ReTextWebPreview(editBox,
 			                           self.editorPositionToSourceLine,
-						   self.sourceLineToEditorPosition)
+			                           self.sourceLineToEditorPosition)
 		else:
 			preview = ReTextPreview(self)
 
