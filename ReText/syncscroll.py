@@ -27,12 +27,14 @@ class SyncScroll:
         self.sourceLineToEditorPosition = sourceLineToEditorPositionFunc
 
         self.lastPreviewPosition = QPoint()
+        self.scrollPositionNeedsRestore = False
 
         self.editorViewportHeight = 0
         self.editorViewportOffset = 0
         self.editorCursorPosition = 0
 
-        previewFrame.contentsSizeChanged.connect(self._handlePreviewResized)
+        self.frame.contentsSizeChanged.connect(self._handlePreviewResized)
+        self.frame.loadStarted.connect(self._handleLoadStarted)
 
     def handleEditorResized(self, editorViewportHeight):
         self.editorViewportHeight = editorViewportHeight
@@ -46,11 +48,15 @@ class SyncScroll:
         self.editorCursorPosition = editorCursorPosition
         return self._updatePreviewScrollPosition()
 
+    def _handleLoadStarted(self):
+        self.lastPreviewPosition = self.frame.scrollPosition()
+        self.scrollPositionNeedsRestore = True
+
     def _handlePreviewResized(self):
         self._recalculatePositionMap()
         self._updatePreviewScrollPosition()
 
-    def linearScale(self, fromValue, fromMin, fromMax, toMin, toMax):
+    def _linearScale(self, fromValue, fromMin, fromMax, toMin, toMax):
         fromRange = fromMax - fromMin
         toRange = toMax - toMin
 
@@ -63,6 +69,10 @@ class SyncScroll:
 
     def _updatePreviewScrollPosition(self):
         if not self.posmap:
+
+            if self.scrollPositionNeedsRestore:
+                self.frame.setScrollPosition(self.lastPreviewPosition)
+                self.scrollPositionNeedsRestore = False
             return
 
         textedit_pixel_to_scroll_to = self.editorCursorPosition
@@ -102,7 +112,7 @@ class SyncScroll:
 
         # calculate rendered pixel position of line corresponding to cursor
         # (0 == top of document)
-        preview_pixel_to_scroll_to = self.linearScale(textedit_pixel_to_scroll_to,
+        preview_pixel_to_scroll_to = self._linearScale(textedit_pixel_to_scroll_to,
                                                       min_textedit_pos, max_textedit_pos,
                                                       min_preview_pos, max_preview_pos)
 
