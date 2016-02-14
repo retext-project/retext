@@ -1065,8 +1065,7 @@ class ReTextWindow(QMainWindow):
 	def viewHtml(self):
 		htmlDlg = HtmlDialog(self)
 		try:
-			htmltext = self.currentTab.getHtml(includeStyleSheet=False,
-				includeTitle=False)
+			htmltext = self.currentTab.getHtml(includeStyleSheet=False)
 		except Exception:
 			return self.printError()
 		winTitle = self.currentTab.getDocumentTitle(baseName=True)
