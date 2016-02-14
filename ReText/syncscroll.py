@@ -26,8 +26,8 @@ class SyncScroll:
         self.editorPositionToSourceLine = editorPositionToSourceLineFunc
         self.sourceLineToEditorPosition = sourceLineToEditorPositionFunc
 
-        self.lastPreviewPosition = QPoint()
-        self.scrollPositionNeedsRestoreAfterLoad = False
+        self.previewPositionBeforeLoad = QPoint()
+        self.contentIsLoading = False
 
         self.editorViewportHeight = 0
         self.editorViewportOffset = 0
@@ -50,13 +50,13 @@ class SyncScroll:
         return self._updatePreviewScrollPosition()
 
     def _handleLoadStarted(self):
-        self.lastPreviewPosition = self.frame.scrollPosition()
-        self.scrollPositionNeedsRestoreAfterLoad = True
+        # Store the current scroll position so it can be restored when the new
+        # content is presented
+        self.previewPositionBeforeLoad = self.frame.scrollPosition()
+        self.contentIsLoading = True
 
     def _handleLoadFinished(self):
-        if self.scrollPositionNeedsRestoreAfterLoad:
-            self.frame.setScrollPosition(self.lastPreviewPosition)
-            self.scrollPositionNeedsRestoreAfterLoad= False
+        self.contentIsLoading = False
 
     def _handlePreviewResized(self):
         self._recalculatePositionMap()
@@ -75,6 +75,11 @@ class SyncScroll:
 
     def _updatePreviewScrollPosition(self):
         if not self.posmap:
+            # Loading new content resets the scroll position to the top. If we
+            # don't have a posmap to calculate the new best position, then
+            # restore the position stored at the beginning of the load.
+            if self.contentIsLoading:
+                self.frame.setScrollPosition(self.previewPositionBeforeLoad)
             return
 
         textedit_pixel_to_scroll_to = self.editorCursorPosition
@@ -121,9 +126,9 @@ class SyncScroll:
         distance_to_top_of_viewport = textedit_pixel_to_scroll_to - self.editorViewportOffset
         preview_scroll_offset = preview_pixel_to_scroll_to - distance_to_top_of_viewport
 
-        self.lastPreviewPosition = self.frame.scrollPosition()
-        self.lastPreviewPosition.setY(preview_scroll_offset)
-        self.frame.setScrollPosition(self.lastPreviewPosition)
+        pos = self.frame.scrollPosition()
+        pos.setY(preview_scroll_offset)
+        self.frame.setScrollPosition(pos)
 
     def _recalculatePositionMap(self):
         # Create a list of input line positions mapped to vertical pixel positions in the preview
