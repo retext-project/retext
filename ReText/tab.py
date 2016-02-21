@@ -29,7 +29,7 @@ try:
 except ImportError:
 	ReTextFakeVimHandler = None
 
-from PyQt5.QtCore import Qt, QDir, QFile, QFileInfo, QObject, QPoint, QTextStream, QTimer, QUrl
+from PyQt5.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QObject, QPoint, QTextStream, QTimer, QUrl
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtWidgets import QTextBrowser, QTextEdit, QSplitter
 from PyQt5.QtWebKit import QWebSettings
@@ -38,13 +38,28 @@ from PyQt5.QtWebKitWidgets import QWebPage, QWebView
 PreviewDisabled, PreviewLive, PreviewNormal = range(3)
 
 class ReTextTab(QObject):
-	def __init__(self, parent, fileName, previewState=PreviewDisabled):
+
+	fileNameChanged = pyqtSignal()
+	modificationStateChanged = pyqtSignal()
+	activeMarkupChanged = pyqtSignal()
+
+	# Make _fileName a read-only property to make sure that any
+	# modification happens through the proper functions. These functions
+	# will make sure that the fileNameChanged signal is emitted when
+	# applicable.
+	@property
+	def fileName(self):
+		return self._fileName
+
+	def __init__(self, parent, fileName, defaultMarkup, previewState=PreviewDisabled):
 		QObject.__init__(self, parent)
 		self.p = parent
-		self.fileName = fileName
+		self._fileName = fileName
 		self.editBox = ReTextEdit(self)
 		self.previewBox = self.createPreviewBox(self.editBox)
-		self.markup = self.getMarkup()
+		self.defaultMarkupClass = defaultMarkup
+		self.activeMarkupClass = None
+		self.markup = None
 		self.previewState = previewState
 		self.previewBlocked = False
 
@@ -52,17 +67,21 @@ class ReTextTab(QObject):
 		self.highlighter = ReTextHighlighter(textDocument)
 		if enchant_available and parent.actionEnableSC.isChecked():
 			self.highlighter.dictionary = enchant.Dict(parent.sl or None)
-			self.highlighter.rehighlight()
-		self.highlighter.docType = self.markup.name
+			# Rehighlighting is tied to the change in markup class that
+			# happens at the end of this function
 
 		self.editBox.textChanged.connect(self.updateLivePreviewBox)
 		self.editBox.undoAvailable.connect(parent.actionUndo.setEnabled)
 		self.editBox.redoAvailable.connect(parent.actionRedo.setEnabled)
 		self.editBox.copyAvailable.connect(parent.actionCopy.setEnabled)
 
-		textDocument.modificationChanged.connect(parent.modificationChanged)
+		textDocument.modificationChanged.connect(self.handleModificationChanged)
 
+		self.updateActiveMarkupClass()
 		self.updateBoxesVisibility()
+
+	def handleModificationChanged(self):
+		self.modificationStateChanged.emit()
 
 	def editorPositionToSourceLine(self, editorPosition):
 		viewportPosition = editorPosition - self.editBox.verticalScrollBar().value()
@@ -97,18 +116,58 @@ class ReTextTab(QObject):
 		splitter.tab = self
 		return splitter
 
-	def getMarkupClass(self):
-		if self.fileName:
+	def setDefaultMarkupClass(self, markupClass):
+		'''
+		Set the default markup class to use in case a markup that
+		matches the filename cannot be found. This function calls
+		updateActiveMarkupClass so it can decide if the active 
+		markup class also has to change.
+		'''
+		self.defaultMarkupClass = markupClass
+		self.updateActiveMarkupClass()
+
+	def getActiveMarkupClass(self):
+		'''
+		Return the currently active markup class for this tab.
+		No objects should be created of this class, it should
+		only be used to retrieve markup class specific information.
+		'''
+		return self.activeMarkupClass
+
+	def updateActiveMarkupClass(self):
+		'''
+		Update the active markup class based on the default class and
+		the current filename. If the active markup class changes, the
+		highlighter is rerun on the input text, the markup object of
+		this tab is replaced with one of the new class and the
+		activeMarkupChanged signal is emitted.
+		'''
+		previousMarkupClass = self.activeMarkupClass
+
+		self.activeMarkupClass = self.defaultMarkupClass
+
+		if self._fileName:
 			markupClass = get_markup_for_file_name(
-				self.fileName, return_class=True)
+				self._fileName, return_class=True)
 			if markupClass:
-				return markupClass
-		return self.p.defaultMarkup
+				self.activeMarkupClass = markupClass
+
+		if self.activeMarkupClass != previousMarkupClass:
+			self.highlighter.docType = self.activeMarkupClass.name if self.activeMarkupClass else None
+			self.highlighter.rehighlight()
+
+			# for now create a markup object here
+			self.markup = self.getMarkup()
+
+			# TODO: trigger a preview update here?
+
+			self.activeMarkupChanged.emit()
 
 	def getMarkup(self):
-		markupClass = self.getMarkupClass()
+		markupClass = self.getActiveMarkupClass()
 		if markupClass and markupClass.available():
-			return markupClass(filename=self.fileName)
+			return markupClass(filename=self._fileName)
+		return None
 
 	def getDocumentTitle(self, baseName=False):
 		if self.markup and not baseName:
@@ -117,15 +176,15 @@ class ReTextTab(QObject):
 				return self.markup.get_document_title(text)
 			except Exception:
 				self.p.printError()
-		if self.fileName:
-			fileinfo = QFileInfo(self.fileName)
+		if self._fileName:
+			fileinfo = QFileInfo(self._fileName)
 			basename = fileinfo.completeBaseName()
 			return (basename if basename else fileinfo.fileName())
 		return self.tr("New document")
 
 	def getHtml(self, includeStyleSheet=True, webenv=False, syncScroll=False):
 		if self.markup is None:
-			markupClass = self.getMarkupClass()
+			markupClass = self.getActiveMarkupClass()
 			errMsg = self.tr('Could not parse file contents, check if '
 			                 'you have the <a href="%s">necessary module</a> '
 			                 'installed!')
@@ -176,7 +235,7 @@ class ReTextTab(QObject):
 			                       globalSettings.font.family())
 			settings.setFontSize(QWebSettings.DefaultFontSize,
 			                     globalSettings.font.pointSize())
-			self.previewBox.setHtml(html, QUrl.fromLocalFile(self.fileName))
+			self.previewBox.setHtml(html, QUrl.fromLocalFile(self._fileName))
 
 	def updateLivePreviewBox(self):
 		if self.previewState == PreviewLive and not self.previewBlocked:
@@ -187,15 +246,11 @@ class ReTextTab(QObject):
 		self.editBox.setVisible(self.previewState < PreviewNormal)
 		self.previewBox.setVisible(self.previewState > PreviewDisabled)
 
-	def setMarkupClass(self, markupClass):
-		self.markup = None
-		if markupClass and markupClass.available:
-			self.markup = markupClass(filename=self.fileName)
-		self.highlighter.docType = markupClass.name if markupClass else None
-		self.highlighter.rehighlight()
-
-	def readTextFromFile(self, encoding=None):
-		openfile = QFile(self.fileName)
+	def readTextFromFile(self, fileName=None, encoding=None):
+		previousFileName = self._fileName
+		if fileName:
+			self._fileName = fileName
+		openfile = QFile(self._fileName)
 		openfile.open(QFile.ReadOnly)
 		stream = QTextStream(openfile)
 		encoding = encoding or globalSettings.defaultCodec
@@ -203,17 +258,23 @@ class ReTextTab(QObject):
 			stream.setCodec(encoding)
 		text = stream.readAll()
 		openfile.close()
-		markupClass = get_markup_for_file_name(self.fileName, return_class=True)
-		self.setMarkupClass(markupClass)
+
+		self.updateActiveMarkupClass()
+
 		modified = bool(encoding) and (self.editBox.toPlainText() != text)
 		self.editBox.setPlainText(text)
 		self.editBox.document().setModified(modified)
 
+		if previousFileName != self._fileName:
+			self.fileNameChanged.emit()
+
+
 	def saveTextToFile(self, fileName=None, addToWatcher=True):
-		if fileName is None:
-			fileName = self.fileName
-		self.p.fileSystemWatcher.removePath(fileName)
-		savefile = QFile(fileName)
+		previousFileName = self._fileName
+		if fileName:
+			self._fileName = fileName
+		self.p.fileSystemWatcher.removePath(previousFileName)
+		savefile = QFile(self._fileName)
 		result = savefile.open(QFile.WriteOnly)
 		if result:
 			savestream = QTextStream(savefile)
@@ -221,8 +282,13 @@ class ReTextTab(QObject):
 				savestream.setCodec(globalSettings.defaultCodec)
 			savestream << self.editBox.toPlainText()
 			savefile.close()
+			self.editBox.document().setModified(False)
 		if result and addToWatcher:
-			self.p.fileSystemWatcher.addPath(fileName)
+			self.p.fileSystemWatcher.addPath(self._fileName)
+
+		if previousFileName != self._fileName:
+			self.fileNameChanged.emit()
+
 		return result
 
 	def installFakeVimHandler(self):
@@ -315,7 +381,7 @@ class ReTextPreview(QTextBrowser):
 			self.scrollToAnchor(url[1:])
 		elif link.isRelative() and get_markup_for_file_name(url, return_class=True):
 			fileToOpen = QDir.current().filePath(url)
-			if not QFileInfo(fileToOpen).completeSuffix() and self.fileName:
+			if not QFileInfo(fileToOpen).completeSuffix() and self._fileName:
 				fileToOpen += '.' + QFileInfo(self.tab.fileName).completeSuffix()
 			self.tab.p.openFileWrapper(fileToOpen)
 		elif globalSettings.handleWebLinks and isLocalHtml:

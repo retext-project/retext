@@ -188,11 +188,12 @@ class ReTextWindow(QMainWindow):
 		availableMarkups = markups.get_available_markups()
 		if not availableMarkups:
 			print('Warning: no markups are available!')
-		self.defaultMarkup = availableMarkups[0] if availableMarkups else None
+		defaultMarkup = availableMarkups[0] if availableMarkups else None
 		if globalSettings.defaultMarkup:
 			mc = markups.find_markup_class_by_name(globalSettings.defaultMarkup)
 			if mc and mc.available():
-				self.defaultMarkup = mc
+				defaultMarkup = mc
+		self.setDefaultMarkup(defaultMarkup)
 		if len(availableMarkups) > 1:
 			self.chooseGroup = QActionGroup(self)
 			markupActions = []
@@ -393,9 +394,59 @@ class ReTextWindow(QMainWindow):
 		print('Exception occured while parsing document:', file=sys.stderr)
 		traceback.print_exc()
 
+
+	def tabFileNameChanged(self, tab):
+		'''
+		Perform all UI state changes that need to be done when the
+		filename of the current tab has changed.
+		'''
+		if tab == self.currentTab:
+			if tab.fileName:
+				self.setWindowTitle("")
+				self.setWindowFilePath(tab.fileName)
+				self.tabWidget.setTabText(self.ind, tab.getDocumentTitle(baseName=True))
+				self.tabWidget.setTabToolTip(self.ind, tab.fileName)
+				QDir.setCurrent(QFileInfo(tab.fileName).dir().path())
+			else:
+				self.setWindowTitle(self.tr('New document') + '[*]')
+
+			canReload = bool(tab.fileName) and not self.autoSaveActive(tab)
+			self.actionSetEncoding.setEnabled(canReload)
+			self.actionReload.setEnabled(canReload)
+	
+	def tabActiveMarkupChanged(self, tab):
+		'''
+		Perform all UI state changes that need to be done when the
+		active markup class of the current tab has changed.
+		'''
+		if tab == self.currentTab:
+			markupClass = tab.getActiveMarkupClass()
+			dtMarkdown = (markupClass == markups.MarkdownMarkup)
+			dtMkdOrReST = dtMarkdown or (markupClass == markups.ReStructuredTextMarkup)
+			self.formattingBox.setEnabled(dtMarkdown)
+			self.symbolBox.setEnabled(dtMarkdown)
+			self.actionUnderline.setEnabled(dtMarkdown)
+			self.actionBold.setEnabled(dtMkdOrReST)
+			self.actionItalic.setEnabled(dtMkdOrReST)
+
+	def tabModificationStateChanged(self, tab):
+		'''
+		Perform all UI state changes that need to be done when the
+		modification state of the current tab has changed.
+		'''
+		if tab == self.currentTab:
+			changed = tab.editBox.document().isModified()
+			if self.autoSaveActive(tab):
+				changed = False
+			self.actionSave.setEnabled(changed)
+			self.setWindowModified(changed)
+		
 	def createTab(self, fileName):
-		self.currentTab = ReTextTab(self, fileName,
+		self.currentTab = ReTextTab(self, fileName, self.defaultMarkup,
 			previewState=int(globalSettings.livePreviewByDefault))
+		self.currentTab.fileNameChanged.connect(lambda: self.tabFileNameChanged(self.currentTab))
+		self.currentTab.modificationStateChanged.connect(lambda: self.tabModificationStateChanged(self.currentTab))
+		self.currentTab.activeMarkupChanged.connect(lambda: self.tabActiveMarkupChanged(self.currentTab))
 		self.tabWidget.addTab(self.currentTab.getSplitter(), self.tr("New document"))
 
 	def closeTab(self, ind):
@@ -408,23 +459,19 @@ class ReTextWindow(QMainWindow):
 			del currentWidget.tab
 			self.tabWidget.removeTab(ind)
 
-	def docTypeChanged(self):
-		markupClass = self.currentTab.getMarkupClass()
-		if type(self.currentTab.markup) != markupClass:
-			self.currentTab.setMarkupClass(markupClass)
-			self.currentTab.updatePreviewBox()
-		dtMarkdown = (markupClass == markups.MarkdownMarkup)
-		dtMkdOrReST = dtMarkdown or (markupClass == markups.ReStructuredTextMarkup)
-		self.formattingBox.setEnabled(dtMarkdown)
-		self.symbolBox.setEnabled(dtMarkdown)
-		self.actionUnderline.setEnabled(dtMarkdown)
-		self.actionBold.setEnabled(dtMkdOrReST)
-		self.actionItalic.setEnabled(dtMkdOrReST)
-		canReload = bool(self.currentTab.fileName) and not self.autoSaveActive()
-		self.actionSetEncoding.setEnabled(canReload)
-		self.actionReload.setEnabled(canReload)
-
 	def changeIndex(self, ind):
+		'''
+		This function is called when a different tab is selected.
+		It changes the state of the window to mirror the current state
+		of the newly selected tab. Future changes to this state will be
+		done in response to signals emitted by the tab, to which the
+		window was subscribed when the tab was created. The window is
+		subscribed to all tabs like this, but only the active tab will
+		logically generate these signals.
+		Aside from the above this function also calls the handlers for
+		the other changes that are implied by a tab switch: filename
+		change, modification state change and active markup change.
+		'''
 		self.currentTab = self.tabWidget.currentWidget().tab
 		editBox = self.currentTab.editBox
 		previewState = self.currentTab.previewState
@@ -437,13 +484,11 @@ class ReTextWindow(QMainWindow):
 		self.actionTableMode.setChecked(editBox.tableModeEnabled)
 		self.editBar.setEnabled(previewState < PreviewNormal)
 		self.ind = ind
-		if self.currentTab.fileName:
-			self.setCurrentFile()
-		else:
-			self.setWindowTitle(self.tr('New document') + '[*]')
-			self.docTypeChanged()
-		self.modificationChanged(editBox.document().isModified())
 		editBox.setFocus(Qt.OtherFocusReason)
+
+		self.tabFileNameChanged(self.currentTab)
+		self.tabModificationStateChanged(self.currentTab)
+		self.tabActiveMarkupChanged(self.currentTab)
 
 	def changeEditorFont(self):
 		font, ok = QFontDialog.getFont(globalSettings.editorFont, self)
@@ -589,20 +634,15 @@ class ReTextWindow(QMainWindow):
 		else:
 			QMessageBox.warning(self, '', self.tr("Please, save the file somewhere."))
 
-	def setCurrentFile(self):
-		self.setWindowTitle("")
-		self.tabWidget.setTabText(self.ind, self.currentTab.getDocumentTitle(baseName=True))
-		self.tabWidget.setTabToolTip(self.ind, self.currentTab.fileName or '')
-		self.setWindowFilePath(self.currentTab.fileName)
-		files = readListFromSettings("recentFileList")
-		while self.currentTab.fileName in files:
-			files.remove(self.currentTab.fileName)
-		files.insert(0, self.currentTab.fileName)
-		if len(files) > 10:
-			del files[10:]
-		writeListToSettings("recentFileList", files)
-		QDir.setCurrent(QFileInfo(self.currentTab.fileName).dir().path())
-		self.docTypeChanged()
+	def moveToTopOfRecentFileList(self, fileName):
+		if fileName:
+			files = readListFromSettings("recentFileList")
+			if fileName in files:
+				files.remove(fileName)
+			files.insert(0, fileName)
+			if len(files) > 10:
+				del files[10:]
+			writeListToSettings("recentFileList", files)
 
 	def createNew(self, text=None):
 		self.createTab("")
@@ -673,7 +713,7 @@ class ReTextWindow(QMainWindow):
 				self.extensionActions.append((action, mimetype))
 
 	def updateExtensionsVisibility(self):
-		markupClass = self.currentTab.getMarkupClass()
+		markupClass = self.currentTab.getActiveMarkupClass()
 		for action in self.extensionActions:
 			if markupClass is None:
 				action[0].setEnabled(False)
@@ -737,11 +777,8 @@ class ReTextWindow(QMainWindow):
 				self.tabWidget.setCurrentIndex(self.ind)
 			if fileName:
 				self.fileSystemWatcher.addPath(fileName)
-			self.currentTab.fileName = fileName
-			self.currentTab.readTextFromFile()
-			editBox = self.currentTab.editBox
-			self.setCurrentFile()
-			self.setWindowModified(editBox.document().isModified())
+			self.currentTab.readTextFromFile(fileName)
+			self.moveToTopOfRecentFileList(self.currentTab.fileName)
 
 	def showEncodingDialog(self):
 		if not self.maybeSave(self.ind):
@@ -751,7 +788,7 @@ class ReTextWindow(QMainWindow):
 			[bytes(b).decode() for b in QTextCodec.availableCodecs()],
 			0, False)
 		if ok:
-			self.currentTab.readTextFromFile(encoding)
+			self.currentTab.readTextFromFile(None, encoding)
 
 	def saveFile(self):
 		self.saveFileMain(dlg=False)
@@ -763,10 +800,11 @@ class ReTextWindow(QMainWindow):
 		for tab in self.iterateTabs():
 			if tab.fileName and QFileInfo(tab.fileName).isWritable():
 				tab.saveTextToFile()
-				tab.editBox.document().setModified(False)
 
 	def saveFileMain(self, dlg):
-		if (not self.currentTab.fileName) or dlg:
+		fileNameToSave = self.currentTab.fileName
+
+		if (not fileNameToSave) or dlg:
 			markupClass = self.currentTab.getMarkupClass()
 			if (markupClass is None) or not hasattr(markupClass, 'default_extension'):
 				defaultExt = self.tr("Plain text (*.txt)")
@@ -782,20 +820,15 @@ class ReTextWindow(QMainWindow):
 					ext = globalSettings.restDefaultFileExtension
 				else:
 					ext = markupClass.default_extension
-			newFileName = QFileDialog.getSaveFileName(self,
+			fileNameToSave = QFileDialog.getSaveFileName(self,
 				self.tr("Save file"), "", defaultExt)[0]
-			if newFileName:
-				if not QFileInfo(newFileName).suffix():
-					newFileName += ext
-				if self.currentTab.fileName:
-					self.fileSystemWatcher.removePath(self.currentTab.fileName)
-				self.currentTab.fileName = newFileName
+			if fileNameToSave:
+				if not QFileInfo(fileNameToSave).suffix():
+					fileNameToSave += ext
 				self.actionSetEncoding.setDisabled(self.autoSaveActive())
-		if self.currentTab.fileName:
-			if self.currentTab.saveTextToFile():
-				self.setCurrentFile()
-				self.currentTab.editBox.document().setModified(False)
-				self.setWindowModified(False)
+		if fileNameToSave:
+			if self.currentTab.saveTextToFile(fileNameToSave):
+				self.moveToTopOfRecentFileList(self.currentTab.fileName)
 				return True
 			else:
 				QMessageBox.warning(self, '',
@@ -914,7 +947,7 @@ class ReTextWindow(QMainWindow):
 			tmpname = basename+'.html'
 			self.saveHtml(tmpname)
 		else:
-			tmpname = basename + self.currentTab.getMarkupClass().default_extension
+			tmpname = basename + self.currentTab.getActiveMarkupClass().default_extension
 			self.currentTab.saveTextToFile(fileName=tmpname, addToWatcher=False)
 		command = command.replace('%of', '"out'+defaultext+'"')
 		command = command.replace('%html' if html else '%if', '"'+tmpname+'"')
@@ -928,16 +961,10 @@ class ReTextWindow(QMainWindow):
 		if of:
 			QFile('out'+defaultext).rename(fileName)
 
-	def autoSaveActive(self, ind=None):
-		tab = self.currentTab if ind is None else self.tabWidget.widget(ind).tab
+	def autoSaveActive(self, tab=None):
+		tab = tab if tab else self.currentTab
 		return (self.autoSaveEnabled and tab.fileName and
 			QFileInfo(tab.fileName).isWritable())
-
-	def modificationChanged(self, changed):
-		if self.autoSaveActive():
-			changed = False
-		self.actionSave.setEnabled(changed)
-		self.setWindowModified(changed)
 
 	def clipboardDataChanged(self):
 		mimeData = QApplication.instance().clipboard().mimeData()
@@ -1037,7 +1064,7 @@ class ReTextWindow(QMainWindow):
 
 	def maybeSave(self, ind):
 		tab = self.tabWidget.widget(ind).tab
-		if self.autoSaveActive(ind):
+		if self.autoSaveActive(tab):
 			tab.saveTextToFile()
 			return True
 		if not tab.editBox.document().isModified():
@@ -1095,6 +1122,4 @@ class ReTextWindow(QMainWindow):
 		writeToSettings('defaultMarkup', markupClass.name, defaultName)
 		for tab in self.iterateTabs():
 			if not tab.fileName:
-				tab.setMarkupClass(markupClass)
-				tab.updatePreviewBox()
-		self.docTypeChanged()
+				tab.setDefaultMarkupClass(markupClass)
