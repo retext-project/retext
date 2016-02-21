@@ -23,6 +23,7 @@ import sys
 import time
 import unittest
 from unittest.mock import patch, MagicMock
+import warnings
 
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QApplication, QFileDialog, QWidget
@@ -55,6 +56,7 @@ def processEventsUntilIdle(eventTimeout=defaultEventTimeout):
 class TestWindow(unittest.TestCase):
 
     def setUp(self):
+        warnings.simplefilter("ignore", Warning)
         self.readListFromSettingsMock = patch('ReText.window.readListFromSettings', return_value=[]).start()
         self.writeListToSettingsMock  = patch('ReText.window.writeListToSettings').start()
         self.writeToSettingsMock      = patch('ReText.window.writeToSettings').start()
