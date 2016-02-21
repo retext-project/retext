@@ -34,7 +34,7 @@ except ImportError:
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
  QIODevice, QLocale, QRect, QTextCodec, QTextStream, QTimer, QUrl, Qt
 from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
- QKeySequence, QPalette, QTextCursor, QTextDocument, QTextDocumentWriter
+ QKeySequence, QPalette, QTextDocument, QTextDocumentWriter
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
  QLineEdit, QMainWindow, QMenu, QMenuBar, QMessageBox, QTabWidget, QToolBar
@@ -608,18 +608,8 @@ class ReTextWindow(QMainWindow):
 		if self.csBox.isChecked():
 			flags |= QTextDocument.FindCaseSensitively
 		text = self.searchEdit.text()
-		editBox = self.currentTab.editBox
-		cursor = editBox.textCursor()
-		newCursor = editBox.document().find(text, cursor, flags)
-		if not newCursor.isNull():
-			editBox.setTextCursor(newCursor)
-			return self.setSearchEditColor(True)
-		cursor.movePosition(QTextCursor.End if back else QTextCursor.Start)
-		newCursor = editBox.document().find(text, cursor, flags)
-		if not newCursor.isNull():
-			editBox.setTextCursor(newCursor)
-			return self.setSearchEditColor(True)
-		self.setSearchEditColor(False)
+		found = self.currentTab.find(text, flags)
+		self.setSearchEditColor(found)
 
 	def setSearchEditColor(self, found):
 		palette = self.searchEdit.palette()

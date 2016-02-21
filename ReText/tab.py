@@ -30,7 +30,7 @@ except ImportError:
 	ReTextFakeVimHandler = None
 
 from PyQt5.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QObject, QPoint, QTextStream, QTimer, QUrl
-from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtGui import QDesktopServices, QTextCursor, QTextDocument
 from PyQt5.QtWidgets import QTextBrowser, QTextEdit, QSplitter
 from PyQt5.QtWebKit import QWebSettings
 from PyQt5.QtWebKitWidgets import QWebPage, QWebView
@@ -302,6 +302,19 @@ class ReTextTab(QObject):
 			fakeVimEditor.setQuitAction(self.actionQuit)
 			# TODO: action is bool, really call remove?
 			self.p.actionFakeVimMode.triggered.connect(fakeVimEditor.remove)
+
+	def find(self, text, flags):
+		cursor = self.editBox.textCursor()
+		newCursor = self.editBox.document().find(text, cursor, flags)
+		if not newCursor.isNull():
+			self.editBox.setTextCursor(newCursor)
+			return True
+		cursor.movePosition(QTextCursor.End if (flags & QTextDocument.FindBackward) else QTextCursor.Start)
+		newCursor = self.editBox.document().find(text, cursor, flags)
+		if not newCursor.isNull():
+			self.editBox.setTextCursor(newCursor)
+			return True
+		return False
 
 class ReTextWebPreview(QWebView):
 
