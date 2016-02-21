@@ -413,7 +413,7 @@ class ReTextWindow(QMainWindow):
 			canReload = bool(tab.fileName) and not self.autoSaveActive(tab)
 			self.actionSetEncoding.setEnabled(canReload)
 			self.actionReload.setEnabled(canReload)
-	
+
 	def tabActiveMarkupChanged(self, tab):
 		'''
 		Perform all UI state changes that need to be done when the
@@ -440,7 +440,7 @@ class ReTextWindow(QMainWindow):
 				changed = False
 			self.actionSave.setEnabled(changed)
 			self.setWindowModified(changed)
-		
+
 	def createTab(self, fileName):
 		self.currentTab = ReTextTab(self, fileName, self.defaultMarkup,
 			previewState=int(globalSettings.livePreviewByDefault))
@@ -805,7 +805,7 @@ class ReTextWindow(QMainWindow):
 		fileNameToSave = self.currentTab.fileName
 
 		if (not fileNameToSave) or dlg:
-			markupClass = self.currentTab.getMarkupClass()
+			markupClass = self.currentTab.getActiveMarkupClass()
 			if (markupClass is None) or not hasattr(markupClass, 'default_extension'):
 				defaultExt = self.tr("Plain text (*.txt)")
 				ext = ".txt"
@@ -963,8 +963,8 @@ class ReTextWindow(QMainWindow):
 
 	def autoSaveActive(self, tab=None):
 		tab = tab if tab else self.currentTab
-		return (self.autoSaveEnabled and tab.fileName and
-			QFileInfo(tab.fileName).isWritable())
+		return bool(self.autoSaveEnabled and tab.fileName and
+			    QFileInfo(tab.fileName).isWritable())
 
 	def clipboardDataChanged(self):
 		mimeData = QApplication.instance().clipboard().mimeData()

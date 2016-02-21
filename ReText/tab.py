@@ -259,13 +259,12 @@ class ReTextTab(QObject):
 		text = stream.readAll()
 		openfile.close()
 
-		self.updateActiveMarkupClass()
-
 		modified = bool(encoding) and (self.editBox.toPlainText() != text)
 		self.editBox.setPlainText(text)
 		self.editBox.document().setModified(modified)
 
 		if previousFileName != self._fileName:
+			self.updateActiveMarkupClass()
 			self.fileNameChanged.emit()
 
 
@@ -287,6 +286,7 @@ class ReTextTab(QObject):
 			self.p.fileSystemWatcher.addPath(self._fileName)
 
 		if previousFileName != self._fileName:
+			self.updateActiveMarkupClass()
 			self.fileNameChanged.emit()
 
 		return result
