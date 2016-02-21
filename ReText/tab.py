@@ -169,13 +169,17 @@ class ReTextTab(QObject):
 			return markupClass(filename=self._fileName)
 		return None
 
-	def getDocumentTitle(self, baseName=False):
-		if self.markup and not baseName:
+	def getDocumentTitle(self):
+		if self.markup:
 			text = self.editBox.toPlainText()
 			try:
 				return self.markup.get_document_title(text)
 			except Exception:
 				self.p.printError()
+
+		return getBaseName()
+
+	def getBaseName(self):
 		if self._fileName:
 			fileinfo = QFileInfo(self._fileName)
 			basename = fileinfo.completeBaseName()
@@ -198,7 +202,7 @@ class ReTextTab(QObject):
 		headers = ''
 		if includeStyleSheet:
 			headers += '<style type="text/css">\n' + self.p.ss + '</style>\n'
-		baseName = self.getDocumentTitle(baseName=True)
+		baseName = self.getBaseName()
 		cssFileName = baseName + '.css'
 		if QFile.exists(cssFileName):
 			headers += ('<link rel="stylesheet" type="text/css" href="%s">\n'

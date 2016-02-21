@@ -404,7 +404,7 @@ class ReTextWindow(QMainWindow):
 			if tab.fileName:
 				self.setWindowTitle("")
 				self.setWindowFilePath(tab.fileName)
-				self.tabWidget.setTabText(self.ind, tab.getDocumentTitle(baseName=True))
+				self.tabWidget.setTabText(self.ind, tab.getBaseName())
 				self.tabWidget.setTabToolTip(self.ind, tab.fileName)
 				QDir.setCurrent(QFileInfo(tab.fileName).dir().path())
 			else:
@@ -942,7 +942,7 @@ class ReTextWindow(QMainWindow):
 				return
 			if defaultext and not QFileInfo(fileName).suffix():
 				fileName += defaultext
-		basename = '.%s.retext-temp' % self.currentTab.getDocumentTitle(baseName=True)
+		basename = '.%s.retext-temp' % self.currentTab.getBaseName()
 		if html:
 			tmpname = basename+'.html'
 			self.saveHtml(tmpname)
@@ -1093,7 +1093,7 @@ class ReTextWindow(QMainWindow):
 			htmltext = self.currentTab.getHtml(includeStyleSheet=False)
 		except Exception:
 			return self.printError()
-		winTitle = self.currentTab.getDocumentTitle(baseName=True)
+		winTitle = self.currentTab.getBaseName()
 		htmlDlg.setWindowTitle(winTitle+" ("+self.tr("HTML code")+")")
 		htmlDlg.textEdit.setPlainText(htmltext.rstrip())
 		htmlDlg.hl.rehighlight()
