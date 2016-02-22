@@ -335,16 +335,14 @@ class InfoArea(QLabel):
 			self.editor.palette().color(QPalette.WindowText))
 		self.setPalette(palette)
 
-	def forwardMouseEvent():
-		def newHandler(self, event):
-			pos = self.mapToParent(event.pos())
-			newEvent = QMouseEvent(event.type(), pos,
-			                       event.button(), event.buttons(),
-			                       event.modifiers())
-			self.editor.mousePressEvent(newEvent)
-		return newHandler
+	def mousePressEvent(self, event):
+		pos = self.mapToParent(event.pos())
+		pos.setX(pos.x() - self.editor.lineNumberAreaWidth())
+		newEvent = QMouseEvent(event.type(), pos,
+		                       event.button(), event.buttons(),
+		                       event.modifiers())
+		self.editor.mousePressEvent(newEvent)
 
-	mousePressEvent = forwardMouseEvent()
-	mouseReleaseEvent = forwardMouseEvent()
-	mouseDoubleClickEvent = forwardMouseEvent()
-	mouseMoveEvent = forwardMouseEvent()
+	mouseReleaseEvent = mousePressEvent
+	mouseDoubleClickEvent = mousePressEvent
+	mouseMoveEvent = mousePressEvent
