@@ -127,7 +127,7 @@ class TestWindow(unittest.TestCase):
     # Tests
     #
 
-    def test_window_title_and_tabs__after_start_with_empty_tab(self):
+    def test_windowTitleAndTabs_afterStartWithEmptyTab(self):
         self.window = ReTextWindow()
         self.window.createNew('')
         processEventsUntilIdle()
@@ -137,7 +137,7 @@ class TestWindow(unittest.TestCase):
         self.assertFalse(self.window.currentTab.fileName)
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
-    def test_window_title_and_tabs__after_loading_file(self, getOpenFileNamesMock):
+    def test_windowTitleAndTabs_afterLoadingFile(self, getOpenFileNamesMock):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
@@ -149,7 +149,7 @@ class TestWindow(unittest.TestCase):
         self.assertTrue(self.window.currentTab.fileName.endswith('tests/testdata/existing_file.md'))
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
-    def test_window_title_and_tabs__after_switching_tab(self, getOpenFileNamesMock):
+    def test_windowTitleAndTabs_afterSwitchingTab(self, getOpenFileNamesMock):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
@@ -174,7 +174,7 @@ class TestWindow(unittest.TestCase):
         self.assertTrue(self.window.tabWidget.currentWidget().tab is tab_with_file)
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
-    def test_active_tab__after_loading_file_that_is_already_open_in_other_tab(self, getOpenFileNamesMock):
+    def test_activeTab_afterLoadingFileThatIsAlreadyOpenInOtherTab(self, getOpenFileNamesMock):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
@@ -195,7 +195,7 @@ class TestWindow(unittest.TestCase):
         self.assertTrue(self.window.currentTab is tab_with_file)
         self.assertTrue(self.window.currentTab.fileName.endswith('tests/testdata/existing_file.md'))
 
-    def test_markup_dependent_widget_states__after_start_with_empty_tab_and_markdown_as_default_markup(self):
+    def test_markupDependentWidgetStates_afterStartWithEmptyTabAndMarkdownAsDefaultMarkup(self):
         self.window = ReTextWindow()
         self.window.createNew('')
         processEventsUntilIdle()
@@ -203,7 +203,7 @@ class TestWindow(unittest.TestCase):
         # markdown is the default markup
         self.check_widgets_enabled_for_markdown(self.window)
 
-    def test_markup_dependent_widget_states__after_start_with_empty_tab_and_restructuredtext_as_default_markup(self):
+    def test_markupDependentWidgetStates_afterStartWithEmptyTabAndRestructuredtextAsDefaultMarkup(self):
         self.globalSettingsMock.defaultMarkup = 'reStructuredText'
         self.window = ReTextWindow()
         self.window.createNew('')
@@ -211,7 +211,7 @@ class TestWindow(unittest.TestCase):
 
         self.check_widgets_enabled_for_restructuredtext(self.window)
 
-    def test_markup_dependent_widget_states__after_changing_default_markup(self):
+    def test_markupDependentWidgetStates_afterChangingDefaultMarkup(self):
         self.window = ReTextWindow()
         self.window.createNew('')
         processEventsUntilIdle()
@@ -221,7 +221,7 @@ class TestWindow(unittest.TestCase):
         self.check_widgets_enabled_for_restructuredtext(self.window)
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
-    def test_markup_dependent_widget_states__after_loading_markdown_document(self, getOpenFileNamesMock):
+    def test_markupDependentWidgetStates_afterLoadingMarkdownDocument(self, getOpenFileNamesMock):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
@@ -230,7 +230,7 @@ class TestWindow(unittest.TestCase):
         self.check_widgets_enabled_for_markdown(self.window)
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.rst')], None))
-    def test_markup_dependent_widget_states__after_loading_restructuredtext_document(self, getOpenFileNamesMock):
+    def test_markupDependentWidgetStates_afterLoadingRestructuredtextDocument(self, getOpenFileNamesMock):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
@@ -240,7 +240,7 @@ class TestWindow(unittest.TestCase):
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', side_effect=[ ([os.path.join(path_to_testdata, 'existing_file.md')], None),
                                                                        ([os.path.join(path_to_testdata, 'existing_file.rst')], None) ])
-    def test_markup_dependent_widget_states__after_switching_tab(self, getOpenFileNamesMock):
+    def test_markupDependentWidgetStates_afterSwitchingTab(self, getOpenFileNamesMock):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
@@ -258,7 +258,7 @@ class TestWindow(unittest.TestCase):
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
     @patch('ReText.window.QFileDialog.getSaveFileName', return_value=(os.path.join(path_to_testdata, 'not_existing_file.rst'), None))
-    def test_markup_dependent_widget_states__after_saving_document_as_different_markup(self, getOpenFileNamesMock, getSaveFileNameMock):
+    def test_markupDependentWidgetStates_afterSavingDocumentAsDifferentMarkup(self, getOpenFileNamesMock, getSaveFileNameMock):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
@@ -275,7 +275,7 @@ class TestWindow(unittest.TestCase):
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
     @patch('ReText.window.QFileDialog.getSaveFileName', return_value=(os.path.join(path_to_testdata, 'not_existing_file.md'), None))
-    def test_save_widget_states(self, getOpenFileNamesMock, getSaveFileNameMock):
+    def test_saveWidgetStates(self, getOpenFileNamesMock, getSaveFileNameMock):
         self.window = ReTextWindow()
 
         # check if save is disabled at first
@@ -308,7 +308,7 @@ class TestWindow(unittest.TestCase):
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
     @patch('ReText.window.QFileDialog.getSaveFileName', return_value=(os.path.join(path_to_testdata, 'not_existing_file.md'), None))
-    def test_save_widget_states__autosave_enabled(self, getOpenFileNamesMock, getSaveFileNameMock):
+    def test_saveWidgetStates_autosaveEnabled(self, getOpenFileNamesMock, getSaveFileNameMock):
         self.globalSettingsMock.autoSave = True
         self.window = ReTextWindow()
 
@@ -338,7 +338,7 @@ class TestWindow(unittest.TestCase):
             os.remove(os.path.join(path_to_testdata, 'not_existing_file.md'))
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
-    def test_encoding_and_reload_widget_states(self, getOpenFileNamesMock):
+    def test_encodingAndReloadWidgetStates(self, getOpenFileNamesMock):
         self.window = ReTextWindow()
 
         # check if reload/set encoding is disabled for a tab without filename set
@@ -351,7 +351,7 @@ class TestWindow(unittest.TestCase):
         self.check_widgets_enabled(self.window, ('actionReload','actionSetEncoding'))
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
-    def test_encoding_and_reload_widget_states__always_disabled_when_autosave_enabled(self, getOpenFileNamesMock):
+    def test_encodingAndReloadWidgetStates_alwaysDisabledWhenAutosaveEnabled(self, getOpenFileNamesMock):
         self.globalSettingsMock.autoSave = True
         self.window = ReTextWindow()
 
