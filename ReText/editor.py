@@ -218,7 +218,6 @@ class ReTextEdit(QTextEdit):
 		return 5 + self.fontMetrics().width('9') * digits
 
 	def updateLineNumberAreaWidth(self, blockcount=0):
-		self.lineNumberArea.update()
 		self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, 0)
 
 	def resizeEvent(self, event):
@@ -257,6 +256,7 @@ class ReTextEdit(QTextEdit):
 			cursorPosition = self.backupCursorPositionOnLine()
 			tablemode.adjustTableToChanges(self.document(), pos, added - removed, markupClass)
 			self.restoreCursorPositionOnLine(cursorPosition)
+		self.lineNumberArea.update()
 
 class LineNumberArea(QWidget):
 	def __init__(self, editor):
