@@ -178,7 +178,7 @@ class ReTextEdit(QTextEdit):
 		elif key == Qt.Key_Return and not cursor.hasSelection():
 			if event.modifiers() & Qt.ShiftModifier:
 				# Insert Markdown-style line break
-				markupClass = self.tab.getMarkupClass()
+				markupClass = self.tab.getActiveMarkupClass()
 				if markupClass and markupClass == MarkdownMarkup:
 					cursor.insertText('  ')
 			if event.modifiers() & Qt.ControlModifier:
@@ -251,7 +251,7 @@ class ReTextEdit(QTextEdit):
 
 	def contentsChange(self, pos, removed, added):
 		if self.tableModeEnabled:
-			markupClass = self.tab.getMarkupClass()
+			markupClass = self.tab.getActiveMarkupClass()
 
 			cursorPosition = self.backupCursorPositionOnLine()
 			tablemode.adjustTableToChanges(self.document(), pos, added - removed, markupClass)

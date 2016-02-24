@@ -16,10 +16,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from datetime import datetime
+
 from markups import get_markup_for_file_name
 from markups.common import MODULE_HOME_PAGE
 
-from ReText import app_version, enchant, enchant_available, globalSettings
+from ReText import app_version, enchant, enchant_available, globalSettings, converterprocess
 from ReText.editor import ReTextEdit
 from ReText.highlighter import ReTextHighlighter
 from ReText.syncscroll import SyncScroll
@@ -60,8 +62,13 @@ class ReTextTab(QObject):
 		self.defaultMarkupClass = defaultMarkup
 		self.activeMarkupClass = None
 		self.markup = None
+		self.converted = None
 		self.previewState = previewState
-		self.previewBlocked = False
+		self.previewOutdated = False
+		self.conversionPending = False
+
+		self.converterProcess = converterprocess.ConverterProcess()
+		self.converterProcess.conversionDone.connect(self.updatePreviewBox)
 
 		textDocument = self.editBox.document()
 		self.highlighter = ReTextHighlighter(textDocument)
@@ -70,7 +77,7 @@ class ReTextTab(QObject):
 			# Rehighlighting is tied to the change in markup class that
 			# happens at the end of this function
 
-		self.editBox.textChanged.connect(self.updateLivePreviewBox)
+		self.editBox.textChanged.connect(self.triggerPreviewUpdate)
 		self.editBox.undoAvailable.connect(parent.actionUndo.setEnabled)
 		self.editBox.redoAvailable.connect(parent.actionRedo.setEnabled)
 		self.editBox.copyAvailable.connect(parent.actionCopy.setEnabled)
@@ -156,24 +163,13 @@ class ReTextTab(QObject):
 			self.highlighter.docType = self.activeMarkupClass.name if self.activeMarkupClass else None
 			self.highlighter.rehighlight()
 
-			# for now create a markup object here
-			self.markup = self.getMarkup()
-
-			# TODO: trigger a preview update here?
-
 			self.activeMarkupChanged.emit()
+			self.triggerPreviewUpdate()
 
-	def getMarkup(self):
-		markupClass = self.getActiveMarkupClass()
-		if markupClass and markupClass.available():
-			return markupClass(filename=self._fileName)
-		return None
-
-	def getDocumentTitle(self):
-		if self.markup:
-			text = self.editBox.toPlainText()
+	def getDocumentTitleFromConverted(self, converted):
+		if converted:
 			try:
-				return self.markup.get_document_title(text)
+				return converted.get_document_title()
 			except Exception:
 				self.p.printError()
 
@@ -186,8 +182,8 @@ class ReTextTab(QObject):
 			return (basename if basename else fileinfo.fileName())
 		return self.tr("New document")
 
-	def getHtml(self, includeStyleSheet=True, webenv=False, syncScroll=False):
-		if self.markup is None:
+	def getHtmlFromConverted(self, converted, includeStyleSheet=True, webenv=False):
+		if converted is None:
 			markupClass = self.getActiveMarkupClass()
 			errMsg = self.tr('Could not parse file contents, check if '
 			                 'you have the <a href="%s">necessary module</a> '
@@ -198,7 +194,6 @@ class ReTextTab(QObject):
 				# Remove the link if markupClass doesn't have the needed attribute
 				errMsg = errMsg.replace('<a href="%s">', '').replace('</a>', '')
 			return '<p style="color: red">%s</p>' % errMsg
-		text = self.editBox.toPlainText()
 		headers = ''
 		if includeStyleSheet:
 			headers += '<style type="text/css">\n' + self.p.ss + '</style>\n'
@@ -208,21 +203,37 @@ class ReTextTab(QObject):
 			headers += ('<link rel="stylesheet" type="text/css" href="%s">\n'
 			% cssFileName)
 		headers += ('<meta name="generator" content="ReText %s">\n' % app_version)
-		self.markup.requested_extensions = []
-		if syncScroll:
-			self.markup.requested_extensions.append('ReText.mdx_posmap')
-		return self.markup.get_whole_html(text,
+		return converted.get_whole_html(
 			custom_headers=headers, include_stylesheet=includeStyleSheet,
 			fallback_title=baseName, webenv=webenv)
 
+	def getDocumentForExport(self, includeStyleSheet, webenv):
+		markupClass = self.getActiveMarkupClass()
+		if markupClass and markupClass.available():
+			exportMarkup = markupClass(filename=self._fileName)
+
+			text = self.editBox.toPlainText()
+			converted = exportMarkup.convert(text)
+		else:
+			converted = None
+
+		return (self.getDocumentTitleFromConverted(converted),
+		        self.getHtmlFromConverted(converted, includeStyleSheet=includeStyleSheet, webenv=webenv),
+			self.previewBox)
+
 	def updatePreviewBox(self):
-		self.previewBlocked = False
+		self.conversionPending = False
+
+		try:
+			self.converted = self.converterProcess.get_result()
+		except converterprocess.ConversionError:
+			self.converted = None
 		if isinstance(self.previewBox, QTextEdit):
 			scrollbar = self.previewBox.verticalScrollBar()
 			scrollbarValue = scrollbar.value()
 			distToBottom = scrollbar.maximum() - scrollbarValue
 		try:
-			html = self.getHtml(syncScroll=globalSettings.syncScroll)
+			html = self.getHtmlFromConverted(self.converted)
 		except Exception:
 			return self.p.printError()
 		if isinstance(self.previewBox, QTextEdit):
@@ -241,10 +252,24 @@ class ReTextTab(QObject):
 			                     globalSettings.font.pointSize())
 			self.previewBox.setHtml(html, QUrl.fromLocalFile(self._fileName))
 
-	def updateLivePreviewBox(self):
-		if self.previewState == PreviewLive and not self.previewBlocked:
-			self.previewBlocked = True
-			QTimer.singleShot(1000, self.updatePreviewBox)
+		if self.previewOutdated:
+			self.triggerPreviewUpdate()
+
+	def triggerPreviewUpdate(self):
+		self.previewOutdated = True
+
+		if not self.conversionPending:
+			self.conversionPending = True
+			QTimer.singleShot(500, self.startPendingConversion)
+
+	def startPendingConversion(self):
+			self.previewOutdated = False
+
+			requested_extensions = ['ReText.mdx_posmap'] if globalSettings.syncScroll else []
+			self.converterProcess.start_conversion(self.getActiveMarkupClass().name,
+			                                       self.fileName,
+							       requested_extensions,
+							       self.editBox.toPlainText())
 
 	def updateBoxesVisibility(self):
 		self.editBox.setVisible(self.previewState < PreviewNormal)

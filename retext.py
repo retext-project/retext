@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# vim: ts=8:sts=8:sw=8:noexpandtab
 
 # ReText
 # Copyright 2011-2015 Dmitry Shachnev
@@ -16,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import multiprocessing as mp
 import sys
 import signal
 from os.path import join
@@ -78,4 +80,5 @@ def main():
 	sys.exit(app.exec())
 
 if __name__ == '__main__':
+	mp.set_start_method('spawn')
 	main()

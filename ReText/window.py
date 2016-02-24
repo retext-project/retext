@@ -502,23 +502,19 @@ class ReTextWindow(QMainWindow):
 		if ok:
 			globalSettings.font = font
 			for tab in self.iterateTabs():
-				tab.updatePreviewBox()
+				tab.triggerPreviewUpdate()
 
 	def preview(self, viewmode):
 		self.currentTab.previewState = viewmode * 2
 		self.actionLivePreview.setChecked(False)
 		self.editBar.setDisabled(viewmode)
 		self.currentTab.updateBoxesVisibility()
-		if viewmode:
-			self.currentTab.updatePreviewBox()
 
 	def enableLivePreview(self, livemode):
 		self.currentTab.previewState = int(livemode)
 		self.actionPreview.setChecked(livemode)
 		self.editBar.setEnabled(True)
 		self.currentTab.updateBoxesVisibility()
-		if livemode:
-			self.currentTab.updatePreviewBox()
 
 	def enableWebKit(self, enable):
 		globalSettings.useWebKit = enable
@@ -532,7 +528,7 @@ class ReTextWindow(QMainWindow):
 			tab.previewBox.setMinimumWidth(125)
 			splitter.addWidget(tab.previewBox)
 			splitter.setSizes((50, 50))
-			tab.updatePreviewBox()
+			tab.triggerPreviewUpdate()
 			tab.updateBoxesVisibility()
 
 	def enableCopy(self, copymode):
@@ -829,8 +825,8 @@ class ReTextWindow(QMainWindow):
 		if not QFileInfo(fileName).suffix():
 			fileName += ".html"
 		try:
-			htmltext = self.currentTab.getHtml(includeStyleSheet=False,
-				webenv=True)
+			_, htmltext, _ = self.currentTab.getDocumentForExport(includeStyleSheet=False,
+				                                              webenv=True)
 		except Exception:
 			return self.printError()
 		htmlFile = QFile(fileName)
@@ -841,19 +837,20 @@ class ReTextWindow(QMainWindow):
 		html << htmltext
 		htmlFile.close()
 
-	def textDocument(self):
+	def textDocument(self, title, htmltext):
 		td = QTextDocument()
-		td.setMetaInformation(QTextDocument.DocumentTitle,
-		                      self.currentTab.getDocumentTitle())
+		td.setMetaInformation(QTextDocument.DocumentTitle, title)
 		if self.ss:
 			td.setDefaultStyleSheet(self.ss)
-		td.setHtml(self.currentTab.getHtml())
+		td.setHtml(htmltext)
 		td.setDefaultFont(globalSettings.font)
 		return td
 
 	def saveOdf(self):
+		title, htmltext, _ = self.currentTab.getDocumentForExport(includeStyleSheet=True,
+		                                                          webenv=False)
 		try:
-			document = self.textDocument()
+			document = self.textDocument(title, htmltext)
 		except Exception:
 			return self.printError()
 		fileName = QFileDialog.getSaveFileName(self,
@@ -872,50 +869,54 @@ class ReTextWindow(QMainWindow):
 		if fileName:
 			self.saveHtml(fileName)
 
-	def getDocumentForPrint(self):
+	def getDocumentForPrint(self, title, htmltext, preview):
 		if globalSettings.useWebKit:
-			return self.currentTab.previewBox
+			return preview
 		try:
-			return self.textDocument()
+			return self.textDocument(title, htmltext)
 		except Exception:
 			self.printError()
 
-	def standardPrinter(self):
+	def standardPrinter(self, title):
 		printer = QPrinter(QPrinter.HighResolution)
-		printer.setDocName(self.currentTab.getDocumentTitle())
+		printer.setDocName(title)
 		printer.setCreator('ReText %s' % app_version)
 		return printer
 
 	def savePdf(self):
-		self.currentTab.updatePreviewBox()
 		fileName = QFileDialog.getSaveFileName(self,
 			self.tr("Export document to PDF"),
 			"", self.tr("PDF files (*.pdf)"))[0]
 		if fileName:
 			if not QFileInfo(fileName).suffix():
 				fileName += ".pdf"
-			printer = self.standardPrinter()
+			title, htmltext, preview = self.currentTab.getDocumentForExport(includeStyleSheet=True,
+										        webenv=False)
+			printer = self.standardPrinter(title)
 			printer.setOutputFormat(QPrinter.PdfFormat)
 			printer.setOutputFileName(fileName)
-			document = self.getDocumentForPrint()
+			document = self.getDocumentForPrint(title, htmltext, preview)
 			if document != None:
 				document.print(printer)
 
 	def printFile(self):
-		self.currentTab.updatePreviewBox()
-		printer = self.standardPrinter()
+		title, htmltext, preview = self.currentTab.getDocumentForExport(includeStyleSheet=True,
+										webenv=False)
+		printer = self.standardPrinter(title)
 		dlg = QPrintDialog(printer, self)
 		dlg.setWindowTitle(self.tr("Print document"))
 		if (dlg.exec() == QDialog.Accepted):
-			document = self.getDocumentForPrint()
+			document = self.getDocumentForPrint(title, htmltext, preview)
 			if document != None:
 				document.print(printer)
 
 	def printPreview(self):
-		document = self.getDocumentForPrint()
+		title, htmltext, preview = self.currentTab.getDocumentForExport(includeStyleSheet=True,
+										webenv=False)
+		document = self.getDocumentForPrint(title, htmltext, preview)
 		if document == None:
 			return
-		printer = self.standardPrinter()
+		printer = self.standardPrinter(title)
 		preview = QPrintPreviewDialog(printer, self)
 		preview.paintRequested.connect(document.print)
 		preview.exec()
@@ -1028,7 +1029,6 @@ class ReTextWindow(QMainWindow):
 		elif not self.currentTab.editBox.document().isModified():
 			# File was not modified in ReText, reload silently
 			self.currentTab.readTextFromFile()
-			self.currentTab.updatePreviewBox()
 		else:
 			text = self.tr(
 				'This document has been modified by other application.\n'
@@ -1044,7 +1044,6 @@ class ReTextWindow(QMainWindow):
 			messageBox.exec()
 			if messageBox.clickedButton() is reloadButton:
 				self.currentTab.readTextFromFile()
-				self.currentTab.updatePreviewBox()
 			else:
 				self.autoSaveEnabled = False
 				self.currentTab.editBox.document().setModified(True)
@@ -1080,7 +1079,8 @@ class ReTextWindow(QMainWindow):
 	def viewHtml(self):
 		htmlDlg = HtmlDialog(self)
 		try:
-			htmltext = self.currentTab.getHtml(includeStyleSheet=False)
+			_, htmltext = self.currentTab.getDocumentForExport(includeStyleSheet=False,
+			                                                   webenv=False)
 		except Exception:
 			return self.printError()
 		winTitle = self.currentTab.getBaseName()

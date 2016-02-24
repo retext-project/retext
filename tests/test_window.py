@@ -25,10 +25,13 @@ import unittest
 from unittest.mock import patch, MagicMock
 import warnings
 
-from PyQt5.QtCore import QTimer
+from markups.abstract import ConvertedMarkup
+
+from PyQt5.QtCore import pyqtSignal, QObject, QTimer
 from PyQt5.QtWidgets import QApplication, QFileDialog, QWidget
 import ReText
 from ReText.window import ReTextWindow
+from ReText.tab import ReTextTab
 
 defaultEventTimeout = 0.0
 path_to_testdata = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'testdata')
@@ -52,7 +55,16 @@ def processEventsUntilIdle(eventTimeout=defaultEventTimeout):
             app.processEvents()
         time.sleep(eventTimeout)
 
+class FakeConverterProcess(QObject):
+    conversionDone = pyqtSignal()
 
+    def start_conversion(self, name, filename, extensions, text):
+        self.conversionDone.emit()
+
+    def get_result(self):
+        return ConvertedMarkup('')
+
+@patch('ReText.tab.converterprocess.ConverterProcess', FakeConverterProcess)
 class TestWindow(unittest.TestCase):
 
     def setUp(self):
