@@ -248,7 +248,14 @@ class ReTextTab(QSplitter):
 			                       globalSettings.font.family())
 			settings.setFontSize(QWebSettings.DefaultFontSize,
 			                     globalSettings.font.pointSize())
-			self.previewBox.setHtml(html, QUrl.fromLocalFile(self._fileName))
+
+			# Always provide a baseUrl otherwise QWebView will
+			# refuse to show images or other external objects
+			if self._fileName:
+				baseUrl = QUrl.fromLocalFile(self._fileName)
+			else:
+				baseUrl = QUrl.fromLocalFile(QDir.currentPath())
+			self.previewBox.setHtml(html, baseUrl)
 
 		if self.previewOutdated:
 			self.triggerPreviewUpdate()

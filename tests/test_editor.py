@@ -1,3 +1,5 @@
+# vim: ts=8:sts=8:sw=8:noexpandtab
+
 # This file is part of ReText
 # Copyright: 2014 Dmitry Shachnev
 #
@@ -14,10 +16,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import sys
 import unittest
+from unittest.mock import patch
 
+from ReText.editor import ReTextEdit
 from ReText.editor import documentIndentMore, documentIndentLess
-from PyQt5.QtGui import QTextCursor, QTextDocument
+from PyQt5.QtGui import QImage, QTextCursor, QTextDocument
+from PyQt5.QtCore import Qt, QMimeData
+from PyQt5.QtWidgets import QApplication
+from markups import MarkdownMarkup, ReStructuredTextMarkup
 
 class SettingsMock:
 	tabWidth = 4
@@ -72,6 +80,64 @@ class TestIndentation(unittest.TestCase):
 		cursor.setPosition(11, QTextCursor.KeepAnchor)
 		documentIndentLess(self.document, cursor, self.settings)
 		self.assertEqual('foo\nbar\nbaz', self.document.toPlainText())
+
+# Keep a reference so it is not garbage collected
+app = QApplication([])
+
+class TestClipboardHandling(unittest.TestCase):
+	class DummyReTextTab():
+		def __init__(self):
+			self.markupClass = None
+
+		def getActiveMarkupClass(self):
+			return self.markupClass
+
+	def setUp(self):
+		self.p = self
+		self.editor = ReTextEdit(self)
+		self.dummytab = self.DummyReTextTab()
+		self.editor.tab = self.dummytab
+
+	def _create_image(self):
+		image = QImage(80, 60, QImage.Format_RGB32)
+		image.fill(Qt.green)
+		return image
+
+	def test_allowTextOnClipboard(self):
+		mimeData = QMimeData()
+		mimeData.setText('hello')
+		self.assertTrue(self.editor.canInsertFromMimeData(mimeData))
+
+	def test_allowImageOnClipboard(self):
+		mimeData = QMimeData()
+		mimeData.setImageData(self._create_image())
+		self.assertTrue(self.editor.canInsertFromMimeData(mimeData))
+
+	def test_pasteText(self):
+		mimeData = QMimeData()
+		mimeData.setText('pasted text')
+		self.editor.insertFromMimeData(mimeData)
+		self.assertTrue('pasted text' in self.editor.toPlainText())
+
+	@patch.object(ReTextEdit, 'getImageFilenameAndLink', return_value=('/tmp/myimage.jpg', 'myimage.jpg'))
+	@patch.object(QImage, 'save')
+	def test_pasteImage_Markdown(self, _mock_image, _mock_editor):
+		mimeData = QMimeData()
+		mimeData.setImageData(self._create_image())
+		self.dummytab.markupClass = MarkdownMarkup
+
+		self.editor.insertFromMimeData(mimeData)
+		self.assertTrue('![myimage](myimage.jpg)' in self.editor.toPlainText())
+
+	@patch.object(ReTextEdit, 'getImageFilenameAndLink', return_value=('/tmp/myimage.jpg', 'myimage.jpg'))
+	@patch.object(QImage, 'save')
+	def test_pasteImage_RestructuredText(self, _mock_image, _mock_editor):
+		mimeData = QMimeData()
+		mimeData.setImageData(self._create_image())
+		self.dummytab.markupClass = ReStructuredTextMarkup
+
+		self.editor.insertFromMimeData(mimeData)
+		self.assertTrue('.. image:: myimage.jpg' in self.editor.toPlainText())
 
 if __name__ == '__main__':
 	unittest.main()

@@ -16,14 +16,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+import re
 import weakref
-from markups import MarkdownMarkup
+
+from markups import MarkdownMarkup, ReStructuredTextMarkup
 from ReText import globalSettings, tablemode, readFromSettings
 
-from PyQt5.QtCore import pyqtSignal, QRect, QSize, Qt
-from PyQt5.QtGui import QColor, QKeyEvent, QMouseEvent, QPainter, QPalette, \
-QTextCursor, QTextFormat, QWheelEvent
-from PyQt5.QtWidgets import QLabel, QTextEdit, QWidget
+from PyQt5.QtCore import pyqtSignal, QFileInfo, QRect, QSize, Qt
+from PyQt5.QtGui import QColor, QImage, QKeyEvent, QMouseEvent, QPainter, \
+QPalette, QTextCursor, QTextFormat, QWheelEvent
+from PyQt5.QtWidgets import QFileDialog, QLabel, QTextEdit, QWidget
 
 colors = {
 	'marginLine': QColor(0xdc, 0xd2, 0xdc),
@@ -258,6 +261,59 @@ class ReTextEdit(QTextEdit):
 			tablemode.adjustTableToChanges(self.document(), pos, added - removed, markupClass)
 			self.restoreCursorPositionOnLine(cursorPosition)
 		self.lineNumberArea.update()
+
+	def canInsertFromMimeData(self, mimeData):
+		return mimeData.hasText() or mimeData.hasImage()
+
+	def findNextImageName(self, filenames):
+		highestNumber = 0
+		for filename in filenames:
+			m = re.match(r'image(\d\d\d\d).png', filename, re.IGNORECASE)
+			if m:
+				number = int(m.group(1))
+				highestNumber = max(number, highestNumber)
+		return 'image%04d.png' % (highestNumber + 1)
+
+	def getImageFilenameAndLink(self):
+		if self.tab.fileName:
+			saveDir = os.path.dirname(self.tab.fileName)
+		else:
+			saveDir = os.getcwd()
+
+		imageFileName = self.findNextImageName(os.listdir(saveDir))
+
+		chosenFileName = QFileDialog.getSaveFileName(self,
+		                                   self.tr('Save image'),
+		                                   os.path.join(saveDir, imageFileName),
+		                                   self.tr('Images (*.png *.jpg)'))[0]
+
+		if chosenFileName:
+			# Use relative links for named documents
+			if self.tab.fileName:
+				link = os.path.relpath(chosenFileName, saveDir)
+			else:
+				link = chosenFileName
+		else:
+			link = None
+
+		return chosenFileName, link
+
+	def insertFromMimeData(self, mimeData):
+		if mimeData.hasImage():
+			fileName, link = self.getImageFilenameAndLink()
+			if fileName:
+				image = QImage(mimeData.imageData())
+				image.save(fileName)
+
+				markupClass = self.tab.getActiveMarkupClass()
+				if markupClass and markupClass == MarkdownMarkup:
+					imageText = '![%s](%s)' % (QFileInfo(link).baseName(), link)
+				elif markupClass and markupClass == ReStructuredTextMarkup:
+					imageText = '.. image:: %s' % link
+
+				self.textCursor().insertText(imageText)
+		else:
+			QTextEdit.insertFromMimeData(self, mimeData)
 
 class LineNumberArea(QWidget):
 	def __init__(self, editor):

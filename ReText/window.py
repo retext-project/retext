@@ -959,7 +959,7 @@ class ReTextWindow(QMainWindow):
 	def clipboardDataChanged(self):
 		mimeData = QApplication.instance().clipboard().mimeData()
 		if mimeData is not None:
-			self.actionPaste.setEnabled(mimeData.hasText())
+			self.actionPaste.setEnabled(mimeData.hasText() or mimeData.hasImage())
 
 	def insertFormatting(self, formatting):
 		cursor = self.currentTab.editBox.textCursor()
