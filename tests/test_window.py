@@ -176,14 +176,14 @@ class TestWindow(unittest.TestCase):
 
         self.assertEqual('New document[*]', self.window.windowTitle())
         self.assertTrue(self.window.currentTab is tab_with_unsaved_content)
-        self.assertTrue(self.window.tabWidget.currentWidget().tab is tab_with_unsaved_content)
+        self.assertTrue(self.window.tabWidget.currentWidget() is tab_with_unsaved_content)
 
         self.window.switchTab()
         processEventsUntilIdle()
 
         self.assertEqual('existing_file.md[*]', self.window.windowTitle())
         self.assertTrue(self.window.currentTab is tab_with_file)
-        self.assertTrue(self.window.tabWidget.currentWidget().tab is tab_with_file)
+        self.assertTrue(self.window.tabWidget.currentWidget() is tab_with_file)
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
     def test_activeTab_afterLoadingFileThatIsAlreadyOpenInOtherTab(self, getOpenFileNamesMock):

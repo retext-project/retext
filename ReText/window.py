@@ -342,7 +342,7 @@ class ReTextWindow(QMainWindow):
 
 	def iterateTabs(self):
 		for i in range(self.tabWidget.count()):
-			yield self.tabWidget.widget(i).tab
+			yield self.tabWidget.widget(i)
 
 	def updateStyleSheet(self):
 		if globalSettings.styleSheet:
@@ -447,18 +447,18 @@ class ReTextWindow(QMainWindow):
 		self.currentTab.fileNameChanged.connect(lambda: self.tabFileNameChanged(self.currentTab))
 		self.currentTab.modificationStateChanged.connect(lambda: self.tabModificationStateChanged(self.currentTab))
 		self.currentTab.activeMarkupChanged.connect(lambda: self.tabActiveMarkupChanged(self.currentTab))
-		self.tabWidget.addTab(self.currentTab.getSplitter(), self.tr("New document"))
+		self.tabWidget.addTab(self.currentTab, self.tr("New document"))
 		self.currentTab.updateBoxesVisibility()
 
 	def closeTab(self, ind):
 		if self.maybeSave(ind):
 			if self.tabWidget.count() == 1:
 				self.createTab("")
-			currentWidget = self.tabWidget.widget(ind)
-			if currentWidget.tab.fileName:
-				self.fileSystemWatcher.removePath(currentWidget.tab.fileName)
-			del currentWidget.tab
+			closedTab = self.tabWidget.widget(ind)
+			if closedTab.fileName:
+				self.fileSystemWatcher.removePath(closedTab.fileName)
 			self.tabWidget.removeTab(ind)
+			closedTab.deleteLater()
 
 	def changeIndex(self, ind):
 		'''
@@ -473,7 +473,7 @@ class ReTextWindow(QMainWindow):
 		the other changes that are implied by a tab switch: filename
 		change, modification state change and active markup change.
 		'''
-		self.currentTab = self.tabWidget.currentWidget().tab
+		self.currentTab = self.tabWidget.currentWidget()
 		editBox = self.currentTab.editBox
 		previewState = self.currentTab.previewState
 		self.actionUndo.setEnabled(editBox.document().isUndoAvailable())
@@ -520,15 +520,14 @@ class ReTextWindow(QMainWindow):
 	def enableWebKit(self, enable):
 		globalSettings.useWebKit = enable
 		for i in range(self.tabWidget.count()):
-			splitter = self.tabWidget.widget(i)
-			tab = splitter.tab
+			tab = self.tabWidget.widget(i)
 			tab.previewBox.disconnectExternalSignals()
 			tab.previewBox.setParent(None)
 			tab.previewBox.deleteLater()
 			tab.previewBox = tab.createPreviewBox(tab.editBox)
 			tab.previewBox.setMinimumWidth(125)
-			splitter.addWidget(tab.previewBox)
-			splitter.setSizes((50, 50))
+			tab.addWidget(tab.previewBox)
+			tab.setSizes((50, 50))
 			tab.triggerPreviewUpdate()
 			tab.updateBoxesVisibility()
 
@@ -1053,7 +1052,7 @@ class ReTextWindow(QMainWindow):
 			self.fileSystemWatcher.addPath(fileName)
 
 	def maybeSave(self, ind):
-		tab = self.tabWidget.widget(ind).tab
+		tab = self.tabWidget.widget(ind)
 		if self.autoSaveActive(tab):
 			tab.saveTextToFile()
 			return True

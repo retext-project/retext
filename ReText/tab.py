@@ -16,8 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from datetime import datetime
-
 from markups import get_markup_for_file_name
 from markups.common import MODULE_HOME_PAGE
 
@@ -39,7 +37,7 @@ from PyQt5.QtWebKitWidgets import QWebPage, QWebView
 
 PreviewDisabled, PreviewLive, PreviewNormal = range(3)
 
-class ReTextTab(QObject):
+class ReTextTab(QSplitter):
 
 	fileNameChanged = pyqtSignal()
 	modificationStateChanged = pyqtSignal()
@@ -54,7 +52,7 @@ class ReTextTab(QObject):
 		return self._fileName
 
 	def __init__(self, parent, fileName, defaultMarkup, previewState=PreviewDisabled):
-		QObject.__init__(self, parent)
+		super(QSplitter, self).__init__(Qt.Horizontal, parent=parent)
 		self.p = parent
 		self._fileName = fileName
 		self.editBox = ReTextEdit(self)
@@ -82,6 +80,14 @@ class ReTextTab(QObject):
 		self.editBox.redoAvailable.connect(parent.actionRedo.setEnabled)
 		self.editBox.copyAvailable.connect(parent.actionCopy.setEnabled)
 
+		# Give both boxes a minimum size so the minimumSizeHint will be
+		# ignored when splitter.setSizes is called below
+		for widget in self.editBox, self.previewBox:
+			widget.setMinimumWidth(125)
+			self.addWidget(widget)
+		self.setSizes((50, 50))
+		self.setChildrenCollapsible(False)
+
 		textDocument.modificationChanged.connect(self.handleModificationChanged)
 
 		self.updateActiveMarkupClass()
@@ -89,38 +95,31 @@ class ReTextTab(QObject):
 	def handleModificationChanged(self):
 		self.modificationStateChanged.emit()
 
-	def editorPositionToSourceLine(self, editorPosition):
-		viewportPosition = editorPosition - self.editBox.verticalScrollBar().value()
-		sourceLine = self.editBox.cursorForPosition(QPoint(0,viewportPosition)).blockNumber()
-		return sourceLine
-
-	def sourceLineToEditorPosition(self, sourceLine):
-		doc = self.editBox.document()
-		block = doc.findBlockByNumber(sourceLine)
-		rect = doc.documentLayout().blockBoundingRect(block)
-		return rect.top()
-
 	def createPreviewBox(self, editBox):
+
+		# Use closures to avoid a hard reference from ReTextWebPreview
+		# to self, which would keep the tab and its resources alive
+		# even after other references to it have disappeared.
+
+		def editorPositionToSourceLine(editorPosition):
+			viewportPosition = editorPosition - editBox.verticalScrollBar().value()
+			sourceLine = editBox.cursorForPosition(QPoint(0,viewportPosition)).blockNumber()
+			return sourceLine
+
+		def sourceLineToEditorPosition(sourceLine):
+			doc = editBox.document()
+			block = doc.findBlockByNumber(sourceLine)
+			rect = doc.documentLayout().blockBoundingRect(block)
+			return rect.top()
+
 		if globalSettings.useWebKit:
 			preview = ReTextWebPreview(editBox,
-			                           self.editorPositionToSourceLine,
-			                           self.sourceLineToEditorPosition)
+			                           editorPositionToSourceLine,
+			                           sourceLineToEditorPosition)
 		else:
 			preview = ReTextPreview(self)
 
 		return preview
-
-	def getSplitter(self):
-		splitter = QSplitter(Qt.Horizontal)
-		# Give both boxes a minimum size so the minimumSizeHint will be
-		# ignored when splitter.setSizes is called below
-		for widget in self.editBox, self.previewBox:
-			widget.setMinimumWidth(125)
-			splitter.addWidget(widget)
-		splitter.setSizes((50, 50))
-		splitter.setChildrenCollapsible(False)
-		splitter.tab = self
-		return splitter
 
 	def setDefaultMarkupClass(self, markupClass):
 		'''

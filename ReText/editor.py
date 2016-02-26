@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import weakref
 from markups import MarkdownMarkup
 from ReText import globalSettings, tablemode, readFromSettings
 
@@ -86,7 +87,7 @@ class ReTextEdit(QTextEdit):
 
 	def __init__(self, parent):
 		QTextEdit.__init__(self)
-		self.tab = parent
+		self.tab = weakref.proxy(parent)
 		self.parent = parent.p
 		self.undoRedoActive = False
 		self.tableModeEnabled = False

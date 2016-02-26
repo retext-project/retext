@@ -5,6 +5,7 @@ import markups
 import multiprocessing as mp
 import struct
 import time
+import weakref
 
 from PyQt5.QtCore import pyqtSignal, QSocketNotifier
 
@@ -43,9 +44,13 @@ class ConverterProcess(object):
 
     def __init__(self):
         conn_parent, conn_child = mp.Pipe()
-        self.child = mp.Process(target=_converter_process_func, args=(conn_parent, conn_child))
-        self.child.daemon = True
-        self.child.start()
+
+        # Use a local variable for child so that we can talk to the child in
+        # on_finalize without needing a reference to self
+        child = mp.Process(target=_converter_process_func, args=(conn_parent, conn_child))
+        child.daemon = True
+        child.start()
+        self.child = child
 
         conn_child.close()
         self.conn = conn_parent
@@ -57,6 +62,13 @@ class ConverterProcess(object):
         # assign the activated signal of the notifier to a conversionDone
         # member to get a more meaningful signal name for others to connect to
         self.conversionDone = self.conversionNotifier.activated
+
+        def on_finalize(conn):
+            conn_parent.send({'command':'quit'})
+            conn_parent.close()
+            child.join()
+
+        weakref.finalize(self, on_finalize, conn_parent)
 
     def start_conversion(self, markup_name, filename, requested_extensions, text):
         if self.busy:
