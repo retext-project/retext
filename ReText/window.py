@@ -448,6 +448,7 @@ class ReTextWindow(QMainWindow):
 		self.currentTab.modificationStateChanged.connect(lambda: self.tabModificationStateChanged(self.currentTab))
 		self.currentTab.activeMarkupChanged.connect(lambda: self.tabActiveMarkupChanged(self.currentTab))
 		self.tabWidget.addTab(self.currentTab.getSplitter(), self.tr("New document"))
+		self.currentTab.updateBoxesVisibility()
 
 	def closeTab(self, ind):
 		if self.maybeSave(ind):

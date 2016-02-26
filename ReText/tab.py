@@ -85,7 +85,6 @@ class ReTextTab(QObject):
 		textDocument.modificationChanged.connect(self.handleModificationChanged)
 
 		self.updateActiveMarkupClass()
-		self.updateBoxesVisibility()
 
 	def handleModificationChanged(self):
 		self.modificationStateChanged.emit()
