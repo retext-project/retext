@@ -16,6 +16,7 @@
 
 import markups
 import markups.common
+import multiprocessing as mp
 from os.path import dirname, exists, join
 
 from PyQt5.QtCore import QByteArray, QLocale, QSettings, QStandardPaths
@@ -24,7 +25,8 @@ from PyQt5.QtGui import QFont
 app_version = "5.3.0"
 
 settings = QSettings('ReText project', 'ReText')
-print('Using configuration file:', settings.fileName())
+if mp.current_process().name == 'MainProcess':
+    print('Using configuration file:', settings.fileName())
 
 if not str(settings.fileName()).endswith('.conf'):
 	# We are on Windows probably
