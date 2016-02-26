@@ -1,3 +1,11 @@
+## ReText 6.0 (TBD)
+
+* The live preview now automatically scrolls to match its position with the
+  editor
+* Markup conversion is now performed in a background process, improving
+  responsiveness of the editor
+* ReText now depends on version 2.0 or higher of pymarkups
+
 ## ReText 5.3 (2015-12-20)
 
 * Tabs are now reorderable.

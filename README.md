@@ -13,7 +13,7 @@ ReText requires the following packages to run:
 
 * [python](https://www.python.org/) — version 3.2 or higher
 * [pyqt5](http://www.riverbankcomputing.co.uk/software/pyqt/intro)
-* [python-markups](https://pypi.python.org/pypi/Markups)
+* [python-markups](https://pypi.python.org/pypi/Markups) - version 2.0 or higher
 
 We also recommend having these packages installed:
 
@@ -34,7 +34,7 @@ automatically loaded. For development snapshots, compile translations using
 
 You can translate ReText into your language on [Transifex].
 
-ReText is Copyright 2011–2015 [Dmitry Shachnev](https://mitya57.me)
+ReText is Copyright 2011–2016 [Dmitry Shachnev](https://mitya57.me)
 and is licensed under GNU GPL (v2+) license, the current version is available in
 `LICENSE_GPL` file.
 

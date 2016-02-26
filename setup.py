@@ -14,7 +14,7 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 .. _`home page`: https://github.com/retext-project/retext
 .. _`wiki`: https://github.com/retext-project/retext/wiki'''
 
-requires = ['docutils', 'Markdown', 'Markups', 'pyenchant', 'Pygments']
+requires = ['docutils', 'Markdown', 'Markups>=2.0.0', 'pyenchant', 'Pygments']
 
 import re
 import sys
