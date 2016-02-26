@@ -519,8 +519,7 @@ class ReTextWindow(QMainWindow):
 
 	def enableWebKit(self, enable):
 		globalSettings.useWebKit = enable
-		for i in range(self.tabWidget.count()):
-			tab = self.tabWidget.widget(i)
+		for tab in self.iterateTabs():
 			tab.previewBox.disconnectExternalSignals()
 			tab.previewBox.setParent(None)
 			tab.previewBox.deleteLater()
