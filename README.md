@@ -1,5 +1,5 @@
-Welcome to ReText!
-==================
+Welcome to ReText!  [![Travis CI status][Travis SVG]][Travis]
+=============================================================
 
 ReText is a simple but powerful editor for Markdown and reStructuredText markup
 languages. ReText is written in Python language and works on Linux and other
@@ -34,12 +34,14 @@ automatically loaded. For development snapshots, compile translations using
 
 You can translate ReText into your language on [Transifex].
 
-ReText is Copyright 2011–2016 [Dmitry Shachnev](https://mitya57.me)
-and is licensed under GNU GPL (v2+) license, the current version is available in
-`LICENSE_GPL` file.
+ReText is Copyright 2011–2016 [Dmitry Shachnev](https://mitya57.me),
+2011–2016 Maurice van der Pot, and is licensed under GNU GPL (v2+) license, the
+current version is available in `LICENSE_GPL` file.
 
 ReText icon is based on `accessories-text-editor` icon from the Faenza theme.
 
 [wiki]: https://github.com/retext-project/retext/wiki
 [PyPI]: https://pypi.python.org/pypi/ReText
 [Transifex]: https://www.transifex.com/mitya57/ReText/
+[Travis]: https://travis-ci.org/retext-project/retext
+[Travis SVG]: https://api.travis-ci.org/retext-project/retext.svg
