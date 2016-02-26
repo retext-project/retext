@@ -14,8 +14,6 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 .. _`home page`: https://github.com/retext-project/retext
 .. _`wiki`: https://github.com/retext-project/retext/wiki'''
 
-requires = ['docutils', 'Markdown', 'Markups>=2.0.0', 'pyenchant', 'Pygments']
-
 import re
 import sys
 from os.path import join
@@ -117,8 +115,8 @@ setup(name='ReText',
         ('share/retext/icons', glob('icons/*')),
         ('share/retext/locale', iglob('locale/*.qm'))
       ],
-      requires=requires,
-      install_requires=requires,
+      requires=['docutils', 'Markdown', 'Markups', 'pyenchant', 'Pygments'],
+      install_requires=['docutils', 'Markdown', 'Markups>=2.0', 'pyenchant', 'Pygments'],
       cmdclass={
         'build': retext_build,
         'sdist': retext_sdist,
