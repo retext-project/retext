@@ -35,8 +35,9 @@ automatically loaded. For development snapshots, compile translations using
 You can translate ReText into your language on [Transifex].
 
 ReText is Copyright 2011–2016 [Dmitry Shachnev](https://mitya57.me),
-2011–2016 Maurice van der Pot, and is licensed under GNU GPL (v2+) license, the
-current version is available in `LICENSE_GPL` file.
+2011–2016 [Maurice van der Pot](mailto:griffon26@kfk4ever.com), and is
+licensed under GNU GPL (v2+) license, the current version is available in
+`LICENSE_GPL` file.
 
 ReText icon is based on `accessories-text-editor` icon from the Faenza theme.
 
