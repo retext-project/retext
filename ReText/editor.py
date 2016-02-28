@@ -268,7 +268,7 @@ class ReTextEdit(QTextEdit):
 	def findNextImageName(self, filenames):
 		highestNumber = 0
 		for filename in filenames:
-			m = re.match(r'image(\d\d\d\d).png', filename, re.IGNORECASE)
+			m = re.match(r'image(\d+).png', filename, re.IGNORECASE)
 			if m:
 				number = int(m.group(1))
 				highestNumber = max(number, highestNumber)
