@@ -1,9 +1,10 @@
 ## ReText 6.0 (TBD)
 
 * The live preview now automatically scrolls to match its position with the
-  editor
+  editor (only for markdown)
 * Markup conversion is now performed in a background process, improving
   responsiveness of the editor
+* Images can now be copied and pasted into ReText
 * ReText now depends on version 2.0 or higher of pymarkups
 
 ## ReText 5.3 (2015-12-20)
