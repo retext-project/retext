@@ -38,7 +38,17 @@ def _converter_process_func(conn_parent, conn_child):
             except ConversionError:
                 result = ('markup_not_available', None)
 
-            conn_child.send(result)
+            try:
+                conn_child.send(result)
+            except BrokenPipeError:
+                # Continue despite the broken pipe because we expect that a
+                # 'quit' command will have been sent. If it has been then we
+                # should terminate without any error messages. If no command
+                # was queued we will get an EOFError from the read, giving us a
+                # second chance to show that something went wrong by exiting
+                # with a traceback.
+                continue
+
 
 class ConverterProcess(object):
 
