@@ -80,7 +80,7 @@ class ConfigDialog(QDialog):
 			(self.tr('Show line numbers'), 'lineNumbersEnabled'),
 			(self.tr('Tab key inserts spaces'), 'tabInsertsSpaces'),
 			(self.tr('Tabulation width'), 'tabWidth'),
-			(self.tr('Display right margin at column'), 'rightMargin'),
+			(self.tr('Draw vertical line at column'), 'rightMargin'),
 			(self.tr('Interface'), None),
 			(self.tr('Icon theme name'), 'iconTheme'),
 			(self.tr('Stylesheet file'), 'styleSheet', True),
