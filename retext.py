@@ -20,6 +20,7 @@
 import multiprocessing as mp
 import sys
 import signal
+from os import devnull
 from os.path import join
 from ReText import datadirs, globalSettings, app_version
 from ReText.window import ReTextWindow
@@ -35,6 +36,12 @@ def canonicalize(option):
 	return QFileInfo(option).canonicalFilePath()
 
 def main():
+	# If we're running on Windows without a console, then discard stdout
+	# and save stderr to a file to facilitate debugging in case of crashes.
+	if sys.executable.endswith('pythonw.exe'):
+		sys.stdout = open(devnull, 'w')
+		sys.stderr = open('stderr.log', 'w')
+
 	app = QApplication(sys.argv)
 	app.setOrganizationName("ReText project")
 	app.setApplicationName("ReText")
@@ -73,7 +80,7 @@ def main():
 				window.preview(True)
 		elif fileName == '--preview':
 			previewMode = True
-	inputData = '' if sys.stdin.isatty() else sys.stdin.read()
+	inputData = '' if (sys.stdin == None or sys.stdin.isatty()) else sys.stdin.read()
 	if inputData or not window.tabWidget.count():
 		window.createNew(inputData)
 	signal.signal(signal.SIGINT, lambda sig, frame: window.close())
