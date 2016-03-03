@@ -167,4 +167,5 @@ class ConfigDialog(QDialog):
 			print(e, file=sys.stderr)
 		for tab in self.parent.iterateTabs():
 			tab.editBox.updateFont()
+			tab.editBox.viewport().update()
 		self.parent.updateStyleSheet()
