@@ -58,12 +58,17 @@ for dir in datadirs:
 		icon_path = join(dir, 'icons/')
 		break
 
+def chooseMonospaceFont():
+	font = QFont('monospace')
+	font.setStyleHint(QFont.TypeWriter)
+	return font
+
 configOptions = {
 	'appStyleSheet': '',
 	'autoSave': False,
 	'defaultCodec': '',
 	'defaultMarkup': '',
-	'editorFont': QFont('monospace'),
+	'editorFont': chooseMonospaceFont(),
 	'font': QFont(),
 	'handleWebLinks': False,
 	'hideToolBar': False,
