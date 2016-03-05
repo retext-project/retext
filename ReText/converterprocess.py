@@ -3,11 +3,35 @@
 from datetime import datetime
 import markups
 import multiprocessing as mp
+import pickle
+import socket
 import struct
 import time
 import weakref
 
 from PyQt5.QtCore import pyqtSignal, QSocketNotifier
+
+def recvall(sock, remaining):
+    alldata = bytearray()
+    while remaining > 0:
+        data = sock.recv(remaining)
+        alldata.extend(data)
+        remaining -= len(data)
+
+    return alldata
+
+def receiveObject(sock):
+    sizeBuf = recvall(sock, 4)
+    size = struct.unpack('I', sizeBuf)[0]
+    message = recvall(sock, size)
+    obj = pickle.loads(message)
+    return obj
+
+def sendObject(sock, obj):
+    message = pickle.dumps(obj)
+    sizeBuf = struct.pack('I', len(message))
+    sock.sendall(sizeBuf)
+    sock.sendall(message)
 
 class ConversionError(Exception):
     pass
@@ -18,7 +42,7 @@ def _converter_process_func(conn_parent, conn_child):
     current_markup = None
 
     while True:
-        job = conn_child.recv()
+        job = receiveObject(conn_child)
         if job['command'] == 'quit':
             break
         elif job['command'] == 'convert':
@@ -39,7 +63,7 @@ def _converter_process_func(conn_parent, conn_child):
                 result = ('markup_not_available', None)
 
             try:
-                conn_child.send(result)
+                sendObject(conn_child, result)
             except BrokenPipeError:
                 # Continue despite the broken pipe because we expect that a
                 # 'quit' command will have been sent. If it has been then we
@@ -53,7 +77,7 @@ def _converter_process_func(conn_parent, conn_child):
 class ConverterProcess(object):
 
     def __init__(self):
-        conn_parent, conn_child = mp.Pipe()
+        conn_parent, conn_child = socket.socketpair()
 
         # Use a local variable for child so that we can talk to the child in
         # on_finalize without needing a reference to self
@@ -74,7 +98,7 @@ class ConverterProcess(object):
         self.conversionDone = self.conversionNotifier.activated
 
         def on_finalize(conn):
-            conn_parent.send({'command':'quit'})
+            sendObject(conn_parent, {'command':'quit'})
             conn_parent.close()
             child.join()
 
@@ -84,11 +108,11 @@ class ConverterProcess(object):
         if self.busy:
             raise RuntimeError('Already converting')
 
-        self.conn.send({'command': 'convert',
-                        'markup_name' : markup_name,
-                        'filename' : filename,
-                        'requested_extensions' : requested_extensions,
-                        'text' : text})
+        sendObject(self.conn, {'command': 'convert',
+                               'markup_name' : markup_name,
+                               'filename' : filename,
+                               'requested_extensions' : requested_extensions,
+                               'text' : text})
         self.busy = True
 
     def get_result(self):
@@ -97,7 +121,7 @@ class ConverterProcess(object):
 
         self.busy = False
 
-        status, converted = self.conn.recv()
+        status, converted = receiveObject(self.conn)
 
         if status != 'ok':
             raise ConversionError('The specified markup was not available')
@@ -105,6 +129,6 @@ class ConverterProcess(object):
         return converted
 
     def stop(self):
-        self.conn.send({'command': 'quit'})
+        sendObject(self.conn, {'command': 'quit'})
         self.conn.close()
 
