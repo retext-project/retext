@@ -1,3 +1,5 @@
+# vim: ts=8:sts=8:sw=8:noexpandtab
+
 # This file is part of ReText
 # Copyright: 2012-2014 Dmitry Shachnev
 #
@@ -58,17 +60,12 @@ for dir in datadirs:
 		icon_path = join(dir, 'icons/')
 		break
 
-def chooseMonospaceFont():
-	font = QFont('monospace')
-	font.setStyleHint(QFont.TypeWriter)
-	return font
-
 configOptions = {
 	'appStyleSheet': '',
 	'autoSave': False,
 	'defaultCodec': '',
 	'defaultMarkup': '',
-	'editorFont': chooseMonospaceFont(),
+	'editorFont': QFont(),
 	'font': QFont(),
 	'handleWebLinks': False,
 	'hideToolBar': False,
@@ -137,6 +134,11 @@ def writeListToSettings(key, value, settings=settings):
 	else:
 		settings.remove(key)
 
+def chooseMonospaceFont():
+	font = QFont('monospace')
+	font.setStyleHint(QFont.TypeWriter)
+	return font
+
 class ReTextSettings(object):
 	def __init__(self):
 		for option in configOptions:
@@ -149,6 +151,14 @@ class ReTextSettings(object):
 			raise AttributeError('Unknown attribute')
 		object.__setattr__(self, option, value)
 		writeToSettings(option, value, configOptions[option])
+
+	def __getattribute__(self, option):
+		value = object.__getattribute__(self, option)
+		# Choose a font just-in-time, because when the settings are
+		# loaded it is too early to work on Windows
+		if option == 'editorFont' and not value.family():
+			value = chooseMonospaceFont()
+		return value
 
 globalSettings = ReTextSettings()
 
