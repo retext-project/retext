@@ -34,11 +34,12 @@ class PosMapExtension(Extension):
             preprocessor, are removed before any other extensions get confused
             by them.
         """
-        md.preprocessors.add('posmap', PosMapPreprocessor(md), '_begin')
+        md.preprocessors.add('posmap_mark', PosMapMarkPreprocessor(md), '_begin')
+        md.preprocessors.add('posmap_clean', PosMapCleanPreprocessor(md), '_end')
         md.parser.blockprocessors.add('posmap', PosMapBlockProcessor(md.parser), '_begin')
 
-class PosMapPreprocessor(Preprocessor):
-    """ PosMapPreprocessor - insert $posmapmarker$linenr entries at each empty line """
+class PosMapMarkPreprocessor(Preprocessor):
+    """ PosMapMarkPreprocessor - insert $posmapmarker$linenr entries at each empty line """
 
     def run(self, lines):
         new_text = []
@@ -48,6 +49,23 @@ class PosMapPreprocessor(Preprocessor):
                 new_text.append('$posmapmarker$%d' % i)
                 new_text.append('')
         return new_text
+
+class PosMapCleanPreprocessor(Preprocessor):
+    """ PosMapCleanPreprocessor - remove $posmapmarker$linenr entries that
+        accidentally ended up in the htmlStash. This could have happened
+        because they were inside html tags or a fenced code block
+    """
+
+    POSMAP_MARKER_RE = re.compile('\$posmapmarker\$\d+\n\n')
+
+    def run(self, lines):
+
+        for i in range(self.markdown.htmlStash.html_counter):
+            html, safe = self.markdown.htmlStash.rawHtmlBlocks[i]
+            html = re.sub(self.POSMAP_MARKER_RE, '', html)
+            self.markdown.htmlStash.rawHtmlBlocks[i] = (html, safe)
+
+        return lines
 
 
 class PosMapBlockProcessor(BlockProcessor):
