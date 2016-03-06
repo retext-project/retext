@@ -704,7 +704,7 @@ class ReTextWindow(QMainWindow):
 				action[0].setEnabled(False)
 				continue
 			mimetype = action[1]
-			if mimetype == None:
+			if mimetype is None:
 				enabled = True
 			elif markupClass == markups.MarkdownMarkup:
 				enabled = (mimetype in ("text/x-retext-markdown", "text/x-markdown"))
@@ -913,7 +913,7 @@ class ReTextWindow(QMainWindow):
 		title, htmltext, preview = self.currentTab.getDocumentForExport(includeStyleSheet=True,
 										webenv=False)
 		document = self.getDocumentForPrint(title, htmltext, preview)
-		if document == None:
+		if document is None:
 			return
 		printer = self.standardPrinter(title)
 		preview = QPrintPreviewDialog(printer, self)

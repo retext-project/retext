@@ -127,7 +127,7 @@ def _determineNextEdge(rows, rowShifts, offset):
 	for row, rowShift in zip(rows, rowShifts):
 		if rowShift != 0:
 			edge = row.text.find('|', offset)
-			if edge != -1 and (nextedge == None or edge < nextedge):
+			if edge != -1 and (nextedge is None or edge < nextedge):
 				nextedge = edge
 	return nextedge
 

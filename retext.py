@@ -80,7 +80,7 @@ def main():
 				window.preview(True)
 		elif fileName == '--preview':
 			previewMode = True
-	inputData = '' if (sys.stdin == None or sys.stdin.isatty()) else sys.stdin.read()
+	inputData = '' if (sys.stdin is None or sys.stdin.isatty()) else sys.stdin.read()
 	if inputData or not window.tabWidget.count():
 		window.createNew(inputData)
 	signal.signal(signal.SIGINT, lambda sig, frame: window.close())
