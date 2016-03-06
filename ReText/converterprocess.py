@@ -9,12 +9,14 @@ import struct
 import time
 import weakref
 
-from PyQt5.QtCore import pyqtSignal, QSocketNotifier
+from PyQt5.QtCore import pyqtSignal, QObject, QSocketNotifier
 
 def recvall(sock, remaining):
     alldata = bytearray()
     while remaining > 0:
         data = sock.recv(remaining)
+        if len(data) == 0:
+            break
         alldata.extend(data)
         remaining -= len(data)
 
@@ -74,10 +76,19 @@ def _converter_process_func(conn_parent, conn_child):
                 continue
 
 
-class ConverterProcess(object):
+class ConverterProcess(QObject):
+
+    conversionDone = pyqtSignal()
 
     def __init__(self):
+        super(QObject, self).__init__()
+
         conn_parent, conn_child = socket.socketpair()
+        
+        # TODO: figure out which of the two sockets should be set to 
+        #       inheritable and which should be passed to the child
+        if hasattr(conn_child, 'set_inheritable'):
+            conn_child.set_inheritable(True)
 
         # Use a local variable for child so that we can talk to the child in
         # on_finalize without needing a reference to self
@@ -92,10 +103,7 @@ class ConverterProcess(object):
         self.busy = False
         self.conversionNotifier = QSocketNotifier(self.conn.fileno(),
                                                   QSocketNotifier.Read)
-
-        # assign the activated signal of the notifier to a conversionDone
-        # member to get a more meaningful signal name for others to connect to
-        self.conversionDone = self.conversionNotifier.activated
+        self.conversionNotifier.activated.connect(self._conversionNotifierActivated)
 
         def on_finalize(conn):
             sendObject(conn_parent, {'command':'quit'})
@@ -103,6 +111,12 @@ class ConverterProcess(object):
             child.join()
 
         weakref.finalize(self, on_finalize, conn_parent)
+
+    def _conversionNotifierActivated(self):
+        # Set the socket to blocking before waking up any interested parties,
+        # because it has been set to unblocking by QSocketNotifier
+        self.conn.setblocking(True)
+        self.conversionDone.emit()
 
     def start_conversion(self, markup_name, filename, requested_extensions, text):
         if self.busy:
