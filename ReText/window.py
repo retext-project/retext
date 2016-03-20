@@ -51,6 +51,11 @@ class ReTextWindow(QMainWindow):
 			self.move((screenRect.width()-self.width())/2, (screenRect.height()-self.height())/2)
 		if not screenRect.contains(self.geometry()):
 			self.showMaximized()
+		if sys.platform.startswith('darwin'):
+			# https://github.com/retext-project/retext/issues/198
+			searchPaths = QIcon.themeSearchPaths()
+			searchPaths.append('/opt/local/share/icons')
+			QIcon.setThemeSearchPaths(searchPaths)
 		if globalSettings.iconTheme:
 			QIcon.setThemeName(globalSettings.iconTheme)
 		if QIcon.themeName() in ('hicolor', ''):
