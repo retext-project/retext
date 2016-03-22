@@ -183,7 +183,7 @@ class ReTextEdit(QTextEdit):
 			if event.modifiers() & Qt.ShiftModifier:
 				# Insert Markdown-style line break
 				markupClass = self.tab.getActiveMarkupClass()
-				if markupClass and markupClass == MarkdownMarkup:
+				if markupClass == MarkdownMarkup:
 					cursor.insertText('  ')
 			if event.modifiers() & Qt.ControlModifier:
 				cursor.insertText('\n')
@@ -306,9 +306,9 @@ class ReTextEdit(QTextEdit):
 				image.save(fileName)
 
 				markupClass = self.tab.getActiveMarkupClass()
-				if markupClass and markupClass == MarkdownMarkup:
+				if markupClass == MarkdownMarkup:
 					imageText = '![%s](%s)' % (QFileInfo(link).baseName(), link)
-				elif markupClass and markupClass == ReStructuredTextMarkup:
+				elif markupClass == ReStructuredTextMarkup:
 					imageText = '.. image:: %s' % link
 
 				self.textCursor().insertText(imageText)
