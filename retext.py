@@ -22,7 +22,7 @@ import sys
 import signal
 from os import devnull
 from os.path import join
-from ReText import datadirs, globalSettings, app_version
+from ReText import datadirs, settings, globalSettings, app_version
 from ReText.window import ReTextWindow
 
 from PyQt5.QtCore import QFile, QFileInfo, QIODevice, QLibraryInfo, \
@@ -61,6 +61,7 @@ def main():
 		QLibraryInfo.location(QLibraryInfo.TranslationsPath))
 	app.installTranslator(RtTranslator)
 	app.installTranslator(QtTranslator)
+	print('Using configuration file:', settings.fileName())
 	if globalSettings.appStyleSheet:
 		sheetfile = QFile(globalSettings.appStyleSheet)
 		sheetfile.open(QIODevice.ReadOnly)
