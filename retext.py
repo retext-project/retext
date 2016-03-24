@@ -20,6 +20,7 @@
 import multiprocessing as mp
 import sys
 import signal
+import markups
 from os import devnull
 from os.path import join
 from ReText import datadirs, settings, globalSettings, app_version
@@ -36,6 +37,9 @@ def canonicalize(option):
 	return QFileInfo(option).canonicalFilePath()
 
 def main():
+	if markups.__version_tuple__ < (2, ):
+		sys.exit('Error: ReText needs PyMarkups 2.0 or newer to run.')
+
 	# If we're running on Windows without a console, then discard stdout
 	# and save stderr to a file to facilitate debugging in case of crashes.
 	if sys.executable.endswith('pythonw.exe'):
