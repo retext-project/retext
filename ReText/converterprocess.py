@@ -16,7 +16,7 @@ def recvall(sock, remaining):
     while remaining > 0:
         data = sock.recv(remaining)
         if len(data) == 0:
-            break
+            raise EOFError('Received 0 bytes from socket while more bytes were expected. Did the sender process exit unexpectedly?')
         alldata.extend(data)
         remaining -= len(data)
 
@@ -84,7 +84,7 @@ class ConverterProcess(QObject):
         super(QObject, self).__init__()
 
         conn_parent, conn_child = socket.socketpair()
-        
+
         # TODO: figure out which of the two sockets should be set to 
         #       inheritable and which should be passed to the child
         if hasattr(conn_child, 'set_inheritable'):
