@@ -19,53 +19,43 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
-        <source>Restore live preview state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
         <source>Open external links in ReText window</source>
         <translation>Åbn eksterne links i ReText-vinduet</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstbehandler</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Highlight current line</source>
-        <translation type="unfinished"></translation>
+        <translation>Fremhæv nuværende linje</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Show line numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis linjenumre</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Tab key inserts spaces</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab-tast indsætter mellemrum</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Tabulation width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Display right margin at column</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab-bredde</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Grænseflade</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Icon theme name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikontemanavn</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -78,9 +68,24 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="config.py" line="102"/>
+        <location filename="config.py" line="103"/>
         <source>Help</source>
-        <translation type="unfinished">Hjælp</translation>
+        <translation>Hjælp</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Use live preview by default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Enable synchronized scrolling for Markdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Draw vertical line at column</source>
+        <translation>Tegn lodret linje ved kolonne</translation>
     </message>
 </context>
 <context>
@@ -88,12 +93,12 @@
     <message>
         <location filename="config.py" line="34"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(ingen)</translation>
     </message>
     <message>
         <location filename="config.py" line="41"/>
         <source>Select file to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg en fil, der skal åbnes</translation>
     </message>
 </context>
 <context>
@@ -114,444 +119,472 @@
     <message>
         <location filename="fakevimeditor.py" line="64"/>
         <source>No write since last change (add ! to override)</source>
-        <translation type="unfinished"></translation>
+        <translation>Intet skrevet siden sidste ændring (tilføj ! for at tilsidesætte)</translation>
     </message>
     <message>
         <location filename="fakevimeditor.py" line="121"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
+    </message>
+</context>
+<context>
+    <name>ReTextEdit</name>
+    <message>
+        <location filename="editor.py" line="285"/>
+        <source>Save image</source>
+        <translation>Gem billede</translation>
+    </message>
+    <message>
+        <location filename="editor.py" line="285"/>
+        <source>Images (*.png *.jpg)</source>
+        <translation>Billeder (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
     <name>ReTextTab</name>
     <message>
-        <location filename="tab.py" line="115"/>
+        <location filename="tab.py" line="181"/>
         <source>New document</source>
         <translation>Nyt dokument</translation>
     </message>
     <message>
-        <location filename="tab.py" line="121"/>
+        <location filename="tab.py" line="186"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation>Kunne ikke indlæse filens indhold, dobbeltcheck at du har det &lt;a href=&quot;%s&quot;&gt;nødvendige modul&lt;/a&gt; installeret.</translation>
+        <translation>Kunne ikke indlæse filens indhold, kontroller at du har det &lt;a href=&quot;%s&quot;&gt;nødvendige modul&lt;/a&gt; installeret.</translation>
     </message>
 </context>
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="window.py" line="69"/>
+        <location filename="window.py" line="76"/>
         <source>File toolbar</source>
         <translation>Fil-værktøjslinie</translation>
     </message>
     <message>
-        <location filename="window.py" line="71"/>
+        <location filename="window.py" line="78"/>
         <source>Edit toolbar</source>
         <translation>Redigering-værktøjslinie</translation>
     </message>
     <message>
-        <location filename="window.py" line="73"/>
+        <location filename="window.py" line="80"/>
         <source>Search toolbar</source>
         <translation>Søge-værktøjslinie</translation>
     </message>
     <message>
-        <location filename="window.py" line="77"/>
+        <location filename="window.py" line="84"/>
         <source>New</source>
         <translation>Ny</translation>
     </message>
     <message>
-        <location filename="window.py" line="80"/>
+        <location filename="window.py" line="87"/>
         <source>Open</source>
         <translation>Åben</translation>
     </message>
     <message>
-        <location filename="window.py" line="89"/>
+        <location filename="window.py" line="1047"/>
+        <source>Reload</source>
+        <translation>Genindlæs</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="96"/>
         <source>Save</source>
         <translation>Gem</translation>
     </message>
     <message>
-        <location filename="window.py" line="83"/>
+        <location filename="window.py" line="90"/>
         <source>Set encoding</source>
-        <translation type="unfinished"></translation>
+        <translation>Indstil indkodning</translation>
     </message>
     <message>
-        <location filename="window.py" line="93"/>
+        <location filename="window.py" line="100"/>
         <source>Save as</source>
         <translation>Gem som</translation>
     </message>
     <message>
-        <location filename="window.py" line="99"/>
+        <location filename="window.py" line="102"/>
+        <source>Next tab</source>
+        <translation>Næste fane</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="104"/>
+        <source>Previous tab</source>
+        <translation>Forrige fane</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="106"/>
         <source>Print</source>
         <translation>Udskrift</translation>
     </message>
     <message>
-        <location filename="window.py" line="102"/>
+        <location filename="window.py" line="109"/>
         <source>Print preview</source>
         <translation>Udskriftsvisning</translation>
     </message>
     <message>
-        <location filename="window.py" line="104"/>
+        <location filename="window.py" line="111"/>
         <source>View HTML code</source>
         <translation>Vis HTML-kode</translation>
     </message>
     <message>
-        <location filename="window.py" line="109"/>
+        <location filename="window.py" line="112"/>
+        <source>Change editor font</source>
+        <translation>Skift skrifttype til tekstbehandling</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="114"/>
+        <source>Change preview font</source>
+        <translation>Skift skrifttype til forhåndsvisning</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="116"/>
         <source>Find text</source>
         <translation>Find tekst</translation>
     </message>
     <message>
-        <location filename="window.py" line="113"/>
+        <location filename="window.py" line="120"/>
         <source>Preview</source>
         <translation>Forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="window.py" line="123"/>
+        <location filename="window.py" line="130"/>
         <source>Live preview</source>
         <translation>Live-forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="window.py" line="136"/>
+        <location filename="window.py" line="135"/>
+        <source>Table mode</source>
+        <translation>Tabelmodus</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="138"/>
+        <source>FakeVim mode</source>
+        <translation>FakeVim-modus</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="143"/>
         <source>Fullscreen mode</source>
         <translation>Fuldskærmsvisning</translation>
     </message>
     <message>
-        <location filename="window.py" line="506"/>
+        <location filename="window.py" line="550"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Præferencer</translation>
     </message>
     <message>
-        <location filename="window.py" line="146"/>
+        <location filename="window.py" line="153"/>
         <source>Quit</source>
         <translation>Afslut</translation>
     </message>
     <message>
-        <location filename="window.py" line="149"/>
+        <location filename="window.py" line="156"/>
         <source>Undo</source>
         <translation>Fortryd</translation>
     </message>
     <message>
-        <location filename="window.py" line="151"/>
+        <location filename="window.py" line="158"/>
         <source>Redo</source>
         <translation>Gendan</translation>
     </message>
     <message>
-        <location filename="window.py" line="153"/>
+        <location filename="window.py" line="160"/>
         <source>Copy</source>
         <translation>Kopier</translation>
     </message>
     <message>
-        <location filename="window.py" line="155"/>
+        <location filename="window.py" line="162"/>
         <source>Cut</source>
         <translation>Klip</translation>
     </message>
     <message>
-        <location filename="window.py" line="157"/>
+        <location filename="window.py" line="164"/>
         <source>Paste</source>
         <translation>Indsæt</translation>
     </message>
     <message>
-        <location filename="window.py" line="167"/>
+        <location filename="window.py" line="174"/>
         <source>Enable</source>
         <translation>Aktiver</translation>
     </message>
     <message>
-        <location filename="window.py" line="168"/>
+        <location filename="window.py" line="175"/>
         <source>Set locale</source>
         <translation>Sæt sprogindstillinger</translation>
     </message>
     <message>
-        <location filename="window.py" line="169"/>
+        <location filename="window.py" line="176"/>
         <source>Use WebKit renderer</source>
         <translation>Anvend WebKit-fremviser</translation>
     </message>
     <message>
-        <location filename="window.py" line="172"/>
-        <source>Next</source>
-        <translation>Næste</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="174"/>
-        <source>Previous</source>
-        <translation>Foregående</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="176"/>
-        <source>Get help online</source>
-        <translation>Find hjælp online</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="177"/>
-        <source>About ReText</source>
-        <translation>Om ReText</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="180"/>
-        <source>About Qt</source>
-        <translation>Om Qt</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="200"/>
-        <source>Bold</source>
-        <translation>Fed</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="202"/>
-        <source>Italic</source>
-        <translation>Kursiv</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="204"/>
-        <source>Underline</source>
-        <translation>Understregning</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="212"/>
-        <source>Tags</source>
-        <translation>Tags</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="216"/>
-        <source>Symbols</source>
-        <translation>Symboler</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="223"/>
-        <source>File</source>
-        <translation>Fil</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="224"/>
-        <source>Edit</source>
-        <translation>Rediger</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="225"/>
-        <source>Help</source>
-        <translation>Hjælp</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="228"/>
-        <source>Open recent</source>
-        <translation>Åben seneste</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="241"/>
-        <source>Export</source>
-        <translation>Eksport</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="262"/>
-        <source>Spell check</source>
-        <translation>Stavekontrol</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="270"/>
-        <source>Default markup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="273"/>
-        <source>Formatting</source>
-        <translation>Formattering</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="313"/>
-        <source>Search</source>
-        <translation>Søg</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="315"/>
-        <source>Case sensitively</source>
-        <translation>Skelnen mellem store og små bogstaver</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="441"/>
-        <source>New document</source>
-        <translation>Nyt dokument</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="594"/>
-        <source>Please, save the file somewhere.</source>
-        <translation>Gem venligst filen et sted.</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="171"/>
+        <location filename="window.py" line="178"/>
         <source>Show directory</source>
         <translation>Vis mappe</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="179"/>
+        <source>Next</source>
+        <translation>Næste</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="181"/>
+        <source>Previous</source>
+        <translation>Foregående</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="183"/>
+        <source>Close</source>
+        <translation>Luk</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="186"/>
+        <source>Get help online</source>
+        <translation>Find hjælp online</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="187"/>
+        <source>About ReText</source>
+        <translation>Om ReText</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="190"/>
+        <source>About Qt</source>
+        <translation>Om Qt</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="211"/>
+        <source>Bold</source>
+        <translation>Fed</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="213"/>
+        <source>Italic</source>
+        <translation>Kursiv</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="215"/>
+        <source>Underline</source>
+        <translation>Understregning</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="281"/>
+        <source>Formatting</source>
+        <translation>Formattering</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="227"/>
+        <source>Symbols</source>
+        <translation>Symboler</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="232"/>
+        <source>File</source>
+        <translation>Fil</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="233"/>
+        <source>Edit</source>
+        <translation>Rediger</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="234"/>
+        <source>Help</source>
+        <translation>Hjælp</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="237"/>
+        <source>Open recent</source>
+        <translation>Åben seneste</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="249"/>
+        <source>Export</source>
+        <translation>Eksport</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="270"/>
+        <source>Spell check</source>
+        <translation>Stavekontrol</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="278"/>
+        <source>Default markup</source>
+        <translation>Standardmarkup</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="318"/>
+        <source>Search</source>
+        <translation>Søg</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="320"/>
+        <source>Case sensitively</source>
+        <translation>Skelnen mellem store og små bogstaver</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="455"/>
+        <source>New document</source>
+        <translation>Nyt dokument</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="625"/>
+        <source>Please, save the file somewhere.</source>
+        <translation>Gem venligst filen et sted.</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="741"/>
         <source>Select one or several files to open</source>
         <translation>Vælg en eller flere filer, der skal åbnes</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="741"/>
         <source>Supported files</source>
         <translation>Understøttede filer</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="741"/>
         <source>All files (*)</source>
         <translation>Alle filer (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="753"/>
+        <location filename="window.py" line="777"/>
         <source>Select file encoding from the list:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg filindkodning fra listen:</translation>
     </message>
     <message>
-        <location filename="window.py" line="773"/>
+        <location filename="window.py" line="801"/>
         <source>Plain text (*.txt)</source>
         <translation>Ren tekst (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="776"/>
+        <location filename="window.py" line="804"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s-filer</translation>
     </message>
     <message>
-        <location filename="window.py" line="847"/>
+        <location filename="window.py" line="871"/>
         <source>Save file</source>
         <translation>Gem fil</translation>
     </message>
     <message>
-        <location filename="window.py" line="802"/>
+        <location filename="window.py" line="825"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Kan ikke gemme filen, fordi den er skrivebeskyttet!</translation>
     </message>
     <message>
-        <location filename="window.py" line="837"/>
+        <location filename="window.py" line="861"/>
         <source>Export document to ODT</source>
         <translation>Eksporter dokument til ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="837"/>
+        <location filename="window.py" line="861"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocument-tekstfiler (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="847"/>
+        <location filename="window.py" line="871"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML-filer (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="869"/>
+        <location filename="window.py" line="892"/>
         <source>Export document to PDF</source>
         <translation>Eksporter dokument til PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="869"/>
+        <location filename="window.py" line="892"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF-filer (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="886"/>
+        <location filename="window.py" line="912"/>
         <source>Print document</source>
         <translation>Udskriv dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="907"/>
+        <location filename="window.py" line="935"/>
         <source>Export document</source>
         <translation>Eksporter dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="926"/>
+        <location filename="window.py" line="954"/>
         <source>Failed to execute the command:</source>
         <translation>Kunne ikke udføre kommandoen:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1033"/>
-        <source>The document has been modified.
-Do you want to save your changes?</source>
-        <translation>Dokumentet er blevet ændret.
-Ønsker du at gemme dine ændringer?</translation>
+        <location filename="window.py" line="990"/>
+        <source>Alt text</source>
+        <translation>Alternativ tekst</translation>
     </message>
     <message>
-        <location filename="window.py" line="1058"/>
-        <source>HTML code</source>
-        <translation>HTML-kode</translation>
+        <location filename="window.py" line="991"/>
+        <source>URL</source>
+        <translation>URL</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
-        <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>Enkel men stærk editor til Markdown og reStructuredText</translation>
+        <location filename="window.py" line="991"/>
+        <source>Link text</source>
+        <translation>Link-tekst</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
-        <source>Author: Dmitry Shachnev, 2011</source>
-        <translation>Forfatter: Dmitry Shachnev, 2011</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1069"/>
-        <source>Website</source>
-        <translation>Hjemmeside</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1069"/>
-        <source>Markdown syntax</source>
-        <translation>Markdown-syntaks</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1069"/>
-        <source>reStructuredText syntax</source>
-        <translation>reStructuredText-syntaks</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1012"/>
-        <source>Reload</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="95"/>
-        <source>Next tab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="97"/>
-        <source>Previous tab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="128"/>
-        <source>Table mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="131"/>
-        <source>FakeVim mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="995"/>
+        <location filename="window.py" line="1031"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1003"/>
+        <location filename="window.py" line="1038"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1008"/>
+        <location filename="window.py" line="1043"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="105"/>
-        <source>Change editor font</source>
-        <translation type="unfinished"></translation>
+        <location filename="window.py" line="1067"/>
+        <source>The document has been modified.
+Do you want to save your changes?</source>
+        <translation>Dokumentet er blevet ændret.
+Ønsker du at gemme dine ændringer?</translation>
     </message>
     <message>
-        <location filename="window.py" line="107"/>
-        <source>Change preview font</source>
-        <translation type="unfinished"></translation>
+        <location filename="window.py" line="1092"/>
+        <source>HTML code</source>
+        <translation>HTML-kode</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
+        <location filename="window.py" line="1103"/>
         <source>ReText %s (using PyMarkups %s)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1103"/>
+        <source>Simple but powerful editor for Markdown and reStructuredText</source>
+        <translation>Enkel men stærk editor til Markdown og reStructuredText</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1103"/>
+        <source>Author: Dmitry Shachnev, 2011</source>
+        <translation>Forfatter: Dmitry Shachnev, 2011</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1103"/>
+        <source>Website</source>
+        <translation>Hjemmeside</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1103"/>
+        <source>Markdown syntax</source>
+        <translation>Markdown-syntaks</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1103"/>
+        <source>reStructuredText syntax</source>
+        <translation>reStructuredText-syntaks</translation>
     </message>
 </context>
 </TS>
