@@ -466,7 +466,7 @@
     <message>
         <location filename="window.py" line="847"/>
         <source>HTML files (*.html *.htm)</source>
-        <translation>Arquivos HTML (*.html, *.htm)</translation>
+        <translation>Arquivos HTML (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="window.py" line="869"/>

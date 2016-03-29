@@ -365,7 +365,7 @@
     <message>
         <location filename="window.py" line="847"/>
         <source>HTML files (*.html *.htm)</source>
-        <translation>HTML fitxategiak (*.html, *.htm)</translation>
+        <translation>HTML fitxategiak (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="window.py" line="869"/>
