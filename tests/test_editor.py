@@ -27,6 +27,9 @@ from PyQt5.QtCore import Qt, QMimeData
 from PyQt5.QtWidgets import QApplication
 from markups import MarkdownMarkup, ReStructuredTextMarkup
 
+# Keep a reference so it is not garbage collected
+app = QApplication.instance() or QApplication(sys.argv)
+
 class SettingsMock:
 	tabWidth = 4
 	tabInsertsSpaces = True
@@ -81,8 +84,6 @@ class TestIndentation(unittest.TestCase):
 		documentIndentLess(self.document, cursor, self.settings)
 		self.assertEqual('foo\nbar\nbaz', self.document.toPlainText())
 
-# Keep a reference so it is not garbage collected
-app = QApplication([])
 
 class TestClipboardHandling(unittest.TestCase):
 	class DummyReTextTab():

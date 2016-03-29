@@ -26,7 +26,7 @@ from ReText import readListFromSettings, writeListToSettings, \
 from ReText.highlighter import colorScheme, updateColorScheme
 
 # Keep a reference so it is not garbage collected
-app = QCoreApplication(sys.argv)
+app = QCoreApplication.instance() or QCoreApplication(sys.argv)
 
 class TestSettings(unittest.TestCase):
 	def setUp(self):

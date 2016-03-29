@@ -36,8 +36,7 @@ from ReText.tab import ReTextTab
 defaultEventTimeout = 0.0
 path_to_testdata = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'testdata')
 
-# Keep a reference so it is not garbage collected
-app = QApplication([])
+app = QApplication.instance() or QApplication(sys.argv)
 
 def handle_timer_event():
     print('timer event received')
