@@ -26,11 +26,10 @@ import warnings
 
 from markups.abstract import ConvertedMarkup
 
-from PyQt5.QtCore import pyqtSignal, QObject, QTimer
-from PyQt5.QtWidgets import QApplication, QFileDialog, QWidget
+from PyQt5.QtCore import pyqtSignal, QObject
+from PyQt5.QtWidgets import QApplication
 import ReText
 from ReText.window import ReTextWindow
-from ReText.tab import ReTextTab
 
 defaultEventTimeout = 0.0
 path_to_testdata = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'testdata')
