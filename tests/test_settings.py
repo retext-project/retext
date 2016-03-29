@@ -19,14 +19,18 @@ import tempfile
 import sys
 
 from os.path import basename, dirname, splitext
-from PyQt5.QtCore import Qt, QCoreApplication, QSettings
+from PyQt5.QtCore import Qt, QSettings
 from PyQt5.QtGui import QColor, QFont
+from PyQt5.QtWidgets import QApplication
 from ReText import readListFromSettings, writeListToSettings, \
  readFromSettings, writeToSettings
 from ReText.highlighter import colorScheme, updateColorScheme
 
-# Keep a reference so it is not garbage collected
-app = QCoreApplication.instance() or QCoreApplication(sys.argv)
+# For this particular test, QCoreApplication is enough. However, we should
+# only have one QCoreApplication instance for all tests in a process. As
+# other tests need QApplication, we should not create a bare QCoreApplication
+# here. Also, keep a reference so it is not garbage collected.
+app = QApplication.instance() or QApplication(sys.argv)
 
 class TestSettings(unittest.TestCase):
 	def setUp(self):
