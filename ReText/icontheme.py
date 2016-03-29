@@ -40,7 +40,7 @@ def get_from_gtk():
 		from gi import require_version
 		require_version('Gtk', '3.0')
 		from gi.repository import Gtk
-	except ImportError:
+	except (ImportError, ValueError):
 		return
 	settings = Gtk.Settings.get_default()
 	return settings.get_property('gtk-icon-theme-name')
