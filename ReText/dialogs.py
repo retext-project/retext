@@ -37,14 +37,15 @@ class HtmlDialog(QDialog):
 		verticalLayout.addWidget(buttonBox)
 
 class LocaleDialog(QDialog):
-	def __init__(self, parent, defaultText=""):
+	def __init__(self, parent, defaultText=None):
 		QDialog.__init__(self, parent)
 		verticalLayout = QVBoxLayout(self)
 		self.label = QLabel(self)
 		self.label.setText(self.tr('Enter locale name (example: en_US)'))
 		verticalLayout.addWidget(self.label)
 		self.localeEdit = QLineEdit(self)
-		self.localeEdit.setText(defaultText)
+		if defaultText:
+			self.localeEdit.setText(defaultText)
 		verticalLayout.addWidget(self.localeEdit)
 		self.checkBox = QCheckBox(self.tr('Set as default'), self)
 		verticalLayout.addWidget(self.checkBox)

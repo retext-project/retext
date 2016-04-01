@@ -573,10 +573,7 @@ class ReTextWindow(QMainWindow):
 			hl.rehighlight()
 
 	def changeLocale(self):
-		if self.sl:
-			localedlg = LocaleDialog(self, defaultText=self.sl)
-		else:
-			localedlg = LocaleDialog(self)
+		localedlg = LocaleDialog(self, defaultText=self.sl)
 		if localedlg.exec() != QDialog.Accepted:
 			return
 		sl = localedlg.localeEdit.text()
