@@ -20,7 +20,7 @@ import markups
 import sys
 from subprocess import Popen
 from ReText import icon_path, app_version, globalSettings, readListFromSettings, \
- writeListToSettings, writeToSettings, datadirs, enchant, enchant_available
+ writeListToSettings, writeToSettings, datadirs
 from ReText.tab import ReTextTab, PreviewNormal, PreviewLive
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
@@ -30,6 +30,11 @@ try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler, FakeVimMode
 except ImportError:
 	ReTextFakeVimHandler = None
+
+try:
+	import enchant
+except ImportError:
+	enchant = None
 
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
  QIODevice, QLocale, QTextCodec, QTextStream, QTimer, QUrl, Qt
@@ -170,7 +175,7 @@ class ReTextWindow(QMainWindow):
 		qApp = QApplication.instance()
 		qApp.clipboard().dataChanged.connect(self.clipboardDataChanged)
 		self.clipboardDataChanged()
-		if enchant_available:
+		if enchant is not None:
 			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSpellCheck)
 			self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
 		self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
@@ -266,7 +271,7 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionCopy)
 		menuEdit.addAction(self.actionPaste)
 		menuEdit.addSeparator()
-		if enchant_available:
+		if enchant is not None:
 			menuSC = menuEdit.addMenu(self.tr('Spell check'))
 			menuSC.addAction(self.actionEnableSC)
 			menuSC.addAction(self.actionSetLocale)
@@ -332,14 +337,13 @@ class ReTextWindow(QMainWindow):
 			timer.start(60000)
 			timer.timeout.connect(self.saveAll)
 		self.ind = None
-		if enchant_available:
+		if enchant is not None:
 			self.sl = globalSettings.spellCheckLocale
-			if self.sl:
-				try:
-					enchant.Dict(self.sl)
-				except Exception as e:
-					print(e, file=sys.stderr)
-					self.sl = None
+			try:
+				enchant.Dict(self.sl or None)
+			except enchant.errors.Error as e:
+				print(e, file=sys.stderr)
+				globalSettings.spellCheck = False
 			if globalSettings.spellCheck:
 				self.actionEnableSC.setChecked(True)
 		self.fileSystemWatcher = QFileSystemWatcher()
@@ -560,10 +564,13 @@ class ReTextWindow(QMainWindow):
 			FakeVimMode.exit(self)
 
 	def enableSpellCheck(self, yes):
-		if yes:
-			self.setAllDictionaries(enchant.Dict(self.sl or None))
-		else:
-			self.setAllDictionaries(None)
+		try:
+			dict = enchant.Dict(self.sl or None)
+		except enchant.errors.Error as e:
+			QMessageBox.warning(self, '', str(e))
+			self.actionEnableSC.setChecked(False)
+			yes = False
+		self.setAllDictionaries(dict if yes else None)
 		globalSettings.spellCheck = yes
 
 	def setAllDictionaries(self, dictionary):
@@ -577,21 +584,15 @@ class ReTextWindow(QMainWindow):
 		if localedlg.exec() != QDialog.Accepted:
 			return
 		sl = localedlg.localeEdit.text()
-		setdefault = localedlg.checkBox.isChecked()
-		if sl:
-			try:
-				sl = str(sl)
-				enchant.Dict(sl)
-			except Exception as e:
-				QMessageBox.warning(self, '', str(e))
-			else:
-				self.sl = sl
-				self.enableSpellCheck(self.actionEnableSC.isChecked())
+		try:
+			enchant.Dict(sl or None)
+		except enchant.errors.Error as e:
+			QMessageBox.warning(self, '', str(e))
 		else:
-			self.sl = None
+			self.sl = sl or None
 			self.enableSpellCheck(self.actionEnableSC.isChecked())
-		if setdefault:
-			globalSettings.spellCheckLocale = sl
+			if localedlg.checkBox.isChecked():
+				globalSettings.spellCheckLocale = sl
 
 	def searchBarVisibilityChanged(self, visible):
 		self.actionSearch.setChecked(visible)

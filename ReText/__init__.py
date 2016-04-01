@@ -32,19 +32,6 @@ if not str(settings.fileName()).endswith('.conf'):
 	settings = QSettings(QSettings.IniFormat, QSettings.UserScope,
 		'ReText project', 'ReText')
 
-try:
-	import enchant
-	import enchant.errors
-except ImportError:
-	enchant_available = False
-	enchant = None
-else:
-	enchant_available = True
-	try:
-		enchant.Dict()
-	except enchant.errors.Error:
-		enchant_available = False
-
 datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
 datadirs = [join(d, 'retext') for d in datadirs]
 

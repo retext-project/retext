@@ -19,7 +19,7 @@
 from markups import get_markup_for_file_name
 from markups.common import MODULE_HOME_PAGE
 
-from ReText import app_version, enchant, enchant_available, globalSettings, converterprocess
+from ReText import app_version, globalSettings, converterprocess
 from ReText.editor import ReTextEdit
 from ReText.highlighter import ReTextHighlighter
 from ReText.syncscroll import SyncScroll
@@ -28,6 +28,11 @@ try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler
 except ImportError:
 	ReTextFakeVimHandler = None
+
+try:
+	import enchant
+except ImportError:
+	enchant = None
 
 from PyQt5.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QPoint, QTextStream, QTimer, QUrl
 from PyQt5.QtGui import QDesktopServices, QTextCursor, QTextDocument
@@ -70,7 +75,7 @@ class ReTextTab(QSplitter):
 
 		textDocument = self.editBox.document()
 		self.highlighter = ReTextHighlighter(textDocument)
-		if enchant_available and parent.actionEnableSC.isChecked():
+		if enchant is not None and parent.actionEnableSC.isChecked():
 			self.highlighter.dictionary = enchant.Dict(parent.sl or None)
 			# Rehighlighting is tied to the change in markup class that
 			# happens at the end of this function
