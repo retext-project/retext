@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 
-from datetime import datetime
 import markups
 import multiprocessing as mp
 import pickle
 import socket
 import struct
-import time
 import weakref
 
 from PyQt5.QtCore import pyqtSignal, QObject, QSocketNotifier

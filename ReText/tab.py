@@ -29,7 +29,7 @@ try:
 except ImportError:
 	ReTextFakeVimHandler = None
 
-from PyQt5.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QObject, QPoint, QTextStream, QTimer, QUrl
+from PyQt5.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QPoint, QTextStream, QTimer, QUrl
 from PyQt5.QtGui import QDesktopServices, QTextCursor, QTextDocument
 from PyQt5.QtWidgets import QTextBrowser, QTextEdit, QSplitter
 from PyQt5.QtWebKit import QWebSettings

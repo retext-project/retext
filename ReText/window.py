@@ -32,12 +32,12 @@ except ImportError:
 	ReTextFakeVimHandler = None
 
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
- QIODevice, QLocale, QRect, QTextCodec, QTextStream, QTimer, QUrl, Qt
+ QIODevice, QLocale, QTextCodec, QTextStream, QTimer, QUrl, Qt
 from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
  QKeySequence, QPalette, QTextDocument, QTextDocumentWriter
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
- QLineEdit, QMainWindow, QMenu, QMenuBar, QMessageBox, QTabWidget, QToolBar
+ QLineEdit, QMainWindow, QMenu, QMessageBox, QTabWidget, QToolBar
 from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
 
 class ReTextWindow(QMainWindow):
