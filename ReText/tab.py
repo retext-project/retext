@@ -171,7 +171,7 @@ class ReTextTab(QSplitter):
 			except Exception:
 				self.p.printError()
 
-		return getBaseName()
+		return self.getBaseName()
 
 	def getBaseName(self):
 		if self._fileName:
