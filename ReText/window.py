@@ -938,7 +938,7 @@ class ReTextWindow(QMainWindow):
 			self.saveHtml(tmpname)
 		else:
 			tmpname = basename + self.currentTab.getActiveMarkupClass().default_extension
-			self.currentTab.saveTextToFile(fileName=tmpname, addToWatcher=False)
+			self.currentTab.writeTextToFile(tmpname)
 		command = command.replace('%of', '"out'+defaultext+'"')
 		command = command.replace('%html' if html else '%if', '"'+tmpname+'"')
 		try:

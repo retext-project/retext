@@ -306,13 +306,10 @@ class ReTextTab(QSplitter):
 			self.updateActiveMarkupClass()
 			self.fileNameChanged.emit()
 
-
-	def saveTextToFile(self, fileName=None, addToWatcher=True):
-		previousFileName = self._fileName
-		if fileName:
-			self._fileName = fileName
-		self.p.fileSystemWatcher.removePath(previousFileName)
-		savefile = QFile(self._fileName)
+	def writeTextToFile(self, fileName=None):
+		# Just writes the text to file, without any changes to tab object
+		# Used directly for i.e. export extensions
+		savefile = QFile(fileName or self._fileName)
 		result = savefile.open(QFile.WriteOnly)
 		if result:
 			savestream = QTextStream(savefile)
@@ -320,11 +317,18 @@ class ReTextTab(QSplitter):
 				savestream.setCodec(globalSettings.defaultCodec)
 			savestream << self.editBox.toPlainText()
 			savefile.close()
-			self.editBox.document().setModified(False)
-		if result and addToWatcher:
-			self.p.fileSystemWatcher.addPath(self._fileName)
+		return result
 
-		if previousFileName != self._fileName:
+	def saveTextToFile(self, fileName=None):
+		# Sets fileName as tab fileName and writes the text to that file
+		result = self.writeTextToFile(fileName)
+		if result:
+			self.editBox.document().setModified(False)
+		if result and self._fileName != fileName:
+			if self._fileName:
+				self.p.fileSystemWatcher.removePath(self._fileName)
+			self._fileName = fileName
+			self.p.fileSystemWatcher.addPath(self._fileName)
 			self.updateActiveMarkupClass()
 			self.fileNameChanged.emit()
 
