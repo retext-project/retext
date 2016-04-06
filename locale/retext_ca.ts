@@ -19,11 +19,6 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
-        <source>Restore live preview state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
         <source>Open external links in ReText window</source>
         <translation type="unfinished"></translation>
     </message>
@@ -81,6 +76,11 @@
         <location filename="config.py" line="102"/>
         <source>Help</source>
         <translation type="unfinished">Ajuda</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Use live preview by default</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -348,12 +348,12 @@
         <translation>Majúscules i minúscules</translation>
     </message>
     <message>
-        <location filename="window.py" line="441"/>
+        <location filename="window.py" line="442"/>
         <source>New document</source>
         <translation>Document nou</translation>
     </message>
     <message>
-        <location filename="window.py" line="594"/>
+        <location filename="window.py" line="591"/>
         <source>Please, save the file somewhere.</source>
         <translation>deseu el fitxer en algun directori</translation>
     </message>
@@ -363,115 +363,115 @@
         <translation>Mostra el directori</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="711"/>
         <source>Select one or several files to open</source>
         <translation>Seleccioneu un o més fitxers per obrir</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="711"/>
         <source>Supported files</source>
         <translation>Fitxers suportats</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="711"/>
         <source>All files (*)</source>
         <translation>Tots els fitxers (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="773"/>
+        <location filename="window.py" line="770"/>
         <source>Plain text (*.txt)</source>
         <translation>Text pla (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="776"/>
+        <location filename="window.py" line="773"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s fitxers</translation>
     </message>
     <message>
-        <location filename="window.py" line="847"/>
+        <location filename="window.py" line="844"/>
         <source>Save file</source>
         <translation>Desa el fitxer</translation>
     </message>
     <message>
-        <location filename="window.py" line="802"/>
+        <location filename="window.py" line="799"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>No s&apos;ha pogut desar el fitxer perquè només és de lectura</translation>
     </message>
     <message>
-        <location filename="window.py" line="837"/>
+        <location filename="window.py" line="834"/>
         <source>Export document to ODT</source>
         <translation>Exporta el document a ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="837"/>
+        <location filename="window.py" line="834"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Fitxers de text OpenDocument (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="847"/>
+        <location filename="window.py" line="844"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Fitxers HTML (*.html *htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="869"/>
+        <location filename="window.py" line="866"/>
         <source>Export document to PDF</source>
         <translation>Exporta document com a PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="869"/>
+        <location filename="window.py" line="866"/>
         <source>PDF files (*.pdf)</source>
         <translation>Fitxers PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="886"/>
+        <location filename="window.py" line="883"/>
         <source>Print document</source>
         <translation>Imprimeix document</translation>
     </message>
     <message>
-        <location filename="window.py" line="907"/>
+        <location filename="window.py" line="904"/>
         <source>Export document</source>
         <translation>Exporta document</translation>
     </message>
     <message>
-        <location filename="window.py" line="926"/>
+        <location filename="window.py" line="923"/>
         <source>Failed to execute the command:</source>
         <translation>S&apos;ha produït un error a l&apos;executar el comandament:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1033"/>
+        <location filename="window.py" line="1030"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>S&apos;ha modificat el document.
 Voleu desar els canvis?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1058"/>
+        <location filename="window.py" line="1055"/>
         <source>HTML code</source>
         <translation>Codi HTML</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
+        <location filename="window.py" line="1066"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Editor de Markdown i reStructuredText senzill alhora que potent</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
+        <location filename="window.py" line="1066"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Autor: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
+        <location filename="window.py" line="1066"/>
         <source>Website</source>
         <translation>Lloc web</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
+        <location filename="window.py" line="1066"/>
         <source>Markdown syntax</source>
         <translation>Sintaxi markdown</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
+        <location filename="window.py" line="1066"/>
         <source>reStructuredText syntax</source>
         <translation>Sintaxi reStructuredText</translation>
     </message>
@@ -481,7 +481,7 @@ Voleu desar els canvis?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="506"/>
+        <location filename="window.py" line="503"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
@@ -491,12 +491,12 @@ Voleu desar els canvis?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="753"/>
+        <location filename="window.py" line="750"/>
         <source>Select file encoding from the list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1012"/>
+        <location filename="window.py" line="1009"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
@@ -521,20 +521,20 @@ Voleu desar els canvis?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="995"/>
+        <location filename="window.py" line="992"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1003"/>
+        <location filename="window.py" line="1000"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1008"/>
+        <location filename="window.py" line="1005"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -549,7 +549,7 @@ Do you want to reload the file (this will discard all your changes)?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
+        <location filename="window.py" line="1066"/>
         <source>ReText %s (using PyMarkups %s)</source>
         <translation type="unfinished"></translation>
     </message>

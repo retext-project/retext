@@ -19,11 +19,6 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
-        <source>Restore live preview state</source>
-        <translation>恢复实时预览状态</translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
         <source>Open external links in ReText window</source>
         <translation>在 ReText 窗口中打开外部链接</translation>
     </message>
@@ -81,6 +76,11 @@
         <location filename="config.py" line="102"/>
         <source>Help</source>
         <translation>帮助</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Use live preview by default</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -168,7 +168,7 @@
         <translation>设置编码方式</translation>
     </message>
     <message>
-        <location filename="window.py" line="1012"/>
+        <location filename="window.py" line="1009"/>
         <source>Reload</source>
         <translation>重载</translation>
     </message>
@@ -248,7 +248,7 @@
         <translation>全屏模式</translation>
     </message>
     <message>
-        <location filename="window.py" line="506"/>
+        <location filename="window.py" line="503"/>
         <source>Preferences</source>
         <translation>个人偏好</translation>
     </message>
@@ -403,105 +403,105 @@
         <translation>对大小写敏感</translation>
     </message>
     <message>
-        <location filename="window.py" line="441"/>
+        <location filename="window.py" line="442"/>
         <source>New document</source>
         <translation>新文件</translation>
     </message>
     <message>
-        <location filename="window.py" line="594"/>
+        <location filename="window.py" line="591"/>
         <source>Please, save the file somewhere.</source>
         <translation>请，保存到别的地方呦！</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="711"/>
         <source>Select one or several files to open</source>
         <translation>选择一个或多个文件打开</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="711"/>
         <source>Supported files</source>
         <translation>支持的文件类型</translation>
     </message>
     <message>
-        <location filename="window.py" line="714"/>
+        <location filename="window.py" line="711"/>
         <source>All files (*)</source>
         <translation>全部文件 (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="753"/>
+        <location filename="window.py" line="750"/>
         <source>Select file encoding from the list:</source>
         <translation>从列表中选择文件编码方式</translation>
     </message>
     <message>
-        <location filename="window.py" line="773"/>
+        <location filename="window.py" line="770"/>
         <source>Plain text (*.txt)</source>
         <translation>普通文本文档 (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="776"/>
+        <location filename="window.py" line="773"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s 文件</translation>
     </message>
     <message>
-        <location filename="window.py" line="847"/>
+        <location filename="window.py" line="844"/>
         <source>Save file</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="window.py" line="802"/>
+        <location filename="window.py" line="799"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>不能保存文件因为当前文件或文件夹只读！</translation>
     </message>
     <message>
-        <location filename="window.py" line="837"/>
+        <location filename="window.py" line="834"/>
         <source>Export document to ODT</source>
         <translation>导出文件到 ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="837"/>
+        <location filename="window.py" line="834"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocument 文本文件 (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="847"/>
+        <location filename="window.py" line="844"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML 文件 (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="869"/>
+        <location filename="window.py" line="866"/>
         <source>Export document to PDF</source>
         <translation>导出文件到 PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="869"/>
+        <location filename="window.py" line="866"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF 文件 (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="886"/>
+        <location filename="window.py" line="883"/>
         <source>Print document</source>
         <translation>打印文件</translation>
     </message>
     <message>
-        <location filename="window.py" line="907"/>
+        <location filename="window.py" line="904"/>
         <source>Export document</source>
         <translation>导出文件</translation>
     </message>
     <message>
-        <location filename="window.py" line="926"/>
+        <location filename="window.py" line="923"/>
         <source>Failed to execute the command:</source>
         <translation>不能执行命令:</translation>
     </message>
     <message>
-        <location filename="window.py" line="995"/>
+        <location filename="window.py" line="992"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation>此文件已被其他应用程序删除。
 请确保在退出程序前保存了文件。</translation>
     </message>
     <message>
-        <location filename="window.py" line="1003"/>
+        <location filename="window.py" line="1000"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
@@ -510,48 +510,48 @@ Do you want to reload the file (this will discard all your changes)?
 </translation>
     </message>
     <message>
-        <location filename="window.py" line="1008"/>
+        <location filename="window.py" line="1005"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation>如果不重新载入文件，将禁用该会话的自动保存模式，以防止数据丢失。</translation>
     </message>
     <message>
-        <location filename="window.py" line="1033"/>
+        <location filename="window.py" line="1030"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>文件已更改，确认保存吗？</translation>
     </message>
     <message>
-        <location filename="window.py" line="1058"/>
+        <location filename="window.py" line="1055"/>
         <source>HTML code</source>
         <translation>HTML 代码</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
+        <location filename="window.py" line="1066"/>
         <source>ReText %s (using PyMarkups %s)</source>
         <translation>ReText %s（使用 PyMarkups %s）</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
+        <location filename="window.py" line="1066"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>简单高效的 Markdown 与 ReStructuredText 编辑器</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
+        <location filename="window.py" line="1066"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
+        <location filename="window.py" line="1066"/>
         <source>Website</source>
         <translation>网站</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
+        <location filename="window.py" line="1066"/>
         <source>Markdown syntax</source>
         <translation>Markdown 语法</translation>
     </message>
     <message>
-        <location filename="window.py" line="1069"/>
+        <location filename="window.py" line="1066"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText 语法</translation>
     </message>
