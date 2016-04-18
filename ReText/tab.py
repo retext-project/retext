@@ -321,14 +321,14 @@ class ReTextTab(QSplitter):
 
 	def saveTextToFile(self, fileName=None):
 		# Sets fileName as tab fileName and writes the text to that file
+		if self._fileName:
+			self.p.fileSystemWatcher.removePath(self._fileName)
 		result = self.writeTextToFile(fileName)
 		if result:
 			self.editBox.document().setModified(False)
+			self.p.fileSystemWatcher.addPath(fileName or self._fileName)
 		if result and self._fileName != fileName:
-			if self._fileName:
-				self.p.fileSystemWatcher.removePath(self._fileName)
 			self._fileName = fileName
-			self.p.fileSystemWatcher.addPath(self._fileName)
 			self.updateActiveMarkupClass()
 			self.fileNameChanged.emit()
 
