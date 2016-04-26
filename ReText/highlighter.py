@@ -50,7 +50,7 @@ defaultColorScheme = {
 	'blockquotes': Qt.darkGray,
 	'restDirectives': Qt.darkMagenta,
 	'restRoles': Qt.darkRed,
-	'whitespaceOnEnd': QColor(0xf0, 0xf0, 0xd2)
+	'whitespaceOnEnd': QColor(0xe1, 0xe1, 0xa5, 0x80)
 }
 colorScheme = {}
 
