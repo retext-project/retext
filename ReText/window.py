@@ -921,6 +921,7 @@ class ReTextWindow(QMainWindow):
 		preview.exec()
 
 	def runExtensionCommand(self, command, filefilter, defaultext):
+		import shlex
 		of = ('%of' in command)
 		html = ('%html' in command)
 		if of:
@@ -932,6 +933,8 @@ class ReTextWindow(QMainWindow):
 				return
 			if defaultext and not QFileInfo(fileName).suffix():
 				fileName += defaultext
+		else:
+			fileName = 'out' + defaultext
 		basename = '.%s.retext-temp' % self.currentTab.getBaseName()
 		if html:
 			tmpname = basename+'.html'
@@ -939,8 +942,8 @@ class ReTextWindow(QMainWindow):
 		else:
 			tmpname = basename + self.currentTab.getActiveMarkupClass().default_extension
 			self.currentTab.writeTextToFile(tmpname)
-		command = command.replace('%of', '"out'+defaultext+'"')
-		command = command.replace('%html' if html else '%if', '"'+tmpname+'"')
+		command = command.replace('%of', shlex.quote(fileName))
+		command = command.replace('%html' if html else '%if', shlex.quote(tmpname))
 		try:
 			Popen(str(command), shell=True).wait()
 		except Exception as error:
@@ -948,8 +951,6 @@ class ReTextWindow(QMainWindow):
 			QMessageBox.warning(self, '', self.tr('Failed to execute the command:')
 			+ '\n' + errorstr)
 		QFile(tmpname).remove()
-		if of:
-			QFile('out'+defaultext).rename(fileName)
 
 	def autoSaveActive(self, tab=None):
 		tab = tab if tab else self.currentTab
