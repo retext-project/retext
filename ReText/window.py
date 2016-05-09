@@ -21,7 +21,7 @@ import sys
 from subprocess import Popen
 from ReText import icon_path, app_version, globalSettings, readListFromSettings, \
  writeListToSettings, writeToSettings, datadirs
-from ReText.tab import ReTextTab, PreviewNormal, PreviewLive
+from ReText.tab import ReTextTab, ReTextWebPreview, PreviewNormal, PreviewLive
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
 from ReText.icontheme import get_icon_theme
@@ -179,6 +179,9 @@ class ReTextWindow(QMainWindow):
 			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSpellCheck)
 			self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
 		self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
+		if ReTextWebPreview is None:
+			globalSettings.useWebKit = False
+			self.actionWebKit.setEnabled(False)
 		self.actionWebKit.setChecked(globalSettings.useWebKit)
 		self.actionShow = self.act(self.tr('Show directory'), 'system-file-manager', self.showInDir)
 		self.actionFind = self.act(self.tr('Next'), 'go-next', self.find,

@@ -22,7 +22,6 @@ from markups.common import MODULE_HOME_PAGE
 from ReText import app_version, globalSettings, converterprocess
 from ReText.editor import ReTextEdit
 from ReText.highlighter import ReTextHighlighter
-from ReText.syncscroll import SyncScroll
 
 try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler
@@ -37,8 +36,11 @@ except ImportError:
 from PyQt5.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QPoint, QTextStream, QTimer, QUrl
 from PyQt5.QtGui import QDesktopServices, QTextCursor, QTextDocument
 from PyQt5.QtWidgets import QTextBrowser, QTextEdit, QSplitter
-from PyQt5.QtWebKit import QWebSettings
-from PyQt5.QtWebKitWidgets import QWebPage, QWebView
+
+try:
+	from ReText.webkitpreview import ReTextWebPreview
+except ImportError:
+	ReTextWebPreview = None
 
 PreviewDisabled, PreviewLive, PreviewNormal = range(3)
 
@@ -248,11 +250,7 @@ class ReTextTab(QSplitter):
 				newValue = scrollbar.maximum() - distToBottom
 				scrollbar.setValue(newValue)
 		else:
-			settings = self.previewBox.settings()
-			settings.setFontFamily(QWebSettings.StandardFont,
-			                       globalSettings.font.family())
-			settings.setFontSize(QWebSettings.DefaultFontSize,
-			                     globalSettings.font.pointSize())
+			self.previewBox.updateFontSettings()
 
 			# Always provide a baseUrl otherwise QWebView will
 			# refuse to show images or other external objects
@@ -354,63 +352,6 @@ class ReTextTab(QSplitter):
 			self.editBox.setTextCursor(newCursor)
 			return True
 		return False
-
-class ReTextWebPreview(QWebView):
-
-	def __init__(self, editBox,
-	             editorPositionToSourceLineFunc,
-	             sourceLineToEditorPositionFunc):
-
-		QWebView.__init__(self)
-
-		self.editBox = editBox
-
-		if not globalSettings.handleWebLinks:
-			self.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
-			self.page().linkClicked.connect(QDesktopServices.openUrl)
-		self.settings().setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
-		self.settings().setDefaultTextEncoding('utf-8')
-		# Avoid caching of CSS
-		self.settings().setObjectCacheCapacities(0,0,0)
-
-		self.syncscroll = SyncScroll(self.page().mainFrame(),
-					     editorPositionToSourceLineFunc,
-					     sourceLineToEditorPositionFunc)
-
-		# Events relevant to sync scrolling
-		self.editBox.cursorPositionChanged.connect(self._handleCursorPositionChanged)
-		self.editBox.verticalScrollBar().valueChanged.connect(self.syncscroll.handleEditorScrolled)
-		self.editBox.resized.connect(self._handleEditorResized)
-
-		# Scroll the preview when the mouse wheel is used to scroll
-		# beyond the beginning/end of the editor
-		self.editBox.scrollLimitReached.connect(self._handleWheelEvent)
-
-	def disconnectExternalSignals(self):
-		self.editBox.cursorPositionChanged.disconnect(self._handleCursorPositionChanged)
-		self.editBox.verticalScrollBar().valueChanged.disconnect(self.syncscroll.handleEditorScrolled)
-		self.editBox.resized.disconnect(self._handleEditorResized)
-
-		self.editBox.scrollLimitReached.disconnect(self._handleWheelEvent)
-
-	def _handleWheelEvent(self, event):
-		"""
-		Use this intermediate function because it is not possible to
-		disconnect a built-in method. It would generate the following error:
-		  TypeError: 'builtin_function_or_method' object is not connected
-		"""
-		# Only pass wheelEvents on to the preview if syncscroll is
-		# controlling the position of the preview
-		if self.syncscroll.isActive():
-			self.wheelEvent(event)
-
-	def _handleCursorPositionChanged(self):
-		editorCursorPosition = self.editBox.verticalScrollBar().value() + \
-				       self.editBox.cursorRect().top()
-		self.syncscroll.handleCursorPositionChanged(editorCursorPosition)
-
-	def _handleEditorResized(self, rect):
-		self.syncscroll.handleEditorResized(rect.height())
 
 
 class ReTextPreview(QTextBrowser):
