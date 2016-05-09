@@ -252,7 +252,7 @@
     </message>
     <message>
         <location filename="window.py" line="130"/>
-        <source>Table mode</source>
+        <source>Table editing mode</source>
         <translation>Режим редактирования таблиц</translation>
     </message>
     <message>

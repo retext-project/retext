@@ -512,7 +512,7 @@ Chcete uložiť vaše zmeny?</translation>
     </message>
     <message>
         <location filename="window.py" line="128"/>
-        <source>Table mode</source>
+        <source>Table editing mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
