@@ -109,7 +109,7 @@
         <translation>Indtast lokalitetsnavn (f.eks. da_DK)</translation>
     </message>
     <message>
-        <location filename="dialogs.py" line="49"/>
+        <location filename="dialogs.py" line="50"/>
         <source>Set as default</source>
         <translation>Sæt som standard</translation>
     </message>
@@ -143,12 +143,12 @@
 <context>
     <name>ReTextTab</name>
     <message>
-        <location filename="tab.py" line="181"/>
+        <location filename="tab.py" line="188"/>
         <source>New document</source>
         <translation>Nyt dokument</translation>
     </message>
     <message>
-        <location filename="tab.py" line="186"/>
+        <location filename="tab.py" line="193"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation>Kunne ikke indlæse filens indhold, kontroller at du har det &lt;a href=&quot;%s&quot;&gt;nødvendige modul&lt;/a&gt; installeret.</translation>
     </message>
@@ -156,27 +156,27 @@
 <context>
     <name>ReTextWindow</name>
     <message>
-        <location filename="window.py" line="76"/>
+        <location filename="window.py" line="81"/>
         <source>File toolbar</source>
         <translation>Fil-værktøjslinie</translation>
     </message>
     <message>
-        <location filename="window.py" line="78"/>
+        <location filename="window.py" line="83"/>
         <source>Edit toolbar</source>
         <translation>Redigering-værktøjslinie</translation>
     </message>
     <message>
-        <location filename="window.py" line="80"/>
+        <location filename="window.py" line="85"/>
         <source>Search toolbar</source>
         <translation>Søge-værktøjslinie</translation>
     </message>
     <message>
-        <location filename="window.py" line="84"/>
+        <location filename="window.py" line="89"/>
         <source>New</source>
         <translation>Ny</translation>
     </message>
     <message>
-        <location filename="window.py" line="87"/>
+        <location filename="window.py" line="92"/>
         <source>Open</source>
         <translation>Åben</translation>
     </message>
@@ -186,318 +186,318 @@
         <translation>Genindlæs</translation>
     </message>
     <message>
-        <location filename="window.py" line="96"/>
+        <location filename="window.py" line="101"/>
         <source>Save</source>
         <translation>Gem</translation>
     </message>
     <message>
-        <location filename="window.py" line="90"/>
+        <location filename="window.py" line="95"/>
         <source>Set encoding</source>
         <translation>Indstil indkodning</translation>
     </message>
     <message>
-        <location filename="window.py" line="100"/>
+        <location filename="window.py" line="105"/>
         <source>Save as</source>
         <translation>Gem som</translation>
     </message>
     <message>
-        <location filename="window.py" line="102"/>
+        <location filename="window.py" line="107"/>
         <source>Next tab</source>
         <translation>Næste fane</translation>
     </message>
     <message>
-        <location filename="window.py" line="104"/>
+        <location filename="window.py" line="109"/>
         <source>Previous tab</source>
         <translation>Forrige fane</translation>
     </message>
     <message>
-        <location filename="window.py" line="106"/>
+        <location filename="window.py" line="111"/>
         <source>Print</source>
         <translation>Udskrift</translation>
     </message>
     <message>
-        <location filename="window.py" line="109"/>
+        <location filename="window.py" line="114"/>
         <source>Print preview</source>
         <translation>Udskriftsvisning</translation>
     </message>
     <message>
-        <location filename="window.py" line="111"/>
+        <location filename="window.py" line="116"/>
         <source>View HTML code</source>
         <translation>Vis HTML-kode</translation>
     </message>
     <message>
-        <location filename="window.py" line="112"/>
+        <location filename="window.py" line="117"/>
         <source>Change editor font</source>
         <translation>Skift skrifttype til tekstbehandling</translation>
     </message>
     <message>
-        <location filename="window.py" line="114"/>
+        <location filename="window.py" line="119"/>
         <source>Change preview font</source>
         <translation>Skift skrifttype til forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="window.py" line="116"/>
+        <location filename="window.py" line="121"/>
         <source>Find text</source>
         <translation>Find tekst</translation>
     </message>
     <message>
-        <location filename="window.py" line="120"/>
+        <location filename="window.py" line="125"/>
         <source>Preview</source>
         <translation>Forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="window.py" line="130"/>
+        <location filename="window.py" line="135"/>
         <source>Live preview</source>
         <translation>Live-forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="window.py" line="135"/>
+        <location filename="window.py" line="140"/>
         <source>Table editing mode</source>
         <translation>Tabelmodus</translation>
     </message>
     <message>
-        <location filename="window.py" line="138"/>
+        <location filename="window.py" line="144"/>
         <source>FakeVim mode</source>
         <translation>FakeVim-modus</translation>
     </message>
     <message>
-        <location filename="window.py" line="143"/>
+        <location filename="window.py" line="149"/>
         <source>Fullscreen mode</source>
         <translation>Fuldskærmsvisning</translation>
     </message>
     <message>
-        <location filename="window.py" line="550"/>
+        <location filename="window.py" line="558"/>
         <source>Preferences</source>
         <translation>Præferencer</translation>
     </message>
     <message>
-        <location filename="window.py" line="153"/>
+        <location filename="window.py" line="159"/>
         <source>Quit</source>
         <translation>Afslut</translation>
     </message>
     <message>
-        <location filename="window.py" line="156"/>
+        <location filename="window.py" line="162"/>
         <source>Undo</source>
         <translation>Fortryd</translation>
     </message>
     <message>
-        <location filename="window.py" line="158"/>
+        <location filename="window.py" line="164"/>
         <source>Redo</source>
         <translation>Gendan</translation>
     </message>
     <message>
-        <location filename="window.py" line="160"/>
+        <location filename="window.py" line="166"/>
         <source>Copy</source>
         <translation>Kopier</translation>
     </message>
     <message>
-        <location filename="window.py" line="162"/>
+        <location filename="window.py" line="168"/>
         <source>Cut</source>
         <translation>Klip</translation>
     </message>
     <message>
-        <location filename="window.py" line="164"/>
+        <location filename="window.py" line="170"/>
         <source>Paste</source>
         <translation>Indsæt</translation>
     </message>
     <message>
-        <location filename="window.py" line="174"/>
+        <location filename="window.py" line="180"/>
         <source>Enable</source>
         <translation>Aktiver</translation>
     </message>
     <message>
-        <location filename="window.py" line="175"/>
+        <location filename="window.py" line="181"/>
         <source>Set locale</source>
         <translation>Sæt sprogindstillinger</translation>
     </message>
     <message>
-        <location filename="window.py" line="176"/>
+        <location filename="window.py" line="182"/>
         <source>Use WebKit renderer</source>
         <translation>Anvend WebKit-fremviser</translation>
     </message>
     <message>
-        <location filename="window.py" line="178"/>
+        <location filename="window.py" line="187"/>
         <source>Show directory</source>
         <translation>Vis mappe</translation>
     </message>
     <message>
-        <location filename="window.py" line="179"/>
+        <location filename="window.py" line="188"/>
         <source>Next</source>
         <translation>Næste</translation>
     </message>
     <message>
-        <location filename="window.py" line="181"/>
+        <location filename="window.py" line="190"/>
         <source>Previous</source>
         <translation>Foregående</translation>
     </message>
     <message>
-        <location filename="window.py" line="183"/>
+        <location filename="window.py" line="192"/>
         <source>Close</source>
         <translation>Luk</translation>
     </message>
     <message>
-        <location filename="window.py" line="186"/>
+        <location filename="window.py" line="195"/>
         <source>Get help online</source>
         <translation>Find hjælp online</translation>
     </message>
     <message>
-        <location filename="window.py" line="187"/>
+        <location filename="window.py" line="196"/>
         <source>About ReText</source>
         <translation>Om ReText</translation>
     </message>
     <message>
-        <location filename="window.py" line="190"/>
+        <location filename="window.py" line="199"/>
         <source>About Qt</source>
         <translation>Om Qt</translation>
     </message>
     <message>
-        <location filename="window.py" line="211"/>
+        <location filename="window.py" line="220"/>
         <source>Bold</source>
         <translation>Fed</translation>
     </message>
     <message>
-        <location filename="window.py" line="213"/>
+        <location filename="window.py" line="222"/>
         <source>Italic</source>
         <translation>Kursiv</translation>
     </message>
     <message>
-        <location filename="window.py" line="215"/>
+        <location filename="window.py" line="224"/>
         <source>Underline</source>
         <translation>Understregning</translation>
     </message>
     <message>
-        <location filename="window.py" line="281"/>
+        <location filename="window.py" line="290"/>
         <source>Formatting</source>
         <translation>Formattering</translation>
     </message>
     <message>
-        <location filename="window.py" line="227"/>
+        <location filename="window.py" line="236"/>
         <source>Symbols</source>
         <translation>Symboler</translation>
     </message>
     <message>
-        <location filename="window.py" line="232"/>
+        <location filename="window.py" line="241"/>
         <source>File</source>
         <translation>Fil</translation>
     </message>
     <message>
-        <location filename="window.py" line="233"/>
+        <location filename="window.py" line="242"/>
         <source>Edit</source>
         <translation>Rediger</translation>
     </message>
     <message>
-        <location filename="window.py" line="234"/>
+        <location filename="window.py" line="243"/>
         <source>Help</source>
         <translation>Hjælp</translation>
     </message>
     <message>
-        <location filename="window.py" line="237"/>
+        <location filename="window.py" line="246"/>
         <source>Open recent</source>
         <translation>Åben seneste</translation>
     </message>
     <message>
-        <location filename="window.py" line="249"/>
+        <location filename="window.py" line="258"/>
         <source>Export</source>
         <translation>Eksport</translation>
     </message>
     <message>
-        <location filename="window.py" line="270"/>
+        <location filename="window.py" line="279"/>
         <source>Spell check</source>
         <translation>Stavekontrol</translation>
     </message>
     <message>
-        <location filename="window.py" line="278"/>
+        <location filename="window.py" line="287"/>
         <source>Default markup</source>
         <translation>Standardmarkup</translation>
     </message>
     <message>
-        <location filename="window.py" line="318"/>
+        <location filename="window.py" line="327"/>
         <source>Search</source>
         <translation>Søg</translation>
     </message>
     <message>
-        <location filename="window.py" line="320"/>
+        <location filename="window.py" line="329"/>
         <source>Case sensitively</source>
         <translation>Skelnen mellem store og små bogstaver</translation>
     </message>
     <message>
-        <location filename="window.py" line="455"/>
+        <location filename="window.py" line="463"/>
         <source>New document</source>
         <translation>Nyt dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="625"/>
+        <location filename="window.py" line="627"/>
         <source>Please, save the file somewhere.</source>
         <translation>Gem venligst filen et sted.</translation>
     </message>
     <message>
-        <location filename="window.py" line="741"/>
+        <location filename="window.py" line="743"/>
         <source>Select one or several files to open</source>
         <translation>Vælg en eller flere filer, der skal åbnes</translation>
     </message>
     <message>
-        <location filename="window.py" line="741"/>
+        <location filename="window.py" line="743"/>
         <source>Supported files</source>
         <translation>Understøttede filer</translation>
     </message>
     <message>
-        <location filename="window.py" line="741"/>
+        <location filename="window.py" line="743"/>
         <source>All files (*)</source>
         <translation>Alle filer (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="777"/>
+        <location filename="window.py" line="779"/>
         <source>Select file encoding from the list:</source>
         <translation>Vælg filindkodning fra listen:</translation>
     </message>
     <message>
-        <location filename="window.py" line="801"/>
+        <location filename="window.py" line="800"/>
         <source>Plain text (*.txt)</source>
         <translation>Ren tekst (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="804"/>
+        <location filename="window.py" line="803"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s-filer</translation>
     </message>
     <message>
-        <location filename="window.py" line="871"/>
+        <location filename="window.py" line="870"/>
         <source>Save file</source>
         <translation>Gem fil</translation>
     </message>
     <message>
-        <location filename="window.py" line="825"/>
+        <location filename="window.py" line="824"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Kan ikke gemme filen, fordi den er skrivebeskyttet!</translation>
     </message>
     <message>
-        <location filename="window.py" line="861"/>
+        <location filename="window.py" line="860"/>
         <source>Export document to ODT</source>
         <translation>Eksporter dokument til ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="861"/>
+        <location filename="window.py" line="860"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocument-tekstfiler (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="871"/>
+        <location filename="window.py" line="870"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML-filer (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="892"/>
+        <location filename="window.py" line="891"/>
         <source>Export document to PDF</source>
         <translation>Eksporter dokument til PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="892"/>
+        <location filename="window.py" line="891"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF-filer (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="912"/>
+        <location filename="window.py" line="911"/>
         <source>Print document</source>
         <translation>Udskriv dokument</translation>
     </message>
@@ -507,7 +507,7 @@
         <translation>Eksporter dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="954"/>
+        <location filename="window.py" line="956"/>
         <source>Failed to execute the command:</source>
         <translation>Kunne ikke udføre kommandoen:</translation>
     </message>
