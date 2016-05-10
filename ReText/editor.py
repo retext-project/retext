@@ -20,7 +20,7 @@ import os
 import re
 import weakref
 
-from markups import MarkdownMarkup, ReStructuredTextMarkup
+from markups import MarkdownMarkup, ReStructuredTextMarkup, TextileMarkup
 from ReText import globalSettings, tablemode, readFromSettings
 
 from PyQt5.QtCore import pyqtSignal, QFileInfo, QRect, QSize, Qt
@@ -310,6 +310,8 @@ class ReTextEdit(QTextEdit):
 					imageText = '![%s](%s)' % (QFileInfo(link).baseName(), link)
 				elif markupClass == ReStructuredTextMarkup:
 					imageText = '.. image:: %s' % link
+				elif markupClass == TextileMarkup:
+					imageText = '!%s!' % link
 
 				self.textCursor().insertText(imageText)
 		else:
