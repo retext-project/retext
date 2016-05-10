@@ -1,11 +1,18 @@
-## ReText 6.0 (TBD)
+## ReText 6.0 (2016-05-10)
 
 * The live preview now automatically scrolls to match its position with the
-  editor (only for markdown)
+  editor (only for Markdown).
 * Markup conversion is now performed in a background process, improving
-  responsiveness of the editor
-* Images can now be copied and pasted into ReText
-* ReText now depends on version 2.0 or higher of pymarkups
+  responsiveness of the editor.
+* Images can now be copied and pasted into ReText (contributed by Bart
+  Clephas).
+* Added a button to quickly close the search bar.
+* Added basic CSS styling for tables.
+* Replaced the tags box with the new “Formatting” box for Markdown
+  (contributed by Donato Marrazzo).
+* Hitting return twice now ends the Markdown list.
+* ReText now depends on version 2.0 or higher of pymarkups.
+* The QtWebKit dependency is now optional (though still recommended).
 
 ## ReText 5.3 (2015-12-20)
 
