@@ -3,6 +3,7 @@
 import markups
 import multiprocessing as mp
 import pickle
+import signal
 import socket
 import struct
 import traceback
@@ -45,6 +46,10 @@ def _indent(text, prefix):
 
 def _converter_process_func(conn_parent, conn_child):
     conn_parent.close()
+
+    # Ignore ctrl-C. The main application will also receive the signal and
+    # determine if the application should be stopped or not.
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
 
     current_markup = None
 
@@ -110,6 +115,7 @@ class ConverterProcess(QObject):
         self.conn = conn_parent
 
         self.busy = False
+        self.notificationPending = False
         self.conversionNotifier = QSocketNotifier(self.conn.fileno(),
                                                   QSocketNotifier.Read)
         self.conversionNotifier.activated.connect(self._conversionNotifierActivated)
@@ -122,10 +128,18 @@ class ConverterProcess(QObject):
         weakref.finalize(self, on_finalize, conn_parent)
 
     def _conversionNotifierActivated(self):
-        # Set the socket to blocking before waking up any interested parties,
-        # because it has been set to unblocking by QSocketNotifier
-        self.conn.setblocking(True)
-        self.conversionDone.emit()
+        # The ready-for-read signal on the socket may be triggered multiple
+        # times, but we only send a single notification to the client as soon
+        # as the results of the conversion are starting to come in. This makes
+        # it easy for clients to avoid multiple calls to get_result for the
+        # same conversion.
+        if self.notificationPending:
+            self.notificationPending = False
+
+            # Set the socket to blocking before waking up any interested parties,
+            # because it has been set to unblocking by QSocketNotifier
+            self.conn.setblocking(True)
+            self.conversionDone.emit()
 
     def start_conversion(self, markup_name, filename, requested_extensions, text):
         if self.busy:
@@ -137,6 +151,7 @@ class ConverterProcess(QObject):
                                'requested_extensions' : requested_extensions,
                                'text' : text})
         self.busy = True
+        self.notificationPending = True
 
     def get_result(self):
         if not self.busy:
