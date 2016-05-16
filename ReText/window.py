@@ -404,7 +404,7 @@ class ReTextWindow(QMainWindow):
 
 	def printError(self):
 		import traceback
-		print('Exception occured while parsing document:', file=sys.stderr)
+		print('Exception occurred while parsing document:', file=sys.stderr)
 		traceback.print_exc()
 
 

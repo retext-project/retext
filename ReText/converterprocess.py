@@ -5,6 +5,7 @@ import multiprocessing as mp
 import pickle
 import socket
 import struct
+import traceback
 import weakref
 
 from PyQt5.QtCore import pyqtSignal, QObject, QSocketNotifier
@@ -36,6 +37,12 @@ def sendObject(sock, obj):
 class ConversionError(Exception):
     pass
 
+class MarkupNotAvailableError(Exception):
+    pass
+
+def _indent(text, prefix):
+    return ''.join(('%s%s\n' % (prefix, line) for line in text.splitlines()))
+
 def _converter_process_func(conn_parent, conn_child):
     conn_parent.close()
 
@@ -52,15 +59,19 @@ def _converter_process_func(conn_parent, conn_child):
                     current_markup.filename != job['filename']):
                     markup_class = markups.find_markup_class_by_name(job['markup_name'])
                     if not markup_class.available():
-                        raise ConversionError('markup_not_available')
+                        raise MarkupNotAvailableError('The specified markup was not available')
 
                     current_markup = markup_class(job['filename'])
                     current_markup.requested_extensions = job['requested_extensions']
 
                 converted = current_markup.convert(job['text'])
                 result = ('ok', converted)
-            except ConversionError:
-                result = ('markup_not_available', None)
+            except MarkupNotAvailableError as e:
+                result = ('markupnotavailableerror', e.args)
+            except Exception:
+                result = ('conversionerror',
+                          'The background markup conversion process received this exception:\n%s' %
+                          _indent(traceback.format_exc(), '    '))
 
             try:
                 sendObject(conn_child, result)
@@ -133,12 +144,14 @@ class ConverterProcess(QObject):
 
         self.busy = False
 
-        status, converted = receiveObject(self.conn)
+        status, result = receiveObject(self.conn)
 
-        if status != 'ok':
-            raise ConversionError('The specified markup was not available')
+        if status == 'markupnotavailableerror':
+            raise MarkupNotAvailableError(result)
+        elif status == 'conversionerror':
+            raise ConversionError(result)
 
-        return converted
+        return result
 
     def stop(self):
         sendObject(self.conn, {'command': 'quit'})

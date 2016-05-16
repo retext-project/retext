@@ -231,8 +231,11 @@ class ReTextTab(QSplitter):
 
 		try:
 			self.converted = self.converterProcess.get_result()
-		except converterprocess.ConversionError:
+		except converterprocess.MarkupNotAvailableError:
 			self.converted = None
+		except converterprocess.ConversionError:
+			return self.p.printError()
+
 		if isinstance(self.previewBox, QTextEdit):
 			scrollbar = self.previewBox.verticalScrollBar()
 			scrollbarValue = scrollbar.value()
