@@ -92,7 +92,7 @@ if '--no-rename' in sys.argv or iswindows:
 	retext_install_scripts = install_scripts
 	try:
 		sys.argv.remove('--no-rename')
-	except KeyError:
+	except ValueError:
 		pass
 
 filterwarnings('ignore', "Unknown distribution option: 'install_requires'")
