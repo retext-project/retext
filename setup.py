@@ -128,7 +128,6 @@ setup(name='ReText',
       ],
       requires=['docutils', 'Markdown', 'Markups', 'pyenchant', 'Pygments'],
       install_requires=install_requires,
-      extras_require={'windows': 'backports.socketpair'},#
       cmdclass={
         'build': retext_build,
         'sdist': retext_sdist,
