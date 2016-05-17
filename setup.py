@@ -16,6 +16,7 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 
 import re
 import sys
+import platform
 from os.path import join
 from distutils import log
 from distutils.core import setup, Command
@@ -29,6 +30,8 @@ from warnings import filterwarnings
 
 if sys.version_info[0] < 3:
 	sys.exit('Error: Python 3.x is required.')
+
+iswindows = True if platform.system() == 'Windows' else False
 
 def build_translations():
 	print('running build_translations')
@@ -85,9 +88,12 @@ class retext_upload(upload):
 			print('calling process', args)
 			check_call(args)
 
-if '--no-rename' in sys.argv:
+if '--no-rename' in sys.argv or iswindows:
 	retext_install_scripts = install_scripts
-	sys.argv.remove('--no-rename')
+	try:
+		sys.argv.remove('--no-rename')
+	except KeyError:
+		pass
 
 filterwarnings('ignore', "Unknown distribution option: 'install_requires'")
 
@@ -99,6 +105,11 @@ classifiers = [
 	'Topic :: Text Editors',
 	'Topic :: Text Processing :: Markup'
 ]
+
+install_requires = ['docutils', 'Markdown', 'Markups>=2.0', 'pyenchant', 'Pygments']
+if iswindows and sys.version_info[1] < 5:
+	# Windows compatibility: socket.socketpair backport on Python < 3.5
+	install_requires.append('backports.socketpair')
 
 setup(name='ReText',
       version=VERSION,
@@ -116,7 +127,8 @@ setup(name='ReText',
         ('share/retext/locale', iglob('locale/*.qm'))
       ],
       requires=['docutils', 'Markdown', 'Markups', 'pyenchant', 'Pygments'],
-      install_requires=['docutils', 'Markdown', 'Markups>=2.0', 'pyenchant', 'Pygments'],
+      install_requires=install_requires,
+      extras_require={'windows': 'backports.socketpair'},#
       cmdclass={
         'build': retext_build,
         'sdist': retext_sdist,

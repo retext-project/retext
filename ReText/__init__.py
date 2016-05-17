@@ -22,6 +22,7 @@ from os.path import dirname, exists, join
 
 from PyQt5.QtCore import QByteArray, QLocale, QSettings, QStandardPaths
 from PyQt5.QtGui import QFont
+import platform
 
 app_version = "6.0.0"
 
@@ -33,6 +34,12 @@ if not str(settings.fileName()).endswith('.conf'):
 		'ReText project', 'ReText')
 
 datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
+
+if platform.system() == 'Windows':
+    # Windows compatibility: Add "PythonXXX\share\" path
+    import sys
+    datadirs.append(join(dirname(sys.executable), 'share'))
+
 datadirs = [join(d, 'retext') for d in datadirs]
 
 if '__file__' in locals():
