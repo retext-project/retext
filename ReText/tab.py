@@ -22,6 +22,8 @@ from markups.common import MODULE_HOME_PAGE
 from ReText import app_version, globalSettings, converterprocess
 from ReText.editor import ReTextEdit
 from ReText.highlighter import ReTextHighlighter
+import os
+import chardet
 
 try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler
@@ -132,7 +134,7 @@ class ReTextTab(QSplitter):
 		'''
 		Set the default markup class to use in case a markup that
 		matches the filename cannot be found. This function calls
-		updateActiveMarkupClass so it can decide if the active 
+		updateActiveMarkupClass so it can decide if the active
 		markup class also has to change.
 		'''
 		self.defaultMarkupClass = markupClass
@@ -286,6 +288,22 @@ class ReTextTab(QSplitter):
 		self.editBox.setVisible(self.previewState < PreviewNormal)
 		self.previewBox.setVisible(self.previewState > PreviewDisabled)
 
+	def detectFileEncoding(self, fileName):
+		'''
+		Detect content encoding of specific file by first 512 bytes.
+
+		It will return the global default encoding if it can't determine
+		which the encoding is.
+		'''
+		someBytes = min(512, os.path.getsize(fileName))
+		raw = open(fileName, 'rb').read(someBytes)
+		result = chardet.detect(raw)
+
+		if result["confidence"] < 0.65:
+			return globalSettings.defaultCodec
+
+		return result['encoding']
+
 	def readTextFromFile(self, fileName=None, encoding=None):
 		previousFileName = self._fileName
 		if fileName:
@@ -293,15 +311,22 @@ class ReTextTab(QSplitter):
 		openfile = QFile(self._fileName)
 		openfile.open(QFile.ReadOnly)
 		stream = QTextStream(openfile)
-		encoding = encoding or globalSettings.defaultCodec
+
+		# Only do encoding detect behavior while encoding have not specificed yet.
+		if encoding is None:
+			encoding = self.detectFileEncoding(fileName)
+
 		if encoding:
 			stream.setCodec(encoding)
 		text = stream.readAll()
 		openfile.close()
 
-		modified = bool(encoding) and (self.editBox.toPlainText() != text)
 		self.editBox.setPlainText(text)
-		self.editBox.document().setModified(modified)
+		self.editBox.document().setModified(False)
+
+		# If we specific an encoding or detected a encoding, we should save
+		# the file with same encoding
+		self.editBox.document().setProperty("encoding", encoding)
 
 		if previousFileName != self._fileName:
 			self.updateActiveMarkupClass()
@@ -314,8 +339,12 @@ class ReTextTab(QSplitter):
 		result = savefile.open(QFile.WriteOnly)
 		if result:
 			savestream = QTextStream(savefile)
-			if globalSettings.defaultCodec:
-				savestream.setCodec(globalSettings.defaultCodec)
+
+			# Save the file with original encoding
+			encoding = self.editBox.document().property("encoding")
+			if encoding is not None:
+				savestream.setCodec(encoding)
+
 			savestream << self.editBox.toPlainText()
 			savefile.close()
 		return result
