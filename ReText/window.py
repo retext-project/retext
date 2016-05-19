@@ -421,6 +421,7 @@ class ReTextWindow(QMainWindow):
 				self.tabWidget.setTabToolTip(self.ind, tab.fileName)
 				QDir.setCurrent(QFileInfo(tab.fileName).dir().path())
 			else:
+				self.setWindowFilePath('')
 				self.setWindowTitle(self.tr('New document') + '[*]')
 
 			canReload = bool(tab.fileName) and not self.autoSaveActive(tab)
