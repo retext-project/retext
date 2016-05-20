@@ -68,7 +68,7 @@ class retext_install_scripts(install_scripts):
 				# script directly from command line
 				batch_script = "@echo off\n%s %s %%*" % (sys.executable, renamed_file)
 				with open("%s.bat" % renamed_file, "w") as bat_file:
-    				bat_file.write(batch_script)
+					bat_file.write(batch_script)
 
 class retext_test(Command):
 	user_options = []
