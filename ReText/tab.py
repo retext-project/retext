@@ -328,10 +328,10 @@ class ReTextTab(QSplitter):
 		if result:
 			self.editBox.document().setModified(False)
 			self.p.fileSystemWatcher.addPath(fileName or self._fileName)
-		if result and self._fileName != fileName:
-			self._fileName = fileName
-			self.updateActiveMarkupClass()
-			self.fileNameChanged.emit()
+			if fileName and self._fileName != fileName:
+				self._fileName = fileName
+				self.updateActiveMarkupClass()
+				self.fileNameChanged.emit()
 
 		return result
 
