@@ -16,6 +16,7 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 
 import re
 import sys
+import os.path
 from os.path import join
 from distutils import log
 from distutils.core import setup, Command
@@ -57,8 +58,16 @@ class retext_install_scripts(install_scripts):
 		import shutil
 		install_scripts.run(self)
 		for file in self.get_outputs():
-			log.info('renaming %s to %s', file, file[:-3])
-			shutil.move(file, file[:-3])
+			renamed_file = file[:-3]
+
+			log.info('renaming %s to %s', file, renamed_file)
+			shutil.move(file, renamed_file)
+
+			if sys.platform == "win32":
+				# Generate batch script for warpper the python script so we could invoke that
+				# script directly from command line
+				batch_script = "@echo off\n%s %s %%*" % (sys.executable, renamed_file)
+				open("%s.bat" %  renamed_file, "wb").write(batch_script.encode())
 
 class retext_test(Command):
 	user_options = []
