@@ -353,6 +353,15 @@ class ReTextWindow(QMainWindow):
 		self.fileSystemWatcher = QFileSystemWatcher()
 		self.fileSystemWatcher.fileChanged.connect(self.fileChanged)
 
+	def restoreLastOpenedFiles(self):
+		for file in readListFromSettings("lastFileList"):
+			self.openFileWrapper(file)
+
+		# Show the tab of last opened file
+		lastTabIndex = globalSettings.lastTabIndex
+		if lastTabIndex >= 0 and lastTabIndex < self.tabWidget.count():
+			self.tabWidget.setCurrentIndex(lastTabIndex)
+
 	def iterateTabs(self):
 		for i in range(self.tabWidget.count()):
 			yield self.tabWidget.widget(i)
@@ -1081,6 +1090,10 @@ class ReTextWindow(QMainWindow):
 				return closeevent.ignore()
 		if globalSettings.saveWindowGeometry and not self.isMaximized():
 			globalSettings.windowGeometry = self.saveGeometry()
+		if globalSettings.openLastFilesOnStartup:
+			files = [tab.fileName for tab in self.iterateTabs()]
+			writeListToSettings("lastFileList", files)
+			globalSettings.lastTabIndex = self.tabWidget.currentIndex()
 		closeevent.accept()
 
 	def viewHtml(self):

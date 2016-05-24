@@ -67,6 +67,7 @@ class ConfigDialog(QDialog):
 		self.options = (
 			(self.tr('Behavior'), None),
 			(self.tr('Automatically save documents'), 'autoSave'),
+			(self.tr('Automatically open last documents on startup'), 'openLastFilesOnStartup'),
 			(self.tr('Restore window geometry'), 'saveWindowGeometry'),
 			(self.tr('Use live preview by default'), 'livePreviewByDefault'),
 			(self.tr('Open external links in ReText window'), 'handleWebLinks'),

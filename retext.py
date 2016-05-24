@@ -85,6 +85,9 @@ def main():
 				window.preview(True)
 		elif fileName == '--preview':
 			previewMode = True
+	if globalSettings.openLastFilesOnStartup:
+		window.restoreLastOpenedFiles()
+
 	inputData = '' if (sys.stdin is None or sys.stdin.isatty()) else sys.stdin.read()
 	if inputData or not window.tabWidget.count():
 		window.createNew(inputData)
