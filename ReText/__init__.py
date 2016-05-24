@@ -47,6 +47,7 @@ for dir in datadirs:
 configOptions = {
 	'appStyleSheet': '',
 	'autoSave': False,
+	'openLastFilesOnStartup': False,
 	'defaultCodec': '',
 	'defaultMarkup': '',
 	'editorFont': QFont(),
@@ -72,6 +73,7 @@ configOptions = {
 	'useFakeVim': False,
 	'useWebKit': False,
 	'windowGeometry': QByteArray(),
+	'lastTabIndex': 0,
 }
 
 def readFromSettings(key, keytype, settings=settings, default=None):
