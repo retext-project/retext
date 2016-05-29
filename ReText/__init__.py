@@ -49,6 +49,7 @@ configOptions = {
 	'autoSave': False,
 	'defaultCodec': '',
 	'defaultMarkup': '',
+	'detectEncoding': True,
 	'editorFont': QFont(),
 	'font': QFont(),
 	'handleWebLinks': False,

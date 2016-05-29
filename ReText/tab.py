@@ -286,6 +286,25 @@ class ReTextTab(QSplitter):
 		self.editBox.setVisible(self.previewState < PreviewNormal)
 		self.previewBox.setVisible(self.previewState > PreviewDisabled)
 
+	def detectFileEncoding(self, fileName):
+		'''
+		Detect content encoding of specific file by first 512 bytes.
+
+		It will return the global default encoding if it can't determine
+		which the encoding is.
+		'''
+		try:
+			import chardet
+		except ImportError:
+			return
+
+		with open(fileName, 'rb') as inputFile:
+			raw = inputFile.read(512)
+
+		result = chardet.detect(raw)
+		if result['confidence'] > 0.65:
+			return result['encoding']
+
 	def readTextFromFile(self, fileName=None, encoding=None):
 		previousFileName = self._fileName
 		if fileName:
@@ -293,15 +312,23 @@ class ReTextTab(QSplitter):
 		openfile = QFile(self._fileName)
 		openfile.open(QFile.ReadOnly)
 		stream = QTextStream(openfile)
+
+		# Only try to detect encoding if it is not specified
+		if encoding is None and globalSettings.detectEncoding:
+			encoding = self.detectFileEncoding(fileName)
+
 		encoding = encoding or globalSettings.defaultCodec
 		if encoding:
 			stream.setCodec(encoding)
+			# If encoding is specified or detected, we should save the file with
+			# the same encoding
+			self.editBox.document().setProperty("encoding", encoding)
+
 		text = stream.readAll()
 		openfile.close()
 
-		modified = bool(encoding) and (self.editBox.toPlainText() != text)
 		self.editBox.setPlainText(text)
-		self.editBox.document().setModified(modified)
+		self.editBox.document().setModified(False)
 
 		if previousFileName != self._fileName:
 			self.updateActiveMarkupClass()
@@ -314,8 +341,12 @@ class ReTextTab(QSplitter):
 		result = savefile.open(QFile.WriteOnly)
 		if result:
 			savestream = QTextStream(savefile)
-			if globalSettings.defaultCodec:
-				savestream.setCodec(globalSettings.defaultCodec)
+
+			# Save the file with original encoding
+			encoding = self.editBox.document().property("encoding")
+			if encoding is not None:
+				savestream.setCodec(encoding)
+
 			savestream << self.editBox.toPlainText()
 			savefile.close()
 		return result

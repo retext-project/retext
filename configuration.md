@@ -12,6 +12,7 @@ option name                    | type      | description
 `autoSave`                     | boolean   | whether to automatically save documents (default: false)
 `defaultCodec`                 | string    | name of encoding to use by default (default: use system encoding)
 `defaultMarkup`                | string    | name of markup to use for unknown files
+`detectEncoding`               | boolean   | whether to automatically detect files encoding; needs chardet package (default: true)
 `editorFont`                   | string    | font to use for editor: name (default: `monospace`)
 `editorFontSize`               | integer   | font to use for editor: font size
 `font`                         | string    | font to use for previews: name
