@@ -776,9 +776,11 @@ class ReTextWindow(QMainWindow):
 	def showEncodingDialog(self):
 		if not self.maybeSave(self.ind):
 			return
+		codecsSet = set(bytes(QTextCodec.codecForName(alias).name())
+		                for alias in QTextCodec.availableCodecs())
 		encoding, ok = QInputDialog.getItem(self, '',
 			self.tr('Select file encoding from the list:'),
-			[bytes(b).decode() for b in QTextCodec.availableCodecs()],
+			[bytes(b).decode() for b in sorted(codecsSet)],
 			0, False)
 		if ok:
 			self.currentTab.readTextFromFile(None, encoding)
