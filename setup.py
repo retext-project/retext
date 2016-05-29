@@ -124,7 +124,7 @@ setup(name='ReText',
         ('share/retext/icons', glob('icons/*')),
         ('share/retext/locale', iglob('locale/*.qm'))
       ],
-      requires=['docutils', 'Markdown', 'Markups', 'pyenchant', 'Pygments'],
+      requires=['docutils', 'Markdown', 'Markups(>=2.0)', 'pyenchant', 'Pygments'],
       install_requires=['docutils', 'Markdown', 'Markups>=2.0', 'pyenchant', 'Pygments'],
       cmdclass={
         'build': retext_build,
