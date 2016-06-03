@@ -101,6 +101,7 @@ class ReTextEdit(QTextEdit):
 		self.document().blockCountChanged.connect(self.updateLineNumberAreaWidth)
 		self.cursorPositionChanged.connect(self.highlightCurrentLine)
 		self.document().contentsChange.connect(self.contentsChange)
+		self.setCursorWidth(globalSettings.cursorWidth)
 
 	def updateFont(self):
 		self.setFont(globalSettings.editorFont)
@@ -112,6 +113,10 @@ class ReTextEdit(QTextEdit):
 		self.infoArea.updateTextAndGeometry()
 
 	def paintEvent(self, event):
+		if self.cursorWidth() != globalSettings.cursorWidth:
+			# Reset the cursor width if global cursor width setting changed
+			self.setCursorWidth(globalSettings.cursorWidth)
+
 		if not globalSettings.rightMargin:
 			return QTextEdit.paintEvent(self, event)
 		painter = QPainter(self.viewport())

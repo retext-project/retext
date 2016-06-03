@@ -80,6 +80,7 @@ class ConfigDialog(QDialog):
 			(self.tr('Show line numbers'), 'lineNumbersEnabled'),
 			(self.tr('Tab key inserts spaces'), 'tabInsertsSpaces'),
 			(self.tr('Tabulation width'), 'tabWidth'),
+			(self.tr('Cursor width'), 'cursorWidth'),
 			(self.tr('Draw vertical line at column'), 'rightMargin'),
 			(self.tr('Interface'), None),
 			(self.tr('Icon theme name'), 'iconTheme'),
@@ -123,6 +124,8 @@ class ConfigDialog(QDialog):
 				self.configurators[name] = QSpinBox(self)
 				if name == 'tabWidth':
 					self.configurators[name].setRange(1, 10)
+				elif name == 'cursorWidth':
+					self.configurators[name].setRange(1, 5)
 				else:
 					self.configurators[name].setMaximum(200)
 				self.configurators[name].setValue(value)

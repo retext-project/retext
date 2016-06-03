@@ -34,6 +34,7 @@ option name                    | type      | description
 `syncScroll`                   | boolean   | whether to enable synchronized scrolling for Markdown (default: true)
 `tabInsertsSpaces`             | boolean   | whether Tab key should insert spaces instead of tabs (default: true)
 `tabWidth`                     | integer   | the width of tab character (default: 4)
+`cursorWidth`                  | integer   | the width of cursor, in pixels (default: 1)
 `uiLanguage`                   | string    | short name of locale to use for interface (examples: `en_US, `ru, `pt_BR`)
 `useFakeVim`                   | boolean   | whether to use the FakeVim editor, if available (default: false)
 `useWebKit`                    | boolean   | whether to use the WebKit instead of QTextEdit as HTML previewer (default: false)
