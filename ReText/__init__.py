@@ -69,6 +69,7 @@ configOptions = {
 	'syncScroll': True,
 	'tabInsertsSpaces': True,
 	'tabWidth': 4,
+	'cursorWidth': 1,
 	'uiLanguage': QLocale.system().name(),
 	'useFakeVim': False,
 	'useWebKit': False,
