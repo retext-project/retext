@@ -4,10 +4,15 @@ import markups
 import multiprocessing as mp
 import pickle
 import signal
-import socket
 import struct
 import traceback
 import weakref
+
+try:
+	from socket import socketpair
+except ImportError:
+	# Windows compatibility: socket.socketpair backport for Python < 3.5
+	from backports.socketpair import socketpair
 
 from PyQt5.QtCore import pyqtSignal, QObject, QSocketNotifier
 
@@ -97,7 +102,7 @@ class ConverterProcess(QObject):
     def __init__(self):
         super(QObject, self).__init__()
 
-        conn_parent, conn_child = socket.socketpair()
+        conn_parent, conn_child = socketpair()
 
         # TODO: figure out which of the two sockets should be set to 
         #       inheritable and which should be passed to the child
