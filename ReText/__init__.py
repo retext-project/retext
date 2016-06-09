@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import sys
 import markups
 import markups.common
 from os.path import dirname, exists, join
@@ -34,6 +35,10 @@ if not str(settings.fileName()).endswith('.conf'):
 
 datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
 datadirs = [join(d, 'retext') for d in datadirs]
+
+if sys.platform == "win32":
+	# Windows compatibility: Add "PythonXXX\share\" path
+	datadirs.append(join(dirname(sys.executable), 'share', 'retext'))
 
 if '__file__' in locals():
 	datadirs = [dirname(dirname(__file__))] + datadirs
