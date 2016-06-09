@@ -132,7 +132,7 @@ class ReTextTab(QSplitter):
 		'''
 		Set the default markup class to use in case a markup that
 		matches the filename cannot be found. This function calls
-		updateActiveMarkupClass so it can decide if the active 
+		updateActiveMarkupClass so it can decide if the active
 		markup class also has to change.
 		'''
 		self.defaultMarkupClass = markupClass
@@ -288,10 +288,9 @@ class ReTextTab(QSplitter):
 
 	def detectFileEncoding(self, fileName):
 		'''
-		Detect content encoding of specific file by first 512 bytes.
+		Detect content encoding of specific file.
 
-		It will return the global default encoding if it can't determine
-		which the encoding is.
+		It will return the None if it can't determine the encoding.
 		'''
 		try:
 			import chardet
@@ -299,10 +298,21 @@ class ReTextTab(QSplitter):
 			return
 
 		with open(fileName, 'rb') as inputFile:
-			raw = inputFile.read(512)
+			raw = inputFile.read(2048)
 
 		result = chardet.detect(raw)
 		if result['confidence'] > 0.65:
+			if result['encoding'].lower() == 'ascii':
+				# Encoding 'utf-8' is compatible with 'ascii'.
+ 				# if we detected a file be encoded as 'ascii', there have
+				# two possible reasons:
+				#
+				# 1. The file is really encoded as 'ascii'
+				# 2. The file is encoded as 'utf-8', but there don't have any
+				#    utf-8 characters in first 2048 Bytes.
+				#
+				# It's fine to decode by 'utf-8' encoding in both situation.
+				return 'utf-8'
 			return result['encoding']
 
 	def readTextFromFile(self, fileName=None, encoding=None):
