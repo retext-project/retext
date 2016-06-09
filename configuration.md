@@ -10,6 +10,7 @@ option name                    | type      | description
 -----------                    | ----      | -----------
 `appStyleSheet`                | file path | file containing a Qt stylesheet file
 `autoSave`                     | boolean   | whether to automatically save documents (default: false)
+`openLastFilesOnStartup`       | boolean   | whether to automatically open last documents on startup (default: false),
 `defaultCodec`                 | string    | name of encoding to use by default (default: use system encoding)
 `defaultMarkup`                | string    | name of markup to use for unknown files
 `detectEncoding`               | boolean   | whether to automatically detect files encoding; needs chardet package (default: true)
@@ -42,7 +43,7 @@ If the type is 'file path', then the value should be an absolute path
 to a file.
 
 These options can be set internally by ReText and should never be set
-manually: `recentFileList` and `windowGeometry`.
+manually: `recentFileList`, `lastFileList`, `lastTabIndex` and `windowGeometry`.
 
 Icon themes
 ===========

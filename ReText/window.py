@@ -20,7 +20,7 @@ import markups
 import sys
 from subprocess import Popen
 from ReText import icon_path, app_version, globalSettings, readListFromSettings, \
- writeListToSettings, writeToSettings, datadirs
+ readFromSettings, writeListToSettings, writeToSettings, datadirs
 from ReText.tab import ReTextTab, ReTextWebPreview, PreviewNormal, PreviewLive
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
@@ -352,6 +352,17 @@ class ReTextWindow(QMainWindow):
 				self.actionEnableSC.setChecked(True)
 		self.fileSystemWatcher = QFileSystemWatcher()
 		self.fileSystemWatcher.fileChanged.connect(self.fileChanged)
+
+		# Restore last opened files
+		if globalSettings.openLastFilesOnStartup:
+			files = readListFromSettings("lastFileList")
+			for file in files:
+				self.openFileWrapper(file)
+
+			# Trigger the tab of last opened file
+			lastTabIndex = globalSettings.lastTabIndex
+			if (lastTabIndex >= 0) and (lastTabIndex < self.tabWidget.count()):
+				self.tabWidget.setCurrentIndex(lastTabIndex)
 
 	def iterateTabs(self):
 		for i in range(self.tabWidget.count()):
@@ -1081,6 +1092,13 @@ class ReTextWindow(QMainWindow):
 				return closeevent.ignore()
 		if globalSettings.saveWindowGeometry and not self.isMaximized():
 			globalSettings.windowGeometry = self.saveGeometry()
+		if globalSettings.openLastFilesOnStartup:
+			files = []
+			for i in range(0, self.tabWidget.count()):
+				tab = self.tabWidget.widget(i)
+				files.append(tab.fileName)
+			writeListToSettings("lastFileList", files)
+			globalSettings.lastTabIndex = self.tabWidget.currentIndex()
 		closeevent.accept()
 
 	def viewHtml(self):
