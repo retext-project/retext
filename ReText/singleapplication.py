@@ -103,7 +103,7 @@ class SingleApplication(QObject):
 		# Ensure we run only one application
 		isAnotherRunning = False
 		if not self._sharedMemory.isAttached():
-			# If share memory is attachable, that means there have another
+			# If shared memory is attachable, that means there exists another
 			# running application
 			self._systemSemaphore.acquire()
 			try:
@@ -164,4 +164,3 @@ class SingleApplication(QObject):
 		assert(type(message) == bytes)
 		data = struct.pack("@I%ss" % len(message), len(message), message)
 		self._client.write(data)
-
