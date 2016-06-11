@@ -16,12 +16,8 @@
 
 import functools
 import struct
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtCore import QObject
-from PyQt5.QtCore import QSharedMemory
-from PyQt5.QtCore import QSystemSemaphore
-from PyQt5.QtNetwork import QLocalServer
-from PyQt5.QtNetwork import QLocalSocket
+from PyQt5.QtCore import pyqtSignal, QObject, QSharedMemory, QSystemSemaphore
+from PyQt5.QtNetwork import QLocalServer, QLocalSocket
 
 class SingleApplication(QObject):
 	"""
