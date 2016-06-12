@@ -76,7 +76,7 @@ class SingleApplication(QObject):
 		self._localSockets[localSocket] += localSocket.readAll()
 		data = self._localSockets[localSocket]
 		if len(data) > 4:
-			# First 4bytes is an native Integer.
+			# First 4bytes is a native Integer.
 			dataSize = struct.unpack("@I", data[:4])[0]
 			receivedDataSize = len(data) - 4
 			if receivedDataSize < dataSize:
