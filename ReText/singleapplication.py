@@ -111,7 +111,7 @@ class SingleApplication(QObject):
 
 		if not isAnotherRunning:
 			# If we already attached by previous attach test, we will create
-			# the share memory.
+			# the shared memory.
 			self._systemSemaphore.acquire()
 			try:
 				isAnotherRunning = not self._sharedMemory.create(1, QSharedMemory.ReadWrite)
@@ -119,7 +119,7 @@ class SingleApplication(QObject):
 				self._systemSemaphore.release()
 
 			# If there something happened during create procedure lead us can't
-			# create one, we should detach that share memory.
+			# create one, we should detach that shared memory.
 			if isAnotherRunning:
 				self._systemSemaphore.acquire()
 				try:
@@ -146,8 +146,8 @@ class SingleApplication(QObject):
 		else:
 			# Detach immediately if create failed.
 			#
-			# WARNING: On windows os, seems if we don't detach the share memory
-			# after failed to create, another ReText can't create the share
+			# WARNING: On windows os, seems if we don't detach the shared memory
+			# after failed to create, another ReText can't create the shared
 			# memory after original instance exitted while there still have
 			# ReText as client.
 
