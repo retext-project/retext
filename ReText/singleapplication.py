@@ -157,6 +157,8 @@ class SingleApplication(QObject):
 
 	def sendMessage(self, message):
 		# Only accept bytes message
-		assert(type(message) == bytes)
+		if not isinstance(message, bytes):
+			raise TypeError("message must be bytes type!")
+
 		data = struct.pack("@I%ss" % len(message), len(message), message)
 		self._client.write(data)
