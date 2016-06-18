@@ -16,7 +16,10 @@
 
 import functools
 import struct
-from PyQt5.QtCore import pyqtSignal, QObject, QSharedMemory, QSystemSemaphore
+import tempfile
+import os
+from PyQt5.QtCore import pyqtSignal, QObject, QSharedMemory, QSystemSemaphore, \
+	QLockFile
 from PyQt5.QtNetwork import QLocalServer, QLocalSocket
 
 class SingleApplication(QObject):
@@ -42,24 +45,11 @@ class SingleApplication(QObject):
 		QObject.__init__(self, parent)
 		self._name = name
 		self._mode = self.Server
-		self._sharedMemory = QSharedMemory(self._name)
-		self._systemSemaphore = QSystemSemaphore(self._name + "-2", 1)
 		self._server = None
 		self._client = None
 		self._localSockets = {}
-
-		# Fix for *nix:
-		# http://stackoverflow.com/questions/5006547/qt-best-practice-for-a-single-instance-app-protection
-		# http://habrahabr.ru/post/173281/
-
-		self._systemSemaphore.acquire();
-		try:
-			unixFix = QSharedMemory(self._name)
-			unixFix.attach()
-			unixFix.detach()
-			unixFix = None
-		finally:
-			self._systemSemaphore.release();
+		self._lockFile = QLockFile(os.path.join(
+			tempfile.gettempdir(), '%s.lock' % self._name))
 
 	@property
 	def name(self):
@@ -97,36 +87,7 @@ class SingleApplication(QObject):
 
 	def start(self):
 		# Ensure we run only one application
-		isAnotherRunning = False
-		if not self._sharedMemory.isAttached():
-			# If shared memory is attachable, that means there exists another
-			# running application
-			self._systemSemaphore.acquire()
-			try:
-				isAnotherRunning = self._sharedMemory.attach()
-				if isAnotherRunning:
-					self._sharedMemory.detach()
-			finally:
-				self._systemSemaphore.release()
-
-		if not isAnotherRunning:
-			# If we already attached by previous attach test, we will create
-			# the shared memory.
-			self._systemSemaphore.acquire()
-			try:
-				isAnotherRunning = not self._sharedMemory.create(1, QSharedMemory.ReadWrite)
-			finally:
-				self._systemSemaphore.release()
-
-			# If there something happened during create procedure lead us can't
-			# create one, we should detach that shared memory.
-			if isAnotherRunning:
-				self._systemSemaphore.acquire()
-				try:
-					if self._sharedMemory.isAttached():
-						self._sharedMemory.detach()
-				finally:
-					self._systemSemaphore.release();
+		isAnotherRunning = not self._lockFile.tryLock()
 
 		# Fine, now we could take different action on different situation.
 		if isAnotherRunning:
