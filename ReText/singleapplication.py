@@ -144,7 +144,9 @@ class SingleApplication(QObject):
 			self._mode = self.Server
 			self._server = QLocalServer(self)
 			self._server.newConnection.connect(self._onServerNewConnection)
-
+			# Access is restricted to the same user as the process that created
+			# the socket.
+			self._server.setSocketOptions(QLocalServer.UserAccessOption)
 			if not self._server.listen(self._name):
 				# Failed to listen, is there have another application crashed
 				# without normally shutdown it's server?
