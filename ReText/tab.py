@@ -301,7 +301,7 @@ class ReTextTab(QSplitter):
 			raw = inputFile.read(2048)
 
 		result = chardet.detect(raw)
-		if result['confidence'] > 0.65:
+		if result['confidence'] > 0.9:
 			if result['encoding'].lower() == 'ascii':
 				# UTF-8 files can be falsely detected as ASCII files if they
 				# don't contain non-ASCII characters in first 2048 bytes.
