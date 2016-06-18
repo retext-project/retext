@@ -34,6 +34,19 @@ from PyQt5.QtCore import QFile, QFileInfo, QIODevice, QLibraryInfo, \
 from PyQt5.QtWidgets import QApplication, qApp
 from PyQt5.QtNetwork import QNetworkProxyFactory
 
+def get_current_user():
+    import os
+    try:
+        import pwd
+    except ImportError:
+        import getpass
+        pwd = None
+
+    if pwd:
+        return pwd.getpwuid(os.getuid()).pw_name
+    else:
+        return getpass.getuser()
+
 def canonicalize(option):
 	if option == '--preview':
 		return option
@@ -58,7 +71,7 @@ def main():
 	if hasattr(app, 'setDesktopFileName'): # available since Qt 5.7
 		app.setDesktopFileName('me.mitya57.ReText.desktop')
 
-	singleApp = SingleApplication("D1278E7822F011E6802800F1F38F93EF")
+	singleApp = SingleApplication("ReText-%s" % get_current_user())
 	singleApp.start()
 	if singleApp.mode == singleApp.Client:
 		# When we are in client mode, we just send the arguments to existing
