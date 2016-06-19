@@ -25,6 +25,7 @@ from ReText.tab import ReTextTab, ReTextWebPreview, PreviewNormal, PreviewLive
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
 from ReText.icontheme import get_icon_theme
+from PyQt5.QtGui import QTextCursor
 
 try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler, FakeVimMode
@@ -189,6 +190,9 @@ class ReTextWindow(QMainWindow):
 			shct=QKeySequence.FindNext)
 		self.actionFindPrev = self.act(self.tr('Previous'), 'go-previous',
 			lambda: self.find(back=True), shct=QKeySequence.FindPrevious)
+		self.actionReplace = self.act(self.tr('Replace'), trig=self.replace,
+			shct=QKeySequence.Replace)
+		self.actionReplaceAll = self.act(self.tr('Replace All'), trig=self.replaceAll)
 		self.actionCloseSearch = self.act(self.tr('Close'), 'window-close',
 			lambda: self.searchBar.setVisible(False))
 		self.actionCloseSearch.setPriority(QAction.LowPriority)
@@ -326,12 +330,18 @@ class ReTextWindow(QMainWindow):
 		self.searchEdit = QLineEdit(self.searchBar)
 		self.searchEdit.setPlaceholderText(self.tr('Search'))
 		self.searchEdit.returnPressed.connect(self.find)
+		self.replaceEdit = QLineEdit(self.searchBar)
+		self.replaceEdit.setPlaceholderText(self.tr('Replace'))
 		self.csBox = QCheckBox(self.tr('Case sensitively'), self.searchBar)
 		self.searchBar.addWidget(self.searchEdit)
+		self.searchBar.addSeparator()
+		self.searchBar.addWidget(self.replaceEdit)
 		self.searchBar.addSeparator()
 		self.searchBar.addWidget(self.csBox)
 		self.searchBar.addAction(self.actionFindPrev)
 		self.searchBar.addAction(self.actionFind)
+		self.searchBar.addAction(self.actionReplace)
+		self.searchBar.addAction(self.actionReplaceAll)
 		self.searchBar.addAction(self.actionCloseSearch)
 		self.searchBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 		self.searchBar.setVisible(False)
@@ -613,15 +623,75 @@ class ReTextWindow(QMainWindow):
 		if visible:
 			self.searchEdit.setFocus(Qt.ShortcutFocusReason)
 
-	def find(self, back=False):
+	def getFindFlags(self, back=False):
 		flags = QTextDocument.FindFlags()
 		if back:
 			flags |= QTextDocument.FindBackward
 		if self.csBox.isChecked():
 			flags |= QTextDocument.FindCaseSensitively
+		return flags
+
+	def find(self, back=False):
+		flags = self.getFindFlags(back)
 		text = self.searchEdit.text()
 		found = self.currentTab.find(text, flags)
 		self.setSearchEditColor(found)
+		return found
+
+	def replace(self, back=False):
+		cursor = self.currentTab.editBox.textCursor()
+		if cursor.hasSelection():
+			# If current already have selection, we will reset the cursor to
+			# the beginning of selection.
+			position = cursor.selectionStart()
+			cursor.clearSelection()
+			cursor.setPosition(position)
+			self.currentTab.editBox.setTextCursor(cursor)
+
+		if not self.find(back):
+			return False
+
+		cursor = self.currentTab.editBox.textCursor()
+		cursor.insertText(self.replaceEdit.text())
+		self.find(back) # Focus on next word
+		return True
+
+	def replaceAll(self):
+		count = 0
+
+		# The whole action should be one time undo action in undo stack
+		#
+		# References to : http://stackoverflow.com/questions/33379527/qtextedit-find-and-replace-performance
+		currentCursor = self.currentTab.editBox.textCursor()
+		currentCursor.beginEditBlock()
+		try:
+			findText = self.searchEdit.text()
+			replaceText = self.replaceEdit.text()
+			document = self.currentTab.editBox.document()
+			flags = self.getFindFlags()
+			# Use a new cursor to search the text, so it won't lead
+			# the current cursor changed.
+			cursor = QTextCursor(document)
+			while True:
+				cursor = document.find(findText, cursor, flags)
+				if cursor.isNull():
+					break
+				cursor.insertText(replaceText)
+				count += 1
+		finally:
+			currentCursor.endEditBlock()
+
+		isReplaced = (count > 0)
+		if isReplaced:
+			QMessageBox.information(self,
+				self.tr("Replace"),
+				self.tr("%s strings be replaced.") % count)
+		else:
+			QMessageBox.information(self,
+				self.tr("Replace"),
+				self.tr("No strings to be replaced."))
+
+		return isReplaced
 
 	def setSearchEditColor(self, found):
 		palette = self.searchEdit.palette()
