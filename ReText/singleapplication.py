@@ -88,16 +88,7 @@ class SingleApplication(QObject):
 	def start(self):
 		# Ensure we run only one application
 		isAnotherRunning = not self._lockFile.tryLock()
-
-		# Fine, now we could take different action on different situation.
 		if isAnotherRunning:
-			# Detach immediately if create failed.
-			#
-			# WARNING: On windows os, seems if we don't detach the shared memory
-			# after failed to create, another ReText can't create the shared
-			# memory after original instance exitted while there still have
-			# ReText as client.
-
 			self._mode = self.Client
 			self._client = QLocalSocket(self)
 			self._client.connectToServer(self._name)
