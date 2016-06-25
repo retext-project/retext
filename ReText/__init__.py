@@ -74,6 +74,7 @@ configOptions = {
 	'spellCheckLocale': '',
 	'styleSheet': '',
 	'syncScroll': True,
+	'tabBarAutoHide': False,
 	'tabInsertsSpaces': True,
 	'tabWidth': 4,
 	'uiLanguage': QLocale.system().name(),
