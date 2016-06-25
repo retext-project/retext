@@ -189,6 +189,12 @@ class ReTextWindow(QMainWindow):
 			shct=QKeySequence.FindNext)
 		self.actionFindPrev = self.act(self.tr('Previous'), 'go-previous',
 			lambda: self.find(back=True), shct=QKeySequence.FindPrevious)
+		self.actionReplace = self.act(self.tr('Replace'), 'edit-find-replace',
+			lambda: self.find(replace=True))
+		self.actionReplaceAll = self.act(self.tr('Replace all'), trig=self.replaceAll)
+		menuReplace = QMenu()
+		menuReplace.addAction(self.actionReplaceAll)
+		self.actionReplace.setMenu(menuReplace)
 		self.actionCloseSearch = self.act(self.tr('Close'), 'window-close',
 			lambda: self.searchBar.setVisible(False))
 		self.actionCloseSearch.setPriority(QAction.LowPriority)
@@ -326,12 +332,17 @@ class ReTextWindow(QMainWindow):
 		self.searchEdit = QLineEdit(self.searchBar)
 		self.searchEdit.setPlaceholderText(self.tr('Search'))
 		self.searchEdit.returnPressed.connect(self.find)
+		self.replaceEdit = QLineEdit(self.searchBar)
+		self.replaceEdit.setPlaceholderText(self.tr('Replace with'))
+		self.replaceEdit.returnPressed.connect(self.find)
 		self.csBox = QCheckBox(self.tr('Case sensitively'), self.searchBar)
 		self.searchBar.addWidget(self.searchEdit)
+		self.searchBar.addWidget(self.replaceEdit)
 		self.searchBar.addSeparator()
 		self.searchBar.addWidget(self.csBox)
 		self.searchBar.addAction(self.actionFindPrev)
 		self.searchBar.addAction(self.actionFind)
+		self.searchBar.addAction(self.actionReplace)
 		self.searchBar.addAction(self.actionCloseSearch)
 		self.searchBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 		self.searchBar.setVisible(False)
@@ -613,14 +624,21 @@ class ReTextWindow(QMainWindow):
 		if visible:
 			self.searchEdit.setFocus(Qt.ShortcutFocusReason)
 
-	def find(self, back=False):
+	def find(self, back=False, replace=False):
 		flags = QTextDocument.FindFlags()
 		if back:
 			flags |= QTextDocument.FindBackward
 		if self.csBox.isChecked():
 			flags |= QTextDocument.FindCaseSensitively
 		text = self.searchEdit.text()
-		found = self.currentTab.find(text, flags)
+		replaceText = self.replaceEdit.text() if replace else None
+		found = self.currentTab.find(text, flags, replaceText=replaceText)
+		self.setSearchEditColor(found)
+
+	def replaceAll(self):
+		text = self.searchEdit.text()
+		replaceText = self.replaceEdit.text()
+		found = self.currentTab.replaceAll(text, replaceText)
 		self.setSearchEditColor(found)
 
 	def setSearchEditColor(self, found):

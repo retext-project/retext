@@ -378,19 +378,43 @@ class ReTextTab(QSplitter):
 			# TODO: action is bool, really call remove?
 			self.p.actionFakeVimMode.triggered.connect(fakeVimEditor.remove)
 
-	def find(self, text, flags):
+	def find(self, text, flags, replaceText=None, wrap=False):
 		cursor = self.editBox.textCursor()
-		newCursor = self.editBox.document().find(text, cursor, flags)
+		if wrap and flags & QTextDocument.FindBackward:
+			cursor.movePosition(QTextCursor.End)
+		elif wrap:
+			cursor.movePosition(QTextCursor.Start)
+		if replaceText is not None and cursor.selectedText() == text:
+			newCursor = cursor
+		else:
+			newCursor = self.editBox.document().find(text, cursor, flags)
 		if not newCursor.isNull():
+			if replaceText is not None:
+				newCursor.insertText(replaceText)
+				newCursor.movePosition(QTextCursor.Left, QTextCursor.MoveAnchor, len(replaceText))
+				newCursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, len(replaceText))
 			self.editBox.setTextCursor(newCursor)
 			return True
-		cursor.movePosition(QTextCursor.End if (flags & QTextDocument.FindBackward) else QTextCursor.Start)
-		newCursor = self.editBox.document().find(text, cursor, flags)
-		if not newCursor.isNull():
-			self.editBox.setTextCursor(newCursor)
-			return True
+		if not wrap:
+			return self.find(text, flags, replaceText, True)
 		return False
 
+	def replaceAll(self, text, replaceText):
+		cursor = self.editBox.textCursor()
+		cursor.beginEditBlock()
+		cursor.movePosition(QTextCursor.Start)
+		flags = QTextDocument.FindFlags()
+		cursor = lastCursor = self.editBox.document().find(text, cursor, flags)
+		while not cursor.isNull():
+			cursor.insertText(replaceText)
+			lastCursor = cursor
+			cursor = self.editBox.document().find(text, cursor, flags)
+		if not lastCursor.isNull():
+			lastCursor.movePosition(QTextCursor.Left, QTextCursor.MoveAnchor, len(replaceText))
+			lastCursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, len(replaceText))
+			self.editBox.setTextCursor(lastCursor)
+		self.editBox.textCursor().endEditBlock()
+		return not lastCursor.isNull()
 
 class ReTextPreview(QTextBrowser):
 	"""
