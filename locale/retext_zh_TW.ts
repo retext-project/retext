@@ -181,12 +181,12 @@
         <translation>特殊符號</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="873"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML 檔案 (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="873"/>
         <source>Save file</source>
         <translation>儲存檔案</translation>
     </message>
@@ -236,17 +236,17 @@
         <translation>編輯工具列</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="894"/>
         <source>Export document to PDF</source>
         <translation>匯出檔案到 PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="894"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF 檔案 (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1067"/>
+        <location filename="window.py" line="1070"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>檔案已變更，確定儲存嗎？</translation>
@@ -277,12 +277,12 @@ Do you want to save your changes?</source>
         <translation>貼上</translation>
     </message>
     <message>
-        <location filename="window.py" line="463"/>
+        <location filename="window.py" line="464"/>
         <source>New document</source>
         <translation>新檔</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>All files (*)</source>
         <translation>所有檔案 (*)</translation>
     </message>
@@ -297,12 +297,12 @@ Do you want to save your changes?</source>
         <translation>開啟最近的</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="863"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Libreoffice 檔案 (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="863"/>
         <source>Export document to ODT</source>
         <translation>匯出檔案到 ODT</translation>
     </message>
@@ -312,7 +312,7 @@ Do you want to save your changes?</source>
         <translation>檢視 HTML 程式碼</translation>
     </message>
     <message>
-        <location filename="window.py" line="1092"/>
+        <location filename="window.py" line="1095"/>
         <source>HTML code</source>
         <translation>HTML 程式碼</translation>
     </message>
@@ -322,7 +322,7 @@ Do you want to save your changes?</source>
         <translation>列印預覽</translation>
     </message>
     <message>
-        <location filename="window.py" line="911"/>
+        <location filename="window.py" line="914"/>
         <source>Print document</source>
         <translation>列印檔案</translation>
     </message>
@@ -332,22 +332,22 @@ Do you want to save your changes?</source>
         <translation>同步預覽</translation>
     </message>
     <message>
-        <location filename="window.py" line="627"/>
+        <location filename="window.py" line="628"/>
         <source>Please, save the file somewhere.</source>
         <translation>請，儲存到別的地方呦！</translation>
     </message>
     <message>
-        <location filename="window.py" line="800"/>
+        <location filename="window.py" line="803"/>
         <source>Plain text (*.txt)</source>
         <translation>純文本 (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>Supported files</source>
         <translation>支持的檔案格式</translation>
     </message>
     <message>
-        <location filename="window.py" line="935"/>
+        <location filename="window.py" line="938"/>
         <source>Export document</source>
         <translation>匯出檔案</translation>
     </message>
@@ -402,32 +402,32 @@ Do you want to save your changes?</source>
         <translation>對大小写敏感</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Website</source>
         <translation>部落格</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Markdown syntax</source>
         <translation>Markdown 句法</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText 句法</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>簡單高效的 Markdown 與 reStructuredText 編輯器</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>Select one or several files to open</source>
         <translation>選擇一個或多個檔案以開啟</translation>
     </message>
@@ -442,7 +442,7 @@ Do you want to save your changes?</source>
         <translation>顯示目錄</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="827"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>不能儲存檔案因为它是只讀的！</translation>
     </message>
@@ -477,12 +477,12 @@ Do you want to save your changes?</source>
         <translation>使用WebKit渲染</translation>
     </message>
     <message>
-        <location filename="window.py" line="956"/>
+        <location filename="window.py" line="959"/>
         <source>Failed to execute the command:</source>
         <translation>不能執行指令:</translation>
     </message>
     <message>
-        <location filename="window.py" line="803"/>
+        <location filename="window.py" line="806"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s 檔案</translation>
@@ -493,7 +493,7 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="558"/>
+        <location filename="window.py" line="559"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
@@ -503,12 +503,12 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="779"/>
+        <location filename="window.py" line="782"/>
         <source>Select file encoding from the list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1047"/>
+        <location filename="window.py" line="1050"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
@@ -533,20 +533,20 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1031"/>
+        <location filename="window.py" line="1034"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1038"/>
+        <location filename="window.py" line="1041"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1043"/>
+        <location filename="window.py" line="1046"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -561,7 +561,7 @@ Do you want to reload the file (this will discard all your changes)?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>ReText %s (using PyMarkups %s)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -571,17 +571,17 @@ Do you want to reload the file (this will discard all your changes)?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="990"/>
+        <location filename="window.py" line="993"/>
         <source>Alt text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="994"/>
         <source>URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="994"/>
         <source>Link text</source>
         <translation type="unfinished"></translation>
     </message>

@@ -186,7 +186,7 @@
         <translation>文字エンコーディング</translation>
     </message>
     <message>
-        <location filename="window.py" line="1047"/>
+        <location filename="window.py" line="1050"/>
         <source>Reload</source>
         <translation>再読み込み</translation>
     </message>
@@ -266,7 +266,7 @@
         <translation>フルスクリーンモード</translation>
     </message>
     <message>
-        <location filename="window.py" line="558"/>
+        <location filename="window.py" line="559"/>
         <source>Preferences</source>
         <translation>設定</translation>
     </message>
@@ -416,105 +416,105 @@
         <translation>大文字と小文字を区別</translation>
     </message>
     <message>
-        <location filename="window.py" line="463"/>
+        <location filename="window.py" line="464"/>
         <source>New document</source>
         <translation>新規文書</translation>
     </message>
     <message>
-        <location filename="window.py" line="627"/>
+        <location filename="window.py" line="628"/>
         <source>Please, save the file somewhere.</source>
         <translation>どこかにファイルを保存してください。</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>Select one or several files to open</source>
         <translation>開きたいファイル（複数可）を選択してください</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>Supported files</source>
         <translation>サポートされているファイル</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>All files (*)</source>
         <translation>すべてのファイル (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="779"/>
+        <location filename="window.py" line="782"/>
         <source>Select file encoding from the list:</source>
         <translation>ファイルの文字エンコーディングを選んでください：</translation>
     </message>
     <message>
-        <location filename="window.py" line="800"/>
+        <location filename="window.py" line="803"/>
         <source>Plain text (*.txt)</source>
         <translation>プレーンテキスト (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="803"/>
+        <location filename="window.py" line="806"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s ファイル</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="873"/>
         <source>Save file</source>
         <translation>ファイルを保存</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="827"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>読み取り専用ファイルのため保存できません。</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="863"/>
         <source>Export document to ODT</source>
         <translation>文書をODTにエクスポート</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="863"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocumentテキストファイル (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="873"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTMLファイル (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="894"/>
         <source>Export document to PDF</source>
         <translation>文書をPDFにエクスポート</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="894"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDFファイル (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="911"/>
+        <location filename="window.py" line="914"/>
         <source>Print document</source>
         <translation>文書を印刷</translation>
     </message>
     <message>
-        <location filename="window.py" line="935"/>
+        <location filename="window.py" line="938"/>
         <source>Export document</source>
         <translation>文書をエクスポート</translation>
     </message>
     <message>
-        <location filename="window.py" line="956"/>
+        <location filename="window.py" line="959"/>
         <source>Failed to execute the command:</source>
         <translation>コマンドの実行に失敗しました:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1031"/>
+        <location filename="window.py" line="1034"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation>このファイルは他のアプリケーションによって削除されました。
 終了する前にファイルを保存して下さい。</translation>
     </message>
     <message>
-        <location filename="window.py" line="1038"/>
+        <location filename="window.py" line="1041"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
@@ -523,49 +523,49 @@ Do you want to reload the file (this will discard all your changes)?
 </translation>
     </message>
     <message>
-        <location filename="window.py" line="1043"/>
+        <location filename="window.py" line="1046"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation>再読み込みを選択しない場合、データの消失を避けるために自動保存機能はこのセッションで無効になります。</translation>
     </message>
     <message>
-        <location filename="window.py" line="1067"/>
+        <location filename="window.py" line="1070"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>文書は変更されています。
 変更内容を保存しますか？</translation>
     </message>
     <message>
-        <location filename="window.py" line="1092"/>
+        <location filename="window.py" line="1095"/>
         <source>HTML code</source>
         <translation>HTMLコード</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>ReText %s (using PyMarkups %s)</source>
         <translation>ReText %s(PyMarkups %s 利用)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Markdown と reStructuredText のためのシンプルでパワフルなエディタ</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Website</source>
         <translation>Webサイト</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Markdown syntax</source>
         <translation>Markdown 記法</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText 文法</translation>
     </message>
@@ -575,17 +575,17 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="990"/>
+        <location filename="window.py" line="993"/>
         <source>Alt text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="994"/>
         <source>URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="994"/>
         <source>Link text</source>
         <translation type="unfinished"></translation>
     </message>

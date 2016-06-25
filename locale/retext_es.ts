@@ -186,7 +186,7 @@
         <translation>Establecer codificación</translation>
     </message>
     <message>
-        <location filename="window.py" line="1047"/>
+        <location filename="window.py" line="1050"/>
         <source>Reload</source>
         <translation>Recargar</translation>
     </message>
@@ -266,7 +266,7 @@
         <translation>Pantalla completa</translation>
     </message>
     <message>
-        <location filename="window.py" line="558"/>
+        <location filename="window.py" line="559"/>
         <source>Preferences</source>
         <translation>Preferencias</translation>
     </message>
@@ -421,120 +421,120 @@
         <translation>Distinguir mayúsculas y minúsculas</translation>
     </message>
     <message>
-        <location filename="window.py" line="463"/>
+        <location filename="window.py" line="464"/>
         <source>New document</source>
         <translation>Documento nuevo</translation>
     </message>
     <message>
-        <location filename="window.py" line="627"/>
+        <location filename="window.py" line="628"/>
         <source>Please, save the file somewhere.</source>
         <translation>Guarde el archivo en algún lugar.</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>Select one or several files to open</source>
         <translation>Seleccione uno o varios archivos a abrir</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>Supported files</source>
         <translation>Archivos compatibles</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>All files (*)</source>
         <translation>Todos los archivos (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="779"/>
+        <location filename="window.py" line="782"/>
         <source>Select file encoding from the list:</source>
         <translation>Seleccionar codificación del archivo en la lista:</translation>
     </message>
     <message>
-        <location filename="window.py" line="800"/>
+        <location filename="window.py" line="803"/>
         <source>Plain text (*.txt)</source>
         <translation>Texto plano (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="803"/>
+        <location filename="window.py" line="806"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s archivos</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="873"/>
         <source>Save file</source>
         <translation>Guardar archivo</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="827"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>No se puede guardar el archivo porque es de solo lectura.</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="863"/>
         <source>Export document to ODT</source>
         <translation>Exportar documento a ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="863"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Archivos de texto OpenDocument (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="873"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Archivos HTML (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="894"/>
         <source>Export document to PDF</source>
         <translation>Exportar documento a PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="894"/>
         <source>PDF files (*.pdf)</source>
         <translation>Archivos PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="911"/>
+        <location filename="window.py" line="914"/>
         <source>Print document</source>
         <translation>Imprimir documento</translation>
     </message>
     <message>
-        <location filename="window.py" line="935"/>
+        <location filename="window.py" line="938"/>
         <source>Export document</source>
         <translation>Exportar documento</translation>
     </message>
     <message>
-        <location filename="window.py" line="956"/>
+        <location filename="window.py" line="959"/>
         <source>Failed to execute the command:</source>
         <translation>Fallo al ejecutar el comando:</translation>
     </message>
     <message>
-        <location filename="window.py" line="990"/>
+        <location filename="window.py" line="993"/>
         <source>Alt text</source>
         <translation>Texto Alt de imagen</translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="994"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="994"/>
         <source>Link text</source>
         <translation>Texto de enlace</translation>
     </message>
     <message>
-        <location filename="window.py" line="1031"/>
+        <location filename="window.py" line="1034"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation>Este archivo ha sido eliminado por otra aplicación.
 Por favor, asegúrese de guardar el archivo antes de salir.</translation>
     </message>
     <message>
-        <location filename="window.py" line="1038"/>
+        <location filename="window.py" line="1041"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
@@ -543,49 +543,49 @@ Do you want to reload the file (this will discard all your changes)?
 </translation>
     </message>
     <message>
-        <location filename="window.py" line="1043"/>
+        <location filename="window.py" line="1046"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation>Si elige no recargar el archivo, el modo de autoguardado será inhabilitado en esta sesión para prevenir la pérdida de datos.</translation>
     </message>
     <message>
-        <location filename="window.py" line="1067"/>
+        <location filename="window.py" line="1070"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Se ha modificado el documento.
 ¿Quiere guardar sus cambios?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1092"/>
+        <location filename="window.py" line="1095"/>
         <source>HTML code</source>
         <translation>Código HTML</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>ReText %s (using PyMarkups %s)</source>
         <translation>ReText %s (usa PyMarkups %s)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Editor para Markdown y reStructuredText sencillo pero poderoso</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Autor: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Website</source>
         <translation>Sitio web</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Markdown syntax</source>
         <translation>Sintaxis Markdown</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>reStructuredText syntax</source>
         <translation>Sintaxis de reStructuredText</translation>
     </message>

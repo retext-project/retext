@@ -361,12 +361,12 @@
         <translation>Gan cas</translation>
     </message>
     <message>
-        <location filename="window.py" line="463"/>
+        <location filename="window.py" line="464"/>
         <source>New document</source>
         <translation>Dogfen newydd</translation>
     </message>
     <message>
-        <location filename="window.py" line="627"/>
+        <location filename="window.py" line="628"/>
         <source>Please, save the file somewhere.</source>
         <translation>Cadwch y ffeil i leoliad arall.</translation>
     </message>
@@ -376,115 +376,115 @@
         <translation>Dangos cyfeiriadur</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>Select one or several files to open</source>
         <translation>Dewis un neu sawl ffeil i&apos;w hagor</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>Supported files</source>
         <translation>Ffeiliau a gynhaliwyd</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>All files (*)</source>
         <translation>Pob ffeil (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="800"/>
+        <location filename="window.py" line="803"/>
         <source>Plain text (*.txt)</source>
         <translation>Testun plaen (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="803"/>
+        <location filename="window.py" line="806"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s ffeil</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="873"/>
         <source>Save file</source>
         <translation>Cadw ffeil</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="827"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Methu â chadw i ffeil gan ei bod yn darllen yn unig</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="863"/>
         <source>Export document to ODT</source>
         <translation>Allforio dogfen i ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="863"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Ffeiliau testun OpenDocument (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="873"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Ffeiliau HTML (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="894"/>
         <source>Export document to PDF</source>
         <translation>Allforio dogfen i PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="894"/>
         <source>PDF files (*.pdf)</source>
         <translation>Ffeiliau PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="911"/>
+        <location filename="window.py" line="914"/>
         <source>Print document</source>
         <translation>Argraffu dogfen</translation>
     </message>
     <message>
-        <location filename="window.py" line="935"/>
+        <location filename="window.py" line="938"/>
         <source>Export document</source>
         <translation>Allforio dogfen</translation>
     </message>
     <message>
-        <location filename="window.py" line="956"/>
+        <location filename="window.py" line="959"/>
         <source>Failed to execute the command:</source>
         <translation>Methwyd â rhedeg y gorchymyn:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1067"/>
+        <location filename="window.py" line="1070"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Cafodd y ddogfen hon ei haddasu.
 Ydych chi am gadw&apos;ch newidiadau?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1092"/>
+        <location filename="window.py" line="1095"/>
         <source>HTML code</source>
         <translation>Cod HTML</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Golygydd syml ond pwerus ar gyfer Markdown a reStructuredText</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Awdur: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Website</source>
         <translation>Gwefan</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Markdown syntax</source>
         <translation>Cystrawen markdown</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>reStructuredText syntax</source>
         <translation>Cystrawen reStructuredText</translation>
     </message>
@@ -494,7 +494,7 @@ Ydych chi am gadw&apos;ch newidiadau?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="558"/>
+        <location filename="window.py" line="559"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
@@ -504,12 +504,12 @@ Ydych chi am gadw&apos;ch newidiadau?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="779"/>
+        <location filename="window.py" line="782"/>
         <source>Select file encoding from the list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1047"/>
+        <location filename="window.py" line="1050"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
@@ -534,20 +534,20 @@ Ydych chi am gadw&apos;ch newidiadau?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1031"/>
+        <location filename="window.py" line="1034"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1038"/>
+        <location filename="window.py" line="1041"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1043"/>
+        <location filename="window.py" line="1046"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -562,7 +562,7 @@ Do you want to reload the file (this will discard all your changes)?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>ReText %s (using PyMarkups %s)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -572,17 +572,17 @@ Do you want to reload the file (this will discard all your changes)?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="990"/>
+        <location filename="window.py" line="993"/>
         <source>Alt text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="994"/>
         <source>URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="994"/>
         <source>Link text</source>
         <translation type="unfinished"></translation>
     </message>

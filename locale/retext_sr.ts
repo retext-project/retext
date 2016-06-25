@@ -186,7 +186,7 @@
         <translation>Постави кодирање</translation>
     </message>
     <message>
-        <location filename="window.py" line="1047"/>
+        <location filename="window.py" line="1050"/>
         <source>Reload</source>
         <translation>Учитај поново</translation>
     </message>
@@ -266,7 +266,7 @@
         <translation>Режим пуног екрана</translation>
     </message>
     <message>
-        <location filename="window.py" line="558"/>
+        <location filename="window.py" line="559"/>
         <source>Preferences</source>
         <translation>Подешавања</translation>
     </message>
@@ -416,105 +416,105 @@
         <translation>Осетљив на вел. слова</translation>
     </message>
     <message>
-        <location filename="window.py" line="463"/>
+        <location filename="window.py" line="464"/>
         <source>New document</source>
         <translation>Нови документ</translation>
     </message>
     <message>
-        <location filename="window.py" line="627"/>
+        <location filename="window.py" line="628"/>
         <source>Please, save the file somewhere.</source>
         <translation>Сачувајте фајл негде.</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>Select one or several files to open</source>
         <translation>Изаберите један или више фајлова за отварање</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>Supported files</source>
         <translation>Подржани фајлови</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="744"/>
         <source>All files (*)</source>
         <translation>Сви фајлови (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="779"/>
+        <location filename="window.py" line="782"/>
         <source>Select file encoding from the list:</source>
         <translation>Са листе изаберите кодирање фајла:</translation>
     </message>
     <message>
-        <location filename="window.py" line="800"/>
+        <location filename="window.py" line="803"/>
         <source>Plain text (*.txt)</source>
         <translation>Обичан текст (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="803"/>
+        <location filename="window.py" line="806"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s фајлови</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="873"/>
         <source>Save file</source>
         <translation>Сачувај фајл</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="827"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Не могу да сачувам јер је фајл само за читање!</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="863"/>
         <source>Export document to ODT</source>
         <translation>Извези документ у ОДТ</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="863"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>ОпенДокумент текстуални фајл (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="873"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>ХТМЛ фајлови (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="894"/>
         <source>Export document to PDF</source>
         <translation>Извези документ у ПДФ</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="894"/>
         <source>PDF files (*.pdf)</source>
         <translation>ПДФ фајлови (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="911"/>
+        <location filename="window.py" line="914"/>
         <source>Print document</source>
         <translation>Штампај документ</translation>
     </message>
     <message>
-        <location filename="window.py" line="935"/>
+        <location filename="window.py" line="938"/>
         <source>Export document</source>
         <translation>Извези документ</translation>
     </message>
     <message>
-        <location filename="window.py" line="956"/>
+        <location filename="window.py" line="959"/>
         <source>Failed to execute the command:</source>
         <translation>Неуспело извршење команде:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1031"/>
+        <location filename="window.py" line="1034"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation>Овај фајл је обрисала друга апликације.
 Сачувајте га пре него што изађете.</translation>
     </message>
     <message>
-        <location filename="window.py" line="1038"/>
+        <location filename="window.py" line="1041"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
@@ -522,49 +522,49 @@ Do you want to reload the file (this will discard all your changes)?
 Желите ли да га поново учитате? (ово ће поништити све ваше измене)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1043"/>
+        <location filename="window.py" line="1046"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation>Ако изаберете да не учитате поново, аутоматско чување биће искључено за ову сесију да би се спречио губитак података.</translation>
     </message>
     <message>
-        <location filename="window.py" line="1067"/>
+        <location filename="window.py" line="1070"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Документ је измењен.
 Желите ли да сачувате ваше измене?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1092"/>
+        <location filename="window.py" line="1095"/>
         <source>HTML code</source>
         <translation>ХТМЛ код</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>ReText %s (using PyMarkups %s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Једноставан али моћан уређивач за Маркдаун и реструктуирани текст</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Аутор: Дмитриј Шачнев (Dmitry Shachnev), 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Website</source>
         <translation>Веб сајт</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>Markdown syntax</source>
         <translation>Маркдаун синтакса</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1106"/>
         <source>reStructuredText syntax</source>
         <translation>Синтакса реструктуираног текста</translation>
     </message>
@@ -574,17 +574,17 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="990"/>
+        <location filename="window.py" line="993"/>
         <source>Alt text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="994"/>
         <source>URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="994"/>
         <source>Link text</source>
         <translation type="unfinished"></translation>
     </message>
