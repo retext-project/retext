@@ -14,6 +14,9 @@
 * ReText now depends on version 2.0 or higher of pymarkups.
 * The QtWebKit dependency is now optional (though still recommended).
 
+*Bugfix update 6.0.1 was released on 2016-06-25, fixing some crashes and
+making auto-save work again.*
+
 ## ReText 5.3 (2015-12-20)
 
 * Tabs are now reorderable.
