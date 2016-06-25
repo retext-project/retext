@@ -744,7 +744,7 @@ class ReTextWindow(QMainWindow):
 			if mimetype is None:
 				enabled = True
 			elif markupClass == markups.MarkdownMarkup:
-				enabled = (mimetype in ("text/x-retext-markdown", "text/x-markdown"))
+				enabled = (mimetype in ("text/x-retext-markdown", "text/x-markdown", "text/markdown"))
 			elif markupClass == markups.ReStructuredTextMarkup:
 				enabled = (mimetype in ("text/x-retext-rst", "text/x-rst"))
 			else:
