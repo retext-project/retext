@@ -2,6 +2,6 @@ include LICENSE_GPL
 include README.md
 include changelog.md
 include configuration.md
-recursive-include tests *.py
+recursive-include tests *.py *.md *.rst
 recursive-include locale retext_*.ts retext_*.qm
 recursive-include icons *.png *.svg
