@@ -97,7 +97,7 @@ class Proxy (FakeVimProxy):
 		return self.__editor.textCursor()
 
 	def hasBlockSelection(self):
-		return self.__editor.hasBlockSelection()
+		return self.__handler.hasBlockSelection()
 
 	def commandBufferChanged(self, msg, cursorPosition, cursorAnchor, messageLevel, eventFilter):
 		# Give focus back to editor if closing command line.
@@ -220,7 +220,7 @@ class ReTextFakeVimHandler (QObject):
 			self.__quitAction.trigger()
 
 	def hasBlockSelection(self):
-		return self.__BlockSelection.isVisible()
+		return self.__blockSelection.isVisible()
 
 	def highlightMatches(self, pattern):
 		cur = self.__editor.textCursor()
