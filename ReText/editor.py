@@ -28,6 +28,11 @@ from PyQt5.QtGui import QColor, QImage, QKeyEvent, QMouseEvent, QPainter, \
 QPalette, QTextCursor, QTextFormat, QWheelEvent
 from PyQt5.QtWidgets import QFileDialog, QLabel, QTextEdit, QWidget
 
+try:
+	from ReText.fakevimeditor import ReTextFakeVimHandler
+except ImportError:
+	ReTextFakeVimHandler = None
+
 colors = {
 	'marginLine': QColor(0xdc, 0xd2, 0xdc),
 	'currentLineHighlight': QColor(0xff, 0xff, 0xc8),
@@ -101,6 +106,8 @@ class ReTextEdit(QTextEdit):
 		self.document().blockCountChanged.connect(self.updateLineNumberAreaWidth)
 		self.cursorPositionChanged.connect(self.highlightCurrentLine)
 		self.document().contentsChange.connect(self.contentsChange)
+		if globalSettings.useFakeVim:
+			self.installFakeVimHandler()
 
 	def updateFont(self):
 		self.setFont(globalSettings.editorFont)
@@ -316,6 +323,13 @@ class ReTextEdit(QTextEdit):
 				self.textCursor().insertText(imageText)
 		else:
 			QTextEdit.insertFromMimeData(self, mimeData)
+
+	def installFakeVimHandler(self):
+		if ReTextFakeVimHandler:
+			fakeVimEditor = ReTextFakeVimHandler(self, self.parent)
+			fakeVimEditor.setSaveAction(self.parent.actionSave)
+			fakeVimEditor.setQuitAction(self.parent.actionQuit)
+			self.parent.actionFakeVimMode.triggered.connect(fakeVimEditor.remove)
 
 class LineNumberArea(QWidget):
 	def __init__(self, editor):

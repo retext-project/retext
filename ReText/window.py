@@ -586,7 +586,7 @@ class ReTextWindow(QMainWindow):
 		if yes:
 			FakeVimMode.init(self)
 			for tab in self.iterateTabs():
-				tab.installFakeVimHandler()
+				tab.editBox.installFakeVimHandler()
 		else:
 			FakeVimMode.exit(self)
 

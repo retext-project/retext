@@ -24,11 +24,6 @@ from ReText.editor import ReTextEdit
 from ReText.highlighter import ReTextHighlighter
 
 try:
-	from ReText.fakevimeditor import ReTextFakeVimHandler
-except ImportError:
-	ReTextFakeVimHandler = None
-
-try:
 	import enchant
 except ImportError:
 	enchant = None
@@ -369,14 +364,6 @@ class ReTextTab(QSplitter):
 				self.fileNameChanged.emit()
 
 		return result
-
-	def installFakeVimHandler(self):
-		if ReTextFakeVimHandler:
-			fakeVimEditor = ReTextFakeVimHandler(self.editBox, self)
-			fakeVimEditor.setSaveAction(self.actionSave)
-			fakeVimEditor.setQuitAction(self.actionQuit)
-			# TODO: action is bool, really call remove?
-			self.p.actionFakeVimMode.triggered.connect(fakeVimEditor.remove)
 
 	def find(self, text, flags, replaceText=None, wrap=False):
 		cursor = self.editBox.textCursor()
