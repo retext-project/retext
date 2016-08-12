@@ -25,7 +25,9 @@
   <summary xml:lang="zh_CN">支持 Markdown 和 reStructuredText 语法的简易文本编辑器</summary>
   <summary xml:lang="zh_TW">簡單高效的 Markdown 與 reStructuredText 編輯器</summary>
   <description>
-    <p>ReText is a text editor for various markup languages (such as Markdown and reStructuredText). It gives you the power to control all output formatting. The files it works with are plain text files, however it can export to PDF, HTML and other formats. ReText is written in Python language and works on Linux and other POSIX-compatible platforms. </p>
+    <p>ReText is a text editor for plain text markup languages, such as Markdown and reStructuredText.</p>
+    <p>It supports tabs, live text preview, synchronized scrolling (for Markdown) and syntax highlighting.</p>
+    <p>ReText can export to HTML, ODT and PDF formats. It is also possible to write custom export extensions.</p>
   </descripion>
   <url type="homepage">https://github.com/retext-project/retext</url>
   <metadata_license>CC0</metadata_license>
