@@ -68,9 +68,9 @@ class TestWindow(unittest.TestCase):
         warnings.simplefilter("ignore", Warning)
         self.readListFromSettingsMock = patch('ReText.window.readListFromSettings', return_value=[]).start()
         self.writeListToSettingsMock  = patch('ReText.window.writeListToSettings').start()
-        self.writeToSettingsMock      = patch('ReText.window.writeToSettings').start()
         self.globalSettingsMock       = patch('ReText.window.globalSettings', MagicMock(**ReText.configOptions)).start()
         self.fileSystemWatcherMock    = patch('ReText.window.QFileSystemWatcher').start()
+        ReText.tab.globalSettings = self.globalSettingsMock
 
     def tearDown(self):
         patch.stopall()
@@ -172,15 +172,15 @@ class TestWindow(unittest.TestCase):
         tab_with_unsaved_content = self.window.currentTab
 
         self.assertEqual('New document[*]', self.window.windowTitle())
-        self.assertTrue(self.window.currentTab is tab_with_unsaved_content)
-        self.assertTrue(self.window.tabWidget.currentWidget() is tab_with_unsaved_content)
+        self.assertIs(self.window.currentTab, tab_with_unsaved_content)
+        self.assertIs(self.window.tabWidget.currentWidget(), tab_with_unsaved_content)
 
         self.window.switchTab()
         processEventsUntilIdle()
 
         self.assertEqual('existing_file.md[*]', self.window.windowTitle())
-        self.assertTrue(self.window.currentTab is tab_with_file)
-        self.assertTrue(self.window.tabWidget.currentWidget() is tab_with_file)
+        self.assertIs(self.window.currentTab, tab_with_file)
+        self.assertIs(self.window.tabWidget.currentWidget(), tab_with_file)
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
     def test_activeTab_afterLoadingFileThatIsAlreadyOpenInOtherTab(self, getOpenFileNamesMock):
@@ -201,7 +201,7 @@ class TestWindow(unittest.TestCase):
         processEventsUntilIdle()
 
         # Check that we have indeed been switched back to the previous tab
-        self.assertTrue(self.window.currentTab is tab_with_file)
+        self.assertIs(self.window.currentTab, tab_with_file)
         self.assertTrue(self.window.currentTab.fileName.endswith('tests/testdata/existing_file.md'))
 
     def test_markupDependentWidgetStates_afterStartWithEmptyTabAndMarkdownAsDefaultMarkup(self):
