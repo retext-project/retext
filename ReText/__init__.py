@@ -53,7 +53,7 @@ configOptions = {
 	'appStyleSheet': '',
 	'autoSave': False,
 	'defaultCodec': '',
-	'defaultMarkup': '',
+	'defaultMarkup': markups.MarkdownMarkup.name,
 	'detectEncoding': True,
 	'editorFont': QFont(),
 	'font': QFont(),

@@ -20,7 +20,7 @@ import markups
 import sys
 from subprocess import Popen
 from ReText import icon_path, app_version, globalSettings, readListFromSettings, \
- writeListToSettings, writeToSettings, datadirs
+ writeListToSettings, datadirs
 from ReText.tab import ReTextTab, ReTextWebPreview, PreviewNormal, PreviewLive
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
@@ -208,19 +208,12 @@ class ReTextWindow(QMainWindow):
 		availableMarkups = markups.get_available_markups()
 		if not availableMarkups:
 			print('Warning: no markups are available!')
-		defaultMarkup = availableMarkups[0] if availableMarkups else None
-		if globalSettings.defaultMarkup:
-			mc = markups.find_markup_class_by_name(globalSettings.defaultMarkup)
-			if mc and mc.available():
-				defaultMarkup = mc
-		if defaultMarkup is not None:
-			self.setDefaultMarkup(defaultMarkup)
 		if len(availableMarkups) > 1:
 			self.chooseGroup = QActionGroup(self)
 			markupActions = []
 			for markup in availableMarkups:
 				markupAction = self.act(markup.name, trigbool=self.markupFunction(markup))
-				if markup == self.defaultMarkup:
+				if markup.name == globalSettings.defaultMarkup:
 					markupAction.setChecked(True)
 				self.chooseGroup.addAction(markupAction)
 				markupActions.append(markupAction)
@@ -479,7 +472,7 @@ class ReTextWindow(QMainWindow):
 			self.setWindowModified(changed)
 
 	def createTab(self, fileName):
-		self.currentTab = ReTextTab(self, fileName, self.defaultMarkup,
+		self.currentTab = ReTextTab(self, fileName,
 			previewState=int(globalSettings.livePreviewByDefault))
 		self.currentTab.fileNameChanged.connect(lambda: self.tabFileNameChanged(self.currentTab))
 		self.currentTab.modificationStateChanged.connect(lambda: self.tabModificationStateChanged(self.currentTab))
@@ -1148,9 +1141,7 @@ class ReTextWindow(QMainWindow):
 		+self.tr('reStructuredText syntax')+'</a></p>')
 
 	def setDefaultMarkup(self, markupClass):
-		self.defaultMarkup = markupClass
-		defaultName = markups.get_available_markups()[0].name
-		writeToSettings('defaultMarkup', markupClass.name, defaultName)
+		globalSettings.defaultMarkup = markupClass.name
 		for tab in self.iterateTabs():
 			if not tab.fileName:
-				tab.setDefaultMarkupClass(markupClass)
+				tab.updateActiveMarkupClass()
