@@ -68,7 +68,6 @@ class TestWindow(unittest.TestCase):
         warnings.simplefilter("ignore", Warning)
         self.readListFromSettingsMock = patch('ReText.window.readListFromSettings', return_value=[]).start()
         self.writeListToSettingsMock  = patch('ReText.window.writeListToSettings').start()
-        self.writeToSettingsMock      = patch('ReText.window.writeToSettings').start()
         self.globalSettingsMock       = patch('ReText.window.globalSettings', MagicMock(**ReText.configOptions)).start()
         self.fileSystemWatcherMock    = patch('ReText.window.QFileSystemWatcher').start()
 
