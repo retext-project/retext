@@ -70,6 +70,7 @@ class TestWindow(unittest.TestCase):
         self.writeListToSettingsMock  = patch('ReText.window.writeListToSettings').start()
         self.globalSettingsMock       = patch('ReText.window.globalSettings', MagicMock(**ReText.configOptions)).start()
         self.fileSystemWatcherMock    = patch('ReText.window.QFileSystemWatcher').start()
+        ReText.tab.globalSettings = self.globalSettingsMock
 
     def tearDown(self):
         patch.stopall()
