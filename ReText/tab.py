@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from markups import get_markup_for_file_name
+from markups import get_markup_for_file_name, find_markup_class_by_name
 from markups.common import MODULE_HOME_PAGE
 
 from ReText import app_version, globalSettings, converterprocess
@@ -58,13 +58,12 @@ class ReTextTab(QSplitter):
 	def fileName(self):
 		return self._fileName
 
-	def __init__(self, parent, fileName, defaultMarkup, previewState=PreviewDisabled):
+	def __init__(self, parent, fileName, previewState=PreviewDisabled):
 		super(QSplitter, self).__init__(Qt.Horizontal, parent=parent)
 		self.p = parent
 		self._fileName = fileName
 		self.editBox = ReTextEdit(self)
 		self.previewBox = self.createPreviewBox(self.editBox)
-		self.defaultMarkupClass = defaultMarkup
 		self.activeMarkupClass = None
 		self.markup = None
 		self.converted = None
@@ -128,16 +127,6 @@ class ReTextTab(QSplitter):
 
 		return preview
 
-	def setDefaultMarkupClass(self, markupClass):
-		'''
-		Set the default markup class to use in case a markup that
-		matches the filename cannot be found. This function calls
-		updateActiveMarkupClass so it can decide if the active 
-		markup class also has to change.
-		'''
-		self.defaultMarkupClass = markupClass
-		self.updateActiveMarkupClass()
-
 	def getActiveMarkupClass(self):
 		'''
 		Return the currently active markup class for this tab.
@@ -156,7 +145,7 @@ class ReTextTab(QSplitter):
 		'''
 		previousMarkupClass = self.activeMarkupClass
 
-		self.activeMarkupClass = self.defaultMarkupClass
+		self.activeMarkupClass = find_markup_class_by_name(globalSettings.defaultMarkup)
 
 		if self._fileName:
 			markupClass = get_markup_for_file_name(
