@@ -213,7 +213,8 @@ class ReTextWindow(QMainWindow):
 			mc = markups.find_markup_class_by_name(globalSettings.defaultMarkup)
 			if mc and mc.available():
 				defaultMarkup = mc
-		self.setDefaultMarkup(defaultMarkup)
+		if defaultMarkup is not None:
+			self.setDefaultMarkup(defaultMarkup)
 		if len(availableMarkups) > 1:
 			self.chooseGroup = QActionGroup(self)
 			markupActions = []
