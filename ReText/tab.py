@@ -303,7 +303,7 @@ class ReTextTab(QSplitter):
 
 		# Only try to detect encoding if it is not specified
 		if encoding is None and globalSettings.detectEncoding:
-			encoding = self.detectFileEncoding(fileName)
+			encoding = self.detectFileEncoding(self._fileName)
 
 		encoding = encoding or globalSettings.defaultCodec
 		if encoding:
