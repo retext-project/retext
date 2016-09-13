@@ -297,14 +297,16 @@ class ReTextTab(QSplitter):
 		previousFileName = self._fileName
 		if fileName:
 			self._fileName = fileName
-		openfile = QFile(self._fileName)
-		openfile.open(QFile.ReadOnly)
-		stream = QTextStream(openfile)
 
 		# Only try to detect encoding if it is not specified
 		if encoding is None and globalSettings.detectEncoding:
 			encoding = self.detectFileEncoding(self._fileName)
 
+		# TODO: why do we open the file twice: for detecting encoding
+		# and for actual read? Can we open it just once?
+		openfile = QFile(self._fileName)
+		openfile.open(QFile.ReadOnly)
+		stream = QTextStream(openfile)
 		encoding = encoding or globalSettings.defaultCodec
 		if encoding:
 			stream.setCodec(encoding)
