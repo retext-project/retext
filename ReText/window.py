@@ -840,6 +840,12 @@ class ReTextWindow(QMainWindow):
 			if fileNameToSave:
 				if not QFileInfo(fileNameToSave).suffix():
 					fileNameToSave += ext
+				# Make sure we don't overwrite a file opened in other tab
+				for tab in self.iterateTabs():
+					if tab is not self.currentTab and tab.fileName == fileNameToSave:
+						QMessageBox.warning(self, "",
+							self.tr("Cannot save to file which is open in another tab!"))
+						return False
 				self.actionSetEncoding.setDisabled(self.autoSaveActive())
 		if fileNameToSave:
 			if self.currentTab.saveTextToFile(fileNameToSave):
