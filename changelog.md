@@ -17,6 +17,9 @@
 *Bugfix update 6.0.1 was released on 2016-06-25, fixing some crashes and
 making auto-save work again.*
 
+*Bugfix update 6.0.2 was released on 2016-10-03, fixing an issue with
+startup on Plasma and adding some new translations.*
+
 ## ReText 5.3 (2015-12-20)
 
 * Tabs are now reorderable.
