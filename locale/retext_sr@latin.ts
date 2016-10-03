@@ -68,7 +68,7 @@
         <translation>Fajl rasporeda</translation>
     </message>
     <message>
-        <location filename="config.py" line="103"/>
+        <location filename="config.py" line="104"/>
         <source>Help</source>
         <translation>Pomoć</translation>
     </message>
@@ -85,6 +85,11 @@
     <message>
         <location filename="config.py" line="67"/>
         <source>Draw vertical line at column</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Automatically open last documents on startup</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -130,12 +135,12 @@
 <context>
     <name>ReTextEdit</name>
     <message>
-        <location filename="editor.py" line="285"/>
+        <location filename="editor.py" line="292"/>
         <source>Save image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editor.py" line="285"/>
+        <location filename="editor.py" line="292"/>
         <source>Images (*.png *.jpg)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -143,12 +148,12 @@
 <context>
     <name>ReTextTab</name>
     <message>
-        <location filename="tab.py" line="188"/>
+        <location filename="tab.py" line="172"/>
         <source>New document</source>
         <translation>Novi dokument</translation>
     </message>
     <message>
-        <location filename="tab.py" line="193"/>
+        <location filename="tab.py" line="177"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation>Ne mogu da raščlanim sadržaj fajla, Proverite da li imate instaliran &lt;a href=&quot;%s&quot;&gt;neophodan modul&lt;/a&gt;!</translation>
     </message>
@@ -186,7 +191,7 @@
         <translation>Postavi kodiranje</translation>
     </message>
     <message>
-        <location filename="window.py" line="1047"/>
+        <location filename="window.py" line="1079"/>
         <source>Reload</source>
         <translation>Učitaj ponovo</translation>
     </message>
@@ -256,7 +261,7 @@
         <translation>Režim punog ekrana</translation>
     </message>
     <message>
-        <location filename="window.py" line="558"/>
+        <location filename="window.py" line="575"/>
         <source>Preferences</source>
         <translation>Podešavanja</translation>
     </message>
@@ -321,17 +326,17 @@
         <translation>Prethodno</translation>
     </message>
     <message>
-        <location filename="window.py" line="195"/>
+        <location filename="window.py" line="201"/>
         <source>Get help online</source>
         <translation>Potražite pomoć na internetu</translation>
     </message>
     <message>
-        <location filename="window.py" line="196"/>
+        <location filename="window.py" line="202"/>
         <source>About ReText</source>
         <translation>O programu ReText</translation>
     </message>
     <message>
-        <location filename="window.py" line="199"/>
+        <location filename="window.py" line="205"/>
         <source>About Qt</source>
         <translation>O QT-u</translation>
     </message>
@@ -401,110 +406,110 @@
         <translation>Traži</translation>
     </message>
     <message>
-        <location filename="window.py" line="329"/>
+        <location filename="window.py" line="332"/>
         <source>Case sensitively</source>
         <translation>Osetljiv na vel. slova</translation>
     </message>
     <message>
-        <location filename="window.py" line="463"/>
+        <location filename="window.py" line="480"/>
         <source>New document</source>
         <translation>Novi dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="627"/>
+        <location filename="window.py" line="651"/>
         <source>Please, save the file somewhere.</source>
         <translation>Sačuvajte fajl negde.</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="767"/>
         <source>Select one or several files to open</source>
         <translation>Izaberite jedan ili više fajlova za otvaranje</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="767"/>
         <source>Supported files</source>
         <translation>Podržani fajlovi</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="767"/>
         <source>All files (*)</source>
         <translation>Svi fajlovi (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="779"/>
+        <location filename="window.py" line="805"/>
         <source>Select file encoding from the list:</source>
         <translation>Sa liste izaberite kodiranje fajla:</translation>
     </message>
     <message>
-        <location filename="window.py" line="800"/>
+        <location filename="window.py" line="826"/>
         <source>Plain text (*.txt)</source>
         <translation>Običan tekst (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="803"/>
+        <location filename="window.py" line="829"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s fajlovi</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="902"/>
         <source>Save file</source>
         <translation>Sačuvaj fajl</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="856"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Ne mogu da sačuvam jer je fajl samo za čitanje!</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="892"/>
         <source>Export document to ODT</source>
         <translation>Izvezi dokument u ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="892"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocument tekstualni fajl (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="902"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML fajlovi (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="923"/>
         <source>Export document to PDF</source>
         <translation>Izvezi dokument u PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="923"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF fajlovi (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="911"/>
+        <location filename="window.py" line="943"/>
         <source>Print document</source>
         <translation>Štampaj dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="935"/>
+        <location filename="window.py" line="967"/>
         <source>Export document</source>
         <translation>Izvezi dokument</translation>
     </message>
     <message>
-        <location filename="window.py" line="956"/>
+        <location filename="window.py" line="988"/>
         <source>Failed to execute the command:</source>
         <translation>Neuspelo izvršenje komande:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1031"/>
+        <location filename="window.py" line="1063"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation>Ovaj fajl je obrisala druga aplikacije.
 Sačuvajte ga pre nego što izađete.</translation>
     </message>
     <message>
-        <location filename="window.py" line="1038"/>
+        <location filename="window.py" line="1070"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
@@ -512,44 +517,44 @@ Do you want to reload the file (this will discard all your changes)?
 Želite li da ga ponovo učitate? (ovo će poništiti sve vaše izmene)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1043"/>
+        <location filename="window.py" line="1075"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation>Ako izaberete da ne učitate ponovo, automatsko čuvanje biće isključeno za ovu sesiju da bi se sprečio gubitak podataka.</translation>
     </message>
     <message>
-        <location filename="window.py" line="1067"/>
+        <location filename="window.py" line="1099"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Dokument je izmenjen.
 Želite li da sačuvate vaše izmene?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1092"/>
+        <location filename="window.py" line="1128"/>
         <source>HTML code</source>
         <translation>HTML kod</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Jednostavan ali moćan uređivač za Markdown i reStructuredText</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Autor: Dmitrij Šačnev (Dmitry Shachnev), 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>Website</source>
         <translation>Web sajt</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>Markdown syntax</source>
         <translation>Sintaksa Markdown</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>reStructuredText syntax</source>
         <translation>Sintaksa reStructuredText</translation>
     </message>
@@ -564,28 +569,48 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>ReText %s (using PyMarkups %s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="192"/>
+        <location filename="window.py" line="198"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="990"/>
+        <location filename="window.py" line="1022"/>
         <source>Alt text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="1023"/>
         <source>URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="1023"/>
         <source>Link text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="window.py" line="192"/>
+        <source>Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="window.py" line="194"/>
+        <source>Replace all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="window.py" line="330"/>
+        <source>Replace with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="window.py" line="847"/>
+        <source>Cannot save to file which is open in another tab!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

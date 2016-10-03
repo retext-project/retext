@@ -19,6 +19,11 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
+        <source>Use live preview by default</source>
+        <translation>默认使用实时预览</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
         <source>Open external links in ReText window</source>
         <translation>在 ReText 窗口中打开外部链接</translation>
     </message>
@@ -26,6 +31,11 @@
         <location filename="config.py" line="67"/>
         <source>Markdown syntax extensions (comma-separated)</source>
         <translation>Markdown 语法扩展 (逗号分隔)</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Enable synchronized scrolling for Markdown</source>
+        <translation>对Markdown开启编辑与预览的同步滚动</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -54,6 +64,11 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
+        <source>Draw vertical line at column</source>
+        <translation>画出垂直边界线</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
         <source>Interface</source>
         <translation>交互界面</translation>
     </message>
@@ -68,23 +83,13 @@
         <translation>样式表文件</translation>
     </message>
     <message>
-        <location filename="config.py" line="103"/>
+        <location filename="config.py" line="104"/>
         <source>Help</source>
         <translation>帮助</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
-        <source>Use live preview by default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Enable synchronized scrolling for Markdown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Draw vertical line at column</source>
+        <source>Automatically open last documents on startup</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -130,27 +135,27 @@
 <context>
     <name>ReTextEdit</name>
     <message>
-        <location filename="editor.py" line="285"/>
+        <location filename="editor.py" line="292"/>
         <source>Save image</source>
-        <translation type="unfinished"></translation>
+        <translation>保存图片</translation>
     </message>
     <message>
-        <location filename="editor.py" line="285"/>
+        <location filename="editor.py" line="292"/>
         <source>Images (*.png *.jpg)</source>
-        <translation type="unfinished"></translation>
+        <translation>图片 (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
     <name>ReTextTab</name>
     <message>
-        <location filename="tab.py" line="188"/>
+        <location filename="tab.py" line="172"/>
         <source>New document</source>
-        <translation>新文件</translation>
+        <translation>新建文档</translation>
     </message>
     <message>
-        <location filename="tab.py" line="193"/>
+        <location filename="tab.py" line="177"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation>不能处理文件内容，检查你是否安装了 &lt;a href=&quot;%s&quot;&gt;必需的模块&lt;/a&gt;！</translation>
+        <translation>不能粘贴文件内容，检查下是否安装了 &lt;a href=&quot;%s&quot;&gt;必要模块&lt;/a&gt; ！</translation>
     </message>
 </context>
 <context>
@@ -186,7 +191,7 @@
         <translation>设置编码方式</translation>
     </message>
     <message>
-        <location filename="window.py" line="1047"/>
+        <location filename="window.py" line="1079"/>
         <source>Reload</source>
         <translation>重载</translation>
     </message>
@@ -251,11 +256,6 @@
         <translation>实时预览</translation>
     </message>
     <message>
-        <location filename="window.py" line="140"/>
-        <source>Table editing mode</source>
-        <translation>表格样式</translation>
-    </message>
-    <message>
         <location filename="window.py" line="144"/>
         <source>FakeVim mode</source>
         <translation>FakeVim 模式</translation>
@@ -266,7 +266,7 @@
         <translation>全屏模式</translation>
     </message>
     <message>
-        <location filename="window.py" line="558"/>
+        <location filename="window.py" line="575"/>
         <source>Preferences</source>
         <translation>个人偏好</translation>
     </message>
@@ -331,17 +331,22 @@
         <translation>上一项</translation>
     </message>
     <message>
-        <location filename="window.py" line="195"/>
+        <location filename="window.py" line="198"/>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="201"/>
         <source>Get help online</source>
         <translation>在线获取帮助（英文）</translation>
     </message>
     <message>
-        <location filename="window.py" line="196"/>
+        <location filename="window.py" line="202"/>
         <source>About ReText</source>
         <translation>关于 ReText</translation>
     </message>
     <message>
-        <location filename="window.py" line="199"/>
+        <location filename="window.py" line="205"/>
         <source>About Qt</source>
         <translation>关于 Qt</translation>
     </message>
@@ -359,6 +364,11 @@
         <location filename="window.py" line="224"/>
         <source>Underline</source>
         <translation>下划线</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="290"/>
+        <source>Formatting</source>
+        <translation>字符样式</translation>
     </message>
     <message>
         <location filename="window.py" line="236"/>
@@ -401,120 +411,130 @@
         <translation>默认编辑模式</translation>
     </message>
     <message>
-        <location filename="window.py" line="290"/>
-        <source>Formatting</source>
-        <translation>字符样式</translation>
-    </message>
-    <message>
         <location filename="window.py" line="327"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="window.py" line="329"/>
+        <location filename="window.py" line="332"/>
         <source>Case sensitively</source>
         <translation>对大小写敏感</translation>
     </message>
     <message>
-        <location filename="window.py" line="463"/>
+        <location filename="window.py" line="480"/>
         <source>New document</source>
         <translation>新文件</translation>
     </message>
     <message>
-        <location filename="window.py" line="627"/>
+        <location filename="window.py" line="651"/>
         <source>Please, save the file somewhere.</source>
         <translation>请，保存到别的地方呦！</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="767"/>
         <source>Select one or several files to open</source>
         <translation>选择一个或多个文件打开</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="767"/>
         <source>Supported files</source>
         <translation>支持的文件类型</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="767"/>
         <source>All files (*)</source>
         <translation>全部文件 (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="779"/>
+        <location filename="window.py" line="805"/>
         <source>Select file encoding from the list:</source>
         <translation>从列表中选择文件编码方式</translation>
     </message>
     <message>
-        <location filename="window.py" line="800"/>
+        <location filename="window.py" line="826"/>
         <source>Plain text (*.txt)</source>
         <translation>普通文本文档 (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="803"/>
+        <location filename="window.py" line="829"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s 文件</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="902"/>
         <source>Save file</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="856"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>不能保存文件因为当前文件或文件夹只读！</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="892"/>
         <source>Export document to ODT</source>
         <translation>导出文件到 ODT</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="892"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>OpenDocument 文本文件 (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="902"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>HTML 文件 (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="923"/>
         <source>Export document to PDF</source>
         <translation>导出文件到 PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="923"/>
         <source>PDF files (*.pdf)</source>
         <translation>PDF 文件 (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="911"/>
+        <location filename="window.py" line="943"/>
         <source>Print document</source>
         <translation>打印文件</translation>
     </message>
     <message>
-        <location filename="window.py" line="935"/>
+        <location filename="window.py" line="967"/>
         <source>Export document</source>
         <translation>导出文件</translation>
     </message>
     <message>
-        <location filename="window.py" line="956"/>
+        <location filename="window.py" line="988"/>
         <source>Failed to execute the command:</source>
         <translation>不能执行命令:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1031"/>
+        <location filename="window.py" line="1022"/>
+        <source>Alt text</source>
+        <translation>替换文本</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1023"/>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1023"/>
+        <source>Link text</source>
+        <translation>链接文本</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1063"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation>此文件已被其他应用程序删除。
 请确保在退出程序前保存了文件。</translation>
     </message>
     <message>
-        <location filename="window.py" line="1038"/>
+        <location filename="window.py" line="1070"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
@@ -523,69 +543,74 @@ Do you want to reload the file (this will discard all your changes)?
 </translation>
     </message>
     <message>
-        <location filename="window.py" line="1043"/>
+        <location filename="window.py" line="1075"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation>如果不重新载入文件，将禁用该会话的自动保存模式，以防止数据丢失。</translation>
     </message>
     <message>
-        <location filename="window.py" line="1067"/>
+        <location filename="window.py" line="1099"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>文件已更改，确认保存吗？</translation>
     </message>
     <message>
-        <location filename="window.py" line="1092"/>
+        <location filename="window.py" line="1128"/>
         <source>HTML code</source>
         <translation>HTML 代码</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>ReText %s (using PyMarkups %s)</source>
         <translation>ReText %s（使用 PyMarkups %s）</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>简单高效的 Markdown 与 ReStructuredText 编辑器</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>作者: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>Website</source>
         <translation>网站</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>Markdown syntax</source>
         <translation>Markdown 语法</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText 语法</translation>
     </message>
     <message>
+        <location filename="window.py" line="140"/>
+        <source>Table editing mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="window.py" line="192"/>
-        <source>Close</source>
+        <source>Replace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="990"/>
-        <source>Alt text</source>
+        <location filename="window.py" line="194"/>
+        <source>Replace all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
-        <source>URL</source>
+        <location filename="window.py" line="330"/>
+        <source>Replace with</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
-        <source>Link text</source>
+        <location filename="window.py" line="847"/>
+        <source>Cannot save to file which is open in another tab!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

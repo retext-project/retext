@@ -68,7 +68,7 @@
         <translation>Arquivo de estilos</translation>
     </message>
     <message>
-        <location filename="config.py" line="103"/>
+        <location filename="config.py" line="104"/>
         <source>Help</source>
         <translation>Ajuda</translation>
     </message>
@@ -85,6 +85,11 @@
     <message>
         <location filename="config.py" line="67"/>
         <source>Draw vertical line at column</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Automatically open last documents on startup</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -130,12 +135,12 @@
 <context>
     <name>ReTextEdit</name>
     <message>
-        <location filename="editor.py" line="285"/>
+        <location filename="editor.py" line="292"/>
         <source>Save image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="editor.py" line="285"/>
+        <location filename="editor.py" line="292"/>
         <source>Images (*.png *.jpg)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -143,12 +148,12 @@
 <context>
     <name>ReTextTab</name>
     <message>
-        <location filename="tab.py" line="188"/>
+        <location filename="tab.py" line="172"/>
         <source>New document</source>
         <translation>Novo documento</translation>
     </message>
     <message>
-        <location filename="tab.py" line="193"/>
+        <location filename="tab.py" line="177"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation>Não foi possível analisar conteúdo do arquivo, verifique se você tem o &lt;a href=&quot;%s&quot;&gt;modulo necessário&lt;/a&gt; instalado!</translation>
     </message>
@@ -186,7 +191,7 @@
         <translation>Definir codificação</translation>
     </message>
     <message>
-        <location filename="window.py" line="1047"/>
+        <location filename="window.py" line="1079"/>
         <source>Reload</source>
         <translation>Recarregar</translation>
     </message>
@@ -266,7 +271,7 @@
         <translation>Modo tela cheia</translation>
     </message>
     <message>
-        <location filename="window.py" line="558"/>
+        <location filename="window.py" line="575"/>
         <source>Preferences</source>
         <translation>Preferências</translation>
     </message>
@@ -331,17 +336,17 @@
         <translation>Anterior</translation>
     </message>
     <message>
-        <location filename="window.py" line="195"/>
+        <location filename="window.py" line="201"/>
         <source>Get help online</source>
         <translation>Ajuda online</translation>
     </message>
     <message>
-        <location filename="window.py" line="196"/>
+        <location filename="window.py" line="202"/>
         <source>About ReText</source>
         <translation>Sobre ReText</translation>
     </message>
     <message>
-        <location filename="window.py" line="199"/>
+        <location filename="window.py" line="205"/>
         <source>About Qt</source>
         <translation>Sobre Qt</translation>
     </message>
@@ -411,110 +416,110 @@
         <translation>Pesquisar</translation>
     </message>
     <message>
-        <location filename="window.py" line="329"/>
+        <location filename="window.py" line="332"/>
         <source>Case sensitively</source>
         <translation>Diferenciando maiúsculas e minúsculas</translation>
     </message>
     <message>
-        <location filename="window.py" line="463"/>
+        <location filename="window.py" line="480"/>
         <source>New document</source>
         <translation>Novo documento</translation>
     </message>
     <message>
-        <location filename="window.py" line="627"/>
+        <location filename="window.py" line="651"/>
         <source>Please, save the file somewhere.</source>
         <translation>Por favor, salve o arquivo em outra localização.</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="767"/>
         <source>Select one or several files to open</source>
         <translation>Selecione um ou mais arquivos para abrir</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="767"/>
         <source>Supported files</source>
         <translation>Arquivos suportados</translation>
     </message>
     <message>
-        <location filename="window.py" line="743"/>
+        <location filename="window.py" line="767"/>
         <source>All files (*)</source>
         <translation>Todos os arquivos (*)</translation>
     </message>
     <message>
-        <location filename="window.py" line="779"/>
+        <location filename="window.py" line="805"/>
         <source>Select file encoding from the list:</source>
         <translation>Selecione a codificação de arquivo da lista:</translation>
     </message>
     <message>
-        <location filename="window.py" line="800"/>
+        <location filename="window.py" line="826"/>
         <source>Plain text (*.txt)</source>
         <translation>Texto simples (*.txt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="803"/>
+        <location filename="window.py" line="829"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
         <translation>%s arquivos</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="902"/>
         <source>Save file</source>
         <translation>Salvar arquivo</translation>
     </message>
     <message>
-        <location filename="window.py" line="824"/>
+        <location filename="window.py" line="856"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Não é possível salvar arquivo somente leitura!</translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="892"/>
         <source>Export document to ODT</source>
         <translation>Exportar documento para ODT </translation>
     </message>
     <message>
-        <location filename="window.py" line="860"/>
+        <location filename="window.py" line="892"/>
         <source>OpenDocument text files (*.odt)</source>
         <translation>Arquivos de texto OpenDocument (*.odt)</translation>
     </message>
     <message>
-        <location filename="window.py" line="870"/>
+        <location filename="window.py" line="902"/>
         <source>HTML files (*.html *.htm)</source>
         <translation>Arquivos HTML (*.html *.htm)</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="923"/>
         <source>Export document to PDF</source>
         <translation>Exportar documento para PDF</translation>
     </message>
     <message>
-        <location filename="window.py" line="891"/>
+        <location filename="window.py" line="923"/>
         <source>PDF files (*.pdf)</source>
         <translation>Arquivos PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="window.py" line="911"/>
+        <location filename="window.py" line="943"/>
         <source>Print document</source>
         <translation>Imprimir documento</translation>
     </message>
     <message>
-        <location filename="window.py" line="935"/>
+        <location filename="window.py" line="967"/>
         <source>Export document</source>
         <translation>Exportar documento</translation>
     </message>
     <message>
-        <location filename="window.py" line="956"/>
+        <location filename="window.py" line="988"/>
         <source>Failed to execute the command:</source>
         <translation>Falha ao executar o comando:</translation>
     </message>
     <message>
-        <location filename="window.py" line="1031"/>
+        <location filename="window.py" line="1063"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
         <translation>O arquivo foi apagado por outro programa.
 Certifique-se de salvá-lo antes de sair.</translation>
     </message>
     <message>
-        <location filename="window.py" line="1038"/>
+        <location filename="window.py" line="1070"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
@@ -523,70 +528,90 @@ Gostaria de recarregar o arquivo? (isso descartará suas alterações)
 </translation>
     </message>
     <message>
-        <location filename="window.py" line="1043"/>
+        <location filename="window.py" line="1075"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
         <translation>So você escolher por não recarregar o arquivo, o modo de autossalvamento será desabilitado nessa sessão para prevenir a perda de dados.</translation>
     </message>
     <message>
-        <location filename="window.py" line="1067"/>
+        <location filename="window.py" line="1099"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>O documento foi modificado.
 Deseja salvar as alterações?</translation>
     </message>
     <message>
-        <location filename="window.py" line="1092"/>
+        <location filename="window.py" line="1128"/>
         <source>HTML code</source>
         <translation>Código HTML</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>ReText %s (using PyMarkups %s)</source>
         <translation>ReText %s (usando PyMarkups %s)</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
         <translation>Simples e poderoso editor para Markdown e reStructuredText</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>Author: Dmitry Shachnev, 2011</source>
         <translation>Autor: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>Website</source>
         <translation>Website</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>Markdown syntax</source>
         <translation>Sintaxe Markdown</translation>
     </message>
     <message>
-        <location filename="window.py" line="1103"/>
+        <location filename="window.py" line="1139"/>
         <source>reStructuredText syntax</source>
         <translation>Sintaxe reStructuredText</translation>
     </message>
     <message>
-        <location filename="window.py" line="192"/>
+        <location filename="window.py" line="198"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="990"/>
+        <location filename="window.py" line="1022"/>
         <source>Alt text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="1023"/>
         <source>URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="window.py" line="991"/>
+        <location filename="window.py" line="1023"/>
         <source>Link text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="window.py" line="192"/>
+        <source>Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="window.py" line="194"/>
+        <source>Replace all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="window.py" line="330"/>
+        <source>Replace with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="window.py" line="847"/>
+        <source>Cannot save to file which is open in another tab!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
