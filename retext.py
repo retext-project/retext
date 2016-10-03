@@ -32,7 +32,7 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtNetwork import QNetworkProxyFactory
 
 def canonicalize(option):
-	if option == '--preview':
+	if option in ('--preview', '-'):
 		return option
 	return QFileInfo(option).canonicalFilePath()
 
@@ -77,6 +77,7 @@ def main():
 	# need to have a list of canonical names before loading
 	fileNames = list(map(canonicalize, sys.argv[1:]))
 	previewMode = False
+	readStdIn = False
 	for fileName in fileNames:
 		if QFile.exists(fileName):
 			window.openFileWrapper(fileName)
@@ -85,7 +86,12 @@ def main():
 				window.preview(True)
 		elif fileName == '--preview':
 			previewMode = True
-	inputData = '' if (sys.stdin is None or sys.stdin.isatty()) else sys.stdin.read()
+		elif fileName == '-':
+			readStdIn = True
+
+	inputData = ''
+	if readStdIn and sys.stdin is not None:
+		inputData = sys.stdin.read()
 	if inputData or not window.tabWidget.count():
 		window.createNew(inputData)
 	signal.signal(signal.SIGINT, lambda sig, frame: window.close())
