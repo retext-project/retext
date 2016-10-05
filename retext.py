@@ -93,6 +93,8 @@ def main():
 
 	inputData = ''
 	if readStdIn and sys.stdin is not None:
+		if sys.stdin.isatty():
+			print('Reading stdin, press ^D to end...')
 		inputData = sys.stdin.read()
 	if inputData or not window.tabWidget.count():
 		window.createNew(inputData)
