@@ -19,6 +19,7 @@
 import markups
 import os
 import sys
+import tempfile
 import time
 import unittest
 from unittest.mock import patch, MagicMock
@@ -372,6 +373,19 @@ class TestWindow(unittest.TestCase):
         self.window.actionOpen.trigger()
         processEventsUntilIdle()
         self.check_widgets_disabled(self.window, ('actionReload','actionSetEncoding'))
+
+    def test_doesNotTweakSpecialCharacters(self):
+        fileName = tempfile.mkstemp(suffix='.mkd')[1]
+        content = 'Non-breaking\u00a0space\n\nLine\u2028separator\n'
+        with open(fileName, 'w') as tempFile:
+            tempFile.write(content)
+        window = ReTextWindow()
+        window.openFileWrapper(fileName)
+        self.assertTrue(window.saveFile())
+        with open(fileName) as tempFile:
+            self.assertMultiLineEqual(content, tempFile.read())
+        os.remove(fileName)
+
 
 if __name__ == '__main__':
     unittest.main()

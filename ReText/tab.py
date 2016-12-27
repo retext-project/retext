@@ -327,6 +327,14 @@ class ReTextTab(QSplitter):
 	def writeTextToFile(self, fileName=None):
 		# Just writes the text to file, without any changes to tab object
 		# Used directly for i.e. export extensions
+
+		# Get text from the cursor to avoid tweaking special characters,
+		# see https://bugreports.qt.io/browse/QTBUG-57552 and
+		# https://github.com/retext-project/retext/issues/216
+		cursor = self.editBox.textCursor()
+		cursor.select(QTextCursor.Document)
+		text = cursor.selectedText().replace('\u2029', '\n')
+
 		savefile = QFile(fileName or self._fileName)
 		result = savefile.open(QFile.WriteOnly)
 		if result:
@@ -337,7 +345,7 @@ class ReTextTab(QSplitter):
 			if encoding is not None:
 				savestream.setCodec(encoding)
 
-			savestream << self.editBox.toPlainText()
+			savestream << text
 			savefile.close()
 		return result
 
