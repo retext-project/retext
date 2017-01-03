@@ -60,6 +60,7 @@ class ReTextWindow(QMainWindow):
 			# https://github.com/retext-project/retext/issues/198
 			searchPaths = QIcon.themeSearchPaths()
 			searchPaths.append('/opt/local/share/icons')
+			searchPaths.append('/usr/local/share/icons')
 			QIcon.setThemeSearchPaths(searchPaths)
 		if globalSettings.iconTheme:
 			QIcon.setThemeName(globalSettings.iconTheme)
