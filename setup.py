@@ -16,6 +16,7 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 
 import re
 import sys
+
 from os.path import join
 from distutils import log
 from distutils.core import setup, Command
