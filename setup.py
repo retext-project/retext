@@ -124,8 +124,18 @@ setup(name='ReText',
         ('share/retext/icons', glob('icons/*')),
         ('share/retext/locale', iglob('locale/*.qm'))
       ],
-      requires=['docutils', 'Markdown', 'Markups(>=2.0)', 'pyenchant', 'Pygments'],
-      install_requires=['docutils', 'Markdown', 'Markups>=2.0', 'pyenchant', 'Pygments', 'chardet>=2.3'],
+      requires=['docutils', 'Markdown', 'Markups(>=2.0)', 'pyenchant', 'Pygments', 'PyQt5'],
+      install_requires=[
+        'docutils',
+        'Markdown',
+        'Markups>=2.0',
+        'pyenchant',
+        'Pygments',
+        'chardet>=2.3',
+        # On Linux distro-packaged Qt/PyQt is preferred
+        'PyQt5;platform_system=="Windows"',
+        'PyQt5;platform_system=="Darwin"',
+      ],
       cmdclass={
         'build': retext_build,
         'sdist': retext_sdist,
