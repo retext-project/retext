@@ -28,7 +28,7 @@
     <p>ReText is a text editor for plain text markup languages, such as Markdown and reStructuredText.</p>
     <p>It supports tabs, live text preview, synchronized scrolling (for Markdown) and syntax highlighting.</p>
     <p>ReText can export to HTML, ODT and PDF formats. It is also possible to write custom export extensions.</p>
-  </descripion>
+  </description>
   <url type="homepage">https://github.com/retext-project/retext</url>
   <metadata_license>CC0</metadata_license>
   <project_license>GPL-2.0+</project_license>
