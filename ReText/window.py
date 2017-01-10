@@ -23,7 +23,7 @@ import warnings
 
 from ReText import (getBundledIcon, app_version, globalSettings,
                     readListFromSettings, writeListToSettings, datadirs)
-from ReText.tab import ReTextTab, ReTextWebPreview, PreviewNormal, PreviewLive
+from ReText.tab import ReTextTab, ReTextWebKitPreview, PreviewNormal, PreviewLive
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
 from ReText.icontheme import get_icon_theme
@@ -183,7 +183,7 @@ class ReTextWindow(QMainWindow):
 			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSpellCheck)
 			self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
 		self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
-		if ReTextWebPreview is None:
+		if ReTextWebKitPreview is None:
 			globalSettings.useWebKit = False
 			self.actionWebKit.setEnabled(False)
 		self.actionWebKit.setChecked(globalSettings.useWebKit)

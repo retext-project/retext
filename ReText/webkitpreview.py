@@ -25,7 +25,7 @@ from PyQt5.QtWebKit import QWebSettings
 from PyQt5.QtWebKitWidgets import QWebPage, QWebView
 
 
-class ReTextWebPreview(QWebView):
+class ReTextWebKitPreview(QWebView):
 
 	def __init__(self, editBox,
 	             editorPositionToSourceLineFunc,

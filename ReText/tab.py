@@ -34,9 +34,9 @@ from PyQt5.QtGui import QDesktopServices, QTextCursor, QTextDocument
 from PyQt5.QtWidgets import QTextBrowser, QTextEdit, QSplitter
 
 try:
-	from ReText.webkitpreview import ReTextWebPreview
+	from ReText.webkitpreview import ReTextWebKitPreview
 except ImportError:
-	ReTextWebPreview = None
+	ReTextWebKitPreview = None
 
 PreviewDisabled, PreviewLive, PreviewNormal = range(3)
 
@@ -99,7 +99,7 @@ class ReTextTab(QSplitter):
 
 	def createPreviewBox(self, editBox):
 
-		# Use closures to avoid a hard reference from ReTextWebPreview
+		# Use closures to avoid a hard reference from ReTextWebKitPreview
 		# to self, which would keep the tab and its resources alive
 		# even after other references to it have disappeared.
 
@@ -115,9 +115,9 @@ class ReTextTab(QSplitter):
 			return rect.top()
 
 		if globalSettings.useWebKit:
-			preview = ReTextWebPreview(editBox,
-			                           editorPositionToSourceLine,
-			                           sourceLineToEditorPosition)
+			preview = ReTextWebKitPreview(editBox,
+			                              editorPositionToSourceLine,
+			                              sourceLineToEditorPosition)
 		else:
 			preview = ReTextPreview(self)
 
