@@ -40,6 +40,9 @@ if sys.platform == "win32":
 	# Windows compatibility: Add "PythonXXX\share\" path
 	datadirs.append(join(dirname(sys.executable), 'share', 'retext'))
 
+# For virtualenvs
+datadirs.append(join(dirname(dirname(sys.executable)), 'share', 'retext'))
+
 if '__file__' in locals():
 	datadirs = [dirname(dirname(__file__))] + datadirs
 
