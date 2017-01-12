@@ -55,16 +55,22 @@ def main():
 	if hasattr(app, 'setDesktopFileName'): # available since Qt 5.7
 		app.setDesktopFileName('me.mitya57.ReText.desktop')
 	QNetworkProxyFactory.setUseSystemConfiguration(True)
+
 	RtTranslator = QTranslator()
 	for path in datadirs:
 		if RtTranslator.load('retext_' + globalSettings.uiLanguage,
 		                     join(path, 'locale')):
 			break
+	QtbaseTranslator = QTranslator()
+	QtbaseTranslator.load("qtbase_" + globalSettings.uiLanguage,
+		QLibraryInfo.location(QLibraryInfo.TranslationsPath))
 	QtTranslator = QTranslator()
 	QtTranslator.load("qtbase_" + globalSettings.uiLanguage,
 		QLibraryInfo.location(QLibraryInfo.TranslationsPath))
 	app.installTranslator(RtTranslator)
+	app.installTranslator(QtbaseTranslator)
 	app.installTranslator(QtTranslator)
+
 	print('Using configuration file:', settings.fileName())
 	if globalSettings.appStyleSheet:
 		sheetfile = QFile(globalSettings.appStyleSheet)
