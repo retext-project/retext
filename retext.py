@@ -21,15 +21,31 @@ import multiprocessing as mp
 import sys
 import signal
 import markups
+import struct
+import json
 from os import devnull
 from os.path import join
 from ReText import datadirs, settings, globalSettings, app_version
 from ReText.window import ReTextWindow
+from ReText.singleapplication import SingleApplication
 
 from PyQt5.QtCore import QFile, QFileInfo, QIODevice, QLibraryInfo, \
- QTextStream, QTranslator
-from PyQt5.QtWidgets import QApplication
+ QTextStream, QTranslator, QTimer
+from PyQt5.QtWidgets import QApplication, qApp
 from PyQt5.QtNetwork import QNetworkProxyFactory
+
+def get_current_user():
+    import os
+    try:
+        import pwd
+    except ImportError:
+        import getpass
+        pwd = None
+
+    if pwd:
+        return pwd.getpwuid(os.getuid()).pw_name
+    else:
+        return getpass.getuser()
 
 def canonicalize(option):
 	if option in ('--preview', '-'):
@@ -54,6 +70,39 @@ def main():
 	app.setOrganizationDomain('mitya57.me')
 	if hasattr(app, 'setDesktopFileName'): # available since Qt 5.7
 		app.setDesktopFileName('me.mitya57.ReText.desktop')
+
+	singleApp = SingleApplication("ReText-%s" % get_current_user())
+	singleApp.start()
+	if singleApp.mode == singleApp.Client:
+		# When we are in client mode, we just send the arguments to existing
+		# application instance and exit
+		message = json.dumps(list(map(canonicalize, sys.argv[1:])))
+		singleApp.sendMessage(message.encode('utf-8'))
+
+		# Exit the application immediately after sending the message
+		timer = QTimer()
+		timer.setSingleShot(True)
+		timer.setInterval(0)
+		timer.timeout.connect(app.quit)
+		timer.start()
+
+		# We should clear some messages before exit
+		sys.exit(app.exec())
+		return
+
+	def onReceivedMessage(message):
+		for widget in qApp.topLevelWidgets():
+			isMainWindow = widget.property("_mainWindow_")
+			if isMainWindow is None:
+				continue
+
+			fileNames = json.loads(message.decode('utf-8'))
+			for fileName in fileNames:
+				if QFile.exists(fileName):
+					widget.openFileWrapper(fileName)
+			break
+	singleApp.receivedMessage.connect(onReceivedMessage)
+
 	QNetworkProxyFactory.setUseSystemConfiguration(True)
 	RtTranslator = QTranslator()
 	for path in datadirs:
@@ -72,6 +121,8 @@ def main():
 		app.setStyleSheet(QTextStream(sheetfile).readAll())
 		sheetfile.close()
 	window = ReTextWindow()
+	# Mark this window so that we could find it when we received the message.
+	window.setProperty("_mainWindow_", True)
 	window.show()
 	# ReText can change directory when loading files, so we
 	# need to have a list of canonical names before loading
