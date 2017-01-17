@@ -765,7 +765,7 @@ class ReTextWindow(QMainWindow):
 			supportedExtensions += markup.file_extensions
 		fileFilter = ' (' + str.join(' ', ['*'+ext for ext in supportedExtensions]) + ');;'
 		fileNames = QFileDialog.getOpenFileNames(self,
-			self.tr("Select one or several files to open"), "",
+			self.tr("Select one or several files to open"), QDir.currentPath(),
 			self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
 		for fileName in fileNames[0]:
 			self.openFileWrapper(fileName)
