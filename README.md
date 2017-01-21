@@ -1,5 +1,8 @@
-Welcome to ReText!  [![Travis CI status][Travis SVG]][Travis]
-=============================================================
+Welcome to ReText!
+==================
+
+[![Travis CI status][Travis SVG]][Travis]
+[![Appveyor CI status][Appveyor SVG]][Appveyor]
 
 ReText is a simple but powerful editor for Markdown and reStructuredText markup
 languages. ReText is written in Python language and works on Linux and other
@@ -45,4 +48,6 @@ ReText icon is based on `accessories-text-editor` icon from the Faenza theme.
 [PyPI]: https://pypi.python.org/pypi/ReText
 [Transifex]: https://www.transifex.com/mitya57/ReText/
 [Travis]: https://travis-ci.org/retext-project/retext
-[Travis SVG]: https://api.travis-ci.org/retext-project/retext.svg
+[Travis SVG]: https://api.travis-ci.org/retext-project/retext.svg?branch=master
+[Appveyor]: https://ci.appveyor.com/project/mitya57/retext
+[Appveyor SVG]: https://ci.appveyor.com/api/projects/status/github/retext-project/retext?branch=master&svg=true
