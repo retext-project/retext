@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from contextlib import suppress
 import markups
 import os
 import sys
@@ -377,14 +378,15 @@ class TestWindow(unittest.TestCase):
     def test_doesNotTweakSpecialCharacters(self):
         fileName = tempfile.mkstemp(suffix='.mkd')[1]
         content = 'Non-breaking\u00a0space\n\nLine\u2028separator\n'
-        with open(fileName, 'w') as tempFile:
+        with open(fileName, 'w', encoding='utf-8') as tempFile:
             tempFile.write(content)
         window = ReTextWindow()
         window.openFileWrapper(fileName)
         self.assertTrue(window.saveFile())
-        with open(fileName) as tempFile:
+        with open(fileName, encoding='utf-8') as tempFile:
             self.assertMultiLineEqual(content, tempFile.read())
-        os.remove(fileName)
+        with suppress(PermissionError):
+            os.remove(fileName)
 
 
 if __name__ == '__main__':
