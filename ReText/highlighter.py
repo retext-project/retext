@@ -38,6 +38,8 @@ reReSTDirects  = re.compile(r'\.\. [a-z]+::')
 reReSTRoles    = re.compile(':[a-z]+:')
 reTextileHdrs  = re.compile(r'^h[1-6][()<>=]*\.\s.+')
 reTextileQuot  = re.compile(r'^bq\.\s.+')
+reMkdCodeSpans = re.compile('`[^`]*`')
+reReSTCodeSpan = re.compile('``.+?``')
 reWords        = re.compile('[^_\\W]+', flags=re.UNICODE)
 reSpacesOnEnd  = re.compile(r'\s+$', flags=re.UNICODE)
 
@@ -46,6 +48,7 @@ defaultColorScheme = {
 	'htmlSymbols': Qt.darkCyan,
 	'htmlStrings': Qt.darkYellow,
 	'htmlComments': Qt.gray,
+	'codeSpans': QColor(0x50, 0x50, 0x50),
 	'markdownLinks': Qt.blue,
 	'blockquotes': Qt.darkGray,
 	'restDirectives': Qt.darkMagenta,
@@ -92,10 +95,12 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			(reTextileQuot,  'blockquotes',    QFont.Normal),                   # 17
 			(reAsterisks,    None,             QFont.Bold),                     # 18
 			(reDblUnderline, None,             QFont.Normal,  True),            # 19
+			(reMkdCodeSpans, 'codeSpans',      QFont.Normal),                   # 20
+			(reReSTCodeSpan, 'codeSpans',      QFont.Normal),                   # 21
 		)
 		patternsDict = {
-			'Markdown': (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13),
-			'reStructuredText': (4, 6, 14, 15),
+			'Markdown': (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 20),
+			'reStructuredText': (4, 6, 14, 15, 21),
 			'Textile': (0, 5, 6, 16, 17, 18, 19),
 			'html': (0, 1, 2, 3)
 		}

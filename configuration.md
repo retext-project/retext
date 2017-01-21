@@ -92,6 +92,7 @@ color name        | description
 `htmlComments`    | HTML comments, i.e. `<!-- comment -->`
 `markdownLinks`   | Markdown links and images text, i.e. `foo` inside `[foo](http://example.com)`
 `blockquotes`     | blockquotes, i.e. `> quote` in Markdown
+`codeSpans`       | code spans, i.e. `` `code` `` in Markdown
 `restDirectives`  | reStructuredText directives, i.e. `.. math::`
 `restRoles`       | reStructuredText roles, i.e. `:math:`
 `whitespaceOnEnd` | whitespace at line endings
