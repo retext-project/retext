@@ -19,6 +19,8 @@
 import markups
 import sys
 from subprocess import Popen
+import warnings
+
 from ReText import (getBundledIcon, app_version, globalSettings,
                     readListFromSettings, writeListToSettings, datadirs)
 from ReText.tab import ReTextTab, ReTextWebPreview, PreviewNormal, PreviewLive
@@ -352,7 +354,7 @@ class ReTextWindow(QMainWindow):
 			try:
 				enchant.Dict(self.sl or None)
 			except enchant.errors.Error as e:
-				print(e, file=sys.stderr)
+				warnings.warn(e, RuntimeWarning)
 				globalSettings.spellCheck = False
 			if globalSettings.spellCheck:
 				self.actionEnableSC.setChecked(True)
