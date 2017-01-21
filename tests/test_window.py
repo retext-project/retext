@@ -37,6 +37,7 @@ defaultEventTimeout = 0.0
 path_to_testdata = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'testdata')
 
 app = QApplication.instance() or QApplication(sys.argv)
+ReText.initializeDataDirs()
 
 def handle_timer_event():
     print('timer event received')

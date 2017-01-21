@@ -19,8 +19,8 @@
 import markups
 import sys
 from subprocess import Popen
-from ReText import icon_path, app_version, globalSettings, readListFromSettings, \
- writeListToSettings, datadirs
+from ReText import (getBundledIcon, app_version, globalSettings,
+                    readListFromSettings, writeListToSettings, datadirs)
 from ReText.tab import ReTextTab, ReTextWebPreview, PreviewNormal, PreviewLive
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
@@ -65,10 +65,10 @@ class ReTextWindow(QMainWindow):
 		if globalSettings.iconTheme:
 			QIcon.setThemeName(globalSettings.iconTheme)
 		if QIcon.themeName() in ('hicolor', ''):
-			if not QFile.exists(icon_path + 'document-new.png'):
+			if not QFile.exists(getBundledIcon('document-new')):
 				QIcon.setThemeName(get_icon_theme())
-		if QFile.exists(icon_path+'retext.png'):
-			self.setWindowIcon(QIcon(icon_path+'retext.png'))
+		if QFile.exists(getBundledIcon('retext')):
+			self.setWindowIcon(QIcon(getBundledIcon('retext')))
 		elif QFile.exists('/usr/share/pixmaps/retext.png'):
 			self.setWindowIcon(QIcon('/usr/share/pixmaps/retext.png'))
 		else:
@@ -132,7 +132,7 @@ class ReTextWindow(QMainWindow):
 		elif QIcon.hasThemeIcon('x-office-document'):
 			self.actionPreview.setIcon(QIcon.fromTheme('x-office-document'))
 		else:
-			self.actionPreview.setIcon(QIcon(icon_path+'document-preview.png'))
+			self.actionPreview.setIcon(QIcon(getBundledIcon('document-preview')))
 		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.CTRL+Qt.Key_L,
 		trigbool=self.enableLivePreview)
 		menuPreview = QMenu()
@@ -417,7 +417,7 @@ class ReTextWindow(QMainWindow):
 		return action
 
 	def actIcon(self, name):
-		return QIcon.fromTheme(name, QIcon(icon_path+name+'.png'))
+		return QIcon.fromTheme(name, QIcon(getBundledIcon(name)))
 
 	def printError(self):
 		import traceback

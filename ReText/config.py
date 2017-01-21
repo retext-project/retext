@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from ReText import globalSettings, icon_path
+from ReText import globalSettings, getBundledIcon
 from ReText.icontheme import get_icon_theme
 from markups.common import CONFIGURATION_DIR
 from os.path import join
@@ -156,7 +156,7 @@ class ConfigDialog(QDialog):
 	def applySettings(self):
 		QIcon.setThemeName(globalSettings.iconTheme)
 		if QIcon.themeName() in ('hicolor', ''):
-			if not QFile.exists(icon_path + 'document-new.png'):
+			if not QFile.exists(getBundledIcon('document-new')):
 				QIcon.setThemeName(get_icon_theme())
 		try:
 			extsFile = open(MKD_EXTS_FILE, 'w')

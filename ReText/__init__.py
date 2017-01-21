@@ -33,24 +33,34 @@ if not str(settings.fileName()).endswith('.conf'):
 	settings = QSettings(QSettings.IniFormat, QSettings.UserScope,
 		'ReText project', 'ReText')
 
-datadirs = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
-datadirs = [join(d, 'retext') for d in datadirs]
+datadirs = []
 
-if sys.platform == "win32":
-	# Windows compatibility: Add "PythonXXX\share\" path
-	datadirs.append(join(dirname(sys.executable), 'share', 'retext'))
+def initializeDataDirs():
+	assert not datadirs
 
-# For virtualenvs
-datadirs.append(join(dirname(dirname(sys.executable)), 'share', 'retext'))
+	if '__file__' in locals():
+		datadirs.append(dirname(dirname(__file__)))
 
-if '__file__' in locals():
-	datadirs = [dirname(dirname(__file__))] + datadirs
+	dataLocations = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
+	datadirs.extend(join(d, 'retext') for d in dataLocations)
 
-icon_path = 'icons/'
-for dir in datadirs:
-	if exists(join(dir, 'icons')):
-		icon_path = join(dir, 'icons/')
-		break
+	if sys.platform == "win32":
+		# Windows compatibility: Add "PythonXXX\share\" path
+		datadirs.append(join(dirname(sys.executable), 'share', 'retext'))
+
+	# For virtualenvs
+	datadirs.append(join(dirname(dirname(sys.executable)), 'share', 'retext'))
+
+_iconPath = None
+
+def getBundledIcon(iconName):
+	global _iconPath
+	if _iconPath is None:
+		for dir in ['icons'] + datadirs:
+			_iconPath = join(dir, 'icons')
+			if exists(_iconPath):
+				break
+	return join(_iconPath, iconName + '.png')
 
 configOptions = {
 	'appStyleSheet': '',

@@ -24,6 +24,7 @@ import markups
 from os import devnull
 from os.path import join
 from ReText import datadirs, settings, globalSettings, app_version
+from ReText import initializeDataDirs
 from ReText.window import ReTextWindow
 
 from PyQt5.QtCore import QFile, QFileInfo, QIODevice, QLibraryInfo, \
@@ -55,6 +56,7 @@ def main():
 	if hasattr(app, 'setDesktopFileName'): # available since Qt 5.7
 		app.setDesktopFileName('me.mitya57.ReText.desktop')
 	QNetworkProxyFactory.setUseSystemConfiguration(True)
+	initializeDataDirs()
 	RtTranslator = QTranslator()
 	for path in datadirs:
 		if RtTranslator.load('retext_' + globalSettings.uiLanguage,
