@@ -158,6 +158,7 @@ class TestWindow(unittest.TestCase):
         self.assertEqual(1, self.window.tabWidget.count())
         self.assertEqual('existing_file.md[*]', self.window.windowTitle())
         self.assertTrue(self.window.currentTab.fileName.endswith('tests/testdata/existing_file.md'))
+        self.assertFalse(self.window.isWindowModified())
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
     def test_windowTitleAndTabs_afterSwitchingTab(self, getOpenFileNamesMock):
@@ -293,27 +294,32 @@ class TestWindow(unittest.TestCase):
         self.window.createNew('')
         processEventsUntilIdle()
         self.check_widgets_disabled(self.window, ('actionSave',))
+        self.assertFalse(self.window.isWindowModified())
 
         # check if it's enabled after inserting some text
         self.window.currentTab.editBox.textCursor().insertText('some text')
         processEventsUntilIdle()
         self.check_widgets_enabled(self.window, ('actionSave',))
+        self.assertTrue(self.window.isWindowModified())
 
         # check if it's disabled again after loading a file in a second tab and switching to it
         self.window.actionOpen.trigger()
         processEventsUntilIdle()
         self.check_widgets_disabled(self.window, ('actionSave',))
+        self.assertFalse(self.window.isWindowModified())
 
         # check if it's enabled again after switching back
         self.window.switchTab()
         processEventsUntilIdle()
         self.check_widgets_enabled(self.window, ('actionSave',))
+        self.assertTrue(self.window.isWindowModified())
 
         # check if it's disabled after saving
         try:
             self.window.actionSaveAs.trigger()
             processEventsUntilIdle()
             self.check_widgets_disabled(self.window, ('actionSave',))
+            self.assertFalse(self.window.isWindowModified())
         finally:
             os.remove(os.path.join(path_to_testdata, 'not_existing_file.md'))
 
