@@ -42,6 +42,7 @@ reReSTFldLists = re.compile('^ *:(.*?):')
 reTextileHdrs  = re.compile(r'^h[1-6][()<>=]*\.\s.+')
 reTextileQuot  = re.compile(r'^bq\.\s.+')
 reMkdCodeSpans = re.compile('`[^`]*`')
+reMkdMathSpans = re.compile(r'\\[\(\[].*?\\[\)\]]')
 reReSTCodeSpan = re.compile('``.+?``')
 reWords        = re.compile('[^_\\W]+', flags=re.UNICODE)
 reSpacesOnEnd  = re.compile(r'\s+$', flags=re.UNICODE)
@@ -128,10 +129,11 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			(reReSTLinks,    NF, NF, ITAL | UNDL, NF),                              # 22
 			(reReSTLinkRefs, NF, FG('markdownLinks'), ITAL | UNDL),                 # 23
 			(reReSTFldLists, NF, FG('restDirectives')),                             # 24
+			(reMkdMathSpans, FG('codeSpans')),                                      # 25
 		)
 
 		patternsDict = {
-			'Markdown': (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 20),
+			'Markdown': (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 20, 25),
 			'reStructuredText': (4, 6, 14, 15, 21, 22, 23, 24),
 			'Textile': (0, 5, 6, 16, 17, 18, 19),
 			'html': (0, 1, 2, 3)
