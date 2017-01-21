@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from os.path import exists, splitext
 from markups import get_markup_for_file_name, find_markup_class_by_name
 from markups.common import MODULE_HOME_PAGE
 
@@ -402,6 +403,19 @@ class ReTextTab(QSplitter):
 		self.editBox.textCursor().endEditBlock()
 		return not lastCursor.isNull()
 
+	def openSourceFile(self, fileToOpen):
+		"""Finds and opens the source file for link target fileToOpen."""
+		if self.fileName:
+			currentExt = splitext(self.fileName)[1]
+			basename, ext = splitext(fileToOpen)
+			if ext in ('.html', '') and exists(basename + currentExt):
+				self.p.openFileWrapper(basename + currentExt)
+				return basename + currentExt
+		if exists(fileToOpen) and get_markup_for_file_name(fileToOpen, return_class=True):
+			self.p.openFileWrapper(fileToOpen)
+			return fileToOpen
+
+
 class ReTextPreview(QTextBrowser):
 	"""
 	When links like [test](test) are clicked, the file test.md is opened.
@@ -424,12 +438,11 @@ class ReTextPreview(QTextBrowser):
 		isLocalHtml = (link.scheme() in ('file', '') and url.endswith('.html'))
 		if url.startswith('#'):
 			self.scrollToAnchor(url[1:])
-		elif link.isRelative() and get_markup_for_file_name(url, return_class=True):
+		elif link.isRelative():
 			fileToOpen = QDir.current().filePath(url)
-			if not QFileInfo(fileToOpen).completeSuffix() and self._fileName:
-				fileToOpen += '.' + QFileInfo(self.tab.fileName).completeSuffix()
-			self.tab.p.openFileWrapper(fileToOpen)
-		elif globalSettings.handleWebLinks and isLocalHtml:
+			if self.tab.openSourceFile(fileToOpen):
+				return
+		if globalSettings.handleWebLinks and isLocalHtml:
 			self.setSource(link)
 		else:
 			QDesktopServices.openUrl(link)
