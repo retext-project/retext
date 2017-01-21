@@ -35,7 +35,9 @@ reMkdLinksImgs = re.compile(r'(?<=\[)[^\[\]]*(?=\])')
 reMkdLinkRefs  = re.compile(r'(?<=\]\()[^\(\)]*(?=\))')
 reBlockQuotes  = re.compile('^ *>.+')
 reReSTDirects  = re.compile(r'\.\. [a-z]+::')
-reReSTRoles    = re.compile(':[a-z]+:')
+reReSTRoles    = re.compile('(:[a-z-]+:)(`.+?`)')
+reReSTLinks    = re.compile('(`.+?<)(.+?)(>`__?)')
+reReSTLinkRefs = re.compile(r'\.\. _`?(.*?)`?: (.*)')
 reTextileHdrs  = re.compile(r'^h[1-6][()<>=]*\.\s.+')
 reTextileQuot  = re.compile(r'^bq\.\s.+')
 reMkdCodeSpans = re.compile('`[^`]*`')
@@ -68,39 +70,67 @@ def updateColorScheme(settings=settings):
 
 updateColorScheme()
 
+class Formatter:
+	def __init__(self, funcs=None):
+		self._funcs = funcs or []
+
+	def __or__(self, other):
+		result = Formatter(self._funcs.copy())
+		if isinstance(other, Formatter):
+			result._funcs.extend(other._funcs)
+		elif isinstance(other, QFont.Weight):
+			result._funcs.append(lambda f: f.setFontWeight(other))
+		return result
+
+	def format(self, charFormat):
+		for func in self._funcs:
+			func(charFormat)
+
+NF = Formatter()
+ITAL = Formatter([lambda f: f.setFontItalic(True)])
+UNDL = Formatter([lambda f: f.setFontUnderline(True)])
+
+def FG(colorName):
+	color = colorScheme[colorName]
+	func = lambda f: f.setForeground(color)
+	return Formatter([func])
+
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
 	docType = None
 
 	def highlightBlock(self, text):
 		patterns = (
-			# regex,         color,            font style,    italic, underline
-			(reHtmlTags,     'htmlTags',       QFont.Bold),                     # 0
-			(reHtmlSymbols,  'htmlSymbols',    QFont.Bold),                     # 1
-			(reHtmlStrings,  'htmlStrings',    QFont.Bold),                     # 2
-			(reHtmlComments, 'htmlComments',   QFont.Normal),                   # 3
-			(reAsterisks,    None,             QFont.Normal,  True),            # 4
-			(reUnderline,    None,             QFont.Normal,  True),            # 5
-			(reDblAsterisks, None,             QFont.Bold),                     # 6
-			(reDblUnderline, None,             QFont.Bold),                     # 7
-			(reTrpAsterisks, None,             QFont.Bold,    True),            # 8
-			(reTrpUnderline, None,             QFont.Bold,    True),            # 9
-			(reMkdHeaders,   None,             QFont.Black),                    # 10
-			(reMkdLinksImgs, 'markdownLinks',  QFont.Normal),                   # 11
-			(reMkdLinkRefs,  None,             QFont.Normal,  True,   True),    # 12
-			(reBlockQuotes,  'blockquotes',    QFont.Normal),                   # 13
-			(reReSTDirects,  'restDirectives', QFont.Bold),                     # 14
-			(reReSTRoles,    'restRoles',      QFont.Bold),                     # 15
-			(reTextileHdrs,  None,             QFont.Black),                    # 16
-			(reTextileQuot,  'blockquotes',    QFont.Normal),                   # 17
-			(reAsterisks,    None,             QFont.Bold),                     # 18
-			(reDblUnderline, None,             QFont.Normal,  True),            # 19
-			(reMkdCodeSpans, 'codeSpans',      QFont.Normal),                   # 20
-			(reReSTCodeSpan, 'codeSpans',      QFont.Normal),                   # 21
+			# regex,         color,
+			(reHtmlTags,     FG('htmlTags') | QFont.Bold),                          # 0
+			(reHtmlSymbols,  FG('htmlSymbols') | QFont.Bold),                       # 1
+			(reHtmlStrings,  FG('htmlStrings') | QFont.Bold),                       # 2
+			(reHtmlComments, FG('htmlComments')),                                   # 3
+			(reAsterisks,    ITAL),                                                 # 4
+			(reUnderline,    ITAL),                                                 # 5
+			(reDblAsterisks, NF | QFont.Bold),                                      # 6
+			(reDblUnderline, NF | QFont.Bold),                                      # 7
+			(reTrpAsterisks, ITAL | QFont.Bold),                                    # 8
+			(reTrpUnderline, ITAL | QFont.Bold),                                    # 9
+			(reMkdHeaders,   NF | QFont.Black),                                     # 10
+			(reMkdLinksImgs, FG('markdownLinks')),                                  # 11
+			(reMkdLinkRefs,  ITAL | UNDL),                                          # 12
+			(reBlockQuotes,  FG('blockquotes')),                                    # 13
+			(reReSTDirects,  FG('restDirectives') | QFont.Bold),                    # 14
+			(reReSTRoles,    NF, FG('restRoles') | QFont.Bold, FG('htmlStrings')),  # 15
+			(reTextileHdrs,  NF | QFont.Black),                                     # 16
+			(reTextileQuot,  FG('blockquotes')),                                    # 17
+			(reAsterisks,    NF | QFont.Bold),                                      # 18
+			(reDblUnderline, ITAL),                                                 # 19
+			(reMkdCodeSpans, FG('codeSpans')),                                      # 20
+			(reReSTCodeSpan, FG('codeSpans')),                                      # 21
+			(reReSTLinks,    NF, NF, ITAL | UNDL, NF),                              # 22
+			(reReSTLinkRefs, NF, FG('markdownLinks'), ITAL | UNDL),                 # 23
 		)
+
 		patternsDict = {
 			'Markdown': (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 20),
-			'reStructuredText': (4, 6, 14, 15, 21),
+			'reStructuredText': (4, 6, 14, 15, 21, 22, 23),
 			'Textile': (0, 5, 6, 16, 17, 18, 19),
 			'html': (0, 1, 2, 3)
 		}
@@ -108,16 +138,11 @@ class ReTextHighlighter(QSyntaxHighlighter):
 		if self.docType in patternsDict:
 			for number in patternsDict[self.docType]:
 				pattern = patterns[number]
-				charFormat = QTextCharFormat()
-				charFormat.setFontWeight(pattern[2])
-				if pattern[1] != None:
-					charFormat.setForeground(colorScheme[pattern[1]])
-				if len(pattern) >= 4:
-					charFormat.setFontItalic(pattern[3])
-				if len(pattern) >= 5:
-					charFormat.setFontUnderline(pattern[4])
 				for match in pattern[0].finditer(text):
-					self.setFormat(match.start(), match.end() - match.start(), charFormat)
+					for i, formatter in enumerate(pattern[1:]):
+						charFormat = QTextCharFormat()
+						formatter.format(charFormat)
+						self.setFormat(match.start(i), match.end(i) - match.start(i), charFormat)
 		for match in reSpacesOnEnd.finditer(text):
 			charFormat = QTextCharFormat()
 			charFormat.setBackground(colorScheme['whitespaceOnEnd'])
