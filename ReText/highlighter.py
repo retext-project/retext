@@ -51,7 +51,7 @@ defaultColorScheme = {
 	'htmlStrings': Qt.darkYellow,
 	'htmlComments': Qt.gray,
 	'codeSpans': QColor(0x50, 0x50, 0x50),
-	'markdownLinks': Qt.blue,
+	'markdownLinks': QColor(0, 0, 0x90),
 	'blockquotes': Qt.darkGray,
 	'restDirectives': Qt.darkMagenta,
 	'restRoles': Qt.darkRed,
