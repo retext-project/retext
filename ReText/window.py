@@ -866,7 +866,11 @@ class ReTextWindow(QMainWindow):
 		except Exception:
 			return self.printError()
 		htmlFile = QFile(fileName)
-		htmlFile.open(QIODevice.WriteOnly)
+		result = htmlFile.open(QIODevice.WriteOnly)
+		if not result:
+			QMessageBox.warning(self, '',
+				self.tr("Cannot save to file because it is read-only!"))
+			return
 		html = QTextStream(htmlFile)
 		if globalSettings.defaultCodec:
 			html.setCodec(globalSettings.defaultCodec)
