@@ -19,13 +19,14 @@
 
 from ReText import globalSettings
 from ReText.syncscroll import SyncScroll
+from ReText.preview import ReTextWebPreview
 
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtWebKit import QWebSettings
 from PyQt5.QtWebKitWidgets import QWebPage, QWebView
 
 
-class ReTextWebKitPreview(QWebView):
+class ReTextWebKitPreview(ReTextWebPreview, QWebView):
 
 	def __init__(self, editBox,
 	             editorPositionToSourceLineFunc,
@@ -33,54 +34,17 @@ class ReTextWebKitPreview(QWebView):
 
 		QWebView.__init__(self)
 
-		self.editBox = editBox
+		self.syncscroll = SyncScroll(self.page().mainFrame(),
+		                             editorPositionToSourceLineFunc,
+		                             sourceLineToEditorPositionFunc)
+		ReTextWebPreview.__init__(self, editBox)
 
 		if not globalSettings.handleWebLinks:
 			self.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
 			self.page().linkClicked.connect(QDesktopServices.openUrl)
 		self.settings().setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
-		self.settings().setDefaultTextEncoding('utf-8')
 		# Avoid caching of CSS
 		self.settings().setObjectCacheCapacities(0,0,0)
-
-		self.syncscroll = SyncScroll(self.page().mainFrame(),
-					     editorPositionToSourceLineFunc,
-					     sourceLineToEditorPositionFunc)
-
-		# Events relevant to sync scrolling
-		self.editBox.cursorPositionChanged.connect(self._handleCursorPositionChanged)
-		self.editBox.verticalScrollBar().valueChanged.connect(self.syncscroll.handleEditorScrolled)
-		self.editBox.resized.connect(self._handleEditorResized)
-
-		# Scroll the preview when the mouse wheel is used to scroll
-		# beyond the beginning/end of the editor
-		self.editBox.scrollLimitReached.connect(self._handleWheelEvent)
-
-	def disconnectExternalSignals(self):
-		self.editBox.cursorPositionChanged.disconnect(self._handleCursorPositionChanged)
-		self.editBox.verticalScrollBar().valueChanged.disconnect(self.syncscroll.handleEditorScrolled)
-		self.editBox.resized.disconnect(self._handleEditorResized)
-
-		self.editBox.scrollLimitReached.disconnect(self._handleWheelEvent)
-
-	def _handleWheelEvent(self, event):
-		"""
-		Use this intermediate function because it is not possible to
-		disconnect a built-in method. It would generate the following error:
-		  TypeError: 'builtin_function_or_method' object is not connected
-		"""
-		# Only pass wheelEvents on to the preview if syncscroll is
-		# controlling the position of the preview
-		if self.syncscroll.isActive():
-			self.wheelEvent(event)
-
-	def _handleCursorPositionChanged(self):
-		editorCursorPosition = self.editBox.verticalScrollBar().value() + \
-				       self.editBox.cursorRect().top()
-		self.syncscroll.handleCursorPositionChanged(editorCursorPosition)
-
-	def _handleEditorResized(self, rect):
-		self.syncscroll.handleEditorResized(rect.height())
 
 	def updateFontSettings(self):
 		settings = self.settings()

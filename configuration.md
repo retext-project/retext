@@ -38,6 +38,7 @@ option name                    | type      | description
 `tabWidth`                     | integer   | the width of tab character (default: 4)
 `uiLanguage`                   | string    | short name of locale to use for interface (examples: `en_US, `ru, `pt_BR`)
 `useFakeVim`                   | boolean   | whether to use the FakeVim editor, if available (default: false)
+`useWebEngine`                 | boolean   | whether to use the WebEngine (Chromium) as HTML previewer (default: false)
 `useWebKit`                    | boolean   | whether to use the WebKit instead of QTextEdit as HTML previewer (default: false)
 
 If the type is 'file path', then the value should be an absolute path

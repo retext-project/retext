@@ -23,7 +23,8 @@ import warnings
 
 from ReText import (getBundledIcon, app_version, globalSettings,
                     readListFromSettings, writeListToSettings, datadirs)
-from ReText.tab import ReTextTab, ReTextWebKitPreview, PreviewNormal, PreviewLive
+from ReText.tab import (ReTextTab, ReTextWebKitPreview, ReTextWebEnginePreview,
+                        PreviewNormal, PreviewLive)
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
 from ReText.icontheme import get_icon_theme
@@ -187,6 +188,11 @@ class ReTextWindow(QMainWindow):
 			globalSettings.useWebKit = False
 			self.actionWebKit.setEnabled(False)
 		self.actionWebKit.setChecked(globalSettings.useWebKit)
+		self.actionWebEngine = self.act(self.tr('Use WebEngine (Chromium) renderer'),
+			trigbool=self.enableWebEngine)
+		if ReTextWebEnginePreview is None:
+			globalSettings.useWebEngine = False
+		self.actionWebEngine.setChecked(globalSettings.useWebEngine)
 		self.actionShow = self.act(self.tr('Show directory'), 'system-file-manager', self.showInDir)
 		self.actionFind = self.act(self.tr('Next'), 'go-next', self.find,
 			shct=QKeySequence.FindNext)
@@ -294,7 +300,10 @@ class ReTextWindow(QMainWindow):
 		menuFormat.addAction(self.actionBold)
 		menuFormat.addAction(self.actionItalic)
 		menuFormat.addAction(self.actionUnderline)
-		menuEdit.addAction(self.actionWebKit)
+		if ReTextWebKitPreview is not None or ReTextWebEnginePreview is None:
+			menuEdit.addAction(self.actionWebKit)
+		else:
+			menuEdit.addAction(self.actionWebEngine)
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionViewHtml)
 		menuEdit.addAction(self.actionPreview)
@@ -553,15 +562,12 @@ class ReTextWindow(QMainWindow):
 	def enableWebKit(self, enable):
 		globalSettings.useWebKit = enable
 		for tab in self.iterateTabs():
-			tab.previewBox.disconnectExternalSignals()
-			tab.previewBox.setParent(None)
-			tab.previewBox.deleteLater()
-			tab.previewBox = tab.createPreviewBox(tab.editBox)
-			tab.previewBox.setMinimumWidth(125)
-			tab.addWidget(tab.previewBox)
-			tab.setSizes((50, 50))
-			tab.triggerPreviewUpdate()
-			tab.updateBoxesVisibility()
+			tab.rebuildPreviewBox()
+
+	def enableWebEngine(self, enable):
+		globalSettings.useWebEngine = enable
+		for tab in self.iterateTabs():
+			tab.rebuildPreviewBox()
 
 	def enableCopy(self, copymode):
 		self.actionCopy.setEnabled(copymode)

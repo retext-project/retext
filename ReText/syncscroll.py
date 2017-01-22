@@ -133,7 +133,17 @@ class SyncScroll:
         pos.setY(preview_scroll_offset)
         self.frame.setScrollPosition(pos)
 
+    def _setPositionMap(self, posmap):
+        self.posmap = posmap
+        if posmap:
+            self.posmap[0] = 0
+
     def _recalculatePositionMap(self):
+        if hasattr(self.frame, 'getPositionMap'):
+            # For WebEngine the update has to be asynchronous
+            self.frame.getPositionMap(self._setPositionMap)
+            return
+
         # Create a list of input line positions mapped to vertical pixel positions in the preview
         self.posmap = {}
         elements = self.frame.findAllElements('[data-posmap]')

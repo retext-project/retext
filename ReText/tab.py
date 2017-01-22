@@ -38,6 +38,11 @@ try:
 except ImportError:
 	ReTextWebKitPreview = None
 
+try:
+	from ReText.webenginepreview import ReTextWebEnginePreview
+except ImportError:
+	ReTextWebEnginePreview = None
+
 PreviewDisabled, PreviewLive, PreviewNormal = range(3)
 
 class ReTextTab(QSplitter):
@@ -114,10 +119,14 @@ class ReTextTab(QSplitter):
 			rect = doc.documentLayout().blockBoundingRect(block)
 			return rect.top()
 
-		if globalSettings.useWebKit:
+		if ReTextWebKitPreview and globalSettings.useWebKit:
 			preview = ReTextWebKitPreview(editBox,
 			                              editorPositionToSourceLine,
 			                              sourceLineToEditorPosition)
+		elif ReTextWebEnginePreview and globalSettings.useWebEngine:
+			preview = ReTextWebEnginePreview(self,
+			                                 editorPositionToSourceLine,
+			                                 sourceLineToEditorPosition)
 		else:
 			preview = ReTextPreview(self)
 
@@ -270,6 +279,17 @@ class ReTextTab(QSplitter):
 	def updateBoxesVisibility(self):
 		self.editBox.setVisible(self.previewState < PreviewNormal)
 		self.previewBox.setVisible(self.previewState > PreviewDisabled)
+
+	def rebuildPreviewBox(self):
+		self.previewBox.disconnectExternalSignals()
+		self.previewBox.setParent(None)
+		self.previewBox.deleteLater()
+		self.previewBox = self.createPreviewBox(self.editBox)
+		self.previewBox.setMinimumWidth(125)
+		self.addWidget(self.previewBox)
+		self.setSizes((50, 50))
+		self.triggerPreviewUpdate()
+		self.updateBoxesVisibility()
 
 	def detectFileEncoding(self, fileName):
 		'''
