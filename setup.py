@@ -77,7 +77,7 @@ class retext_install_data(install_data):
 			import urllib.request
 			import tarfile
 			from io import BytesIO
-			icons_tgz = 'http://downloads.sourceforge.net/project/retext/Icons/ReTextIcons_r4.tar.gz'
+			icons_tgz = 'http://downloads.sourceforge.net/project/retext/Icons/ReTextIcons_r5.tar.gz'
 			response = urllib.request.urlopen(icons_tgz)
 			tario = BytesIO(response.read())
 			tar = tarfile.open(fileobj=tario, mode='r')
