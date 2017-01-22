@@ -19,7 +19,7 @@
 from ReText import globalSettings
 from ReText.preview import ReTextWebPreview
 from ReText.syncscroll import SyncScroll
-from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtGui import QDesktopServices, QGuiApplication
 from PyQt5.QtWebEngineWidgets import QWebEnginePage, QWebEngineView, QWebEngineSettings
 
 
@@ -97,3 +97,9 @@ class ReTextWebEnginePreview(ReTextWebPreview, QWebEngineView):
         self.setEnabled(False)
         QWebEngineView.setHtml(self, html, baseUrl)
         self.setEnabled(True)
+
+    def _handleWheelEvent(self, event):
+        # Only pass wheelEvents on to the preview if syncscroll is
+        # controlling the position of the preview
+        if self.syncscroll.isActive():
+            QGuiApplication.sendEvent(self.focusProxy(), event)

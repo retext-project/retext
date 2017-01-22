@@ -42,17 +42,6 @@ class ReTextWebPreview:
 
 		self.editBox.scrollLimitReached.disconnect(self._handleWheelEvent)
 
-	def _handleWheelEvent(self, event):
-		"""
-		Use this intermediate function because it is not possible to
-		disconnect a built-in method. It would generate the following error:
-		  TypeError: 'builtin_function_or_method' object is not connected
-		"""
-		# Only pass wheelEvents on to the preview if syncscroll is
-		# controlling the position of the preview
-		if self.syncscroll.isActive():
-			self.wheelEvent(event)
-
 	def _handleCursorPositionChanged(self):
 		editorCursorPosition = self.editBox.verticalScrollBar().value() + \
 				       self.editBox.cursorRect().top()
