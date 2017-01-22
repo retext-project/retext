@@ -59,7 +59,9 @@ class SyncScroll:
         self.contentIsLoading = True
 
     def _handleLoadFinished(self):
+        self.frame.setScrollPosition(self.previewPositionBeforeLoad)
         self.contentIsLoading = False
+        self._recalculatePositionMap()
 
     def _handlePreviewResized(self):
         self._recalculatePositionMap()
