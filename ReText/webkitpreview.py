@@ -28,20 +28,20 @@ from PyQt5.QtWebKitWidgets import QWebPage, QWebView
 
 class ReTextWebKitPreview(ReTextWebPreview, QWebView):
 
-	def __init__(self, editBox,
+	def __init__(self, tab,
 	             editorPositionToSourceLineFunc,
 	             sourceLineToEditorPositionFunc):
 
 		QWebView.__init__(self)
+		self.tab = tab
 
 		self.syncscroll = SyncScroll(self.page().mainFrame(),
 		                             editorPositionToSourceLineFunc,
 		                             sourceLineToEditorPositionFunc)
-		ReTextWebPreview.__init__(self, editBox)
+		ReTextWebPreview.__init__(self, tab.editBox)
 
-		if not globalSettings.handleWebLinks:
-			self.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
-			self.page().linkClicked.connect(QDesktopServices.openUrl)
+		self.page().setLinkDelegationPolicy(QWebPage.DelegateAllLinks)
+		self.page().linkClicked.connect(self._handleLinkClicked)
 		self.settings().setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
 		# Avoid caching of CSS
 		self.settings().setObjectCacheCapacities(0,0,0)
@@ -58,3 +58,16 @@ class ReTextWebKitPreview(ReTextWebPreview, QWebView):
 		# controlling the position of the preview
 		if self.syncscroll.isActive():
 			self.wheelEvent(event)
+
+	def _handleLinkClicked(self, url):
+		if url.isLocalFile():
+			localFile = url.toLocalFile()
+			if localFile == self.tab.fileName and url.hasFragment():
+				self.page().mainFrame().scrollToAnchor(url.fragment())
+				return
+			if self.tab.openSourceFile(localFile):
+				return
+		if globalSettings.handleWebLinks:
+			self.load(url)
+		else:
+			QDesktopServices.openUrl(url)

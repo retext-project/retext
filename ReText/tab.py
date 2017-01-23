@@ -120,7 +120,7 @@ class ReTextTab(QSplitter):
 			return rect.top()
 
 		if ReTextWebKitPreview and globalSettings.useWebKit:
-			preview = ReTextWebKitPreview(editBox,
+			preview = ReTextWebKitPreview(self,
 			                              editorPositionToSourceLine,
 			                              sourceLineToEditorPosition)
 		elif ReTextWebEnginePreview and globalSettings.useWebEngine:
