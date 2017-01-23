@@ -552,12 +552,14 @@ class ReTextWindow(QMainWindow):
 		self.actionLivePreview.setChecked(False)
 		self.editBar.setDisabled(viewmode)
 		self.currentTab.updateBoxesVisibility()
+		self.currentTab.triggerPreviewUpdate()
 
 	def enableLivePreview(self, livemode):
 		self.currentTab.previewState = int(livemode)
 		self.actionPreview.setChecked(livemode)
 		self.editBar.setEnabled(True)
 		self.currentTab.updateBoxesVisibility()
+		self.currentTab.triggerPreviewUpdate()
 
 	def enableWebKit(self, enable):
 		globalSettings.useWebKit = enable
