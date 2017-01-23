@@ -563,10 +563,12 @@ class ReTextWindow(QMainWindow):
 
 	def enableWebKit(self, enable):
 		globalSettings.useWebKit = enable
+		globalSettings.useWebEngine = False
 		for tab in self.iterateTabs():
 			tab.rebuildPreviewBox()
 
 	def enableWebEngine(self, enable):
+		globalSettings.useWebKit = False
 		globalSettings.useWebEngine = enable
 		for tab in self.iterateTabs():
 			tab.rebuildPreviewBox()
