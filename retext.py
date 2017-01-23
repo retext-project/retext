@@ -28,7 +28,7 @@ from ReText import initializeDataDirs
 from ReText.window import ReTextWindow
 
 from PyQt5.QtCore import QFile, QFileInfo, QIODevice, QLibraryInfo, \
- QTextStream, QTranslator
+ QTextStream, QTranslator, Qt
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtNetwork import QNetworkProxyFactory
 
@@ -47,6 +47,9 @@ def main():
 		sys.stdout = open(devnull, 'w')
 		sys.stderr = open('stderr.log', 'w')
 
+	if hasattr(Qt, 'AA_ShareOpenGLContexts'):
+		# Needed for Qt WebEngine on Windows
+		QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
 	app = QApplication(sys.argv)
 	app.setOrganizationName("ReText project")
 	app.setApplicationName("ReText")

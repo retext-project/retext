@@ -28,7 +28,7 @@ import warnings
 
 from markups.abstract import ConvertedMarkup
 
-from PyQt5.QtCore import pyqtSignal, QObject
+from PyQt5.QtCore import pyqtSignal, QObject, Qt
 from PyQt5.QtWidgets import QApplication
 import ReText
 from ReText.window import ReTextWindow
@@ -36,6 +36,8 @@ from ReText.window import ReTextWindow
 defaultEventTimeout = 0.0
 path_to_testdata = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'testdata')
 
+if hasattr(Qt, 'AA_ShareOpenGLContexts'):
+    QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
 app = QApplication.instance() or QApplication(sys.argv)
 ReText.initializeDataDirs()
 

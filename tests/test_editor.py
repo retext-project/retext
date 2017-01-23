@@ -27,6 +27,8 @@ from PyQt5.QtCore import Qt, QMimeData
 from PyQt5.QtWidgets import QApplication
 from markups import MarkdownMarkup, ReStructuredTextMarkup
 
+if hasattr(Qt, 'AA_ShareOpenGLContexts'):
+	QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
 # Keep a reference so it is not garbage collected
 app = QApplication.instance() or QApplication(sys.argv)
 

@@ -30,6 +30,8 @@ from ReText.highlighter import colorScheme, updateColorScheme
 # only have one QCoreApplication instance for all tests in a process. As
 # other tests need QApplication, we should not create a bare QCoreApplication
 # here. Also, keep a reference so it is not garbage collected.
+if hasattr(Qt, 'AA_ShareOpenGLContexts'):
+	QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
 app = QApplication.instance() or QApplication(sys.argv)
 
 class TestSettings(unittest.TestCase):
