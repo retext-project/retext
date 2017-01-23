@@ -424,7 +424,12 @@ class ReTextTab(QSplitter):
 		return not lastCursor.isNull()
 
 	def openSourceFile(self, fileToOpen):
-		"""Finds and opens the source file for link target fileToOpen."""
+		"""Finds and opens the source file for link target fileToOpen.
+
+		When links like [test](test) are clicked, the file test.md is opened.
+		It has to be located next to the current opened file.
+		Relative paths like [test](../test) or [test](folder/test) are also possible.
+		"""
 		if self.fileName:
 			currentExt = splitext(self.fileName)[1]
 			basename, ext = splitext(fileToOpen)
@@ -437,11 +442,6 @@ class ReTextTab(QSplitter):
 
 
 class ReTextPreview(QTextBrowser):
-	"""
-	When links like [test](test) are clicked, the file test.md is opened.
-	It has to be located next to the current opened file.
-	Relative pathes like [test](../test) or [test](folder/test) are also possible.
-	"""
 
 	def __init__(self, tab):
 		QTextBrowser.__init__(self)
