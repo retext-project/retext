@@ -186,7 +186,7 @@ class ReTextEdit(QTextEdit):
 			documentIndentMore(self.document(), cursor)
 		elif key == Qt.Key_Backtab:
 			documentIndentLess(self.document(), cursor)
-		elif key == Qt.Key_Return and not cursor.hasSelection():
+		elif key == Qt.Key_Return:
 			if event.modifiers() & Qt.ShiftModifier:
 				# Insert Markdown-style line break
 				markupClass = self.tab.getActiveMarkupClass()
