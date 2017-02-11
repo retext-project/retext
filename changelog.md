@@ -1,3 +1,27 @@
+## ReText 7.0 (2017-02-11)
+
+* It is now possible to install ReText on Windows and macOS using a simple
+  `pip install ReText` command. This will pull PyQt5 wheels from PyPI,
+  and also download and extract the icons pack needed on this platforms.
+  Setup now also generates a wrapper batch script (this was contributed by
+  Hong-She Liang).
+* Added experimental Qt WebEngine renderer, in addition to the existing
+  Qt WebKit one.
+* The highlighter got support for reStructuredText links, field lists
+  and for Markdown and reStructuredText code spans.
+* The replace option was added to the search toolbar.
+* The WebKit and WebEngine previewers can now detect links to local HTML
+  files and open the corresponding source files in new tab if those are
+  found.
+* The table mode is now able to insert inter-cell line breaks and new rows,
+  when Return and Shift-Return are pressed (respectively).
+* ReText can now automatically detect files encoding when `chardet` module
+  is present (contributed by Hong-She Liang).
+* A configuration option for automatically opening last files was added
+  (contributed by Hong-She Liang).
+* A configuration option for hiding the tabs bar when there is only one tab
+  was added.
+
 ## ReText 6.0 (2016-05-10)
 
 * The live preview now automatically scrolls to match its position with the
