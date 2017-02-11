@@ -397,6 +397,7 @@ class ReTextWindow(QMainWindow):
 			self.ss = 'html { color: %s; }\n' % palette.color(QPalette.WindowText).name()
 			self.ss += 'td, th { border: 1px solid #c3c3c3; padding: 0 3px 0 3px; }\n'
 			self.ss += 'table { border-collapse: collapse; }\n'
+			self.ss += 'img { max-width: 100%; }\n'
 
 	def initTabWidget(self):
 		def dragEnterEvent(e):
