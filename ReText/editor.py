@@ -195,6 +195,9 @@ class ReTextEdit(QTextEdit):
 			if event.modifiers() & Qt.ControlModifier:
 				cursor.insertText('\n')
 				self.ensureCursorVisible()
+			elif self.tableModeEnabled and tablemode.handleReturn(cursor):
+				self.setTextCursor(cursor)
+				self.ensureCursorVisible()
 			else:
 				self.handleReturn(cursor)
 		else:
