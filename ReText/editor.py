@@ -187,19 +187,18 @@ class ReTextEdit(QTextEdit):
 		elif key == Qt.Key_Backtab:
 			documentIndentLess(self.document(), cursor)
 		elif key == Qt.Key_Return:
-			if event.modifiers() & Qt.ShiftModifier:
-				# Insert Markdown-style line break
-				markupClass = self.tab.getActiveMarkupClass()
-				if markupClass == MarkdownMarkup:
-					cursor.insertText('  ')
+			markupClass = self.tab.getActiveMarkupClass()
 			if event.modifiers() & Qt.ControlModifier:
 				cursor.insertText('\n')
 				self.ensureCursorVisible()
-			elif self.tableModeEnabled and tablemode.handleReturn(cursor,
+			elif self.tableModeEnabled and tablemode.handleReturn(cursor, markupClass,
 					newRow=(event.modifiers() & Qt.ShiftModifier)):
 				self.setTextCursor(cursor)
 				self.ensureCursorVisible()
 			else:
+				if event.modifiers() & Qt.ShiftModifier and markupClass == MarkdownMarkup:
+					# Insert Markdown-style line break
+					cursor.insertText('  ')
 				self.handleReturn(cursor)
 		else:
 			if event.text() and self.tableModeEnabled:
