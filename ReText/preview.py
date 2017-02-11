@@ -16,6 +16,37 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from PyQt5.QtCore import QDir
+from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtWidgets import QTextBrowser
+from ReText import globalSettings
+
+class ReTextPreview(QTextBrowser):
+
+	def __init__(self, tab):
+		QTextBrowser.__init__(self)
+		self.tab = tab
+		# if set to True, links to other files will unsuccessfully be opened as anchors
+		self.setOpenLinks(False)
+		self.anchorClicked.connect(self.openInternal)
+
+	def disconnectExternalSignals(self):
+		pass
+
+	def openInternal(self, link):
+		url = link.url()
+		isLocalHtml = (link.scheme() in ('file', '') and url.endswith('.html'))
+		if url.startswith('#'):
+			self.scrollToAnchor(url[1:])
+		elif link.isRelative():
+			fileToOpen = QDir.current().filePath(url)
+			if self.tab.openSourceFile(fileToOpen):
+				return
+		if globalSettings.handleWebLinks and isLocalHtml:
+			self.setSource(link)
+		else:
+			QDesktopServices.openUrl(link)
+
 
 class ReTextWebPreview:
 	"""This is a common class shared between WebKit and WebEngine

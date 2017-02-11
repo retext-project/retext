@@ -23,6 +23,7 @@ from markups.common import MODULE_HOME_PAGE
 from ReText import app_version, globalSettings, converterprocess
 from ReText.editor import ReTextEdit
 from ReText.highlighter import ReTextHighlighter
+from ReText.preview import ReTextPreview
 
 try:
 	import enchant
@@ -30,8 +31,8 @@ except ImportError:
 	enchant = None
 
 from PyQt5.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QPoint, QTextStream, QTimer, QUrl
-from PyQt5.QtGui import QDesktopServices, QTextCursor, QTextDocument
-from PyQt5.QtWidgets import QTextBrowser, QTextEdit, QSplitter
+from PyQt5.QtGui import QTextCursor, QTextDocument
+from PyQt5.QtWidgets import QTextEdit, QSplitter
 
 try:
 	from ReText.webkitpreview import ReTextWebKitPreview
@@ -439,30 +440,3 @@ class ReTextTab(QSplitter):
 		if exists(fileToOpen) and get_markup_for_file_name(fileToOpen, return_class=True):
 			self.p.openFileWrapper(fileToOpen)
 			return fileToOpen
-
-
-class ReTextPreview(QTextBrowser):
-
-	def __init__(self, tab):
-		QTextBrowser.__init__(self)
-		self.tab = tab
-		# if set to True, links to other files will unsuccessfully be opened as anchors
-		self.setOpenLinks(False)
-		self.anchorClicked.connect(self.openInternal)
-
-	def disconnectExternalSignals(self):
-		pass
-
-	def openInternal(self, link):
-		url = link.url()
-		isLocalHtml = (link.scheme() in ('file', '') and url.endswith('.html'))
-		if url.startswith('#'):
-			self.scrollToAnchor(url[1:])
-		elif link.isRelative():
-			fileToOpen = QDir.current().filePath(url)
-			if self.tab.openSourceFile(fileToOpen):
-				return
-		if globalSettings.handleWebLinks and isLocalHtml:
-			self.setSource(link)
-		else:
-			QDesktopServices.openUrl(link)
