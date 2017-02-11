@@ -191,15 +191,22 @@ def adjustTableToChanges(doc, pos, editsize, markupClass):
 		cursor = QTextCursor(doc)
 		_performEdits(cursor, rows, editLists, editedlineindex, editsize)
 
-def handleReturn(cursor):
+def handleReturn(cursor, newRow):
 	positionInBlock = cursor.positionInBlock()
 	cursor.select(QTextCursor.LineUnderCursor)
 	oldLine = cursor.selectedText()
 	if not ('| ' in oldLine or ' |' in oldLine):
 		cursor.setPosition(cursor.block().position() + positionInBlock)
 		return False
+	indent = 0
+	while oldLine[indent] in ' \t':
+		indent += 1
+	indentChars, oldLine = oldLine[:indent], oldLine[indent:]
 	newLine = ''.join('|' if c in '+|' else ' ' for c in oldLine)
 	cursor.movePosition(QTextCursor.EndOfLine)
-	cursor.insertText('\n' + newLine)
+	if newRow:
+		sepLine = ''.join('+' if c in '+|' else '-' for c in oldLine)
+		cursor.insertText('\n' + indentChars + sepLine)
+	cursor.insertText('\n' + indentChars + newLine)
 	cursor.setPosition(cursor.block().position() + positionInBlock)
 	return True
