@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-VERSION = '6.1.0'
+VERSION = '7.0.0'
 
 long_description = '''\
 ReText is simple text editor that supports Markdown and reStructuredText
