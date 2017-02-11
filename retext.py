@@ -83,6 +83,8 @@ def main():
 	fileNames = list(map(canonicalize, sys.argv[1:]))
 	previewMode = False
 	readStdIn = False
+	if globalSettings.openLastFilesOnStartup:
+		window.restoreLastOpenedFiles()
 	for fileName in fileNames:
 		if QFile.exists(fileName):
 			window.openFileWrapper(fileName)
@@ -93,8 +95,6 @@ def main():
 			previewMode = True
 		elif fileName == '-':
 			readStdIn = True
-	if globalSettings.openLastFilesOnStartup:
-		window.restoreLastOpenedFiles()
 
 	inputData = ''
 	if readStdIn and sys.stdin is not None:
