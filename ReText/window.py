@@ -363,7 +363,7 @@ class ReTextWindow(QMainWindow):
 			try:
 				enchant.Dict(self.sl or None)
 			except enchant.errors.Error as e:
-				warnings.warn(e, RuntimeWarning)
+				warnings.warn(str(e), RuntimeWarning)
 				globalSettings.spellCheck = False
 			if globalSettings.spellCheck:
 				self.actionEnableSC.setChecked(True)
