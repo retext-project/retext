@@ -67,7 +67,7 @@ class retext_install_scripts(install_scripts):
 			if sys.platform == "win32":
 				# Generate a batch script to wrap the python script so we could invoke
 				# that script directly from the command line
-				batch_script = "@echo off\n%s %s %%*" % (sys.executable, renamed_file)
+				batch_script = "@echo off\n\"%s\" \"%s\" %%*" % (sys.executable, renamed_file)
 				with open("%s.bat" % renamed_file, "w") as bat_file:
 					bat_file.write(batch_script)
 
