@@ -68,6 +68,7 @@ configOptions = {
 	'defaultCodec': '',
 	'defaultMarkup': markups.MarkdownMarkup.name,
 	'detectEncoding': True,
+	'documentStatsEnabled': False,
 	'editorFont': QFont(),
 	'font': QFont(),
 	'handleWebLinks': False,

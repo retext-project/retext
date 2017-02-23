@@ -37,6 +37,7 @@ colors = {
 	'marginLine': QColor(0xdc, 0xd2, 0xdc),
 	'currentLineHighlight': QColor(0xff, 0xff, 0xc8),
 	'infoArea': QColor(0xaa, 0xff, 0x55, 0xaa),
+	'statsArea': QColor(0xff, 0xaa, 0x55, 0xaa),
 	'lineNumberArea': Qt.cyan,
 	'lineNumberAreaText': Qt.darkCyan
 }
@@ -101,7 +102,9 @@ class ReTextEdit(QTextEdit):
 		self.tableModeEnabled = False
 		self.setAcceptRichText(False)
 		self.lineNumberArea = LineNumberArea(self)
-		self.infoArea = InfoArea(self)
+		self.infoArea = LineInfoArea(self)
+		self.statistics = (0, 0, 0)
+		self.statsArea = TextInfoArea(self)
 		self.updateFont()
 		self.document().blockCountChanged.connect(self.updateLineNumberAreaWidth)
 		self.cursorPositionChanged.connect(self.highlightCurrentLine)
@@ -117,6 +120,8 @@ class ReTextEdit(QTextEdit):
 		self.setTabStopWidth(globalSettings.tabWidth * self.fontMetrics().width(' '))
 		self.updateLineNumberAreaWidth()
 		self.infoArea.updateTextAndGeometry()
+		self.updateTextStatistics()
+		self.statsArea.updateTextAndGeometry()
 
 	def paintEvent(self, event):
 		if not globalSettings.rightMargin:
@@ -244,6 +249,7 @@ class ReTextEdit(QTextEdit):
 		self.lineNumberArea.setGeometry(rect.left(), rect.top(),
 			self.lineNumberAreaWidth(), rect.height())
 		self.infoArea.updateTextAndGeometry()
+		self.statsArea.updateTextAndGeometry()
 
 	def highlightCurrentLine(self):
 		if globalSettings.relativeLineNumbers:
@@ -276,6 +282,7 @@ class ReTextEdit(QTextEdit):
 			tablemode.adjustTableToChanges(self.document(), pos, added - removed, markupClass)
 			self.restoreCursorPositionOnLine(cursorPosition)
 		self.lineNumberArea.update()
+		self.updateTextStatistics()
 
 	def canInsertFromMimeData(self, mimeData):
 		return mimeData.hasText() or mimeData.hasImage()
@@ -339,6 +346,27 @@ class ReTextEdit(QTextEdit):
 			fakeVimEditor.setQuitAction(self.parent.actionQuit)
 			self.parent.actionFakeVimMode.triggered.connect(fakeVimEditor.remove)
 
+	def updateTextStatistics(self):
+		if not globalSettings.documentStatsEnabled:
+			return
+		text = self.toPlainText()
+		wasWordCharacter = False
+		wordCount = 0
+		alphaNumCount = 0
+		characterCount = 0
+		for c in text:
+			characterCount += 1
+			isWordCharacter = c.isalnum()
+			if isWordCharacter:
+				alphaNumCount += 1
+			if wasWordCharacter and not isWordCharacter:
+				wordCount += 1
+			wasWordCharacter = isWordCharacter
+		if wasWordCharacter:
+			wordCount += 1
+		self.statistics = (wordCount, alphaNumCount, characterCount)
+
+
 class LineNumberArea(QWidget):
 	def __init__(self, editor):
 		QWidget.__init__(self, editor)
@@ -373,39 +401,42 @@ class LineNumberArea(QWidget):
 				cursor.movePosition(QTextCursor.NextBlock)
 
 class InfoArea(QLabel):
-	def __init__(self, editor):
+	def __init__(self, editor, baseColor):
 		QWidget.__init__(self, editor)
 		self.editor = editor
 		self.editor.cursorPositionChanged.connect(self.updateTextAndGeometry)
 		self.updateTextAndGeometry()
 		self.setAutoFillBackground(True)
+		self.baseColor = baseColor
 		palette = self.palette()
-		palette.setColor(QPalette.Window, colorValues['infoArea'])
+		palette.setColor(QPalette.Window, self.baseColor)
 		self.setPalette(palette)
 		self.setCursor(Qt.IBeamCursor)
 
 	def updateTextAndGeometry(self):
 		text = self.getText()
+		(w, h) = self.getAreaSize(text)
+		(x, y) = self.getAreaPosition(w, h)
 		self.setText(text)
-		viewport = self.editor.viewport()
+		self.resize(w, h)
+		self.move(x, y)
+		self.setVisible(not globalSettings.useFakeVim)
+
+	def getAreaSize(self, text):
 		metrics = self.fontMetrics()
 		width = metrics.width(text)
 		height = metrics.height()
-		self.resize(width, height)
-		rightSide = viewport.width() + self.editor.lineNumberAreaWidth()
-		self.move(rightSide - width, viewport.height() - height)
-		self.setVisible(not globalSettings.useFakeVim)
+		return width, height
+
+	def getAreaPosition(self, width, height):
+		return 0, 0
 
 	def getText(self):
-		template = '%d : %d'
-		cursor = self.editor.textCursor()
-		block = cursor.blockNumber() + 1
-		position = cursor.positionInBlock()
-		return template % (block, position)
+		return ""
 
 	def enterEvent(self, event):
 		palette = self.palette()
-		windowColor = QColor(colorValues['infoArea'])
+		windowColor = QColor(self.baseColor)
 		windowColor.setAlpha(0x20)
 		palette.setColor(QPalette.Window, windowColor)
 		textColor = palette.color(QPalette.WindowText)
@@ -415,7 +446,7 @@ class InfoArea(QLabel):
 
 	def leaveEvent(self, event):
 		palette = self.palette()
-		palette.setColor(QPalette.Window, colorValues['infoArea'])
+		palette.setColor(QPalette.Window, self.baseColor)
 		palette.setColor(QPalette.WindowText,
 			self.editor.palette().color(QPalette.WindowText))
 		self.setPalette(palette)
@@ -431,3 +462,37 @@ class InfoArea(QLabel):
 	mouseReleaseEvent = mousePressEvent
 	mouseDoubleClickEvent = mousePressEvent
 	mouseMoveEvent = mousePressEvent
+
+class LineInfoArea(InfoArea):
+	def __init__(self, editor):
+		InfoArea.__init__(self, editor, colorValues['infoArea'])
+
+	def getAreaPosition(self, width, height):
+		viewport = self.editor.viewport()
+		rightSide = viewport.width() + self.editor.lineNumberAreaWidth()
+		return rightSide - width, viewport.height() - height
+
+	def getText(self):
+		template = '%d : %d'
+		cursor = self.editor.textCursor()
+		block = cursor.blockNumber() + 1
+		position = cursor.positionInBlock()
+		return template % (block, position)
+
+
+class TextInfoArea(InfoArea):
+	def __init__(self, editor):
+		InfoArea.__init__(self, editor, colorValues['statsArea'])
+
+	def getAreaPosition(self, width, height):
+		viewport = self.editor.viewport()
+		leftSide = self.editor.lineNumberAreaWidth()
+		return leftSide, viewport.height() - height
+
+	def getText(self):
+		if not globalSettings.documentStatsEnabled:
+			return
+		template = self.tr('%d w : %d a : %d c')
+		words, alphaNums, characters = self.editor.statistics
+		return template % (words, alphaNums, characters)
+

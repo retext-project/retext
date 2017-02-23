@@ -69,6 +69,11 @@
         <translation>Fichier de feuille de style</translation>
     </message>
     <message>
+        <location filename="config.py" line="67"/>
+        <source>Show document stats</source>
+        <translation>Afficher les statistiques du document</translation>
+    </message>
+    <message>
         <location filename="config.py" line="104"/>
         <source>Help</source>
         <translation>Aide</translation>
@@ -144,6 +149,11 @@
         <location filename="editor.py" line="295"/>
         <source>Images (*.png *.jpg)</source>
         <translation>Images (*.png *.jpg)</translation>
+    </message>
+    <message>
+        <location filename="editor.py" line="493"/>
+        <source>%d w : %d a : %d c</source>
+        <translation>%d m : %d a : %d c</translation>
     </message>
 </context>
 <context>
