@@ -17,7 +17,7 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 import platform
 import re
 import sys
-from os.path import join
+from os.path import join, isfile
 from distutils import log
 from distutils.core import setup, Command
 from distutils.command.build import build
@@ -65,9 +65,15 @@ class retext_install_scripts(install_scripts):
 			shutil.move(file, renamed_file)
 
 			if sys.platform == "win32":
+				py = sys.executable
+				pyw = py.replace('.exe', 'w.exe')
+				pyw_found = isfile(pyw)
+				if pyw_found:
+					py = pyw
+
 				# Generate a batch script to wrap the python script so we could invoke
 				# that script directly from the command line
-				batch_script = "@echo off\n\"%s\" \"%s\" %%*" % (sys.executable, renamed_file)
+				batch_script = '@echo off\n%s"%s" "%s" %%*' % ('start "" ' if pyw_found else '', py, renamed_file)
 				with open("%s.bat" % renamed_file, "w") as bat_file:
 					bat_file.write(batch_script)
 
