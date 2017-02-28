@@ -28,5 +28,5 @@ Categories=Office;WordProcessor;
 Exec=retext %F
 Type=Application
 Icon=retext
-MimeType=text/x-markdown;text/x-rst;
+MimeType=text/markdown;text/x-rst;
 Keywords=Text;Editor;Markdown;reStructuredText;
