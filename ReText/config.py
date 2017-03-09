@@ -79,6 +79,7 @@ class ConfigDialog(QDialog):
 			(self.tr('Editor'), None),
 			(self.tr('Highlight current line'), 'highlightCurrentLine'),
 			(self.tr('Show line numbers'), 'lineNumbersEnabled'),
+			(self.tr('Line numbers are relative to current line'), 'relativeLineNumbers'),
 			(self.tr('Tab key inserts spaces'), 'tabInsertsSpaces'),
 			(self.tr('Tabulation width'), 'tabWidth'),
 			(self.tr('Draw vertical line at column'), 'rightMargin'),
