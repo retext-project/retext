@@ -193,7 +193,7 @@
     <message>
         <location filename="window.py" line="1096"/>
         <source>Reload</source>
-        <translation>Recherger</translation>
+        <translation>Recharger</translation>
     </message>
     <message>
         <location filename="window.py" line="105"/>
