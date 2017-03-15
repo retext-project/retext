@@ -80,6 +80,7 @@ configOptions = {
 	'markdownDefaultFileExtension': '.mkd',
 	'openLastFilesOnStartup': False,
 	'pygmentsStyle': 'default',
+	'relativeLineNumbers': False,
 	'restDefaultFileExtension': '.rst',
 	'rightMargin': 0,
 	'saveWindowGeometry': False,

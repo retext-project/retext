@@ -228,7 +228,10 @@ class ReTextEdit(QTextEdit):
 			return 0
 		cursor = QTextCursor(self.document())
 		cursor.movePosition(QTextCursor.End)
-		digits = len(str(cursor.blockNumber() + 1))
+		if globalSettings.relativeLineNumbers:
+			digits = len(str(cursor.blockNumber())) + 1
+		else:
+			digits = len(str(cursor.blockNumber() + 1))
 		return 5 + self.fontMetrics().width('9') * digits
 
 	def updateLineNumberAreaWidth(self, blockcount=0):
@@ -243,6 +246,8 @@ class ReTextEdit(QTextEdit):
 		self.infoArea.updateTextAndGeometry()
 
 	def highlightCurrentLine(self):
+		if globalSettings.relativeLineNumbers:
+			self.lineNumberArea.update()
 		if not globalSettings.highlightCurrentLine:
 			return self.setExtraSelections([])
 		selection = QTextEdit.ExtraSelection();
@@ -350,11 +355,15 @@ class LineNumberArea(QWidget):
 		cursor = QTextCursor(self.editor.document())
 		cursor.movePosition(QTextCursor.Start)
 		atEnd = False
+		if globalSettings.relativeLineNumbers:
+			relativeTo = self.editor.textCursor().blockNumber()
+		else:
+			relativeTo = -1
 		while not atEnd:
 			rect = self.editor.cursorRect(cursor)
 			block = cursor.block()
 			if block.isVisible():
-				number = str(cursor.blockNumber() + 1)
+				number = str(cursor.blockNumber() - relativeTo).replace('-', '−')
 				painter.setPen(colorValues['lineNumberAreaText'])
 				painter.drawText(0, rect.top(), self.width() - 2,
 					self.fontMetrics().height(), Qt.AlignRight, number)
