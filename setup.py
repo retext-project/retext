@@ -142,6 +142,7 @@ setup(name='ReText',
       data_files=[
         ('share/appdata', ['data/me.mitya57.ReText.appdata.xml']),
         ('share/applications', ['data/me.mitya57.ReText.desktop']),
+        ('share/icons/hicolor/scalable/apps', ['icons/retext.svg']),
         ('share/retext/icons', iglob('icons/*')),
         ('share/retext/locale', iglob('locale/*.qm'))
       ],
