@@ -230,7 +230,7 @@ class ReTextEdit(QTextEdit):
 		cursor.movePosition(QTextCursor.End)
 		if globalSettings.relativeLineNumbers:
 			digits = len(str(cursor.blockNumber())) + 1
-		else :
+		else:
 			digits = len(str(cursor.blockNumber() + 1))
 		return 5 + self.fontMetrics().width('9') * digits
 
@@ -363,7 +363,7 @@ class LineNumberArea(QWidget):
 			rect = self.editor.cursorRect(cursor)
 			block = cursor.block()
 			if block.isVisible():
-				number = str(cursor.blockNumber() - relativeTo).replace('-', '—')
+				number = str(cursor.blockNumber() - relativeTo).replace('-', '−')
 				painter.setPen(colorValues['lineNumberAreaText'])
 				painter.drawText(0, rect.top(), self.width() - 2,
 					self.fontMetrics().height(), Qt.AlignRight, number)
