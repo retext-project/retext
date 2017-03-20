@@ -150,6 +150,7 @@ class retext_upload(upload):
 
 
 filterwarnings('ignore', "Unknown distribution option: 'install_requires'")
+filterwarnings('ignore', "Unknown distribution option: 'python_requires'")
 
 classifiers = [
 	'Development Status :: 5 - Production/Stable',
@@ -176,6 +177,7 @@ setup(name='ReText',
         ('share/retext/icons', iglob('icons/*')),
         ('share/retext/locale', iglob('locale/*.qm'))
       ],
+      python_requires='>=3.1',
       requires=['docutils', 'Markdown', 'Markups(>=2.0)', 'pyenchant', 'Pygments', 'PyQt5'],
       install_requires=[
         'docutils',
