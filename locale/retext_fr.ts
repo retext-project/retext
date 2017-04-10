@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="fr_FR" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="fr_FR">
 <context>
     <name>ConfigDialog</name>
     <message>
@@ -25,7 +26,7 @@
     <message>
         <location filename="config.py" line="67"/>
         <source>Markdown syntax extensions (comma-separated)</source>
-        <translation>Extensions liées à la syntaxe Markdown (séparées par une virgule)</translation>
+        <translation>Extensions Markdown (séparées par une virgule)</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -75,22 +76,22 @@
     <message>
         <location filename="config.py" line="67"/>
         <source>Use live preview by default</source>
-        <translation type="unfinished"></translation>
+        <translation>Utiliser l&apos;aperçu dynamique par défaut</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Enable synchronized scrolling for Markdown</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer le défilement synchronisé pour Markdown</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Draw vertical line at column</source>
-        <translation type="unfinished"></translation>
+        <translation>Dessiner une ligne verticale sur la colonne</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Automatically open last documents on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir automatiquement les derniers documents au démarrage</translation>
     </message>
 </context>
 <context>
@@ -124,7 +125,7 @@
     <message>
         <location filename="fakevimeditor.py" line="64"/>
         <source>No write since last change (add ! to override)</source>
-        <translation>Aucune modification depuis la dernière sauvegarde (ajoutez ! pour écraser)</translation>
+        <translation>Pas d&apos;écriture depuis le dernier changement (ajoutez ! pour écraser)</translation>
     </message>
     <message>
         <location filename="fakevimeditor.py" line="121"/>
@@ -137,12 +138,12 @@
     <message>
         <location filename="editor.py" line="295"/>
         <source>Save image</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer l&apos;image</translation>
     </message>
     <message>
         <location filename="editor.py" line="295"/>
         <source>Images (*.png *.jpg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Images (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
@@ -173,7 +174,7 @@
     <message>
         <location filename="window.py" line="89"/>
         <source>Search toolbar</source>
-        <translation>Barre d&apos;outil de recherche</translation>
+        <translation>Barre d&apos;outil Recherche</translation>
     </message>
     <message>
         <location filename="window.py" line="93"/>
@@ -243,12 +244,12 @@
     <message>
         <location filename="window.py" line="139"/>
         <source>Live preview</source>
-        <translation>Aperçu direct</translation>
+        <translation>Aperçu dynamique</translation>
     </message>
     <message>
         <location filename="window.py" line="144"/>
         <source>Table editing mode</source>
-        <translation>Mode table</translation>
+        <translation>Mode édition table</translation>
     </message>
     <message>
         <location filename="window.py" line="148"/>
@@ -438,7 +439,7 @@
     <message>
         <location filename="window.py" line="818"/>
         <source>Select file encoding from the list:</source>
-        <translation>Choisir l&apos;encodage du fichier dans la liste</translation>
+        <translation>Choisir l&apos;encodage du fichier dans la liste:</translation>
     </message>
     <message>
         <location filename="window.py" line="839"/>
@@ -449,7 +450,7 @@
         <location filename="window.py" line="842"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
-        <translation>Fichers %s</translation>
+        <translation>Fichiers %s</translation>
     </message>
     <message>
         <location filename="window.py" line="919"/>
@@ -562,62 +563,62 @@ Voulez vous enregistrer vos changements ?</translation>
     <message>
         <location filename="window.py" line="121"/>
         <source>Change editor font</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer la police de l&apos;éditeur</translation>
     </message>
     <message>
         <location filename="window.py" line="123"/>
         <source>Change preview font</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer la police de l&apos;aperçu</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
         <source>ReText %s (using PyMarkups %s)</source>
-        <translation type="unfinished"></translation>
+        <translation>ReText %s (utilisant PyMarkups %s)</translation>
     </message>
     <message>
         <location filename="window.py" line="207"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <location filename="window.py" line="1039"/>
         <source>Alt text</source>
-        <translation type="unfinished"></translation>
+        <translation>Texte alternatif</translation>
     </message>
     <message>
         <location filename="window.py" line="1040"/>
         <source>URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL</translation>
     </message>
     <message>
         <location filename="window.py" line="1040"/>
         <source>Link text</source>
-        <translation type="unfinished"></translation>
+        <translation>Texte du lien</translation>
     </message>
     <message>
         <location filename="window.py" line="201"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Remplacer</translation>
     </message>
     <message>
         <location filename="window.py" line="203"/>
         <source>Replace all</source>
-        <translation type="unfinished"></translation>
+        <translation>Remplacer tout</translation>
     </message>
     <message>
         <location filename="window.py" line="342"/>
         <source>Replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>Remplacer avec</translation>
     </message>
     <message>
         <location filename="window.py" line="860"/>
         <source>Cannot save to file which is open in another tab!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;enregistrer un fichier ouvert dans un autre onglet!</translation>
     </message>
     <message>
         <location filename="window.py" line="191"/>
         <source>Use WebEngine (Chromium) renderer</source>
-        <translation type="unfinished"></translation>
+        <translation>Utiliser le rendu de WebEngine (Chromium)</translation>
     </message>
 </context>
 </TS>
