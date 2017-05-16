@@ -113,7 +113,7 @@ class ReTextWindow(QMainWindow):
 		self.actionPrevTab = self.act(self.tr('Previous tab'), 'go-previous',
 			lambda: self.switchTab(-1), shct=Qt.CTRL+Qt.Key_PageUp)
 		self.actionCloseCurrentTab = self.act(self.tr('Close tab'), 'window-close',
-			lambda: self.closeCurrentTab(), shct=Qt.CTRL + Qt.Key_W)
+			lambda: self.closeTab(self.ind), shct=QKeySequence.Close)
 		self.actionPrint = self.act(self.tr('Print'), 'document-print',
 			self.printFile, shct=QKeySequence.Print)
 		self.actionPrint.setPriority(QAction.LowPriority)
@@ -504,9 +504,6 @@ class ReTextWindow(QMainWindow):
 				self.fileSystemWatcher.removePath(closedTab.fileName)
 			self.tabWidget.removeTab(ind)
 			closedTab.deleteLater()
-
-	def closeCurrentTab(self):
-		self.closeTab(self.ind)
 
 	def changeIndex(self, ind):
 		'''
