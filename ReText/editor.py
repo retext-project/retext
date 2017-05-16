@@ -353,9 +353,8 @@ class ReTextEdit(QTextEdit):
 		wasWordCharacter = False
 		wordCount = 0
 		alphaNumCount = 0
-		characterCount = 0
+		characterCount = len(text)
 		for c in text:
-			characterCount += 1
 			isWordCharacter = c.isalnum()
 			if isWordCharacter:
 				alphaNumCount += 1
