@@ -112,6 +112,8 @@ class ReTextWindow(QMainWindow):
 			lambda: self.switchTab(1), shct=Qt.CTRL+Qt.Key_PageDown)
 		self.actionPrevTab = self.act(self.tr('Previous tab'), 'go-previous',
 			lambda: self.switchTab(-1), shct=Qt.CTRL+Qt.Key_PageUp)
+		self.actionCloseCurrentTab = self.act(self.tr('Close tab'), 'window-close',
+			lambda: self.closeTab(self.ind), shct=QKeySequence.Close)
 		self.actionPrint = self.act(self.tr('Print'), 'document-print',
 			self.printFile, shct=QKeySequence.Print)
 		self.actionPrint.setPriority(QAction.LowPriority)
@@ -263,6 +265,7 @@ class ReTextWindow(QMainWindow):
 		menuFile.addSeparator()
 		menuFile.addAction(self.actionNextTab)
 		menuFile.addAction(self.actionPrevTab)
+		menuFile.addAction(self.actionCloseCurrentTab)
 		menuFile.addSeparator()
 		menuExport = menuFile.addMenu(self.tr('Export'))
 		menuExport.addAction(self.actionSaveHtml)
