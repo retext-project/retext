@@ -152,8 +152,9 @@
     </message>
     <message>
         <location filename="editor.py" line="493"/>
-        <source>%d w : %d a : %d c</source>
-        <translation>%d m : %d a : %d c</translation>
+        <source>%d w | %d a | %d c</source>
+        <comment>count of words, alphanumeric characters, all characters</comment>
+        <translation>%d m | %d a | %d c</translation>
     </message>
 </context>
 <context>

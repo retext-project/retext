@@ -492,7 +492,8 @@ class TextInfoArea(InfoArea):
 	def getText(self):
 		if not globalSettings.documentStatsEnabled:
 			return
-		template = self.tr('%d w : %d a : %d c')
+		template = self.tr('%d w | %d a | %d c',
+		                   'count of words, alphanumeric characters, all characters')
 		words, alphaNums, characters = self.editor.statistics
 		return template % (words, alphaNums, characters)
 
