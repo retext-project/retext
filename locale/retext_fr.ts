@@ -227,6 +227,11 @@
         <translation>Onglet précédent</translation>
     </message>
     <message>
+        <location filename="window.py" line="113"/>
+        <source>Close tab</source>
+        <translation>Fermer l'onglet</translation>
+    </message>
+    <message>
         <location filename="window.py" line="115"/>
         <source>Print</source>
         <translation>Imprimer</translation>
