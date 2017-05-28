@@ -941,7 +941,8 @@ class ReTextWindow(QMainWindow):
 	def savePdf(self):
 		fileName = QFileDialog.getSaveFileName(self,
 			self.tr("Export document to PDF"),
-			"", self.tr("PDF files (*.pdf)"))[0]
+			self.currentTab.getBaseName() + ".pdf",
+			self.tr("PDF files (*.pdf)"))[0]
 		if fileName:
 			if not QFileInfo(fileName).suffix():
 				fileName += ".pdf"
