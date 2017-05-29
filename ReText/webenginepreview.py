@@ -33,7 +33,8 @@ class ReTextWebEnginePage(QWebEnginePage):
 
     def getPositionMap(self, callback):
         def resultCallback(result):
-            return callback({int(a): b for a, b in result.items()})
+            if result:
+                return callback({int(a): b for a, b in result.items()})
 
         script = """
         var elements = document.querySelectorAll('[data-posmap]');
