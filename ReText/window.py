@@ -701,7 +701,10 @@ class ReTextWindow(QMainWindow):
 			self.menuRecentFiles.addAction(action)
 
 	def markupFunction(self, markup):
-		return lambda: self.setDefaultMarkup(markup)
+		def run():
+			self.setDefaultMarkup(markup)
+			self.docTypeChanged()
+		return run
 
 	def openFunction(self, fileName):
 		return lambda: self.openFileWrapper(fileName)
