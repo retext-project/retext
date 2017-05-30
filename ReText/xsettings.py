@@ -64,6 +64,8 @@ def get_raw_xsettings(display=0):
 	c = ctypes.CDLL(c_library_name)
 
 	# set some args and return types
+	c.free.argtypes = [ctypes.c_void_p]
+	c.free.restype = None
 	xcb.xcb_connect.argtypes = [ctypes.c_char_p, ctypes.POINTER(ctypes.c_int)]
 	xcb.xcb_connect.restype = ctypes.c_void_p
 	xcb.xcb_connection_has_error.argtypes = [ctypes.c_void_p]
