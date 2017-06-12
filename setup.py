@@ -14,16 +14,14 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 .. _`home page`: https://github.com/retext-project/retext
 .. _`wiki`: https://github.com/retext-project/retext/wiki'''
 
-import platform
 import re
 import sys
-from os.path import join, isfile
+from os.path import join, isfile, basename
 from distutils import log
 from distutils.core import setup, Command
 from distutils.command.build import build
 from distutils.command.sdist import sdist
-from distutils.command.install_scripts import install_scripts
-from distutils.command.install_data import install_data
+from distutils.command.install import install
 from distutils.command.upload import upload
 from subprocess import check_call
 from glob import glob, iglob
@@ -43,6 +41,18 @@ def build_translations():
 	if error:
 		print('Failed to build translations:', error)
 
+
+def bundle_icons():
+	import urllib.request
+	import tarfile
+	from io import BytesIO
+	icons_tgz = 'http://downloads.sourceforge.net/project/retext/Icons/ReTextIcons_r5.tar.gz'
+	response = urllib.request.urlopen(icons_tgz)
+	tario = BytesIO(response.read())
+	tar = tarfile.open(fileobj=tario, mode='r')
+	tar.extractall(path='icons')
+
+
 class retext_build(build):
 	def run(self):
 		build.run(self)
@@ -52,43 +62,66 @@ class retext_build(build):
 class retext_sdist(sdist):
 	def run(self):
 		build_translations()
+		bundle_icons()
 		sdist.run(self)
 
-class retext_install_scripts(install_scripts):
+class retext_install(install):
+	user_options = install.user_options + [
+		('no-rename', None, 'do not rename retext.py to retext'),
+	]
+	boolean_options = install.boolean_options + ['no-rename']
+
+	def initialize_options(self):
+		install.initialize_options(self)
+		self.no_rename = None
+
+	def change_roots(self, *names):
+		self.orig_install_scripts = self.install_scripts
+		self.orig_install_data = self.install_data
+		install.change_roots(self, *names)
+
 	def run(self):
 		import shutil
-		install_scripts.run(self)
-		for file in self.get_outputs():
-			renamed_file = file[:-3]
+		install.run(self)
 
-			log.info('renaming %s to %s', file, renamed_file)
-			shutil.move(file, renamed_file)
+		if self.root is None:
+			self.orig_install_scripts = self.install_scripts
+			self.orig_install_data = self.install_data
 
-			if sys.platform == "win32":
-				py = sys.executable
-				pyw = py.replace('.exe', 'w.exe')
-				pyw_found = isfile(pyw)
-				if pyw_found:
-					py = pyw
+		retext = join(self.install_scripts, 'retext.py')
+		if not self.no_rename:
+			log.info('renaming %s -> %s', retext, retext[:-3])
+			shutil.move(retext, retext[:-3])
+			retext = retext[:-3]
+		retext = join(self.orig_install_scripts, basename(retext))
 
-				# Generate a batch script to wrap the python script so we could invoke
-				# that script directly from the command line
-				batch_script = '@echo off\n%s"%s" "%s" %%*' % ('start "" ' if pyw_found else '', py, renamed_file)
-				with open("%s.bat" % renamed_file, "w") as bat_file:
-					bat_file.write(batch_script)
+		if sys.platform == "win32":
+			py = sys.executable
+			pyw = py.replace('.exe', 'w.exe')
+			pyw_found = isfile(pyw)
+			if pyw_found:
+				py = pyw
 
-class retext_install_data(install_data):
-	def run(self):
-		if platform.system() in ('Windows', 'Darwin'):
-			import urllib.request
-			import tarfile
-			from io import BytesIO
-			icons_tgz = 'http://downloads.sourceforge.net/project/retext/Icons/ReTextIcons_r5.tar.gz'
-			response = urllib.request.urlopen(icons_tgz)
-			tario = BytesIO(response.read())
-			tar = tarfile.open(fileobj=tario, mode='r')
-			tar.extractall(path='icons')
-		install_data.run(self)
+			# Generate a batch script to wrap the python script so we could invoke
+			# that script directly from the command line
+			batch_script = '@echo off\n%s"%s" "%s" %%*' % ('start "" ' if pyw_found else '', py, retext)
+			with open("%s.bat" % retext, "w") as bat_file:
+				bat_file.write(batch_script)
+
+		# Fix Exec and Icon fields in the desktop file
+		desktop_file_path = join(self.install_data, 'share', 'applications',
+		                         'me.mitya57.ReText.desktop')
+		icon_path = join(self.orig_install_data, 'share', 'retext', 'icons', 'retext.svg')
+		with open(desktop_file_path) as desktop_file:
+			desktop_contents = desktop_file.read()
+		print('fixing Exec line in %s' % desktop_file_path)
+		desktop_contents = desktop_contents.replace('Exec=retext', 'Exec=%s' % retext)
+		if self.orig_install_data != '/usr':
+			print('fixing Icon line in %s' % desktop_file_path)
+			desktop_contents = desktop_contents.replace('Icon=retext', 'Icon=%s' % icon_path)
+		with open(desktop_file_path, 'w') as desktop_file:
+			desktop_file.write(desktop_contents)
+
 
 class retext_test(Command):
 	user_options = []
@@ -115,9 +148,6 @@ class retext_upload(upload):
 			print('calling process', args)
 			check_call(args)
 
-if '--no-rename' in sys.argv:
-	retext_install_scripts = install_scripts
-	sys.argv.remove('--no-rename')
 
 filterwarnings('ignore', "Unknown distribution option: 'install_requires'")
 
@@ -142,6 +172,7 @@ setup(name='ReText',
       data_files=[
         ('share/appdata', ['data/me.mitya57.ReText.appdata.xml']),
         ('share/applications', ['data/me.mitya57.ReText.desktop']),
+        ('share/icons/hicolor/scalable/apps', ['icons/retext.svg']),
         ('share/retext/icons', iglob('icons/*')),
         ('share/retext/locale', iglob('locale/*.qm'))
       ],
@@ -160,8 +191,7 @@ setup(name='ReText',
       cmdclass={
         'build': retext_build,
         'sdist': retext_sdist,
-        'install_data': retext_install_data,
-        'install_scripts': retext_install_scripts,
+        'install': retext_install,
         'test': retext_test,
         'upload': retext_upload
       },
