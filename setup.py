@@ -14,7 +14,6 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 .. _`home page`: https://github.com/retext-project/retext
 .. _`wiki`: https://github.com/retext-project/retext/wiki'''
 
-import platform
 import re
 import sys
 from os.path import join, isfile
@@ -43,6 +42,18 @@ def build_translations():
 	if error:
 		print('Failed to build translations:', error)
 
+
+def bundle_icons():
+	import urllib.request
+	import tarfile
+	from io import BytesIO
+	icons_tgz = 'http://downloads.sourceforge.net/project/retext/Icons/ReTextIcons_r5.tar.gz'
+	response = urllib.request.urlopen(icons_tgz)
+	tario = BytesIO(response.read())
+	tar = tarfile.open(fileobj=tario, mode='r')
+	tar.extractall(path='icons')
+
+
 class retext_build(build):
 	def run(self):
 		build.run(self)
@@ -52,6 +63,7 @@ class retext_build(build):
 class retext_sdist(sdist):
 	def run(self):
 		build_translations()
+		bundle_icons()
 		sdist.run(self)
 
 class retext_install_scripts(install_scripts):
@@ -77,18 +89,6 @@ class retext_install_scripts(install_scripts):
 				with open("%s.bat" % renamed_file, "w") as bat_file:
 					bat_file.write(batch_script)
 
-class retext_install_data(install_data):
-	def run(self):
-		if platform.system() in ('Windows', 'Darwin'):
-			import urllib.request
-			import tarfile
-			from io import BytesIO
-			icons_tgz = 'http://downloads.sourceforge.net/project/retext/Icons/ReTextIcons_r5.tar.gz'
-			response = urllib.request.urlopen(icons_tgz)
-			tario = BytesIO(response.read())
-			tar = tarfile.open(fileobj=tario, mode='r')
-			tar.extractall(path='icons')
-		install_data.run(self)
 
 class retext_test(Command):
 	user_options = []
@@ -163,7 +163,6 @@ setup(name='ReText',
       cmdclass={
         'build': retext_build,
         'sdist': retext_sdist,
-        'install_data': retext_install_data,
         'install_scripts': retext_install_scripts,
         'test': retext_test,
         'upload': retext_upload
