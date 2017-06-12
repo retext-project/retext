@@ -21,8 +21,7 @@ from distutils import log
 from distutils.core import setup, Command
 from distutils.command.build import build
 from distutils.command.sdist import sdist
-from distutils.command.install_scripts import install_scripts
-from distutils.command.install_data import install_data
+from distutils.command.install import install
 from distutils.command.upload import upload
 from subprocess import check_call
 from glob import glob, iglob
@@ -66,28 +65,38 @@ class retext_sdist(sdist):
 		bundle_icons()
 		sdist.run(self)
 
-class retext_install_scripts(install_scripts):
+class retext_install(install):
+	user_options = install.user_options + [
+		('no-rename', None, 'do not rename retext.py to retext'),
+	]
+	boolean_options = install.boolean_options + ['no-rename']
+
+	def initialize_options(self):
+		install.initialize_options(self)
+		self.no_rename = None
+
 	def run(self):
 		import shutil
-		install_scripts.run(self)
-		for file in self.get_outputs():
-			renamed_file = file[:-3]
+		install.run(self)
 
-			log.info('renaming %s to %s', file, renamed_file)
-			shutil.move(file, renamed_file)
+		retext = join(self.install_scripts, 'retext.py')
+		if not self.no_rename:
+			log.info('renaming %s -> %s', retext, retext[:-3])
+			shutil.move(retext, retext[:-3])
+			retext = retext[:-3]
 
-			if sys.platform == "win32":
-				py = sys.executable
-				pyw = py.replace('.exe', 'w.exe')
-				pyw_found = isfile(pyw)
-				if pyw_found:
-					py = pyw
+		if sys.platform == "win32":
+			py = sys.executable
+			pyw = py.replace('.exe', 'w.exe')
+			pyw_found = isfile(pyw)
+			if pyw_found:
+				py = pyw
 
-				# Generate a batch script to wrap the python script so we could invoke
-				# that script directly from the command line
-				batch_script = '@echo off\n%s"%s" "%s" %%*' % ('start "" ' if pyw_found else '', py, renamed_file)
-				with open("%s.bat" % renamed_file, "w") as bat_file:
-					bat_file.write(batch_script)
+			# Generate a batch script to wrap the python script so we could invoke
+			# that script directly from the command line
+			batch_script = '@echo off\n%s"%s" "%s" %%*' % ('start "" ' if pyw_found else '', py, retext)
+			with open("%s.bat" % retext, "w") as bat_file:
+				bat_file.write(batch_script)
 
 
 class retext_test(Command):
@@ -115,9 +124,6 @@ class retext_upload(upload):
 			print('calling process', args)
 			check_call(args)
 
-if '--no-rename' in sys.argv:
-	retext_install_scripts = install_scripts
-	sys.argv.remove('--no-rename')
 
 filterwarnings('ignore', "Unknown distribution option: 'install_requires'")
 filterwarnings('ignore', "Unknown distribution option: 'python_requires'")
@@ -163,7 +169,7 @@ setup(name='ReText',
       cmdclass={
         'build': retext_build,
         'sdist': retext_sdist,
-        'install_scripts': retext_install_scripts,
+        'install': retext_install,
         'test': retext_test,
         'upload': retext_upload
       },
