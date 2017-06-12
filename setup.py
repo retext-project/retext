@@ -16,7 +16,7 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 
 import re
 import sys
-from os.path import join, isfile
+from os.path import join, isfile, basename
 from distutils import log
 from distutils.core import setup, Command
 from distutils.command.build import build
@@ -75,15 +75,25 @@ class retext_install(install):
 		install.initialize_options(self)
 		self.no_rename = None
 
+	def change_roots(self, *names):
+		self.orig_install_scripts = self.install_scripts
+		self.orig_install_data = self.install_data
+		install.change_roots(self, *names)
+
 	def run(self):
 		import shutil
 		install.run(self)
+
+		if self.root is None:
+			self.orig_install_scripts = self.install_scripts
+			self.orig_install_data = self.install_data
 
 		retext = join(self.install_scripts, 'retext.py')
 		if not self.no_rename:
 			log.info('renaming %s -> %s', retext, retext[:-3])
 			shutil.move(retext, retext[:-3])
 			retext = retext[:-3]
+		retext = join(self.orig_install_scripts, basename(retext))
 
 		if sys.platform == "win32":
 			py = sys.executable
@@ -97,6 +107,20 @@ class retext_install(install):
 			batch_script = '@echo off\n%s"%s" "%s" %%*' % ('start "" ' if pyw_found else '', py, retext)
 			with open("%s.bat" % retext, "w") as bat_file:
 				bat_file.write(batch_script)
+
+		# Fix Exec and Icon fields in the desktop file
+		desktop_file_path = join(self.install_data, 'share', 'applications',
+		                         'me.mitya57.ReText.desktop')
+		icon_path = join(self.orig_install_data, 'share', 'retext', 'icons', 'retext.svg')
+		with open(desktop_file_path) as desktop_file:
+			desktop_contents = desktop_file.read()
+		print('fixing Exec line in %s' % desktop_file_path)
+		desktop_contents = desktop_contents.replace('Exec=retext', 'Exec=%s' % retext)
+		if self.orig_install_data != '/usr':
+			print('fixing Icon line in %s' % desktop_file_path)
+			desktop_contents = desktop_contents.replace('Icon=retext', 'Icon=%s' % icon_path)
+		with open(desktop_file_path, 'w') as desktop_file:
+			desktop_file.write(desktop_contents)
 
 
 class retext_test(Command):
