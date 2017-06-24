@@ -14,8 +14,18 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
+        <source>Automatically open last documents on startup</source>
+        <translation>Na početku, automatski otvori poslednje dokumente</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
         <source>Restore window geometry</source>
         <translation>Upamti geometriju prozora</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Use live preview by default</source>
+        <translation>Podrazumevano koristi živi pregled</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -25,7 +35,12 @@
     <message>
         <location filename="config.py" line="67"/>
         <source>Markdown syntax extensions (comma-separated)</source>
-        <translation>Proširenja sintakse Markdown (odvojeno zapetom)</translation>
+        <translation>Markdaun proširenja sintakse (odvojeno zapetom)</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Enable synchronized scrolling for Markdown</source>
+        <translation>Uključi sinhronizovano klizanje za Markdown</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -54,6 +69,11 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
+        <source>Draw vertical line at column</source>
+        <translation>Iscrtaj vertikalnu liniju na koloni</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
         <source>Interface</source>
         <translation>Sučelje</translation>
     </message>
@@ -71,26 +91,6 @@
         <location filename="config.py" line="104"/>
         <source>Help</source>
         <translation>Pomoć</translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Use live preview by default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Enable synchronized scrolling for Markdown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Draw vertical line at column</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Automatically open last documents on startup</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -137,12 +137,12 @@
     <message>
         <location filename="editor.py" line="295"/>
         <source>Save image</source>
-        <translation type="unfinished"></translation>
+        <translation>Sačuvaj sliku</translation>
     </message>
     <message>
         <location filename="editor.py" line="295"/>
         <source>Images (*.png *.jpg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Slike (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
@@ -155,7 +155,7 @@
     <message>
         <location filename="tab.py" line="188"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation>Ne mogu da raščlanim sadržaj fajla, Proverite da li imate instaliran &lt;a href=&quot;%s&quot;&gt;neophodan modul&lt;/a&gt;!</translation>
+        <translation>Ne mogu da raščlanim sadržaj fajla. Proverite da li imate instaliran &lt;a href=&quot;%s&quot;&gt;neophodan modul&lt;/a&gt;!</translation>
     </message>
 </context>
 <context>
@@ -231,6 +231,16 @@
         <translation>Pogledaj HTML kod</translation>
     </message>
     <message>
+        <location filename="window.py" line="121"/>
+        <source>Change editor font</source>
+        <translation>Izmeni font uređivača</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="123"/>
+        <source>Change preview font</source>
+        <translation>Izmeni font pregleda</translation>
+    </message>
+    <message>
         <location filename="window.py" line="125"/>
         <source>Find text</source>
         <translation>Nađi tekst</translation>
@@ -248,7 +258,7 @@
     <message>
         <location filename="window.py" line="144"/>
         <source>Table editing mode</source>
-        <translation>Režim tabele</translation>
+        <translation>Režim uređivanja tabele</translation>
     </message>
     <message>
         <location filename="window.py" line="148"/>
@@ -311,6 +321,11 @@
         <translation>Koristi WebKit iscrtavač</translation>
     </message>
     <message>
+        <location filename="window.py" line="191"/>
+        <source>Use WebEngine (Chromium) renderer</source>
+        <translation>Koristi WebEngine (Chromium) iscrtavač</translation>
+    </message>
+    <message>
         <location filename="window.py" line="196"/>
         <source>Show directory</source>
         <translation>Prikaži direktorijum</translation>
@@ -326,6 +341,21 @@
         <translation>Prethodno</translation>
     </message>
     <message>
+        <location filename="window.py" line="201"/>
+        <source>Replace</source>
+        <translation>Zameni</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="203"/>
+        <source>Replace all</source>
+        <translation>Zameni sve</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="207"/>
+        <source>Close</source>
+        <translation>Zatvori</translation>
+    </message>
+    <message>
         <location filename="window.py" line="210"/>
         <source>Get help online</source>
         <translation>Potražite pomoć na internetu</translation>
@@ -333,7 +363,7 @@
     <message>
         <location filename="window.py" line="211"/>
         <source>About ReText</source>
-        <translation>O programu ReText</translation>
+        <translation>O ReText-u</translation>
     </message>
     <message>
         <location filename="window.py" line="214"/>
@@ -354,6 +384,11 @@
         <location filename="window.py" line="233"/>
         <source>Underline</source>
         <translation>Podvučeno</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="299"/>
+        <source>Formatting</source>
+        <translation>Formatiranje</translation>
     </message>
     <message>
         <location filename="window.py" line="245"/>
@@ -396,14 +431,14 @@
         <translation>Podrazumevana markacija</translation>
     </message>
     <message>
-        <location filename="window.py" line="299"/>
-        <source>Formatting</source>
-        <translation>Formatiranje</translation>
-    </message>
-    <message>
         <location filename="window.py" line="339"/>
         <source>Search</source>
         <translation>Traži</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="342"/>
+        <source>Replace with</source>
+        <translation>Zameni sa</translation>
     </message>
     <message>
         <location filename="window.py" line="344"/>
@@ -457,6 +492,11 @@
         <translation>Sačuvaj fajl</translation>
     </message>
     <message>
+        <location filename="window.py" line="860"/>
+        <source>Cannot save to file which is open in another tab!</source>
+        <translation>Ne mogu da sačuvam jer je otvoren u drugom jezičku!</translation>
+    </message>
+    <message>
         <location filename="window.py" line="884"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Ne mogu da sačuvam jer je fajl samo za čitanje!</translation>
@@ -502,6 +542,21 @@
         <translation>Neuspelo izvršenje komande:</translation>
     </message>
     <message>
+        <location filename="window.py" line="1039"/>
+        <source>Alt text</source>
+        <translation>Alt tekst</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1040"/>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1040"/>
+        <source>Link text</source>
+        <translation>Tekst veze</translation>
+    </message>
+    <message>
         <location filename="window.py" line="1080"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
@@ -535,8 +590,13 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
+        <source>ReText %s (using PyMarkups %s)</source>
+        <translation>ReText %s (koristeći PyMarkups %s)</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1156"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>Jednostavan ali moćan uređivač za Markdown i reStructuredText</translation>
+        <translation>Jednostavan ali moćan uređivač za Markdaun i restruktuirani tekst</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
@@ -551,72 +611,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1156"/>
         <source>Markdown syntax</source>
-        <translation>Sintaksa Markdown</translation>
+        <translation>Markdaun sintaksa</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
         <source>reStructuredText syntax</source>
-        <translation>Sintaksa reStructuredText</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="121"/>
-        <source>Change editor font</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="123"/>
-        <source>Change preview font</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1156"/>
-        <source>ReText %s (using PyMarkups %s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="207"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1039"/>
-        <source>Alt text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1040"/>
-        <source>URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1040"/>
-        <source>Link text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="201"/>
-        <source>Replace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="203"/>
-        <source>Replace all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="342"/>
-        <source>Replace with</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="860"/>
-        <source>Cannot save to file which is open in another tab!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="191"/>
-        <source>Use WebEngine (Chromium) renderer</source>
-        <translation type="unfinished"></translation>
+        <translation>Sintaksa restruktuiranog teksta</translation>
     </message>
 </context>
 </TS>

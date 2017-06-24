@@ -14,13 +14,33 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
+        <source>Automatically open last documents on startup</source>
+        <translation>Åbn automatisk sidste dokument ved opstart</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
         <source>Restore window geometry</source>
         <translation>Gendan vinduesgeometri</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
+        <source>Use live preview by default</source>
+        <translation>Brug live-forhåndsvisning som standard</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
         <source>Open external links in ReText window</source>
         <translation>Åbn eksterne links i ReText-vinduet</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Markdown syntax extensions (comma-separated)</source>
+        <translation>Markdown-syntaksudvidelser (kommasepareret)</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Enable synchronized scrolling for Markdown</source>
+        <translation>Aktivér synkroniseret rulning for Markdown</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -40,12 +60,17 @@
     <message>
         <location filename="config.py" line="67"/>
         <source>Tab key inserts spaces</source>
-        <translation>Tab-tast indsætter mellemrum</translation>
+        <translation>Tabulatortast indsætter mellemrum</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Tabulation width</source>
-        <translation>Tab-bredde</translation>
+        <translation>Tabulatorbredde</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Draw vertical line at column</source>
+        <translation>Tegn lodret linje ved kolonne</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -60,37 +85,12 @@
     <message>
         <location filename="config.py" line="67"/>
         <source>Stylesheet file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Markdown syntax extensions (comma-separated)</source>
-        <translation type="unfinished"></translation>
+        <translation>Typografiarkfil</translation>
     </message>
     <message>
         <location filename="config.py" line="104"/>
         <source>Help</source>
         <translation>Hjælp</translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Use live preview by default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Enable synchronized scrolling for Markdown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Draw vertical line at column</source>
-        <translation>Tegn lodret linje ved kolonne</translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Automatically open last documents on startup</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -163,17 +163,17 @@
     <message>
         <location filename="window.py" line="85"/>
         <source>File toolbar</source>
-        <translation>Fil-værktøjslinie</translation>
+        <translation>Fil-værktøjslinje</translation>
     </message>
     <message>
         <location filename="window.py" line="87"/>
         <source>Edit toolbar</source>
-        <translation>Redigering-værktøjslinie</translation>
+        <translation>Redigering-værktøjslinje</translation>
     </message>
     <message>
         <location filename="window.py" line="89"/>
         <source>Search toolbar</source>
-        <translation>Søge-værktøjslinie</translation>
+        <translation>Søge-værktøjslinje</translation>
     </message>
     <message>
         <location filename="window.py" line="93"/>
@@ -183,7 +183,12 @@
     <message>
         <location filename="window.py" line="96"/>
         <source>Open</source>
-        <translation>Åben</translation>
+        <translation>Åbn</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="99"/>
+        <source>Set encoding</source>
+        <translation>Indstil kodning</translation>
     </message>
     <message>
         <location filename="window.py" line="1096"/>
@@ -194,11 +199,6 @@
         <location filename="window.py" line="105"/>
         <source>Save</source>
         <translation>Gem</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="99"/>
-        <source>Set encoding</source>
-        <translation>Indstil indkodning</translation>
     </message>
     <message>
         <location filename="window.py" line="109"/>
@@ -258,12 +258,12 @@
     <message>
         <location filename="window.py" line="144"/>
         <source>Table editing mode</source>
-        <translation>Tabelmodus</translation>
+        <translation>Tabelredigeringstilstand</translation>
     </message>
     <message>
         <location filename="window.py" line="148"/>
         <source>FakeVim mode</source>
-        <translation>FakeVim-modus</translation>
+        <translation>FakeVim-tilstand</translation>
     </message>
     <message>
         <location filename="window.py" line="153"/>
@@ -308,7 +308,7 @@
     <message>
         <location filename="window.py" line="184"/>
         <source>Enable</source>
-        <translation>Aktiver</translation>
+        <translation>Aktivér</translation>
     </message>
     <message>
         <location filename="window.py" line="185"/>
@@ -319,6 +319,11 @@
         <location filename="window.py" line="186"/>
         <source>Use WebKit renderer</source>
         <translation>Anvend WebKit-fremviser</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="191"/>
+        <source>Use WebEngine (Chromium) renderer</source>
+        <translation>Brug WebEngine-fremviser (Chromium)</translation>
     </message>
     <message>
         <location filename="window.py" line="196"/>
@@ -336,6 +341,16 @@
         <translation>Foregående</translation>
     </message>
     <message>
+        <location filename="window.py" line="201"/>
+        <source>Replace</source>
+        <translation>Erstat</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="203"/>
+        <source>Replace all</source>
+        <translation>Erstart alle</translation>
+    </message>
+    <message>
         <location filename="window.py" line="207"/>
         <source>Close</source>
         <translation>Luk</translation>
@@ -343,7 +358,7 @@
     <message>
         <location filename="window.py" line="210"/>
         <source>Get help online</source>
-        <translation>Find hjælp online</translation>
+        <translation>Få hjælp online</translation>
     </message>
     <message>
         <location filename="window.py" line="211"/>
@@ -373,7 +388,7 @@
     <message>
         <location filename="window.py" line="299"/>
         <source>Formatting</source>
-        <translation>Formattering</translation>
+        <translation>Formatering</translation>
     </message>
     <message>
         <location filename="window.py" line="245"/>
@@ -398,7 +413,7 @@
     <message>
         <location filename="window.py" line="255"/>
         <source>Open recent</source>
-        <translation>Åben seneste</translation>
+        <translation>Åbn seneste</translation>
     </message>
     <message>
         <location filename="window.py" line="267"/>
@@ -419,6 +434,11 @@
         <location filename="window.py" line="339"/>
         <source>Search</source>
         <translation>Søg</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="342"/>
+        <source>Replace with</source>
+        <translation>Erstat med</translation>
     </message>
     <message>
         <location filename="window.py" line="344"/>
@@ -453,7 +473,7 @@
     <message>
         <location filename="window.py" line="818"/>
         <source>Select file encoding from the list:</source>
-        <translation>Vælg filindkodning fra listen:</translation>
+        <translation>Vælg filkodning fra listen:</translation>
     </message>
     <message>
         <location filename="window.py" line="839"/>
@@ -470,6 +490,11 @@
         <location filename="window.py" line="919"/>
         <source>Save file</source>
         <translation>Gem fil</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="860"/>
+        <source>Cannot save to file which is open in another tab!</source>
+        <translation>Kan ikke gemme til fil som er åben i et andet faneblad!</translation>
     </message>
     <message>
         <location filename="window.py" line="884"/>
@@ -535,19 +560,21 @@
         <location filename="window.py" line="1080"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Denne fil er blevet slettet af et andet program.
+Sørg for at du gemmer filen inden afslutning.</translation>
     </message>
     <message>
         <location filename="window.py" line="1087"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Dette dokument er blevet ændret af et andet program.
+Vil du genindlæse filen (dette fil kasserer alle finde ændringer)?</translation>
     </message>
     <message>
         <location filename="window.py" line="1092"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hvis du vælger ikke er genindlæse filen, deaktiveres automatisk gem-tilstand for denne session for at undgå tab af data.</translation>
     </message>
     <message>
         <location filename="window.py" line="1116"/>
@@ -564,7 +591,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1156"/>
         <source>ReText %s (using PyMarkups %s)</source>
-        <translation type="unfinished"></translation>
+        <translation>ReText %s (bruger PyMarkups %s)</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
@@ -579,7 +606,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1156"/>
         <source>Website</source>
-        <translation>Hjemmeside</translation>
+        <translation>Websted</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
@@ -590,31 +617,6 @@ Do you want to save your changes?</source>
         <location filename="window.py" line="1156"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText-syntaks</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="201"/>
-        <source>Replace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="203"/>
-        <source>Replace all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="342"/>
-        <source>Replace with</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="860"/>
-        <source>Cannot save to file which is open in another tab!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="191"/>
-        <source>Use WebEngine (Chromium) renderer</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

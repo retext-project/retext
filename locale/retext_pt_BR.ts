@@ -14,8 +14,18 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
+        <source>Automatically open last documents on startup</source>
+        <translation>Abrir últimos documentos automaticamente na inicialização</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
         <source>Restore window geometry</source>
         <translation>Restaurar a geometria da janela</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Use live preview by default</source>
+        <translation>Utilizar a visualização automática como padrão</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -26,6 +36,11 @@
         <location filename="config.py" line="67"/>
         <source>Markdown syntax extensions (comma-separated)</source>
         <translation>Extensões de sintáxe Markdown (separadas por vírgulas)</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Enable synchronized scrolling for Markdown</source>
+        <translation>Ativar rolagem sincronizada para Markdown</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -54,6 +69,11 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
+        <source>Draw vertical line at column</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
         <source>Interface</source>
         <translation>Interface</translation>
     </message>
@@ -71,26 +91,6 @@
         <location filename="config.py" line="104"/>
         <source>Help</source>
         <translation>Ajuda</translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Use live preview by default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Enable synchronized scrolling for Markdown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Draw vertical line at column</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Automatically open last documents on startup</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -137,12 +137,12 @@
     <message>
         <location filename="editor.py" line="295"/>
         <source>Save image</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar imagem</translation>
     </message>
     <message>
         <location filename="editor.py" line="295"/>
         <source>Images (*.png *.jpg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagens (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
@@ -155,7 +155,7 @@
     <message>
         <location filename="tab.py" line="188"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation>Não foi possível analisar conteúdo do arquivo, verifique se você tem o &lt;a href=&quot;%s&quot;&gt;modulo necessário&lt;/a&gt; instalado!</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -258,7 +258,7 @@
     <message>
         <location filename="window.py" line="144"/>
         <source>Table editing mode</source>
-        <translation>Modo de entrada de tabela</translation>
+        <translation>Modo de edição de tabelas</translation>
     </message>
     <message>
         <location filename="window.py" line="148"/>
@@ -321,6 +321,11 @@
         <translation>Utilizar renderizador WebKit</translation>
     </message>
     <message>
+        <location filename="window.py" line="191"/>
+        <source>Use WebEngine (Chromium) renderer</source>
+        <translation>Utilizar renderizador WebEngine (Chromium)</translation>
+    </message>
+    <message>
         <location filename="window.py" line="196"/>
         <source>Show directory</source>
         <translation>Exibir diretório</translation>
@@ -334,6 +339,21 @@
         <location filename="window.py" line="199"/>
         <source>Previous</source>
         <translation>Anterior</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="201"/>
+        <source>Replace</source>
+        <translation>Substituir</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="203"/>
+        <source>Replace all</source>
+        <translation>Substituir todos</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="207"/>
+        <source>Close</source>
+        <translation>Fechar</translation>
     </message>
     <message>
         <location filename="window.py" line="210"/>
@@ -364,6 +384,11 @@
         <location filename="window.py" line="233"/>
         <source>Underline</source>
         <translation>Sublinhado</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="299"/>
+        <source>Formatting</source>
+        <translation>Formatar</translation>
     </message>
     <message>
         <location filename="window.py" line="245"/>
@@ -406,14 +431,14 @@
         <translation>Marcação padrão</translation>
     </message>
     <message>
-        <location filename="window.py" line="299"/>
-        <source>Formatting</source>
-        <translation>Formatar</translation>
-    </message>
-    <message>
         <location filename="window.py" line="339"/>
         <source>Search</source>
         <translation>Pesquisar</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="342"/>
+        <source>Replace with</source>
+        <translation>Substituir por</translation>
     </message>
     <message>
         <location filename="window.py" line="344"/>
@@ -467,6 +492,11 @@
         <translation>Salvar arquivo</translation>
     </message>
     <message>
+        <location filename="window.py" line="860"/>
+        <source>Cannot save to file which is open in another tab!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="window.py" line="884"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Não é possível salvar arquivo somente leitura!</translation>
@@ -510,6 +540,21 @@
         <location filename="window.py" line="1005"/>
         <source>Failed to execute the command:</source>
         <translation>Falha ao executar o comando:</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1039"/>
+        <source>Alt text</source>
+        <translation>Texto alternativo</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1040"/>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1040"/>
+        <source>Link text</source>
+        <translation>Texto de link</translation>
     </message>
     <message>
         <location filename="window.py" line="1080"/>
@@ -573,51 +618,6 @@ Deseja salvar as alterações?</translation>
         <location filename="window.py" line="1156"/>
         <source>reStructuredText syntax</source>
         <translation>Sintaxe reStructuredText</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="207"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1039"/>
-        <source>Alt text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1040"/>
-        <source>URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1040"/>
-        <source>Link text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="201"/>
-        <source>Replace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="203"/>
-        <source>Replace all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="342"/>
-        <source>Replace with</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="860"/>
-        <source>Cannot save to file which is open in another tab!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="191"/>
-        <source>Use WebEngine (Chromium) renderer</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

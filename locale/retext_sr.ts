@@ -14,8 +14,18 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
+        <source>Automatically open last documents on startup</source>
+        <translation>На почетку, аутоматски отвори последње документе</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
         <source>Restore window geometry</source>
         <translation>Упамти геометрију прозора</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Use live preview by default</source>
+        <translation>Подразумевано користи живи преглед</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -26,6 +36,11 @@
         <location filename="config.py" line="67"/>
         <source>Markdown syntax extensions (comma-separated)</source>
         <translation>Маркдаун проширења синтаксе (одвојено запетом)</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Enable synchronized scrolling for Markdown</source>
+        <translation>Укључи синхронизовано клизање за Маркдаун</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -54,6 +69,11 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
+        <source>Draw vertical line at column</source>
+        <translation>Исцртај вертикалну линију на колони</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
         <source>Interface</source>
         <translation>Сучеље</translation>
     </message>
@@ -71,26 +91,6 @@
         <location filename="config.py" line="104"/>
         <source>Help</source>
         <translation>Помоћ</translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Use live preview by default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Enable synchronized scrolling for Markdown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Draw vertical line at column</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Automatically open last documents on startup</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -137,12 +137,12 @@
     <message>
         <location filename="editor.py" line="295"/>
         <source>Save image</source>
-        <translation type="unfinished"></translation>
+        <translation>Сачувај слику</translation>
     </message>
     <message>
         <location filename="editor.py" line="295"/>
         <source>Images (*.png *.jpg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Слике (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
@@ -155,7 +155,7 @@
     <message>
         <location filename="tab.py" line="188"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation>Не могу да рашчланим садржај фајла, Проверите да ли имате инсталиран &lt;a href=&quot;%s&quot;&gt;неопходан модул&lt;/a&gt;!</translation>
+        <translation>Не могу да рашчланим садржај фајла. Проверите имате ли инсталиран &lt;a href=&quot;%s&quot;&gt;неопходaн модул&lt;/a&gt;!</translation>
     </message>
 </context>
 <context>
@@ -163,12 +163,12 @@
     <message>
         <location filename="window.py" line="85"/>
         <source>File toolbar</source>
-        <translation>Фајл алатна трака</translation>
+        <translation>Алатна трака фајла</translation>
     </message>
     <message>
         <location filename="window.py" line="87"/>
         <source>Edit toolbar</source>
-        <translation>Уреди алатна трака</translation>
+        <translation>Алатна трака уређивања</translation>
     </message>
     <message>
         <location filename="window.py" line="89"/>
@@ -258,7 +258,7 @@
     <message>
         <location filename="window.py" line="144"/>
         <source>Table editing mode</source>
-        <translation>Режим табеле</translation>
+        <translation>Режим уређивања табеле</translation>
     </message>
     <message>
         <location filename="window.py" line="148"/>
@@ -321,6 +321,11 @@
         <translation>Користи ВебКит исцртавач</translation>
     </message>
     <message>
+        <location filename="window.py" line="191"/>
+        <source>Use WebEngine (Chromium) renderer</source>
+        <translation>Користи ВебМотор (Хромијум) исцртавач</translation>
+    </message>
+    <message>
         <location filename="window.py" line="196"/>
         <source>Show directory</source>
         <translation>Прикажи директоријум</translation>
@@ -334,6 +339,21 @@
         <location filename="window.py" line="199"/>
         <source>Previous</source>
         <translation>Претходно</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="201"/>
+        <source>Replace</source>
+        <translation>Замени</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="203"/>
+        <source>Replace all</source>
+        <translation>Замени све</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="207"/>
+        <source>Close</source>
+        <translation>Затвори</translation>
     </message>
     <message>
         <location filename="window.py" line="210"/>
@@ -364,6 +384,11 @@
         <location filename="window.py" line="233"/>
         <source>Underline</source>
         <translation>Подвучено</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="299"/>
+        <source>Formatting</source>
+        <translation>Форматирање</translation>
     </message>
     <message>
         <location filename="window.py" line="245"/>
@@ -406,14 +431,14 @@
         <translation>Подразумевана маркација</translation>
     </message>
     <message>
-        <location filename="window.py" line="299"/>
-        <source>Formatting</source>
-        <translation>Форматирање</translation>
-    </message>
-    <message>
         <location filename="window.py" line="339"/>
         <source>Search</source>
         <translation>Тражи</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="342"/>
+        <source>Replace with</source>
+        <translation>Замени са</translation>
     </message>
     <message>
         <location filename="window.py" line="344"/>
@@ -467,6 +492,11 @@
         <translation>Сачувај фајл</translation>
     </message>
     <message>
+        <location filename="window.py" line="860"/>
+        <source>Cannot save to file which is open in another tab!</source>
+        <translation>Не могу да сачувам јер је отворен у другом језичку!</translation>
+    </message>
+    <message>
         <location filename="window.py" line="884"/>
         <source>Cannot save to file because it is read-only!</source>
         <translation>Не могу да сачувам јер је фајл само за читање!</translation>
@@ -512,6 +542,21 @@
         <translation>Неуспело извршење команде:</translation>
     </message>
     <message>
+        <location filename="window.py" line="1039"/>
+        <source>Alt text</source>
+        <translation>Алт текст</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1040"/>
+        <source>URL</source>
+        <translation>УРЛ</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="1040"/>
+        <source>Link text</source>
+        <translation>Текст везе</translation>
+    </message>
+    <message>
         <location filename="window.py" line="1080"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
@@ -546,7 +591,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1156"/>
         <source>ReText %s (using PyMarkups %s)</source>
-        <translation type="unfinished"></translation>
+        <translation>РеТекст %s (користећи PyMarkups %s)</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
@@ -572,51 +617,6 @@ Do you want to save your changes?</source>
         <location filename="window.py" line="1156"/>
         <source>reStructuredText syntax</source>
         <translation>Синтакса реструктуираног текста</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="207"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1039"/>
-        <source>Alt text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1040"/>
-        <source>URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="1040"/>
-        <source>Link text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="201"/>
-        <source>Replace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="203"/>
-        <source>Replace all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="342"/>
-        <source>Replace with</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="860"/>
-        <source>Cannot save to file which is open in another tab!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="191"/>
-        <source>Use WebEngine (Chromium) renderer</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
