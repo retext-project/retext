@@ -22,6 +22,9 @@
 * A configuration option for hiding the tabs bar when there is only one tab
   was added.
 
+*Bugfix update 7.0.1 was released on 2017-06-25 with improved installation
+procedure in setup.py, some crash fixes, and updated translations.*
+
 ## ReText 6.0 (2016-05-10)
 
 * The live preview now automatically scrolls to match its position with the
