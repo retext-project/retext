@@ -14,6 +14,11 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
+        <source>Automatically open last documents on startup</source>
+        <translation>Automaticky otevírat dokumenty</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
         <source>Restore window geometry</source>
         <translation>Obnovit rozměry okna</translation>
     </message>
@@ -26,6 +31,11 @@
         <location filename="config.py" line="67"/>
         <source>Open external links in ReText window</source>
         <translation>Otevírat externí odkazy v okně ReTextu</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Markdown syntax extensions (comma-separated)</source>
+        <translation>Přípony syntaxe Markdown (oddělené čárkami)</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -78,19 +88,9 @@
         <translation>Soubor stylu</translation>
     </message>
     <message>
-        <location filename="config.py" line="67"/>
-        <source>Markdown syntax extensions (comma-separated)</source>
-        <translation>Přípony syntaxe Markdown (oddělené čárkami)</translation>
-    </message>
-    <message>
         <location filename="config.py" line="104"/>
         <source>Help</source>
         <translation>Nápověda</translation>
-    </message>
-    <message>
-        <location filename="config.py" line="67"/>
-        <source>Automatically open last documents on startup</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -258,7 +258,7 @@
     <message>
         <location filename="window.py" line="144"/>
         <source>Table editing mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Editační mód pro tablet</translation>
     </message>
     <message>
         <location filename="window.py" line="148"/>
@@ -321,6 +321,11 @@
         <translation>Použít WebKit k vykreslování</translation>
     </message>
     <message>
+        <location filename="window.py" line="191"/>
+        <source>Use WebEngine (Chromium) renderer</source>
+        <translation>Použít WebEngine (Chromium) k vykreslování</translation>
+    </message>
+    <message>
         <location filename="window.py" line="196"/>
         <source>Show directory</source>
         <translation>Zobrazit složku</translation>
@@ -334,6 +339,16 @@
         <location filename="window.py" line="199"/>
         <source>Previous</source>
         <translation>Předchozí</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="201"/>
+        <source>Replace</source>
+        <translation>Nahradit</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="203"/>
+        <source>Replace all</source>
+        <translation>Nahradit vše</translation>
     </message>
     <message>
         <location filename="window.py" line="207"/>
@@ -421,6 +436,11 @@
         <translation>Najít</translation>
     </message>
     <message>
+        <location filename="window.py" line="342"/>
+        <source>Replace with</source>
+        <translation>Nahradit s</translation>
+    </message>
+    <message>
         <location filename="window.py" line="344"/>
         <source>Case sensitively</source>
         <translation>Rozlišovat velikost písmen</translation>
@@ -470,6 +490,11 @@
         <location filename="window.py" line="919"/>
         <source>Save file</source>
         <translation>Uložit soubor</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="860"/>
+        <source>Cannot save to file which is open in another tab!</source>
+        <translation>Nelze uložit do souboru, který je otevřený v jiné záložce!</translation>
     </message>
     <message>
         <location filename="window.py" line="884"/>
@@ -592,31 +617,6 @@ Do you want to save your changes?</source>
         <location filename="window.py" line="1156"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText syntaxe</translation>
-    </message>
-    <message>
-        <location filename="window.py" line="201"/>
-        <source>Replace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="203"/>
-        <source>Replace all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="342"/>
-        <source>Replace with</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="860"/>
-        <source>Cannot save to file which is open in another tab!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="window.py" line="191"/>
-        <source>Use WebEngine (Chromium) renderer</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
