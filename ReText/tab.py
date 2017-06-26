@@ -86,7 +86,7 @@ class ReTextTab(QSplitter):
 		self.editBox.textChanged.connect(self.triggerPreviewUpdate)
 		self.editBox.undoAvailable.connect(parent.actionUndo.setEnabled)
 		self.editBox.redoAvailable.connect(parent.actionRedo.setEnabled)
-		self.editBox.copyAvailable.connect(parent.actionCopy.setEnabled)
+		self.editBox.copyAvailable.connect(parent.enableCopy)
 
 		# Give both boxes a minimum size so the minimumSizeHint will be
 		# ignored when splitter.setSizes is called below
