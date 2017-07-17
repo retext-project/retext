@@ -219,7 +219,7 @@ class ReTextEdit(QTextEdit):
 		length = len(text)
 		pos = 0
 		while pos < length and (text[pos] in (' ', '\t')
-		  or text[pos:pos+2] in ('* ', '- ')):
+		  or text[pos:pos+2] in ('* ', '- ', '> ')):
 			pos += 1
 		if pos == length:
 			cursor.removeSelectedText()
