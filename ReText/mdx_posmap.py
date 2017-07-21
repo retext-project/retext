@@ -53,7 +53,10 @@ class PosMapMarkPreprocessor(Preprocessor):
 class PosMapCleanPreprocessor(Preprocessor):
     """ PosMapCleanPreprocessor - remove $posmapmarker$linenr entries that
         accidentally ended up in the htmlStash. This could have happened
-        because they were inside html tags or a fenced code block
+        because they were inside html tags or a fenced code block.
+
+        The codehilite extension wraps this line into a span, so handle that
+        case too (see https://github.com/retext-project/retext/issues/299).
     """
 
     POSMAP_MARKER_RE = re.compile('(<span class="a-z+">)?\$posmapmarker\$\d+(</span>)?\n\n')
