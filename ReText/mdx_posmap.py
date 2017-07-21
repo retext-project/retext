@@ -56,7 +56,7 @@ class PosMapCleanPreprocessor(Preprocessor):
         because they were inside html tags or a fenced code block
     """
 
-    POSMAP_MARKER_RE = re.compile('\$posmapmarker\$\d+\n\n')
+    POSMAP_MARKER_RE = re.compile('(<span class="a-z+">)?\$posmapmarker\$\d+(</span>)?\n\n')
 
     def run(self, lines):
 
