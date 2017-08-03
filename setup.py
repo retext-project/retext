@@ -112,14 +112,14 @@ class retext_install(install):
 		desktop_file_path = join(self.install_data, 'share', 'applications',
 		                         'me.mitya57.ReText.desktop')
 		icon_path = join(self.orig_install_data, 'share', 'retext', 'icons', 'retext.svg')
-		with open(desktop_file_path) as desktop_file:
+		with open(desktop_file_path, encoding="utf-8") as desktop_file:
 			desktop_contents = desktop_file.read()
 		print('fixing Exec line in %s' % desktop_file_path)
 		desktop_contents = desktop_contents.replace('Exec=retext', 'Exec=%s' % retext)
 		if self.orig_install_data != '/usr':
 			print('fixing Icon line in %s' % desktop_file_path)
 			desktop_contents = desktop_contents.replace('Icon=retext', 'Icon=%s' % icon_path)
-		with open(desktop_file_path, 'w') as desktop_file:
+		with open(desktop_file_path, 'w', encoding="utf-8") as desktop_file:
 			desktop_file.write(desktop_contents)
 
 
