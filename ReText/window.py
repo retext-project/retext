@@ -1130,7 +1130,7 @@ class ReTextWindow(QMainWindow):
 		for ind in range(self.tabWidget.count()):
 			if not self.maybeSave(ind):
 				return closeevent.ignore()
-		if globalSettings.saveWindowGeometry and not self.isMaximized():
+		if globalSettings.saveWindowGeometry:
 			globalSettings.windowGeometry = self.saveGeometry()
 		if globalSettings.openLastFilesOnStartup:
 			files = [tab.fileName for tab in self.iterateTabs()]
