@@ -60,6 +60,7 @@ class ConfigDialog(QDialog):
 		buttonBox.accepted.connect(self.saveSettings)
 		buttonBox.rejected.connect(self.close)
 		self.initWidgets()
+		self.configurators['rightMargin'].valueChanged.connect(self.handleRightMarginSet)
 		self.layout.addWidget(buttonBox, len(self.options), 0, 1, 2)
 
 	def initConfigOptions(self):
@@ -123,6 +124,8 @@ class ConfigDialog(QDialog):
 			if isinstance(value, bool):
 				self.configurators[name] = QCheckBox(self)
 				self.configurators[name].setChecked(value)
+				if name == 'rightMarginWrap' and getattr(globalSettings, 'rightMargin') == 0:
+					self.configurators[name].setEnabled(False)
 			elif isinstance(value, int):
 				self.configurators[name] = QSpinBox(self)
 				if name == 'tabWidth':
@@ -137,6 +140,14 @@ class ConfigDialog(QDialog):
 				self.configurators[name].setText(value)
 			self.layout.addWidget(label, index, 0)
 			self.layout.addWidget(self.configurators[name], index, 1, Qt.AlignRight)
+
+	def handleRightMarginSet(self, value):
+		if value > 0:
+			self.configurators['rightMarginWrap'].setEnabled(True)
+			self.configurators['rightMarginWrap'].setChecked(getattr(globalSettings, 'rightMarginWrap'))
+		else:
+			self.configurators['rightMarginWrap'].setChecked(False)
+			self.configurators['rightMarginWrap'].setEnabled(False)
 
 	def saveSettings(self):
 		for option in self.options:
@@ -171,5 +182,6 @@ class ConfigDialog(QDialog):
 			print(e, file=sys.stderr)
 		for tab in self.parent.iterateTabs():
 			tab.editBox.updateFont()
+			tab.editBox.setWrapModeAndWidth()
 			tab.editBox.viewport().update()
 		self.parent.updateStyleSheet()

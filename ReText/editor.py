@@ -115,11 +115,11 @@ class ReTextEdit(QTextEdit):
 
 	def setWrapModeAndWidth(self):
 		if globalSettings.rightMarginWrap:
-			if self.rect().topRight().x() < self.marginx:
-				self.setLineWrapMode(1)
-			else:
+			if self.rect().topRight().x() > self.marginx:
 				self.setLineWrapMode(2)
 				self.setLineWrapColumnOrWidth(self.marginx)
+		else:
+			self.setLineWrapMode(1)
 
 	def updateFont(self):
 		self.setFont(globalSettings.editorFont)
