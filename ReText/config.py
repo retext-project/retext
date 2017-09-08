@@ -83,6 +83,7 @@ class ConfigDialog(QDialog):
 			(self.tr('Tab key inserts spaces'), 'tabInsertsSpaces'),
 			(self.tr('Tabulation width'), 'tabWidth'),
 			(self.tr('Draw vertical line at column'), 'rightMargin'),
+            (self.tr('Enable soft wrap'), 'rightMarginWrap'),
 			(self.tr('Show document stats'), 'documentStatsEnabled'),
 			(self.tr('Interface'), None),
 			(self.tr('Icon theme name'), 'iconTheme'),

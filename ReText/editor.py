@@ -106,11 +106,20 @@ class ReTextEdit(QTextEdit):
 		self.statistics = (0, 0, 0)
 		self.statsArea = TextInfoArea(self)
 		self.updateFont()
+		self.setWrapModeAndWidth()
 		self.document().blockCountChanged.connect(self.updateLineNumberAreaWidth)
 		self.cursorPositionChanged.connect(self.highlightCurrentLine)
 		self.document().contentsChange.connect(self.contentsChange)
 		if globalSettings.useFakeVim:
 			self.installFakeVimHandler()
+
+	def setWrapModeAndWidth(self):
+		if globalSettings.rightMarginWrap:
+			if self.rect().topRight().x() < self.marginx:
+				self.setLineWrapMode(1)
+			else:
+				self.setLineWrapMode(2)
+				self.setLineWrapColumnOrWidth(self.marginx)
 
 	def updateFont(self):
 		self.setFont(globalSettings.editorFont)
@@ -250,6 +259,7 @@ class ReTextEdit(QTextEdit):
 			self.lineNumberAreaWidth(), rect.height())
 		self.infoArea.updateTextAndGeometry()
 		self.statsArea.updateTextAndGeometry()
+		self.setWrapModeAndWidth()
 
 	def highlightCurrentLine(self):
 		if globalSettings.relativeLineNumbers:
@@ -495,4 +505,3 @@ class TextInfoArea(InfoArea):
 		                   'count of words, alphanumeric characters, all characters')
 		words, alphaNums, characters = self.editor.statistics
 		return template % (words, alphaNums, characters)
-
