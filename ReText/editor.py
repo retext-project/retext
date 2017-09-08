@@ -114,10 +114,9 @@ class ReTextEdit(QTextEdit):
 			self.installFakeVimHandler()
 
 	def setWrapModeAndWidth(self):
-		if globalSettings.rightMarginWrap:
-			if self.rect().topRight().x() > self.marginx:
-				self.setLineWrapMode(2)
-				self.setLineWrapColumnOrWidth(self.marginx)
+		if globalSettings.rightMarginWrap and (self.rect().topRight().x() > self.marginx):
+			self.setLineWrapMode(2)
+			self.setLineWrapColumnOrWidth(self.marginx)
 		else:
 			self.setLineWrapMode(1)
 
