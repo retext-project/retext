@@ -58,12 +58,11 @@ def _getTableLines(doc, pos, markupClass):
 				row.separatorline = True
 				row.paddingchar = '-'
 	elif markupClass == ReStructuredTextMarkup:
-		for i, row in enumerate(rows):
-			if i & 1 == 0: # i is even
+		for row in rows:
+			if row.text.strip().startswith(('+-','+=')):
 				row.separatorline = True
-				row.paddingchar = '=' if (i == 2) else '-'
+				row.paddingchar = row.text.strip()[1]
 				row.text = row.text.replace('+', '|')
-
 	return rows, editedlineindex, offset
 
 def _sortaUndoEdit(rows, editedlineindex, editsize):
