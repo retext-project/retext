@@ -84,7 +84,7 @@ class ConfigDialog(QDialog):
 			(self.tr('Tab key inserts spaces'), 'tabInsertsSpaces'),
 			(self.tr('Tabulation width'), 'tabWidth'),
 			(self.tr('Draw vertical line at column'), 'rightMargin'),
-            (self.tr('Enable soft wrap'), 'rightMarginWrap'),
+			(self.tr('Enable soft wrap'), 'rightMarginWrap'),
 			(self.tr('Show document stats'), 'documentStatsEnabled'),
 			(self.tr('Interface'), None),
 			(self.tr('Icon theme name'), 'iconTheme'),
@@ -124,7 +124,7 @@ class ConfigDialog(QDialog):
 			if isinstance(value, bool):
 				self.configurators[name] = QCheckBox(self)
 				self.configurators[name].setChecked(value)
-				if name == 'rightMarginWrap' and getattr(globalSettings, 'rightMargin') == 0:
+				if name == 'rightMarginWrap' and (globalSettings.rightMargin == 0):
 					self.configurators[name].setEnabled(False)
 			elif isinstance(value, int):
 				self.configurators[name] = QSpinBox(self)
@@ -144,7 +144,7 @@ class ConfigDialog(QDialog):
 	def handleRightMarginSet(self, value):
 		if value > 0:
 			self.configurators['rightMarginWrap'].setEnabled(True)
-			self.configurators['rightMarginWrap'].setChecked(getattr(globalSettings, 'rightMarginWrap'))
+			self.configurators['rightMarginWrap'].setChecked(globalSettings.rightMarginWrap)
 		else:
 			self.configurators['rightMarginWrap'].setChecked(False)
 			self.configurators['rightMarginWrap'].setEnabled(False)
