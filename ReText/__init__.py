@@ -84,6 +84,7 @@ configOptions = {
 	'relativeLineNumbers': False,
 	'restDefaultFileExtension': '.rst',
 	'rightMargin': 0,
+	'rightMarginWrap': False,
 	'saveWindowGeometry': False,
 	'spellCheck': False,
 	'spellCheckLocale': '',
