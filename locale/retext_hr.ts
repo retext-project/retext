@@ -369,7 +369,7 @@
     <message>
         <location filename="window.py" line="214"/>
         <source>About Qt</source>
-        <translation>O QT-u</translation>
+        <translation>O Qt-u</translation>
     </message>
     <message>
         <location filename="window.py" line="229"/>
@@ -603,7 +603,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1156"/>
         <source>Author: Dmitry Shachnev, 2011</source>
-        <translation>Autor: Dmitry Shachnev (Dmitry Shachnev), 2011</translation>
+        <translation>Autor: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
