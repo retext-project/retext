@@ -15,7 +15,7 @@
     <message>
         <location filename="config.py" line="67"/>
         <source>Automatically open last documents on startup</source>
-        <translation>tvori zadnje uređivan dokument prilikom pokretanja</translation>
+        <translation>Otvori zadnje uređivan dokument prilikom pokretanja</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
