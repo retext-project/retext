@@ -18,28 +18,17 @@ import re
 import sys
 from os.path import join, isfile, basename
 from distutils import log
-from distutils.core import setup, Command
 from distutils.command.build import build
-from distutils.command.sdist import sdist
-from distutils.command.install import install
-from distutils.command.upload import upload
+from setuptools import setup, Command
+from setuptools.command.sdist import sdist
+from setuptools.command.install import install
+from setuptools.command.test import test
+from setuptools.command.upload import upload
 from subprocess import check_call
 from glob import glob, iglob
-from warnings import filterwarnings
 
 if sys.version_info[0] < 3:
 	sys.exit('Error: Python 3.x is required.')
-
-def build_translations():
-	print('running build_translations')
-	error = None
-	for ts_file in glob(join('locale', '*.ts')):
-		try:
-			check_call(('lrelease', ts_file), env={'QT_SELECT': '5'})
-		except Exception as e:
-			error = e
-	if error:
-		print('Failed to build translations:', error)
 
 
 def bundle_icons():
@@ -53,15 +42,33 @@ def bundle_icons():
 	tar.extractall(path='icons')
 
 
-class retext_build(build):
+class retext_build_translations(Command):
+	description = 'Build .qm files from .ts files using lrelease'
+	user_options = []
+
+	def initialize_options(self):
+		pass
+
+	def finalize_options(self):
+		pass
+
 	def run(self):
-		build.run(self)
-		if not glob(join('locale', '*.qm')):
-			build_translations()
+		for ts_file in glob(join('locale', '*.ts')):
+			try:
+				check_call(('lrelease', ts_file), env={'QT_SELECT': '5'})
+			except Exception as e:
+				log.warn('Failed to build translations: %s', e)
+				break
+
+
+class retext_build(build):
+	sub_commands = build.sub_commands + [('build_translations', None)]
+
 
 class retext_sdist(sdist):
+	sub_commands = sdist.sub_commands + [('build_translations', None)]
+
 	def run(self):
-		build_translations()
 		bundle_icons()
 		sdist.run(self)
 
@@ -123,17 +130,11 @@ class retext_install(install):
 			desktop_file.write(desktop_contents)
 
 
-class retext_test(Command):
-	user_options = []
+class retext_test(test):
+	def finalize_options(self):
+		self.test_suite = 'tests'
+		test.finalize_options(self)
 
-	def initialize_options(self): pass
-	def finalize_options(self): pass
-
-	def run(self):
-		from tests import main
-		testprogram = main(module=None, argv=sys.argv[:1], verbosity=2, exit=False)
-		if not testprogram.result.wasSuccessful():
-			sys.exit(1)
 
 class retext_upload(upload):
 	def run(self):
@@ -148,9 +149,6 @@ class retext_upload(upload):
 			print('calling process', args)
 			check_call(args)
 
-
-filterwarnings('ignore', "Unknown distribution option: 'install_requires'")
-filterwarnings('ignore', "Unknown distribution option: 'python_requires'")
 
 classifiers = [
 	'Development Status :: 5 - Production/Stable',
@@ -191,6 +189,7 @@ setup(name='ReText',
         'PyQt5;platform_system=="Darwin"',
       ],
       cmdclass={
+        'build_translations': retext_build_translations,
         'build': retext_build,
         'sdist': retext_sdist,
         'install': retext_install,

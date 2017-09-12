@@ -1,4 +1,5 @@
 ReText/__pycache__
+ReText.egg-info
 locale/*.qm
 MANIFEST
 build
