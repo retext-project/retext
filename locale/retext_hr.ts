@@ -15,7 +15,7 @@
     <message>
         <location filename="config.py" line="67"/>
         <source>Automatically open last documents on startup</source>
-        <translation>Prilikom pokretanja otvori zadnje uređivan dokument</translation>
+        <translation>Otvori zadnje uređivan dokument prilikom pokretanja</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -25,7 +25,7 @@
     <message>
         <location filename="config.py" line="67"/>
         <source>Use live preview by default</source>
-        <translation>Pregled uživo kao zadano</translation>
+        <translation>Pregled uživo kao zadana postavka</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -314,7 +314,7 @@
     <message>
         <location filename="window.py" line="185"/>
         <source>Set locale</source>
-        <translation>Lokalizacijske postavke</translation>
+        <translation>Postavljanje jezika</translation>
     </message>
     <message>
         <location filename="window.py" line="186"/>
@@ -419,7 +419,7 @@
     <message>
         <location filename="window.py" line="267"/>
         <source>Export</source>
-        <translation>Izvez</translation>
+        <translation>Izvoz</translation>
     </message>
     <message>
         <location filename="window.py" line="288"/>
