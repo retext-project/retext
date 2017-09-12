@@ -14,7 +14,6 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 .. _`home page`: https://github.com/retext-project/retext
 .. _`wiki`: https://github.com/retext-project/retext/wiki'''
 
-import re
 import sys
 from os.path import join, isfile, basename
 from distutils import log
@@ -23,7 +22,6 @@ from setuptools import setup, Command
 from setuptools.command.sdist import sdist
 from setuptools.command.install import install
 from setuptools.command.test import test
-from setuptools.command.upload import upload
 from subprocess import check_call
 from glob import glob, iglob
 
@@ -35,11 +33,16 @@ def bundle_icons():
 	import urllib.request
 	import tarfile
 	from io import BytesIO
-	icons_tgz = 'http://downloads.sourceforge.net/project/retext/Icons/ReTextIcons_r5.tar.gz'
+	icons_tgz = 'https://github.com/retext-project/retext/archive/icons.tar.gz'
 	response = urllib.request.urlopen(icons_tgz)
 	tario = BytesIO(response.read())
 	tar = tarfile.open(fileobj=tario, mode='r')
-	tar.extractall(path='icons')
+	for member in tar:
+		if member.isfile():
+			member.path = basename(member.path)
+			log.info('bundling icons/%s', member.path)
+			tar.extract(member, 'icons')
+	tar.close()
 
 
 class retext_build_translations(Command):
@@ -136,20 +139,6 @@ class retext_test(test):
 		test.finalize_options(self)
 
 
-class retext_upload(upload):
-	def run(self):
-		self.sign = True
-		self.identity = '0x2f1c8ae0'
-		upload.run(self)
-		for command, pyversion, filename in self.distribution.dist_files:
-			full_version = re.search(r'ReText-([\d\.]+)\.tar\.gz', filename).group(1)
-			new_path = ('mandriver@frs.sourceforge.net:/home/frs/project/r/re/retext/ReText-%s/' %
-			            full_version[:-2])
-			args = ['scp', filename, filename + '.asc', new_path]
-			print('calling process', args)
-			check_call(args)
-
-
 classifiers = [
 	'Development Status :: 5 - Production/Stable',
 	'Environment :: X11 Applications :: Qt',
@@ -194,7 +183,6 @@ setup(name='ReText',
         'sdist': retext_sdist,
         'install': retext_install,
         'test': retext_test,
-        'upload': retext_upload
       },
       classifiers=classifiers,
       license='GPL 2+'
