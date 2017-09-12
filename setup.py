@@ -181,13 +181,15 @@ setup(name='ReText',
         'docutils',
         'Markdown',
         'Markups>=2.0',
-        'pyenchant',
         'Pygments',
         'chardet>=2.3',
         # On Linux distro-packaged Qt/PyQt is preferred
         'PyQt5;platform_system=="Windows"',
         'PyQt5;platform_system=="Darwin"',
       ],
+      extras_require={
+        'spellcheck': ['pyenchant'],
+      },
       cmdclass={
         'build_translations': retext_build_translations,
         'build': retext_build,
