@@ -121,10 +121,10 @@ class retext_install(install):
 		icon_path = join(self.orig_install_data, 'share', 'retext', 'icons', 'retext.svg')
 		with open(desktop_file_path, encoding="utf-8") as desktop_file:
 			desktop_contents = desktop_file.read()
-		print('fixing Exec line in %s' % desktop_file_path)
+		log.info('fixing Exec line in %s', desktop_file_path)
 		desktop_contents = desktop_contents.replace('Exec=retext', 'Exec=%s' % retext)
 		if self.orig_install_data != '/usr':
-			print('fixing Icon line in %s' % desktop_file_path)
+			log.info('fixing Icon line in %s', desktop_file_path)
 			desktop_contents = desktop_contents.replace('Icon=retext', 'Icon=%s' % icon_path)
 		with open(desktop_file_path, 'w', encoding="utf-8") as desktop_file:
 			desktop_file.write(desktop_contents)
@@ -146,7 +146,7 @@ class retext_upload(upload):
 			new_path = ('mandriver@frs.sourceforge.net:/home/frs/project/r/re/retext/ReText-%s/' %
 			            full_version[:-2])
 			args = ['scp', filename, filename + '.asc', new_path]
-			print('calling process', args)
+			log.info('calling process: %s', ' '.join(args))
 			check_call(args)
 
 
