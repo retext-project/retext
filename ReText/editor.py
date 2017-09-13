@@ -181,12 +181,29 @@ class ReTextEdit(QTextEdit):
 		actions = [self.parent.act(sug, trig=self.fixWord(sug)) for sug in suggestions]
 		menu = self.createStandardContextMenu()
 		menu.insertSeparator(menu.actions()[0])
+		menu.insertAction(menu.actions()[0], self.parent.act(self.tr('Add to dictionary'),
+			trig=self.learnWord(word)))
+		menu.insertSeparator(menu.actions()[0])
 		for action in actions[::-1]:
 			menu.insertAction(menu.actions()[0], action)
 		menu.exec(event.globalPos())
 
 	def fixWord(self, correctword):
 		return lambda: self.insertPlainText(correctword)
+
+	def learnWord(self, newword):
+		return lambda: self.addNewWord(newword)
+
+	def addNewWord(self, newword):
+		cursor = self.textCursor()
+		block = cursor.block()
+		cursor.clearSelection()
+		self.setTextCursor(cursor)
+		dictionary = self.tab.highlighter.dictionary
+		if (dictionary is None) or not newword:
+			return
+		dictionary.add(newword)
+		self.tab.highlighter.rehighlightBlock(block)
 
 	def keyPressEvent(self, event):
 		key = event.key()

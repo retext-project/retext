@@ -156,6 +156,11 @@
         <comment>count of words, alphanumeric characters, all characters</comment>
         <translation>%d m | %d a | %d c</translation>
     </message>
+    <message>
+        <location filename="editor.py" line="184"/>
+        <source>Add to dictionary</source>
+        <translation>Ajouter au dictionaire</translation>
+    </message>
 </context>
 <context>
     <name>ReTextTab</name>
