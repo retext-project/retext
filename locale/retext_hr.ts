@@ -88,6 +88,11 @@
         <translation>Datoteka lista stilova</translation>
     </message>
     <message>
+        <location filename="config.py" line="67"/>
+        <source>Show document stats</source>
+        <translation>Prikaz statističkih podataka dokumenta</translation>
+	</message>
+    <message>
         <location filename="config.py" line="104"/>
         <source>Help</source>
         <translation>Pomoć</translation>
@@ -144,6 +149,17 @@
         <source>Images (*.png *.jpg)</source>
         <translation>Slike (*.png *.jpg)</translation>
     </message>
+    <message>
+        <location filename="editor.py" line="493"/>
+        <source>%d w | %d a | %d c</source>
+        <comment>broj riječi, alfanumerički znakovi, svi znakovi</comment>
+        <translation>%d m | %d a | %d c</translation>
+    </message>
+    <message>
+        <location filename="editor.py" line="184"/>
+        <source>Add to dictionary</source>
+        <translation>Dodaj riječ u rječnik</translation>
+</message>
 </context>
 <context>
     <name>ReTextTab</name>
@@ -217,6 +233,11 @@
         <translation>Prethodna kartica</translation>
     </message>
     <message>
+        <location filename="window.py" line="113"/>
+        <source>Close tab</source>
+        <translation>Fermer l'onglet</translation>
+	</message>
+    <message>
         <location filename="window.py" line="115"/>
         <source>Print</source>
         <translation>Ispis</translation>
@@ -244,7 +265,7 @@
     <message>
         <location filename="window.py" line="125"/>
         <source>Find text</source>
-        <translation>Pronađi tekst</translation>
+        <translation>Traži u tekstu</translation>
     </message>
     <message>
         <location filename="window.py" line="129"/>
