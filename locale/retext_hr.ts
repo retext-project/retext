@@ -235,7 +235,7 @@
     <message>
         <location filename="window.py" line="113"/>
         <source>Close tab</source>
-        <translation>Fermer l'onglet</translation>
+        <translation>Zatvori karticu</translation>
 	</message>
     <message>
         <location filename="window.py" line="115"/>
