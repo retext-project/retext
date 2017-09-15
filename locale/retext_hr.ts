@@ -159,7 +159,7 @@
         <location filename="editor.py" line="184"/>
         <source>Add to dictionary</source>
         <translation>Dodaj riječ u rječnik</translation>
-</message>
+    </message>
 </context>
 <context>
     <name>ReTextTab</name>
