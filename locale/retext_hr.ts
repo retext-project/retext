@@ -91,7 +91,7 @@
         <location filename="config.py" line="67"/>
         <source>Show document stats</source>
         <translation>Prikaz statističkih podataka dokumenta</translation>
-	</message>
+    </message>
     <message>
         <location filename="config.py" line="104"/>
         <source>Help</source>
@@ -236,7 +236,7 @@
         <location filename="window.py" line="113"/>
         <source>Close tab</source>
         <translation>Zatvori karticu</translation>
-	</message>
+    </message>
     <message>
         <location filename="window.py" line="115"/>
         <source>Print</source>
