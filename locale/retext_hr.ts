@@ -171,7 +171,6 @@
     <message>
         <location filename="tab.py" line="188"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation>Ne mogu da raščlanim sadržaj fajla. Proverite da li imate instaliran &lt;a href=&quot;%s&quot;&gt;neophodan modul&lt;/a&gt;!</translation>
         <translation>Nije moguće raščlaniti sadržaj datoteke. Provjerite imate li instaliran &lt;a href=&quot;%s&quot;&gt;potreban modul&lt;/a&gt;!</translation>
     </message>
 </context>
@@ -516,7 +515,6 @@
     <message>
         <location filename="window.py" line="860"/>
         <source>Cannot save to file which is open in another tab!</source>
-        <translation>Ne mogu da sačuvam jer je otvoren u drugom jezičku!</translation>
         <translation>Datoteku nije moguće spremiti jer je otvorena u drugoj kartici.</translation>
     </message>
     <message>
