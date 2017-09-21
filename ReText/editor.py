@@ -93,6 +93,8 @@ def documentIndentLess(document, cursor, globalSettings=globalSettings):
 class ReTextEdit(QTextEdit):
 	resized = pyqtSignal(QRect)
 	scrollLimitReached = pyqtSignal(QWheelEvent)
+	returnBlockPattern = re.compile("^[\\s]*([*>-]|\\d+\\.) ")
+	orderedListPattern = re.compile("^([\\s]*)(\\d+)\\. $")
 
 	def __init__(self, parent):
 		QTextEdit.__init__(self)
@@ -242,15 +244,23 @@ class ReTextEdit(QTextEdit):
 		cursor.movePosition(QTextCursor.StartOfBlock, QTextCursor.KeepAnchor)
 		text = cursor.selectedText()
 		length = len(text)
-		pos = 0
-		while pos < length and (text[pos] in (' ', '\t')
-		  or text[pos:pos+2] in ('* ', '- ', '> ')):
-			pos += 1
-		if pos == length:
-			cursor.removeSelectedText()
+		match = self.returnBlockPattern.search(text)
+		if match is not None:
+			matchedText = match.group(0)
+			if len(matchedText) == length:
+				cursor.removeSelectedText()
+				matchedText = ''
+			else:
+				matchOL = self.orderedListPattern.match(matchedText)
+				if matchOL is not None:
+					matchedPrefix = matchOL.group(1)
+					matchedNumber = int(matchOL.group(2))
+					matchedText = matchedPrefix + str(matchedNumber + 1) + ". "
+		else:
+			matchedText = ''
 		# Reset the cursor
 		cursor = self.textCursor()
-		cursor.insertText(('\n' + text[:pos]) if pos < length else '\n')
+		cursor.insertText('\n' + matchedText)
 		self.ensureCursorVisible()
 
 	def lineNumberAreaWidth(self):
