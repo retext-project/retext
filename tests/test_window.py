@@ -60,7 +60,7 @@ def processEventsUntilIdle(eventTimeout=defaultEventTimeout):
 class FakeConverterProcess(QObject):
     conversionDone = pyqtSignal()
 
-    def start_conversion(self, name, filename, extensions, text):
+    def start_conversion(self, name, filename, extensions, text, current_dir):
         self.conversionDone.emit()
 
     def get_result(self):
