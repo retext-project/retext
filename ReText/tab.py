@@ -403,6 +403,10 @@ class ReTextTab(QSplitter):
 				newCursor.movePosition(QTextCursor.Left, QTextCursor.MoveAnchor, len(replaceText))
 				newCursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, len(replaceText))
 			self.editBox.setTextCursor(newCursor)
+			if self.editBox.cursorRect().bottom() >= self.editBox.height() - 3:
+				scrollValue = self.editBox.verticalScrollBar().value()
+				areaHeight = self.editBox.fontMetrics().height()
+				self.editBox.verticalScrollBar().setValue(scrollValue + areaHeight)
 			return True
 		if not wrap:
 			return self.find(text, flags, replaceText, True)
