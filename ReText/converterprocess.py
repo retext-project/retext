@@ -2,6 +2,7 @@
 
 import markups
 import multiprocessing as mp
+import os
 import pickle
 import signal
 import struct
@@ -64,6 +65,7 @@ def _converter_process_func(conn_parent, conn_child):
             break
         elif job['command'] == 'convert':
             try:
+                os.chdir(job['current_dir'])
                 if (not current_markup or
                     current_markup.name != job['markup_name'] or
                     current_markup.filename != job['filename']):
@@ -146,13 +148,14 @@ class ConverterProcess(QObject):
             self.conn.setblocking(True)
             self.conversionDone.emit()
 
-    def start_conversion(self, markup_name, filename, requested_extensions, text):
+    def start_conversion(self, markup_name, filename, requested_extensions, text, current_dir):
         if self.busy:
             raise RuntimeError('Already converting')
 
         sendObject(self.conn, {'command': 'convert',
                                'markup_name' : markup_name,
                                'filename' : filename,
+                               'current_dir': current_dir,
                                'requested_extensions' : requested_extensions,
                                'text' : text})
         self.busy = True

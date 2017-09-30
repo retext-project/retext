@@ -274,8 +274,9 @@ class ReTextTab(QSplitter):
 			requested_extensions = ['ReText.mdx_posmap'] if globalSettings.syncScroll else []
 			self.converterProcess.start_conversion(self.getActiveMarkupClass().name,
 			                                       self.fileName,
-							       requested_extensions,
-							       self.editBox.toPlainText())
+			                                       requested_extensions,
+			                                       self.editBox.toPlainText(),
+			                                       QDir.currentPath())
 
 	def updateBoxesVisibility(self):
 		self.editBox.setVisible(self.previewState < PreviewNormal)
