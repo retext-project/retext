@@ -144,6 +144,9 @@ def writeListToSettings(key, value, settings=settings):
 	else:
 		settings.remove(key)
 
+def getSettingsFilePath(settings=settings):
+	return settings.fileName()
+
 def chooseMonospaceFont():
 	font = QFont('monospace')
 	font.setStyleHint(QFont.TypeWriter)
