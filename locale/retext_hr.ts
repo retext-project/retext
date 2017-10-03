@@ -15,12 +15,12 @@
     <message>
         <location filename="config.py" line="67"/>
         <source>Automatically open last documents on startup</source>
-        <translation>Otvori zadnje uređivan dokument prilikom pokretanja</translation>
+        <translation>Otvaranje zadnje uređivanoga dokumenta prilikom pokretanja</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Restore window geometry</source>
-        <translation>Zapamti dimenzije prozora</translation>
+        <translation>Pamćenje dimenzije prozora</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -60,7 +60,7 @@
     <message>
         <location filename="config.py" line="67"/>
         <source>Tab key inserts spaces</source>
-        <translation>Tipka Tab umeće bjeline</translation>
+        <translation>Tab umeće bjeline</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
@@ -279,7 +279,7 @@
     <message>
         <location filename="window.py" line="144"/>
         <source>Table editing mode</source>
-        <translation>Način rada uređivanja tablica</translation>
+        <translation>Uređivanje tablica kao način rada</translation>
     </message>
     <message>
         <location filename="window.py" line="148"/>
@@ -289,7 +289,7 @@
     <message>
         <location filename="window.py" line="153"/>
         <source>Fullscreen mode</source>
-        <translation>Prikaz preko cijeloga ekrana kao način rada</translation>
+        <translation>Prikaz preko cijeloga zaslona kao način rada</translation>
     </message>
     <message>
         <location filename="window.py" line="588"/>
@@ -617,7 +617,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1156"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>Jednostavan ali moćan uređivač teksta pisanoga Markdownom i reStructuredTextom</translation>
+        <translation>Jednostavan ali moćan uređivač Markdowna i reStructuredTexta</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
@@ -632,12 +632,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1156"/>
         <source>Markdown syntax</source>
-        <translation>Markdown sintaksa</translation>
+        <translation>Sintaksa Markdowna</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
         <source>reStructuredText syntax</source>
-        <translation>reStructuredText sintaksa</translation>
+        <translation>Sintaksa reStructuredTexta</translation>
     </message>
 </context>
 </TS>
