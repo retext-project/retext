@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from ReText import globalSettings, getBundledIcon
+from ReText import globalSettings, getBundledIcon, getSettingsFilePath
 from ReText.icontheme import get_icon_theme
 from markups.common import CONFIGURATION_DIR
 from os.path import join
@@ -61,7 +61,7 @@ class ConfigDialog(QDialog):
 		buttonBox.rejected.connect(self.close)
 		self.initWidgets()
 		self.configurators['rightMargin'].valueChanged.connect(self.handleRightMarginSet)
-		self.layout.addWidget(buttonBox, len(self.options), 0, 1, 2)
+		self.layout.addWidget(buttonBox, len(self.options)+1, 0, 1, 2)
 
 	def initConfigOptions(self):
 		# options is a tuple containing (displayname, name) tuples
@@ -140,6 +140,13 @@ class ConfigDialog(QDialog):
 				self.configurators[name].setText(value)
 			self.layout.addWidget(label, index, 0)
 			self.layout.addWidget(self.configurators[name], index, 1, Qt.AlignRight)
+		# Display the current config file
+		label = QLabel(self.tr('Using configuration file at:'), self)
+		self.layout.addWidget(label, len(self.options), 0)
+		path = getSettingsFilePath()
+		pathLabel = QLabel('<a href="file://'+path+'">'+path+'</a>', self)
+		pathLabel.linkActivated.connect(self.openLink)
+		self.layout.addWidget(pathLabel, len(self.options), 1)
 
 	def handleRightMarginSet(self, value):
 		if value > 0:
@@ -185,3 +192,6 @@ class ConfigDialog(QDialog):
 			tab.editBox.setWrapModeAndWidth()
 			tab.editBox.viewport().update()
 		self.parent.updateStyleSheet()
+
+	def openLink(self, link):
+		QDesktopServices.openUrl(QUrl(link))

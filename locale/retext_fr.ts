@@ -582,6 +582,11 @@ Voulez vous enregistrer vos changements ?</translation>
         <translation>Syntaxe reStructuredText</translation>
     </message>
     <message>
+        <location filename="window.py" line="1170"/>
+        <source>Using configuration file at:</source>
+        <translation>Fichier de configuration situé à :</translation>
+    </message>
+    <message>
         <location filename="window.py" line="121"/>
         <source>Change editor font</source>
         <translation>Changer la police de l&apos;éditeur</translation>
