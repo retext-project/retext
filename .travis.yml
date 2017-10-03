@@ -8,6 +8,8 @@ addons:
     packages:
     - libegl1-mesa
 install:
-  - pip install PyQt5 Markdown docutils
+  - pip install PyQt5 Markdown docutils pyflakes
   - pip install git+https://github.com/retext-project/pymarkups.git
-script: xvfb-run -a -s "-screen 0 1024x768x24" python setup.py test
+script:
+  - xvfb-run -a -s "-screen 0 1024x768x24" python setup.py test
+  - python -m pyflakes ReText/*.py retext.py setup.py
