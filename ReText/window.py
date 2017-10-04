@@ -540,16 +540,22 @@ class ReTextWindow(QMainWindow):
 	def changeEditorFont(self):
 		font, ok = QFontDialog.getFont(globalSettings.editorFont, self)
 		if ok:
-			globalSettings.editorFont = font
-			for tab in self.iterateTabs():
-				tab.editBox.updateFont()
+			self.setEditorFont(font)
+
+	def setEditorFont(self, font):
+		globalSettings.editorFont = font
+		for tab in self.iterateTabs():
+			tab.editBox.updateFont()
 
 	def changePreviewFont(self):
 		font, ok = QFontDialog.getFont(globalSettings.font, self)
 		if ok:
-			globalSettings.font = font
-			for tab in self.iterateTabs():
-				tab.triggerPreviewUpdate()
+			self.setPreviewFont(font)
+
+	def setPreviewFont(self, font):
+		globalSettings.font = font
+		for tab in self.iterateTabs():
+			tab.triggerPreviewUpdate()
 
 	def preview(self, viewmode):
 		self.currentTab.previewState = viewmode * 2

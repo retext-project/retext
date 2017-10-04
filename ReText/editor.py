@@ -25,7 +25,7 @@ from ReText import globalSettings, tablemode, readFromSettings
 
 from PyQt5.QtCore import pyqtSignal, QFileInfo, QRect, QSize, Qt
 from PyQt5.QtGui import QColor, QImage, QKeyEvent, QMouseEvent, QPainter, \
-QPalette, QTextCursor, QTextFormat, QWheelEvent
+QPalette, QTextCursor, QTextFormat, QWheelEvent, QGuiApplication
 from PyQt5.QtWidgets import QFileDialog, QLabel, QTextEdit, QWidget
 
 try:
@@ -144,15 +144,29 @@ class ReTextEdit(QTextEdit):
 		QTextEdit.paintEvent(self, event)
 
 	def wheelEvent(self, event):
-		QTextEdit.wheelEvent(self, event)
-
-		if event.angleDelta().y() < 0:
-			scrollBarLimit = self.verticalScrollBar().maximum()
+		modifiers = QGuiApplication.keyboardModifiers()
+		if modifiers == Qt.ControlModifier:
+			font = globalSettings.editorFont
+			size = font.pointSize()
+			scroll = event.angleDelta().y()
+			if scroll > 0:
+				size += 1
+			elif scroll < 0:
+				size -= 1
+			else:
+				return
+			font.setPointSize(size)
+			self.parent.setEditorFont(font)
 		else:
-			scrollBarLimit = self.verticalScrollBar().minimum()
+			QTextEdit.wheelEvent(self, event)
 
-		if self.verticalScrollBar().value() == scrollBarLimit:
-			self.scrollLimitReached.emit(event)
+			if event.angleDelta().y() < 0:
+				scrollBarLimit = self.verticalScrollBar().maximum()
+			else:
+				scrollBarLimit = self.verticalScrollBar().minimum()
+
+			if self.verticalScrollBar().value() == scrollBarLimit:
+				self.scrollLimitReached.emit(event)
 
 	def scrollContentsBy(self, dx, dy):
 		QTextEdit.scrollContentsBy(self, dx, dy)
