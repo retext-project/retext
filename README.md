@@ -8,7 +8,7 @@ ReText is a simple but powerful editor for Markdown and reStructuredText markup
 languages. ReText is written in Python language and works on Linux and other
 POSIX-compatible platforms. To install ReText, use `setup.py install` command.
 
-![ReText under KDE 5](https://a.fsdn.com/con/app/proj/retext/screenshots/retext-kde5.png)
+![ReText on Plasma 5 desktop](data/retext-kde5.png)
 
 You can read more about ReText in the [wiki].
 
