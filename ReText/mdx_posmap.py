@@ -39,19 +39,19 @@ class PosMapExtension(Extension):
         md.parser.blockprocessors.add('posmap', PosMapBlockProcessor(md.parser), '_begin')
 
 class PosMapMarkPreprocessor(Preprocessor):
-    """ PosMapMarkPreprocessor - insert $posmapmarker$linenr entries at each empty line """
+    """ PosMapMarkPreprocessor - insert __posmapmarker__linenr entries at each empty line """
 
     def run(self, lines):
         new_text = []
         for i, line in enumerate(lines):
             new_text.append(line)
             if line == '':
-                new_text.append('$posmapmarker$%d' % i)
+                new_text.append('__posmapmarker__%d' % i)
                 new_text.append('')
         return new_text
 
 class PosMapCleanPreprocessor(Preprocessor):
-    """ PosMapCleanPreprocessor - remove $posmapmarker$linenr entries that
+    """ PosMapCleanPreprocessor - remove __posmapmarker__linenr entries that
         accidentally ended up in the htmlStash. This could have happened
         because they were inside html tags or a fenced code block.
 
@@ -59,7 +59,7 @@ class PosMapCleanPreprocessor(Preprocessor):
         case too (see https://github.com/retext-project/retext/issues/299).
     """
 
-    POSMAP_MARKER_RE = re.compile('(<span class="a-z+">)?\$posmapmarker\$\d+(</span>)?\n\n')
+    POSMAP_MARKER_RE = re.compile('(<span class="a-z+">)?__posmapmarker__\d+(</span>)?\n\n')
 
     def run(self, lines):
 
@@ -77,11 +77,11 @@ class PosMapBlockProcessor(BlockProcessor):
     """
 
     def test(self, parent, block):
-        return block.startswith('$posmapmarker$')
+        return block.startswith('__posmapmarker__')
 
     def run(self, parent, blocks):
         block = blocks.pop(0)
-        line_nr = block.split('$')[2]
+        line_nr = block.split('__')[2]
         last_child = self.lastChild(parent)
         if last_child != None:
             # Avoid setting the attribute on HTML placeholders, because it
