@@ -23,7 +23,8 @@ from os.path import join
 from PyQt5.QtCore import QFile, QFileInfo, QUrl, Qt
 from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
- QFileDialog, QGridLayout, QLabel, QLineEdit, QPushButton, QSpinBox
+ QFileDialog, QGridLayout, QLabel, QLineEdit, QPushButton, QSpinBox, \
+ QTabWidget, QVBoxLayout, QWidget
 
 MKD_EXTS_FILE = join(CONFIGURATION_DIR, 'markdown-extensions.txt')
 
@@ -53,7 +54,14 @@ class ConfigDialog(QDialog):
 		QDialog.__init__(self, parent)
 		self.parent = parent
 		self.initConfigOptions()
-		self.layout = QGridLayout(self)
+		self.layout = QVBoxLayout(self)
+		path = getSettingsFilePath()
+		pathLabel = QLabel(self.tr('Using configuration file at:') +
+			' <a href="file://%(path)s">%(path)s</a>' % {'path': path}, self)
+		pathLabel.linkActivated.connect(self.openLink)
+		self.layout.addWidget(pathLabel)
+		self.tabWidget = QTabWidget(self)
+		self.layout.addWidget(self.tabWidget)
 		buttonBox = QDialogButtonBox(self)
 		buttonBox.setStandardButtons(QDialogButtonBox.Ok |
 			QDialogButtonBox.Cancel)
@@ -61,44 +69,53 @@ class ConfigDialog(QDialog):
 		buttonBox.rejected.connect(self.close)
 		self.initWidgets()
 		self.configurators['rightMargin'].valueChanged.connect(self.handleRightMarginSet)
-		self.layout.addWidget(buttonBox, len(self.options)+1, 0, 1, 2)
+		self.layout.addWidget(buttonBox)
 
 	def initConfigOptions(self):
-		# options is a tuple containing (displayname, name) tuples
-		self.options = (
-			(self.tr('Behavior'), None),
-			(self.tr('Automatically save documents'), 'autoSave'),
-			(self.tr('Automatically open last documents on startup'), 'openLastFilesOnStartup'),
-			(self.tr('Restore window geometry'), 'saveWindowGeometry'),
-			(self.tr('Use live preview by default'), 'livePreviewByDefault'),
-			(self.tr('Open external links in ReText window'), 'handleWebLinks'),
-			(self.tr('Markdown syntax extensions (comma-separated)'), 'markdownExtensions'),
-			(None, 'markdownExtensions'),
-			(self.tr('Enable synchronized scrolling for Markdown'), 'syncScroll'),
-		#	(self.tr('Default Markdown file extension'), 'markdownDefaultFileExtension'),
-		#	(self.tr('Default reStructuredText file extension'), 'restDefaultFileExtension'),
-			(self.tr('Editor'), None),
-			(self.tr('Highlight current line'), 'highlightCurrentLine'),
-			(self.tr('Show line numbers'), 'lineNumbersEnabled'),
-			(self.tr('Line numbers are relative to current line'), 'relativeLineNumbers'),
-			(self.tr('Tab key inserts spaces'), 'tabInsertsSpaces'),
-			(self.tr('Tabulation width'), 'tabWidth'),
-			(self.tr('Draw vertical line at column'), 'rightMargin'),
-			(self.tr('Enable soft wrap'), 'rightMarginWrap'),
-			(self.tr('Show document stats'), 'documentStatsEnabled'),
-			(self.tr('Interface'), None),
-			(self.tr('Icon theme name'), 'iconTheme'),
-			(self.tr('Stylesheet file'), 'styleSheet', True),
+		self.tabs = (
+			(self.tr('Behavior'), (
+				(self.tr('Automatically save documents'), 'autoSave'),
+				(self.tr('Automatically open last documents on startup'), 'openLastFilesOnStartup'),
+				(self.tr('Restore window geometry'), 'saveWindowGeometry'),
+				(self.tr('Use live preview by default'), 'livePreviewByDefault'),
+				(self.tr('Open external links in ReText window'), 'handleWebLinks'),
+				(self.tr('Markdown syntax extensions (comma-separated)'), 'markdownExtensions'),
+				(None, 'markdownExtensions'),
+				(self.tr('Enable synchronized scrolling for Markdown'), 'syncScroll'),
+			#	(self.tr('Default Markdown file extension'), 'markdownDefaultFileExtension'),
+			#	(self.tr('Default reStructuredText file extension'), 'restDefaultFileExtension'),
+			)),
+			(self.tr('Editor'), (
+				(self.tr('Highlight current line'), 'highlightCurrentLine'),
+				(self.tr('Show line numbers'), 'lineNumbersEnabled'),
+				(self.tr('Line numbers are relative to current line'), 'relativeLineNumbers'),
+				(self.tr('Tab key inserts spaces'), 'tabInsertsSpaces'),
+				(self.tr('Tabulation width'), 'tabWidth'),
+				(self.tr('Draw vertical line at column'), 'rightMargin'),
+				(self.tr('Enable soft wrap'), 'rightMarginWrap'),
+				(self.tr('Show document stats'), 'documentStatsEnabled'),
+			)),
+			(self.tr('Interface'), (
+				(self.tr('Icon theme name'), 'iconTheme'),
+				(self.tr('Stylesheet file'), 'styleSheet', True),
+			))
 		)
 
 	def initWidgets(self):
 		self.configurators = {}
-		for index, option in enumerate(self.options):
+		for tabTitle, options in self.tabs:
+			page = self.getPageWidget(options)
+			self.tabWidget.addTab(page, tabTitle)
+
+	def getPageWidget(self, options):
+		page = QWidget(self)
+		layout = QGridLayout(page)
+		for index, option in enumerate(options):
 			displayname, name = option[:2]
 			fileselector = option[2] if len(option) > 2 else False
 			if name is None:
 				header = QLabel('<h3>%s</h3>' % displayname, self)
-				self.layout.addWidget(header, index, 0, 1, 2, Qt.AlignHCenter)
+				layout.addWidget(header, index, 0, 1, 2, Qt.AlignHCenter)
 				continue
 			if displayname:
 				label = QLabel(displayname + ':', self)
@@ -107,8 +124,8 @@ class ConfigDialog(QDialog):
 					url = QUrl('https://github.com/retext-project/retext/wiki/Markdown-extensions')
 					helpButton = QPushButton(self.tr('Help'), self)
 					helpButton.clicked.connect(lambda: QDesktopServices.openUrl(url))
-					self.layout.addWidget(label, index, 0)
-					self.layout.addWidget(helpButton, index, 1)
+					layout.addWidget(label, index, 0)
+					layout.addWidget(helpButton, index, 1)
 					continue
 				try:
 					extsFile = open(MKD_EXTS_FILE)
@@ -118,7 +135,7 @@ class ConfigDialog(QDialog):
 					value = ''
 				self.configurators[name] = QLineEdit(self)
 				self.configurators[name].setText(value)
-				self.layout.addWidget(self.configurators[name], index, 0, 1, 2)
+				layout.addWidget(self.configurators[name], index, 0, 1, 2)
 				continue
 			value = getattr(globalSettings, name)
 			if isinstance(value, bool):
@@ -138,15 +155,9 @@ class ConfigDialog(QDialog):
 			elif isinstance(value, str):
 				self.configurators[name] = QLineEdit(self)
 				self.configurators[name].setText(value)
-			self.layout.addWidget(label, index, 0)
-			self.layout.addWidget(self.configurators[name], index, 1, Qt.AlignRight)
-		# Display the current config file
-		label = QLabel(self.tr('Using configuration file at:'), self)
-		self.layout.addWidget(label, len(self.options), 0)
-		path = getSettingsFilePath()
-		pathLabel = QLabel('<a href="file://'+path+'">'+path+'</a>', self)
-		pathLabel.linkActivated.connect(self.openLink)
-		self.layout.addWidget(pathLabel, len(self.options), 1)
+			layout.addWidget(label, index, 0)
+			layout.addWidget(self.configurators[name], index, 1, Qt.AlignRight)
+		return page
 
 	def handleRightMarginSet(self, value):
 		if value > 0:
@@ -157,11 +168,9 @@ class ConfigDialog(QDialog):
 			self.configurators['rightMarginWrap'].setEnabled(False)
 
 	def saveSettings(self):
-		for option in self.options:
-			name = option[1]
-			if name is None or name == 'markdownExtensions':
+		for name, configurator in self.configurators.items():
+			if name == 'markdownExtensions':
 				continue
-			configurator = self.configurators[name]
 			if isinstance(configurator, QCheckBox):
 				value = configurator.isChecked()
 			elif isinstance(configurator, QSpinBox):
