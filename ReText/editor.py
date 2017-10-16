@@ -289,7 +289,7 @@ class ReTextEdit(QTextEdit):
 		return 5 + self.fontMetrics().width('9') * digits
 
 	def updateLineNumberAreaWidth(self, blockcount=0):
-		self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, 0)
+		self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, self.fontMetrics().height())
 
 	def resizeEvent(self, event):
 		QTextEdit.resizeEvent(self, event)
@@ -483,35 +483,6 @@ class InfoArea(QLabel):
 	def getText(self):
 		return ""
 
-	def enterEvent(self, event):
-		palette = self.palette()
-		windowColor = QColor(self.baseColor)
-		windowColor.setAlpha(0x20)
-		palette.setColor(QPalette.Window, windowColor)
-		textColor = palette.color(QPalette.WindowText)
-		textColor.setAlpha(0x20)
-		palette.setColor(QPalette.WindowText, textColor)
-		self.setPalette(palette)
-
-	def leaveEvent(self, event):
-		palette = self.palette()
-		palette.setColor(QPalette.Window, self.baseColor)
-		palette.setColor(QPalette.WindowText,
-			self.editor.palette().color(QPalette.WindowText))
-		self.setPalette(palette)
-
-	def mousePressEvent(self, event):
-		pos = self.mapToParent(event.pos())
-		pos.setX(pos.x() - self.editor.lineNumberAreaWidth())
-		newEvent = QMouseEvent(event.type(), pos,
-		                       event.button(), event.buttons(),
-		                       event.modifiers())
-		self.editor.mousePressEvent(newEvent)
-
-	mouseReleaseEvent = mousePressEvent
-	mouseDoubleClickEvent = mousePressEvent
-	mouseMoveEvent = mousePressEvent
-
 class LineInfoArea(InfoArea):
 	def __init__(self, editor):
 		InfoArea.__init__(self, editor, colorValues['infoArea'])
@@ -519,7 +490,7 @@ class LineInfoArea(InfoArea):
 	def getAreaPosition(self, width, height):
 		viewport = self.editor.viewport()
 		rightSide = viewport.width() + self.editor.lineNumberAreaWidth()
-		return rightSide - width, viewport.height() - height
+		return rightSide - width, viewport.height() + 1
 
 	def getText(self):
 		template = '%d : %d'
@@ -536,7 +507,7 @@ class TextInfoArea(InfoArea):
 	def getAreaPosition(self, width, height):
 		viewport = self.editor.viewport()
 		leftSide = self.editor.lineNumberAreaWidth()
-		return leftSide, viewport.height() - height
+		return leftSide, viewport.height() + 1
 
 	def getText(self):
 		if not globalSettings.documentStatsEnabled:
