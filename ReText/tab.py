@@ -32,7 +32,7 @@ except ImportError:
 
 from PyQt5.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QPoint, QTextStream, QTimer, QUrl
 from PyQt5.QtGui import QTextCursor, QTextDocument
-from PyQt5.QtWidgets import QTextEdit, QSplitter
+from PyQt5.QtWidgets import QTextEdit, QSplitter, QMessageBox
 
 try:
 	from ReText.webkitpreview import ReTextWebKitPreview
@@ -445,3 +445,11 @@ class ReTextTab(QSplitter):
 		if exists(fileToOpen) and get_markup_for_file_name(fileToOpen, return_class=True):
 			self.p.openFileWrapper(fileToOpen)
 			return fileToOpen
+
+	def openStatsDialog(self):
+		self.editBox.updateTextStatistics()
+		words, alphaNums, characters = self.editBox.statistics
+		QMessageBox.information(self, self.tr('Document statistics'), '<p><strong>' + self.tr('Word count:') +
+                                '</strong> ' + str(words) + '</p><p><strong>' + self.tr('Alphanumeric characters:') +
+                                '</strong> ' + str(alphaNums) + '</p><p><strong>' + self.tr('Characters:') +
+                                '</strong> ' + str(characters) + '</p>')

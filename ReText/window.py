@@ -158,6 +158,7 @@ class ReTextWindow(QMainWindow):
 		self.actionConfig = self.act(self.tr('Preferences'), icon='preferences-system',
 			trig=self.openConfigDialog)
 		self.actionConfig.setMenuRole(QAction.PreferencesRole)
+		self.actionStats = self.act(self.tr('Document statistics'), trig=self.openStatsDialog)
 		self.actionSaveHtml = self.act('HTML', 'text-html', self.saveFileHtml)
 		self.actionPdf = self.act('PDF', 'application-pdf', self.savePdf)
 		self.actionOdf = self.act('ODT', 'x-office-document', self.saveOdf)
@@ -292,6 +293,7 @@ class ReTextWindow(QMainWindow):
 			menuSC.addAction(self.actionEnableSC)
 			menuSC.addAction(self.actionSetLocale)
 		menuEdit.addAction(self.actionSearch)
+		menuEdit.addAction(self.actionStats)
 		menuEdit.addAction(self.actionChangeEditorFont)
 		menuEdit.addAction(self.actionChangePreviewFont)
 		menuEdit.addSeparator()
@@ -597,6 +599,9 @@ class ReTextWindow(QMainWindow):
 		dlg = ConfigDialog(self)
 		dlg.setWindowTitle(self.tr('Preferences'))
 		dlg.show()
+
+	def openStatsDialog(self):
+		self.currentTab.openStatsDialog()
 
 	def enableFakeVimMode(self, yes):
 		globalSettings.useFakeVim = yes
