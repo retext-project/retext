@@ -175,6 +175,10 @@ class ReTextWindow(QMainWindow):
 			lambda: self.currentTab.editBox.cut(), shct=QKeySequence.Cut)
 		self.actionPaste = self.act(self.tr('Paste'), 'edit-paste',
 			lambda: self.currentTab.editBox.paste(), shct=QKeySequence.Paste)
+		self.actionMoveUp = self.act(self.tr('Move line up'), 'go-up',
+			lambda: self.currentTab.editBox.moveLineUp(), shct=Qt.ALT+Qt.Key_Up)
+		self.actionMoveDown = self.act(self.tr('Move line down'), 'go-down',
+			lambda: self.currentTab.editBox.moveLineDown(), shct=Qt.ALT+Qt.Key_Down)
 		self.actionUndo.setEnabled(False)
 		self.actionRedo.setEnabled(False)
 		self.actionCopy.setEnabled(False)
@@ -286,6 +290,9 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionCut)
 		menuEdit.addAction(self.actionCopy)
 		menuEdit.addAction(self.actionPaste)
+		menuEdit.addSeparator()
+		menuEdit.addAction(self.actionMoveUp)
+		menuEdit.addAction(self.actionMoveDown)
 		menuEdit.addSeparator()
 		if enchant is not None:
 			menuSC = menuEdit.addMenu(self.tr('Spell check'))

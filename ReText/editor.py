@@ -173,35 +173,42 @@ class ReTextEdit(QTextEdit):
 		self.lineNumberArea.update()
 
 	def contextMenuEvent(self, event):
+		# Create base menu
+		menu = self.createStandardContextMenu()
 		text = self.toPlainText()
-		dictionary = self.tab.highlighter.dictionary
-		if (dictionary is None) or not text:
-			return QTextEdit.contextMenuEvent(self, event)
+		if not text:
+			menu.exec(event.globalPos())
+			return
+
+		# Check word under the cursor
 		oldcursor = self.textCursor()
 		cursor = self.cursorForPosition(event.pos())
-		pos = cursor.positionInBlock()
+		self.setTextCursor(cursor)
+		pos = cursor.position()
 		if pos == len(text):
 			pos -= 1
 		curchar = text[pos]
 		isalpha = curchar.isalpha()
-		cursor.select(QTextCursor.WordUnderCursor)
-		if not isalpha or (oldcursor.hasSelection() and
-		oldcursor.selectedText() != cursor.selectedText()):
-			return QTextEdit.contextMenuEvent(self, event)
-		self.setTextCursor(cursor)
-		word = cursor.selectedText()
-		if not word or dictionary.check(word):
-			self.setTextCursor(oldcursor)
-			return QTextEdit.contextMenuEvent(self, event)
-		suggestions = dictionary.suggest(word)
-		actions = [self.parent.act(sug, trig=self.fixWord(sug)) for sug in suggestions]
-		menu = self.createStandardContextMenu()
-		menu.insertSeparator(menu.actions()[0])
-		menu.insertAction(menu.actions()[0], self.parent.act(self.tr('Add to dictionary'),
-			trig=self.learnWord(word)))
-		menu.insertSeparator(menu.actions()[0])
-		for action in actions[::-1]:
-			menu.insertAction(menu.actions()[0], action)
+		dictionary = self.tab.highlighter.dictionary
+		word = None
+		if isalpha and not (oldcursor.hasSelection() and oldcursor.selectedText() != cursor.selectedText()):
+			cursor.select(QTextCursor.WordUnderCursor)
+			word = cursor.selectedText()
+
+		if word is not None and not dictionary.check(word):
+			self.setTextCursor(cursor)
+			suggestions = dictionary.suggest(word)
+			actions = [self.parent.act(sug, trig=self.fixWord(sug)) for sug in suggestions]
+			menu.insertSeparator(menu.actions()[0])
+			for action in actions[::-1]:
+				menu.insertAction(menu.actions()[0], action)
+			menu.insertSeparator(menu.actions()[0])
+			menu.insertAction(menu.actions()[0], self.parent.act(self.tr('Add to dictionary'), trig=self.learnWord(word)))
+
+		menu.addSeparator()
+		menu.addAction(self.parent.actionMoveUp)
+		menu.addAction(self.parent.actionMoveDown)
+
 		menu.exec(event.globalPos())
 
 	def fixWord(self, correctword):
@@ -276,6 +283,29 @@ class ReTextEdit(QTextEdit):
 		cursor = self.textCursor()
 		cursor.insertText('\n' + matchedText)
 		self.ensureCursorVisible()
+
+	def moveLineUp(self):
+		self.moveLine(QTextCursor.PreviousBlock)
+
+	def moveLineDown(self):
+		self.moveLine(QTextCursor.NextBlock)
+
+	def moveLine(self, direction):
+		cursor = self.textCursor()
+		# Select the current block
+		cursor.movePosition(QTextCursor.StartOfBlock, QTextCursor.MoveAnchor)
+		cursor.movePosition(QTextCursor.NextBlock, QTextCursor.KeepAnchor)
+		text = cursor.selectedText()
+		# Remove it
+		cursor.removeSelectedText()
+		# Move to the wanted block
+		cursor.movePosition(direction, QTextCursor.MoveAnchor)
+		# Paste the line
+		cursor.insertText(text)
+		# Move to the pasted block
+		cursor.movePosition(QTextCursor.PreviousBlock, QTextCursor.MoveAnchor)
+		# Update cursor
+		self.setTextCursor(cursor)
 
 	def lineNumberAreaWidth(self):
 		if not globalSettings.lineNumbersEnabled:
