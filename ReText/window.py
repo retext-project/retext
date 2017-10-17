@@ -42,7 +42,8 @@ except ImportError:
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
  QIODevice, QLocale, QTextCodec, QTextStream, QTimer, QUrl, Qt
 from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
- QKeySequence, QPalette, QTextDocument, QTextDocumentWriter
+ QKeySequence, QPalette, QTextDocument, QTextDocumentWriter, \
+ QPagedPaintDevice
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
  QLineEdit, QMainWindow, QMenu, QMessageBox, QTabWidget, QToolBar
@@ -943,7 +944,38 @@ class ReTextWindow(QMainWindow):
 		printer = QPrinter(QPrinter.HighResolution)
 		printer.setDocName(title)
 		printer.setCreator('ReText %s' % app_version)
+		page_size = self.getPageSizeByName(globalSettings.paperSize)
+		if page_size is not None:
+		    printer.setPaperSize(page_size)
+		else:
+		    QMessageBox.warning(self, '',
+				'Unrecognized PaperSize setting "{0}".'.format(
+				globalSettings.paperSize))
 		return printer
+
+	def getPageSizeByName(self, page_size_name):
+		""" Returns a validated PageSize instance
+		corresponding to the given name. Returns
+		None if the name is not a valid PageSize.
+		"""
+
+		page_size = None
+		match = None
+		if page_size_name:
+			match = list(filter(lambda y:y.lower()==page_size_name.lower(),
+						self.availablePageSizes()))
+		if match:
+			page_size = getattr(QPagedPaintDevice, match[0])
+		return page_size
+
+	def availablePageSizes(self):
+		""" List available page sizes.
+		"""
+
+		sizes = [x for x in dir(QPagedPaintDevice)
+				 if type(getattr(QPagedPaintDevice,x)) ==
+				 QPagedPaintDevice.PageSize]
+		return sizes
 
 	def savePdf(self):
 		fileName = QFileDialog.getSaveFileName(self,
