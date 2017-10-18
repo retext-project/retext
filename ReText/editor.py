@@ -519,7 +519,10 @@ class LineInfoArea(InfoArea):
 	def getAreaPosition(self, width, height):
 		viewport = self.editor.viewport()
 		rightSide = viewport.width() + self.editor.lineNumberAreaWidth()
-		return rightSide - width, viewport.height() - height
+		if globalSettings.documentStatsEnabled:
+			return rightSide - width, viewport.height() - (2 * height)
+		else:
+			return rightSide - width, viewport.height() - height
 
 	def getText(self):
 		template = '%d : %d'
@@ -535,8 +538,8 @@ class TextInfoArea(InfoArea):
 
 	def getAreaPosition(self, width, height):
 		viewport = self.editor.viewport()
-		leftSide = self.editor.lineNumberAreaWidth()
-		return leftSide, viewport.height() - height
+		rightSide = viewport.width() + self.editor.lineNumberAreaWidth()
+		return rightSide - width, viewport.height() - height
 
 	def getText(self):
 		if not globalSettings.documentStatsEnabled:
