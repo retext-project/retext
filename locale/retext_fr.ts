@@ -174,6 +174,26 @@
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation>Impossible d&apos;analyser le contenu du fichier, vérifier si les &lt;a href=&quot;%s&quot;&gt;modules nécessaires&lt;/a&gt; sont installés!</translation>
     </message>
+    <message>
+        <location filename="tab.py" line="183"/>
+        <source>Document statistics</source>
+        <translation>Statistiques du document</translation>
+    </message>
+    <message>
+        <location filename="tab.py" line="183"/>
+        <source>Word count:</source>
+        <translation>Nombre de mots : </translation>
+    </message>
+    <message>
+        <location filename="tab.py" line="183"/>
+        <source>Alphanumeric characters:</source>
+        <translation>Caractères alpha-numériques :</translation>
+    </message>
+    <message>
+        <location filename="tab.py" line="183"/>
+        <source>Characters:</source>
+        <translation>Caractères : </translation>
+    </message>
 </context>
 <context>
     <name>ReTextWindow</name>
