@@ -98,7 +98,7 @@ configOptions = {
 	'useWebEngine': False,
 	'useWebKit': False,
 	'windowGeometry': QByteArray(),
-	'paperSize': 'A4',
+	'paperSize': '',
 }
 
 def readFromSettings(key, keytype, settings=settings, default=None):

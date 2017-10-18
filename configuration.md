@@ -27,6 +27,7 @@ option name                    | type      | description
 `livePreviewByDefault`         | boolean   | whether new tabs and windows should open in live preview mode (default: false)
 `markdownDefaultFileExtension` | string    | default file extension for Markdown files (default: `.mkd`)
 `pygmentsStyle`                | string    | name of Pygments syntax highlighting style to use (default: `default`)
+`paperSize`                    | string    | name of default page size to use for print and export (e.g. A4, Letter)
 `relativeLineNumbers`          | boolean   | whether to show line numbers as relative from the current line (default: false)
 `restDefaultFileExtension`     | string    | default file extension for reStructuredText files (default: `.rst`)
 `rightMargin`                  | integer   | enable drawing of vertical line on defined position (or 0 to disable)

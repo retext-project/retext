@@ -944,29 +944,30 @@ class ReTextWindow(QMainWindow):
 		printer = QPrinter(QPrinter.HighResolution)
 		printer.setDocName(title)
 		printer.setCreator('ReText %s' % app_version)
-		page_size = self.getPageSizeByName(globalSettings.paperSize)
-		if page_size is not None:
-		    printer.setPaperSize(page_size)
-		else:
-		    QMessageBox.warning(self, '',
-				'Unrecognized PaperSize setting "{0}".'.format(
-				globalSettings.paperSize))
+		if globalSettings.paperSize:
+			pageSize = self.getPageSizeByName(globalSettings.paperSize)
+			if pageSize is not None:
+				printer.setPaperSize(pageSize)
+			else:
+				QMessageBox.warning(self, '',
+					self.tr('Unrecognized PaperSize setting "%s".' %
+					globalSettings.paperSize))
 		return printer
 
-	def getPageSizeByName(self, page_size_name):
+	def getPageSizeByName(self, pageSizeName):
 		""" Returns a validated PageSize instance
 		corresponding to the given name. Returns
 		None if the name is not a valid PageSize.
 		"""
 
-		page_size = None
+		pageSize = None
 		match = None
-		if page_size_name:
-			match = list(filter(lambda y:y.lower()==page_size_name.lower(),
+		if pageSizeName:
+			match = list(filter(lambda y:y.lower()==pageSizeName.lower(),
 						self.availablePageSizes()))
 		if match:
-			page_size = getattr(QPagedPaintDevice, match[0])
-		return page_size
+			pageSize = getattr(QPagedPaintDevice, match[0])
+		return pageSize
 
 	def availablePageSizes(self):
 		""" List available page sizes.
