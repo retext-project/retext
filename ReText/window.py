@@ -892,7 +892,7 @@ class ReTextWindow(QMainWindow):
 			fileName += ".html"
 		try:
 			_, htmltext, _ = self.currentTab.getDocumentForExport(includeStyleSheet=False,
-				                                              webenv=True)
+			                                                      webenv=True)
 		except Exception:
 			return self.printError()
 		htmlFile = QFile(fileName)
@@ -957,31 +957,28 @@ class ReTextWindow(QMainWindow):
 				printer.setPaperSize(pageSize)
 			else:
 				QMessageBox.warning(self, '',
-					self.tr('Unrecognized PaperSize setting "%s".') %
+					self.tr('Unrecognized paperSize setting "%s".') %
 					globalSettings.paperSize)
 		return printer
 
 	def getPageSizeByName(self, pageSizeName):
-		""" Returns a validated PageSize instance corresponding to the given 
-        name. Returns None if the name is not a valid PageSize.
+		""" Returns a validated PageSize instance corresponding to the given
+		name. Returns None if the name is not a valid PageSize.
 		"""
-		
 		pageSize = None
-        
-		lowerCaseNames = {pageSize.lower(): pageSize for pageSize in 
-						  self.availablePageSizes()}
+
+		lowerCaseNames = {pageSize.lower(): pageSize for pageSize in
+		                  self.availablePageSizes()}
 		if pageSizeName.lower() in lowerCaseNames:
 			pageSize = getattr(QPagedPaintDevice, lowerCaseNames[pageSizeName])
 
 		return pageSize
 
 	def availablePageSizes(self):
-		""" List available page sizes.
-		"""
+		""" List available page sizes. """
 
 		sizes = [x for x in dir(QPagedPaintDevice)
-				 if type(getattr(QPagedPaintDevice,x)) ==
-				 QPagedPaintDevice.PageSize]
+		         if type(getattr(QPagedPaintDevice, x)) == QPagedPaintDevice.PageSize]
 		return sizes
 
 	def savePdf(self):
