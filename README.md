@@ -6,7 +6,9 @@ Welcome to ReText!
 
 ReText is a simple but powerful editor for Markdown and reStructuredText markup
 languages. ReText is written in Python language and works on Linux and other
-POSIX-compatible platforms. To install ReText, use `setup.py install` command.
+POSIX-compatible platforms. To install ReText from the cloned repository, use
+`setup.py install` command (by default it installs system wide, pass the
+`--user` option for installing into the user’s home directory).
 
 ![ReText on Plasma 5 desktop](data/retext-kde5.png)
 
@@ -32,8 +34,9 @@ also use `pip install ReText` command to install it from there.
 
 Translation files are already compiled for release tarballs and will be
 automatically loaded. For development snapshots, compile translations using
-`lrelease locale/*.ts` command. Translation files can also be loaded from
-`/usr/share/retext/` directory.
+`lrelease locale/*.ts` command (on Debian-based systems, `lrelease` is
+available in `qttools5-dev-tools` package). Translation files can also be
+loaded from `/usr/share/retext/` directory.
 
 You can translate ReText into your language on [Transifex].
 
