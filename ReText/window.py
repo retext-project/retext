@@ -950,23 +950,22 @@ class ReTextWindow(QMainWindow):
 				printer.setPaperSize(pageSize)
 			else:
 				QMessageBox.warning(self, '',
-					self.tr('Unrecognized PaperSize setting "%s".' %
-					globalSettings.paperSize))
+					self.tr('Unrecognized PaperSize setting "%s".') %
+					globalSettings.paperSize)
 		return printer
 
 	def getPageSizeByName(self, pageSizeName):
-		""" Returns a validated PageSize instance
-		corresponding to the given name. Returns
-		None if the name is not a valid PageSize.
+		""" Returns a validated PageSize instance corresponding to the given 
+        name. Returns None if the name is not a valid PageSize.
 		"""
-
+		
 		pageSize = None
-		match = None
-		if pageSizeName:
-			match = list(filter(lambda y:y.lower()==pageSizeName.lower(),
-						self.availablePageSizes()))
-		if match:
-			pageSize = getattr(QPagedPaintDevice, match[0])
+        
+		lowerCaseNames = {pageSize.lower(): pageSize for pageSize in 
+						  self.availablePageSizes()}
+		if pageSizeName.lower() in lowerCaseNames:
+			pageSize = getattr(QPagedPaintDevice, lowerCaseNames[pageSizeName])
+
 		return pageSize
 
 	def availablePageSizes(self):
