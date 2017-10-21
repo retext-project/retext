@@ -42,7 +42,8 @@ except ImportError:
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
  QIODevice, QLocale, QTextCodec, QTextStream, QTimer, QUrl, Qt
 from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
- QKeySequence, QPalette, QTextDocument, QTextDocumentWriter
+ QKeySequence, QPalette, QTextDocument, QTextDocumentWriter, \
+ QPagedPaintDevice
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
  QLineEdit, QMainWindow, QMenu, QMessageBox, QTabWidget, QToolBar
@@ -950,7 +951,38 @@ class ReTextWindow(QMainWindow):
 		printer = QPrinter(QPrinter.HighResolution)
 		printer.setDocName(title)
 		printer.setCreator('ReText %s' % app_version)
+		if globalSettings.paperSize:
+			pageSize = self.getPageSizeByName(globalSettings.paperSize)
+			if pageSize is not None:
+				printer.setPaperSize(pageSize)
+			else:
+				QMessageBox.warning(self, '',
+					self.tr('Unrecognized PaperSize setting "%s".') %
+					globalSettings.paperSize)
 		return printer
+
+	def getPageSizeByName(self, pageSizeName):
+		""" Returns a validated PageSize instance corresponding to the given 
+        name. Returns None if the name is not a valid PageSize.
+		"""
+		
+		pageSize = None
+        
+		lowerCaseNames = {pageSize.lower(): pageSize for pageSize in 
+						  self.availablePageSizes()}
+		if pageSizeName.lower() in lowerCaseNames:
+			pageSize = getattr(QPagedPaintDevice, lowerCaseNames[pageSizeName])
+
+		return pageSize
+
+	def availablePageSizes(self):
+		""" List available page sizes.
+		"""
+
+		sizes = [x for x in dir(QPagedPaintDevice)
+				 if type(getattr(QPagedPaintDevice,x)) ==
+				 QPagedPaintDevice.PageSize]
+		return sizes
 
 	def savePdf(self):
 		fileName = QFileDialog.getSaveFileName(self,
