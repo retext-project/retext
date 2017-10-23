@@ -203,9 +203,17 @@ class ReTextTab(QSplitter):
 			headers += ('<link rel="stylesheet" type="text/css" href="%s">\n'
 			% cssFileName)
 		headers += ('<meta name="generator" content="ReText %s">\n' % app_version)
-		return converted.get_whole_html(
+		html = converted.get_whole_html(
 			custom_headers=headers, include_stylesheet=includeStyleSheet,
 			fallback_title=baseName, webenv=webenv)
+		old_mathjax = '<script type="text/javascript" src="file:///usr/share/javascript/mathjax/MathJax.js"></script>'
+		new_mathjax = """
+			    	  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=AM_HTMLorMML">
+			    	  </script>\n
+					  """
+		html = html.replace(old_mathjax,new_mathjax)
+		
+		return html
 
 	def getDocumentForExport(self, includeStyleSheet, webenv):
 		markupClass = self.getActiveMarkupClass()
