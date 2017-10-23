@@ -207,10 +207,10 @@ class ReTextTab(QSplitter):
 			custom_headers=headers, include_stylesheet=includeStyleSheet,
 			fallback_title=baseName, webenv=webenv)
 		old_mathjax = '<script type="text/javascript" src="file:///usr/share/javascript/mathjax/MathJax.js"></script>'
-        new_mathjax = """
-                      <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=AM_HTMLorMML">
-                      </script>\n
-                      """
+		new_mathjax = """
+			    	  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=AM_HTMLorMML">
+			    	  </script>\n
+					  """
 		html = html.replace(old_mathjax,new_mathjax)
 		
 		return html
