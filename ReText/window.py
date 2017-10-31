@@ -970,7 +970,7 @@ class ReTextWindow(QMainWindow):
 		lowerCaseNames = {pageSize.lower(): pageSize for pageSize in
 		                  self.availablePageSizes()}
 		if pageSizeName.lower() in lowerCaseNames:
-			pageSize = getattr(QPagedPaintDevice, lowerCaseNames[pageSizeName])
+			pageSize = getattr(QPagedPaintDevice, lowerCaseNames[pageSizeName.lower()])
 
 		return pageSize
 
