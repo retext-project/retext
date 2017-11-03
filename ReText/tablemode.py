@@ -1,5 +1,7 @@
+# vim: ts=8:sts=8:sw=8:noexpandtab
+#
 # This file is part of ReText
-# Copyright: 2014 Maurice van der Pot
+# Copyright: 2014, 2017 Maurice van der Pot
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -65,17 +67,20 @@ def _getTableLines(doc, pos, markupClass):
 				row.text = row.text.replace('+', '|')
 	return rows, editedlineindex, offset
 
-def _sortaUndoEdit(rows, editedlineindex, editsize):
+# Modify the edited line to put the table borders after the edition in their original positions.
+# It does not matter that this function changes the position of table borders before the edition,
+# because table editing mode only ever changes the table to the right of the cursor position.
+def _sortaUndoEdit(rows, editedlineindex, offset, editsize):
 	aftertext = rows[editedlineindex].text
 	if editsize < 0:
 		beforetext = ' ' * -editsize + aftertext
 	else:
-		beforetext = aftertext[editsize:]
+		beforetext = aftertext[:offset] + aftertext[offset + editsize:]
 
 	rows[editedlineindex].text = beforetext
 
-def _determineRoomInCell(row, edge, shrinking, startposition=0):
-	if edge >= len(row.text) or row.text[edge] != '|':
+def _determineRoomInCell(row, edge, edgeIndex, shrinking, startposition=0):
+	if edge >= len(row.text) or row.text[edge] != '|' or _getEdgeIndex(row.text, edge) != edgeIndex:
 		room = LARGER_THAN_ANYTHING
 	else:
 		clearance = 0
@@ -103,10 +108,18 @@ def _determineRoomInCell(row, edge, shrinking, startposition=0):
 
 	return room
 
-def _performShift(row, rowShift, edge, shift):
+def _getEdgeIndex(text, edge):
+	return text[:edge].count('|')
+
+# Add an edit for a row to match the specified shift if it has an edge on the
+# specified position
+def _performShift(row, rowShift, edge, edgeIndex, shift):
 	editlist = []
 
-	if len(row.text) > edge and row.text[edge] == '|' and rowShift != shift:
+	# Any row that has an edge on the specified position and that doesn't
+	# already have edits that shift it 'shift' positions, will get an
+	# additional edit
+	if len(row.text) > edge and row.text[edge] == '|' and rowShift != shift and _getEdgeIndex(row.text, edge) == edgeIndex:
 		editsize = -(rowShift - shift)
 		rowShift = shift
 
@@ -121,43 +134,61 @@ def _performShift(row, rowShift, edge, shift):
 
 	return editlist, rowShift
 
+# Finds the next edge position starting at offset in any row that is shifting.
+# Rows that are not shifting when we are searching for an edge starting at
+# offset, are rows that (upto offset) did not have any edges that aligned with
+# shifting edges on other rows.
 def _determineNextEdge(rows, rowShifts, offset):
 	nextedge = None
+	nextedgerow = None
+
 	for row, rowShift in zip(rows, rowShifts):
 		if rowShift != 0:
 			edge = row.text.find('|', offset)
 			if edge != -1 and (nextedge is None or edge < nextedge):
 				nextedge = edge
-	return nextedge
+				nextedgerow = row
 
+	return nextedge, _getEdgeIndex(nextedgerow.text, nextedge) if nextedge else None
+
+# Return a list of edits to be made in other lines to adapt the table lines to
+# a single edit in the edited line.
 def _determineEditLists(rows, editedlineindex, offset, editsize):
+
+	# rowShift represents how much the characters on a line will shift as a
+	# result of the already collected edits to be made.
 	rowShifts = [0 for _ in rows]
 	rowShifts[editedlineindex] = editsize
 
 	editLists = [[] for _ in rows]
 
-	currentedge = _determineNextEdge(rows, rowShifts, offset)
+	# Find the next edge position on the edited row
+	currentedge, currentedgeindex = _determineNextEdge(rows, rowShifts, offset)
 	firstEdge = True
 
 
 	while currentedge:
 
 		if editsize < 0:
-			leastLeftShift = min((-rowShift + _determineRoomInCell(row, currentedge, True)
+			# How much an edge shifts to the left depends on how much room
+			# there is in the cells on any row that shares this edge.
+			leastLeftShift = min((-rowShift + _determineRoomInCell(row, currentedge, currentedgeindex, True)
 				for row, rowShift in zip(rows, rowShifts)))
 
 			shift = max(editsize, -leastLeftShift)
 		else:
+			# When shifting right, determine how much only once based on how
+			# much the edited cell needs to expand
 			if firstEdge:
-				room = _determineRoomInCell(rows[editedlineindex], currentedge, False, offset)
+				room = _determineRoomInCell(rows[editedlineindex], currentedge, currentedgeindex, False, offset)
 				shift = max(0, editsize - room)
 
 		for i, row in enumerate(rows):
-			editList, newRowShift = _performShift(row, rowShifts[i], currentedge, shift)
+			editList, newRowShift = _performShift(row, rowShifts[i], currentedge, currentedgeindex, shift)
 			rowShifts[i] = newRowShift
 			editLists[i].extend(editList)
 
-		currentedge = _determineNextEdge(rows, rowShifts, currentedge + 1)
+		currentedge, currentedgeindex = _determineNextEdge(rows, rowShifts, currentedge + 1)
 		firstEdge = False
 
 	return editLists
@@ -183,7 +214,7 @@ def adjustTableToChanges(doc, pos, editsize, markupClass):
 	if markupClass in (MarkdownMarkup, ReStructuredTextMarkup):
 		rows, editedlineindex, offset = _getTableLines(doc, pos, markupClass)
 
-		_sortaUndoEdit(rows, editedlineindex, editsize)
+		_sortaUndoEdit(rows, editedlineindex, offset, editsize)
 
 		editLists = _determineEditLists(rows, editedlineindex, offset, editsize)
 
