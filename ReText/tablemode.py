@@ -79,10 +79,14 @@ def _sortaUndoEdit(rows, editedlineindex, offset, editsize):
 
 	rows[editedlineindex].text = beforetext
 
+# Given text and the position of the n-th edge, returns n - 1
+def _getEdgeIndex(text, edge):
+	return text[:edge].count('|')
+
 def _determineRoomInCell(row, edge, edgeIndex, shrinking, startposition=0):
-	if edge >= len(row.text) or row.text[edge] != '|' or _getEdgeIndex(row.text, edge) != edgeIndex:
-		room = LARGER_THAN_ANYTHING
-	else:
+
+	if len(row.text) > edge and row.text[edge] == '|' and \
+	   (not edgeIndex or _getEdgeIndex(row.text, edge) == edgeIndex):
 		clearance = 0
 		cellwidth = 0
 		afterContent = True
@@ -105,11 +109,10 @@ def _determineRoomInCell(row, edge, edgeIndex, shrinking, startposition=0):
 				room = max(0, cellwidth - 1)
 		else:
 			room = clearance
+	else:
+		room = LARGER_THAN_ANYTHING
 
 	return room
-
-def _getEdgeIndex(text, edge):
-	return text[:edge].count('|')
 
 # Add an edit for a row to match the specified shift if it has an edge on the
 # specified position
@@ -119,7 +122,8 @@ def _performShift(row, rowShift, edge, edgeIndex, shift):
 	# Any row that has an edge on the specified position and that doesn't
 	# already have edits that shift it 'shift' positions, will get an
 	# additional edit
-	if len(row.text) > edge and row.text[edge] == '|' and rowShift != shift and _getEdgeIndex(row.text, edge) == edgeIndex:
+	if len(row.text) > edge and row.text[edge] == '|' and rowShift != shift and \
+	   (not edgeIndex or _getEdgeIndex(row.text, edge) == edgeIndex):
 		editsize = -(rowShift - shift)
 		rowShift = shift
 
@@ -153,7 +157,7 @@ def _determineNextEdge(rows, rowShifts, offset):
 
 # Return a list of edits to be made in other lines to adapt the table lines to
 # a single edit in the edited line.
-def _determineEditLists(rows, editedlineindex, offset, editsize):
+def _determineEditLists(rows, editedlineindex, offset, editsize, alignWithAnyEdge):
 
 	# rowShift represents how much the characters on a line will shift as a
 	# result of the already collected edits to be made.
@@ -168,6 +172,10 @@ def _determineEditLists(rows, editedlineindex, offset, editsize):
 
 
 	while currentedge:
+
+		if alignWithAnyEdge:
+			# Ignore what column the edge belongs to
+			currentedgeindex = None
 
 		if editsize < 0:
 			# How much an edge shifts to the left depends on how much room
@@ -212,11 +220,17 @@ def _performEdits(cursor, rows, editLists, linewithoffset, offset):
 
 def adjustTableToChanges(doc, pos, editsize, markupClass):
 	if markupClass in (MarkdownMarkup, ReStructuredTextMarkup):
+
+		# This is needed because in ReSt cells can span multiple columns
+		# and we can therefore not determine which edges in other rows
+		# are supposed to be aligned with the edges in the edited row.
+		alignWithAnyEdge = (markupClass == ReStructuredTextMarkup)
+
 		rows, editedlineindex, offset = _getTableLines(doc, pos, markupClass)
 
 		_sortaUndoEdit(rows, editedlineindex, offset, editsize)
 
-		editLists = _determineEditLists(rows, editedlineindex, offset, editsize)
+		editLists = _determineEditLists(rows, editedlineindex, offset, editsize, alignWithAnyEdge)
 
 		cursor = QTextCursor(doc)
 		_performEdits(cursor, rows, editLists, editedlineindex, editsize)

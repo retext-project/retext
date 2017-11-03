@@ -30,7 +30,7 @@ class TestTableMode(unittest.TestCase):
 			text = text[:offset] + fragment + text[offset:]
 		return text
 
-	def checkDetermineEditLists(self, paddingChars, before, edit, after):
+	def checkDetermineEditLists(self, paddingChars, before, edit, after, alignWithAnyEdge):
 		class Row():
 			def __init__(self, text, separatorLine, paddingChar):
 				self.text = text
@@ -71,7 +71,7 @@ class TestTableMode(unittest.TestCase):
 		else:
 			editoffset = contentsChangeOffset
 
-		editLists = tablemode._determineEditLists(rows, edit[0], contentsChangeOffset, editsize)
+		editLists = tablemode._determineEditLists(rows, edit[0], contentsChangeOffset, editsize, alignWithAnyEdge)
 
 
 		editedRows = []
@@ -89,7 +89,12 @@ class TestTableMode(unittest.TestCase):
 		editedRows[editedline] = self.performEdit(editedRows[editedline], editoffset, editsize, fragment=editstripped)
 
 		if editedRows != after:
-			assertMessage = ["Output differs.",
+			if alignWithAnyEdge:
+				alignmentScenario = "when aligning any edge with another"
+			else:
+				alignmentScenario = "when only aligning edges of cells in the same column"
+
+			assertMessage = ["Output differs %s." % alignmentScenario,
 			                 "",
 			                 "Input:"] + \
 			                ["%3d '%s'" % (i, line) for i, line in enumerate(before)] + \
@@ -116,7 +121,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|a   |',
 		           '|    |']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Insert at the last position in a cell where it doesn't need to grow
 		separatorChars = '  '
@@ -128,7 +134,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|   a|',
 		           '|    |']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Insert at the end of a cell so it will have to grow
 		separatorChars = '  '
@@ -140,7 +147,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|    a|',
 		           '|     |']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 	def test_insertPushAhead(self):
 
@@ -154,7 +162,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|a  x|',
 		           '|    |']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Insert without enough room to push, so the cell will have to grow
 		separatorChars = '  '
@@ -166,7 +175,35 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|a   x|',
 		           '|     |']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+
+		# Insert without enough room to push, so the cell will have to grow,
+		# but the edge of the cell below it does not move with it because it is
+		# of an earlier column
+		separatorChars = '  '
+		before  = ['| |   x|',
+		           '  |    |']
+
+		edit = (0, '   a    ')
+
+		after   = ['| |a   x|',
+		           '  |    |']
+
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
+
+		# Insert without enough room to push, so the cell will have to grow,
+		# but the edge of the cell below it does not move with it because it is
+		# of a later column
+		separatorChars = '  '
+		before  = ['  |   x|',
+		           '| |    |']
+
+		edit = (0, '   a    ')
+
+		after   = ['  |a   x|',
+		           '| |    |']
+
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Insert multiple characters forcing a partial grow
 		separatorChars = '  '
@@ -178,6 +215,9 @@ class TestTableMode(unittest.TestCase):
 		after   = ['| aaaaaa|',
 		           '|       |']
 
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
+
 		# Insert multiple characters forcing a partial grow through pushing other chars ahead
 		separatorChars = '  '
 		before  = ['| bb   |',
@@ -188,8 +228,9 @@ class TestTableMode(unittest.TestCase):
 		after   = ['| aaaaaaabb|',
 		           '|          |']
 
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
 
 	def test_insertInSeparatorCell(self):
 
@@ -203,7 +244,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|    |',
 		           '|--a-|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Insert in a cell on a separator line forcing it to grow
 		separatorChars = ' -'
@@ -215,7 +257,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|     |',
 		           '|---a-|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Insert in a cell on a separator line with an alignment marker
 		separatorChars = ' -'
@@ -227,7 +270,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|    |',
 		           '|--a:|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Insert in a cell on a separator line with an alignment marker forcing it to grow
 		separatorChars = ' -'
@@ -239,7 +283,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|     |',
 		           '|---a:|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Insert in a cell on a separator line after the alignment marker forcing it to grow
 		separatorChars = ' -'
@@ -251,7 +296,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|     |',
 		           '|---:a|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 	def test_insertAboveSeparatorLine(self):
 		# Insert on another line, without growing the cell
@@ -264,7 +310,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|   a|',
 		           '|----|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Insert on another line, forcing the separator cell to grow
 		separatorChars = ' -'
@@ -276,7 +323,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|    a|',
 		           '|-----|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Insert on another line, without growing the cell with alignment marker
 		separatorChars = ' -'
@@ -288,7 +336,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|   a|',
 		           '|---:|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Insert on another line, forcing the separator cell with alignment marker to grow
 		separatorChars = ' -'
@@ -300,7 +349,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|    a|',
 		           '|----:|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Insert on another line, forcing the separator cell that ends with a regular char to grow
 		separatorChars = ' -'
@@ -312,7 +362,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|    a|',
 		           '|---- |']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 	def test_insertCascade(self):
 		# Test if growing of cells cascades onto other lines through edges that are shifted
@@ -329,7 +380,7 @@ class TestTableMode(unittest.TestCase):
 		           '           |    |',
 		           '      |']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
 
 		# Test if growing of cells cascades onto other lines but does not affect unconnected edges
 		separatorChars = '   '
@@ -343,7 +394,7 @@ class TestTableMode(unittest.TestCase):
 		           '      |    |',
 		           '       |   |    |']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
 
 	def test_simpleDelete(self):
 		# Delete at start of cell
@@ -356,7 +407,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|bcd|',
 		           '|   |']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Delete at end of cell
 		separatorChars = '  '
@@ -368,7 +420,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|abc|',
 		           '|   |']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 	def test_deleteShrinking(self):
 		# Shrinking limited by cell on other row
@@ -381,6 +434,9 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|bc  |',
 		           '|efgh|']
 
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
+
 		# Shrinking limited by cell on other row (cont'd)
 		separatorChars = '  '
 		before  = ['|abcd|',
@@ -391,31 +447,46 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|abc |',
 		           '|efgh|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Shrinking of next cell limited by cell on other row
 		separatorChars = '  '
 		before  = ['|abc |    |',
-		           '|efghijklm|']
+		           '|efghi|klm|']
 
 		edit = (0, ' d  ')
 
 		after   = ['|bc |     |',
-		           '|efghijklm|']
+		           '|efghi|klm|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
-		# Shrink current cell fully, shrink next cell partially
+		# Shrink current cell fully, grow next cell a partially
+		separatorChars = '  '
+		before  = ['| aabb|    |',
+		           '|xxxxxx|x  |']
+
+		edit = (0, '  dddd')
+
+		after   = ['| |      |',
+		           '|xxxxxx|x|']
+
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
+
+		# Shrink current cell fully, do not change next cell
 		separatorChars = '  '
 		before  = ['| aabb|    |',
 		           '|xxxxxxxx  |']
 
 		edit = (0, '  dddd')
 
-		after   = ['| |      |',
-		           '|xxxxxxxx|']
+		after   = ['| |    |',
+		           '|xxxxxxxx  |']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 	def test_deleteShrinkingSeparatorRow(self):
 		# Shrinking not limited by size of separator cell
@@ -428,7 +499,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|acd|',
 		           '|---|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Shrinking limited by size of separator cell
 		separatorChars = ' -'
@@ -440,7 +512,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|ac |',
 		           '|---|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Shrinking not limited by size of separator cell with alignment markers
 		separatorChars = ' -'
@@ -452,7 +525,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|acd|',
 		           '|:-:|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Shrinking limited by size of separator cell with alignment markers
 		separatorChars = ' -'
@@ -464,7 +538,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|ac |',
 		           '|:-:|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 		# Shrinking partially limited by size of separator cell with alignment markers
 		separatorChars = ' -'
@@ -476,7 +551,8 @@ class TestTableMode(unittest.TestCase):
 		after   = ['|a  |',
 		           '|:-:|']
 
-		self.checkDetermineEditLists(separatorChars, before, edit, after)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, True)
+		self.checkDetermineEditLists(separatorChars, before, edit, after, False)
 
 if __name__ == '__main__':
 	unittest.main()
