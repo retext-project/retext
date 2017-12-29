@@ -125,9 +125,8 @@ class ReTextWindow(QMainWindow):
 			trig=self.changeEditorFont)
 		self.actionChangePreviewFont = self.act(self.tr('Change preview font'),
 			trig=self.changePreviewFont)
-		self.actionSearch = self.act(self.tr('Find text'), 'edit-find', shct=QKeySequence.Find)
-		self.actionSearch.setCheckable(True)
-		self.actionSearch.triggered[bool].connect(self.searchBar.setVisible)
+		self.actionSearch = self.act(self.tr('Find text'), 'edit-find',
+			self.search, shct=QKeySequence.Find)
 		self.searchBar.visibilityChanged.connect(self.searchBarVisibilityChanged)
 		self.actionPreview = self.act(self.tr('Preview'), shct=Qt.CTRL+Qt.Key_E,
 			trigbool=self.preview)
@@ -212,7 +211,8 @@ class ReTextWindow(QMainWindow):
 		menuReplace.addAction(self.actionReplaceAll)
 		self.actionReplace.setMenu(menuReplace)
 		self.actionCloseSearch = self.act(self.tr('Close'), 'window-close',
-			lambda: self.searchBar.setVisible(False))
+			lambda: self.searchBar.setVisible(False),
+			shct=QKeySequence.Cancel)
 		self.actionCloseSearch.setPriority(QAction.LowPriority)
 		self.actionHelp = self.act(self.tr('Get help online'), 'help-contents', self.openHelp)
 		self.aboutWindowTitle = self.tr('About ReText')
@@ -646,8 +646,11 @@ class ReTextWindow(QMainWindow):
 			if localedlg.checkBox.isChecked():
 				globalSettings.spellCheckLocale = sl
 
+	def search(self):
+		self.searchBar.setVisible(True)
+		self.searchEdit.setFocus(Qt.ShortcutFocusReason)
+
 	def searchBarVisibilityChanged(self, visible):
-		self.actionSearch.setChecked(visible)
 		if visible:
 			self.searchEdit.setFocus(Qt.ShortcutFocusReason)
 
