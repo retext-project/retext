@@ -30,7 +30,7 @@ We also recommend having these packages installed:
   support
 
 The latest stable version of ReText can be downloaded from [PyPI]. You can
-also use `pip install ReText` command to install it from there.
+also use `pip3 install ReText` command to install it from there.
 
 Translation files are already compiled for release tarballs and will be
 automatically loaded. For development snapshots, compile translations using
