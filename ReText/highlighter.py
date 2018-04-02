@@ -97,6 +97,12 @@ def FG(colorName):
 	func = lambda f: f.setForeground(color)
 	return Formatter([func])
 
+def QString_length(text):
+	# In QString, surrogate pairs are represented using multiple QChars,
+	# so the length of QString is not always equal to the number of graphemes
+	# in it (which is the case with Python strings).
+	return sum((ord(char) >> 16) + 1 for char in text)
+
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
 	docType = None
@@ -146,11 +152,15 @@ class ReTextHighlighter(QSyntaxHighlighter):
 					for i, formatter in enumerate(pattern[1:]):
 						charFormat = QTextCharFormat()
 						formatter.format(charFormat)
-						self.setFormat(match.start(i), match.end(i) - match.start(i), charFormat)
+						self.setFormat(QString_length(text[:match.start(i)]),
+						               QString_length(match.group(i)),
+						               charFormat)
 		for match in reSpacesOnEnd.finditer(text):
 			charFormat = QTextCharFormat()
 			charFormat.setBackground(colorScheme['whitespaceOnEnd'])
-			self.setFormat(match.start(), match.end() - match.start(), charFormat)
+			self.setFormat(QString_length(text[:match.start()]),
+			               QString_length(match.group(0)),
+			               charFormat)
 		# Spell checker
 		if self.dictionary:
 			charFormat = QTextCharFormat()
@@ -161,4 +171,6 @@ class ReTextHighlighter(QSyntaxHighlighter):
 				finalFormat.merge(charFormat)
 				finalFormat.merge(self.format(match.start()))
 				if not self.dictionary.check(match.group(0)):
-					self.setFormat(match.start(), match.end() - match.start(), finalFormat)
+					self.setFormat(QString_length(text[:match.start()]),
+					               QString_length(match.group(0)),
+					               finalFormat)
