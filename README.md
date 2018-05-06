@@ -15,16 +15,16 @@ You can read more about ReText in the [wiki].
 ReText requires the following packages to run:
 
 * [python](https://www.python.org/) — version 3.2 or higher
-* [pyqt5](http://www.riverbankcomputing.co.uk/software/pyqt/intro)
-* [python-markups](https://pypi.python.org/pypi/Markups) — version 2.0 or higher
+* [pyqt5](https://riverbankcomputing.com/software/pyqt/intro)
+* [python-markups](https://pypi.org/project/Markups/) — version 2.0 or higher
 
 We also recommend having these packages installed:
 
-* [python-markdown](https://pypi.python.org/pypi/Markdown) — for Markdown
+* [python-markdown](https://pypi.org/project/Markdown/) — for Markdown
   language support
-* [python-docutils](https://pypi.python.org/pypi/docutils) — for reStructuredText
+* [python-docutils](https://pypi.org/project/docutils/) — for reStructuredText
   language support
-* [python-enchant](https://pypi.python.org/pypi/pyenchant) — for spell checking
+* [python-enchant](https://pypi.org/project/pyenchant/) — for spell checking
   support
 
 The latest stable version of ReText can be downloaded from [PyPI]. You can
@@ -45,7 +45,7 @@ licensed under GNU GPL (v2+) license, the current version is available in
 ReText icon is based on `accessories-text-editor` icon from the Faenza theme.
 
 [wiki]: https://github.com/retext-project/retext/wiki
-[PyPI]: https://pypi.python.org/pypi/ReText
+[PyPI]: https://pypi.org/project/ReText/
 [Transifex]: https://www.transifex.com/mitya57/ReText/
 [Travis]: https://travis-ci.org/retext-project/retext
 [Travis SVG]: https://api.travis-ci.org/retext-project/retext.svg?branch=master
