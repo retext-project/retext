@@ -514,7 +514,7 @@
     <message>
         <location filename="window.py" line="919"/>
         <source>HTML files (*.html *.htm)</source>
-        <translation>HTML-Dateien (*.html, *.htm)</translation>
+        <translation>HTML-Dateien (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="window.py" line="940"/>
