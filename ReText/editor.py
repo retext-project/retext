@@ -184,10 +184,7 @@ class ReTextEdit(QTextEdit):
 		oldcursor = self.textCursor()
 		cursor = self.cursorForPosition(event.pos())
 		self.setTextCursor(cursor)
-		pos = cursor.position()
-		if pos == len(text):
-			pos -= 1
-		curchar = text[pos]
+		curchar = self.document().characterAt(cursor.position())
 		isalpha = curchar.isalpha()
 		dictionary = self.tab.highlighter.dictionary
 		word = None
