@@ -150,10 +150,7 @@ class ReTextEdit(QTextEdit):
 			return QTextEdit.contextMenuEvent(self, event)
 		oldcursor = self.textCursor()
 		cursor = self.cursorForPosition(event.pos())
-		pos = cursor.positionInBlock()
-		if pos == len(text):
-			pos -= 1
-		curchar = text[pos]
+		curchar = self.document().characterAt(cursor.position())
 		isalpha = curchar.isalpha()
 		cursor.select(QTextCursor.WordUnderCursor)
 		if not isalpha or (oldcursor.hasSelection() and
