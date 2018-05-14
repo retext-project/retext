@@ -101,7 +101,7 @@ def QString_length(text):
 	# In QString, surrogate pairs are represented using multiple QChars,
 	# so the length of QString is not always equal to the number of graphemes
 	# in it (which is the case with Python strings).
-	return sum((ord(char) >> 16) + 1 for char in text)
+	return sum(2 if ord(char) > 65535 else 1 for char in text)
 
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
