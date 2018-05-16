@@ -10,7 +10,6 @@ option name                    | type      | description
 -----------                    | ----      | -----------
 `appStyleSheet`                | file path | file containing a Qt stylesheet file
 `autoSave`                     | boolean   | whether to automatically save documents (default: false)
-`openLastFilesOnStartup`       | boolean   | whether to automatically open last documents on startup (default: false),
 `defaultCodec`                 | string    | name of encoding to use by default (default: use system encoding)
 `defaultMarkup`                | string    | name of markup to use for unknown files
 `detectEncoding`               | boolean   | whether to automatically detect files encoding; needs chardet package (default: true)
@@ -25,6 +24,7 @@ option name                    | type      | description
 `lineNumbersEnabled`           | boolean   | whether to show column with line numbers in editor (default: false)
 `livePreviewByDefault`         | boolean   | whether new tabs and windows should open in live preview mode (default: false)
 `markdownDefaultFileExtension` | string    | default file extension for Markdown files (default: `.mkd`)
+`openLastFilesOnStartup`       | boolean   | whether to automatically open last documents on startup (default: false)
 `pygmentsStyle`                | string    | name of Pygments syntax highlighting style to use (default: `default`)
 `restDefaultFileExtension`     | string    | default file extension for reStructuredText files (default: `.rst`)
 `rightMargin`                  | integer   | enable drawing of vertical line on defined position (or 0 to disable)
