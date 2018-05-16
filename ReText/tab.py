@@ -349,7 +349,7 @@ class ReTextTab(QSplitter):
 
 	def writeTextToFile(self, fileName=None):
 		# Just writes the text to file, without any changes to tab object
-		# Used directly for i.e. export extensions
+		# Used directly for e.g. export extensions
 
 		# Get text from the cursor to avoid tweaking special characters,
 		# see https://bugreports.qt.io/browse/QTBUG-57552 and

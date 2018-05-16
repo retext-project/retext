@@ -90,13 +90,13 @@ Color names for the highlighter:
 
 color name        | description
 ----------        | -----------
-`htmlTags`        | HTML tags, i.e. `<foo>`
-`htmlStrings`     | string properties inside HTML tags, i.e. `"baz"` inside `<foo bar="baz">`
-`htmlSymbols`     | HTML symbols, i.e. `&bar;`
-`htmlComments`    | HTML comments, i.e. `<!-- comment -->`
-`markdownLinks`   | Markdown links and images text, i.e. `foo` inside `[foo](http://example.com)`
-`blockquotes`     | blockquotes, i.e. `> quote` in Markdown
-`codeSpans`       | code spans, i.e. `` `code` `` in Markdown
-`restDirectives`  | reStructuredText directives, i.e. `.. math::`
-`restRoles`       | reStructuredText roles, i.e. `:math:`
+`htmlTags`        | HTML tags, e.g. `<foo>`
+`htmlStrings`     | string properties inside HTML tags, e.g. `"baz"` inside `<foo bar="baz">`
+`htmlSymbols`     | HTML symbols, e.g. `&bar;`
+`htmlComments`    | HTML comments, e.g. `<!-- comment -->`
+`markdownLinks`   | Markdown links and images text, e.g. `foo` inside `[foo](http://example.com)`
+`blockquotes`     | blockquotes, e.g. `> quote` in Markdown
+`codeSpans`       | code spans, e.g. `` `code` `` in Markdown
+`restDirectives`  | reStructuredText directives, e.g. `.. math::`
+`restRoles`       | reStructuredText roles, e.g. `:math:`
 `whitespaceOnEnd` | whitespace at line endings
