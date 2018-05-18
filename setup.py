@@ -21,7 +21,6 @@ from distutils.command.build import build
 from setuptools import setup, Command
 from setuptools.command.sdist import sdist
 from setuptools.command.install import install
-from setuptools.command.test import test
 from subprocess import check_call
 from glob import glob, iglob
 
@@ -133,12 +132,6 @@ class retext_install(install):
 			desktop_file.write(desktop_contents)
 
 
-class retext_test(test):
-	def finalize_options(self):
-		self.test_suite = 'tests'
-		test.finalize_options(self)
-
-
 classifiers = [
 	'Development Status :: 5 - Production/Stable',
 	'Environment :: X11 Applications :: Qt',
@@ -184,8 +177,8 @@ setup(name='ReText',
         'build': retext_build,
         'sdist': retext_sdist,
         'install': retext_install,
-        'test': retext_test,
       },
+      test_suite='tests',
       classifiers=classifiers,
       license='GPL 2+'
 )
