@@ -20,7 +20,7 @@ from ReText.icontheme import get_icon_theme
 from markups.common import CONFIGURATION_DIR
 from os.path import join
 
-from PyQt5.QtCore import QFile, QFileInfo, QUrl, Qt
+from PyQt5.QtCore import pyqtSignal, QFile, QFileInfo, QUrl, Qt
 from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
  QFileDialog, QGridLayout, QLabel, QLineEdit, QPushButton, QSpinBox, \
@@ -48,6 +48,15 @@ class FileSelectButton(QPushButton):
 			self.setText(QFileInfo(self.fileName).fileName())
 		else:
 			self.setText(self.defaultText)
+
+
+class ClickableLabel(QLabel):
+	clicked = pyqtSignal()
+
+	def mousePressEvent(self, event):
+		self.clicked.emit()
+		super().mousePressEvent(event)
+
 
 class ConfigDialog(QDialog):
 	def __init__(self, parent):
@@ -118,7 +127,7 @@ class ConfigDialog(QDialog):
 				layout.addWidget(header, index, 0, 1, 2, Qt.AlignHCenter)
 				continue
 			if displayname:
-				label = QLabel(displayname + ':', self)
+				label = ClickableLabel(displayname + ':', self)
 			if name == 'markdownExtensions':
 				if displayname:
 					url = QUrl('https://github.com/retext-project/retext/wiki/Markdown-extensions')
@@ -143,6 +152,7 @@ class ConfigDialog(QDialog):
 				self.configurators[name].setChecked(value)
 				if name == 'rightMarginWrap' and (globalSettings.rightMargin == 0):
 					self.configurators[name].setEnabled(False)
+				label.clicked.connect(self.configurators[name].nextCheckState)
 			elif isinstance(value, int):
 				self.configurators[name] = QSpinBox(self)
 				if name == 'tabWidth':
