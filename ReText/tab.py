@@ -339,11 +339,13 @@ class ReTextTab(QSplitter):
 		text = stream.readAll()
 		openfile.close()
 
+		if previousFileName != self._fileName:
+			self.updateActiveMarkupClass()
+
 		self.editBox.setPlainText(text)
 		self.editBox.document().setModified(False)
 
 		if previousFileName != self._fileName:
-			self.updateActiveMarkupClass()
 			self.fileNameChanged.emit()
 
 	def writeTextToFile(self, fileName=None):
