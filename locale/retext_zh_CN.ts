@@ -135,12 +135,12 @@
 <context>
     <name>ReTextEdit</name>
     <message>
-        <location filename="editor.py" line="295"/>
+        <location filename="editor.py" line="292"/>
         <source>Save image</source>
         <translation>保存图片</translation>
     </message>
     <message>
-        <location filename="editor.py" line="295"/>
+        <location filename="editor.py" line="292"/>
         <source>Images (*.png *.jpg)</source>
         <translation>图片 (*.png *.jpg)</translation>
     </message>
