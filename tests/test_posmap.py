@@ -102,3 +102,17 @@ class PosMapTest(TestCase):
         expected = markdown(text, extensions=self.extensionsNoPosMap)
         self.assertIn('<div class="codehilite">', html)
         self.assertMultiLineEqual(html, expected)
+
+    def test_traditionalCodeBlock(self):
+        text = dedent("""\
+            :::python
+            if __name__ == "__main__":
+                print("Hello, world!")
+
+        a paragraph following the code block, line 5
+        """)
+        extensions = [CodeHiliteExtension(), PosMapExtension()]
+        html = markdown(text, extensions=extensions)
+        self.assertNotIn('posmapmarker', html)
+        self.assertIn('<div class="codehilite">', html)
+        self.assertIn('<p data-posmap="5">', html)
