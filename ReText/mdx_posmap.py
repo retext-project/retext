@@ -21,8 +21,11 @@ import re
 
 from markdown.blockprocessors import BlockProcessor
 from markdown.extensions import Extension
+from markdown.extensions.codehilite import CodeHilite
 from markdown.preprocessors import Preprocessor
 from markdown.util import etree, HTML_PLACEHOLDER_RE
+
+POSMAP_MARKER_RE = re.compile(r'__posmapmarker__\d+\n\n')
 
 
 class PosMapExtension(Extension):
@@ -37,6 +40,16 @@ class PosMapExtension(Extension):
         md.preprocessors.add('posmap_mark', PosMapMarkPreprocessor(md), '_begin')
         md.preprocessors.add('posmap_clean', PosMapCleanPreprocessor(md), '_end')
         md.parser.blockprocessors.add('posmap', PosMapBlockProcessor(md.parser), '_begin')
+
+        # Monkey patch CodeHilite constructor to remove the posmap markers from
+        # text before highlighting it
+        orig_codehilite_init = CodeHilite.__init__
+
+        def new_codehilite_init(self, src=None, *args, **kwargs):
+            src = POSMAP_MARKER_RE.sub('', src)
+            orig_codehilite_init(self, src=src, *args, **kwargs)
+        CodeHilite.__init__ = new_codehilite_init
+
 
 class PosMapMarkPreprocessor(Preprocessor):
     """ PosMapMarkPreprocessor - insert __posmapmarker__linenr entries at each empty line """
@@ -59,13 +72,11 @@ class PosMapCleanPreprocessor(Preprocessor):
         case too (see https://github.com/retext-project/retext/issues/299).
     """
 
-    POSMAP_MARKER_RE = re.compile('(<span class="a-z+">)?__posmapmarker__\d+(</span>)?\n\n')
-
     def run(self, lines):
 
         for i in range(self.markdown.htmlStash.html_counter):
             html, safe = self.markdown.htmlStash.rawHtmlBlocks[i]
-            html = re.sub(self.POSMAP_MARKER_RE, '', html)
+            html = re.sub(POSMAP_MARKER_RE, '', html)
             self.markdown.htmlStash.rawHtmlBlocks[i] = (html, safe)
 
         return lines
