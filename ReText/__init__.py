@@ -169,7 +169,9 @@ class ReTextSettings(object):
 	def __getattribute__(self, option):
 		value = object.__getattribute__(self, option)
 		# Choose a font just-in-time, because when the settings are
-		# loaded it is too early to work on Windows
+		# loaded it is too early to work.
+		if option == 'font' and not value.family():
+			value = QFont()
 		if option == 'editorFont' and not value.family():
 			value = chooseMonospaceFont()
 		return value
