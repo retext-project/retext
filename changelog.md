@@ -25,6 +25,11 @@
 *Bugfix update 7.0.1 was released on 2017-06-25 with improved installation
 procedure in setup.py, some crash fixes, and updated translations.*
 
+*Bugfix update 7.0.2 was released on 2018-06-05, fixing many bugs. Most
+importantly, issues with installation (#324, #363, #365), with synchronized
+scrolling breaking code blocks highlighting (#299), with emoji support
+(#357, #368), and with some lines disappearing after opening files (#345).*
+
 ## ReText 6.0 (2016-05-10)
 
 * The live preview now automatically scrolls to match its position with the
