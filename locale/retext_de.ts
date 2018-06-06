@@ -59,6 +59,11 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
+        <source>Line numbers are relative to current line</source>
+        <translation>Zeilennummern sind relativ zur aktuellen Zeile</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
         <source>Tab key inserts spaces</source>
         <translation>Tabulator fügt Leerzeichen ein</translation>
     </message>
@@ -74,6 +79,16 @@
     </message>
     <message>
         <location filename="config.py" line="67"/>
+        <source>Enable soft wrap</source>
+        <translation>Aktiviere weichen Zeilenumbruch</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Zeige Dokumentstatistik</source>
+        <translation>Aktiviere weichen Zeilenumbruch</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
         <source>Interface</source>
         <translation>Oberfläche</translation>
     </message>
@@ -86,6 +101,11 @@
         <location filename="config.py" line="67"/>
         <source>Stylesheet file</source>
         <translation>Stilvorlage-Datei</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="67"/>
+        <source>Using configuration file at</source>
+        <translation>Verwende Konfigurationsdatei unter</translation>
     </message>
     <message>
         <location filename="config.py" line="104"/>
