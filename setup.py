@@ -68,9 +68,8 @@ class retext_build(build):
 
 
 class retext_sdist(sdist):
-	sub_commands = sdist.sub_commands + [('build_translations', None)]
-
 	def run(self):
+		self.run_command('build_translations')
 		bundle_icons()
 		sdist.run(self)
 
