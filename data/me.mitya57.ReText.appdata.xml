@@ -1,3 +1,4 @@
+<!-- Copyright 2018 Dmitry Shachnev -->
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
   <id>me.mitya57.ReText.desktop</id>
@@ -29,6 +30,16 @@
     <p>It supports tabs, live text preview, synchronized scrolling (for Markdown) and syntax highlighting.</p>
     <p>ReText can export to HTML, ODT and PDF formats. It is also possible to write custom export extensions.</p>
   </description>
+  <description xml:lang="de">
+    <p>ReText ist ein Texteditor für vereinfachten Auszeichnungssprachen wie Markdown und reStructuredText.</p>
+    <p>Er unterstützt Reiter, Live-Vorschau, synchrones Scrollen (für Markdown) und Syntaxhervorhebung.</p>
+    <p>ReText kann Dokumente in HTML, ODT und PDF exportieren. Es ist auch möglich, benutzerdefinierte Export-Erweiterungen zu schreiben.</p>
+  </description>
+  <description xml:lang="ru">
+    <p>ReText — это текстовый редактор для языков разметки, таких как Markdown и reStructuredText.</p>
+    <p>Он поддерживает вкладки, живой просмотр, синхронную прокрутку (для Markdown) и подсветку синтаксиса.</p>
+    <p>ReText может экспортировать в форматы HTML, ODT и PDF. Также возможно написание собственных расширений экспорта.</p>
+  </description>
   <url type="homepage">https://github.com/retext-project/retext</url>
   <metadata_license>CC0</metadata_license>
   <project_license>GPL-2.0+</project_license>
@@ -37,9 +48,10 @@
   </provides>
   <screenshots>
     <screenshot type="default">
-      <image width="1116" height="650">https://raw.githubusercontent.com/retext-project/retext/master/data/retext-kde5.png</image>
+      <image width="1090" height="624">https://raw.githubusercontent.com/retext-project/retext/master/data/retext-kde5.png</image>
     </screenshot>
   </screenshots>
+  <translation type="qt">retext</translation>
   <developer_name>Dmitry Shachnev</developer_name>
-  <updatecontact>mitya57_AT_gmail.com</updatecontact>
+  <update_contact>mitya57_AT_gmail.com</update_contact>
 </component>
