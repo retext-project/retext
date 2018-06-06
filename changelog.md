@@ -30,6 +30,9 @@ importantly, issues with installation (#324, #363, #365), with synchronized
 scrolling breaking code blocks highlighting (#299), with emoji support
 (#357, #368), and with some lines disappearing after opening files (#345).*
 
+*Bugfix update 7.0.3 was released on 2018-06-06 with minor changes and
+fixed tarball contents.*
+
 ## ReText 6.0 (2016-05-10)
 
 * The live preview now automatically scrolls to match its position with the
