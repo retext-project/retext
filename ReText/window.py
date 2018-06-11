@@ -566,8 +566,15 @@ class ReTextWindow(QMainWindow):
 		for tab in self.iterateTabs():
 			tab.triggerPreviewUpdate()
 
+	def setPreviewState(self, previewState):
+		if previewState == PreviewLive:
+			self.enableLivePreview(True)
+		else:
+			self.preview(previewState == PreviewNormal)
+
 	def preview(self, viewmode):
 		self.currentTab.previewState = viewmode * 2
+		self.actionPreview.setChecked(viewmode)
 		self.actionLivePreview.setChecked(False)
 		self.editBar.setDisabled(viewmode)
 		self.currentTab.updateBoxesVisibility()
@@ -807,6 +814,7 @@ class ReTextWindow(QMainWindow):
 	def openFileWrapper(self, fileName):
 		if not fileName:
 			return
+		previewState = self.currentTab.previewState if hasattr(self, 'currentTab') else PreviewNormal
 		fileName = QFileInfo(fileName).canonicalFilePath()
 		exists = False
 		for i, tab in enumerate(self.iterateTabs()):
@@ -830,6 +838,7 @@ class ReTextWindow(QMainWindow):
 				self.fileSystemWatcher.addPath(fileName)
 			self.currentTab.readTextFromFile(fileName)
 			self.moveToTopOfRecentFileList(self.currentTab.fileName)
+			self.setPreviewState(previewState)
 
 	def showEncodingDialog(self):
 		if not self.maybeSave(self.ind):
