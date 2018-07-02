@@ -327,6 +327,7 @@ class ReTextEdit(QTextEdit):
 		self.infoArea.updateTextAndGeometry()
 		self.statsArea.updateTextAndGeometry()
 		self.setWrapModeAndWidth()
+		self.ensureCursorVisible()
 
 	def highlightCurrentLine(self):
 		if globalSettings.relativeLineNumbers:
