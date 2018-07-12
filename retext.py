@@ -47,9 +47,8 @@ def main():
 		sys.stdout = open(devnull, 'w')
 		sys.stderr = open('stderr.log', 'w')
 
-	if hasattr(Qt, 'AA_ShareOpenGLContexts'):
-		# Needed for Qt WebEngine on Windows
-		QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
+	# Needed for Qt WebEngine on Windows
+	QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
 	app = QApplication(sys.argv)
 	app.setOrganizationName("ReText project")
 	app.setApplicationName("ReText")

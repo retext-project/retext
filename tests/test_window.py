@@ -36,8 +36,7 @@ from ReText.window import ReTextWindow
 defaultEventTimeout = 0.0
 path_to_testdata = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'testdata')
 
-if hasattr(Qt, 'AA_ShareOpenGLContexts'):
-    QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
+QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
 app = QApplication.instance() or QApplication(sys.argv)
 ReText.initializeDataDirs()
 

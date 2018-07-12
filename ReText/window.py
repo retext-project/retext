@@ -421,8 +421,7 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.setMovable(True)
 		self.tabWidget.dragEnterEvent = dragEnterEvent
 		self.tabWidget.dropEvent = dropEvent
-		if hasattr(self.tabWidget, 'setTabBarAutoHide'):
-			self.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
+		self.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
 
 	def act(self, name, icon=None, trig=None, trigbool=None, shct=None):
 		if not isinstance(shct, QKeySequence):
