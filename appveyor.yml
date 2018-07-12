@@ -1,8 +1,8 @@
 environment:
 
   matrix:
-    - PYTHON: "C:\\Python35-x64"
     - PYTHON: "C:\\Python36-x64"
+    - PYTHON: "C:\\Python37-x64"
 
 install:
   - "%PYTHON%\\python.exe -m pip install PyQt5 Markdown docutils Markups"
