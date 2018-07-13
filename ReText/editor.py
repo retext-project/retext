@@ -457,9 +457,12 @@ class LineNumberArea(QWidget):
 			return QWidget.paintEvent(self, event)
 		painter = QPainter(self)
 		painter.fillRect(event.rect(), colorValues['lineNumberArea'])
+		painter.setPen(colorValues['lineNumberAreaText'])
 		cursor = QTextCursor(self.editor.document())
 		cursor.movePosition(QTextCursor.Start)
 		atEnd = False
+		fontHeight = self.fontMetrics().height()
+		height = self.editor.height()
 		if globalSettings.relativeLineNumbers:
 			relativeTo = self.editor.textCursor().blockNumber()
 		else:
@@ -467,11 +470,12 @@ class LineNumberArea(QWidget):
 		while not atEnd:
 			rect = self.editor.cursorRect(cursor)
 			block = cursor.block()
-			if block.isVisible():
+			if rect.top() >= height:
+				break
+			elif rect.bottom() > 0:
 				number = str(cursor.blockNumber() - relativeTo).replace('-', '−')
-				painter.setPen(colorValues['lineNumberAreaText'])
 				painter.drawText(0, rect.top(), self.width() - 2,
-					self.fontMetrics().height(), Qt.AlignRight, number)
+				                 fontHeight, Qt.AlignRight, number)
 			cursor.movePosition(QTextCursor.EndOfBlock)
 			atEnd = cursor.atEnd()
 			if not atEnd:
