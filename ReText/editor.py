@@ -469,7 +469,6 @@ class LineNumberArea(QWidget):
 			relativeTo = -1
 		while not atEnd:
 			rect = self.editor.cursorRect(cursor)
-			block = cursor.block()
 			if rect.top() >= height:
 				break
 			elif rect.bottom() > 0:
