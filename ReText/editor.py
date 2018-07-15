@@ -23,7 +23,7 @@ import weakref
 from markups import MarkdownMarkup, ReStructuredTextMarkup, TextileMarkup
 from ReText import globalSettings, tablemode, readFromSettings
 
-from PyQt5.QtCore import pyqtSignal, QFileInfo, QRect, QSize, Qt
+from PyQt5.QtCore import pyqtSignal, QFileInfo, QPoint, QRect, QSize, Qt
 from PyQt5.QtGui import QColor, QImage, QKeyEvent, QMouseEvent, QPainter, \
 QPalette, QTextCursor, QTextFormat, QWheelEvent, QGuiApplication
 from PyQt5.QtWidgets import QFileDialog, QLabel, QTextEdit, QWidget
@@ -458,8 +458,7 @@ class LineNumberArea(QWidget):
 		painter = QPainter(self)
 		painter.fillRect(event.rect(), colorValues['lineNumberArea'])
 		painter.setPen(colorValues['lineNumberAreaText'])
-		cursor = QTextCursor(self.editor.document())
-		cursor.movePosition(QTextCursor.Start)
+		cursor = self.editor.cursorForPosition(QPoint(0, 0))
 		atEnd = False
 		fontHeight = self.fontMetrics().height()
 		height = self.editor.height()
@@ -471,10 +470,9 @@ class LineNumberArea(QWidget):
 			rect = self.editor.cursorRect(cursor)
 			if rect.top() >= height:
 				break
-			elif rect.bottom() > 0:
-				number = str(cursor.blockNumber() - relativeTo).replace('-', '−')
-				painter.drawText(0, rect.top(), self.width() - 2,
-				                 fontHeight, Qt.AlignRight, number)
+			number = str(cursor.blockNumber() - relativeTo).replace('-', '−')
+			painter.drawText(0, rect.top(), self.width() - 2,
+			                 fontHeight, Qt.AlignRight, number)
 			cursor.movePosition(QTextCursor.EndOfBlock)
 			atEnd = cursor.atEnd()
 			if not atEnd:
