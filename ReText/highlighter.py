@@ -107,47 +107,48 @@ class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
 	docType = None
 
-	def highlightBlock(self, text):
-		patterns = (
-			# regex,         color,
-			(reHtmlTags,     FG('htmlTags') | QFont.Bold),                          # 0
-			(reHtmlSymbols,  FG('htmlSymbols') | QFont.Bold),                       # 1
-			(reHtmlStrings,  FG('htmlStrings') | QFont.Bold),                       # 2
-			(reHtmlComments, FG('htmlComments')),                                   # 3
-			(reAsterisks,    ITAL),                                                 # 4
-			(reUnderline,    ITAL),                                                 # 5
-			(reDblAsterisks, NF | QFont.Bold),                                      # 6
-			(reDblUnderline, NF | QFont.Bold),                                      # 7
-			(reTrpAsterisks, ITAL | QFont.Bold),                                    # 8
-			(reTrpUnderline, ITAL | QFont.Bold),                                    # 9
-			(reMkdHeaders,   NF | QFont.Black),                                     # 10
-			(reMkdLinksImgs, FG('markdownLinks')),                                  # 11
-			(reMkdLinkRefs,  ITAL | UNDL),                                          # 12
-			(reBlockQuotes,  FG('blockquotes')),                                    # 13
-			(reReSTDirects,  FG('restDirectives') | QFont.Bold),                    # 14
-			(reReSTRoles,    NF, FG('restRoles') | QFont.Bold, FG('htmlStrings')),  # 15
-			(reTextileHdrs,  NF | QFont.Black),                                     # 16
-			(reTextileQuot,  FG('blockquotes')),                                    # 17
-			(reAsterisks,    NF | QFont.Bold),                                      # 18
-			(reDblUnderline, ITAL),                                                 # 19
-			(reMkdCodeSpans, FG('codeSpans')),                                      # 20
-			(reReSTCodeSpan, FG('codeSpans')),                                      # 21
-			(reReSTLinks,    NF, NF, ITAL | UNDL, NF),                              # 22
-			(reReSTLinkRefs, NF, FG('markdownLinks'), ITAL | UNDL),                 # 23
-			(reReSTFldLists, NF, FG('restDirectives')),                             # 24
-			(reMkdMathSpans, FG('codeSpans')),                                      # 25
-		)
+	patterns = (
+		# regex,         color,
+		(reHtmlTags,     FG('htmlTags') | QFont.Bold),                          # 0
+		(reHtmlSymbols,  FG('htmlSymbols') | QFont.Bold),                       # 1
+		(reHtmlStrings,  FG('htmlStrings') | QFont.Bold),                       # 2
+		(reHtmlComments, FG('htmlComments')),                                   # 3
+		(reAsterisks,    ITAL),                                                 # 4
+		(reUnderline,    ITAL),                                                 # 5
+		(reDblAsterisks, NF | QFont.Bold),                                      # 6
+		(reDblUnderline, NF | QFont.Bold),                                      # 7
+		(reTrpAsterisks, ITAL | QFont.Bold),                                    # 8
+		(reTrpUnderline, ITAL | QFont.Bold),                                    # 9
+		(reMkdHeaders,   NF | QFont.Black),                                     # 10
+		(reMkdLinksImgs, FG('markdownLinks')),                                  # 11
+		(reMkdLinkRefs,  ITAL | UNDL),                                          # 12
+		(reBlockQuotes,  FG('blockquotes')),                                    # 13
+		(reReSTDirects,  FG('restDirectives') | QFont.Bold),                    # 14
+		(reReSTRoles,    NF, FG('restRoles') | QFont.Bold, FG('htmlStrings')),  # 15
+		(reTextileHdrs,  NF | QFont.Black),                                     # 16
+		(reTextileQuot,  FG('blockquotes')),                                    # 17
+		(reAsterisks,    NF | QFont.Bold),                                      # 18
+		(reDblUnderline, ITAL),                                                 # 19
+		(reMkdCodeSpans, FG('codeSpans')),                                      # 20
+		(reReSTCodeSpan, FG('codeSpans')),                                      # 21
+		(reReSTLinks,    NF, NF, ITAL | UNDL, NF),                              # 22
+		(reReSTLinkRefs, NF, FG('markdownLinks'), ITAL | UNDL),                 # 23
+		(reReSTFldLists, NF, FG('restDirectives')),                             # 24
+		(reMkdMathSpans, FG('codeSpans')),                                      # 25
+	)
 
-		patternsDict = {
-			'Markdown': (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 20, 25),
-			'reStructuredText': (4, 6, 14, 15, 21, 22, 23, 24),
-			'Textile': (0, 5, 6, 16, 17, 18, 19),
-			'html': (0, 1, 2, 3)
-		}
+	patternsDict = {
+		'Markdown': (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 20, 25),
+		'reStructuredText': (4, 6, 14, 15, 21, 22, 23, 24),
+		'Textile': (0, 5, 6, 16, 17, 18, 19),
+		'html': (0, 1, 2, 3)
+	}
+
+	def highlightBlock(self, text):
 		# Syntax highlighter
-		if self.docType in patternsDict:
-			for number in patternsDict[self.docType]:
-				pattern = patterns[number]
+		if self.docType in self.patternsDict:
+			for number in self.patternsDict[self.docType]:
+				pattern = self.patterns[number]
 				for match in pattern[0].finditer(text):
 					for i, formatter in enumerate(pattern[1:]):
 						charFormat = QTextCharFormat()
