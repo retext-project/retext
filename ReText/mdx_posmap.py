@@ -75,9 +75,14 @@ class PosMapCleanPreprocessor(Preprocessor):
     def run(self, lines):
 
         for i in range(self.markdown.htmlStash.html_counter):
-            html, safe = self.markdown.htmlStash.rawHtmlBlocks[i]
-            html = re.sub(POSMAP_MARKER_RE, '', html)
-            self.markdown.htmlStash.rawHtmlBlocks[i] = (html, safe)
+            block = self.markdown.htmlStash.rawHtmlBlocks[i]
+            if isinstance(block, tuple):
+                # Python-Markdown 2.x uses (html, safe_mode) tuples
+                html, safe = block
+                block = re.sub(POSMAP_MARKER_RE, '', html), safe
+            else:
+                block = re.sub(POSMAP_MARKER_RE, '', block)
+            self.markdown.htmlStash.rawHtmlBlocks[i] = block
 
         return lines
 
