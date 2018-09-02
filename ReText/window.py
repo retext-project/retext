@@ -127,6 +127,8 @@ class ReTextWindow(QMainWindow):
 			trig=self.changePreviewFont)
 		self.actionSearch = self.act(self.tr('Find text'), 'edit-find',
 			self.search, shct=QKeySequence.Find)
+		self.actionGoToLine = self.act(self.tr('Go to line'),
+			trig=self.goToLine, shct=Qt.CTRL+Qt.Key_G)
 		self.searchBar.visibilityChanged.connect(self.searchBarVisibilityChanged)
 		self.actionPreview = self.act(self.tr('Preview'), shct=Qt.CTRL+Qt.Key_E,
 			trigbool=self.preview)
@@ -301,6 +303,7 @@ class ReTextWindow(QMainWindow):
 			menuSC.addAction(self.actionEnableSC)
 			menuSC.addAction(self.actionSetLocale)
 		menuEdit.addAction(self.actionSearch)
+		menuEdit.addAction(self.actionGoToLine)
 		menuEdit.addAction(self.actionChangeEditorFont)
 		menuEdit.addAction(self.actionChangePreviewFont)
 		menuEdit.addSeparator()
@@ -649,6 +652,11 @@ class ReTextWindow(QMainWindow):
 	def search(self):
 		self.searchBar.setVisible(True)
 		self.searchEdit.setFocus(Qt.ShortcutFocusReason)
+
+	def goToLine(self):
+		line, ok = QInputDialog.getInt(self, self.tr("Go to line"), self.tr("Type the line number"))
+		if ok:
+			self.currentTab.goToLine(line)
 
 	def searchBarVisibilityChanged(self, visible):
 		if visible:

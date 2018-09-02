@@ -389,6 +389,12 @@ class ReTextTab(QSplitter):
 
 		return result
 
+	def goToLine(self,line):
+		block = self.editBox.document().findBlockByLineNumber(line)
+		if block.isValid():
+			newCursor = QTextCursor(block)
+			self.editBox.setTextCursor(newCursor)
+
 	def find(self, text, flags, replaceText=None, wrap=False):
 		cursor = self.editBox.textCursor()
 		if wrap and flags & QTextDocument.FindBackward:

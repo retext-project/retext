@@ -258,6 +258,16 @@
         <translation>Rechercher un texte</translation>
     </message>
     <message>
+        <location filename="window.py" line="125"/>
+        <source>Go to line</source>
+        <translation>Aller à la ligne</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="125"/>
+        <source>Type the line number</source>
+        <translation>Entrer le numéro de ligne</translation>
+    </message>
+    <message>
         <location filename="window.py" line="129"/>
         <source>Preview</source>
         <translation>Aperçu</translation>
