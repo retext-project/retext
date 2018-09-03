@@ -656,7 +656,7 @@ class ReTextWindow(QMainWindow):
 	def goToLine(self):
 		line, ok = QInputDialog.getInt(self, self.tr("Go to line"), self.tr("Type the line number"))
 		if ok:
-			self.currentTab.goToLine(line)
+			self.currentTab.goToLine(line-1)
 
 	def searchBarVisibilityChanged(self, visible):
 		if visible:
