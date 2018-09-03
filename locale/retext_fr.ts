@@ -438,6 +438,16 @@
         <translation>Nouveau document</translation>
     </message>
     <message>
+        <location filename="window.py" line="657"/>
+        <source>Go to line</source>
+        <translation>Aller à la ligne</translation>
+    </message>
+    <message>
+        <location filename="window.py" line="657"/>
+        <source>Type the line number</source>
+        <translation>Entrer le numéro de ligne</translation>
+    </message>
+    <message>
         <location filename="window.py" line="664"/>
         <source>Please, save the file somewhere.</source>
         <translation>Veuillez enregistrer le fichier quelque part.</translation>
