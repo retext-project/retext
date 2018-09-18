@@ -178,6 +178,8 @@ class ReTextWindow(QMainWindow):
 			lambda: self.currentTab.editBox.cut(), shct=QKeySequence.Cut)
 		self.actionPaste = self.act(self.tr('Paste'), 'edit-paste',
 			lambda: self.currentTab.editBox.paste(), shct=QKeySequence.Paste)
+		self.actionPasteImage = self.act(self.tr('Paste image'), 'edit-paste',
+			lambda: self.currentTab.editBox.pasteImage(), shct=Qt.CTRL+Qt.SHIFT+Qt.Key_V)
 		self.actionMoveUp = self.act(self.tr('Move line up'), 'go-up',
 			lambda: self.currentTab.editBox.moveLineUp(), shct=Qt.ALT+Qt.Key_Up)
 		self.actionMoveDown = self.act(self.tr('Move line down'), 'go-down',
@@ -294,6 +296,7 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionCut)
 		menuEdit.addAction(self.actionCopy)
 		menuEdit.addAction(self.actionPaste)
+		menuEdit.addAction(self.actionPasteImage)
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionMoveUp)
 		menuEdit.addAction(self.actionMoveDown)
@@ -1071,7 +1074,8 @@ class ReTextWindow(QMainWindow):
 	def clipboardDataChanged(self):
 		mimeData = QApplication.instance().clipboard().mimeData()
 		if mimeData is not None:
-			self.actionPaste.setEnabled(mimeData.hasText() or mimeData.hasImage())
+			self.actionPaste.setEnabled(mimeData.hasText())
+			self.actionPasteImage.setEnabled(mimeData.hasImage())
 
 	def insertFormatting(self, formatting):
 		cursor = self.currentTab.editBox.textCursor()

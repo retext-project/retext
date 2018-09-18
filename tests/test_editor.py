@@ -105,16 +105,6 @@ class TestClipboardHandling(unittest.TestCase):
 		image.fill(Qt.green)
 		return image
 
-	def test_allowTextOnClipboard(self):
-		mimeData = QMimeData()
-		mimeData.setText('hello')
-		self.assertTrue(self.editor.canInsertFromMimeData(mimeData))
-
-	def test_allowImageOnClipboard(self):
-		mimeData = QMimeData()
-		mimeData.setImageData(self._create_image())
-		self.assertTrue(self.editor.canInsertFromMimeData(mimeData))
-
 	def test_pasteText(self):
 		mimeData = QMimeData()
 		mimeData.setText('pasted text')
@@ -126,9 +116,10 @@ class TestClipboardHandling(unittest.TestCase):
 	def test_pasteImage_Markdown(self, _mock_image, _mock_editor):
 		mimeData = QMimeData()
 		mimeData.setImageData(self._create_image())
+		app.clipboard().setMimeData(mimeData)
 		self.dummytab.markupClass = MarkdownMarkup
 
-		self.editor.insertFromMimeData(mimeData)
+		self.editor.pasteImage()
 		self.assertTrue('![myimage](myimage.jpg)' in self.editor.toPlainText())
 
 	@patch.object(ReTextEdit, 'getImageFilenameAndLink', return_value=('/tmp/myimage.jpg', 'myimage.jpg'))
@@ -136,9 +127,10 @@ class TestClipboardHandling(unittest.TestCase):
 	def test_pasteImage_RestructuredText(self, _mock_image, _mock_editor):
 		mimeData = QMimeData()
 		mimeData.setImageData(self._create_image())
+		app.clipboard().setMimeData(mimeData)
 		self.dummytab.markupClass = ReStructuredTextMarkup
 
-		self.editor.insertFromMimeData(mimeData)
+		self.editor.pasteImage()
 		self.assertTrue('.. image:: myimage.jpg' in self.editor.toPlainText())
 
 if __name__ == '__main__':

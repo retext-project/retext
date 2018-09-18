@@ -26,7 +26,7 @@ from ReText import globalSettings, tablemode, readFromSettings
 from PyQt5.QtCore import pyqtSignal, QFileInfo, QPoint, QRect, QSize, Qt
 from PyQt5.QtGui import QColor, QImage, QKeyEvent, QMouseEvent, QPainter, \
 QPalette, QTextCursor, QTextFormat, QWheelEvent, QGuiApplication
-from PyQt5.QtWidgets import QFileDialog, QLabel, QTextEdit, QWidget
+from PyQt5.QtWidgets import QAction, QApplication, QFileDialog, QLabel, QTextEdit, QWidget
 
 try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler
@@ -175,6 +175,12 @@ class ReTextEdit(QTextEdit):
 	def contextMenuEvent(self, event):
 		# Create base menu
 		menu = self.createStandardContextMenu()
+		if self.parent.actionPasteImage.isEnabled():
+			actions = menu.actions()
+			actionPaste = menu.findChild(QAction, "edit-paste")
+			actionNextAfterPaste = actions[actions.index(actionPaste) + 1]
+			menu.insertAction(actionNextAfterPaste, self.parent.actionPasteImage)
+
 		text = self.toPlainText()
 		if not text:
 			menu.exec(event.globalPos())
@@ -362,9 +368,6 @@ class ReTextEdit(QTextEdit):
 		self.lineNumberArea.update()
 		self.updateTextStatistics()
 
-	def canInsertFromMimeData(self, mimeData):
-		return mimeData.hasText() or mimeData.hasImage()
-
 	def findNextImageName(self, filenames):
 		highestNumber = 0
 		for filename in filenames:
@@ -401,24 +404,23 @@ class ReTextEdit(QTextEdit):
 
 		return chosenFileName, link
 
-	def insertFromMimeData(self, mimeData):
-		if mimeData.hasImage():
-			fileName, link = self.getImageFilenameAndLink()
-			if fileName:
-				image = QImage(mimeData.imageData())
-				image.save(fileName)
+	def pasteImage(self):
+		mimeData = QApplication.instance().clipboard().mimeData()
+		fileName, link = self.getImageFilenameAndLink()
+		if not fileName or not mimeData.hasImage():
+			return
+		image = QImage(mimeData.imageData())
+		image.save(fileName)
 
-				markupClass = self.tab.getActiveMarkupClass()
-				if markupClass == MarkdownMarkup:
-					imageText = '![%s](%s)' % (QFileInfo(link).baseName(), link)
-				elif markupClass == ReStructuredTextMarkup:
-					imageText = '.. image:: %s' % link
-				elif markupClass == TextileMarkup:
-					imageText = '!%s!' % link
+		markupClass = self.tab.getActiveMarkupClass()
+		if markupClass == MarkdownMarkup:
+			imageText = '![%s](%s)' % (QFileInfo(link).baseName(), link)
+		elif markupClass == ReStructuredTextMarkup:
+			imageText = '.. image:: %s' % link
+		elif markupClass == TextileMarkup:
+			imageText = '!%s!' % link
 
-				self.textCursor().insertText(imageText)
-		else:
-			QTextEdit.insertFromMimeData(self, mimeData)
+		self.textCursor().insertText(imageText)
 
 	def installFakeVimHandler(self):
 		if ReTextFakeVimHandler:
