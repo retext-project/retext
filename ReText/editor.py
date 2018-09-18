@@ -297,7 +297,10 @@ class ReTextEdit(QTextEdit):
 		if chosenFileName:
 			# Use relative links for named documents
 			if self.tab.fileName:
-				link = os.path.relpath(chosenFileName, saveDir)
+				try:
+					link = os.path.relpath(chosenFileName, saveDir)
+				except ValueError:  # different roots
+					link = chosenFileName
 			else:
 				link = chosenFileName
 		else:
