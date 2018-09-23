@@ -2,9 +2,7 @@ include LICENSE_GPL
 include README.md
 include changelog.md
 include configuration.md
-exclude .gitignore
-exclude .travis.yml
-exclude appveyor.yml
+include data/retext-kde5.png
 recursive-include tests *.py *.md *.rst
 recursive-include locale retext_*.ts retext_*.qm
 recursive-include icons *.png *.svg
