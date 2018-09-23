@@ -1,96 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="uk" sourcelanguage="">
+<!DOCTYPE TS><TS version="2.0" language="sv" sourcelanguage="">
 <context>
     <name>ConfigDialog</name>
     <message>
         <location filename="config.py" line="67"/>
         <source>Behavior</source>
-        <translation>Поведінка</translation>
+        <translation>Beteende</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Automatically save documents</source>
-        <translation>Автоматично зберігати документи</translation>
+        <translation>Spara dokument automatiskt</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Automatically open last documents on startup</source>
-        <translation>Автоматично відкривати останні документи при запуску</translation>
+        <translation>Öppna de senaste dokumenten automatiskt vid uppstart</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Restore window geometry</source>
-        <translation>Відновлювати геометрію вікна</translation>
+        <translation>Återställ fönsterstorlek</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Use live preview by default</source>
-        <translation>Використовувати живий перегляд типово</translation>
+        <translation>Använd live förhandsvisning som standard</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Open external links in ReText window</source>
-        <translation>Відкриті зовнішні посилання у вікні ReText</translation>
+        <translation>Öppna externa länkar i ReText-fönstret</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Markdown syntax extensions (comma-separated)</source>
-        <translation>Розширення синтаксису Markdown (розділені комами)</translation>
+        <translation>Insticksmoduler för Markdown-syntax (kommaseparerade)</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Enable synchronized scrolling for Markdown</source>
-        <translation>Увімкнути синхронне гортання для Markdown</translation>
+        <translation>Aktivera synkroniserad rullning för Markdown</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Editor</source>
-        <translation>Редагувати</translation>
+        <translation>Textredigerare</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Highlight current line</source>
-        <translation>Виділяти поточний рядок</translation>
+        <translation>Markera aktuell rad</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Show line numbers</source>
-        <translation>Показувати номери рядків</translation>
+        <translation>Visa radnummer</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Tab key inserts spaces</source>
-        <translation>Клавіша Tab вставляє пробіли</translation>
+        <translation>Konvertera tabbar till blanksteg</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Tabulation width</source>
-        <translation>Ширина табулювання</translation>
+        <translation>Tabb-bredd</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Draw vertical line at column</source>
-        <translation>Малювати вертикальну лінію у стовпчику</translation>
+        <translation>Visa vertikal linje vid kolumn</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Interface</source>
-        <translation>Інтерфейс</translation>
+        <translation>Gränssnitt</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Icon theme name</source>
-        <translation>Встановити тему піктограм</translation>
+        <translation>Ikon-tema</translation>
     </message>
     <message>
         <location filename="config.py" line="67"/>
         <source>Stylesheet file</source>
-        <translation>Файл стилю Qt</translation>
+        <translation>Stilmall</translation>
     </message>
     <message>
         <location filename="config.py" line="104"/>
         <source>Help</source>
-        <translation>Довідка</translation>
+        <translation>Hjälp</translation>
     </message>
 </context>
 <context>
@@ -98,12 +98,12 @@
     <message>
         <location filename="config.py" line="34"/>
         <source>(none)</source>
-        <translation>(не обраний)</translation>
+        <translation>(inget)</translation>
     </message>
     <message>
         <location filename="config.py" line="41"/>
         <source>Select file to open</source>
-        <translation>Виберіть файл для відкриття</translation>
+        <translation>Välj fil som ska öppnas</translation>
     </message>
 </context>
 <context>
@@ -111,12 +111,12 @@
     <message>
         <location filename="dialogs.py" line="44"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation>Введіть код мови (наприклад: uk_UA)</translation>
+        <translation>Ange landsnamn (exempel: en_US)</translation>
     </message>
     <message>
         <location filename="dialogs.py" line="50"/>
         <source>Set as default</source>
-        <translation>Типово</translation>
+        <translation>Ange som standard</translation>
     </message>
 </context>
 <context>
@@ -124,12 +124,12 @@
     <message>
         <location filename="fakevimeditor.py" line="64"/>
         <source>No write since last change (add ! to override)</source>
-        <translation>Є незбережені зміни (додайте ! для нехтування)</translation>
+        <translation>Ingen överskrift av fil efter senaste ändring (lägg till ! för att tvinga överskrift)</translation>
     </message>
     <message>
         <location filename="fakevimeditor.py" line="121"/>
         <source>Information</source>
-        <translation>Інформація</translation>
+        <translation>Information</translation>
     </message>
 </context>
 <context>
@@ -137,12 +137,12 @@
     <message>
         <location filename="editor.py" line="292"/>
         <source>Save image</source>
-        <translation>Зберегти зображення</translation>
+        <translation>Spara bild</translation>
     </message>
     <message>
         <location filename="editor.py" line="292"/>
         <source>Images (*.png *.jpg)</source>
-        <translation>Зображення (*.png *.jpg)</translation>
+        <translation>Bilder (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
@@ -150,12 +150,12 @@
     <message>
         <location filename="tab.py" line="183"/>
         <source>New document</source>
-        <translation>Новий документ</translation>
+        <translation>Nytt dokument</translation>
     </message>
     <message>
         <location filename="tab.py" line="188"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation>Не вдалося опрацювати вміст файлу, переконайтеся, що встановлено &lt;a href=&quot;%s&quot;&gt;необхідний модуль&lt;/a&gt;!</translation>
+        <translation>Misslyckades att analysera filinnehållet, kontrollera att du har installerat den &lt;a href=&quot;%s&quot;&gt;nödvändiga modulen&lt;/a&gt;!</translation>
     </message>
 </context>
 <context>
@@ -163,462 +163,461 @@
     <message>
         <location filename="window.py" line="85"/>
         <source>File toolbar</source>
-        <translation>Панель файлу</translation>
+        <translation>Filverktygsfält</translation>
     </message>
     <message>
         <location filename="window.py" line="87"/>
         <source>Edit toolbar</source>
-        <translation>Панель редагування</translation>
+        <translation>Redigeringsfält</translation>
     </message>
     <message>
         <location filename="window.py" line="89"/>
         <source>Search toolbar</source>
-        <translation>Панель пошуку</translation>
+        <translation>Sökfält</translation>
     </message>
     <message>
         <location filename="window.py" line="93"/>
         <source>New</source>
-        <translation>Новий</translation>
+        <translation>Nytt</translation>
     </message>
     <message>
         <location filename="window.py" line="96"/>
         <source>Open</source>
-        <translation>Відкрити</translation>
+        <translation>Öppna</translation>
     </message>
     <message>
         <location filename="window.py" line="99"/>
         <source>Set encoding</source>
-        <translation>Встановити кодування</translation>
+        <translation>Teckenkodning</translation>
     </message>
     <message>
         <location filename="window.py" line="1096"/>
         <source>Reload</source>
-        <translation>Перезавантажити</translation>
+        <translation>Ladda om</translation>
     </message>
     <message>
         <location filename="window.py" line="105"/>
         <source>Save</source>
-        <translation>Зберегти</translation>
+        <translation>Spara</translation>
     </message>
     <message>
         <location filename="window.py" line="109"/>
         <source>Save as</source>
-        <translation>Зберегти як</translation>
+        <translation>Spara som</translation>
     </message>
     <message>
         <location filename="window.py" line="111"/>
         <source>Next tab</source>
-        <translation>Наступна вкладка</translation>
+        <translation>Nästa flik</translation>
     </message>
     <message>
         <location filename="window.py" line="113"/>
         <source>Previous tab</source>
-        <translation>Попередня вкладка</translation>
+        <translation>Föregående flik</translation>
     </message>
     <message>
         <location filename="window.py" line="115"/>
         <source>Print</source>
-        <translation>Друкувати</translation>
+        <translation>Skriv ut</translation>
     </message>
     <message>
         <location filename="window.py" line="118"/>
         <source>Print preview</source>
-        <translation>Попередній перегляд перед друком</translation>
+        <translation>Förhandsgranska utskrift</translation>
     </message>
     <message>
         <location filename="window.py" line="120"/>
         <source>View HTML code</source>
-        <translation>Переглянути код HTML</translation>
+        <translation>Visa HTML-kod</translation>
     </message>
     <message>
         <location filename="window.py" line="121"/>
         <source>Change editor font</source>
-        <translation>Змінити шрифт редактора</translation>
+        <translation>Ändra typsnitt för redigering</translation>
     </message>
     <message>
         <location filename="window.py" line="123"/>
         <source>Change preview font</source>
-        <translation>Змінити шрифт перегляду</translation>
+        <translation>Ändra typsnitt för förhandsgranskning</translation>
     </message>
     <message>
         <location filename="window.py" line="125"/>
         <source>Find text</source>
-        <translation>Знайти текст</translation>
+        <translation>Hitta ord</translation>
     </message>
     <message>
         <location filename="window.py" line="129"/>
         <source>Preview</source>
-        <translation>Перегляд</translation>
+        <translation>Förhandsgranska</translation>
     </message>
     <message>
         <location filename="window.py" line="139"/>
         <source>Live preview</source>
-        <translation>Одночасний перегляд</translation>
+        <translation>Live förhandsgranskning</translation>
     </message>
     <message>
         <location filename="window.py" line="144"/>
         <source>Table editing mode</source>
-        <translation>Режим редагування таблиць</translation>
+        <translation>Tabellredigeringsläge</translation>
     </message>
     <message>
         <location filename="window.py" line="148"/>
         <source>FakeVim mode</source>
-        <translation>Режим FakeVim</translation>
+        <translation>FakeVim-läge</translation>
     </message>
     <message>
         <location filename="window.py" line="153"/>
         <source>Fullscreen mode</source>
-        <translation>На увесь екран</translation>
+        <translation>Fullskärmsläge</translation>
     </message>
     <message>
         <location filename="window.py" line="588"/>
         <source>Preferences</source>
-        <translation>Налаштування</translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="window.py" line="163"/>
         <source>Quit</source>
-        <translation>Вийти</translation>
+        <translation>Avsluta</translation>
     </message>
     <message>
         <location filename="window.py" line="166"/>
         <source>Undo</source>
-        <translation>Скасувати дію</translation>
+        <translation>Ångra</translation>
     </message>
     <message>
         <location filename="window.py" line="168"/>
         <source>Redo</source>
-        <translation>Повторити дію</translation>
+        <translation>Gör om</translation>
     </message>
     <message>
         <location filename="window.py" line="170"/>
         <source>Copy</source>
-        <translation>Скопіювати</translation>
+        <translation>Kopiera</translation>
     </message>
     <message>
         <location filename="window.py" line="172"/>
         <source>Cut</source>
-        <translation>Вирізати</translation>
+        <translation>Klipp ut</translation>
     </message>
     <message>
         <location filename="window.py" line="174"/>
         <source>Paste</source>
-        <translation>Вставити</translation>
+        <translation>Klistra in</translation>
     </message>
     <message>
         <location filename="window.py" line="184"/>
         <source>Enable</source>
-        <translation>Увімкнути</translation>
+        <translation>Aktivera</translation>
     </message>
     <message>
         <location filename="window.py" line="185"/>
         <source>Set locale</source>
-        <translation>Вибрати мову</translation>
+        <translation>Ange lokalisering</translation>
     </message>
     <message>
         <location filename="window.py" line="186"/>
         <source>Use WebKit renderer</source>
-        <translation>Використовувати WebKit</translation>
+        <translation>Använd WebKit som renderare</translation>
     </message>
     <message>
         <location filename="window.py" line="191"/>
         <source>Use WebEngine (Chromium) renderer</source>
-        <translation>Використовувати WebEngine (Chromium)</translation>
+        <translation>Använd WebEngine (Chromium) som renderare</translation>
     </message>
     <message>
         <location filename="window.py" line="196"/>
         <source>Show directory</source>
-        <translation>Переглянути теку</translation>
+        <translation>Visa ordbok</translation>
     </message>
     <message>
         <location filename="window.py" line="197"/>
         <source>Next</source>
-        <translation>Наступне</translation>
+        <translation>Nästa</translation>
     </message>
     <message>
         <location filename="window.py" line="199"/>
         <source>Previous</source>
-        <translation>Попереднє</translation>
+        <translation>Föregående</translation>
     </message>
     <message>
         <location filename="window.py" line="201"/>
         <source>Replace</source>
-        <translation>Замінити</translation>
+        <translation>Ersätt</translation>
     </message>
     <message>
         <location filename="window.py" line="203"/>
         <source>Replace all</source>
-        <translation>Замінити все</translation>
+        <translation>Ersätt alla</translation>
     </message>
     <message>
         <location filename="window.py" line="207"/>
         <source>Close</source>
-        <translation>Закрити</translation>
+        <translation>Stäng</translation>
     </message>
     <message>
         <location filename="window.py" line="210"/>
         <source>Get help online</source>
-        <translation>Отримати довідку в мережі</translation>
+        <translation>Få hjälp online</translation>
     </message>
     <message>
         <location filename="window.py" line="211"/>
         <source>About ReText</source>
-        <translation>Про ReText</translation>
+        <translation>Om ReText</translation>
     </message>
     <message>
         <location filename="window.py" line="214"/>
         <source>About Qt</source>
-        <translation>Про Qt</translation>
+        <translation>Om Qt</translation>
     </message>
     <message>
         <location filename="window.py" line="229"/>
         <source>Bold</source>
-        <translation>Жирний</translation>
+        <translation>Fet</translation>
     </message>
     <message>
         <location filename="window.py" line="231"/>
         <source>Italic</source>
-        <translation>Курсив</translation>
+        <translation>Kursiv</translation>
     </message>
     <message>
         <location filename="window.py" line="233"/>
         <source>Underline</source>
-        <translation>Підкреслення</translation>
+        <translation>Understrykning</translation>
     </message>
     <message>
         <location filename="window.py" line="299"/>
         <source>Formatting</source>
-        <translation>Форматування</translation>
+        <translation>Formattering</translation>
     </message>
     <message>
         <location filename="window.py" line="245"/>
         <source>Symbols</source>
-        <translation>Символи</translation>
+        <translation>Symboler</translation>
     </message>
     <message>
         <location filename="window.py" line="250"/>
         <source>File</source>
-        <translation>Файл</translation>
+        <translation>Arkiv</translation>
     </message>
     <message>
         <location filename="window.py" line="251"/>
         <source>Edit</source>
-        <translation>Редагування</translation>
+        <translation>Redigera</translation>
     </message>
     <message>
         <location filename="window.py" line="252"/>
         <source>Help</source>
-        <translation>Довідка</translation>
+        <translation>Hjälp</translation>
     </message>
     <message>
         <location filename="window.py" line="255"/>
         <source>Open recent</source>
-        <translation>Відкрити останній</translation>
+        <translation>Öppna senaste</translation>
     </message>
     <message>
         <location filename="window.py" line="267"/>
         <source>Export</source>
-        <translation>Експорт</translation>
+        <translation>Exportera</translation>
     </message>
     <message>
         <location filename="window.py" line="288"/>
         <source>Spell check</source>
-        <translation>Перевірка правопису</translation>
+        <translation>Stavningskontroll</translation>
     </message>
     <message>
         <location filename="window.py" line="296"/>
         <source>Default markup</source>
-        <translation>Типова розмітка</translation>
+        <translation>Standardtyp</translation>
     </message>
     <message>
         <location filename="window.py" line="339"/>
         <source>Search</source>
-        <translation>Пошук</translation>
+        <translation>Sök</translation>
     </message>
     <message>
         <location filename="window.py" line="342"/>
         <source>Replace with</source>
-        <translation>Замінити на</translation>
+        <translation>Ersätt med</translation>
     </message>
     <message>
         <location filename="window.py" line="344"/>
         <source>Case sensitively</source>
-        <translation>Врахувати регістр</translation>
+        <translation>Skiftlägeskänsligt</translation>
     </message>
     <message>
         <location filename="window.py" line="492"/>
         <source>New document</source>
-        <translation>Новий документ</translation>
+        <translation>Nytt dokument</translation>
     </message>
     <message>
         <location filename="window.py" line="664"/>
         <source>Please, save the file somewhere.</source>
-        <translation>Будь ласка, збережіть кудись файл.</translation>
+        <translation>Vänligen, spara filen.</translation>
     </message>
     <message>
         <location filename="window.py" line="780"/>
         <source>Select one or several files to open</source>
-        <translation>Виберіть один або кілька файлів</translation>
+        <translation>Välj en eller flera filer att öppna</translation>
     </message>
     <message>
         <location filename="window.py" line="780"/>
         <source>Supported files</source>
-        <translation>Файли що підтримуються</translation>
+        <translation>Stödda filer</translation>
     </message>
     <message>
         <location filename="window.py" line="780"/>
         <source>All files (*)</source>
-        <translation>Всі файли (*)</translation>
+        <translation>Alla filer (*)</translation>
     </message>
     <message>
         <location filename="window.py" line="818"/>
         <source>Select file encoding from the list:</source>
-        <translation>Виберіть методу кодування із переліку:</translation>
+        <translation>Välj filkodning från listan:</translation>
     </message>
     <message>
         <location filename="window.py" line="839"/>
         <source>Plain text (*.txt)</source>
-        <translation>Простий текст (*.txt)</translation>
+        <translation>Ren text (*.txt)</translation>
     </message>
     <message>
         <location filename="window.py" line="842"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
-        <translation>Файли %s</translation>
+        <translation>%s filer</translation>
     </message>
     <message>
         <location filename="window.py" line="919"/>
         <source>Save file</source>
-        <translation>Зберегти файл</translation>
+        <translation>Spara fil</translation>
     </message>
     <message>
         <location filename="window.py" line="860"/>
         <source>Cannot save to file which is open in another tab!</source>
-        <translation>Неможливо зберегти файл відкритий в іншій вкладці!</translation>
+        <translation>Kan inte spara till fil som är öppen i en annan flik!</translation>
     </message>
     <message>
         <location filename="window.py" line="884"/>
         <source>Cannot save to file because it is read-only!</source>
-        <translation>Неможливо зберегти, файл тільки для читання!</translation>
+        <translation>Kan inte spara till fil eftersom den är skrivskyddad!</translation>
     </message>
     <message>
         <location filename="window.py" line="909"/>
         <source>Export document to ODT</source>
-        <translation>Експортувати як ODT</translation>
+        <translation>Exportera dokument som ODT</translation>
     </message>
     <message>
         <location filename="window.py" line="909"/>
         <source>OpenDocument text files (*.odt)</source>
-        <translation>Текстові файли OpenDocument (*.odt)</translation>
+        <translation>OpenDocument textfiler (*.odt)</translation>
     </message>
     <message>
         <location filename="window.py" line="919"/>
         <source>HTML files (*.html *.htm)</source>
-        <translation>Файли HTML (*.html *.htm)</translation>
+        <translation>HTML-dokument (*.html *.htm)</translation>
     </message>
     <message>
         <location filename="window.py" line="940"/>
         <source>Export document to PDF</source>
-        <translation>Експортувати як PDF</translation>
+        <translation>Exportera dokument som PDF</translation>
     </message>
     <message>
         <location filename="window.py" line="940"/>
         <source>PDF files (*.pdf)</source>
-        <translation>Файли PDF (*.pdf)</translation>
+        <translation>PDF-filer (*.pdf)</translation>
     </message>
     <message>
         <location filename="window.py" line="960"/>
         <source>Print document</source>
-        <translation>Друкувати документ</translation>
+        <translation>Skriv ut dokument</translation>
     </message>
     <message>
         <location filename="window.py" line="984"/>
         <source>Export document</source>
-        <translation>Експортувати документ</translation>
+        <translation>Exportera dokument</translation>
     </message>
     <message>
         <location filename="window.py" line="1005"/>
         <source>Failed to execute the command:</source>
-        <translation>Помилка при виконанні команди:</translation>
+        <translation>Misslyckades med att utföra kommandot:</translation>
     </message>
     <message>
         <location filename="window.py" line="1039"/>
         <source>Alt text</source>
-        <translation>Альтернативний текст</translation>
+        <translation>Alt textbild</translation>
     </message>
     <message>
         <location filename="window.py" line="1040"/>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation>Webbadress URL</translation>
     </message>
     <message>
         <location filename="window.py" line="1040"/>
         <source>Link text</source>
-        <translation>Текст посилання</translation>
+        <translation>Länktext</translation>
     </message>
     <message>
         <location filename="window.py" line="1080"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
-        <translation>Цей файл був видалений іншим додатком.
-Будь ласка, переконайтеся перед виходом, що ви зберегли файл.</translation>
+        <translation>Den här filen har raderats av en annan applikation.
+Se till att du sparar filen innan du avslutar.</translation>
     </message>
     <message>
         <location filename="window.py" line="1087"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
-        <translation>Цей документ був змінений іншим застосунком.
-Бажаєте перезавантажити файл і втратити незбережені зміни?
+        <translation>Detta dokument har ändrats av en annan applikation.
+Vill du ladda om filen (det här förkastar alla dina ändringar)?
 </translation>
     </message>
     <message>
         <location filename="window.py" line="1092"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
-        <translation>Якщо ви вирішите не перезавантажувати файл, режим автоматичного збереження буде вимкнено для цього сеансу з метою попередження втрати даних.</translation>
+        <translation>Om du väljer att inte ladda om filen, kommer &apos;automatisk sparläge&apos; att avaktiveras för den här sessionen för att förhindra förlust av data.</translation>
     </message>
     <message>
         <location filename="window.py" line="1116"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
-        <translation>Документ було змінено.
-Бажаєте зберегти ці зміни?</translation>
+        <translation>Dokumentet har ändrats.
+Vill du spara dina ändringar?</translation>
     </message>
     <message>
         <location filename="window.py" line="1145"/>
         <source>HTML code</source>
-        <translation>Код HTML</translation>
+        <translation>HTML-källkod</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
         <source>ReText %s (using PyMarkups %s)</source>
-        <translation>ReText %s (використовує PyMarkups %s)</translation>
+        <translation>ReText %s (använder PyMarkups %s)</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>Простий але потужний текстовий редактор для Markdown та reStructuredText
-</translation>
+        <translation>Enkel men kraftfull textredigerare för Markdown och reStructuredText</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
         <source>Author: Dmitry Shachnev, 2011</source>
-        <translation>Автор: Dmitry Shachnev, 2011</translation>
+        <translation>Upphovsman: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
         <source>Website</source>
-        <translation>Веб-сайт</translation>
+        <translation>Hemsida</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
         <source>Markdown syntax</source>
-        <translation>Синтаксис Markdown</translation>
+        <translation>Markdown-syntax</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
         <source>reStructuredText syntax</source>
-        <translation>Синтаксис reStructuredText</translation>
+        <translation>reStructuredText-syntax</translation>
     </message>
 </context>
 </TS>

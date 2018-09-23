@@ -208,12 +208,12 @@
     <message>
         <location filename="window.py" line="111"/>
         <source>Next tab</source>
-        <translation>Næste fane</translation>
+        <translation>Næste faneblad</translation>
     </message>
     <message>
         <location filename="window.py" line="113"/>
         <source>Previous tab</source>
-        <translation>Forrige fane</translation>
+        <translation>Forrige faneblad</translation>
     </message>
     <message>
         <location filename="window.py" line="115"/>
