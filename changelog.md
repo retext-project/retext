@@ -33,6 +33,10 @@ scrolling breaking code blocks highlighting (#299), with emoji support
 *Bugfix update 7.0.3 was released on 2018-06-06 with minor changes and
 fixed tarball contents.*
 
+*Bugfix update 7.0.4 was released on 2018-09-23 with improved editor
+performance (#360), fixed crash on Windows when pasting images (#385),
+support for Python-Markdown 3.0, and updated translations.*
+
 ## ReText 6.0 (2016-05-10)
 
 * The live preview now automatically scrolls to match its position with the
