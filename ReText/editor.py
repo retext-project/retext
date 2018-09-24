@@ -189,7 +189,6 @@ class ReTextEdit(QTextEdit):
 		# Check word under the cursor
 		oldcursor = self.textCursor()
 		cursor = self.cursorForPosition(event.pos())
-		self.setTextCursor(cursor)
 		curchar = self.document().characterAt(cursor.position())
 		isalpha = curchar.isalpha()
 		dictionary = self.tab.highlighter.dictionary
