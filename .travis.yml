@@ -1,14 +1,18 @@
 sudo: false
 language: python
-python:
-  - "3.5"
-  - "3.6"
+matrix:
+  include:
+    - python: "3.5"
+    - python: "3.6"
+    - python: "3.7"
+      sudo: required
+      dist: xenial
 addons:
   apt:
     packages:
     - libegl1-mesa
 install:
-  - pip install "PyQt5!=5.10" Markdown docutils pyflakes
+  - pip install PyQt5 Markdown docutils pyflakes
   - pip install git+https://github.com/retext-project/pymarkups.git
 script:
   - xvfb-run -a -s "-screen 0 1024x768x24" python setup.py test
