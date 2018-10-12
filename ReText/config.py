@@ -78,6 +78,7 @@ class ConfigDialog(QDialog):
 		buttonBox.rejected.connect(self.close)
 		self.initWidgets()
 		self.configurators['rightMargin'].valueChanged.connect(self.handleRightMarginSet)
+		self.configurators['rightMarginWrap'].stateChanged.connect(self.handleRightMarginWrapSet)
 		self.layout.addWidget(buttonBox)
 
 	def initConfigOptions(self):
@@ -150,8 +151,6 @@ class ConfigDialog(QDialog):
 			if isinstance(value, bool):
 				self.configurators[name] = QCheckBox(self)
 				self.configurators[name].setChecked(value)
-				if name == 'rightMarginWrap' and (globalSettings.rightMargin == 0):
-					self.configurators[name].setEnabled(False)
 				label.clicked.connect(self.configurators[name].nextCheckState)
 			elif isinstance(value, int):
 				self.configurators[name] = QSpinBox(self)
@@ -170,12 +169,12 @@ class ConfigDialog(QDialog):
 		return page
 
 	def handleRightMarginSet(self, value):
-		if value > 0:
-			self.configurators['rightMarginWrap'].setEnabled(True)
-			self.configurators['rightMarginWrap'].setChecked(globalSettings.rightMarginWrap)
-		else:
+		if value < 10:
 			self.configurators['rightMarginWrap'].setChecked(False)
-			self.configurators['rightMarginWrap'].setEnabled(False)
+
+	def handleRightMarginWrapSet(self, state):
+		if state == Qt.Checked and self.configurators['rightMargin'].value() < 10:
+			self.configurators['rightMargin'].setValue(80)
 
 	def saveSettings(self):
 		for name, configurator in self.configurators.items():
