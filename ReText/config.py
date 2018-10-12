@@ -108,6 +108,7 @@ class ConfigDialog(QDialog):
 			(self.tr('Interface'), (
 				(self.tr('Icon theme name'), 'iconTheme'),
 				(self.tr('Stylesheet file'), 'styleSheet', True),
+				(self.tr('Hide tabs bar when there is only one tab'), 'tabBarAutoHide'),
 			))
 		)
 
@@ -210,6 +211,7 @@ class ConfigDialog(QDialog):
 			tab.editBox.setWrapModeAndWidth()
 			tab.editBox.viewport().update()
 		self.parent.updateStyleSheet()
+		self.parent.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
 
 	def openLink(self, link):
 		QDesktopServices.openUrl(QUrl(link))
