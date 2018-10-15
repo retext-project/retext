@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import ctypes
 import multiprocessing as mp
 import sys
 import signal
@@ -46,6 +47,13 @@ def main():
 	if sys.executable.endswith('pythonw.exe'):
 		sys.stdout = open(devnull, 'w')
 		sys.stderr = open('stderr.log', 'w')
+
+	try:
+		# See https://github.com/retext-project/retext/issues/399
+		# and https://launchpad.net/bugs/941826
+		ctypes.CDLL('libGL.so.1', ctypes.RTLD_GLOBAL)
+	except OSError:
+		pass
 
 	# Needed for Qt WebEngine on Windows
 	QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
