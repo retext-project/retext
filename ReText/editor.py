@@ -95,6 +95,8 @@ class ReTextEdit(QTextEdit):
 	scrollLimitReached = pyqtSignal(QWheelEvent)
 	returnBlockPattern = re.compile("^[\\s]*([*>-]|\\d+\\.) ")
 	orderedListPattern = re.compile("^([\\s]*)(\\d+)\\. $")
+	wordPattern = re.compile(r"\w+")
+	nonAlphaNumPattern = re.compile(r"\W")
 
 	def __init__(self, parent):
 		QTextEdit.__init__(self)
@@ -432,19 +434,10 @@ class ReTextEdit(QTextEdit):
 		if not globalSettings.documentStatsEnabled:
 			return
 		text = self.toPlainText()
-		wasWordCharacter = False
-		wordCount = 0
-		alphaNumCount = 0
+		wordCount = len(self.wordPattern.findall(text))
+		alphaNums = self.nonAlphaNumPattern.sub('', text)
+		alphaNumCount = len(alphaNums)
 		characterCount = len(text)
-		for c in text:
-			isWordCharacter = c.isalnum()
-			if isWordCharacter:
-				alphaNumCount += 1
-			if wasWordCharacter and not isWordCharacter:
-				wordCount += 1
-			wasWordCharacter = isWordCharacter
-		if wasWordCharacter:
-			wordCount += 1
 		self.statistics = (wordCount, alphaNumCount, characterCount)
 
 
