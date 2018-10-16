@@ -66,7 +66,7 @@ class ConfigDialog(QDialog):
 		self.layout = QVBoxLayout(self)
 		path = getSettingsFilePath()
 		pathLabel = QLabel(self.tr('Using configuration file at:') +
-			' <a href="file://%(path)s">%(path)s</a>' % {'path': path}, self)
+			' <a href="%(path)s">%(path)s</a>' % {'path': path}, self)
 		pathLabel.linkActivated.connect(self.openLink)
 		self.layout.addWidget(pathLabel)
 		self.tabWidget = QTabWidget(self)
@@ -214,4 +214,4 @@ class ConfigDialog(QDialog):
 		self.parent.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
 
 	def openLink(self, link):
-		QDesktopServices.openUrl(QUrl(link))
+		QDesktopServices.openUrl(QUrl.fromLocalFile(link))
