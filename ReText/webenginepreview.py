@@ -54,6 +54,8 @@ class ReTextWebEnginePage(QWebEnginePage):
         print("level=%r message=%r lineNumber=%r sourceId=%r" % (level, message, lineNumber, sourceId))
 
     def acceptNavigationRequest(self, url, type, isMainFrame):
+        if url.scheme() == "data":
+            return True
         if url.isLocalFile():
             localFile = url.toLocalFile()
             if localFile == self.tab.fileName:
