@@ -72,6 +72,7 @@ class ReTextTab(QSplitter):
 		self.previewState = previewState
 		self.previewOutdated = False
 		self.conversionPending = False
+		self.cssFileExists = False
 
 		self.converterProcess = converterprocess.ConverterProcess()
 		self.converterProcess.conversionDone.connect(self.updatePreviewBox)
@@ -198,10 +199,9 @@ class ReTextTab(QSplitter):
 		if includeStyleSheet:
 			headers += '<style type="text/css">\n' + self.p.ss + '</style>\n'
 		baseName = self.getBaseName()
-		cssFileName = baseName + '.css'
-		if QFile.exists(cssFileName):
-			headers += ('<link rel="stylesheet" type="text/css" href="%s">\n'
-			% cssFileName)
+		if self.cssFileExists:
+			headers += ('<link rel="stylesheet" type="text/css" href="%s.css">\n'
+			% baseName)
 		headers += ('<meta name="generator" content="ReText %s">\n' % app_version)
 		return converted.get_whole_html(
 			custom_headers=headers, include_stylesheet=includeStyleSheet,
@@ -345,6 +345,9 @@ class ReTextTab(QSplitter):
 
 		self.editBox.setPlainText(text)
 		self.editBox.document().setModified(False)
+
+		cssFileName = self.getBaseName() + '.css'
+		self.cssFileExists = QFile.exists(cssFileName)
 
 		if previousFileName != self._fileName:
 			self.fileNameChanged.emit()
