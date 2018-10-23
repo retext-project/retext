@@ -199,7 +199,7 @@ class ReTextEdit(QTextEdit):
 			cursor.select(QTextCursor.WordUnderCursor)
 			word = cursor.selectedText()
 
-		if word is not None and not dictionary.check(word):
+		if word is not None and dictionary and not dictionary.check(word):
 			self.setTextCursor(cursor)
 			suggestions = dictionary.suggest(word)
 			actions = [self.parent.act(sug, trig=self.fixWord(sug)) for sug in suggestions]
