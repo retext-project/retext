@@ -213,6 +213,8 @@ class ConfigDialog(QDialog):
 			tab.editBox.viewport().update()
 		self.parent.updateStyleSheet()
 		self.parent.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
+		self.parent.toolBar.setVisible(not globalSettings.hideToolBar)
+		self.parent.editBar.setVisible(not globalSettings.hideToolBar)
 
 	def openLink(self, link):
 		QDesktopServices.openUrl(QUrl(link))
