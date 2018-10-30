@@ -3,92 +3,92 @@
 <context>
     <name>ConfigDialog</name>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Behavior</source>
         <translation>Verhalten</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Automatically save documents</source>
         <translation>Dokumente automatisch speichern</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Automatically open last documents on startup</source>
         <translation>Letzte Dokumente automatisch am Anfang öffnen</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Restore window geometry</source>
         <translation>Fenster-Zustand merken</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Use live preview by default</source>
         <translation>Benutze standardmäßig die Live-Vorschau</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Open external links in ReText window</source>
         <translation>Externe Verweise im ReText-Fenster öffnen</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Markdown syntax extensions (comma-separated)</source>
         <translation>Erweiterungen für Markdown-Syntax (durch Kommata getrennt)</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Enable synchronized scrolling for Markdown</source>
         <translation>Aktiviere für Markdown synchrones Scrollen</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Editor</source>
         <translation>Editor</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Highlight current line</source>
         <translation>Aktuelle Zeile hervorheben</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Show line numbers</source>
         <translation>Zeilennummern anzeigen</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Tab key inserts spaces</source>
         <translation>Tabulator fügt Leerzeichen ein</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Tabulation width</source>
         <translation>Tabulator-Breite</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Draw vertical line at column</source>
         <translation>Zeichne vertikale Linie in die Spalte</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Interface</source>
         <translation>Oberfläche</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Icon theme name</source>
         <translation>Symbolschema-Name</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Stylesheet file</source>
         <translation>Stilvorlage-Datei</translation>
     </message>
     <message>
-        <location filename="config.py" line="134"/>
+        <location filename="config.py" line="137"/>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
@@ -98,19 +98,29 @@
         <translation>Verwende Konfigurationsdatei unter</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Line numbers are relative to current line</source>
         <translation>Zeilennummern sind relativ zur aktuellen Zeile</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Enable soft wrap</source>
         <translation>Aktiviere weichen Zeilenumbruch</translation>
     </message>
     <message>
-        <location filename="config.py" line="84"/>
+        <location filename="config.py" line="85"/>
         <source>Show document stats</source>
         <translation>Zeige Dokumentstatistik</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="85"/>
+        <source>Hide toolbar</source>
+        <translation>Toolbar ausblenden</translation>
+    </message>
+    <message>
+        <location filename="config.py" line="85"/>
+        <source>Hide tabs bar when there is only one tab</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

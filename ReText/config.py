@@ -106,6 +106,7 @@ class ConfigDialog(QDialog):
 				(self.tr('Show document stats'), 'documentStatsEnabled'),
 			)),
 			(self.tr('Interface'), (
+				(self.tr('Hide toolbar'), 'hideToolBar'),
 				(self.tr('Icon theme name'), 'iconTheme'),
 				(self.tr('Stylesheet file'), 'styleSheet', True),
 				(self.tr('Hide tabs bar when there is only one tab'), 'tabBarAutoHide'),
@@ -212,6 +213,8 @@ class ConfigDialog(QDialog):
 			tab.editBox.viewport().update()
 		self.parent.updateStyleSheet()
 		self.parent.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
+		self.parent.toolBar.setVisible(not globalSettings.hideToolBar)
+		self.parent.editBar.setVisible(not globalSettings.hideToolBar)
 
 	def openLink(self, link):
 		QDesktopServices.openUrl(QUrl.fromLocalFile(link))
