@@ -701,8 +701,9 @@ class ReTextWindow(QMainWindow):
 			if fileName in files:
 				files.remove(fileName)
 			files.insert(0, fileName)
-			if len(files) > 10:
-				del files[10:]
+			recentCount = globalSettings.recentDocumentsCount
+			if len(files) > recentCount:
+				del files[recentCount:]
 			writeListToSettings("recentFileList", files)
 
 	def createNew(self, text=None):

@@ -80,6 +80,7 @@ configOptions = {
 	'livePreviewByDefault': False,
 	'markdownDefaultFileExtension': '.mkd',
 	'openLastFilesOnStartup': False,
+	'recentDocumentsCount': 10,
 	'pygmentsStyle': 'default',
 	'relativeLineNumbers': False,
 	'restDefaultFileExtension': '.rst',
