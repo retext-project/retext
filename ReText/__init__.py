@@ -81,6 +81,7 @@ configOptions = {
 	'markdownDefaultFileExtension': '.mkd',
 	'openLastFilesOnStartup': False,
 	'pygmentsStyle': 'default',
+	'recentDocumentsCount': 10,
 	'relativeLineNumbers': False,
 	'restDefaultFileExtension': '.rst',
 	'rightMargin': 0,

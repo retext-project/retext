@@ -86,6 +86,7 @@ class ConfigDialog(QDialog):
 			(self.tr('Behavior'), (
 				(self.tr('Automatically save documents'), 'autoSave'),
 				(self.tr('Automatically open last documents on startup'), 'openLastFilesOnStartup'),
+				(self.tr('Number of recent documents'), 'recentDocumentsCount'),
 				(self.tr('Restore window geometry'), 'saveWindowGeometry'),
 				(self.tr('Use live preview by default'), 'livePreviewByDefault'),
 				(self.tr('Open external links in ReText window'), 'handleWebLinks'),
@@ -158,6 +159,8 @@ class ConfigDialog(QDialog):
 				self.configurators[name] = QSpinBox(self)
 				if name == 'tabWidth':
 					self.configurators[name].setRange(1, 10)
+				elif name == 'recentDocumentsCount':
+					self.configurators[name].setRange(5, 20)
 				else:
 					self.configurators[name].setMaximum(200)
 				self.configurators[name].setValue(value)
