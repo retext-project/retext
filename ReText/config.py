@@ -106,6 +106,7 @@ class ConfigDialog(QDialog):
 				(self.tr('Show document stats'), 'documentStatsEnabled'),
 			)),
 			(self.tr('Interface'), (
+                                (self.tr('Hide Toolbar (Restart required)'), 'hideToolBar'),
 				(self.tr('Icon theme name'), 'iconTheme'),
 				(self.tr('Stylesheet file'), 'styleSheet', True),
 				(self.tr('Hide tabs bar when there is only one tab'), 'tabBarAutoHide'),
