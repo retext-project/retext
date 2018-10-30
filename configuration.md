@@ -28,6 +28,7 @@ option name                    | type      | description
 `openLastFilesOnStartup`       | boolean   | whether to automatically open last documents on startup (default: false)
 `paperSize`                    | string    | name of default page size to use for print and export (e.g. A4, Letter)
 `pygmentsStyle`                | string    | name of Pygments syntax highlighting style to use (default: `default`)
+`recentDocumentsCount`         | integer   | number of recent files to show in the menu (default: 10)
 `relativeLineNumbers`          | boolean   | whether to show line numbers as relative from the current line (default: false)
 `restDefaultFileExtension`     | string    | default file extension for reStructuredText files (default: `.rst`)
 `rightMargin`                  | integer   | enable drawing of vertical line on defined position (or 0 to disable)
