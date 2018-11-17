@@ -518,6 +518,7 @@ class ReTextWindow(QMainWindow):
 			if closedTab.fileName:
 				self.fileSystemWatcher.removePath(closedTab.fileName)
 			self.tabWidget.removeTab(ind)
+			closedTab.cleanImageCache()
 			closedTab.deleteLater()
 
 	def changeIndex(self, ind):
@@ -1194,6 +1195,7 @@ class ReTextWindow(QMainWindow):
 			files = [tab.fileName for tab in self.iterateTabs()]
 			writeListToSettings("lastFileList", files)
 			globalSettings.lastTabIndex = self.tabWidget.currentIndex()
+		[tab.cleanImageCache() for tab in self.iterateTabs()]
 		closeevent.accept()
 
 	def viewHtml(self):
