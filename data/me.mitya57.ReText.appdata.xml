@@ -47,6 +47,7 @@
   <provides>
     <binary>retext</binary>
   </provides>
+  <launchable type="desktop-id">me.mitya57.ReText.desktop</launchable>
   <screenshots>
     <screenshot type="default">
       <image width="1090" height="624">https://raw.githubusercontent.com/retext-project/retext/master/data/retext-kde5.png</image>
@@ -55,4 +56,57 @@
   <translation type="qt">retext</translation>
   <developer_name>Dmitry Shachnev</developer_name>
   <update_contact>mitya57_AT_gmail.com</update_contact>
+  <releases>
+    <release version="7.0.4" date="2018-09-23"/>
+    <release version="7.0.3" date="2018-06-06"/>
+    <release version="7.0.2" date="2018-06-05"/>
+    <release version="7.0.1" date="2017-06-24"/>
+    <release version="7.0.0" date="2017-02-13"/>
+    <release version="6.0.2" date="2016-10-03"/>
+    <release version="6.0.1" date="2016-06-25"/>
+    <release version="6.0.0" date="2016-05-10"/>
+    <release version="5.3.1" date="2016-04-07"/>
+    <release version="5.3.0" date="2015-12-20"/>
+    <release version="5.2.1" date="2015-10-06"/>
+    <release version="5.2.0" date="2015-09-23"/>
+    <release version="5.1.0" date="2015-06-30"/>
+    <release version="5.0.2" date="2015-04-17"/>
+    <release version="5.0.1" date="2014-10-28"/>
+    <release version="5.0.0" date="2014-07-26"/>
+    <release version="4.1.3" date="2014-06-11"/>
+    <release version="4.1.2" date="2014-03-28"/>
+    <release version="4.1.1" date="2013-11-01"/>
+    <release version="4.1.0" date="2013-08-18"/>
+    <release version="4.0.1" date="2013-03-24"/>
+    <release version="4.0.0" date="2012-12-06"/>
+    <release version="3.1.5" date="2013-07-15"/>
+    <release version="3.1.4" date="2013-01-19"/>
+    <release version="3.1.3" date="2012-09-17"/>
+    <release version="3.1.2" date="2012-08-19"/>
+    <release version="3.1.1" date="2012-08-01"/>
+    <release version="3.1.0" date="2012-06-07"/>
+    <release version="3.0.4" date="2012-05-25"/>
+    <release version="3.0.3" date="2012-04-22"/>
+    <release version="3.0.2" date="2012-04-02"/>
+    <release version="3.0.1" date="2012-03-25"/>
+    <release version="3.0.0" date="2012-03-08"/>
+    <release version="2.1.6" date="2012-05-30"/>
+    <release version="2.1.5" date="2012-03-15"/>
+    <release version="2.1.4" date="2012-01-06"/>
+    <release version="2.1.3" date="2011-12-10"/>
+    <release version="2.1.1" date="2011-10-27"/>
+    <release version="2.1.0" date="2011-10-02"/>
+    <release version="2.0.0" date="2011-08-05"/>
+    <release version="1.1.2" date="2011-06-10"/>
+    <release version="1.1.0" date="2011-06-01"/>
+    <release version="1.0.0" date="2011-04-24"/>
+    <release version="0.5.2" date="2011-03-20"/>
+    <release version="0.4.0" date="2011-03-11"/>
+    <release version="0.3.5" date="2011-03-02"/>
+    <release version="0.3.4" date="2011-02-28"/>
+    <release version="0.3.3" date="2011-02-27"/>
+    <release version="0.3.2" date="2011-02-25"/>
+    <release version="0.3.1" date="2011-02-24"/>
+    <release version="0.3.0" date="2011-02-23"/>
+  </releases>
 </component>
