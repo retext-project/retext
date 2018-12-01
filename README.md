@@ -30,6 +30,8 @@ We also recommend having these packages installed:
 * [python-enchant](https://pypi.org/project/pyenchant/) — for spell checking
   support
 
+ReText supports additional [markdown extensions](https://facelessuser.github.io/pymdown-extensions/).
+
 The latest stable version of ReText can be downloaded from [PyPI]. You can
 also use `pip3 install ReText` command to install it from there.
 
