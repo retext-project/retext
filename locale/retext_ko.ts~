@@ -103,7 +103,7 @@
     <message>
         <location filename="config.py" line="41"/>
         <source>Select file to open</source>
-        <translation>파일 선택</translation>
+        <translation type="unfinished">파일 선택</translation>
     </message>
 </context>
 <context>
@@ -111,12 +111,12 @@
     <message>
         <location filename="dialogs.py" line="44"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation>지역이름 입력(예: en_US)</translation>
+        <translation type="unfinished">지역이름 입력</translation>
     </message>
     <message>
         <location filename="dialogs.py" line="50"/>
         <source>Set as default</source>
-        <translation>기본값으로 설정</translation>
+        <translation type="unfinished">기본값으로 설정</translation>
     </message>
 </context>
 <context>
@@ -124,12 +124,12 @@
     <message>
         <location filename="fakevimeditor.py" line="64"/>
         <source>No write since last change (add ! to override)</source>
-        <translation>마지막 수정 후 변경사항 없음(덮어쓰려면 !을 추가하세요)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="fakevimeditor.py" line="121"/>
         <source>Information</source>
-        <translation>정보</translation>
+        <translation type="unfinished">정보</translation>
     </message>
 </context>
 <context>
@@ -137,12 +137,12 @@
     <message>
         <location filename="editor.py" line="295"/>
         <source>Save image</source>
-        <translation>이미지 저장</translation>
+        <translation type="unfinished">이미지 저장</translation>
     </message>
     <message>
         <location filename="editor.py" line="295"/>
         <source>Images (*.png *.jpg)</source>
-        <translation>이미지(*.png *.jpg)</translation>
+        <translation type="unfinished">이미지</translation>
     </message>
 </context>
 <context>
@@ -155,7 +155,7 @@
     <message>
         <location filename="tab.py" line="188"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation>파일 내용을 파싱할 수 업습니다. &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; 가 있는지 보고 설치하세요!</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -303,7 +303,7 @@
     <message>
         <location filename="window.py" line="245"/>
         <source>Symbols</source>
-	<translation>심볼</translation>
+	<translation>심볼 </translation>
     </message>
     <message>
         <location filename="window.py" line="250"/>
@@ -338,7 +338,7 @@
     <message>
         <location filename="window.py" line="344"/>
         <source>Case sensitively</source>
-        <translation>대소문자 구분</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="window.py" line="664"/>
@@ -363,7 +363,7 @@
     <message>
         <location filename="window.py" line="839"/>
         <source>Plain text (*.txt)</source>
-        <translation>일반 텍스트 (*.txt)</translation>
+        <translation> (*.txt)</translation>
     </message>
     <message>
         <location filename="window.py" line="919"/>
@@ -419,7 +419,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1156"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>마크다운과 리스트럭트텍스트를 위한 심플하지만 강력한 에디터</translation>
+        <translation>Markdown et reStructuredText-erako editore sinple baina boteretsua</translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
@@ -439,7 +439,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="1156"/>
         <source>reStructuredText syntax</source>
-	<translation>리스트럭트텍스트 구문</translation>
+	<translation>reStructuredText 구문</translation>
     </message>
     <message>
         <location filename="window.py" line="196"/>
@@ -474,96 +474,96 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="211"/>
         <source>About ReText</source>
-	<translation>ReText란?</translation>
+        <translation>ReText-i buruz</translation>
     </message>
     <message>
         <location filename="window.py" line="186"/>
         <source>Use WebKit renderer</source>
-        <translation>웹킷 렌더러 사용</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1005"/>
         <source>Failed to execute the command:</source>
-        <translation>명령수행에 실패</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="842"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
-        <translation>%s 파일</translation>
+        <translation>%s fitxategiak</translation>
     </message>
     <message>
         <location filename="window.py" line="296"/>
         <source>Default markup</source>
-        <translation>기존 마크업</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="588"/>
         <source>Preferences</source>
-        <translation>선택</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="99"/>
         <source>Set encoding</source>
-        <translation>인코딩 설정</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="818"/>
         <source>Select file encoding from the list:</source>
-        <translation>목록에서 파일 인코딩 선택</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1096"/>
         <source>Reload</source>
-        <translation>리로드</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="111"/>
         <source>Next tab</source>
-        <translation>다음 탭</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="113"/>
         <source>Previous tab</source>
-        <translation>이전 탭</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="144"/>
         <source>Table editing mode</source>
-        <translation>표에디트모드</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="148"/>
         <source>FakeVim mode</source>
-        <translation>페이크빔 모드</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1080"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
-        <translation>이 파일은 다른 앱에 의해 삭제되었습니다. 종료 전에 저장을 꼭 해주십시오.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1087"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
-<translation>이 파일은 다른 앱에 의해 삭제되었습니다. 이 파일을 리로드 하길 원합니까(이것은 당신의 변경사항을 버릴겁니다.)?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1092"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
-        <translation>파일을 리로드 하지 않는다면, 데이터 손실 방지를 위해 세션으ㅔ서 자동저장모드가 비활성화됩니다. </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="121"/>
         <source>Change editor font</source>
-        <translation>에디터 글꼴 변경</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="123"/>
         <source>Change preview font</source>
-        <translation>미리보기 글꼴 바꾸기</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1156"/>
@@ -573,7 +573,7 @@ Do you want to reload the file (this will discard all your changes)?
     <message>
         <location filename="window.py" line="207"/>
         <source>Close</source>
-        <translation type="unfinished">닫기</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="1039"/>
@@ -593,22 +593,22 @@ Do you want to reload the file (this will discard all your changes)?
     <message>
         <location filename="window.py" line="201"/>
         <source>Replace</source>
-        <translation type="unfinished">바꾸기</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="203"/>
         <source>Replace all</source>
-        <translation type="unfinished">모두바꾸기</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="342"/>
         <source>Replace with</source>
-        <translation type="unfinished">~으로 바꾸기</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="860"/>
         <source>Cannot save to file which is open in another tab!</source>
-        <translation type="unfinished">다른 탭에 열려있는 파일은 저장하지 못합니다.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="window.py" line="191"/>
