@@ -246,7 +246,7 @@ class ReTextWindow(QMainWindow):
 			trig=lambda: self.insertFormatting('underline'))
 		self.usefulTags = ('header', 'italic', 'bold', 'underline', 'numbering',
 			'bullets', 'image', 'link', 'inline code', 'code block', 'blockquote')
-		self.usefulChars = ('deg', 'divide', 'dollar', 'hellip', 'laquo', 'larr',
+		self.usefulChars = ('deg', 'divide', 'euro', 'hellip', 'laquo', 'larr',
 			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
 			'rarr', 'rsquo', 'times')
 		self.formattingBox = QComboBox(self.editBar)
