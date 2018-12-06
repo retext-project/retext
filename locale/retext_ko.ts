@@ -98,7 +98,7 @@
     <message>
         <location filename="config.py" line="34"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+	<translation>(선택사항없음)</translation>
     </message>
     <message>
         <location filename="config.py" line="41"/>
@@ -155,7 +155,7 @@
     <message>
         <location filename="tab.py" line="188"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation>파일 내용을 파싱할 수 업습니다. &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; 가 있는지 보고 설치하세요!</translation>
+        <translation>파일 내용을 파싱할 수 업습니다. &lt;a href=&quot;%s&quot;&gt;필수 모듈&lt;/a&gt; 가 있는지 보고 설치하세요!</translation>
     </message>
 </context>
 <context>
@@ -378,7 +378,7 @@
     <message>
         <location filename="window.py" line="909"/>
         <source>OpenDocument text files (*.odt)</source>
-        <translation>텍스트파일로 열기(*.odt)</translation>
+        <translation>텍스트파일로 열기 (*.odt)</translation>
     </message>
     <message>
         <location filename="window.py" line="919"/>
@@ -454,22 +454,22 @@ Do you want to save your changes?</source>
     <message>
         <location filename="window.py" line="229"/>
         <source>Bold</source>
-        <translation type="unfinished"></translation>
+	<translation>굵은 글꼴</translation>
     </message>
     <message>
         <location filename="window.py" line="231"/>
         <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>이탤릭체</translation>
     </message>
     <message>
         <location filename="window.py" line="233"/>
         <source>Underline</source>
-        <translation type="unfinished"></translation>
+        <translation>밑줄</translation>
     </message>
     <message>
         <location filename="window.py" line="299"/>
         <source>Formatting</source>
-        <translation type="unfinished"></translation>
+        <translation>서식 지정</translation>
     </message>
     <message>
         <location filename="window.py" line="211"/>
@@ -548,12 +548,12 @@ Please make sure you save the file before exit.</source>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
-<translation>이 파일은 다른 앱에 의해 삭제되었습니다. 이 파일을 리로드 하길 원합니까(이것은 당신의 변경사항을 버릴겁니다.)?</translation>
+<translation>이 파일은 다른 앱에 의해 삭제되었습니다. 이 파일을 리로드 하길 원합니까(이것은 당신의 변경사항을 버릴겁니다)?</translation>
     </message>
     <message>
         <location filename="window.py" line="1092"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
-        <translation>파일을 리로드 하지 않는다면, 데이터 손실 방지를 위해 세션으ㅔ서 자동저장모드가 비활성화됩니다. </translation>
+        <translation>파일을 리로드 하지 않는다면, 데이터 손실 방지를 위해 세션에서 자동저장모드가 비활성화됩니다.</translation>
     </message>
     <message>
         <location filename="window.py" line="121"/>
@@ -568,52 +568,52 @@ Do you want to reload the file (this will discard all your changes)?
     <message>
         <location filename="window.py" line="1156"/>
         <source>ReText %s (using PyMarkups %s)</source>
-        <translation type="unfinished"></translation>
+        <translation>ReText %s (PyMarkups %s 사용)</translation>
     </message>
     <message>
         <location filename="window.py" line="207"/>
         <source>Close</source>
-        <translation type="unfinished">닫기</translation>
+        <translation>닫기</translation>
     </message>
     <message>
         <location filename="window.py" line="1039"/>
         <source>Alt text</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt속성 텍스트</translation>
     </message>
     <message>
         <location filename="window.py" line="1040"/>
         <source>URL</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="window.py" line="1040"/>
         <source>Link text</source>
-        <translation type="unfinished"></translation>
+        <translation>링크 텍스트</translation>
     </message>
     <message>
         <location filename="window.py" line="201"/>
         <source>Replace</source>
-        <translation type="unfinished">바꾸기</translation>
+        <translation>바꾸기</translation>
     </message>
     <message>
         <location filename="window.py" line="203"/>
         <source>Replace all</source>
-        <translation type="unfinished">모두바꾸기</translation>
+        <translation>모두바꾸기</translation>
     </message>
     <message>
         <location filename="window.py" line="342"/>
         <source>Replace with</source>
-        <translation type="unfinished">~으로 바꾸기</translation>
+        <translation>~으로 바꾸기</translation>
     </message>
     <message>
         <location filename="window.py" line="860"/>
         <source>Cannot save to file which is open in another tab!</source>
-        <translation type="unfinished">다른 탭에 열려있는 파일은 저장하지 못합니다.</translation>
+        <translation>다른 탭에 열려있는 파일은 저장하지 못합니다.</translation>
     </message>
     <message>
         <location filename="window.py" line="191"/>
         <source>Use WebEngine (Chromium) renderer</source>
-        <translation type="unfinished"></translation>
+        <translation>웹 엔진(크로뮴) 렌더러</translation>
     </message>
 </context>
 </TS>
