@@ -65,7 +65,7 @@
     <message>
         <location filename="config.py" line="67"/>
         <source>Markdown syntax extensions (comma-separated)</source>
-        <translation>마크다운 구문 확장(컴마분리))</translation>
+        <translation>마크다운 구문 확장 (컴마분리)</translation>
     </message>
     <message>
         <location filename="config.py" line="104"/>
