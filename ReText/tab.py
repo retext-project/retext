@@ -22,6 +22,7 @@ from markups.common import MODULE_HOME_PAGE
 
 import os
 import re
+import requests
 import tempfile
 import urllib.request
 
@@ -51,16 +52,14 @@ except ImportError:
 	ReTextWebEnginePreview = None
 
 PreviewDisabled, PreviewLive, PreviewNormal = range(3)
-HTML_IMG_TAG_SRC_RE = re.compile(r'\<img[\s]*src[\s]*=[\"\']([^\"\'>]+)[\"\']\/?>')
-MARKDOWN_INLINE_IMG_RE = re.compile(r'!\[[^\]]*\]\s*\(([^\)]*)\)')
-MARKDOWN_REFERENCE_IMG_RE = re.compile(r'\[[^\]]*\]:\s*([^\s)]*)')
+HTML_IMG_TAG_SRC_RE = re.compile(r'<img\s[^>]*?src\s*=\s*[\'\"]([^\'\"]*?)[\'\"][^>]*?>')
 
 class ReTextTab(QSplitter):
 
 	fileNameChanged = pyqtSignal()
 	modificationStateChanged = pyqtSignal()
 	activeMarkupChanged = pyqtSignal()
-	seen_images = {}
+	seenImages = {}
 
 	# Make _fileName a read-only property to make sure that any
 	# modification happens through the proper functions. These functions
@@ -247,6 +246,7 @@ class ReTextTab(QSplitter):
 			distToBottom = scrollbar.maximum() - scrollbarValue
 		try:
 			html = self.getHtmlFromConverted(self.converted)
+			html = self.cacheRemotelyHostedImages(html)
 		except Exception:
 			return self.p.printError()
 		if isinstance(self.previewBox, QTextEdit):
@@ -285,7 +285,7 @@ class ReTextTab(QSplitter):
 			self.converterProcess.start_conversion(self.getActiveMarkupClass().name,
 			                                       self.fileName,
 			                                       requested_extensions,
-			                                       self.cacheRemotelyHostedImages(self.editBox.toPlainText()),
+							       self.editBox.toPlainText(),
 			                                       QDir.currentPath())
 
 	def updateBoxesVisibility(self):
@@ -473,59 +473,57 @@ class ReTextTab(QSplitter):
 			self.p.openFileWrapper(fileToOpen)
 			return fileToOpen
 
-	def cacheHelper(self,text,regex):
+	def cacheRemotelyHostedImages(self, htmlText):
 		"""
 		Search the text for remotely hosted images and cache them into a temp folder so that
 		they don't have to be loaded over again.
 		"""
 		offset=0
-		for match in regex.finditer(text):
-			img_src = match.groups(1)[0]
-			start_position = match.span(1)[0]
-			end_position = match.span(1)[1]
-			local_file = None
+		for match in HTML_IMG_TAG_SRC_RE.finditer(htmlText):
+			imgSrc = match.groups(1)[0]
+			startPosition = match.span(1)[0]
+			endPosition = match.span(1)[1]
+			localFile = None
 
-			if img_src.startswith('http') is False:
+			if imgSrc.startswith('http') is False:
 				continue
 
 			# If it is remotely hosted and we haven't seen it before,
-			# give it a unique filename and save it into /tmp/. Also, save it into
-			# a dict (seen_images) so that we can track it for later use and cleanup
-			if img_src not in self.seen_images:
+			# give it a unique filename and save it as a tmp file. Also, save it into
+			# a dict (seenImages) so that we can track it for later use and cleanup
+			if imgSrc not in self.seenImages:
 				with tempfile.NamedTemporaryFile(delete=False) as temp:
-					urllib.request.urlretrieve(img_src, temp.name)
-					temp.close()
-					local_file = temp.name
-					self.seen_images[img_src] = {
-						'local_file': local_file,
-						'start_position': start_position,
-						'end_position': end_position}
+					try:
+						r = requests.get(imgSrc, timeout=0.001)
+						with open(temp.name, 'wb') as f:
+							f.write(r.content)
+						temp.close()
+						localFile = temp.name
+						self.seenImages[imgSrc] = {
+							'localFile': localFile,
+							'startPosition': startPosition,
+							'endPosition': endPosition}
+
+					# If we can't acquire the image, don't change the text. 
+					# Silently move on.
+					except requests.exceptions.ConnectionError:
+						continue
 
 			# If we've seen this image before, pull it up where it is saved
 			else:
-				local_file = self.seen_images[img_src]['local_file']
+				localFile = self.seenImages[imgSrc]['localFile']
 
 			# Replace the path of the tag with our locally saved file
-			text = '{start}{local_file}{end}'\
-			       .format(start=text[:start_position-offset],
-				       local_file=local_file,
-				       end=text[end_position-offset:])
-			offset += len(img_src)-len(local_file)
-		return text
-
-	def cacheRemotelyHostedImages(self, originalText):
-		"""
-		Look for HTML <img/> tags (which are acceptable in markdown), inline markdown images,
-		and reference markdown images
-		"""
-		text = self.cacheHelper(originalText, HTML_IMG_TAG_SRC_RE)
-		text = self.cacheHelper(text, MARKDOWN_INLINE_IMG_RE)
-		text = self.cacheHelper(text, MARKDOWN_REFERENCE_IMG_RE)
-		return text
+			htmlText = '{start}{localFile}{end}'\
+			       .format(start=htmlText[:startPosition-offset],
+				       localFile=localFile,
+				       end=htmlText[endPosition-offset:])
+			offset += len(imgSrc)-len(localFile)
+		return htmlText
 
 	def cleanImageCache(self):
 		"""
 		This runs when a tab is closed OR when the application is closed.
 		"""
-		[os.remove(image['local_file']) for image in self.seen_images.values()]
-		self.seen_images = {}
+		[os.remove(image['localFile']) for image in self.seenImages.values()]
+		self.seenImages = {}

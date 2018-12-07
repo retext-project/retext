@@ -17,8 +17,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from contextlib import suppress
+import hashlib
 import markups
 import os
+import requests
 import sys
 import tempfile
 import time
@@ -32,6 +34,7 @@ from PyQt5.QtCore import pyqtSignal, QObject, Qt
 from PyQt5.QtWidgets import QApplication
 import ReText
 from ReText.window import ReTextWindow
+from ReText.tab import ReTextTab
 
 defaultEventTimeout = 0.0
 path_to_testdata = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'testdata')
@@ -396,6 +399,85 @@ class TestWindow(unittest.TestCase):
         with suppress(PermissionError):
             os.remove(fileName)
 
+
+class TestCachingOfRemotelyHostedImages(unittest.TestCase):
+    def setUp(self):
+        self.globalSettingsMock = patch('ReText.window.globalSettings', MagicMock(**ReText.configOptions)).start()
+        self.globalSettingsMock.useWebKit = True
+        self.window = ReTextWindow()
+        self.window.createNew('')
+        self.tab = self.window.currentTab
+        self.fakeRemoteUrl = 'https://tupac.com/i-am-alive-and-i-code-now'
+        self.testLocalImg = os.path.join(path_to_testdata, 'tupac.jpg')
+
+    @patch.object(requests, 'get')
+    def test_cacheHelper(self, requestsGet):
+        dummyImgContent = b'dummy'
+        requestsGet.return_value = MagicMock(content=dummyImgContent)
+
+	# Test that our cache helper does not impact locally hosted images.
+        localImg = "<img alt='I am alive' src='{img}'/>".format(img=self.testLocalImg)
+        self.assertEqual(
+	    self.tab.cacheRemotelyHostedImages(localImg),
+	    localImg)
+
+	# Test that our cache helper does modify remotely hosted images.
+        remoteImg = "<img alt='Come with me' src='{url}'/>".format(url=self.fakeRemoteUrl)
+        transformedText = self.tab.cacheRemotelyHostedImages(remoteImg)
+        self.assertNotEqual(
+            transformedText,
+	    remoteImg)
+
+        # Check that the new path points to one in 'tmp' (non-windows) or 'temp' (windows)
+        self.assertTrue('tmp' in transformedText or 'temp' in transformedText)
+
+        # Check hash of temp file matches hash of original content
+        matches = ReText.tab.HTML_IMG_TAG_SRC_RE.findall(transformedText)
+        self.assertEqual(
+            hashlib.md5(open(matches[0],'rb').read()).hexdigest(),
+            hashlib.md5(dummyImgContent).hexdigest())
+
+        # If we add the same image again, ensure it points to the same temporary file
+        transformedText = self.tab.cacheRemotelyHostedImages(transformedText + remoteImg)
+        matches = ReText.tab.HTML_IMG_TAG_SRC_RE.findall(transformedText)
+        self.assertEqual(
+            matches[0],
+            matches[1])
+
+        # Run the cache cleaner and make sure our temporary files are gone
+        self.tab.cleanImageCache()
+        self.assertFalse(os.path.isfile(matches[0]))
+
+    @patch('ReText.window.QMessageBox.warning', return_value='QMessageBox.Discard')
+    @patch.object(requests, 'get')
+    def test_cacheHelperWithGui(self, requestsGet, qMsg):
+        fh = open(self.testLocalImg, 'rb')
+        requestsGet.return_value = MagicMock(content=fh.read())
+
+        self.globalSettingsMock.useWebKit = True
+        self.window = ReTextWindow()
+        self.window.createNew('')
+        self.window.preview(ReText.tab.PreviewLive)
+
+        # Insert an image into the edit box, wait for the preview to be generated
+        processEventsUntilIdle()
+        time.sleep(0.5)
+        self.window.currentTab.editBox.textCursor().insertText(
+	    '![]({url})'.format(url=self.fakeRemoteUrl))
+        processEventsUntilIdle()
+        time.sleep(0.5)
+        processEventsUntilIdle()
+
+        # Check that the cache is non-empty
+        self.assertTrue(self.window.currentTab.seenImages)
+
+        # Check that we see a temporary file generated in the preview box text
+        text = self.window.currentTab.previewBox.page().mainFrame().toHtml()
+        self.assertTrue('tmp' in text or 'temp' in text)
+
+        # Close the tab. Make sure our cache is empty
+        self.window.closeTab(self.window.ind)
+        self.assertFalse(self.window.currentTab.seenImages)
 
 if __name__ == '__main__':
     unittest.main()
