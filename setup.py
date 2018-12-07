@@ -167,6 +167,7 @@ setup(name='ReText',
         # On Linux distro-packaged Qt/PyQt is preferred
         'PyQt5;platform_system=="Windows"',
         'PyQt5;platform_system=="Darwin"',
+        'requests'
       ],
       extras_require={
         'spellcheck': ['pyenchant'],
