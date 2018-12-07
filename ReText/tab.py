@@ -24,7 +24,6 @@ import os
 import re
 import requests
 import tempfile
-import urllib.request
 
 from ReText import app_version, globalSettings, converterprocess
 from ReText.editor import ReTextEdit
