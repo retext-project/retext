@@ -56,6 +56,7 @@
   <translation type="qt">retext</translation>
   <developer_name>Dmitry Shachnev</developer_name>
   <update_contact>mitya57_AT_gmail.com</update_contact>
+  <content_rating type="oars-1.0" />
   <releases>
     <release version="7.0.4" date="2018-09-23"/>
     <release version="7.0.3" date="2018-06-06"/>
