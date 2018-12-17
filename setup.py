@@ -14,6 +14,7 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 .. _`home page`: https://github.com/retext-project/retext
 .. _`wiki`: https://github.com/retext-project/retext/wiki'''
 
+import os
 import sys
 from os.path import join, isfile, basename
 from distutils import log
@@ -55,9 +56,10 @@ class retext_build_translations(Command):
 		pass
 
 	def run(self):
+		environment = dict(os.environ, QT_SELECT='5')
 		for ts_file in glob(join('locale', '*.ts')):
 			try:
-				check_call(('lrelease', ts_file), env={'QT_SELECT': '5'})
+				check_call(('lrelease', ts_file), env=environment)
 			except Exception as e:
 				log.warn('Failed to build translations: %s', e)
 				break
