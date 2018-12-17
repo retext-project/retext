@@ -472,7 +472,7 @@ class TestCachingOfRemotelyHostedImages(unittest.TestCase):
         self.assertTrue(self.window.currentTab.seenImages)
 
         # Check that we see a temporary file generated in the preview box text
-        text = self.window.currentTab.previewBox.page().mainFrame().toHtml()
+        text = self.window.currentTab.previewBox.document().toHtml()
         self.assertTrue('tmp' in text or 'temp' in text)
 
         # Close the tab. Make sure our cache is empty
