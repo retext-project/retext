@@ -16,7 +16,7 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 
 import os
 import sys
-from os.path import join, isfile, basename
+from os.path import join, basename
 from distutils import log
 from distutils.command.build import build
 from setuptools import setup, Command
@@ -76,47 +76,18 @@ class retext_sdist(sdist):
 		sdist.run(self)
 
 class retext_install(install):
-	user_options = install.user_options + [
-		('no-rename', None, 'do not rename retext.py to retext'),
-	]
-	boolean_options = install.boolean_options + ['no-rename']
-
-	def initialize_options(self):
-		install.initialize_options(self)
-		self.no_rename = None
-
 	def change_roots(self, *names):
 		self.orig_install_scripts = self.install_scripts
 		self.orig_install_data = self.install_data
 		install.change_roots(self, *names)
 
 	def run(self):
-		import shutil
 		install.run(self)
 
 		if self.root is None:
 			self.orig_install_scripts = self.install_scripts
 			self.orig_install_data = self.install_data
-
-		retext = join(self.install_scripts, 'retext.py')
-		if not self.no_rename:
-			log.info('renaming %s -> %s', retext, retext[:-3])
-			shutil.move(retext, retext[:-3])
-			retext = retext[:-3]
-		retext = join(self.orig_install_scripts, basename(retext))
-
-		if sys.platform == "win32":
-			py = sys.executable
-			pyw = py.replace('.exe', 'w.exe')
-			pyw_found = isfile(pyw)
-			if pyw_found:
-				py = pyw
-
-			# Generate a batch script to wrap the python script so we could invoke
-			# that script directly from the command line
-			batch_script = '@echo off\n%s"%s" "%s" %%*' % ('start "" ' if pyw_found else '', py, retext)
-			with open("%s.bat" % retext, "w") as bat_file:
-				bat_file.write(batch_script)
+		retext = join(self.orig_install_scripts, 'retext')
 
 		# Fix Exec and Icon fields in the desktop file
 		desktop_file_path = join(self.install_data, 'share', 'applications',
@@ -150,7 +121,9 @@ setup(name='ReText',
       author_email='mitya57@gmail.com',
       url='https://github.com/retext-project/retext',
       packages=['ReText'],
-      scripts=['retext.py'],
+      entry_points={
+        'gui_scripts': ['retext = ReText.__main__:main'],
+      },
       data_files=[
         ('share/applications', ['data/me.mitya57.ReText.desktop']),
         ('share/icons/hicolor/scalable/apps', ['icons/retext.svg']),
