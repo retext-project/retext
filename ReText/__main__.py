@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import ctypes
-import multiprocessing as mp
+import multiprocessing
 import sys
 import signal
 import markups
@@ -39,6 +39,8 @@ def canonicalize(option):
 	return QFileInfo(option).canonicalFilePath()
 
 def main():
+	multiprocessing.set_start_method('spawn')
+
 	if markups.__version_tuple__ < (2, ):
 		sys.exit('Error: ReText needs PyMarkups 2.0 or newer to run.')
 
@@ -114,5 +116,4 @@ def main():
 	sys.exit(app.exec())
 
 if __name__ == '__main__':
-	mp.set_start_method('spawn')
 	main()
