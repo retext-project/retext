@@ -92,6 +92,7 @@ configOptions = {
 	'styleSheet': '',
 	'syncScroll': True,
 	'tabBarAutoHide': False,
+	'titleBarFullPath': False,
 	'tabInsertsSpaces': True,
 	'tabWidth': 4,
 	'uiLanguage': QLocale.system().name(),
