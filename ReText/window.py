@@ -28,6 +28,7 @@ from ReText.tab import (ReTextTab, ReTextWebKitPreview, ReTextWebEnginePreview,
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
 from ReText.icontheme import get_icon_theme
+from ReText.table import TableWizardDialog
 
 try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler, FakeVimMode
@@ -154,6 +155,7 @@ class ReTextWindow(QMainWindow):
 			if globalSettings.useFakeVim:
 				self.actionFakeVimMode.setChecked(True)
 				self.enableFakeVimMode(True)
+		self.actionTableWizard = self.act(self.tr('Table Wizard'), trig=self.openTableWizardDialog)
 		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), 'view-fullscreen',
 			shct=Qt.Key_F11, trigbool=self.enableFullScreen)
 		self.actionFullScreen.setChecked(self.isFullScreen())
@@ -326,6 +328,7 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionViewHtml)
 		menuEdit.addAction(self.actionPreview)
 		menuEdit.addAction(self.actionTableMode)
+		menuEdit.addAction(self.actionTableWizard)
 		if ReTextFakeVimHandler:
 			menuEdit.addAction(self.actionFakeVimMode)
 		menuEdit.addSeparator()
@@ -610,6 +613,11 @@ class ReTextWindow(QMainWindow):
 	def openConfigDialog(self):
 		dlg = ConfigDialog(self)
 		dlg.setWindowTitle(self.tr('Preferences'))
+		dlg.show()
+	
+	def openTableWizardDialog(self):
+		dlg = TableWizardDialog(self)
+		dlg.setWindowTitle(self.tr('Table Wizard'))
 		dlg.show()
 
 	def enableFakeVimMode(self, yes):

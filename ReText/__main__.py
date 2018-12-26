@@ -33,6 +33,7 @@ from PyQt5.QtCore import QFile, QFileInfo, QIODevice, QLibraryInfo, \
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtNetwork import QNetworkProxyFactory
 
+
 def canonicalize(option):
 	if option in ('--preview', '-'):
 		return option
