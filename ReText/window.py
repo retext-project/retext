@@ -244,6 +244,13 @@ class ReTextWindow(QMainWindow):
 			trig=lambda: self.insertFormatting('italic'))
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
 			trig=lambda: self.insertFormatting('underline'))
+		self.actionHeader = self.act(self.tr('Header'),  shct=Qt.CTRL+Qt.Key_H,
+			trig=lambda: self.insertFormatting('header'))
+		self.actionLink = self.act(self.tr('Link'), shct=Qt.CTRL+Qt.Key_K,
+			trig=lambda: self.insertFormatting('link'))
+		self.actionNumbering = self.act(self.tr('numbering'), shct=Qt.CTRL+Qt.Key_N,
+			trig=lambda: self.insertFormatting('numbering'))
+
 		self.usefulTags = ('header', 'italic', 'bold', 'underline', 'numbering',
 			'bullets', 'image', 'link', 'inline code', 'code block', 'blockquote')
 		self.usefulChars = ('deg', 'divide', 'euro', 'hellip', 'laquo', 'larr',
