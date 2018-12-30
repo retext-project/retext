@@ -8,7 +8,7 @@ Configuration options that you can set to improve your experience:
 
 option name                    | type      | description
 -----------                    | ----      | -----------
-`appStyleSheet`                | file path | file containing a Qt stylesheet file
+`appStyleSheet`                | file path | file containing a [Qt stylesheet file]
 `autoSave`                     | boolean   | whether to automatically save documents (default: false)
 `defaultCodec`                 | string    | name of encoding to use by default (default: use system encoding)
 `defaultMarkup`                | string    | name of markup to use for unknown files
@@ -44,6 +44,8 @@ option name                    | type      | description
 `useFakeVim`                   | boolean   | whether to use the FakeVim editor, if available (default: false)
 `useWebEngine`                 | boolean   | whether to use the WebEngine (Chromium) as HTML previewer (default: false)
 `useWebKit`                    | boolean   | whether to use the WebKit instead of QTextEdit as HTML previewer (default: false)
+
+[Qt stylesheet file]: https://doc.qt.io/qt-5/stylesheet-reference.html
 
 If the type is 'file path', then the value should be an absolute path
 to a file.
