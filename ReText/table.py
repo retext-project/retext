@@ -1,33 +1,20 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTabWidget, \
-    QDialogButtonBox, QWidget, QGridLayout, QLabel, QSpinBox
+from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLabel, \
+    QSpinBox
 
 
 class TableWizardDialog(QDialog):
     def __init__(self, parent):
         QDialog.__init__(self, parent)
         self.parent = parent
-        self.layout = QVBoxLayout(self)
-        self.tabWidget = QTabWidget(self)
-        self.layout.addWidget(self.tabWidget)
         buttonBox = QDialogButtonBox(self)
         buttonBox.setStandardButtons(QDialogButtonBox.Ok |
                                      QDialogButtonBox.Cancel)
         buttonBox.accepted.connect(self.makeTable)
         buttonBox.rejected.connect(self.close)
-        self.initWidgets()
-        self.layout.addWidget(buttonBox)
 
-    def initWidgets(self):
         self.configurators = {}
-        tabTitle = 'Table'
-
-        page = self.getPageWidget()
-        self.tabWidget.addTab(page, tabTitle)
-
-    def getPageWidget(self):
-        page = QWidget(self)
-        layout = QGridLayout(page)
+        layout = QGridLayout(self)
 
         label_row = QLabel('Row:', self)
         label_column = QLabel('Column:', self)
@@ -43,8 +30,7 @@ class TableWizardDialog(QDialog):
         layout.addWidget(self.configurators['tableDefaultRowCount'], 0, 1, Qt.AlignRight)
         layout.addWidget(label_column, 1, 0)
         layout.addWidget(self.configurators['tableDefaultColumnCount'], 1, 1, Qt.AlignRight)
-
-        return page
+        layout.addWidget(buttonBox, 2, 0, 1, 2)
 
     def makeTable(self):
         rowCount = self.configurators['tableDefaultRowCount'].value()
