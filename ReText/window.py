@@ -28,6 +28,7 @@ from ReText.tab import (ReTextTab, ReTextWebKitPreview, ReTextWebEnginePreview,
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
 from ReText.icontheme import get_icon_theme
+from ReText.tabledialog import InsertTableDialog
 
 try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler, FakeVimMode
@@ -145,6 +146,8 @@ class ReTextWindow(QMainWindow):
 		menuPreview = QMenu()
 		menuPreview.addAction(self.actionLivePreview)
 		self.actionPreview.setMenu(menuPreview)
+		self.actionInsertTable = self.act(self.tr('Insert table'),
+			trig=lambda: self.insertFormatting('table'))
 		self.actionTableMode = self.act(self.tr('Table editing mode'),
 			shct=Qt.CTRL+Qt.Key_T,
 			trigbool=lambda x: self.currentTab.editBox.enableTableMode(x))
@@ -245,7 +248,8 @@ class ReTextWindow(QMainWindow):
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
 			trig=lambda: self.insertFormatting('underline'))
 		self.usefulTags = ('header', 'italic', 'bold', 'underline', 'numbering',
-			'bullets', 'image', 'link', 'inline code', 'code block', 'blockquote')
+			'bullets', 'image', 'link', 'inline code', 'code block', 'blockquote',
+			'table')
 		self.usefulChars = ('deg', 'divide', 'euro', 'hellip', 'laquo', 'larr',
 			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
 			'rarr', 'rsquo', 'times')
@@ -325,6 +329,7 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionViewHtml)
 		menuEdit.addAction(self.actionPreview)
+		menuEdit.addAction(self.actionInsertTable)
 		menuEdit.addAction(self.actionTableMode)
 		if ReTextFakeVimHandler:
 			menuEdit.addAction(self.actionFakeVimMode)
@@ -1079,6 +1084,12 @@ class ReTextWindow(QMainWindow):
 			self.actionPasteImage.setEnabled(mimeData.hasImage())
 
 	def insertFormatting(self, formatting):
+		if formatting == 'table':
+			dialog = InsertTableDialog(self)
+			dialog.show()
+			self.formattingBox.setCurrentIndex(0)
+			return
+
 		cursor = self.currentTab.editBox.textCursor()
 		text = cursor.selectedText()
 		moveCursorTo = None
