@@ -614,7 +614,7 @@ class ReTextWindow(QMainWindow):
 		dlg = ConfigDialog(self)
 		dlg.setWindowTitle(self.tr('Preferences'))
 		dlg.show()
-	
+
 	def openTableWizardDialog(self):
 		dlg = TableWizardDialog(self)
 		dlg.setWindowTitle(self.tr('Table Wizard'))
