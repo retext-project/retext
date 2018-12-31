@@ -5,8 +5,6 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTabWidget, \
 
 
 class ClickableLabel(QLabel):
-    clicked = pyqtSignal()
-
     def mousePressEvent(self, event):
         self.clicked.emit()
         super().mousePressEvent(event)
