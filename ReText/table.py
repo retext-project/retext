@@ -14,7 +14,6 @@ class TableWizardDialog(QDialog):
     def __init__(self, parent):
         QDialog.__init__(self, parent)
         self.parent = parent
-        self.initTableWizardOptions()
         self.layout = QVBoxLayout(self)
         self.tabWidget = QTabWidget(self)
         self.layout.addWidget(self.tabWidget)
@@ -26,44 +25,37 @@ class TableWizardDialog(QDialog):
         self.initWidgets()
         self.layout.addWidget(buttonBox)
 
-    def initTableWizardOptions(self):
-        self.tabs = (
-                (self.tr('Table'), (
-                (self.tr('Row'), 'rowCount'),
-                (self.tr('Column'), 'columnCount')
-            ))
-        )
-
     def initWidgets(self):
         self.configurators = {}
-        tabTitle = self.tabs[0]
-        options = self.tabs[1]
+        tabTitle = 'Table'
 
-        page = self.getPageWidget(options)
+        page = self.getPageWidget()
         self.tabWidget.addTab(page, tabTitle)
 	
-    def getPageWidget(self, options):
+    def getPageWidget(self):
         page = QWidget(self)
         layout = QGridLayout(page)
-        for index, option in enumerate(options):
-            displayname, name = option[:2]
-			
-            if displayname:
-                label = ClickableLabel(displayname + ':', self)
-			
-            value = getattr(globalSettings, name)
-            self.configurators[name] = QSpinBox(self)
-            if (name == 'rowCount') or (name == 'columnCount'):
-                self.configurators[name].setRange(1,10)
-				
-            self.configurators[name].setValue(value)
-            layout.addWidget(label, index, 0)
-            layout.addWidget(self.configurators[name], index, 1, Qt.AlignRight)
+        
+        label_row = ClickableLabel('Row:', self)
+        label_column = ClickableLabel('Column:', self)
+        self.configurators['tableDefaultRowCount'] = QSpinBox(self)
+        self.configurators['tableDefaultColumnCount'] = QSpinBox(self)
+		
+        self.configurators['tableDefaultRowCount'].setRange(1,10)
+        self.configurators['tableDefaultColumnCount'].setRange(1,10)
+        self.configurators['tableDefaultRowCount'].setValue(3)				# tableDefaultRowCount
+        self.configurators['tableDefaultColumnCount'].setValue(3)			# tableDefaultColumnCount
+
+        layout.addWidget(label_row, 0, 0)
+        layout.addWidget(self.configurators['tableDefaultRowCount'], 0, 1, Qt.AlignRight)
+        layout.addWidget(label_column, 1, 0)
+        layout.addWidget(self.configurators['tableDefaultColumnCount'], 1, 1, Qt.AlignRight)
+        
         return page
 
     def makeTable(self):
-        rowCount = self.configurators['rowCount'].value()
-        columnCount = self.configurators['columnCount'].value()
+        rowCount = self.configurators['tableDefaultRowCount'].value()
+        columnCount = self.configurators['tableDefaultColumnCount'].value()
 	
 
         # Table column's name section (table Header)
