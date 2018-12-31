@@ -146,6 +146,8 @@ class ReTextWindow(QMainWindow):
 		menuPreview = QMenu()
 		menuPreview.addAction(self.actionLivePreview)
 		self.actionPreview.setMenu(menuPreview)
+		self.actionInsertTable = self.act(self.tr('Insert table'),
+			trig=lambda: self.insertFormatting('table'))
 		self.actionTableMode = self.act(self.tr('Table editing mode'),
 			shct=Qt.CTRL+Qt.Key_T,
 			trigbool=lambda x: self.currentTab.editBox.enableTableMode(x))
@@ -155,7 +157,6 @@ class ReTextWindow(QMainWindow):
 			if globalSettings.useFakeVim:
 				self.actionFakeVimMode.setChecked(True)
 				self.enableFakeVimMode(True)
-		self.actionTableWizard = self.act(self.tr('Table Wizard'), trig=self.openTableWizardDialog)
 		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), 'view-fullscreen',
 			shct=Qt.Key_F11, trigbool=self.enableFullScreen)
 		self.actionFullScreen.setChecked(self.isFullScreen())
@@ -247,7 +248,8 @@ class ReTextWindow(QMainWindow):
 		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
 			trig=lambda: self.insertFormatting('underline'))
 		self.usefulTags = ('header', 'italic', 'bold', 'underline', 'numbering',
-			'bullets', 'image', 'link', 'inline code', 'code block', 'blockquote')
+			'bullets', 'image', 'link', 'inline code', 'code block', 'blockquote',
+			'table')
 		self.usefulChars = ('deg', 'divide', 'euro', 'hellip', 'laquo', 'larr',
 			'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
 			'rarr', 'rsquo', 'times')
@@ -327,8 +329,8 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionViewHtml)
 		menuEdit.addAction(self.actionPreview)
+		menuEdit.addAction(self.actionInsertTable)
 		menuEdit.addAction(self.actionTableMode)
-		menuEdit.addAction(self.actionTableWizard)
 		if ReTextFakeVimHandler:
 			menuEdit.addAction(self.actionFakeVimMode)
 		menuEdit.addSeparator()
@@ -613,10 +615,6 @@ class ReTextWindow(QMainWindow):
 	def openConfigDialog(self):
 		dlg = ConfigDialog(self)
 		dlg.setWindowTitle(self.tr('Preferences'))
-		dlg.show()
-
-	def openTableWizardDialog(self):
-		dlg = InsertTableDialog(self)
 		dlg.show()
 
 	def enableFakeVimMode(self, yes):
@@ -1086,6 +1084,12 @@ class ReTextWindow(QMainWindow):
 			self.actionPasteImage.setEnabled(mimeData.hasImage())
 
 	def insertFormatting(self, formatting):
+		if formatting == 'table':
+			dialog = InsertTableDialog(self)
+			dialog.show()
+			self.formattingBox.setCurrentIndex(0)
+			return
+
 		cursor = self.currentTab.editBox.textCursor()
 		text = cursor.selectedText()
 		moveCursorTo = None
