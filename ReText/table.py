@@ -15,8 +15,8 @@ class TableWizardDialog(QDialog):
 
         layout = QGridLayout(self)
 
-        label_row = QLabel('Row:', self)
-        label_column = QLabel('Column:', self)
+        rowsLabel = QLabel('Row:', self)
+        columnsLabel = QLabel('Column:', self)
         self.rowsSpinBox = QSpinBox(self)
         self.columnsSpinBox = QSpinBox(self)
 
@@ -25,9 +25,9 @@ class TableWizardDialog(QDialog):
         self.rowsSpinBox.setValue(3)
         self.columnsSpinBox.setValue(3)
 
-        layout.addWidget(label_row, 0, 0)
+        layout.addWidget(rowsLabel, 0, 0)
         layout.addWidget(self.rowsSpinBox, 0, 1, Qt.AlignRight)
-        layout.addWidget(label_column, 1, 0)
+        layout.addWidget(columnsLabel, 1, 0)
         layout.addWidget(self.columnsSpinBox, 1, 1, Qt.AlignRight)
         layout.addWidget(buttonBox, 2, 0, 1, 2)
 
