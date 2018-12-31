@@ -3,12 +3,6 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTabWidget, \
     QDialogButtonBox, QWidget, QGridLayout, QLabel, QSpinBox
 
 
-class ClickableLabel(QLabel):
-    def mousePressEvent(self, event):
-        self.clicked.emit()
-        super().mousePressEvent(event)
-
-
 class TableWizardDialog(QDialog):
     def __init__(self, parent):
         QDialog.__init__(self, parent)
@@ -35,8 +29,8 @@ class TableWizardDialog(QDialog):
         page = QWidget(self)
         layout = QGridLayout(page)
 
-        label_row = ClickableLabel('Row:', self)
-        label_column = ClickableLabel('Column:', self)
+        label_row = QLabel('Row:', self)
+        label_column = QLabel('Column:', self)
         self.configurators['tableDefaultRowCount'] = QSpinBox(self)
         self.configurators['tableDefaultColumnCount'] = QSpinBox(self)
 
