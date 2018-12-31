@@ -28,7 +28,7 @@ from ReText.tab import (ReTextTab, ReTextWebKitPreview, ReTextWebEnginePreview,
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
 from ReText.icontheme import get_icon_theme
-from ReText.table import TableWizardDialog
+from ReText.tabledialog import InsertTableDialog
 
 try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler, FakeVimMode
@@ -616,7 +616,7 @@ class ReTextWindow(QMainWindow):
 		dlg.show()
 
 	def openTableWizardDialog(self):
-		dlg = TableWizardDialog(self)
+		dlg = InsertTableDialog(self)
 		dlg.setWindowTitle(self.tr('Table Wizard'))
 		dlg.show()
 

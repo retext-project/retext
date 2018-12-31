@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLabel, \
     QSpinBox
 
 
-class TableWizardDialog(QDialog):
+class InsertTableDialog(QDialog):
     def __init__(self, parent):
         QDialog.__init__(self, parent)
         self.parent = parent
