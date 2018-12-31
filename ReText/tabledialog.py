@@ -56,3 +56,7 @@ class InsertTableDialog(QDialog):
 
         cursor.insertText(tableCode)
         self.close()
+
+        # Activate the Table editing mode
+        self.parent.actionTableMode.setChecked(True)
+        tab.editBox.tableModeEnabled = True
