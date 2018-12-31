@@ -7,6 +7,7 @@ class InsertTableDialog(QDialog):
     def __init__(self, parent):
         QDialog.__init__(self, parent)
         self.parent = parent
+        self.setWindowTitle(self.tr('Insert table'))
         buttonBox = QDialogButtonBox(self)
         buttonBox.setStandardButtons(QDialogButtonBox.Ok |
                                      QDialogButtonBox.Cancel)

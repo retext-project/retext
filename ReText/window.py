@@ -617,7 +617,6 @@ class ReTextWindow(QMainWindow):
 
 	def openTableWizardDialog(self):
 		dlg = InsertTableDialog(self)
-		dlg.setWindowTitle(self.tr('Table Wizard'))
 		dlg.show()
 
 	def enableFakeVimMode(self, yes):
