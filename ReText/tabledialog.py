@@ -1,3 +1,4 @@
+from markups import ReStructuredTextMarkup
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLabel, \
     QSpinBox
@@ -33,25 +34,25 @@ class InsertTableDialog(QDialog):
         layout.addWidget(buttonBox, 2, 0, 1, 2)
 
     def makeTable(self):
-        rowCount = self.rowsSpinBox.value()
-        columnCount = self.columnsSpinBox.value()
+        rowsCount = self.rowsSpinBox.value()
+        columnsCount = self.columnsSpinBox.value() + 1
 
-        # Table column's name section (table Header)
-        tableHeader = ''
-        for column in range(columnCount):
-            tableHeader += '|    '
-        tableHeader += '|\n'
+        tab = self.parent.currentTab
+        cursor = tab.editBox.textCursor()
 
-        for column in range(columnCount):
-            tableHeader += '|----'
-        tableHeader += '|\n'
-        self.parent.currentTab.editBox.insertPlainText(tableHeader)
+        tableCode = '' if cursor.atBlockStart() else '\n\n'
+        if tab.activeMarkupClass == ReStructuredTextMarkup:
+            # Insert reStructuredText grid table
+            tableCode += '-----'.join('+' * columnsCount) + '\n'
+            tableCode += '     '.join('|' * columnsCount) + '\n'
+            tableCode += '====='.join('+' * columnsCount) + '\n'
+            tableCode += ('     '.join('|' * columnsCount) + '\n' +
+                          '-----'.join('+' * columnsCount) + '\n') * rowsCount
+        else:
+            # Insert Markdown table
+            tableCode += '     '.join('|' * columnsCount) + '\n'
+            tableCode += '-----'.join('|' * columnsCount) + '\n'
+            tableCode += ('     '.join('|' * columnsCount) + '\n') * rowsCount
 
-        # Table Content section (table body)
-        for row in range(rowCount):
-            tableBody = ''
-            for column in range(columnCount):
-                tableBody += '|    '
-            tableBody += '|\n'
-            self.parent.currentTab.editBox.insertPlainText(tableBody)
+        cursor.insertText(tableCode)
         self.close()
