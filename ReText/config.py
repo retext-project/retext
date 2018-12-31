@@ -151,7 +151,6 @@ class ConfigDialog(QDialog):
 				layout.addWidget(self.configurators[name], index, 0, 1, 2)
 				continue
 			value = getattr(globalSettings, name)
-
 			if isinstance(value, bool):
 				self.configurators[name] = QCheckBox(self)
 				self.configurators[name].setChecked(value)
