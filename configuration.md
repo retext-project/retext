@@ -23,7 +23,7 @@ option name                    | type      | description
 `highlightCurrentLine`         | boolean   | whether to highlight current line in editor (default: false)
 `iconTheme`                    | string    | name of the system icon theme to use (see below)
 `lineNumbersEnabled`           | boolean   | whether to show column with line numbers in editor (default: false)
-`livePreviewByDefault`         | boolean   | whether new tabs and windows should open in live preview mode (default: false)
+`defaultPreviewState`          | integer   | whether new tabs and windows should open in editor (0, default), live-preview (1) or preview mode (2)
 `markdownDefaultFileExtension` | string    | default file extension for Markdown files (default: `.mkd`)
 `openLastFilesOnStartup`       | boolean   | whether to automatically open last documents on startup (default: false)
 `paperSize`                    | string    | name of default page size to use for print and export (e.g. A4, Letter)

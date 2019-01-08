@@ -507,13 +507,15 @@ class ReTextWindow(QMainWindow):
 			self.setWindowModified(changed)
 
 	def createTab(self, fileName):
-		self.currentTab = ReTextTab(self, fileName,
-			previewState=int(globalSettings.livePreviewByDefault))
+		previewState = int(globalSettings.defaultPreviewState)
+		self.currentTab = ReTextTab(self, fileName, previewState)
 		self.currentTab.fileNameChanged.connect(lambda: self.tabFileNameChanged(self.currentTab))
 		self.currentTab.modificationStateChanged.connect(lambda: self.tabModificationStateChanged(self.currentTab))
 		self.currentTab.activeMarkupChanged.connect(lambda: self.tabActiveMarkupChanged(self.currentTab))
 		self.tabWidget.addTab(self.currentTab, self.tr("New document"))
 		self.currentTab.updateBoxesVisibility()
+		if previewState > 0:
+			QTimer.singleShot(500, self.currentTab.triggerPreviewUpdate)
 
 	def closeTab(self, ind):
 		if self.maybeSave(ind):

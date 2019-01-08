@@ -24,7 +24,7 @@ from PyQt5.QtCore import pyqtSignal, QFile, QFileInfo, QUrl, Qt
 from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
  QFileDialog, QGridLayout, QLabel, QLineEdit, QPushButton, QSpinBox, \
- QTabWidget, QVBoxLayout, QWidget
+ QComboBox, QTabWidget, QVBoxLayout, QWidget
 
 MKD_EXTS_FILE = join(CONFIGURATION_DIR, 'markdown-extensions.txt')
 
@@ -88,7 +88,7 @@ class ConfigDialog(QDialog):
 				(self.tr('Automatically open last documents on startup'), 'openLastFilesOnStartup'),
 				(self.tr('Number of recent documents'), 'recentDocumentsCount'),
 				(self.tr('Restore window geometry'), 'saveWindowGeometry'),
-				(self.tr('Use live preview by default'), 'livePreviewByDefault'),
+				(self.tr('Default preview state'), 'defaultPreviewState'),
 				(self.tr('Open external links in ReText window'), 'handleWebLinks'),
 				(self.tr('Markdown syntax extensions (comma-separated)'), 'markdownExtensions'),
 				(None, 'markdownExtensions'),
@@ -125,6 +125,7 @@ class ConfigDialog(QDialog):
 		layout = QGridLayout(page)
 		for index, option in enumerate(options):
 			displayname, name = option[:2]
+			dropdownoption = True if name == 'defaultPreviewState' else False
 			fileselector = option[2] if len(option) > 2 else False
 			if name is None:
 				header = QLabel('<h3>%s</h3>' % displayname, self)
@@ -155,6 +156,13 @@ class ConfigDialog(QDialog):
 				self.configurators[name] = QCheckBox(self)
 				self.configurators[name].setChecked(value)
 				label.clicked.connect(self.configurators[name].nextCheckState)
+			elif dropdownoption:
+				self.configurators[name] = QComboBox(self)
+				if name == 'defaultPreviewState':
+					self.configurators[name].addItem(self.tr('editor'))
+					self.configurators[name].addItem(self.tr('live-preview'))
+					self.configurators[name].addItem(self.tr('preview'))
+					self.configurators[name].setCurrentIndex(value)
 			elif isinstance(value, int):
 				self.configurators[name] = QSpinBox(self)
 				if name == 'tabWidth':
@@ -191,6 +199,9 @@ class ConfigDialog(QDialog):
 				value = configurator.value()
 			elif isinstance(configurator, QLineEdit):
 				value = configurator.text()
+			elif isinstance(configurator, QComboBox):
+				value = configurator.currentIndex()
+				# Value is saved as int to easily translate text in ComboBox
 			elif isinstance(configurator, FileSelectButton):
 				value = configurator.fileName
 			setattr(globalSettings, name, value)

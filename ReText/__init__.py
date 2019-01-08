@@ -77,7 +77,7 @@ configOptions = {
 	'iconTheme': '',
 	'lastTabIndex': 0,
 	'lineNumbersEnabled': False,
-	'livePreviewByDefault': False,
+	'defaultPreviewState': 0,
 	'markdownDefaultFileExtension': '.mkd',
 	'openLastFilesOnStartup': False,
 	'pygmentsStyle': 'default',
