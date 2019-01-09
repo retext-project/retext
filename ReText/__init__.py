@@ -94,12 +94,12 @@ configOptions = {
 	'tabBarAutoHide': False,
 	'tabInsertsSpaces': True,
 	'tabWidth': 4,
-	'titleBarFullPath': False,
 	'uiLanguage': QLocale.system().name(),
 	'useFakeVim': False,
 	'useWebEngine': False,
 	'useWebKit': False,
 	'windowGeometry': QByteArray(),
+	'windowTitleFullPath': False,
 	'paperSize': '',
 }
 

@@ -111,7 +111,7 @@ class ConfigDialog(QDialog):
 				(self.tr('Icon theme name'), 'iconTheme'),
 				(self.tr('Stylesheet file'), 'styleSheet', True),
 				(self.tr('Hide tabs bar when there is only one tab'), 'tabBarAutoHide'),
-				(self.tr('Show full path in titlebar'), 'titleBarFullPath'),
+				(self.tr('Show full path in window title'), 'windowTitleFullPath'),
 			))
 		)
 

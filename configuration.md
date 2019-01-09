@@ -40,11 +40,11 @@ option name                    | type      | description
 `tabBarAutoHide`               | boolean   | whether to hide the tabs bar when only one tab is open (default: false)
 `tabInsertsSpaces`             | boolean   | whether Tab key should insert spaces instead of tabs (default: true)
 `tabWidth`                     | integer   | the width of tab character (default: 4)
-`titleBarFullPath`             | boolean   | whether the full file's path is shown in window's title bar (default:false)
 `uiLanguage`                   | string    | short name of locale to use for interface (examples: `en_US, `ru, `pt_BR`)
 `useFakeVim`                   | boolean   | whether to use the FakeVim editor, if available (default: false)
 `useWebEngine`                 | boolean   | whether to use the WebEngine (Chromium) as HTML previewer (default: false)
 `useWebKit`                    | boolean   | whether to use the WebKit instead of QTextEdit as HTML previewer (default: false)
+`windowTitleFullPath`          | boolean   | whether the window title should show the full path of file (default: false)
 
 If the type is 'file path', then the value should be an absolute path
 to a file.

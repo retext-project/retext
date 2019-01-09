@@ -462,7 +462,7 @@ class ReTextWindow(QMainWindow):
 		if tab == self.currentTab:
 			if tab.fileName:
 				self.setWindowTitle("")
-				if globalSettings.titleBarFullPath:
+				if globalSettings.windowTitleFullPath:
 					self.setWindowTitle(tab.fileName + '[*]')
 				self.setWindowFilePath(tab.fileName)
 				self.tabWidget.setTabText(self.ind, tab.getBaseName())
