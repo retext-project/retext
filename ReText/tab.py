@@ -453,6 +453,7 @@ class ReTextTab(QSplitter):
 			if ext in ('.html', '') and exists(basename + currentExt):
 				self.p.openFileWrapper(basename + currentExt)
 				return basename + currentExt
-		if exists(fileToOpen) and get_markup_for_file_name(fileToOpen, return_class=True):
+		# Whether file exists or not:
+		if get_markup_for_file_name(fileToOpen, return_class=True):
 			self.p.openFileWrapper(fileToOpen)
 			return fileToOpen
