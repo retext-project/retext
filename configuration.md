@@ -44,6 +44,7 @@ option name                    | type      | description
 `useFakeVim`                   | boolean   | whether to use the FakeVim editor, if available (default: false)
 `useWebEngine`                 | boolean   | whether to use the WebEngine (Chromium) as HTML previewer (default: false)
 `useWebKit`                    | boolean   | whether to use the WebKit instead of QTextEdit as HTML previewer (default: false)
+`windowTitleFullPath`          | boolean   | whether the window title should show the full path of file (default: false)
 
 [Qt stylesheet file]: https://doc.qt.io/qt-5/stylesheet-reference.html
 

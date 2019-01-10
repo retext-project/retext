@@ -99,6 +99,7 @@ configOptions = {
 	'useWebEngine': False,
 	'useWebKit': False,
 	'windowGeometry': QByteArray(),
+	'windowTitleFullPath': False,
 	'paperSize': '',
 }
 
