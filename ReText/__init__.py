@@ -80,6 +80,7 @@ configOptions = {
 	'livePreviewByDefault': False,
 	'markdownDefaultFileExtension': '.mkd',
 	'openLastFilesOnStartup': False,
+	'paperSize': '',
 	'pygmentsStyle': 'default',
 	'recentDocumentsCount': 10,
 	'relativeLineNumbers': False,
@@ -100,7 +101,6 @@ configOptions = {
 	'useWebKit': False,
 	'windowGeometry': QByteArray(),
 	'windowTitleFullPath': False,
-	'paperSize': '',
 }
 
 def readFromSettings(key, keytype, settings=settings, default=None):

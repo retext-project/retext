@@ -32,6 +32,7 @@ option name                    | type      | description
 `relativeLineNumbers`          | boolean   | whether to show line numbers as relative from the current line (default: false)
 `restDefaultFileExtension`     | string    | default file extension for reStructuredText files (default: `.rst`)
 `rightMargin`                  | integer   | enable drawing of vertical line on defined position (or 0 to disable)
+`rightMarginWrap`              | boolean   | enable soft wrap at specified margin line (default: false)
 `saveWindowGeometry`           | boolean   | whether to restore window geometry from previous session (default: false)
 `spellCheck`                   | boolean   | whether to enable spell checking
 `spellCheckLocale`             | string    | short name of spell check locale to use (examples: `en_US`, `ru`, `pt_BR`)
