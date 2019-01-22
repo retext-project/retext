@@ -21,7 +21,9 @@ from ReText import globalSettings
 from ReText.syncscroll import SyncScroll
 from ReText.preview import ReTextWebPreview
 
+from PyQt5.QtCore import QStandardPaths
 from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtNetwork import QNetworkDiskCache
 from PyQt5.QtWebKit import QWebSettings
 from PyQt5.QtWebKitWidgets import QWebPage, QWebView
 
@@ -45,6 +47,11 @@ class ReTextWebKitPreview(ReTextWebPreview, QWebView):
 		self.settings().setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
 		# Avoid caching of CSS
 		self.settings().setObjectCacheCapacities(0,0,0)
+
+		self.cache = QNetworkDiskCache()
+		cacheDirectory = QStandardPaths.writableLocation(QStandardPaths.CacheLocation)
+		self.cache.setCacheDirectory(cacheDirectory)
+		self.page().networkAccessManager().setCache(self.cache)
 
 	def updateFontSettings(self):
 		settings = self.settings()
