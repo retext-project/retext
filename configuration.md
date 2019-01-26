@@ -12,6 +12,7 @@ option name                    | type      | description
 `autoSave`                     | boolean   | whether to automatically save documents (default: false)
 `defaultCodec`                 | string    | name of encoding to use by default (default: use system encoding)
 `defaultMarkup`                | string    | name of markup to use for unknown files
+`defaultPreviewState`          | string    | mode for new tabs: `editor`, `normal-preview` or `live-preview` (default: `editor`)
 `detectEncoding`               | boolean   | whether to automatically detect files encoding; needs chardet package (default: true)
 `documentStatsEnabled`         | boolean   | whether to show document stats (word count, character count) (default: false)
 `editorFont`                   | string    | font to use for editor: name (default: `monospace`)
@@ -23,7 +24,6 @@ option name                    | type      | description
 `highlightCurrentLine`         | boolean   | whether to highlight current line in editor (default: false)
 `iconTheme`                    | string    | name of the system icon theme to use (see below)
 `lineNumbersEnabled`           | boolean   | whether to show column with line numbers in editor (default: false)
-`livePreviewByDefault`         | boolean   | whether new tabs and windows should open in live preview mode (default: false)
 `markdownDefaultFileExtension` | string    | default file extension for Markdown files (default: `.mkd`)
 `openLastFilesOnStartup`       | boolean   | whether to automatically open last documents on startup (default: false)
 `paperSize`                    | string    | name of default page size to use for print and export (e.g. A4, Letter)

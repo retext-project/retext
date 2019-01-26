@@ -24,7 +24,7 @@ from PyQt5.QtCore import pyqtSignal, QFile, QFileInfo, QUrl, Qt
 from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
  QFileDialog, QGridLayout, QLabel, QLineEdit, QPushButton, QSpinBox, \
- QTabWidget, QVBoxLayout, QWidget
+ QComboBox, QTabWidget, QVBoxLayout, QWidget
 
 MKD_EXTS_FILE = join(CONFIGURATION_DIR, 'markdown-extensions.txt')
 
@@ -88,7 +88,7 @@ class ConfigDialog(QDialog):
 				(self.tr('Automatically open last documents on startup'), 'openLastFilesOnStartup'),
 				(self.tr('Number of recent documents'), 'recentDocumentsCount'),
 				(self.tr('Restore window geometry'), 'saveWindowGeometry'),
-				(self.tr('Use live preview by default'), 'livePreviewByDefault'),
+				(self.tr('Default preview state'), 'defaultPreviewState'),
 				(self.tr('Open external links in ReText window'), 'handleWebLinks'),
 				(self.tr('Markdown syntax extensions (comma-separated)'), 'markdownExtensions'),
 				(None, 'markdownExtensions'),
@@ -152,7 +152,14 @@ class ConfigDialog(QDialog):
 				layout.addWidget(self.configurators[name], index, 0, 1, 2)
 				continue
 			value = getattr(globalSettings, name)
-			if isinstance(value, bool):
+			if name == 'defaultPreviewState':
+				self.configurators[name] = QComboBox(self)
+				self.configurators[name].addItem(self.tr('Editor'), 'editor')
+				self.configurators[name].addItem(self.tr('Live preview'), 'live-preview')
+				self.configurators[name].addItem(self.tr('Normal preview'), 'normal-preview')
+				comboBoxIndex = self.configurators[name].findData(value)
+				self.configurators[name].setCurrentIndex(comboBoxIndex)
+			elif isinstance(value, bool):
 				self.configurators[name] = QCheckBox(self)
 				self.configurators[name].setChecked(value)
 				label.clicked.connect(self.configurators[name].nextCheckState)
@@ -192,6 +199,8 @@ class ConfigDialog(QDialog):
 				value = configurator.value()
 			elif isinstance(configurator, QLineEdit):
 				value = configurator.text()
+			elif isinstance(configurator, QComboBox):
+				value = configurator.currentData()
 			elif isinstance(configurator, FileSelectButton):
 				value = configurator.fileName
 			setattr(globalSettings, name, value)
