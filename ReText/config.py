@@ -125,7 +125,6 @@ class ConfigDialog(QDialog):
 		layout = QGridLayout(page)
 		for index, option in enumerate(options):
 			displayname, name = option[:2]
-			dropdownoption = True if name == 'defaultPreviewState' else False
 			fileselector = option[2] if len(option) > 2 else False
 			if name is None:
 				header = QLabel('<h3>%s</h3>' % displayname, self)
@@ -152,17 +151,17 @@ class ConfigDialog(QDialog):
 				layout.addWidget(self.configurators[name], index, 0, 1, 2)
 				continue
 			value = getattr(globalSettings, name)
-			if isinstance(value, bool):
+			if name == 'defaultPreviewState':
+				self.configurators[name] = QComboBox(self)
+				self.configurators[name].addItem(self.tr('Editor'), 'editor')
+				self.configurators[name].addItem(self.tr('Live preview'), 'live-preview')
+				self.configurators[name].addItem(self.tr('Normal preview'), 'normal-preview')
+				comboBoxIndex = self.configurators[name].findData(value)
+				self.configurators[name].setCurrentIndex(comboBoxIndex)
+			elif isinstance(value, bool):
 				self.configurators[name] = QCheckBox(self)
 				self.configurators[name].setChecked(value)
 				label.clicked.connect(self.configurators[name].nextCheckState)
-			elif dropdownoption:
-				self.configurators[name] = QComboBox(self)
-				if name == 'defaultPreviewState':
-					self.configurators[name].addItem(self.tr('editor'))
-					self.configurators[name].addItem(self.tr('live-preview'))
-					self.configurators[name].addItem(self.tr('preview'))
-					self.configurators[name].setCurrentIndex(value)
 			elif isinstance(value, int):
 				self.configurators[name] = QSpinBox(self)
 				if name == 'tabWidth':
@@ -200,8 +199,7 @@ class ConfigDialog(QDialog):
 			elif isinstance(configurator, QLineEdit):
 				value = configurator.text()
 			elif isinstance(configurator, QComboBox):
-				value = configurator.currentIndex()
-				# Value is saved as int to easily translate text in ComboBox
+				value = configurator.currentData()
 			elif isinstance(configurator, FileSelectButton):
 				value = configurator.fileName
 			setattr(globalSettings, name, value)

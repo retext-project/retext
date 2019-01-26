@@ -24,7 +24,7 @@ import warnings
 from ReText import (getBundledIcon, app_version, globalSettings,
                     readListFromSettings, writeListToSettings, datadirs)
 from ReText.tab import (ReTextTab, ReTextWebKitPreview, ReTextWebEnginePreview,
-                        PreviewNormal, PreviewLive)
+                        PreviewDisabled, PreviewNormal, PreviewLive)
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog
 from ReText.icontheme import get_icon_theme
@@ -507,7 +507,14 @@ class ReTextWindow(QMainWindow):
 			self.setWindowModified(changed)
 
 	def createTab(self, fileName):
-		previewState = int(globalSettings.defaultPreviewState)
+		previewStatesByName = {
+			'editor': PreviewDisabled,
+			'normal-preview': PreviewNormal,
+			'live-preview': PreviewLive,
+		}
+		previewState = previewStatesByName.get(globalSettings.defaultPreviewState, PreviewDisabled)
+		if previewState == PreviewNormal and not fileName:
+			previewState = PreviewDisabled  # Opening empty document in preview mode makes no sense
 		self.currentTab = ReTextTab(self, fileName, previewState)
 		self.currentTab.fileNameChanged.connect(lambda: self.tabFileNameChanged(self.currentTab))
 		self.currentTab.modificationStateChanged.connect(lambda: self.tabModificationStateChanged(self.currentTab))
