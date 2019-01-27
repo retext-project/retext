@@ -395,7 +395,10 @@ class ReTextWindow(QMainWindow):
 
 	def restoreLastOpenedFiles(self):
 		for file in readListFromSettings("lastFileList"):
-			self.openFileWrapper(file)
+			if QFile.exists(file):
+				self.openFileWrapper(file)
+			else:
+				print("Note: File '" + file + "' has been deleted!")
 
 		# Show the tab of last opened file
 		lastTabIndex = globalSettings.lastTabIndex
