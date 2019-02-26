@@ -10,6 +10,7 @@ addons:
   apt:
     packages:
     - libegl1-mesa
+    - libxkbcommon-x11-0
 install:
   - pip install PyQt5 Markdown docutils pyflakes
   - pip install git+https://github.com/retext-project/pymarkups.git
