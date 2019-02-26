@@ -41,10 +41,10 @@ except ImportError:
 	enchant = None
 
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
- QIODevice, QLocale, QTextCodec, QTextStream, QTimer, QUrl, Qt
+ QIODevice, QLocale, QMarginsF, QTextCodec, QTextStream, QTimer, QUrl, Qt
 from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
- QKeySequence, QPalette, QTextDocument, QTextDocumentWriter, \
- QPagedPaintDevice
+ QKeySequence, QPageLayout, QPageSize, QPagedPaintDevice, QPalette, \
+ QTextDocument, QTextDocumentWriter
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
  QLineEdit, QMainWindow, QMenu, QMessageBox, QTabWidget, QToolBar
@@ -1022,6 +1022,14 @@ class ReTextWindow(QMainWindow):
 				fileName += ".pdf"
 			title, htmltext, preview = self.currentTab.getDocumentForExport(includeStyleSheet=True,
 										        webenv=False)
+			if globalSettings.useWebEngine and hasattr(preview.page(), "printToPdf"):
+				pageSize = self.getPageSizeByName(globalSettings.paperSize)
+				if pageSize is None:
+					pageSize = QPageSize(QPageSize.A4)
+				margins = QMarginsF(20, 20, 13, 20)  # left, top, right, bottom (in millimeters)
+				layout = QPageLayout(pageSize, QPageLayout.Portrait, margins, QPageLayout.Millimeter)
+				preview.page().printToPdf(fileName, layout)  # Available since Qt 5.7
+				return
 			printer = self.standardPrinter(title)
 			printer.setOutputFormat(QPrinter.PdfFormat)
 			printer.setOutputFileName(fileName)
