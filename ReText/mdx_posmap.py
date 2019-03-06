@@ -36,15 +36,15 @@ POSMAP_MARKER_RE = re.compile(r'__posmapmarker__\d+\n\n')
 class PosMapExtension(Extension):
     """ Position Map Extension for Python-Markdown. """
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """ Insert the PosMapExtension blockprocessor before any other
             extensions to make sure our own markers, inserted by the
             preprocessor, are removed before any other extensions get confused
             by them.
         """
-        md.preprocessors.add('posmap_mark', PosMapMarkPreprocessor(md), '_begin')
-        md.preprocessors.add('posmap_clean', PosMapCleanPreprocessor(md), '_end')
-        md.parser.blockprocessors.add('posmap', PosMapBlockProcessor(md.parser), '_begin')
+        md.preprocessors.register(PosMapMarkPreprocessor(md), 'posmap_mark', 50)
+        md.preprocessors.register(PosMapCleanPreprocessor(md), 'posmap_clean', 5)
+        md.parser.blockprocessors.register(PosMapBlockProcessor(md.parser), 'posmap', 150)
 
         # Monkey patch CodeHilite constructor to remove the posmap markers from
         # text before highlighting it
@@ -85,15 +85,10 @@ class PosMapCleanPreprocessor(Preprocessor):
 
     def run(self, lines):
 
-        for i in range(self.markdown.htmlStash.html_counter):
-            block = self.markdown.htmlStash.rawHtmlBlocks[i]
-            if isinstance(block, tuple):
-                # Python-Markdown 2.x uses (html, safe_mode) tuples
-                html, safe = block
-                block = re.sub(POSMAP_MARKER_RE, '', html), safe
-            else:
-                block = re.sub(POSMAP_MARKER_RE, '', block)
-            self.markdown.htmlStash.rawHtmlBlocks[i] = block
+        for i in range(self.md.htmlStash.html_counter):
+            block = self.md.htmlStash.rawHtmlBlocks[i]
+            block = re.sub(POSMAP_MARKER_RE, '', block)
+            self.md.htmlStash.rawHtmlBlocks[i] = block
 
         return lines
 
