@@ -135,7 +135,7 @@ setup(name='ReText',
       requires=['docutils', 'Markdown', 'Markups(>=2.0)', 'pyenchant', 'Pygments', 'PyQt5'],
       install_requires=[
         'docutils',
-        'Markdown',
+        'Markdown>=3.0',
         'Markups>=2.0',
         'Pygments',
         'chardet>=2.3',
