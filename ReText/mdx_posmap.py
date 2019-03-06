@@ -24,6 +24,11 @@ from markdown.extensions import Extension
 from markdown.extensions.codehilite import CodeHilite
 from markdown.preprocessors import Preprocessor
 from markdown.util import etree, HTML_PLACEHOLDER_RE
+try:
+    from pymdownx.highlight import Highlight
+except ImportError:
+    Highlight = None
+
 
 POSMAP_MARKER_RE = re.compile(r'__posmapmarker__\d+\n\n')
 
@@ -49,6 +54,15 @@ class PosMapExtension(Extension):
             src = POSMAP_MARKER_RE.sub('', src)
             orig_codehilite_init(self, src=src, *args, **kwargs)
         CodeHilite.__init__ = new_codehilite_init
+
+        # Same for PyMdown Extensions if it is available
+        if Highlight is not None:
+            orig_highlight_highlight = Highlight.highlight
+
+            def new_highlight_highlight(self, src, *args, **kwargs):
+                src = POSMAP_MARKER_RE.sub('', src)
+                return orig_highlight_highlight(self, src, *args, **kwargs)
+            Highlight.highlight = new_highlight_highlight
 
 
 class PosMapMarkPreprocessor(Preprocessor):

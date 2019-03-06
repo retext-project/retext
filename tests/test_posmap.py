@@ -17,11 +17,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from textwrap import dedent
-from unittest import TestCase
+from unittest import skipIf, TestCase
 
 from markdown import markdown
 from markdown.extensions.codehilite import CodeHiliteExtension
 from markdown.extensions.fenced_code import FencedCodeExtension
+try:
+    from pymdownx.superfences import SuperFencesCodeExtension
+except ImportError:
+    SuperFencesCodeExtension = None
 from ReText.mdx_posmap import PosMapExtension
 
 
@@ -116,3 +120,22 @@ class PosMapTest(TestCase):
         self.assertNotIn('posmapmarker', html)
         self.assertIn('<div class="codehilite">', html)
         self.assertIn('<p data-posmap="5">', html)
+
+    @skipIf(SuperFencesCodeExtension is None,
+            "pymdownx module is not available")
+    def test_superFences(self):
+        text = dedent("""\
+        ```bash
+        tee ~/test << EOF
+        A
+
+        B
+
+        C
+        EOF
+        ```""")
+        extensions = [SuperFencesCodeExtension(), PosMapExtension()]
+        html = markdown(text, extensions=extensions)
+        self.assertNotIn("posmapmarker", html)
+        expected = markdown(text, extensions=[SuperFencesCodeExtension()])
+        self.assertMultiLineEqual(html, expected)
