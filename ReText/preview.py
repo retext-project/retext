@@ -38,6 +38,7 @@ class ReTextPreview(QTextBrowser):
 		isLocalHtml = (link.scheme() in ('file', '') and url.endswith('.html'))
 		if url.startswith('#'):
 			self.scrollToAnchor(url[1:])
+			return
 		elif link.isRelative():
 			fileToOpen = QDir.current().filePath(url)
 			if self.tab.openSourceFile(fileToOpen):
