@@ -1160,22 +1160,24 @@ class ReTextWindow(QMainWindow):
 		self.symbolBox.setCurrentIndex(0)
 
 	def fileChanged(self, fileName):
-		ind = None
-		for testind, tab in enumerate(self.iterateTabs()):
-			if tab.fileName == fileName:
-				ind = testind
-		if ind is None:
+		tab = None
+		for testtab in self.iterateTabs():
+			if testtab.fileName == fileName:
+				tab = testtab
+		if tab is None:
 			self.fileSystemWatcher.removePath(fileName)
-		self.tabWidget.setCurrentIndex(ind)
+			return
 		if not QFile.exists(fileName):
-			self.currentTab.editBox.document().setModified(True)
+			self.tabWidget.setCurrentWidget(tab)
+			tab.editBox.document().setModified(True)
 			QMessageBox.warning(self, '', self.tr(
 				'This file has been deleted by other application.\n'
 				'Please make sure you save the file before exit.'))
-		elif not self.currentTab.editBox.document().isModified():
+		elif not tab.editBox.document().isModified():
 			# File was not modified in ReText, reload silently
-			self.currentTab.readTextFromFile()
+			tab.readTextFromFile()
 		else:
+			self.tabWidget.setCurrentWidget(tab)
 			text = self.tr(
 				'This document has been modified by other application.\n'
 				'Do you want to reload the file (this will discard all '
@@ -1189,10 +1191,10 @@ class ReTextWindow(QMainWindow):
 			messageBox.addButton(QMessageBox.Cancel)
 			messageBox.exec()
 			if messageBox.clickedButton() is reloadButton:
-				self.currentTab.readTextFromFile()
+				tab.readTextFromFile()
 			else:
 				self.autoSaveEnabled = False
-				self.currentTab.editBox.document().setModified(True)
+				tab.editBox.document().setModified(True)
 		if fileName not in self.fileSystemWatcher.files():
 			# https://github.com/retext-project/retext/issues/137
 			self.fileSystemWatcher.addPath(fileName)
