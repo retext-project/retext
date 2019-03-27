@@ -823,17 +823,6 @@ class ReTextWindow(QMainWindow):
 	def openFileWrapper(self, fileName):
 		if not fileName:
 			return
-		if not QFile.exists(fileName):
-			if self.createFileQuestion(fileName):
-				try:
-					print('Create file' + ' ' + fileName , file=sys.stdout)
-					open(fileName, 'x').close()
-				except:
-					QMessageBox.warning(self, 'Warning', 'File could not be created.')
-					return
-			else:
-				print('User decided not to create nonexisting file.', file=sys.stdout)
-				return
 		fileName = QFileInfo(fileName).canonicalFilePath()
 		tabAvailable = False
 		for i, tab in enumerate(self.iterateTabs()):
@@ -858,15 +847,6 @@ class ReTextWindow(QMainWindow):
 			self.currentTab.readTextFromFile(fileName)
 			self.moveToTopOfRecentFileList(self.currentTab.fileName)
 
-	def createFileQuestion(self, fileToCreate):
-		buttonReply = QMessageBox.question(self, self.tr('Create missing file?'),
-			self.tr('The file') + ' \'' + fileToCreate + '\' ' + self.tr('does not exist.')
-			+ '\n' + self.tr('Do you want to create it?'),
-			QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-		if buttonReply == QMessageBox.Yes:
-			return True
-		elif buttonReply == QMessageBox.No:
-			return False
 
 	def showEncodingDialog(self):
 		if not self.maybeSave(self.ind):

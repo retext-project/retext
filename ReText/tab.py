@@ -32,7 +32,7 @@ except ImportError:
 
 from PyQt5.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QPoint, QTextStream, QTimer, QUrl
 from PyQt5.QtGui import QTextCursor, QTextDocument
-from PyQt5.QtWidgets import QTextEdit, QSplitter
+from PyQt5.QtWidgets import QTextEdit, QSplitter, QMessageBox
 
 try:
 	from ReText.webkitpreview import ReTextWebKitPreview
@@ -447,6 +447,12 @@ class ReTextTab(QSplitter):
 		# TODO: broken objective? See TODO below.
 		It has to be located next to the current opened file.
 		Relative paths like [test](../test) or [test](folder/test) are also possible.
+
+		:param fileToOpen:	Link target
+							This can be a file of any extension or a path
+		:returns: 			Filename successfully handled to openFileWrapper
+							or 'noSuchFile' to stop further processing.
+		:rtype: 			str
 		"""
 		if self.fileName:
 			# Please give description of this condition.
@@ -458,7 +464,56 @@ class ReTextTab(QSplitter):
 				#  [test](test) but than ext not in ('.html', '')
 				self.p.openFileWrapper(basename + currentExt)
 				return basename + currentExt
-		# Whether file exists or not:
+
 		if get_markup_for_file_name(fileToOpen, return_class=True):
+			if not QFile.exists(fileToOpen):
+				# ReText should only support to create markup-files, no plain
+				# text files. Thereby it facilitates writing cross-linked
+				# documentation.
+				# Consequently create-file functionality can be nested here.
+				if not self.createFileQuestion(fileToOpen):
+					# File still not exists
+					return 'noSuchFile'
+
+			# fileToOpen exists and has markup
 			self.p.openFileWrapper(fileToOpen)
 			return fileToOpen
+
+	def createFileQuestion(self, fileToCreate):
+		"""Ask user if file should be created and do so if answer is yes.
+
+		:returns: True if new file has been created, False otherwise
+		:rtype: bool
+		"""
+		buttonReply = QMessageBox.question(self, self.tr('Create missing file?'),
+			self.tr("The file '%s' does not exist.\n\nDo you want to create it?" % fileToCreate),
+			QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+		if buttonReply == QMessageBox.Yes:
+			if self.createFile(fileToCreate):
+				return True
+			else:
+				return False
+		elif buttonReply == QMessageBox.No:
+			return False
+
+	def createFile(self, fileToCreate):
+		"""Try to create file, return True if successful"""
+		try:
+			# Create file:
+			open(fileToCreate, 'x').close()
+			return True
+		except FileNotFoundError:
+			# Most expected error due possible misspelling in path and
+			# should thus be handled separately.
+			# 'No such file or directory' reduces to 'No such directory'
+			# because we call createFile if not exists(fileToOpen)
+			QMessageBox.warning(self, 'No such directory',
+								self.tr("File could not be created: '%s'" % fileToCreate))
+			return False
+		except IOError as errormsg:
+			# Does ReText support Python <3.3? If not change IOError to OSError.
+			QMessageBox.warning(self, 'Warning',
+								self.tr('File could not be created: %s' % errormsg))
+			# Printing errormsg within general OSError avoids individual
+			# handling of PermissionError and possibly other.
+			return False
