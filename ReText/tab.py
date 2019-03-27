@@ -444,13 +444,18 @@ class ReTextTab(QSplitter):
 		"""Finds and opens the source file for link target fileToOpen.
 
 		When links like [test](test) are clicked, the file test.md is opened.
+		# TODO: broken objective? See TODO below.
 		It has to be located next to the current opened file.
 		Relative paths like [test](../test) or [test](folder/test) are also possible.
 		"""
 		if self.fileName:
+			# Please give description of this condition.
+			# (e.g. "if internal link was clicked from within valid open document in a tab"?)
 			currentExt = splitext(self.fileName)[1]
 			basename, ext = splitext(fileToOpen)
 			if ext in ('.html', '') and exists(basename + currentExt):
+				# TODO: It seems this should catch markdown links like
+				#  [test](test) but than ext not in ('.html', '')
 				self.p.openFileWrapper(basename + currentExt)
 				return basename + currentExt
 		# Whether file exists or not:
