@@ -838,12 +838,12 @@ class ReTextWindow(QMainWindow):
 				print('User decided not to create nonexisting file.', file=sys.stdout)
 				return
 		fileName = QFileInfo(fileName).canonicalFilePath()
-		exists = False
+		tabAvailable = False
 		for i, tab in enumerate(self.iterateTabs()):
 			if tab.fileName == fileName:
-				exists = True
+				tabAvailable = True
 				ex = i
-		if exists:
+		if tabAvailable:
 			self.tabWidget.setCurrentIndex(ex)
 		elif QFile.exists(fileName):
 			noEmptyTab = (
