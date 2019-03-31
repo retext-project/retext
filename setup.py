@@ -87,6 +87,9 @@ class retext_install(install):
 		if self.root is None:
 			self.orig_install_scripts = self.install_scripts
 			self.orig_install_data = self.install_data
+		elif self.root.endswith("/wheel"):
+			# Installing into a wheel, do not hardcode paths in the .desktop file
+			return
 		retext = join(self.orig_install_scripts, 'retext')
 
 		# Fix Exec and Icon fields in the desktop file
