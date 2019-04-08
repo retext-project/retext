@@ -486,7 +486,7 @@ class ReTextTab(QSplitter):
 		:rtype: bool
 		"""
 		buttonReply = QMessageBox.question(self, self.tr('Create missing file?'),
-			self.tr("The file '%s' does not exist.\n\nDo you want to create it?" % fileToCreate),
+			self.tr("The file '%s' does not exist.\n\nDo you want to create it?") % fileToCreate,
 			QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 		if buttonReply == QMessageBox.Yes:
 			if self.createFile(fileToCreate):
@@ -508,12 +508,12 @@ class ReTextTab(QSplitter):
 			# 'No such file or directory' reduces to 'No such directory'
 			# because we call createFile if not exists(fileToOpen)
 			QMessageBox.warning(self, 'No such directory',
-								self.tr("File could not be created: '%s'" % fileToCreate))
+								self.tr("File could not be created: '%s'") % fileToCreate)
 			return False
 		except IOError as errormsg:
 			# Does ReText support Python <3.3? If not change IOError to OSError.
 			QMessageBox.warning(self, 'Warning',
-								self.tr('File could not be created: %s' % errormsg))
+								self.tr('File could not be created: %s') % errormsg)
 			# Printing errormsg within general OSError avoids individual
 			# handling of PermissionError and possibly other.
 			return False

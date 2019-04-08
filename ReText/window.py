@@ -847,7 +847,6 @@ class ReTextWindow(QMainWindow):
 			self.currentTab.readTextFromFile(fileName)
 			self.moveToTopOfRecentFileList(self.currentTab.fileName)
 
-
 	def showEncodingDialog(self):
 		if not self.maybeSave(self.ind):
 			return
