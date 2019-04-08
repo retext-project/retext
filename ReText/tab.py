@@ -443,10 +443,16 @@ class ReTextTab(QSplitter):
 	def openSourceFile(self, fileToOpen):
 		"""Finds and opens the source file for link target fileToOpen.
 
-		When links like [test](test) are clicked, the file test.md is opened.
-		# TODO: broken objective? See TODO below.
+		Source file means markup file of any known format.
+
+		When links like [test](test) or [test](test.html) are clicked and
+		test.md exists, the file test.md is opened.
 		It has to be located next to the current opened file.
 		Relative paths like [test](../test) or [test](folder/test) are also possible.
+
+		When links to markup-files are clicked that do not exist, ReText will
+		ask to create those files. The extension must be given explicitly, like
+		[test](test.md) but not [test](test).
 
 		:param fileToOpen:	Link target
 							This can be a file of any extension or a path
@@ -460,8 +466,6 @@ class ReTextTab(QSplitter):
 			currentExt = splitext(self.fileName)[1]
 			basename, ext = splitext(fileToOpen)
 			if ext in ('.html', '') and exists(basename + currentExt):
-				# TODO: It seems this should catch markdown links like
-				#  [test](test) but than ext not in ('.html', '')
 				self.p.openFileWrapper(basename + currentExt)
 				return basename + currentExt
 
@@ -511,7 +515,7 @@ class ReTextTab(QSplitter):
 								self.tr("File could not be created: '%s'") % fileToCreate)
 			return False
 		except IOError as errormsg:
-			# Does ReText support Python <3.3? If not change IOError to OSError.
+			# Support Python 3.2 -- IOError is alias of OSError from Python 3.3
 			QMessageBox.warning(self, 'Warning',
 								self.tr('File could not be created: %s') % errormsg)
 			# Printing errormsg within general OSError avoids individual
