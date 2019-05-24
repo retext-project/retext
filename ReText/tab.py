@@ -460,17 +460,15 @@ class ReTextTab(QSplitter):
 
 	def promptFileCreation(self, fileToCreate):
 		"""
-		Prompt user if a file should be created for the clicked link
+		Prompt user if a file should be created for the clicked link,
+		and try to create it. Return True on success.
 		"""
 		buttonReply = QMessageBox.question(self, self.tr('Create missing file?'),
 		                                   self.tr("The file '%s' does not exist.\n\nDo you want to create it?") % fileToCreate,
 		                                   QMessageBox.Yes | QMessageBox.No,
 		                                   QMessageBox.No)
 		if buttonReply == QMessageBox.Yes:
-			if self.createFile(fileToCreate):
-				return True
-			else:
-				return False
+			return self.createFile(fileToCreate)
 		elif buttonReply == QMessageBox.No:
 			return False
 
