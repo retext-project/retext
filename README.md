@@ -16,7 +16,7 @@ You can read more about ReText in the [wiki].
 
 ReText requires the following packages to run:
 
-* [python](https://www.python.org/) — version 3.2 or higher
+* [python](https://www.python.org/) — version 3.4 or higher
 * [pyqt5](https://riverbankcomputing.com/software/pyqt/intro) — version 5.6 or
   higher
 * [python-markups](https://pypi.org/project/Markups/) — version 2.0 or higher
