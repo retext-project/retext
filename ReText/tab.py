@@ -453,7 +453,7 @@ class ReTextTab(QSplitter):
 			self.p.openFileWrapper(fileToOpen)
 			return fileToOpen
 		if get_markup_for_file_name(fileToOpen, return_class=True):
-			if not QFile.exists(fileToOpen):
+			if not QFile.exists(fileToOpen) and QFileInfo(fileToOpen).dir().exists():
 				if self.promptFileCreation(fileToOpen):
 					self.p.openFileWrapper(fileToOpen)
 					return fileToOpen
@@ -495,7 +495,7 @@ class ReTextTab(QSplitter):
 			# Create file:
 			open(fileToCreate, 'x').close()
 			return True
-		except FileNotFoundError:
-			QMessageBox.warning(self, 'No such directory',
-			                    self.tr("File could not be created: '%s'") % fileToCreate)
+		except OSError as err:
+			QMessageBox.warning(self, self.tr("File could not be created"),
+			                    self.tr("Could not create file '%s': %s") % (fileToCreate, err))
 			return False
