@@ -461,8 +461,6 @@ class ReTextTab(QSplitter):
 	def promptFileCreation(self, fileToCreate):
 		"""
 		Prompt user if a file should be created for the clicked link
-		:param fileToCreate:
-		:return: bool
 		"""
 		buttonReply = QMessageBox.question(self, self.tr('Create missing file?'),
 		                                   self.tr("The file '%s' does not exist.\n\nDo you want to create it?") % fileToCreate,
@@ -484,9 +482,6 @@ class ReTextTab(QSplitter):
 		When the link is an html file eg: [Test](test.html), the extension of the current file is assumed
 		(eg test.md for a markdown file).
 		Relative paths like [test](../test) or [test](folder/test) are also possible.
-		:param self:
-		:param path:
-		:return:
 		"""
 		basename, ext = splitext(linkPath)
 		if self.fileName:
