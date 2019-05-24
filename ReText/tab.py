@@ -32,7 +32,7 @@ except ImportError:
 
 from PyQt5.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QPoint, QTextStream, QTimer, QUrl
 from PyQt5.QtGui import QTextCursor, QTextDocument
-from PyQt5.QtWidgets import QTextEdit, QSplitter
+from PyQt5.QtWidgets import QTextEdit, QSplitter, QMessageBox
 
 try:
 	from ReText.webkitpreview import ReTextWebKitPreview
@@ -440,19 +440,62 @@ class ReTextTab(QSplitter):
 		self.editBox.textCursor().endEditBlock()
 		return not lastCursor.isNull()
 
-	def openSourceFile(self, fileToOpen):
+	def openSourceFile(self, linkPath):
 		"""Finds and opens the source file for link target fileToOpen.
 
 		When links like [test](test) are clicked, the file test.md is opened.
 		It has to be located next to the current opened file.
 		Relative paths like [test](../test) or [test](folder/test) are also possible.
 		"""
-		if self.fileName:
-			currentExt = splitext(self.fileName)[1]
-			basename, ext = splitext(fileToOpen)
-			if ext in ('.html', '') and exists(basename + currentExt):
-				self.p.openFileWrapper(basename + currentExt)
-				return basename + currentExt
+
+		fileToOpen = self.resolveSourceFile(linkPath)
 		if exists(fileToOpen) and get_markup_for_file_name(fileToOpen, return_class=True):
 			self.p.openFileWrapper(fileToOpen)
 			return fileToOpen
+		if get_markup_for_file_name(fileToOpen, return_class=True):
+			if not QFile.exists(fileToOpen) and QFileInfo(fileToOpen).dir().exists():
+				if self.promptFileCreation(fileToOpen):
+					self.p.openFileWrapper(fileToOpen)
+					return fileToOpen
+
+	def promptFileCreation(self, fileToCreate):
+		"""
+		Prompt user if a file should be created for the clicked link,
+		and try to create it. Return True on success.
+		"""
+		buttonReply = QMessageBox.question(self, self.tr('Create missing file?'),
+		                                   self.tr("The file '%s' does not exist.\n\nDo you want to create it?") % fileToCreate,
+		                                   QMessageBox.Yes | QMessageBox.No,
+		                                   QMessageBox.No)
+		if buttonReply == QMessageBox.Yes:
+			return self.createFile(fileToCreate)
+		elif buttonReply == QMessageBox.No:
+			return False
+
+	def resolveSourceFile(self, linkPath):
+		"""
+		Finds the actual path of the file to open in a new tab.
+		When the link has no extension, eg: [Test](test), the extension of the current file is assumed
+		(eg test.md for a markdown file).
+		When the link is an html file eg: [Test](test.html), the extension of the current file is assumed
+		(eg test.md for a markdown file).
+		Relative paths like [test](../test) or [test](folder/test) are also possible.
+		"""
+		basename, ext = splitext(linkPath)
+		if self.fileName:
+			currentExt = splitext(self.fileName)[1]
+			if ext in ('.html', '') and (exists(basename+currentExt) or not exists(linkPath)):
+				ext = currentExt
+
+		return basename+ext
+
+	def createFile(self, fileToCreate):
+		"""Try to create file, return True if successful"""
+		try:
+			# Create file:
+			open(fileToCreate, 'x').close()
+			return True
+		except OSError as err:
+			QMessageBox.warning(self, self.tr("File could not be created"),
+			                    self.tr("Could not create file '%s': %s") % (fileToCreate, err))
+			return False

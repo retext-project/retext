@@ -174,6 +174,36 @@
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation>Impossible d&apos;analyser le contenu du fichier, vérifier si les &lt;a href=&quot;%s&quot;&gt;modules nécessaires&lt;/a&gt; sont installés!</translation>
     </message>
+    <message>
+        <location filename="tab.py" line="467"/>
+        <source>Create missing file?</source>
+        <translation>Créer le document manquant ?</translation>
+    </message>
+    <message>
+        <location filename="tab.py" line="468"/>
+        <source>The file '%s' does not exist.\n\nDo you want to create it?</source>
+        <translation>Le document '%s' n'existe pas.\n\nVoulez vous le créer ?</translation>
+    </message>
+    <message>
+        <location filename="tab.py" line="505"/>
+        <source>No such directory</source>
+        <translation>Dossier introuvable</translation>
+    </message>
+    <message>
+        <location filename="tab.py" line="506"/>
+        <source>File could not be created: '%s'</source>
+        <translation>Le document n'a pas pu être créé : '%s'</translation>
+    </message>
+    <message>
+        <location filename="tab.py" line="183"/>
+        <source>New document</source>
+        <translation>Nouveau document</translation>
+    </message>
+    <message>
+        <location filename="tab.py" line="183"/>
+        <source>New document</source>
+        <translation>Nouveau document</translation>
+    </message>
 </context>
 <context>
     <name>ReTextWindow</name>
