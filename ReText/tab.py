@@ -465,8 +465,9 @@ class ReTextTab(QSplitter):
 		:return: bool
 		"""
 		buttonReply = QMessageBox.question(self, self.tr('Create missing file?'),
-										   self.tr("The file '%s' does not exist.\n\nDo you want to create it?") % fileToCreate,
-										   QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+		                                   self.tr("The file '%s' does not exist.\n\nDo you want to create it?") % fileToCreate,
+		                                   QMessageBox.Yes | QMessageBox.No,
+		                                   QMessageBox.No)
 		if buttonReply == QMessageBox.Yes:
 			if self.createFile(fileToCreate):
 				return True
@@ -503,5 +504,5 @@ class ReTextTab(QSplitter):
 			return True
 		except FileNotFoundError:
 			QMessageBox.warning(self, 'No such directory',
-								self.tr("File could not be created: '%s'") % fileToCreate)
+			                    self.tr("File could not be created: '%s'") % fileToCreate)
 			return False
