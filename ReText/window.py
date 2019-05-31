@@ -875,7 +875,8 @@ class ReTextWindow(QMainWindow):
 
 	def saveAll(self):
 		for tab in self.iterateTabs():
-			if tab.fileName and QFileInfo(tab.fileName).isWritable():
+			if (tab.fileName and tab.editBox.document().isModified()
+				and QFileInfo(tab.fileName).isWritable()):
 				tab.saveTextToFile()
 
 	def saveFile(self, dlg=False):
