@@ -38,8 +38,10 @@ datadirs = []
 def initializeDataDirs():
 	assert not datadirs
 
-	if '__file__' in locals():
+	try:
 		datadirs.append(dirname(dirname(__file__)))
+	except NameError:
+		pass
 
 	dataLocations = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
 	datadirs.extend(join(d, 'retext') for d in dataLocations)
