@@ -31,8 +31,8 @@ except ImportError:
 	enchant = None
 
 from PyQt5.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QPoint, QTextStream, QTimer, QUrl
-from PyQt5.QtGui import QTextCursor, QTextDocument
-from PyQt5.QtWidgets import QTextEdit, QSplitter, QMessageBox
+from PyQt5.QtGui import QPalette, QTextCursor, QTextDocument
+from PyQt5.QtWidgets import QApplication, QTextEdit, QSplitter, QMessageBox
 
 try:
 	from ReText.webkitpreview import ReTextWebKitPreview
@@ -196,8 +196,20 @@ class ReTextTab(QSplitter):
 				errMsg = errMsg.replace('<a href="%s">', '').replace('</a>', '')
 			return '<p style="color: red">%s</p>' % errMsg
 		headers = ''
-		if includeStyleSheet:
+		if includeStyleSheet and self.p.ss is not None:
 			headers += '<style type="text/css">\n' + self.p.ss + '</style>\n'
+		elif includeStyleSheet:
+			style = 'td, th { border: 1px solid #c3c3c3; padding: 0 3px 0 3px; }\n'
+			style += 'table { border-collapse: collapse; }\n'
+			style += 'img { max-width: 100%; }\n'
+			# QTextDocument seems to use media=screen even for printing
+			if globalSettings.useWebKit:
+				# https://github.com/retext-project/retext/pull/187
+				palette = QApplication.palette()
+				style += '@media screen { html { color: %s; } }\n' % palette.color(QPalette.WindowText).name()
+				# https://github.com/retext-project/retext/issues/408
+				style += '@media print { html { background-color: white; } }\n'
+			headers += '<style type="text/css">\n' + style + '</style>\n'
 		baseName = self.getBaseName()
 		if self.cssFileExists:
 			headers += ('<link rel="stylesheet" type="text/css" href="%s.css">\n'

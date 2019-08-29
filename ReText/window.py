@@ -407,17 +407,12 @@ class ReTextWindow(QMainWindow):
 			yield self.tabWidget.widget(i)
 
 	def updateStyleSheet(self):
+		self.ss = None
 		if globalSettings.styleSheet:
 			sheetfile = QFile(globalSettings.styleSheet)
 			sheetfile.open(QIODevice.ReadOnly)
 			self.ss = QTextStream(sheetfile).readAll()
 			sheetfile.close()
-		else:
-			palette = QApplication.palette()
-			self.ss = 'html { color: %s; }\n' % palette.color(QPalette.WindowText).name()
-			self.ss += 'td, th { border: 1px solid #c3c3c3; padding: 0 3px 0 3px; }\n'
-			self.ss += 'table { border-collapse: collapse; }\n'
-			self.ss += 'img { max-width: 100%; }\n'
 
 	def initTabWidget(self):
 		def dragEnterEvent(e):
@@ -942,8 +937,6 @@ class ReTextWindow(QMainWindow):
 	def textDocument(self, title, htmltext):
 		td = QTextDocument()
 		td.setMetaInformation(QTextDocument.DocumentTitle, title)
-		if self.ss:
-			td.setDefaultStyleSheet(self.ss)
 		td.setHtml(htmltext)
 		td.setDefaultFont(globalSettings.font)
 		return td
