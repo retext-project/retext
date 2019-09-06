@@ -942,8 +942,7 @@ class ReTextWindow(QMainWindow):
 		return td
 
 	def saveOdf(self):
-		title, htmltext, _ = self.currentTab.getDocumentForExport(includeStyleSheet=True,
-		                                                          webenv=False)
+		title, htmltext, _ = self.currentTab.getDocumentForExport()
 		try:
 			document = self.textDocument(title, htmltext)
 		except Exception:
@@ -1014,8 +1013,7 @@ class ReTextWindow(QMainWindow):
 		if fileName:
 			if not QFileInfo(fileName).suffix():
 				fileName += ".pdf"
-			title, htmltext, preview = self.currentTab.getDocumentForExport(includeStyleSheet=True,
-										        webenv=False)
+			title, htmltext, preview = self.currentTab.getDocumentForExport()
 			if globalSettings.useWebEngine and hasattr(preview.page(), "printToPdf"):
 				pageSize = self.getPageSizeByName(globalSettings.paperSize)
 				if pageSize is None:
@@ -1032,8 +1030,7 @@ class ReTextWindow(QMainWindow):
 				document.print(printer)
 
 	def printFile(self):
-		title, htmltext, preview = self.currentTab.getDocumentForExport(includeStyleSheet=True,
-										webenv=False)
+		title, htmltext, preview = self.currentTab.getDocumentForExport()
 		printer = self.standardPrinter(title)
 		dlg = QPrintDialog(printer, self)
 		dlg.setWindowTitle(self.tr("Print document"))
@@ -1043,8 +1040,7 @@ class ReTextWindow(QMainWindow):
 				document.print(printer)
 
 	def printPreview(self):
-		title, htmltext, preview = self.currentTab.getDocumentForExport(includeStyleSheet=True,
-										webenv=False)
+		title, htmltext, preview = self.currentTab.getDocumentForExport()
 		document = self.getDocumentForPrint(title, htmltext, preview)
 		if document is None:
 			return
@@ -1225,8 +1221,7 @@ class ReTextWindow(QMainWindow):
 	def viewHtml(self):
 		htmlDlg = HtmlDialog(self)
 		try:
-			_, htmltext, _ = self.currentTab.getDocumentForExport(includeStyleSheet=False,
-			                                                      webenv=False)
+			_, htmltext, _ = self.currentTab.getDocumentForExport(includeStyleSheet=False)
 		except Exception:
 			return self.printError()
 		winTitle = self.currentTab.getBaseName()

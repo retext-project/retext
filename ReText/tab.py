@@ -219,7 +219,7 @@ class ReTextTab(QSplitter):
 			custom_headers=headers, include_stylesheet=includeStyleSheet,
 			fallback_title=baseName, webenv=webenv)
 
-	def getDocumentForExport(self, includeStyleSheet, webenv):
+	def getDocumentForExport(self, includeStyleSheet=True, webenv=False):
 		markupClass = self.getActiveMarkupClass()
 		if markupClass and markupClass.available():
 			exportMarkup = markupClass(filename=self._fileName)
