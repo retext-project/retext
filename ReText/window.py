@@ -918,8 +918,7 @@ class ReTextWindow(QMainWindow):
 		if not QFileInfo(fileName).suffix():
 			fileName += ".html"
 		try:
-			_, htmltext, _ = self.currentTab.getDocumentForExport(includeStyleSheet=False,
-			                                                      webenv=True)
+			_, htmltext, _ = self.currentTab.getDocumentForExport(webenv=True)
 		except Exception:
 			return self.printError()
 		htmlFile = QFile(fileName)
