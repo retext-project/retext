@@ -878,6 +878,7 @@ class ReTextWindow(QMainWindow):
 		fileNameToSave = self.currentTab.fileName
 
 		if (not fileNameToSave) or dlg:
+			proposedFileName = ""
 			markupClass = self.currentTab.getActiveMarkupClass()
 			if (markupClass is None) or not hasattr(markupClass, 'default_extension'):
 				defaultExt = self.tr("Plain text (*.txt)")
@@ -893,8 +894,10 @@ class ReTextWindow(QMainWindow):
 					ext = globalSettings.restDefaultFileExtension
 				else:
 					ext = markupClass.default_extension
+			if fileNameToSave is not None:
+				proposedFileName = fileNameToSave
 			fileNameToSave = QFileDialog.getSaveFileName(self,
-				self.tr("Save file"), "", defaultExt)[0]
+				self.tr("Save file"), proposedFileName, defaultExt)[0]
 			if fileNameToSave:
 				if not QFileInfo(fileNameToSave).suffix():
 					fileNameToSave += ext
