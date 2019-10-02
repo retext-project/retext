@@ -950,7 +950,7 @@ class ReTextWindow(QMainWindow):
 		except Exception:
 			return self.printError()
 		fileName = QFileDialog.getSaveFileName(self,
-			self.tr("Export document to ODT"), "",
+			self.tr("Export document to ODT"), self.currentTab.getBaseName() + ".odt",
 			self.tr("OpenDocument text files (*.odt)"))[0]
 		if not QFileInfo(fileName).suffix():
 			fileName += ".odt"
@@ -960,7 +960,7 @@ class ReTextWindow(QMainWindow):
 
 	def saveFileHtml(self):
 		fileName = QFileDialog.getSaveFileName(self,
-			self.tr("Save file"), "",
+			self.tr("Save file"), self.currentTab.getBaseName() + ".html",
 			self.tr("HTML files (*.html *.htm)"))[0]
 		if fileName:
 			self.saveHtml(fileName)
