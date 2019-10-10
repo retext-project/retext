@@ -32,6 +32,7 @@ from PyQt5.QtCore import QCommandLineOption, QCommandLineParser, QFile, \
  QFileInfo, QIODevice, QLibraryInfo, QTextStream, QTranslator, Qt
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtNetwork import QNetworkProxyFactory
+from PyQt5.QtDBus import QDBusConnection, QDBusInterface
 
 def canonicalize(option):
 	if option in ('--preview', '-'):
@@ -74,7 +75,10 @@ def main():
 	parser.addVersionOption()
 	previewOption = QCommandLineOption('preview',
 		QApplication.translate('main', 'Open the files in preview mode'))
+	newWindowOption = QCommandLineOption('new-window',
+		QApplication.translate('main', 'Create a new window even if there is an existing one'))
 	parser.addOption(previewOption)
+	parser.addOption(newWindowOption)
 	parser.addPositionalArgument('files',
 		QApplication.translate('main', 'List of files to open'),
 		'[files...]')
@@ -100,6 +104,20 @@ def main():
 		app.setStyleSheet(QTextStream(sheetfile).readAll())
 		sheetfile.close()
 	window = ReTextWindow()
+
+	connection = QDBusConnection.sessionBus()
+	if connection.isConnected() and not parser.isSet(newWindowOption):
+		connection.registerObject('/', window, QDBusConnection.ExportAllSlots)
+		serviceName = 'me.mitya57.ReText'
+		if not connection.registerService(serviceName) and filesToOpen:
+			print('Opening the file(s) in the existing window of ReText.')
+			iface = QDBusInterface(serviceName, '/', '', connection)
+			for fileName in filesToOpen:
+				iface.call('openFileWrapper', fileName)
+			qWidgetIface = QDBusInterface(serviceName, '/', 'org.qtproject.Qt.QWidget', connection)
+			qWidgetIface.call('raise')
+			sys.exit(0)
+
 	window.show()
 	# ReText can change directory when loading files, so we
 	# need to have a list of canonical names before loading

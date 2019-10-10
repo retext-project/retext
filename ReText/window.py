@@ -41,7 +41,7 @@ except ImportError:
 	enchant = None
 
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
- QIODevice, QLocale, QMarginsF, QTextCodec, QTextStream, QTimer, QUrl, Qt
+ QIODevice, QLocale, QMarginsF, QTextCodec, QTextStream, QTimer, QUrl, Qt, pyqtSlot
 from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
  QKeySequence, QPageLayout, QPageSize, QPagedPaintDevice, QPalette, \
  QTextDocument, QTextDocumentWriter
@@ -826,6 +826,7 @@ class ReTextWindow(QMainWindow):
 		for fileName in fileNames[0]:
 			self.openFileWrapper(fileName)
 
+	@pyqtSlot(str)
 	def openFileWrapper(self, fileName):
 		if not fileName:
 			return
