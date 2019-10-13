@@ -28,8 +28,8 @@ from ReText import datadirs, settings, globalSettings, app_version
 from ReText import initializeDataDirs
 from ReText.window import ReTextWindow
 
-from PyQt5.QtCore import QFile, QFileInfo, QIODevice, QLibraryInfo, \
- QTextStream, QTranslator, Qt
+from PyQt5.QtCore import QCommandLineOption, QCommandLineParser, QFile, \
+ QFileInfo, QIODevice, QLibraryInfo, QTextStream, QTranslator, Qt
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtNetwork import QNetworkProxyFactory
 
@@ -68,6 +68,20 @@ def main():
 	if hasattr(app, 'setDesktopFileName'): # available since Qt 5.7
 		app.setDesktopFileName('me.mitya57.ReText.desktop')
 	QNetworkProxyFactory.setUseSystemConfiguration(True)
+
+	parser = QCommandLineParser()
+	parser.addHelpOption()
+	parser.addVersionOption()
+	previewOption = QCommandLineOption('preview',
+		QApplication.translate('main', 'Open the files in preview mode'))
+	parser.addOption(previewOption)
+	parser.addPositionalArgument('files',
+		QApplication.translate('main', 'List of files to open'),
+		'[files...]')
+
+	parser.process(app)
+	filesToOpen = parser.positionalArguments()
+
 	initializeDataDirs()
 	RtTranslator = QTranslator()
 	for path in datadirs:
@@ -89,19 +103,17 @@ def main():
 	window.show()
 	# ReText can change directory when loading files, so we
 	# need to have a list of canonical names before loading
-	fileNames = list(map(canonicalize, sys.argv[1:]))
-	previewMode = False
+	fileNames = list(map(canonicalize, filesToOpen))
 	readStdIn = False
+
 	if globalSettings.openLastFilesOnStartup:
 		window.restoreLastOpenedFiles()
 	for fileName in fileNames:
 		if QFile.exists(fileName):
 			window.openFileWrapper(fileName)
-			if previewMode:
+			if parser.isSet(previewOption):
 				window.actionPreview.setChecked(True)
 				window.preview(True)
-		elif fileName == '--preview':
-			previewMode = True
 		elif fileName == '-':
 			readStdIn = True
 
