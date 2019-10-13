@@ -25,6 +25,7 @@ option name                    | type      | description
 `iconTheme`                    | string    | name of the system icon theme to use (see below)
 `lineNumbersEnabled`           | boolean   | whether to show column with line numbers in editor (default: false)
 `markdownDefaultFileExtension` | string    | default file extension for Markdown files (default: `.mkd`)
+`openFilesInExistingWindow`    | boolean   | whether to open new files in the existing window (default: true)
 `openLastFilesOnStartup`       | boolean   | whether to automatically open last documents on startup (default: false)
 `paperSize`                    | string    | name of default page size to use for print and export (e.g. A4, Letter)
 `pygmentsStyle`                | string    | name of Pygments syntax highlighting style to use (default: `default`)

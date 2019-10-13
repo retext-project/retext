@@ -81,6 +81,7 @@ configOptions = {
 	'lastTabIndex': 0,
 	'lineNumbersEnabled': False,
 	'markdownDefaultFileExtension': '.mkd',
+	'openFilesInExistingWindow': True,
 	'openLastFilesOnStartup': False,
 	'paperSize': '',
 	'pygmentsStyle': 'default',

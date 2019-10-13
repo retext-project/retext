@@ -105,8 +105,10 @@ def main():
 		sheetfile.close()
 	window = ReTextWindow()
 
+	openInExistingWindow = (globalSettings.openFilesInExistingWindow
+		and not parser.isSet(newWindowOption))
 	connection = QDBusConnection.sessionBus()
-	if connection.isConnected() and not parser.isSet(newWindowOption):
+	if connection.isConnected() and openInExistingWindow:
 		connection.registerObject('/', window, QDBusConnection.ExportAllSlots)
 		serviceName = 'me.mitya57.ReText'
 		if not connection.registerService(serviceName) and filesToOpen:
