@@ -453,6 +453,13 @@ class ReTextWindow(QMainWindow):
 		print('Exception occurred while parsing document:', file=sys.stderr)
 		traceback.print_exc()
 
+	def updateTabTitle(self, ind, tab):
+		changed = tab.editBox.document().isModified()
+		if changed:
+			title = tab.getBaseName() + '*'
+		else:
+			title = tab.getBaseName()
+		self.tabWidget.setTabText(ind, title)
 
 	def tabFileNameChanged(self, tab):
 		'''
@@ -465,7 +472,7 @@ class ReTextWindow(QMainWindow):
 				if globalSettings.windowTitleFullPath:
 					self.setWindowTitle(tab.fileName + '[*]')
 				self.setWindowFilePath(tab.fileName)
-				self.tabWidget.setTabText(self.ind, tab.getBaseName())
+				self.updateTabTitle(self.ind, tab)
 				self.tabWidget.setTabToolTip(self.ind, tab.fileName)
 				QDir.setCurrent(QFileInfo(tab.fileName).dir().path())
 			else:
@@ -496,11 +503,13 @@ class ReTextWindow(QMainWindow):
 		Perform all UI state changes that need to be done when the
 		modification state of the current tab has changed.
 		'''
+
 		if tab == self.currentTab:
 			changed = tab.editBox.document().isModified()
 			if self.autoSaveActive(tab):
 				changed = False
 			self.actionSave.setEnabled(changed)
+			self.updateTabTitle(self.ind, tab)
 			self.setWindowModified(changed)
 
 	def createTab(self, fileName):
@@ -870,10 +879,13 @@ class ReTextWindow(QMainWindow):
 		self.saveFile(dlg=True)
 
 	def saveAll(self):
+		ind = 0
 		for tab in self.iterateTabs():
 			if (tab.fileName and tab.editBox.document().isModified()
 				and QFileInfo(tab.fileName).isWritable()):
 				tab.saveTextToFile()
+				self.updateTabTitle(ind, tab)
+			ind += 1
 
 	def saveFile(self, dlg=False):
 		fileNameToSave = self.currentTab.fileName
@@ -912,6 +924,7 @@ class ReTextWindow(QMainWindow):
 		if fileNameToSave:
 			if self.currentTab.saveTextToFile(fileNameToSave):
 				self.moveToTopOfRecentFileList(self.currentTab.fileName)
+				self.updateTabTitle(self.ind, tab)
 				return True
 			else:
 				QMessageBox.warning(self, '',
@@ -1196,6 +1209,7 @@ class ReTextWindow(QMainWindow):
 		tab = self.tabWidget.widget(ind)
 		if self.autoSaveActive(tab):
 			tab.saveTextToFile()
+			self.updateTabTitle(ind, tab)
 			return True
 		if not tab.editBox.document().isModified():
 			return True
