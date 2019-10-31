@@ -879,13 +879,10 @@ class ReTextWindow(QMainWindow):
 		self.saveFile(dlg=True)
 
 	def saveAll(self):
-		ind = 0
 		for tab in self.iterateTabs():
 			if (tab.fileName and tab.editBox.document().isModified()
 				and QFileInfo(tab.fileName).isWritable()):
 				tab.saveTextToFile()
-				self.updateTabTitle(ind, tab)
-			ind += 1
 
 	def saveFile(self, dlg=False):
 		fileNameToSave = self.currentTab.fileName
@@ -924,7 +921,6 @@ class ReTextWindow(QMainWindow):
 		if fileNameToSave:
 			if self.currentTab.saveTextToFile(fileNameToSave):
 				self.moveToTopOfRecentFileList(self.currentTab.fileName)
-				self.updateTabTitle(self.ind, tab)
 				return True
 			else:
 				QMessageBox.warning(self, '',
@@ -1209,7 +1205,6 @@ class ReTextWindow(QMainWindow):
 		tab = self.tabWidget.widget(ind)
 		if self.autoSaveActive(tab):
 			tab.saveTextToFile()
-			self.updateTabTitle(ind, tab)
 			return True
 		if not tab.editBox.document().isModified():
 			return True
