@@ -160,6 +160,7 @@ class TestWindow(unittest.TestCase):
         self.assertEqual(1, self.window.tabWidget.count())
         self.assertEqual('existing_file.md[*]', self.window.windowTitle())
         self.assertTrue(self.window.currentTab.fileName.endswith('tests/testdata/existing_file.md'))
+        self.assertEqual(self.window.tabWidget.tabText(0), 'existing_file')
         self.assertFalse(self.window.isWindowModified())
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
@@ -179,6 +180,9 @@ class TestWindow(unittest.TestCase):
         self.assertEqual('New document[*]', self.window.windowTitle())
         self.assertIs(self.window.currentTab, tab_with_unsaved_content)
         self.assertIs(self.window.tabWidget.currentWidget(), tab_with_unsaved_content)
+        self.assertEqual(self.window.ind, 1)
+        self.assertEqual(self.window.tabWidget.tabText(0), 'existing_file')
+        self.assertEqual(self.window.tabWidget.tabText(1), 'New document*')
 
         self.window.switchTab()
         processEventsUntilIdle()
@@ -297,24 +301,30 @@ class TestWindow(unittest.TestCase):
         processEventsUntilIdle()
         self.check_widgets_disabled(self.window, ('actionSave',))
         self.assertFalse(self.window.isWindowModified())
+        self.assertEqual(self.window.tabWidget.tabText(0), 'New document')
 
         # check if it's enabled after inserting some text
         self.window.currentTab.editBox.textCursor().insertText('some text')
         processEventsUntilIdle()
         self.check_widgets_enabled(self.window, ('actionSave',))
         self.assertTrue(self.window.isWindowModified())
+        self.assertEqual(self.window.tabWidget.tabText(0), 'New document*')
 
         # check if it's disabled again after loading a file in a second tab and switching to it
         self.window.actionOpen.trigger()
         processEventsUntilIdle()
         self.check_widgets_disabled(self.window, ('actionSave',))
         self.assertFalse(self.window.isWindowModified())
+        self.assertEqual(self.window.tabWidget.tabText(0), 'New document*')
+        self.assertEqual(self.window.tabWidget.tabText(1), 'existing_file')
 
         # check if it's enabled again after switching back
         self.window.switchTab()
         processEventsUntilIdle()
         self.check_widgets_enabled(self.window, ('actionSave',))
         self.assertTrue(self.window.isWindowModified())
+        self.assertEqual(self.window.tabWidget.tabText(0), 'New document*')
+        self.assertEqual(self.window.tabWidget.tabText(1), 'existing_file')
 
         # check if it's disabled after saving
         try:
@@ -322,6 +332,8 @@ class TestWindow(unittest.TestCase):
             processEventsUntilIdle()
             self.check_widgets_disabled(self.window, ('actionSave',))
             self.assertFalse(self.window.isWindowModified())
+            self.assertEqual(self.window.tabWidget.tabText(0), 'not_existing_file')
+            self.assertEqual(self.window.tabWidget.tabText(1), 'existing_file')
         finally:
             os.remove(os.path.join(path_to_testdata, 'not_existing_file.md'))
 

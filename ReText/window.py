@@ -453,6 +453,13 @@ class ReTextWindow(QMainWindow):
 		print('Exception occurred while parsing document:', file=sys.stderr)
 		traceback.print_exc()
 
+	def updateTabTitle(self, ind, tab):
+		changed = tab.editBox.document().isModified()
+		if changed and not self.autoSaveActive(tab):
+			title = tab.getBaseName() + '*'
+		else:
+			title = tab.getBaseName()
+		self.tabWidget.setTabText(ind, title)
 
 	def tabFileNameChanged(self, tab):
 		'''
@@ -465,7 +472,7 @@ class ReTextWindow(QMainWindow):
 				if globalSettings.windowTitleFullPath:
 					self.setWindowTitle(tab.fileName + '[*]')
 				self.setWindowFilePath(tab.fileName)
-				self.tabWidget.setTabText(self.ind, tab.getBaseName())
+				self.updateTabTitle(self.ind, tab)
 				self.tabWidget.setTabToolTip(self.ind, tab.fileName)
 				QDir.setCurrent(QFileInfo(tab.fileName).dir().path())
 			else:
@@ -496,11 +503,13 @@ class ReTextWindow(QMainWindow):
 		Perform all UI state changes that need to be done when the
 		modification state of the current tab has changed.
 		'''
+
 		if tab == self.currentTab:
 			changed = tab.editBox.document().isModified()
 			if self.autoSaveActive(tab):
 				changed = False
 			self.actionSave.setEnabled(changed)
+			self.updateTabTitle(self.ind, tab)
 			self.setWindowModified(changed)
 
 	def createTab(self, fileName):
