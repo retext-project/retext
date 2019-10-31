@@ -455,7 +455,7 @@ class ReTextWindow(QMainWindow):
 
 	def updateTabTitle(self, ind, tab):
 		changed = tab.editBox.document().isModified()
-		if changed:
+		if changed and not self.autoSaveActive(tab):
 			title = tab.getBaseName() + '*'
 		else:
 			title = tab.getBaseName()
