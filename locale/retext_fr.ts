@@ -194,16 +194,6 @@
         <source>File could not be created: '%s'</source>
         <translation>Le document n'a pas pu être créé : '%s'</translation>
     </message>
-    <message>
-        <location filename="tab.py" line="183"/>
-        <source>New document</source>
-        <translation>Nouveau document</translation>
-    </message>
-    <message>
-        <location filename="tab.py" line="183"/>
-        <source>New document</source>
-        <translation>Nouveau document</translation>
-    </message>
 </context>
 <context>
     <name>ReTextWindow</name>
