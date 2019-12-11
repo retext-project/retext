@@ -142,9 +142,7 @@ setup(name='ReText',
         'Markups>=2.0',
         'Pygments',
         'chardet>=2.3',
-        # On Linux distro-packaged Qt/PyQt is preferred
-        'PyQt5;platform_system=="Windows"',
-        'PyQt5;platform_system=="Darwin"',
+        'PyQt5',
       ],
       extras_require={
         'spellcheck': ['pyenchant'],
