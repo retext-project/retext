@@ -72,6 +72,10 @@ class ReTextWindow(QMainWindow):
 		if QIcon.themeName() in ('hicolor', ''):
 			if not QFile.exists(getBundledIcon('document-new')):
 				QIcon.setThemeName(get_icon_theme())
+		if QIcon.themeName() == 'Yaru':
+			# Yaru does not have non-symbolic action icons, so all
+			# document-* icons fall back to mimetypes/document.png.
+			QIcon.setThemeName('Humanity')
 		if QFile.exists(getBundledIcon('retext')):
 			self.setWindowIcon(QIcon(getBundledIcon('retext')))
 		elif QFile.exists('/usr/share/pixmaps/retext.png'):
