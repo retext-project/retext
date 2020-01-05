@@ -26,8 +26,7 @@ from ReText import (getBundledIcon, app_version, globalSettings,
 from ReText.tab import (ReTextTab, ReTextWebKitPreview, ReTextWebEnginePreview,
                         PreviewDisabled, PreviewNormal, PreviewLive)
 from ReText.dialogs import HtmlDialog, LocaleDialog
-from ReText.config import ConfigDialog
-from ReText.icontheme import get_icon_theme
+from ReText.config import ConfigDialog, setIconThemeFromSettings
 from ReText.tabledialog import InsertTableDialog
 
 try:
@@ -67,16 +66,7 @@ class ReTextWindow(QMainWindow):
 			searchPaths.append('/opt/local/share/icons')
 			searchPaths.append('/usr/local/share/icons')
 			QIcon.setThemeSearchPaths(searchPaths)
-		if globalSettings.iconTheme:
-			QIcon.setThemeName(globalSettings.iconTheme)
-		if QIcon.themeName() in ('hicolor', ''):
-			if not QFile.exists(getBundledIcon('document-new')):
-				QIcon.setThemeName(get_icon_theme())
-		if QIcon.themeName() == 'Yaru' and not QIcon.hasThemeIcon('document-new'):
-			# Old Yaru does not have non-symbolic action icons, so all
-			# document-* icons fall back to mimetypes/document.png.
-			# See https://github.com/ubuntu/yaru/issues/1294
-			QIcon.setThemeName('Humanity')
+		setIconThemeFromSettings()
 		if QFile.exists(getBundledIcon('retext')):
 			self.setWindowIcon(QIcon(getBundledIcon('retext')))
 		elif QFile.exists('/usr/share/pixmaps/retext.png'):
