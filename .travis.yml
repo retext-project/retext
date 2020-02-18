@@ -12,6 +12,7 @@ addons:
     - libegl1-mesa
     - libxkbcommon-x11-0
 install:
+  - pip install --upgrade pip
   - pip install PyQt5 Markdown pymdown-extensions docutils pyflakes chardet Pygments
   - pip install git+https://github.com/retext-project/pymarkups.git
 script:
