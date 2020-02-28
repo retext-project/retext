@@ -88,8 +88,8 @@ class retext_install(install):
 			self.orig_install_scripts = self.install_scripts
 			self.orig_install_data = self.install_data
 		elif self.root.endswith("/wheel"):
-			# Installing into a wheel, do not hardcode paths in the .desktop file
-			return
+			raise RuntimeError("Building wheels is disabled, because it breaks .desktop"
+			                   " files. See issues #452 and #497 for details.")
 		retext = join(self.orig_install_scripts, 'retext')
 
 		# Fix Exec and Icon fields in the desktop file
