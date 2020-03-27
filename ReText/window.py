@@ -141,7 +141,7 @@ class ReTextWindow(QMainWindow):
 		menuPreview = QMenu()
 		menuPreview.addAction(self.actionLivePreview)
 		self.actionPreview.setMenu(menuPreview)
-		self.actionInsertTable = self.act(self.tr('Table'),
+		self.actionInsertTable = self.act(self.tr('Insert table'),
 			trig=lambda: self.insertFormatting('table'))
 		self.actionTableMode = self.act(self.tr('Table editing mode'),
 			shct=Qt.CTRL+Qt.Key_T,
@@ -217,8 +217,6 @@ class ReTextWindow(QMainWindow):
 			lambda: self.searchBar.setVisible(False),
 			shct=QKeySequence.Cancel)
 		self.actionCloseSearch.setPriority(QAction.LowPriority)
-		self.actionInsertImage = self.act(self.tr('Image'), 'image',
-										  self.insertImage)
 		self.actionHelp = self.act(self.tr('Get help online'), 'help-contents', self.openHelp)
 		self.aboutWindowTitle = self.tr('About ReText')
 		self.actionAbout = self.act(self.aboutWindowTitle, 'help-about', self.aboutDialog)
@@ -262,7 +260,6 @@ class ReTextWindow(QMainWindow):
 		menubar = self.menuBar()
 		menuFile = menubar.addMenu(self.tr('File'))
 		menuEdit = menubar.addMenu(self.tr('Edit'))
-		menuInsert = menubar.addMenu(self.tr('Insert'))
 		menuHelp = menubar.addMenu(self.tr('Help'))
 		menuFile.addAction(self.actionNew)
 		menuFile.addAction(self.actionOpen)
@@ -327,15 +324,13 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionViewHtml)
 		menuEdit.addAction(self.actionPreview)
+		menuEdit.addAction(self.actionInsertTable)
+		menuEdit.addAction(self.actionTableMode)
 		if ReTextFakeVimHandler:
 			menuEdit.addAction(self.actionFakeVimMode)
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionFullScreen)
 		menuEdit.addAction(self.actionConfig)
-		menuInsert.addAction(self.actionInsertTable)
-		menuInsert.addAction(self.actionTableMode)
-		menuInsert.addSeparator()
-		menuInsert.addAction(self.actionInsertImage)
 		menuHelp.addAction(self.actionHelp)
 		menuHelp.addSeparator()
 		menuHelp.addAction(self.actionAbout)
