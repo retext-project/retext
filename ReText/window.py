@@ -1248,15 +1248,17 @@ class ReTextWindow(QMainWindow):
 	def insertImage(self):
 		supportedExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp']
 		fileFilter = ' (' + str.join(' ', ['*' + ext for ext in supportedExtensions]) + ');;'
-		fileName = QFileDialog.getOpenFileName(self,
-			self.tr("Select one or several files to open"), QDir.currentPath(),
+		fileNames = QFileDialog.getOpenFileNames(self,
+			self.tr("Select one or several images to open"), QDir.currentPath(),
 			self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
 
-		fileName = fileName[0]
-		imageText = '![{0}]({1})'.format(self.tr('Alt text'), self.tr(fileName))
-
 		cursor = self.currentTab.editBox.textCursor()
-		cursor.insertText(imageText)
+		# if there're more than one file, add break lines '\n'
+		bl = '\n' if len(fileNames[0]) > 1 else ''
+		for fileName in fileNames[0]:
+			imageText = '![{0}]({1}){2}'.format(self.tr('Alt text'), self.tr(fileName), bl)
+			cursor.insertText(imageText)
+
 		self.formattingBox.setCurrentIndex(0)
 		self.currentTab.editBox.setFocus(Qt.OtherFocusReason)
 
