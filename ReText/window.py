@@ -1246,8 +1246,8 @@ class ReTextWindow(QMainWindow):
 		supportedExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp']
 		fileFilter = ' (' + str.join(' ', ['*' + ext for ext in supportedExtensions]) + ');;'
 		fileName = QFileDialog.getOpenFileName(self,
-												 self.tr("Select one or several files to open"), QDir.currentPath(),
-												 self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
+			self.tr("Select one or several files to open"), QDir.currentPath(),
+			self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
 
 		fileName = fileName[0]
 		imageText = '![{0}]({1})'.format(self.tr('Alt text'), self.tr(fileName))
