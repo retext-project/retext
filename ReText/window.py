@@ -1105,6 +1105,9 @@ class ReTextWindow(QMainWindow):
 			dialog.show()
 			self.formattingBox.setCurrentIndex(0)
 			return
+		elif formatting == 'image':
+			self.insertImage()
+			return
 
 		cursor = self.currentTab.editBox.textCursor()
 		text = cursor.selectedText()
@@ -1238,6 +1241,21 @@ class ReTextWindow(QMainWindow):
 		htmlDlg.show()
 		htmlDlg.raise_()
 		htmlDlg.activateWindow()
+
+	def insertImage(self):
+		supportedExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp']
+		fileFilter = ' (' + str.join(' ', ['*' + ext for ext in supportedExtensions]) + ');;'
+		fileName = QFileDialog.getOpenFileName(self,
+												 self.tr("Select one or several files to open"), QDir.currentPath(),
+												 self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
+
+		fileName = fileName[0]
+		imageText = '![{0}]({1})'.format(self.tr('Alt text'), self.tr(fileName))
+
+		cursor = self.currentTab.editBox.textCursor()
+		cursor.insertText(imageText)
+		self.formattingBox.setCurrentIndex(0)
+		self.currentTab.editBox.setFocus(Qt.OtherFocusReason)
 
 	def openHelp(self):
 		QDesktopServices.openUrl(QUrl('https://github.com/retext-project/retext/wiki'))
