@@ -148,7 +148,7 @@ class ReTextWindow(QMainWindow):
 			shct=Qt.CTRL+Qt.Key_T,
 			trigbool=lambda x: self.currentTab.editBox.enableTableMode(x))
 		self.actionInsertImage = self.act(self.tr('Insert images by file path'),
-			trig=lambda: self.insertFormatting('image'))
+			trig=lambda: self.insertImage())
 		if ReTextFakeVimHandler:
 			self.actionFakeVimMode = self.act(self.tr('FakeVim mode'),
 				shct=Qt.CTRL+Qt.ALT+Qt.Key_V, trigbool=self.enableFakeVimMode)
