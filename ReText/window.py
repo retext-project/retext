@@ -146,6 +146,8 @@ class ReTextWindow(QMainWindow):
 		self.actionTableMode = self.act(self.tr('Table editing mode'),
 			shct=Qt.CTRL+Qt.Key_T,
 			trigbool=lambda x: self.currentTab.editBox.enableTableMode(x))
+		self.actionInsertImage = self.act(self.tr('Insert images by file path'),
+			trig=lambda: self.insertFormatting('image'))
 		if ReTextFakeVimHandler:
 			self.actionFakeVimMode = self.act(self.tr('FakeVim mode'),
 				shct=Qt.CTRL+Qt.ALT+Qt.Key_V, trigbool=self.enableFakeVimMode)
@@ -326,6 +328,7 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionPreview)
 		menuEdit.addAction(self.actionInsertTable)
 		menuEdit.addAction(self.actionTableMode)
+		menuEdit.addAction(self.actionInsertImage)
 		if ReTextFakeVimHandler:
 			menuEdit.addAction(self.actionFakeVimMode)
 		menuEdit.addSeparator()
