@@ -1108,9 +1108,6 @@ class ReTextWindow(QMainWindow):
 			dialog.show()
 			self.formattingBox.setCurrentIndex(0)
 			return
-		elif formatting == 'image':
-			self.insertImage()
-			return
 
 		cursor = self.currentTab.editBox.textCursor()
 		text = cursor.selectedText()
