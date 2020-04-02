@@ -1247,7 +1247,7 @@ class ReTextWindow(QMainWindow):
 
 	def insertImage(self):
 		supportedExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp']
-		fileFilter = ' (' + str.join(' ', ['*' + ext for ext in supportedExtensions]) + ');;'
+		fileFilter = ' (%s);;' % ' '.join('*' + ext for ext in supportedExtensions)
 		fileNames, _selectedFilter = QFileDialog.getOpenFileNames(self,
 			self.tr("Select one or several images to open"), QDir.currentPath(),
 			self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
