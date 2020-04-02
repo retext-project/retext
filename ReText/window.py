@@ -146,6 +146,8 @@ class ReTextWindow(QMainWindow):
 		self.actionTableMode = self.act(self.tr('Table editing mode'),
 			shct=Qt.CTRL+Qt.Key_T,
 			trigbool=lambda x: self.currentTab.editBox.enableTableMode(x))
+		self.actionInsertImages = self.act(self.tr('Insert images by file path'),
+			trig=lambda: self.insertImages())
 		if ReTextFakeVimHandler:
 			self.actionFakeVimMode = self.act(self.tr('FakeVim mode'),
 				shct=Qt.CTRL+Qt.ALT+Qt.Key_V, trigbool=self.enableFakeVimMode)
@@ -326,6 +328,7 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionPreview)
 		menuEdit.addAction(self.actionInsertTable)
 		menuEdit.addAction(self.actionTableMode)
+		menuEdit.addAction(self.actionInsertImages)
 		if ReTextFakeVimHandler:
 			menuEdit.addAction(self.actionFakeVimMode)
 		menuEdit.addSeparator()
@@ -1238,6 +1241,23 @@ class ReTextWindow(QMainWindow):
 		htmlDlg.show()
 		htmlDlg.raise_()
 		htmlDlg.activateWindow()
+
+	def insertImages(self):
+		supportedExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp']
+		fileFilter = ' (%s);;' % ' '.join('*' + ext for ext in supportedExtensions)
+		fileNames, _selectedFilter = QFileDialog.getOpenFileNames(self,
+			self.tr("Select one or several images to open"), QDir.currentPath(),
+			self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
+
+		cursor = self.currentTab.editBox.textCursor()
+
+		imagesMarkup = '\n'.join(
+			self.currentTab.editBox.getImageMarkup(fileName)
+			for fileName in fileNames)
+		cursor.insertText(imagesMarkup)
+
+		self.formattingBox.setCurrentIndex(0)
+		self.currentTab.editBox.setFocus(Qt.OtherFocusReason)
 
 	def openHelp(self):
 		QDesktopServices.openUrl(QUrl('https://github.com/retext-project/retext/wiki'))
