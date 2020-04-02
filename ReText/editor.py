@@ -134,6 +134,8 @@ class ReTextEdit(QTextEdit):
 		self.infoArea.updateTextAndGeometry()
 		self.updateTextStatistics()
 		self.statsArea.updateTextAndGeometry()
+		if globalSettings.wideCursor:
+			self.setCursorWidth(metrics.averageCharWidth())
 
 	def paintEvent(self, event):
 		if not globalSettings.rightMargin:

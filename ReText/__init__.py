@@ -102,6 +102,7 @@ configOptions = {
 	'useFakeVim': False,
 	'useWebEngine': False,
 	'useWebKit': False,
+	'wideCursor': False,
 	'windowGeometry': QByteArray(),
 	'windowTitleFullPath': False,
 }
