@@ -378,7 +378,7 @@ class ReTextEdit(QTextEdit):
 				highestNumber = max(number, highestNumber)
 		return 'image%04d.png' % (highestNumber + 1)
 
-	def getImageFilenameAndLink(self):
+	def getImageFilename(self):
 		if self.tab.fileName:
 			saveDir = os.path.dirname(self.tab.fileName)
 		else:
@@ -386,30 +386,30 @@ class ReTextEdit(QTextEdit):
 
 		imageFileName = self.findNextImageName(os.listdir(saveDir))
 
-		chosenFileName = QFileDialog.getSaveFileName(self,
+		return QFileDialog.getSaveFileName(self,
 		                                   self.tr('Save image'),
 		                                   os.path.join(saveDir, imageFileName),
 		                                   self.tr('Images (*.png *.jpg)'))[0]
 
-		if chosenFileName:
-			# Use relative links for named documents
-			if self.tab.fileName:
-				try:
-					link = os.path.relpath(chosenFileName, saveDir)
-				except ValueError:  # different roots
-					link = chosenFileName
-			else:
-				link = chosenFileName
-		else:
-			link = None
+	def makeFileNameRelative(self, fileName):
+		"""Tries to make the given fileName relative. If the document is
+		not saved, or the fileName is on a different root, returns the
+		original fileName.
+		"""
+		if self.tab.fileName:
+			currentDir = os.path.dirname(self.tab.fileName)
+			try:
+				return os.path.relpath(fileName, currentDir)
+			except ValueError:  # different roots
+				return fileName
+		return fileName
 
-		return chosenFileName, link
-
-	def getImageMarkup(self, link):
+	def getImageMarkup(self, fileName):
 		"""Returns markup for image in the current markup language.
 
 		This method is also accessed in ReTextWindow.insertImage.
 		"""
+		link = self.makeFileNameRelative(fileName)
 		markupClass = self.tab.getActiveMarkupClass()
 		if markupClass == MarkdownMarkup:
 			return '![%s](%s)' % (QFileInfo(link).baseName(), link)
@@ -420,13 +420,13 @@ class ReTextEdit(QTextEdit):
 
 	def pasteImage(self):
 		mimeData = QApplication.instance().clipboard().mimeData()
-		fileName, link = self.getImageFilenameAndLink()
+		fileName = self.getImageFilename()
 		if not fileName or not mimeData.hasImage():
 			return
 		image = QImage(mimeData.imageData())
 		image.save(fileName)
 
-		imageText = self.getImageMarkup(link)
+		imageText = self.getImageMarkup(fileName)
 
 		self.textCursor().insertText(imageText)
 
