@@ -111,24 +111,26 @@ class TestClipboardHandling(unittest.TestCase):
 		self.editor.insertFromMimeData(mimeData)
 		self.assertTrue('pasted text' in self.editor.toPlainText())
 
-	@patch.object(ReTextEdit, 'getImageFilenameAndLink', return_value=('/tmp/myimage.jpg', 'myimage.jpg'))
+	@patch.object(ReTextEdit, 'getImageFilename', return_value='/tmp/myimage.jpg')
 	@patch.object(QImage, 'save')
 	def test_pasteImage_Markdown(self, _mock_image, _mock_editor):
 		mimeData = QMimeData()
 		mimeData.setImageData(self._create_image())
 		app.clipboard().setMimeData(mimeData)
 		self.dummytab.markupClass = MarkdownMarkup
+		self.dummytab.fileName = '/tmp/foo.md'
 
 		self.editor.pasteImage()
 		self.assertTrue('![myimage](myimage.jpg)' in self.editor.toPlainText())
 
-	@patch.object(ReTextEdit, 'getImageFilenameAndLink', return_value=('/tmp/myimage.jpg', 'myimage.jpg'))
+	@patch.object(ReTextEdit, 'getImageFilename', return_value='/tmp/myimage.jpg')
 	@patch.object(QImage, 'save')
 	def test_pasteImage_RestructuredText(self, _mock_image, _mock_editor):
 		mimeData = QMimeData()
 		mimeData.setImageData(self._create_image())
 		app.clipboard().setMimeData(mimeData)
 		self.dummytab.markupClass = ReStructuredTextMarkup
+		self.dummytab.fileName = '/tmp/foo.rst'
 
 		self.editor.pasteImage()
 		self.assertTrue('.. image:: myimage.jpg' in self.editor.toPlainText())
