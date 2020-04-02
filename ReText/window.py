@@ -28,7 +28,6 @@ from ReText.tab import (ReTextTab, ReTextWebKitPreview, ReTextWebEnginePreview,
 from ReText.dialogs import HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog, setIconThemeFromSettings
 from ReText.tabledialog import InsertTableDialog
-from ReText.editor import ReTextEdit
 
 try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler, FakeVimMode
@@ -1254,13 +1253,12 @@ class ReTextWindow(QMainWindow):
 			self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
 
 		cursor = self.currentTab.editBox.textCursor()
-		markupClass = self.currentTab.getActiveMarkupClass()
 
 		# if there're more than one file, add break lines '\n'
 		bl = '\n' if len(fileNames[0]) > 1 else ''
 		for fileName in fileNames[0]:
-			imageText = ReTextEdit.getCorrectSyntaxLink(markupClass, fileName)
-			cursor.insertText(imageText + bl)
+			imageMarkup = self.currentTab.editBox.getImageMarkup(fileName)
+			cursor.insertText(imageMarkup + bl)
 
 		self.formattingBox.setCurrentIndex(0)
 		self.currentTab.editBox.setFocus(Qt.OtherFocusReason)

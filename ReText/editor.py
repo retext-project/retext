@@ -405,9 +405,12 @@ class ReTextEdit(QTextEdit):
 
 		return chosenFileName, link
 
-	# this function is also accessed in window.insertImage
-	@staticmethod
-	def getCorrectSyntaxLink(markupClass, link):
+	def getImageMarkup(self, link):
+		"""Returns markup for image in the current markup language.
+
+		This method is also accessed in ReTextWindow.insertImage.
+		"""
+		markupClass = self.tab.getActiveMarkupClass()
 		if markupClass == MarkdownMarkup:
 			return '![%s](%s)' % (QFileInfo(link).baseName(), link)
 		elif markupClass == ReStructuredTextMarkup:
@@ -423,8 +426,7 @@ class ReTextEdit(QTextEdit):
 		image = QImage(mimeData.imageData())
 		image.save(fileName)
 
-		markupClass = self.tab.getActiveMarkupClass()
-		imageText = self.getCorrectSyntaxLink(markupClass, link)
+		imageText = self.getImageMarkup(link)
 
 		self.textCursor().insertText(imageText)
 
