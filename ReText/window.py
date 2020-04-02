@@ -1254,11 +1254,10 @@ class ReTextWindow(QMainWindow):
 
 		cursor = self.currentTab.editBox.textCursor()
 
-		# if there're more than one file, add break lines '\n'
-		bl = '\n' if len(fileNames) > 1 else ''
-		for fileName in fileNames:
-			imageMarkup = self.currentTab.editBox.getImageMarkup(fileName)
-			cursor.insertText(imageMarkup + bl)
+		imagesMarkup = '\n'.join(
+			self.currentTab.editBox.getImageMarkup(fileName)
+			for fileName in fileNames)
+		cursor.insertText(imagesMarkup)
 
 		self.formattingBox.setCurrentIndex(0)
 		self.currentTab.editBox.setFocus(Qt.OtherFocusReason)
