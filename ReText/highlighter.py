@@ -166,7 +166,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 		if self.dictionary:
 			charFormat = QTextCharFormat()
 			charFormat.setUnderlineColor(Qt.red)
-			charFormat.setUnderlineStyle(QTextCharFormat.WaveUnderline)
+			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
 			for match in reWords.finditer(text):
 				finalFormat = QTextCharFormat()
 				finalFormat.merge(charFormat)
