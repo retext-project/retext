@@ -16,8 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QDir
-from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtCore import QDir, Qt
+from PyQt5.QtGui import QDesktopServices, QGuiApplication
 from PyQt5.QtWidgets import QTextBrowser
 from ReText import globalSettings
 
@@ -81,3 +81,10 @@ class ReTextWebPreview:
 
 	def _handleEditorResized(self, rect):
 		self.syncscroll.handleEditorResized(rect.height())
+
+	def wheelEvent(self, event):
+		if QGuiApplication.keyboardModifiers() == Qt.ControlModifier:
+			zoomFactor = self.zoomFactor()
+			zoomFactor *= 1.001 ** event.angleDelta().y()
+			self.setZoomFactor(zoomFactor)
+		return super().wheelEvent(event)

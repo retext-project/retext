@@ -19,6 +19,7 @@
 from ReText import globalSettings
 from ReText.preview import ReTextWebPreview
 from ReText.syncscroll import SyncScroll
+from PyQt5.QtCore import QEvent, Qt
 from PyQt5.QtGui import QDesktopServices, QGuiApplication
 from PyQt5.QtWebEngineWidgets import QWebEnginePage, QWebEngineView, QWebEngineSettings
 
@@ -106,3 +107,18 @@ class ReTextWebEnginePreview(ReTextWebPreview, QWebEngineView):
         # controlling the position of the preview
         if self.syncscroll.isActive():
             QGuiApplication.sendEvent(self.focusProxy(), event)
+
+    def event(self, event):
+        # Work-around https://bugreports.qt.io/browse/QTBUG-43602
+        if event.type() == QEvent.ChildAdded:
+            event.child().installEventFilter(self)
+        elif event.type() == QEvent.ChildRemoved:
+            event.child().removeEventFilter(self)
+        return super().event(event)
+
+    def eventFilter(self, object, event):
+        if event.type() == QEvent.Wheel:
+            if QGuiApplication.keyboardModifiers() == Qt.ControlModifier:
+                self.wheelEvent(event)
+                return True
+        return False
