@@ -1,3 +1,95 @@
+## ReText 7.1
+
+* General improvements:
+    - New files are now opened in new tabs by default, not new windows
+      (contributed by Daniele Scasciafratte in #476). This can be disabled
+      using `openFilesInExistingWindow` configuration option.
+    - Preferences dialog improvements: it now uses tabs; added a link to
+      configuration file (contributed by Xavier Gouchet in #327); clicking on
+      checkbox label now changes checkbox state.
+    - Return key now automatically continues quote blocks and ordered lists
+      (contributed by Xavier Gouchet in #298 and #326).
+    - It is now possible to close the current tab with Ctrl+W (contributed by
+      Xavier Gouchet in #283).
+    - Ctrl+wheel on editor now increases/decreases font size (contributed by
+      Xavier Gouchet in #328). Ctrl+wheel in preview zooms in/out (#400).
+    - Alt+Up/Down arrow now moves the current line up/down (contributed by
+      Xavier Gouchet in #337).
+    - Added “Jump to Line” feature, with Ctrl+G shortcut (contributed by
+      Xavier Gouchet in #382).
+    - Table mode improvements (contributed by Maurice van der Pot).
+    - “Paste Image” moved to a separate action, with Ctrl+Shift+V shortcut.
+    - Added “Insert table” dialog (contributed by Changhee Kim in #431).
+    - Clicking a link to nonexistent file now prompts the user to create it
+      (contributed by red-kite in #436 and Xavier Gouchet in #459).
+    - Added a menu action to insert images from filesystem (contributed by
+      Daniel Venturini in #500).
+* New options added:
+    - `relativeLineNumbers` — count line numbers as relative to the current
+      line (contributed by Xavier Gouchet in #270).
+    - `documentStatsEnabled` — show text statistics in the lower left corner
+      of the editor (contributed by Xavier Gouchet in #268 and #338).
+    - `rightMarginWrap` — soft-wrap text at user specified margin line
+      (contributed by Oğuzhan Öğreden in #313).
+    - `paperSize` — set the default paper size for print or PDF export
+      (contributed by mray271 in #335).
+    - `recentDocumentsCount` — number of recent files to show in the menu
+      (contributed by red-kite in #407).
+    - `windowTitleFullPath` — show full path in window title (contributed by
+      red-kite in #429).
+    - `defaultPreviewState` — mode for new tabs: `editor`, `normal-preview` or
+      `live-preview` (contributed by red-kite in #435). It replaces the old
+      `livePreviewByDefault` option.
+    - `wideCursor` — make cursor as wide as characters.
+* Bugs fixed:
+    - Issue #252 — Limit max-width of images to 100%.
+    - Issue #267 — setup.py now installs retext.svg icon.
+    - Issues #281, #469 — Autofill current filename for PDF export and Save As
+      dialogs (the Save As part contributed by Xavier Gouchet in #474).
+    - Issue #291 — Make sure search result does not overlap with stats/info
+      areas.
+    - Issue #301 — Made the Markdown include extension working.
+    - PR #315 — Fixed handling multi-line rows in reStructuredText tables in
+      table mode (contributed by R1dO).
+    - Issue #346 — Ctrl+F now focuses the search field, not closes the search
+      bar. To close the search bar, now the Escape key can be used.
+    - Issue #360 — Optimize line number area painting for large documents.
+    - Issue #378 — Ensure that cursor is visible after resizes.
+    - Issue #397 — Only check whether .css file exists on initial page load.
+    - Issue #399 — Try to load libGL.so.1 before creating QApplication.
+    - Issue #408 — Fix printing with dark themes.
+    - Issue #409 — Make the WebKit renderer use disk cache.
+    - PRs #411, #417, #426, #494 — AppData file improvements (contributed by
+      scx).
+    - Issue #441 — Files reloading no longer triggers tab change.
+    - Issue #445 — Implemented PDF export for the WebEngine renderer.
+    - Issue #451 — Make the highlighter not break the pymdownx.highlight
+      extension.
+    - Issues #452, #497, #499 — Prevent pip from building wheels, as that
+      results in broken desktop files.
+    - Issues #467, #488 — WebEngine renderer broken with new Qt versions.
+    - Issue #468 — Include the stylesheet in exported HTML.
+    - Issue #479 — Display `*` in tab title when document is modified and
+      unsaved (contributed by Xavier Gouchet in #480).
+    - Issue #487 — Added a workaround for missing icons in Ubuntu 19.10 Yaru
+      theme.
+    - PR #496 — Enable HiDPI icons (contributed by Guo Yunhe).
+* Translations updated:
+    - Chinese (China) (contributed by liulitchi and the Chinese team).
+    - Czech (contributed by David Kolibáč).
+    - Danish (contributed by scootergrisen).
+    - Dutch (contributed by Heimen Stoffels).
+    - Finnish (contributed by elguitar).
+    - German (contributed by Oliver A. Gubler in #370, Carsten Beck).
+    - Italian (contributed by Alessandro Menti).
+    - Korean (contributed by MukKim in #415).
+    - Portuguese (Brazil) (contributed by EdemarSantos).
+    - Portuguese (European) (contributed by Ricardo Simões in #278).
+    - Russian (contributed by Vladislav Glinsky, Виктор Ерухин).
+    - Spanish (contributed by Félix Fischer, Fito JB).
+    - Swedish (contributed by Philip Andersen).
+    - Ukrainian (contributed by Vladislav Glinsky).
+
 ## ReText 7.0 (2017-02-11)
 
 * It is now possible to install ReText on Windows and macOS using a simple
