@@ -35,7 +35,7 @@ from PyQt5.QtNetwork import QNetworkProxyFactory
 from PyQt5.QtDBus import QDBusConnection, QDBusInterface
 
 def canonicalize(option):
-	if option in ('--preview', '-'):
+	if option == '-':
 		return option
 	return QFileInfo(option).canonicalFilePath()
 
