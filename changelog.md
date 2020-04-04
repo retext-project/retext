@@ -53,7 +53,6 @@
       table mode (contributed by R1dO).
     - Issue #346 — Ctrl+F now focuses the search field, not closes the search
       bar. To close the search bar, now the Escape key can be used.
-    - Issue #360 — Optimize line number area painting for large documents.
     - Issue #378 — Ensure that cursor is visible after resizes.
     - Issue #397 — Only check whether .css file exists on initial page load.
     - Issue #399 — Try to load libGL.so.1 before creating QApplication.
