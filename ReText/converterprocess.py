@@ -102,7 +102,7 @@ class ConverterProcess(QObject):
     conversionDone = pyqtSignal()
 
     def __init__(self):
-        super(QObject, self).__init__()
+        super().__init__()
 
         conn_parent, conn_child = socketpair()
 
