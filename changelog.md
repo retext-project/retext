@@ -85,6 +85,7 @@
     - Portuguese (Brazil) (contributed by EdemarSantos).
     - Portuguese (European) (contributed by Ricardo Simões in #278).
     - Russian (contributed by Vladislav Glinsky, Виктор Ерухин).
+    - Serbian (contributed by Slobodan Simić).
     - Spanish (contributed by Félix Fischer, Fito JB).
     - Swedish (contributed by Philip Andersen).
     - Ukrainian (contributed by Vladislav Glinsky).
