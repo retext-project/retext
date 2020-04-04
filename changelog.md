@@ -1,4 +1,4 @@
-## ReText 7.1
+## ReText 7.1.0 (2020-04-04)
 
 * General improvements:
     - New files are now opened in new tabs by default, not new windows

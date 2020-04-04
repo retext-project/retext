@@ -59,6 +59,7 @@
   <update_contact>mitya57_AT_gmail.com</update_contact>
   <content_rating type="oars-1.0"/>
   <releases>
+    <release version="7.1.0" date="2020-04-04"/>
     <release version="7.0.4" date="2018-09-23"/>
     <release version="7.0.3" date="2018-06-06"/>
     <release version="7.0.2" date="2018-06-05"/>
