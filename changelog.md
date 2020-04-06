@@ -62,8 +62,8 @@
       scx).
     - Issue #441 — Files reloading no longer triggers tab change.
     - Issue #445 — Implemented PDF export for the WebEngine renderer.
-    - Issue #451 — Make the highlighter not break the pymdownx.highlight
-      extension.
+    - Issue #451 — Make the synchronized scroll implementation not break the
+      pymdownx.highlight extension.
     - Issues #452, #497, #499 — Prevent pip from building wheels, as that
       results in broken desktop files.
     - Issues #467, #488 — WebEngine renderer broken with new Qt versions.
