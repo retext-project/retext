@@ -89,7 +89,9 @@ class retext_install(install):
 			self.orig_install_data = self.install_data
 		elif self.root.endswith("/wheel"):
 			raise RuntimeError("Building wheels is disabled, because it breaks .desktop"
-			                   " files. See issues #452 and #497 for details.")
+			                   " files. See issues #452 and #497 for details.\n"
+			                   "If you are using pip, please ignore this error,"
+			                   " installation should still succeed.")
 		retext = join(self.orig_install_scripts, 'retext')
 
 		# Fix Exec and Icon fields in the desktop file
