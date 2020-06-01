@@ -10,6 +10,12 @@ addons:
   apt:
     packages:
     - libegl1-mesa
+    - libxcb-icccm4
+    - libxcb-image0
+    - libxcb-keysyms1
+    - libxcb-randr0
+    - libxcb-render-util0
+    - libxcb-xinerama0
     - libxkbcommon-x11-0
 install:
   - pip install --upgrade pip
