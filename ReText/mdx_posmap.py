@@ -18,12 +18,13 @@ License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 from __future__ import unicode_literals
 
 import re
+from xml.etree.ElementTree import SubElement
 
 from markdown.blockprocessors import BlockProcessor
 from markdown.extensions import Extension
 from markdown.extensions.codehilite import CodeHilite
 from markdown.preprocessors import Preprocessor
-from markdown.util import etree, HTML_PLACEHOLDER_RE
+from markdown.util import HTML_PLACEHOLDER_RE
 try:
     from pymdownx.highlight import Highlight
 except ImportError:
@@ -110,7 +111,7 @@ class PosMapBlockProcessor(BlockProcessor):
             # would interfere with later replacement with literal HTML
             # fragments. In this case just add an empty <p> with the attribute.
             if last_child.text and re.match(HTML_PLACEHOLDER_RE, last_child.text):
-                last_child = etree.SubElement(parent, 'p')
+                last_child = SubElement(parent, 'p')
             last_child.set('data-posmap', line_nr)
 
 def makeExtension(*args, **kwargs):
