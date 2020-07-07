@@ -57,7 +57,8 @@ class ReTextWindow(QMainWindow):
 		if globalSettings.windowGeometry:
 			self.restoreGeometry(globalSettings.windowGeometry)
 		else:
-			self.move((screenRect.width()-self.width())/2, (screenRect.height()-self.height())/2)
+			self.move((screenRect.width() - self.width()) // 2,
+			          (screenRect.height() - self.height()) // 2)
 			if not screenRect.contains(self.geometry()):
 				self.showMaximized()
 		if sys.platform.startswith('darwin'):
