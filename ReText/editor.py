@@ -97,6 +97,16 @@ class ReTextEdit(QTextEdit):
 	orderedListPattern = re.compile("^([\\s]*)(\\d+)\\. $")
 	wordPattern = re.compile(r"\w+")
 	nonAlphaNumPattern = re.compile(r"\W")
+	surroundKeysSelfClose = [
+		Qt.Key_Underscore,
+		Qt.Key_Asterisk,
+		Qt.Key_QuoteDbl,
+		Qt.Key_Apostrophe
+	]
+	surroundKeysOtherClose = {
+		Qt.Key_ParenLeft: ')',
+		Qt.Key_BracketLeft: ']'
+	}
 
 	def __init__(self, parent):
 		QTextEdit.__init__(self)
@@ -234,6 +244,23 @@ class ReTextEdit(QTextEdit):
 		dictionary.add(newword)
 		self.tab.highlighter.rehighlightBlock(block)
 
+	def isSurroundKey(self, key):
+		return key in self.surroundKeysSelfClose or key in self.surroundKeysOtherClose
+
+	def getCloseKey(self, event, key):
+		if key in self.surroundKeysSelfClose:
+			return event.text()
+
+		if key in self.surroundKeysOtherClose:
+			return self.surroundKeysOtherClose[key]
+
+	def surroundText(self, cursor, event, key):
+		text = cursor.selectedText()
+		keyStr = event.text()
+		keyClose = self.getCloseKey(event, key)
+
+		cursor.insertText(keyStr + text + keyClose)
+
 	def keyPressEvent(self, event):
 		key = event.key()
 		cursor = self.textCursor()
@@ -259,6 +286,8 @@ class ReTextEdit(QTextEdit):
 					# Insert Markdown-style line break
 					cursor.insertText('  ')
 				self.handleReturn(cursor)
+		elif cursor.selectedText() and self.isSurroundKey(key):
+			self.surroundText(cursor, event, key)
 		else:
 			if event.text() and self.tableModeEnabled:
 				cursor.beginEditBlock()
