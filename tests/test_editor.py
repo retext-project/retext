@@ -169,7 +169,6 @@ class TestSurround(unittest.TestCase):
 		self.assertTrue(self.editor.isSurroundKey(Qt.Key_Apostrophe))
 
 	def test_getCloseKey(self):
-		# xvfb-run -a -s "-screen 0 1024x768x24" python3 setup.py test
 		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_Underscore), Qt.Key_Underscore), '_')
 		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_Asterisk), Qt.Key_Asterisk), '*')
 		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_QuoteDbl), Qt.Key_QuoteDbl), '"')
