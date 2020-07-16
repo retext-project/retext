@@ -22,8 +22,8 @@ from unittest.mock import patch
 
 from ReText.editor import ReTextEdit
 from ReText.editor import documentIndentMore, documentIndentLess
-from PyQt5.QtGui import QImage, QTextCursor, QTextDocument
-from PyQt5.QtCore import Qt, QMimeData
+from PyQt5.QtGui import QImage, QTextCursor, QTextDocument, QKeyEvent
+from PyQt5.QtCore import Qt, QMimeData, QEvent
 from PyQt5.QtWidgets import QApplication
 from markups import MarkdownMarkup, ReStructuredTextMarkup
 
@@ -134,6 +134,78 @@ class TestClipboardHandling(unittest.TestCase):
 
 		self.editor.pasteImage()
 		self.assertTrue('.. image:: myimage.jpg' in self.editor.toPlainText())
+
+
+class TestSurround(unittest.TestCase):
+
+	def setUp(self):
+		self.p = self
+		self.editor = ReTextEdit(self)
+		self.document = QTextDocument()
+		self.document.setPlainText('foo bar baz qux corge grault')
+		self.cursor = QTextCursor(self.document)
+
+	def getText(self, key):
+		if key == Qt.Key_ParenLeft: return '('
+		if key == Qt.Key_BracketLeft: return '['
+		if key == Qt.Key_Underscore: return '_'
+		if key == Qt.Key_Asterisk: return '*'
+		if key == Qt.Key_QuoteDbl: return '"'
+		if key == Qt.Key_Apostrophe: return '\''
+
+	def getEvent(self, key):
+		return QKeyEvent(QEvent.KeyPress, key, Qt.NoModifier, text=self.getText(key))
+
+	def test_isSurroundKey(self):
+		# close keys should not start a surrounding
+		self.assertFalse(self.editor.isSurroundKey(Qt.Key_ParenRight))
+		self.assertFalse(self.editor.isSurroundKey(Qt.Key_BracketRight))
+
+		self.assertTrue(self.editor.isSurroundKey(Qt.Key_ParenLeft))
+		self.assertTrue(self.editor.isSurroundKey(Qt.Key_BracketLeft))
+		self.assertTrue(self.editor.isSurroundKey(Qt.Key_Underscore))
+		self.assertTrue(self.editor.isSurroundKey(Qt.Key_Asterisk))
+		self.assertTrue(self.editor.isSurroundKey(Qt.Key_QuoteDbl))
+		self.assertTrue(self.editor.isSurroundKey(Qt.Key_Apostrophe))
+
+	def test_getCloseKey(self):
+		# xvfb-run -a -s "-screen 0 1024x768x24" python3 setup.py test
+		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_Underscore), Qt.Key_Underscore), '_')
+		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_Asterisk), Qt.Key_Asterisk), '*')
+		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_QuoteDbl), Qt.Key_QuoteDbl), '"')
+		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_Apostrophe), Qt.Key_Apostrophe), '\'')
+		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_ParenLeft), Qt.Key_ParenLeft), ')')
+		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_BracketLeft), Qt.Key_BracketLeft), ']')
+
+	def changeCursor(self, posI, posF):
+		self.cursor.setPosition(posI)
+		self.cursor.setPosition(posF, QTextCursor.KeepAnchor)
+
+	def test_surroundText(self):
+
+		self.changeCursor(0, 3)
+		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key_Underscore), Qt.Key_Underscore)
+		self.assertEqual(self.document.toPlainText(), '_foo_ bar baz qux corge grault')
+
+		self.changeCursor(6, 9)
+		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key_Asterisk), Qt.Key_Asterisk)
+		self.assertEqual(self.document.toPlainText(), '_foo_ *bar* baz qux corge grault')
+
+		self.changeCursor(12, 15)
+		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key_QuoteDbl), Qt.Key_QuoteDbl)
+		self.assertEqual(self.document.toPlainText(), '_foo_ *bar* "baz" qux corge grault')
+
+		self.changeCursor(18, 21)
+		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key_Apostrophe), Qt.Key_Apostrophe)
+		self.assertEqual(self.document.toPlainText(), '_foo_ *bar* "baz" \'qux\' corge grault')
+
+		self.changeCursor(24, 29)
+		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key_ParenLeft), Qt.Key_ParenLeft)
+		self.assertEqual(self.document.toPlainText(), '_foo_ *bar* "baz" \'qux\' (corge) grault')
+
+		self.changeCursor(32, 38)
+		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key_BracketLeft), Qt.Key_BracketLeft)
+		self.assertEqual(self.document.toPlainText(), '_foo_ *bar* "baz" \'qux\' (corge) [grault]')
 
 if __name__ == '__main__':
 	unittest.main()
