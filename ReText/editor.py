@@ -372,22 +372,22 @@ class ReTextEdit(QTextEdit):
 			self.lineNumberArea.update()
 		if globalSettings.highlightCurrentLine == 'disabled':
 			return self.setExtraSelections([])
-		elif globalSettings.highlightCurrentLine == 'cursor-line':
+		else:
 			selection = QTextEdit.ExtraSelection()
 			selection.format.setBackground(colorValues['currentLineHighlight'])
 			selection.format.setProperty(QTextFormat.FullWidthSelection, True)
 			selection.cursor = self.textCursor()
 			selection.cursor.clearSelection()
-			self.setExtraSelections([selection])
-		elif globalSettings.highlightCurrentLine == 'wrapped-line':
-			selection = QTextEdit.ExtraSelection()
-			selection.format.setBackground(colorValues['currentLineHighlight'])
-			selection.format.setProperty(QTextFormat.FullWidthSelection, True)
-			selection.cursor = self.textCursor()
-			selection.cursor.clearSelection()
-			selection.cursor.movePosition(QTextCursor.StartOfBlock)
-			selection.cursor.movePosition(QTextCursor.EndOfBlock+1, QTextCursor.KeepAnchor)
-			self.setExtraSelections([selection])
+			selections = [selection]
+			if globalSettings.highlightCurrentLine == 'wrapped-line':
+				selections.append(QTextEdit.ExtraSelection())
+				selections[0].cursor.movePosition(QTextCursor.StartOfBlock)
+				selections[0].cursor.movePosition(QTextCursor.EndOfBlock, QTextCursor.KeepAnchor)
+				selections[1].format.setBackground(colorValues['currentLineHighlight'])
+				selections[1].format.setProperty(QTextFormat.FullWidthSelection, True)
+				selections[1].cursor = self.textCursor()
+				selections[1].cursor.movePosition(QTextCursor.EndOfBlock)
+			self.setExtraSelections(selections)
 
 	def enableTableMode(self, enable):
 		self.tableModeEnabled = enable
