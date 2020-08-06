@@ -76,7 +76,7 @@ configOptions = {
 	'font': QFont(),
 	'handleWebLinks': False,
 	'hideToolBar': False,
-	'highlightCurrentLine': False,
+	'highlightCurrentLine': 'disabled',
 	'iconTheme': '',
 	'lastTabIndex': 0,
 	'lineNumbersEnabled': False,

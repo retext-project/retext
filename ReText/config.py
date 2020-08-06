@@ -171,6 +171,13 @@ class ConfigDialog(QDialog):
 				self.configurators[name].addItem(self.tr('Normal preview'), 'normal-preview')
 				comboBoxIndex = self.configurators[name].findData(value)
 				self.configurators[name].setCurrentIndex(comboBoxIndex)
+			elif name == 'highlightCurrentLine':
+				self.configurators[name] = QComboBox(self)
+				self.configurators[name].addItem(self.tr('Disabled'), 'disabled')
+				self.configurators[name].addItem(self.tr('Cursor Line'), 'cursor-line')
+				self.configurators[name].addItem(self.tr('Wrapped Line'), 'wrapped-line')
+				comboBoxIndex = self.configurators[name].findData(value)
+				self.configurators[name].setCurrentIndex(comboBoxIndex)
 			elif isinstance(value, bool):
 				self.configurators[name] = QCheckBox(self)
 				self.configurators[name].setChecked(value)
