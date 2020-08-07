@@ -370,14 +370,23 @@ class ReTextEdit(QTextEdit):
 	def highlightCurrentLine(self):
 		if globalSettings.relativeLineNumbers:
 			self.lineNumberArea.update()
-		if not globalSettings.highlightCurrentLine:
+		if globalSettings.highlightCurrentLine == 'disabled':
 			return self.setExtraSelections([])
-		selection = QTextEdit.ExtraSelection();
+		selection = QTextEdit.ExtraSelection()
 		selection.format.setBackground(colorValues['currentLineHighlight'])
 		selection.format.setProperty(QTextFormat.FullWidthSelection, True)
 		selection.cursor = self.textCursor()
 		selection.cursor.clearSelection()
-		self.setExtraSelections([selection])
+		selections = [selection]
+		if globalSettings.highlightCurrentLine == 'wrapped-line':
+			selections.append(QTextEdit.ExtraSelection())
+			selections[0].cursor.movePosition(QTextCursor.StartOfBlock)
+			selections[0].cursor.movePosition(QTextCursor.EndOfBlock, QTextCursor.KeepAnchor)
+			selections[1].format.setBackground(colorValues['currentLineHighlight'])
+			selections[1].format.setProperty(QTextFormat.FullWidthSelection, True)
+			selections[1].cursor = self.textCursor()
+			selections[1].cursor.movePosition(QTextCursor.EndOfBlock)
+		self.setExtraSelections(selections)
 
 	def enableTableMode(self, enable):
 		self.tableModeEnabled = enable
