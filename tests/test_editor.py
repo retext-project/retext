@@ -25,6 +25,7 @@ from ReText.editor import documentIndentMore, documentIndentLess
 from PyQt5.QtGui import QImage, QTextCursor, QTextDocument, QKeyEvent
 from PyQt5.QtCore import Qt, QMimeData, QEvent
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtTest import QTest
 from markups import MarkdownMarkup, ReStructuredTextMarkup
 
 QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
@@ -205,6 +206,37 @@ class TestSurround(unittest.TestCase):
 		self.changeCursor(32, 38)
 		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key_BracketLeft), Qt.Key_BracketLeft)
 		self.assertEqual(self.document.toPlainText(), '_foo_ *bar* "baz" \'qux\' (corge) [grault]')
+
+class TestOrderedListMode(unittest.TestCase):
+
+	class DummyReTextTab():
+		def __init__(self):
+			self.markupClass = None
+
+		def getActiveMarkupClass(self):
+			return self.markupClass
+
+	def setUp(self):
+		self.p = self
+
+	def test_increment(self):
+		editor = ReTextEdit(self)
+		editor.tab = self.DummyReTextTab()
+		QTest.keyClicks(editor, '1. Hello')
+		QTest.keyClick(editor, Qt.Key_Return)
+		QTest.keyClicks(editor, 'World')
+		self.assertEqual(editor.document().toPlainText(), '1. Hello\n2. World')
+
+	def test_repeat(self):
+		class TestSettings:
+			orderedListMode = 'repeat'
+			useFakeVim = False
+		editor = ReTextEdit(self, settings=TestSettings())
+		editor.tab = self.DummyReTextTab()
+		QTest.keyClicks(editor, '1. Hello')
+		QTest.keyClick(editor, Qt.Key_Return)
+		QTest.keyClicks(editor, 'World')
+		self.assertEqual(editor.document().toPlainText(), '1. Hello\n1. World')
 
 if __name__ == '__main__':
 	unittest.main()

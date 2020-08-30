@@ -108,7 +108,7 @@ class ReTextEdit(QTextEdit):
 		Qt.Key_BracketLeft: ']'
 	}
 
-	def __init__(self, parent):
+	def __init__(self, parent, settings=globalSettings):
 		QTextEdit.__init__(self)
 		self.tab = weakref.proxy(parent)
 		self.parent = parent.p
@@ -124,6 +124,7 @@ class ReTextEdit(QTextEdit):
 		self.document().blockCountChanged.connect(self.updateLineNumberAreaWidth)
 		self.cursorPositionChanged.connect(self.highlightCurrentLine)
 		self.document().contentsChange.connect(self.contentsChange)
+		self.settings = settings
 		if globalSettings.useFakeVim:
 			self.installFakeVimHandler()
 
@@ -311,7 +312,8 @@ class ReTextEdit(QTextEdit):
 				if matchOL is not None:
 					matchedPrefix = matchOL.group(1)
 					matchedNumber = int(matchOL.group(2))
-					matchedText = matchedPrefix + str(matchedNumber + 1) + ". "
+					nextNumber = matchedNumber if self.settings.orderedListMode == 'repeat' else matchedNumber + 1
+					matchedText = matchedPrefix + str(nextNumber) + ". "
 		else:
 			matchedText = ''
 		# Reset the cursor

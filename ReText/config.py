@@ -117,6 +117,7 @@ class ConfigDialog(QDialog):
 				(self.tr('Draw vertical line at column'), 'rightMargin'),
 				(self.tr('Enable soft wrap'), 'rightMarginWrap'),
 				(self.tr('Show document stats'), 'documentStatsEnabled'),
+				(self.tr('Ordered list mode'), 'orderedListMode'),
 			)),
 			(self.tr('Interface'), (
 				(self.tr('Hide toolbar'), 'hideToolBar'),
@@ -176,6 +177,12 @@ class ConfigDialog(QDialog):
 				self.configurators[name].addItem(self.tr('Disabled'), 'disabled')
 				self.configurators[name].addItem(self.tr('Cursor Line'), 'cursor-line')
 				self.configurators[name].addItem(self.tr('Wrapped Line'), 'wrapped-line')
+				comboBoxIndex = self.configurators[name].findData(value)
+				self.configurators[name].setCurrentIndex(comboBoxIndex)
+			elif name == 'orderedListMode':
+				self.configurators[name] = QComboBox(self)
+				self.configurators[name].addItem(self.tr('Increment'), 'increment')
+				self.configurators[name].addItem(self.tr('Repeat'), 'repeat')
 				comboBoxIndex = self.configurators[name].findData(value)
 				self.configurators[name].setCurrentIndex(comboBoxIndex)
 			elif isinstance(value, bool):

@@ -83,6 +83,7 @@ configOptions = {
 	'markdownDefaultFileExtension': '.mkd',
 	'openFilesInExistingWindow': True,
 	'openLastFilesOnStartup': False,
+	'orderedListMode': 'increment',
 	'paperSize': '',
 	'pygmentsStyle': 'default',
 	'recentDocumentsCount': 10,
