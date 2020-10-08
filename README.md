@@ -9,7 +9,7 @@ languages. One can also add support for [custom markups] using Python modules.
 
 ![ReText on Plasma 5 desktop](data/retext-kde5.png)
 
-To install ReText, make sure that you have [Python] (3.5 or later) installed,
+To install ReText, make sure that you have [Python] (3.6 or later) installed,
 and run `pip3 install ReText`. By default it installs system wide, pass
 `--user` for installing into the user’s home directory. You can also manually
 download the tarball from [PyPI].
