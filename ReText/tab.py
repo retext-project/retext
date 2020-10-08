@@ -275,6 +275,8 @@ class ReTextTab(QSplitter):
 
 	def triggerPreviewUpdate(self):
 		self.previewOutdated = True
+		if self.previewState == PreviewDisabled:
+			return
 
 		if not self.conversionPending:
 			self.conversionPending = True
