@@ -73,7 +73,7 @@ class PosMapTest(TestCase):
         ```""")
         html = markdown(text, extensions=self.extensionsPosMap)
         expected = markdown(text, extensions=self.extensionsNoPosMap)
-        self.assertIn('<div class="codehilite">', html)
+        self.assertIn('<div class="c codehilite">', html)
         self.assertMultiLineEqual(html, expected)
 
     def test_highlightEmptyC(self):
@@ -83,7 +83,7 @@ class PosMapTest(TestCase):
         ```""")
         html = markdown(text, extensions=self.extensionsPosMap)
         expected = markdown(text, extensions=self.extensionsNoPosMap)
-        self.assertIn('<div class="codehilite">', html)
+        self.assertIn('<div class="c codehilite">', html)
         self.assertMultiLineEqual(html, expected)
 
     def test_highlightPython(self):
@@ -94,7 +94,7 @@ class PosMapTest(TestCase):
         ```""")
         html = markdown(text, extensions=self.extensionsPosMap)
         expected = markdown(text, extensions=self.extensionsNoPosMap)
-        self.assertIn('<div class="codehilite">', html)
+        self.assertIn('<div class="python codehilite">', html)
         self.assertMultiLineEqual(html, expected)
 
     def test_highlightEmptyPython(self):
@@ -104,7 +104,7 @@ class PosMapTest(TestCase):
         ```""")
         html = markdown(text, extensions=self.extensionsPosMap)
         expected = markdown(text, extensions=self.extensionsNoPosMap)
-        self.assertIn('<div class="codehilite">', html)
+        self.assertIn('<div class="python codehilite">', html)
         self.assertMultiLineEqual(html, expected)
 
     def test_traditionalCodeBlock(self):
