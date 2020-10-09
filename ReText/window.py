@@ -18,6 +18,7 @@
 
 import markups
 import sys
+import os
 from subprocess import Popen
 import warnings
 
@@ -46,7 +47,8 @@ from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
  QTextDocument, QTextDocumentWriter
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDesktopWidget, QDialog, QFileDialog, QFontDialog, QInputDialog, \
- QLineEdit, QMainWindow, QMenu, QMessageBox, QTabWidget, QToolBar
+ QLineEdit, QMainWindow, QMenu, QMessageBox, QTabWidget, QToolBar, QSplitter, \
+ QTreeView, QFileSystemModel
 from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
 
 class ReTextWindow(QMainWindow):
@@ -75,9 +77,13 @@ class ReTextWindow(QMainWindow):
 		else:
 			self.setWindowIcon(QIcon.fromTheme('retext',
 				QIcon.fromTheme('accessories-text-editor')))
-		self.tabWidget = QTabWidget(self)
+		self.splitter = QSplitter(self)
+		self.treeView = QTreeView(self.splitter)
+		self.treeView.doubleClicked.connect(self.treeItemSelected)
+		self.tabWidget = QTabWidget(self.splitter)
 		self.initTabWidget()
-		self.setCentralWidget(self.tabWidget)
+		self.initDirectoryTree(globalSettings.directoryTree, globalSettings.directoryPath)
+		self.setCentralWidget(self.splitter)
 		self.tabWidget.currentChanged.connect(self.changeIndex)
 		self.tabWidget.tabCloseRequested.connect(self.closeTab)
 		self.toolBar = QToolBar(self.tr('File toolbar'), self)
@@ -427,6 +433,26 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.dragEnterEvent = dragEnterEvent
 		self.tabWidget.dropEvent = dropEvent
 		self.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
+
+	def initDirectoryTree(self, visible, path):
+		if visible:
+			self.fileSystemModel = QFileSystemModel(self.treeView)
+			self.fileSystemModel.setRootPath(path)
+			self.treeView.setModel(self.fileSystemModel)
+			self.treeView.setRootIndex(self.fileSystemModel.index(path))
+			self.treeView.setColumnHidden(1, True)
+			self.treeView.setColumnHidden(2, True)
+			self.treeView.setColumnHidden(3, True)
+			self.treeView.setHeaderHidden(True)
+			self.splitter.setSizes([self.width() / 5, self.width() * 4 / 5])
+		else:
+			self.splitter.setSizes([0, self.width()])
+
+	def treeItemSelected(self, signal):
+		file_path = self.fileSystemModel.filePath(signal)
+		if os.path.isdir(file_path):
+			return
+		self.openFileWrapper(file_path)
 
 	def act(self, name, icon=None, trig=None, trigbool=None, shct=None):
 		if not isinstance(shct, QKeySequence):

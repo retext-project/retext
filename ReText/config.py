@@ -49,6 +49,26 @@ class FileSelectButton(QPushButton):
 		else:
 			self.setText(self.defaultText)
 
+class DirectorySelectButton(QPushButton):
+	def __init__(self, parent, fileName):
+		QPushButton.__init__(self, parent)
+		self.fileName = fileName
+		self.defaultText = self.tr('(none)')
+		self.updateButtonText()
+		self.clicked.connect(self.processClick)
+
+	def processClick(self):
+		startDir = (QFileInfo(self.fileName).absolutePath()
+		            if self.fileName else '')
+		self.fileName = QFileDialog.getExistingDirectory(
+			self, self.tr('Select directory to open'), startDir)
+		self.updateButtonText()
+
+	def updateButtonText(self):
+		if self.fileName:
+			self.setText(QFileInfo(self.fileName).fileName())
+		else:
+			self.setText(self.defaultText)
 
 class ClickableLabel(QLabel):
 	clicked = pyqtSignal()
@@ -125,6 +145,8 @@ class ConfigDialog(QDialog):
 				(self.tr('Stylesheet file'), 'styleSheet', True),
 				(self.tr('Hide tabs bar when there is only one tab'), 'tabBarAutoHide'),
 				(self.tr('Show full path in window title'), 'windowTitleFullPath'),
+				(self.tr('Show directory tree'), 'directoryTree', False),
+				(self.tr('Working directory'), 'directoryPath', True),
 			))
 		)
 
@@ -185,6 +207,8 @@ class ConfigDialog(QDialog):
 				self.configurators[name].addItem(self.tr('Repeat'), 'repeat')
 				comboBoxIndex = self.configurators[name].findData(value)
 				self.configurators[name].setCurrentIndex(comboBoxIndex)
+			elif name == 'directoryPath':
+				self.configurators[name] = DirectorySelectButton(self, value)
 			elif isinstance(value, bool):
 				self.configurators[name] = QCheckBox(self)
 				self.configurators[name].setChecked(value)
@@ -229,6 +253,8 @@ class ConfigDialog(QDialog):
 				value = configurator.currentData()
 			elif isinstance(configurator, FileSelectButton):
 				value = configurator.fileName
+			elif isinstance(configurator, DirectorySelectButton):
+				value = configurator.fileName
 			setattr(globalSettings, name, value)
 		self.applySettings()
 		self.close()
@@ -251,6 +277,7 @@ class ConfigDialog(QDialog):
 		self.parent.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
 		self.parent.toolBar.setVisible(not globalSettings.hideToolBar)
 		self.parent.editBar.setVisible(not globalSettings.hideToolBar)
+		self.parent.initDirectoryTree(globalSettings.directoryTree, globalSettings.directoryPath)
 
 	def openLink(self, link):
 		QDesktopServices.openUrl(QUrl.fromLocalFile(link))
