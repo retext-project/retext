@@ -451,9 +451,7 @@ class ReTextWindow(QMainWindow):
 			self.treeView.setColumnHidden(2, True)
 			self.treeView.setColumnHidden(3, True)
 			self.treeView.setHeaderHidden(True)
-			self.treeView.setVisible(True)
-		else:
-			self.treeView.setVisible(False)
+		self.treeView.setVisible(visible)
 
 	def treeItemSelected(self, signal):
 		file_path = self.fileSystemModel.filePath(signal)
