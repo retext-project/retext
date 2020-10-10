@@ -28,7 +28,7 @@ from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
 
 MKD_EXTS_FILE = join(CONFIGURATION_DIR, 'markdown-extensions.txt')
 
-class FileSelectButton(QPushButton):
+class FileDialogButton(QPushButton):
 	def __init__(self, parent, fileName):
 		QPushButton.__init__(self, parent)
 		self.fileName = fileName
@@ -36,6 +36,16 @@ class FileSelectButton(QPushButton):
 		self.updateButtonText()
 		self.clicked.connect(self.processClick)
 
+	def processClick(self):
+		pass
+
+	def updateButtonText(self):
+		if self.fileName:
+			self.setText(QFileInfo(self.fileName).fileName())
+		else:
+			self.setText(self.defaultText)
+
+class FileSelectButton(FileDialogButton):
 	def processClick(self):
 		startDir = (QFileInfo(self.fileName).absolutePath()
 		            if self.fileName else '')
@@ -43,32 +53,13 @@ class FileSelectButton(QPushButton):
 			self, self.tr('Select file to open'), startDir)[0]
 		self.updateButtonText()
 
-	def updateButtonText(self):
-		if self.fileName:
-			self.setText(QFileInfo(self.fileName).fileName())
-		else:
-			self.setText(self.defaultText)
-
-class DirectorySelectButton(QPushButton):
-	def __init__(self, parent, fileName):
-		QPushButton.__init__(self, parent)
-		self.fileName = fileName
-		self.defaultText = self.tr('(none)')
-		self.updateButtonText()
-		self.clicked.connect(self.processClick)
-
+class DirectorySelectButton(FileDialogButton):
 	def processClick(self):
 		startDir = (QFileInfo(self.fileName).absolutePath()
 		            if self.fileName else '')
 		self.fileName = QFileDialog.getExistingDirectory(
 			self, self.tr('Select directory to open'), startDir)
 		self.updateButtonText()
-
-	def updateButtonText(self):
-		if self.fileName:
-			self.setText(QFileInfo(self.fileName).fileName())
-		else:
-			self.setText(self.defaultText)
 
 class ClickableLabel(QLabel):
 	clicked = pyqtSignal()
