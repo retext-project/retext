@@ -19,7 +19,7 @@
 import sys
 import markups
 import markups.common
-from os.path import dirname, exists, join
+from os.path import dirname, exists, join, expanduser
 
 from PyQt5.QtCore import QByteArray, QLocale, QSettings, QStandardPaths
 from PyQt5.QtGui import QFont
@@ -71,6 +71,7 @@ configOptions = {
 	'defaultMarkup': markups.MarkdownMarkup.name,
 	'defaultPreviewState': 'editor',
 	'detectEncoding': True,
+	'directoryPath': expanduser("~"),
 	'documentStatsEnabled': False,
 	'editorFont': QFont(),
 	'font': QFont(),
@@ -92,6 +93,7 @@ configOptions = {
 	'rightMargin': 0,
 	'rightMarginWrap': False,
 	'saveWindowGeometry': False,
+	'showDirectoryTree': False,
 	'spellCheck': False,
 	'spellCheckLocale': '',
 	'styleSheet': '',
