@@ -438,6 +438,12 @@ class ReTextWindow(QMainWindow):
 		if visible:
 			self.fileSystemModel = QFileSystemModel(self.treeView)
 			self.fileSystemModel.setRootPath(path)
+			supportedExtensions = ['.txt']
+			for markup in markups.get_all_markups():
+				supportedExtensions += markup.file_extensions
+			filters = ["*" + s for s in supportedExtensions]
+			self.fileSystemModel.setNameFilters(filters)
+			self.fileSystemModel.setNameFilterDisables(False)
 			self.treeView.setModel(self.fileSystemModel)
 			self.treeView.setRootIndex(self.fileSystemModel.index(path))
 			self.treeView.setColumnHidden(1, True)
