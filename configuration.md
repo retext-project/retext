@@ -14,6 +14,7 @@ option name                    | type      | description
 `defaultMarkup`                | string    | name of markup to use for unknown files
 `defaultPreviewState`          | string    | mode for new tabs: `editor`, `normal-preview` or `live-preview` (default: `editor`)
 `detectEncoding`               | boolean   | whether to automatically detect files encoding; needs chardet package (default: true)
+`directoryPath`                | string    | the path to the root directory to display in the side panel if `showDirectoryTree` is true (default: `~`)
 `documentStatsEnabled`         | boolean   | whether to show document stats (word count, character count) (default: false)
 `editorFont`                   | string    | font to use for editor: name (default: `monospace`)
 `editorFontSize`               | integer   | font to use for editor: font size
@@ -36,6 +37,7 @@ option name                    | type      | description
 `rightMargin`                  | integer   | enable drawing of vertical line on defined position (or 0 to disable)
 `rightMarginWrap`              | boolean   | enable soft wrap at specified margin line (default: false)
 `saveWindowGeometry`           | boolean   | whether to restore window geometry from previous session (default: false)
+`showDirectoryTree`            | boolean   | whether to show a directory tree on the left side of the window (default: false)
 `spellCheck`                   | boolean   | whether to enable spell checking
 `spellCheckLocale`             | string    | short name of spell check locale to use (examples: `en_US`, `ru`, `pt_BR`)
 `styleSheet`                   | file path | CSS file to use in preview area

@@ -136,7 +136,7 @@ class ConfigDialog(QDialog):
 				(self.tr('Stylesheet file'), 'styleSheet', True),
 				(self.tr('Hide tabs bar when there is only one tab'), 'tabBarAutoHide'),
 				(self.tr('Show full path in window title'), 'windowTitleFullPath'),
-				(self.tr('Show directory tree'), 'directoryTree', False),
+				(self.tr('Show directory tree'), 'showDirectoryTree', False),
 				(self.tr('Working directory'), 'directoryPath', True),
 			))
 		)
@@ -268,7 +268,7 @@ class ConfigDialog(QDialog):
 		self.parent.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
 		self.parent.toolBar.setVisible(not globalSettings.hideToolBar)
 		self.parent.editBar.setVisible(not globalSettings.hideToolBar)
-		self.parent.initDirectoryTree(globalSettings.directoryTree, globalSettings.directoryPath)
+		self.parent.initDirectoryTree(globalSettings.showDirectoryTree, globalSettings.directoryPath)
 
 	def openLink(self, link):
 		QDesktopServices.openUrl(QUrl.fromLocalFile(link))

@@ -72,7 +72,7 @@ configOptions = {
 	'defaultPreviewState': 'editor',
 	'detectEncoding': True,
 	'directoryPath': expanduser("~"),
-	'directoryTree': False,
+	'showDirectoryTree': False,
 	'documentStatsEnabled': False,
 	'editorFont': QFont(),
 	'font': QFont(),

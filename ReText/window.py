@@ -82,7 +82,7 @@ class ReTextWindow(QMainWindow):
 		self.treeView.doubleClicked.connect(self.treeItemSelected)
 		self.tabWidget = QTabWidget(self.splitter)
 		self.initTabWidget()
-		self.initDirectoryTree(globalSettings.directoryTree, globalSettings.directoryPath)
+		self.initDirectoryTree(globalSettings.showDirectoryTree, globalSettings.directoryPath)
 		self.setCentralWidget(self.splitter)
 		self.tabWidget.currentChanged.connect(self.changeIndex)
 		self.tabWidget.tabCloseRequested.connect(self.closeTab)
