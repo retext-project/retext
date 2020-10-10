@@ -242,9 +242,7 @@ class ConfigDialog(QDialog):
 				value = configurator.text()
 			elif isinstance(configurator, QComboBox):
 				value = configurator.currentData()
-			elif isinstance(configurator, FileSelectButton):
-				value = configurator.fileName
-			elif isinstance(configurator, DirectorySelectButton):
+			elif isinstance(configurator, FileDialogButton):
 				value = configurator.fileName
 			setattr(globalSettings, name, value)
 		self.applySettings()
