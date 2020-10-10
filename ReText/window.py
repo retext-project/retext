@@ -82,6 +82,7 @@ class ReTextWindow(QMainWindow):
 		self.treeView.doubleClicked.connect(self.treeItemSelected)
 		self.tabWidget = QTabWidget(self.splitter)
 		self.initTabWidget()
+		self.splitter.setSizes([self.width() / 5, self.width() * 4 / 5])
 		self.initDirectoryTree(globalSettings.showDirectoryTree, globalSettings.directoryPath)
 		self.setCentralWidget(self.splitter)
 		self.tabWidget.currentChanged.connect(self.changeIndex)
@@ -450,9 +451,9 @@ class ReTextWindow(QMainWindow):
 			self.treeView.setColumnHidden(2, True)
 			self.treeView.setColumnHidden(3, True)
 			self.treeView.setHeaderHidden(True)
-			self.splitter.setSizes([self.width() / 5, self.width() * 4 / 5])
+			self.treeView.setVisible(True)
 		else:
-			self.splitter.setSizes([0, self.width()])
+			self.treeView.setVisible(False)
 
 	def treeItemSelected(self, signal):
 		file_path = self.fileSystemModel.filePath(signal)
