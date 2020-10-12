@@ -44,8 +44,8 @@ reTextileQuot  = re.compile(r'^bq\.\s.+')
 reMkdCodeSpans = re.compile('`[^`]*`')
 reMkdMathSpans = re.compile(r'\\[\(\[].*?\\[\)\]]')
 reReSTCodeSpan = re.compile('``.+?``')
-reWords        = re.compile('[^_\\W]+', flags=re.UNICODE)
-reSpacesOnEnd  = re.compile(r'\s+$', flags=re.UNICODE)
+reWords        = re.compile('[^_\\W]+')
+reSpacesOnEnd  = re.compile(r'\s+$')
 
 defaultColorScheme = {
 	'htmlTags': Qt.darkMagenta,
