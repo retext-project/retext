@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from ReText import settings
+from enum import IntFlag, auto
 import re
 
 from PyQt5.QtCore import Qt
@@ -103,54 +104,65 @@ def QString_length(text):
 	# in it (which is the case with Python strings).
 	return sum(2 if ord(char) > 65535 else 1 for char in text)
 
+
+class Markup(IntFlag):
+	Mkd = auto()
+	ReST = auto()
+	Textile = auto()
+	HTML = auto()
+
+
+docTypesMapping = {
+	'Markdown': Markup.Mkd,
+	'reStructuredText': Markup.ReST,
+	'Textile': Markup.Textile,
+	'html': Markup.HTML,
+}
+
+
 class ReTextHighlighter(QSyntaxHighlighter):
 	dictionary = None
 	docType = None
 
 	patterns = (
-		# regex,         color,
-		(reHtmlTags,     FG('htmlTags') | QFont.Bold),                          # 0
-		(reHtmlSymbols,  FG('htmlSymbols') | QFont.Bold),                       # 1
-		(reHtmlStrings,  FG('htmlStrings') | QFont.Bold),                       # 2
-		(reHtmlComments, FG('htmlComments')),                                   # 3
-		(reAsterisks,    ITAL),                                                 # 4
-		(reUnderline,    ITAL),                                                 # 5
-		(reDblAsterisks, NF | QFont.Bold),                                      # 6
-		(reDblUnderline, NF | QFont.Bold),                                      # 7
-		(reTrpAsterisks, ITAL | QFont.Bold),                                    # 8
-		(reTrpUnderline, ITAL | QFont.Bold),                                    # 9
-		(reMkdHeaders,   NF | QFont.Black),                                     # 10
-		(reMkdLinksImgs, FG('markdownLinks')),                                  # 11
-		(reMkdLinkRefs,  ITAL | UNDL),                                          # 12
-		(reBlockQuotes,  FG('blockquotes')),                                    # 13
-		(reReSTDirects,  FG('restDirectives') | QFont.Bold),                    # 14
-		(reReSTRoles,    NF, FG('restRoles') | QFont.Bold, FG('htmlStrings')),  # 15
-		(reTextileHdrs,  NF | QFont.Black),                                     # 16
-		(reTextileQuot,  FG('blockquotes')),                                    # 17
-		(reAsterisks,    NF | QFont.Bold),                                      # 18
-		(reDblUnderline, ITAL),                                                 # 19
-		(reMkdCodeSpans, FG('codeSpans')),                                      # 20
-		(reReSTCodeSpan, FG('codeSpans')),                                      # 21
-		(reReSTLinks,    NF, NF, ITAL | UNDL, NF),                              # 22
-		(reReSTLinkRefs, NF, FG('markdownLinks'), ITAL | UNDL),                 # 23
-		(reReSTFldLists, NF, FG('restDirectives')),                             # 24
-		(reMkdMathSpans, FG('codeSpans')),                                      # 25
+		# regex,         color,                                markups
+		(reHtmlTags,     FG('htmlTags') | QFont.Bold,          Markup.Mkd | Markup.Textile | Markup.HTML),
+		(reHtmlSymbols,  FG('htmlSymbols') | QFont.Bold,       Markup.Mkd | Markup.HTML),
+		(reHtmlStrings,  FG('htmlStrings') | QFont.Bold,       Markup.Mkd | Markup.HTML),
+		(reHtmlComments, FG('htmlComments'),                   Markup.Mkd | Markup.HTML),
+		(reAsterisks,    ITAL,                                 Markup.Mkd | Markup.ReST),
+		(reUnderline,    ITAL,                                 Markup.Mkd | Markup.Textile),
+		(reDblAsterisks, NF | QFont.Bold,                      Markup.Mkd | Markup.ReST | Markup.Textile),
+		(reDblUnderline, NF | QFont.Bold,                      Markup.Mkd),
+		(reTrpAsterisks, ITAL | QFont.Bold,                    Markup.Mkd),
+		(reTrpUnderline, ITAL | QFont.Bold,                    Markup.Mkd),
+		(reMkdHeaders,   NF | QFont.Black,                     Markup.Mkd),
+		(reMkdLinksImgs, FG('markdownLinks'),                  Markup.Mkd),
+		(reMkdLinkRefs,  ITAL | UNDL,                          Markup.Mkd),
+		(reBlockQuotes,  FG('blockquotes'),                    Markup.Mkd),
+		(reReSTDirects,  FG('restDirectives') | QFont.Bold,    Markup.ReST),
+		(reReSTRoles,    NF, FG('restRoles') | QFont.Bold, FG('htmlStrings'), Markup.ReST),
+		(reTextileHdrs,  NF | QFont.Black,                     Markup.Textile),
+		(reTextileQuot,  FG('blockquotes'),                    Markup.Textile),
+		(reAsterisks,    NF | QFont.Bold,                      Markup.Textile),
+		(reDblUnderline, ITAL,                                 Markup.Textile),
+		(reMkdCodeSpans, FG('codeSpans'),                      Markup.Mkd),
+		(reReSTCodeSpan, FG('codeSpans'),                      Markup.ReST),
+		(reReSTLinks,    NF, NF, ITAL | UNDL, NF,              Markup.ReST),
+		(reReSTLinkRefs, NF, FG('markdownLinks'), ITAL | UNDL, Markup.ReST),
+		(reReSTFldLists, NF, FG('restDirectives'),             Markup.ReST),
+		(reMkdMathSpans, FG('codeSpans'),                      Markup.Mkd),
 	)
-
-	patternsDict = {
-		'Markdown': (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 20, 25),
-		'reStructuredText': (4, 6, 14, 15, 21, 22, 23, 24),
-		'Textile': (0, 5, 6, 16, 17, 18, 19),
-		'html': (0, 1, 2, 3)
-	}
 
 	def highlightBlock(self, text):
 		# Syntax highlighter
-		if self.docType in self.patternsDict:
-			for number in self.patternsDict[self.docType]:
-				pattern = self.patterns[number]
-				for match in pattern[0].finditer(text):
-					for i, formatter in enumerate(pattern[1:]):
+		if self.docType in docTypesMapping:
+			markup = docTypesMapping[self.docType]
+			for pattern, *formatters, markups in self.patterns:
+				if not (markup & markups):
+					continue
+				for match in pattern.finditer(text):
+					for i, formatter in enumerate(formatters):
 						charFormat = QTextCharFormat()
 						formatter.format(charFormat)
 						self.setFormat(QString_length(text[:match.start(i)]),
