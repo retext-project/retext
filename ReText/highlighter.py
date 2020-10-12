@@ -111,6 +111,9 @@ class Markup(IntFlag):
 	Textile = auto()
 	HTML = auto()
 
+	# Special value which means that no other markup is allowed inside this pattern
+	CodeSpan = auto()
+
 
 docTypesMapping = {
 	'Markdown': Markup.Mkd,
@@ -126,6 +129,9 @@ class ReTextHighlighter(QSyntaxHighlighter):
 
 	patterns = (
 		# regex,         color,                                markups
+		(reMkdCodeSpans, FG('codeSpans'),                      Markup.Mkd | Markup.CodeSpan),
+		(reMkdMathSpans, FG('codeSpans'),                      Markup.Mkd | Markup.CodeSpan),
+		(reReSTCodeSpan, FG('codeSpans'),                      Markup.ReST | Markup.CodeSpan),
 		(reHtmlTags,     FG('htmlTags') | QFont.Bold,          Markup.Mkd | Markup.Textile | Markup.HTML),
 		(reHtmlSymbols,  FG('htmlSymbols') | QFont.Bold,       Markup.Mkd | Markup.HTML),
 		(reHtmlStrings,  FG('htmlStrings') | QFont.Bold,       Markup.Mkd | Markup.HTML),
@@ -146,22 +152,28 @@ class ReTextHighlighter(QSyntaxHighlighter):
 		(reTextileQuot,  FG('blockquotes'),                    Markup.Textile),
 		(reAsterisks,    NF | QFont.Bold,                      Markup.Textile),
 		(reDblUnderline, ITAL,                                 Markup.Textile),
-		(reMkdCodeSpans, FG('codeSpans'),                      Markup.Mkd),
-		(reReSTCodeSpan, FG('codeSpans'),                      Markup.ReST),
 		(reReSTLinks,    NF, NF, ITAL | UNDL, NF,              Markup.ReST),
 		(reReSTLinkRefs, NF, FG('markdownLinks'), ITAL | UNDL, Markup.ReST),
 		(reReSTFldLists, NF, FG('restDirectives'),             Markup.ReST),
-		(reMkdMathSpans, FG('codeSpans'),                      Markup.Mkd),
 	)
 
 	def highlightBlock(self, text):
 		# Syntax highlighter
+		codeSpans = set()
 		if self.docType in docTypesMapping:
 			markup = docTypesMapping[self.docType]
 			for pattern, *formatters, markups in self.patterns:
 				if not (markup & markups):
 					continue
 				for match in pattern.finditer(text):
+					start, end = match.start(), match.end()
+					if markups & Markup.CodeSpan:
+						codeSpans.add((start, end))
+					elif any(start < codeEnd and end > codeStart
+					         for codeStart, codeEnd in codeSpans):
+						# Ignore any syntax if its match intersects with code spans.
+						# See https://github.com/retext-project/retext/issues/529
+						continue
 					for i, formatter in enumerate(formatters):
 						charFormat = QTextCharFormat()
 						formatter.format(charFormat)
