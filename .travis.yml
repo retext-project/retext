@@ -19,8 +19,7 @@ addons:
     - libxkbcommon-x11-0
 install:
   - pip install --upgrade pip
-  - pip install git+https://github.com/Python-Markdown/markdown.git
-  - pip install PyQt5 pymdown-extensions docutils pyflakes chardet Pygments
+  - pip install PyQt5 Markdown pymdown-extensions docutils pyflakes chardet Pygments
   - pip install git+https://github.com/retext-project/pymarkups.git
 script:
   - xvfb-run -a -s "-screen 0 1024x768x24" python setup.py test
