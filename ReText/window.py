@@ -1056,13 +1056,13 @@ class ReTextWindow(QMainWindow):
 			if not QFileInfo(fileName).suffix():
 				fileName += ".pdf"
 			title, htmltext, preview = self.currentTab.getDocumentForExport()
-			if globalSettings.useWebEngine and hasattr(preview.page(), "printToPdf"):
+			if globalSettings.useWebEngine:
 				pageSize = self.getPageSizeByName(globalSettings.paperSize)
 				if pageSize is None:
 					pageSize = QPageSize(QPageSize.PageSizeId.A4)
 				margins = QMarginsF(20, 20, 13, 20)  # left, top, right, bottom (in millimeters)
 				layout = QPageLayout(pageSize, QPageLayout.Orientation.Portrait, margins, QPageLayout.Unit.Millimeter)
-				preview.page().printToPdf(fileName, layout)  # Available since Qt 5.7
+				preview.page().printToPdf(fileName, layout)
 				return
 			printer = self.standardPrinter(title)
 			printer.setOutputFormat(QPrinter.OutputFormat.PdfFormat)

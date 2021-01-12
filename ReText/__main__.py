@@ -67,8 +67,7 @@ def main():
 	app.setApplicationDisplayName("ReText")
 	app.setApplicationVersion(app_version)
 	app.setOrganizationDomain('mitya57.me')
-	if hasattr(app, 'setDesktopFileName'): # available since Qt 5.7
-		app.setDesktopFileName('me.mitya57.ReText.desktop')
+	app.setDesktopFileName('me.mitya57.ReText.desktop')
 	QNetworkProxyFactory.setUseSystemConfiguration(True)
 
 	parser = QCommandLineParser()
