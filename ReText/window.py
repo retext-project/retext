@@ -88,19 +88,19 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.currentChanged.connect(self.changeIndex)
 		self.tabWidget.tabCloseRequested.connect(self.closeTab)
 		self.toolBar = QToolBar(self.tr('File toolbar'), self)
-		self.addToolBar(Qt.TopToolBarArea, self.toolBar)
+		self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.toolBar)
 		self.editBar = QToolBar(self.tr('Edit toolbar'), self)
-		self.addToolBar(Qt.TopToolBarArea, self.editBar)
+		self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.editBar)
 		self.searchBar = QToolBar(self.tr('Search toolbar'), self)
-		self.addToolBar(Qt.BottomToolBarArea, self.searchBar)
+		self.addToolBar(Qt.ToolBarArea.BottomToolBarArea, self.searchBar)
 		self.toolBar.setVisible(not globalSettings.hideToolBar)
 		self.editBar.setVisible(not globalSettings.hideToolBar)
 		self.actionNew = self.act(self.tr('New'), 'document-new',
-			self.createNew, shct=QKeySequence.New)
-		self.actionNew.setPriority(QAction.LowPriority)
+			self.createNew, shct=QKeySequence.StandardKey.New)
+		self.actionNew.setPriority(QAction.Priority.LowPriority)
 		self.actionOpen = self.act(self.tr('Open'), 'document-open',
-			self.openFile, shct=QKeySequence.Open)
-		self.actionOpen.setPriority(QAction.LowPriority)
+			self.openFile, shct=QKeySequence.StandardKey.Open)
+		self.actionOpen.setPriority(QAction.Priority.LowPriority)
 		self.actionSetEncoding = self.act(self.tr('Set encoding'),
 			trig=self.showEncodingDialog)
 		self.actionSetEncoding.setEnabled(False)
@@ -108,20 +108,20 @@ class ReTextWindow(QMainWindow):
 			lambda: self.currentTab.readTextFromFile())
 		self.actionReload.setEnabled(False)
 		self.actionSave = self.act(self.tr('Save'), 'document-save',
-			self.saveFile, shct=QKeySequence.Save)
+			self.saveFile, shct=QKeySequence.StandardKey.Save)
 		self.actionSave.setEnabled(False)
-		self.actionSave.setPriority(QAction.LowPriority)
+		self.actionSave.setPriority(QAction.Priority.LowPriority)
 		self.actionSaveAs = self.act(self.tr('Save as'), 'document-save-as',
-			self.saveFileAs, shct=QKeySequence.SaveAs)
+			self.saveFileAs, shct=QKeySequence.StandardKey.SaveAs)
 		self.actionNextTab = self.act(self.tr('Next tab'), 'go-next',
-			lambda: self.switchTab(1), shct=Qt.CTRL+Qt.Key_PageDown)
+			lambda: self.switchTab(1), shct=Qt.Modifier.CTRL+Qt.Key.Key_PageDown)
 		self.actionPrevTab = self.act(self.tr('Previous tab'), 'go-previous',
-			lambda: self.switchTab(-1), shct=Qt.CTRL+Qt.Key_PageUp)
+			lambda: self.switchTab(-1), shct=Qt.Modifier.CTRL+Qt.Key.Key_PageUp)
 		self.actionCloseCurrentTab = self.act(self.tr('Close tab'), 'window-close',
-			lambda: self.closeTab(self.ind), shct=QKeySequence.Close)
+			lambda: self.closeTab(self.ind), shct=QKeySequence.StandardKey.Close)
 		self.actionPrint = self.act(self.tr('Print'), 'document-print',
-			self.printFile, shct=QKeySequence.Print)
-		self.actionPrint.setPriority(QAction.LowPriority)
+			self.printFile, shct=QKeySequence.StandardKey.Print)
+		self.actionPrint.setPriority(QAction.Priority.LowPriority)
 		self.actionPrintPreview = self.act(self.tr('Print preview'), 'document-print-preview',
 			self.printPreview)
 		self.actionViewHtml = self.act(self.tr('View HTML code'), 'text-html', self.viewHtml)
@@ -130,11 +130,11 @@ class ReTextWindow(QMainWindow):
 		self.actionChangePreviewFont = self.act(self.tr('Change preview font'),
 			trig=self.changePreviewFont)
 		self.actionSearch = self.act(self.tr('Find text'), 'edit-find',
-			self.search, shct=QKeySequence.Find)
+			self.search, shct=QKeySequence.StandardKey.Find)
 		self.actionGoToLine = self.act(self.tr('Go to line'),
-			trig=self.goToLine, shct=Qt.CTRL+Qt.Key_G)
+			trig=self.goToLine, shct=Qt.Modifier.CTRL+Qt.Key.Key_G)
 		self.searchBar.visibilityChanged.connect(self.searchBarVisibilityChanged)
-		self.actionPreview = self.act(self.tr('Preview'), shct=Qt.CTRL+Qt.Key_E,
+		self.actionPreview = self.act(self.tr('Preview'), shct=Qt.Modifier.CTRL+Qt.Key.Key_E,
 			trigbool=self.preview)
 		if QIcon.hasThemeIcon('document-preview'):
 			self.actionPreview.setIcon(QIcon.fromTheme('document-preview'))
@@ -144,7 +144,7 @@ class ReTextWindow(QMainWindow):
 			self.actionPreview.setIcon(QIcon.fromTheme('x-office-document'))
 		else:
 			self.actionPreview.setIcon(QIcon(getBundledIcon('document-preview')))
-		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.CTRL+Qt.Key_L,
+		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.Modifier.CTRL+Qt.Key.Key_L,
 		trigbool=self.enableLivePreview)
 		menuPreview = QMenu()
 		menuPreview.addAction(self.actionLivePreview)
@@ -152,46 +152,46 @@ class ReTextWindow(QMainWindow):
 		self.actionInsertTable = self.act(self.tr('Insert table'),
 			trig=lambda: self.insertFormatting('table'))
 		self.actionTableMode = self.act(self.tr('Table editing mode'),
-			shct=Qt.CTRL+Qt.Key_T,
+			shct=Qt.Modifier.CTRL+Qt.Key.Key_T,
 			trigbool=lambda x: self.currentTab.editBox.enableTableMode(x))
 		self.actionInsertImages = self.act(self.tr('Insert images by file path'),
 			trig=lambda: self.insertImages())
 		if ReTextFakeVimHandler:
 			self.actionFakeVimMode = self.act(self.tr('FakeVim mode'),
-				shct=Qt.CTRL+Qt.ALT+Qt.Key_V, trigbool=self.enableFakeVimMode)
+				shct=Qt.Modifier.CTRL+Qt.Modifier.ALT+Qt.Key.Key_V, trigbool=self.enableFakeVimMode)
 			if globalSettings.useFakeVim:
 				self.actionFakeVimMode.setChecked(True)
 				self.enableFakeVimMode(True)
 		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), 'view-fullscreen',
-			shct=Qt.Key_F11, trigbool=self.enableFullScreen)
+			shct=Qt.Key.Key_F11, trigbool=self.enableFullScreen)
 		self.actionFullScreen.setChecked(self.isFullScreen())
-		self.actionFullScreen.setPriority(QAction.LowPriority)
+		self.actionFullScreen.setPriority(QAction.Priority.LowPriority)
 		self.actionConfig = self.act(self.tr('Preferences'), icon='preferences-system',
 			trig=self.openConfigDialog)
-		self.actionConfig.setMenuRole(QAction.PreferencesRole)
+		self.actionConfig.setMenuRole(QAction.MenuRole.PreferencesRole)
 		self.actionSaveHtml = self.act('HTML', 'text-html', self.saveFileHtml)
 		self.actionPdf = self.act('PDF', 'application-pdf', self.savePdf)
 		self.actionOdf = self.act('ODT', 'x-office-document', self.saveOdf)
 		self.getExportExtensionsList()
-		self.actionQuit = self.act(self.tr('Quit'), 'application-exit', shct=QKeySequence.Quit)
-		self.actionQuit.setMenuRole(QAction.QuitRole)
+		self.actionQuit = self.act(self.tr('Quit'), 'application-exit', shct=QKeySequence.StandardKey.Quit)
+		self.actionQuit.setMenuRole(QAction.MenuRole.QuitRole)
 		self.actionQuit.triggered.connect(self.close)
 		self.actionUndo = self.act(self.tr('Undo'), 'edit-undo',
-			lambda: self.currentTab.editBox.undo(), shct=QKeySequence.Undo)
+			lambda: self.currentTab.editBox.undo(), shct=QKeySequence.StandardKey.Undo)
 		self.actionRedo = self.act(self.tr('Redo'), 'edit-redo',
-			lambda: self.currentTab.editBox.redo(), shct=QKeySequence.Redo)
+			lambda: self.currentTab.editBox.redo(), shct=QKeySequence.StandardKey.Redo)
 		self.actionCopy = self.act(self.tr('Copy'), 'edit-copy',
-			lambda: self.currentTab.editBox.copy(), shct=QKeySequence.Copy)
+			lambda: self.currentTab.editBox.copy(), shct=QKeySequence.StandardKey.Copy)
 		self.actionCut = self.act(self.tr('Cut'), 'edit-cut',
-			lambda: self.currentTab.editBox.cut(), shct=QKeySequence.Cut)
+			lambda: self.currentTab.editBox.cut(), shct=QKeySequence.StandardKey.Cut)
 		self.actionPaste = self.act(self.tr('Paste'), 'edit-paste',
-			lambda: self.currentTab.editBox.paste(), shct=QKeySequence.Paste)
+			lambda: self.currentTab.editBox.paste(), shct=QKeySequence.StandardKey.Paste)
 		self.actionPasteImage = self.act(self.tr('Paste image'), 'edit-paste',
-			lambda: self.currentTab.editBox.pasteImage(), shct=Qt.CTRL+Qt.SHIFT+Qt.Key_V)
+			lambda: self.currentTab.editBox.pasteImage(), shct=Qt.Modifier.CTRL+Qt.Modifier.SHIFT+Qt.Key.Key_V)
 		self.actionMoveUp = self.act(self.tr('Move line up'), 'go-up',
-			lambda: self.currentTab.editBox.moveLineUp(), shct=Qt.ALT+Qt.Key_Up)
+			lambda: self.currentTab.editBox.moveLineUp(), shct=Qt.Modifier.ALT+Qt.Key.Key_Up)
 		self.actionMoveDown = self.act(self.tr('Move line down'), 'go-down',
-			lambda: self.currentTab.editBox.moveLineDown(), shct=Qt.ALT+Qt.Key_Down)
+			lambda: self.currentTab.editBox.moveLineDown(), shct=Qt.Modifier.ALT+Qt.Key.Key_Down)
 		self.actionUndo.setEnabled(False)
 		self.actionRedo.setEnabled(False)
 		self.actionCopy.setEnabled(False)
@@ -214,9 +214,9 @@ class ReTextWindow(QMainWindow):
 		self.actionWebEngine.setChecked(globalSettings.useWebEngine)
 		self.actionShow = self.act(self.tr('Show directory'), 'system-file-manager', self.showInDir)
 		self.actionFind = self.act(self.tr('Next'), 'go-next', self.find,
-			shct=QKeySequence.FindNext)
+			shct=QKeySequence.StandardKey.FindNext)
 		self.actionFindPrev = self.act(self.tr('Previous'), 'go-previous',
-			lambda: self.find(back=True), shct=QKeySequence.FindPrevious)
+			lambda: self.find(back=True), shct=QKeySequence.StandardKey.FindPrevious)
 		self.actionReplace = self.act(self.tr('Replace'), 'edit-find-replace',
 			lambda: self.find(replace=True))
 		self.actionReplaceAll = self.act(self.tr('Replace all'), trig=self.replaceAll)
@@ -225,14 +225,14 @@ class ReTextWindow(QMainWindow):
 		self.actionReplace.setMenu(menuReplace)
 		self.actionCloseSearch = self.act(self.tr('Close'), 'window-close',
 			lambda: self.searchBar.setVisible(False),
-			shct=QKeySequence.Cancel)
-		self.actionCloseSearch.setPriority(QAction.LowPriority)
+			shct=QKeySequence.StandardKey.Cancel)
+		self.actionCloseSearch.setPriority(QAction.Priority.LowPriority)
 		self.actionHelp = self.act(self.tr('Get help online'), 'help-contents', self.openHelp)
 		self.aboutWindowTitle = self.tr('About ReText')
 		self.actionAbout = self.act(self.aboutWindowTitle, 'help-about', self.aboutDialog)
-		self.actionAbout.setMenuRole(QAction.AboutRole)
+		self.actionAbout.setMenuRole(QAction.MenuRole.AboutRole)
 		self.actionAboutQt = self.act(self.tr('About Qt'))
-		self.actionAboutQt.setMenuRole(QAction.AboutQtRole)
+		self.actionAboutQt.setMenuRole(QAction.MenuRole.AboutQtRole)
 		self.actionAboutQt.triggered.connect(qApp.aboutQt)
 		availableMarkups = markups.get_available_markups()
 		if not availableMarkups:
@@ -246,11 +246,11 @@ class ReTextWindow(QMainWindow):
 					markupAction.setChecked(True)
 				self.chooseGroup.addAction(markupAction)
 				markupActions.append(markupAction)
-		self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.Bold,
+		self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.StandardKey.Bold,
 			trig=lambda: self.insertFormatting('bold'))
-		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.Italic,
+		self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.StandardKey.Italic,
 			trig=lambda: self.insertFormatting('italic'))
-		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.Underline,
+		self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.StandardKey.Underline,
 			trig=lambda: self.insertFormatting('underline'))
 		self.usefulTags = ('header', 'italic', 'bold', 'underline', 'numbering',
 			'bullets', 'image', 'link', 'inline code', 'code block', 'blockquote',
@@ -346,7 +346,7 @@ class ReTextWindow(QMainWindow):
 		menuHelp.addSeparator()
 		menuHelp.addAction(self.actionAbout)
 		menuHelp.addAction(self.actionAboutQt)
-		self.toolBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+		self.toolBar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
 		self.toolBar.addAction(self.actionNew)
 		self.toolBar.addSeparator()
 		self.toolBar.addAction(self.actionOpen)
@@ -379,7 +379,7 @@ class ReTextWindow(QMainWindow):
 		self.searchBar.addAction(self.actionFind)
 		self.searchBar.addAction(self.actionReplace)
 		self.searchBar.addAction(self.actionCloseSearch)
-		self.searchBar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+		self.searchBar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
 		self.searchBar.setVisible(False)
 		self.autoSaveEnabled = globalSettings.autoSave
 		if self.autoSaveEnabled:
@@ -416,7 +416,7 @@ class ReTextWindow(QMainWindow):
 		self.ss = None
 		if globalSettings.styleSheet:
 			sheetfile = QFile(globalSettings.styleSheet)
-			sheetfile.open(QIODevice.ReadOnly)
+			sheetfile.open(QIODevice.OpenModeFlag.ReadOnly)
 			self.ss = QTextStream(sheetfile).readAll()
 			sheetfile.close()
 
@@ -595,7 +595,7 @@ class ReTextWindow(QMainWindow):
 		self.actionTableMode.setChecked(editBox.tableModeEnabled)
 		self.editBar.setEnabled(previewState < PreviewNormal)
 		self.ind = ind
-		editBox.setFocus(Qt.OtherFocusReason)
+		editBox.setFocus(Qt.FocusReason.OtherFocusReason)
 
 		self.tabFileNameChanged(self.currentTab)
 		self.tabModificationStateChanged(self.currentTab)
@@ -689,7 +689,7 @@ class ReTextWindow(QMainWindow):
 
 	def changeLocale(self):
 		localedlg = LocaleDialog(self, defaultText=self.sl)
-		if localedlg.exec() != QDialog.Accepted:
+		if localedlg.exec() != QDialog.DialogCode.Accepted:
 			return
 		sl = localedlg.localeEdit.text()
 		try:
@@ -704,7 +704,7 @@ class ReTextWindow(QMainWindow):
 
 	def search(self):
 		self.searchBar.setVisible(True)
-		self.searchEdit.setFocus(Qt.ShortcutFocusReason)
+		self.searchEdit.setFocus(Qt.FocusReason.ShortcutFocusReason)
 
 	def goToLine(self):
 		line, ok = QInputDialog.getInt(self, self.tr("Go to line"), self.tr("Type the line number"))
@@ -713,14 +713,14 @@ class ReTextWindow(QMainWindow):
 
 	def searchBarVisibilityChanged(self, visible):
 		if visible:
-			self.searchEdit.setFocus(Qt.ShortcutFocusReason)
+			self.searchEdit.setFocus(Qt.FocusReason.ShortcutFocusReason)
 
 	def find(self, back=False, replace=False):
 		flags = QTextDocument.FindFlags()
 		if back:
-			flags |= QTextDocument.FindBackward
+			flags |= QTextDocument.FindFlag.FindBackward
 		if self.csBox.isChecked():
-			flags |= QTextDocument.FindCaseSensitively
+			flags |= QTextDocument.FindFlag.FindCaseSensitively
 		text = self.searchEdit.text()
 		replaceText = self.replaceEdit.text() if replace else None
 		found = self.currentTab.find(text, flags, replaceText=replaceText)
@@ -734,8 +734,8 @@ class ReTextWindow(QMainWindow):
 
 	def setSearchEditColor(self, found):
 		palette = self.searchEdit.palette()
-		palette.setColor(QPalette.Active, QPalette.Base,
-		                 Qt.white if found else QColor(255, 102, 102))
+		palette.setColor(QPalette.ColorGroup.Active, QPalette.ColorRole.Base,
+		                 Qt.GlobalColor.white if found else QColor(255, 102, 102))
 		self.searchEdit.setPalette(palette)
 
 	def showInDir(self):
@@ -795,7 +795,7 @@ class ReTextWindow(QMainWindow):
 			extsdir = QDir(extsprefix+'/export-extensions/')
 			if extsdir.exists():
 				for fileInfo in extsdir.entryInfoList(['*.desktop', '*.ini'],
-				QDir.Files | QDir.Readable):
+				QDir.Filter.Files | QDir.Filter.Readable):
 					extensions.append(self.readExtension(fileInfo.filePath()))
 		locale = QLocale.system().name()
 		self.extensionActions = []
@@ -843,7 +843,7 @@ class ReTextWindow(QMainWindow):
 
 	def readExtension(self, fileName):
 		extFile = QFile(fileName)
-		extFile.open(QIODevice.ReadOnly)
+		extFile.open(QIODevice.OpenModeFlag.ReadOnly)
 		extension = {}
 		stream = QTextStream(extFile)
 		while not stream.atEnd():
@@ -965,7 +965,7 @@ class ReTextWindow(QMainWindow):
 		except Exception:
 			return self.printError()
 		htmlFile = QFile(fileName)
-		result = htmlFile.open(QIODevice.WriteOnly)
+		result = htmlFile.open(QIODevice.OpenModeFlag.WriteOnly)
 		if not result:
 			QMessageBox.warning(self, '',
 				self.tr("Cannot save to file because it is read-only!"))
@@ -978,7 +978,7 @@ class ReTextWindow(QMainWindow):
 
 	def textDocument(self, title, htmltext):
 		td = QTextDocument()
-		td.setMetaInformation(QTextDocument.DocumentTitle, title)
+		td.setMetaInformation(QTextDocument.MetaInformation.DocumentTitle, title)
 		td.setHtml(htmltext)
 		td.setDefaultFont(globalSettings.font)
 		return td
@@ -1014,7 +1014,7 @@ class ReTextWindow(QMainWindow):
 			self.printError()
 
 	def standardPrinter(self, title):
-		printer = QPrinter(QPrinter.HighResolution)
+		printer = QPrinter(QPrinter.PrinterMode.HighResolution)
 		printer.setDocName(title)
 		printer.setCreator('ReText %s' % app_version)
 		if globalSettings.paperSize:
@@ -1059,13 +1059,13 @@ class ReTextWindow(QMainWindow):
 			if globalSettings.useWebEngine and hasattr(preview.page(), "printToPdf"):
 				pageSize = self.getPageSizeByName(globalSettings.paperSize)
 				if pageSize is None:
-					pageSize = QPageSize(QPageSize.A4)
+					pageSize = QPageSize(QPageSize.PageSizeId.A4)
 				margins = QMarginsF(20, 20, 13, 20)  # left, top, right, bottom (in millimeters)
-				layout = QPageLayout(pageSize, QPageLayout.Portrait, margins, QPageLayout.Millimeter)
+				layout = QPageLayout(pageSize, QPageLayout.Orientation.Portrait, margins, QPageLayout.Unit.Millimeter)
 				preview.page().printToPdf(fileName, layout)  # Available since Qt 5.7
 				return
 			printer = self.standardPrinter(title)
-			printer.setOutputFormat(QPrinter.PdfFormat)
+			printer.setOutputFormat(QPrinter.OutputFormat.PdfFormat)
 			printer.setOutputFileName(fileName)
 			document = self.getDocumentForPrint(title, htmltext, preview)
 			if document != None:
@@ -1076,7 +1076,7 @@ class ReTextWindow(QMainWindow):
 		printer = self.standardPrinter(title)
 		dlg = QPrintDialog(printer, self)
 		dlg.setWindowTitle(self.tr("Print document"))
-		if (dlg.exec() == QDialog.Accepted):
+		if (dlg.exec() == QDialog.DialogCode.Accepted):
 			document = self.getDocumentForPrint(title, htmltext, preview)
 			if document != None:
 				document.print(printer)
@@ -1180,7 +1180,7 @@ class ReTextWindow(QMainWindow):
 
 		self.formattingBox.setCurrentIndex(0)
 		# Bring back the focus on the editor
-		self.currentTab.editBox.setFocus(Qt.OtherFocusReason)
+		self.currentTab.editBox.setFocus(Qt.FocusReason.OtherFocusReason)
 
 		if moveCursorTo:
 			cursor.setPosition(moveCursorTo)
@@ -1218,9 +1218,9 @@ class ReTextWindow(QMainWindow):
 				text += self.tr(
 					'If you choose to not reload the file, auto save mode will '
 					'be disabled for this session to prevent data loss.')
-			messageBox = QMessageBox(QMessageBox.Warning, '', text)
-			reloadButton = messageBox.addButton(self.tr('Reload'), QMessageBox.YesRole)
-			messageBox.addButton(QMessageBox.Cancel)
+			messageBox = QMessageBox(QMessageBox.Icon.Warning, '', text)
+			reloadButton = messageBox.addButton(self.tr('Reload'), QMessageBox.ButtonRole.YesRole)
+			messageBox.addButton(QMessageBox.StandardButton.Cancel)
 			messageBox.exec()
 			if messageBox.clickedButton() is reloadButton:
 				tab.readTextFromFile()
@@ -1241,10 +1241,10 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.setCurrentIndex(ind)
 		ret = QMessageBox.warning(self, '',
 			self.tr("The document has been modified.\nDo you want to save your changes?"),
-			QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel)
-		if ret == QMessageBox.Save:
+			QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel)
+		if ret == QMessageBox.StandardButton.Save:
 			return self.saveFile(False)
-		elif ret == QMessageBox.Cancel:
+		elif ret == QMessageBox.StandardButton.Cancel:
 			return False
 		return True
 
@@ -1289,7 +1289,7 @@ class ReTextWindow(QMainWindow):
 		cursor.insertText(imagesMarkup)
 
 		self.formattingBox.setCurrentIndex(0)
-		self.currentTab.editBox.setFocus(Qt.OtherFocusReason)
+		self.currentTab.editBox.setFocus(Qt.FocusReason.OtherFocusReason)
 
 	def openHelp(self):
 		QDesktopServices.openUrl(QUrl('https://github.com/retext-project/retext/wiki'))

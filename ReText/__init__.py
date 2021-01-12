@@ -30,7 +30,7 @@ settings = QSettings('ReText project', 'ReText')
 
 if not str(settings.fileName()).endswith('.conf'):
 	# We are on Windows probably
-	settings = QSettings(QSettings.IniFormat, QSettings.UserScope,
+	settings = QSettings(QSettings.Format.IniFormat, QSettings.Scope.UserScope,
 		'ReText project', 'ReText')
 
 datadirs = []
@@ -43,7 +43,7 @@ def initializeDataDirs():
 	except NameError:
 		pass
 
-	dataLocations = QStandardPaths.standardLocations(QStandardPaths.GenericDataLocation)
+	dataLocations = QStandardPaths.standardLocations(QStandardPaths.StandardLocation.GenericDataLocation)
 	datadirs.extend(join(d, 'retext') for d in dataLocations)
 
 	if sys.platform == "win32":
@@ -159,7 +159,7 @@ def getSettingsFilePath(settings=settings):
 
 def chooseMonospaceFont():
 	font = QFont('monospace')
-	font.setStyleHint(QFont.TypeWriter)
+	font.setStyleHint(QFont.StyleHint.TypeWriter)
 	return font
 
 class ReTextSettings(object):

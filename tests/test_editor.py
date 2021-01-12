@@ -28,7 +28,7 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtTest import QTest
 from markups import MarkdownMarkup, ReStructuredTextMarkup
 
-QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
+QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
 # Keep a reference so it is not garbage collected
 app = QApplication.instance() or QApplication(sys.argv)
 
@@ -62,7 +62,7 @@ class TestIndentation(unittest.TestCase):
 	def test_indentMoreWithSelection(self):
 		cursor = QTextCursor(self.document)
 		cursor.setPosition(1)
-		cursor.setPosition(6, QTextCursor.KeepAnchor)
+		cursor.setPosition(6, QTextCursor.MoveMode.KeepAnchor)
 		self.assertEqual('oo\u2029ba', # \u2029 is paragraph separator
 		                 cursor.selectedText())
 		documentIndentMore(self.document, cursor, self.settings)
@@ -82,7 +82,7 @@ class TestIndentation(unittest.TestCase):
 		self.document.setPlainText('    foo\n    bar\nbaz')
 		cursor = QTextCursor(self.document)
 		cursor.setPosition(5)
-		cursor.setPosition(11, QTextCursor.KeepAnchor)
+		cursor.setPosition(11, QTextCursor.MoveMode.KeepAnchor)
 		documentIndentLess(self.document, cursor, self.settings)
 		self.assertEqual('foo\nbar\nbaz', self.document.toPlainText())
 
@@ -102,8 +102,8 @@ class TestClipboardHandling(unittest.TestCase):
 		self.editor.tab = self.dummytab
 
 	def _create_image(self):
-		image = QImage(80, 60, QImage.Format_RGB32)
-		image.fill(Qt.green)
+		image = QImage(80, 60, QImage.Format.Format_RGB32)
+		image.fill(Qt.GlobalColor.green)
 		return image
 
 	def test_pasteText(self):
@@ -147,64 +147,64 @@ class TestSurround(unittest.TestCase):
 		self.cursor = QTextCursor(self.document)
 
 	def getText(self, key):
-		if key == Qt.Key_ParenLeft: return '('
-		if key == Qt.Key_BracketLeft: return '['
-		if key == Qt.Key_Underscore: return '_'
-		if key == Qt.Key_Asterisk: return '*'
-		if key == Qt.Key_QuoteDbl: return '"'
-		if key == Qt.Key_Apostrophe: return '\''
+		if key == Qt.Key.Key_ParenLeft: return '('
+		if key == Qt.Key.Key_BracketLeft: return '['
+		if key == Qt.Key.Key_Underscore: return '_'
+		if key == Qt.Key.Key_Asterisk: return '*'
+		if key == Qt.Key.Key_QuoteDbl: return '"'
+		if key == Qt.Key.Key_Apostrophe: return '\''
 
 	def getEvent(self, key):
-		return QKeyEvent(QEvent.KeyPress, key, Qt.NoModifier, text=self.getText(key))
+		return QKeyEvent(QEvent.Type.KeyPress, key, Qt.KeyboardModifier.NoModifier, text=self.getText(key))
 
 	def test_isSurroundKey(self):
 		# close keys should not start a surrounding
-		self.assertFalse(self.editor.isSurroundKey(Qt.Key_ParenRight))
-		self.assertFalse(self.editor.isSurroundKey(Qt.Key_BracketRight))
+		self.assertFalse(self.editor.isSurroundKey(Qt.Key.Key_ParenRight))
+		self.assertFalse(self.editor.isSurroundKey(Qt.Key.Key_BracketRight))
 
-		self.assertTrue(self.editor.isSurroundKey(Qt.Key_ParenLeft))
-		self.assertTrue(self.editor.isSurroundKey(Qt.Key_BracketLeft))
-		self.assertTrue(self.editor.isSurroundKey(Qt.Key_Underscore))
-		self.assertTrue(self.editor.isSurroundKey(Qt.Key_Asterisk))
-		self.assertTrue(self.editor.isSurroundKey(Qt.Key_QuoteDbl))
-		self.assertTrue(self.editor.isSurroundKey(Qt.Key_Apostrophe))
+		self.assertTrue(self.editor.isSurroundKey(Qt.Key.Key_ParenLeft))
+		self.assertTrue(self.editor.isSurroundKey(Qt.Key.Key_BracketLeft))
+		self.assertTrue(self.editor.isSurroundKey(Qt.Key.Key_Underscore))
+		self.assertTrue(self.editor.isSurroundKey(Qt.Key.Key_Asterisk))
+		self.assertTrue(self.editor.isSurroundKey(Qt.Key.Key_QuoteDbl))
+		self.assertTrue(self.editor.isSurroundKey(Qt.Key.Key_Apostrophe))
 
 	def test_getCloseKey(self):
-		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_Underscore), Qt.Key_Underscore), '_')
-		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_Asterisk), Qt.Key_Asterisk), '*')
-		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_QuoteDbl), Qt.Key_QuoteDbl), '"')
-		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_Apostrophe), Qt.Key_Apostrophe), '\'')
-		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_ParenLeft), Qt.Key_ParenLeft), ')')
-		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key_BracketLeft), Qt.Key_BracketLeft), ']')
+		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key.Key_Underscore), Qt.Key.Key_Underscore), '_')
+		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key.Key_Asterisk), Qt.Key.Key_Asterisk), '*')
+		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key.Key_QuoteDbl), Qt.Key.Key_QuoteDbl), '"')
+		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key.Key_Apostrophe), Qt.Key.Key_Apostrophe), '\'')
+		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key.Key_ParenLeft), Qt.Key.Key_ParenLeft), ')')
+		self.assertEqual(self.editor.getCloseKey(self.getEvent(Qt.Key.Key_BracketLeft), Qt.Key.Key_BracketLeft), ']')
 
 	def changeCursor(self, posI, posF):
 		self.cursor.setPosition(posI)
-		self.cursor.setPosition(posF, QTextCursor.KeepAnchor)
+		self.cursor.setPosition(posF, QTextCursor.MoveMode.KeepAnchor)
 
 	def test_surroundText(self):
 
 		self.changeCursor(0, 3)
-		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key_Underscore), Qt.Key_Underscore)
+		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key.Key_Underscore), Qt.Key.Key_Underscore)
 		self.assertEqual(self.document.toPlainText(), '_foo_ bar baz qux corge grault')
 
 		self.changeCursor(6, 9)
-		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key_Asterisk), Qt.Key_Asterisk)
+		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key.Key_Asterisk), Qt.Key.Key_Asterisk)
 		self.assertEqual(self.document.toPlainText(), '_foo_ *bar* baz qux corge grault')
 
 		self.changeCursor(12, 15)
-		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key_QuoteDbl), Qt.Key_QuoteDbl)
+		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key.Key_QuoteDbl), Qt.Key.Key_QuoteDbl)
 		self.assertEqual(self.document.toPlainText(), '_foo_ *bar* "baz" qux corge grault')
 
 		self.changeCursor(18, 21)
-		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key_Apostrophe), Qt.Key_Apostrophe)
+		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key.Key_Apostrophe), Qt.Key.Key_Apostrophe)
 		self.assertEqual(self.document.toPlainText(), '_foo_ *bar* "baz" \'qux\' corge grault')
 
 		self.changeCursor(24, 29)
-		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key_ParenLeft), Qt.Key_ParenLeft)
+		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key.Key_ParenLeft), Qt.Key.Key_ParenLeft)
 		self.assertEqual(self.document.toPlainText(), '_foo_ *bar* "baz" \'qux\' (corge) grault')
 
 		self.changeCursor(32, 38)
-		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key_BracketLeft), Qt.Key_BracketLeft)
+		self.editor.surroundText(self.cursor, self.getEvent(Qt.Key.Key_BracketLeft), Qt.Key.Key_BracketLeft)
 		self.assertEqual(self.document.toPlainText(), '_foo_ *bar* "baz" \'qux\' (corge) [grault]')
 
 class TestOrderedListMode(unittest.TestCase):
@@ -223,7 +223,7 @@ class TestOrderedListMode(unittest.TestCase):
 		editor = ReTextEdit(self)
 		editor.tab = self.DummyReTextTab()
 		QTest.keyClicks(editor, '1. Hello')
-		QTest.keyClick(editor, Qt.Key_Return)
+		QTest.keyClick(editor, Qt.Key.Key_Return)
 		QTest.keyClicks(editor, 'World')
 		self.assertEqual(editor.document().toPlainText(), '1. Hello\n2. World')
 
@@ -234,7 +234,7 @@ class TestOrderedListMode(unittest.TestCase):
 		editor = ReTextEdit(self, settings=TestSettings())
 		editor.tab = self.DummyReTextTab()
 		QTest.keyClicks(editor, '1. Hello')
-		QTest.keyClick(editor, Qt.Key_Return)
+		QTest.keyClick(editor, Qt.Key.Key_Return)
 		QTest.keyClicks(editor, 'World')
 		self.assertEqual(editor.document().toPlainText(), '1. Hello\n1. World')
 

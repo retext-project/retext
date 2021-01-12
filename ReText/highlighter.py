@@ -49,15 +49,15 @@ reWords        = re.compile('[^_\\W]+')
 reSpacesOnEnd  = re.compile(r'\s+$')
 
 defaultColorScheme = {
-	'htmlTags': Qt.darkMagenta,
-	'htmlSymbols': Qt.darkCyan,
-	'htmlStrings': Qt.darkYellow,
-	'htmlComments': Qt.gray,
+	'htmlTags': Qt.GlobalColor.darkMagenta,
+	'htmlSymbols': Qt.GlobalColor.darkCyan,
+	'htmlStrings': Qt.GlobalColor.darkYellow,
+	'htmlComments': Qt.GlobalColor.gray,
 	'codeSpans': QColor(0x50, 0x50, 0x50),
 	'markdownLinks': QColor(0, 0, 0x90),
-	'blockquotes': Qt.darkGray,
-	'restDirectives': Qt.darkMagenta,
-	'restRoles': Qt.darkRed,
+	'blockquotes': Qt.GlobalColor.darkGray,
+	'restDirectives': Qt.GlobalColor.darkMagenta,
+	'restRoles': Qt.GlobalColor.darkRed,
 	'whitespaceOnEnd': QColor(0xe1, 0xe1, 0xa5, 0x80)
 }
 colorScheme = {}
@@ -132,25 +132,25 @@ class ReTextHighlighter(QSyntaxHighlighter):
 		(reMkdCodeSpans, FG('codeSpans'),                      Markup.Mkd | Markup.CodeSpan),
 		(reMkdMathSpans, FG('codeSpans'),                      Markup.Mkd | Markup.CodeSpan),
 		(reReSTCodeSpan, FG('codeSpans'),                      Markup.ReST | Markup.CodeSpan),
-		(reHtmlTags,     FG('htmlTags') | QFont.Bold,          Markup.Mkd | Markup.Textile | Markup.HTML),
-		(reHtmlSymbols,  FG('htmlSymbols') | QFont.Bold,       Markup.Mkd | Markup.HTML),
-		(reHtmlStrings,  FG('htmlStrings') | QFont.Bold,       Markup.Mkd | Markup.HTML),
+		(reHtmlTags,     FG('htmlTags') | QFont.Weight.Bold,   Markup.Mkd | Markup.Textile | Markup.HTML),
+		(reHtmlSymbols,  FG('htmlSymbols') | QFont.Weight.Bold, Markup.Mkd | Markup.HTML),
+		(reHtmlStrings,  FG('htmlStrings') | QFont.Weight.Bold, Markup.Mkd | Markup.HTML),
 		(reHtmlComments, FG('htmlComments'),                   Markup.Mkd | Markup.HTML),
 		(reAsterisks,    ITAL,                                 Markup.Mkd | Markup.ReST),
 		(reUnderline,    ITAL,                                 Markup.Mkd | Markup.Textile),
-		(reDblAsterisks, NF | QFont.Bold,                      Markup.Mkd | Markup.ReST | Markup.Textile),
-		(reDblUnderline, NF | QFont.Bold,                      Markup.Mkd),
-		(reTrpAsterisks, ITAL | QFont.Bold,                    Markup.Mkd),
-		(reTrpUnderline, ITAL | QFont.Bold,                    Markup.Mkd),
-		(reMkdHeaders,   NF | QFont.Black,                     Markup.Mkd),
+		(reDblAsterisks, NF | QFont.Weight.Bold,               Markup.Mkd | Markup.ReST | Markup.Textile),
+		(reDblUnderline, NF | QFont.Weight.Bold,               Markup.Mkd),
+		(reTrpAsterisks, ITAL | QFont.Weight.Bold,             Markup.Mkd),
+		(reTrpUnderline, ITAL | QFont.Weight.Bold,             Markup.Mkd),
+		(reMkdHeaders,   NF | QFont.Weight.Black,              Markup.Mkd),
 		(reMkdLinksImgs, FG('markdownLinks'),                  Markup.Mkd),
 		(reMkdLinkRefs,  ITAL | UNDL,                          Markup.Mkd),
 		(reBlockQuotes,  FG('blockquotes'),                    Markup.Mkd),
-		(reReSTDirects,  FG('restDirectives') | QFont.Bold,    Markup.ReST),
-		(reReSTRoles,    NF, FG('restRoles') | QFont.Bold, FG('htmlStrings'), Markup.ReST),
-		(reTextileHdrs,  NF | QFont.Black,                     Markup.Textile),
+		(reReSTDirects,  FG('restDirectives') | QFont.Weight.Bold, Markup.ReST),
+		(reReSTRoles,    NF, FG('restRoles') | QFont.Weight.Bold, FG('htmlStrings'), Markup.ReST),
+		(reTextileHdrs,  NF | QFont.Weight.Black,              Markup.Textile),
 		(reTextileQuot,  FG('blockquotes'),                    Markup.Textile),
-		(reAsterisks,    NF | QFont.Bold,                      Markup.Textile),
+		(reAsterisks,    NF | QFont.Weight.Bold,               Markup.Textile),
 		(reDblUnderline, ITAL,                                 Markup.Textile),
 		(reReSTLinks,    NF, NF, ITAL | UNDL, NF,              Markup.ReST),
 		(reReSTLinkRefs, NF, FG('markdownLinks'), ITAL | UNDL, Markup.ReST),
@@ -189,8 +189,8 @@ class ReTextHighlighter(QSyntaxHighlighter):
 		# Spell checker
 		if self.dictionary:
 			charFormat = QTextCharFormat()
-			charFormat.setUnderlineColor(Qt.red)
-			charFormat.setUnderlineStyle(QTextCharFormat.SpellCheckUnderline)
+			charFormat.setUnderlineColor(Qt.GlobalColor.red)
+			charFormat.setUnderlineStyle(QTextCharFormat.UnderlineStyle.SpellCheckUnderline)
 			for match in reWords.finditer(text):
 				finalFormat = QTextCharFormat()
 				finalFormat.merge(charFormat)

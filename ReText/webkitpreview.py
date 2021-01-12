@@ -42,22 +42,22 @@ class ReTextWebKitPreview(ReTextWebPreview, QWebView):
 		                             sourceLineToEditorPositionFunc)
 		ReTextWebPreview.__init__(self, tab.editBox)
 
-		self.page().setLinkDelegationPolicy(QWebPage.DelegateAllLinks)
+		self.page().setLinkDelegationPolicy(QWebPage.LinkDelegationPolicy.DelegateAllLinks)
 		self.page().linkClicked.connect(self._handleLinkClicked)
-		self.settings().setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)
+		self.settings().setAttribute(QWebSettings.WebAttribute.LocalContentCanAccessFileUrls, False)
 		# Avoid caching of CSS
 		self.settings().setObjectCacheCapacities(0,0,0)
 
 		self.cache = QNetworkDiskCache()
-		cacheDirectory = QStandardPaths.writableLocation(QStandardPaths.CacheLocation)
+		cacheDirectory = QStandardPaths.writableLocation(QStandardPaths.StandardLocation.CacheLocation)
 		self.cache.setCacheDirectory(cacheDirectory)
 		self.page().networkAccessManager().setCache(self.cache)
 
 	def updateFontSettings(self):
 		settings = self.settings()
-		settings.setFontFamily(QWebSettings.StandardFont,
+		settings.setFontFamily(QWebSettings.FontFamily.StandardFont,
 		                       globalSettings.font.family())
-		settings.setFontSize(QWebSettings.DefaultFontSize,
+		settings.setFontSize(QWebSettings.FontSize.DefaultFontSize,
 		                     globalSettings.font.pointSize())
 
 	def _handleWheelEvent(self, event):

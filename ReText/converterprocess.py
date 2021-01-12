@@ -124,7 +124,7 @@ class ConverterProcess(QObject):
         self.busy = False
         self.notificationPending = False
         self.conversionNotifier = QSocketNotifier(self.conn.fileno(),
-                                                  QSocketNotifier.Read)
+                                                  QSocketNotifier.Type.Read)
         self.conversionNotifier.activated.connect(self._conversionNotifierActivated)
 
         def on_finalize(conn):

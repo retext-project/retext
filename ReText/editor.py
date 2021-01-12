@@ -38,8 +38,8 @@ colors = {
 	'currentLineHighlight': QColor(0xff, 0xff, 0xc8),
 	'infoArea': QColor(0xaa, 0xff, 0x55, 0xaa),
 	'statsArea': QColor(0xff, 0xaa, 0x55, 0xaa),
-	'lineNumberArea': Qt.cyan,
-	'lineNumberAreaText': Qt.darkCyan
+	'lineNumberArea': Qt.GlobalColor.cyan,
+	'lineNumberAreaText': Qt.GlobalColor.darkCyan
 }
 
 colorValues = {
@@ -98,14 +98,14 @@ class ReTextEdit(QTextEdit):
 	wordPattern = re.compile(r"\w+")
 	nonAlphaNumPattern = re.compile(r"\W")
 	surroundKeysSelfClose = [
-		Qt.Key_Underscore,
-		Qt.Key_Asterisk,
-		Qt.Key_QuoteDbl,
-		Qt.Key_Apostrophe
+		Qt.Key.Key_Underscore,
+		Qt.Key.Key_Asterisk,
+		Qt.Key.Key_QuoteDbl,
+		Qt.Key.Key_Apostrophe
 	]
 	surroundKeysOtherClose = {
-		Qt.Key_ParenLeft: ')',
-		Qt.Key_BracketLeft: ']'
+		Qt.Key.Key_ParenLeft: ')',
+		Qt.Key.Key_BracketLeft: ']'
 	}
 
 	def __init__(self, parent, settings=globalSettings):
@@ -130,10 +130,10 @@ class ReTextEdit(QTextEdit):
 
 	def setWrapModeAndWidth(self):
 		if globalSettings.rightMarginWrap and (self.rect().topRight().x() > self.marginx):
-			self.setLineWrapMode(QTextEdit.FixedPixelWidth)
+			self.setLineWrapMode(QTextEdit.LineWrapMode.FixedPixelWidth)
 			self.setLineWrapColumnOrWidth(self.marginx)
 		else:
-			self.setLineWrapMode(QTextEdit.WidgetWidth)
+			self.setLineWrapMode(QTextEdit.LineWrapMode.WidgetWidth)
 
 	def updateFont(self):
 		self.setFont(globalSettings.editorFont)
@@ -160,7 +160,7 @@ class ReTextEdit(QTextEdit):
 
 	def wheelEvent(self, event):
 		modifiers = QGuiApplication.keyboardModifiers()
-		if modifiers == Qt.ControlModifier:
+		if modifiers == Qt.KeyboardModifier.ControlModifier:
 			font = globalSettings.editorFont
 			size = font.pointSize()
 			scroll = event.angleDelta().y()
@@ -209,7 +209,7 @@ class ReTextEdit(QTextEdit):
 		dictionary = self.tab.highlighter.dictionary
 		word = None
 		if isalpha and not (oldcursor.hasSelection() and oldcursor.selectedText() != cursor.selectedText()):
-			cursor.select(QTextCursor.WordUnderCursor)
+			cursor.select(QTextCursor.SelectionType.WordUnderCursor)
 			word = cursor.selectedText()
 
 		if word is not None and dictionary and not dictionary.check(word):
@@ -265,25 +265,25 @@ class ReTextEdit(QTextEdit):
 	def keyPressEvent(self, event):
 		key = event.key()
 		cursor = self.textCursor()
-		if key == Qt.Key_Backspace and event.modifiers() & Qt.GroupSwitchModifier:
+		if key == Qt.Key.Key_Backspace and event.modifiers() & Qt.KeyboardModifier.GroupSwitchModifier:
 			# Workaround for https://bugreports.qt.io/browse/QTBUG-49771
 			event = QKeyEvent(event.type(), event.key(),
-				event.modifiers() ^ Qt.GroupSwitchModifier)
-		if key == Qt.Key_Tab:
+				event.modifiers() ^ Qt.KeyboardModifier.GroupSwitchModifier)
+		if key == Qt.Key.Key_Tab:
 			documentIndentMore(self.document(), cursor)
-		elif key == Qt.Key_Backtab:
+		elif key == Qt.Key.Key_Backtab:
 			documentIndentLess(self.document(), cursor)
-		elif key == Qt.Key_Return:
+		elif key == Qt.Key.Key_Return:
 			markupClass = self.tab.getActiveMarkupClass()
-			if event.modifiers() & Qt.ControlModifier:
+			if event.modifiers() & Qt.KeyboardModifier.ControlModifier:
 				cursor.insertText('\n')
 				self.ensureCursorVisible()
 			elif self.tableModeEnabled and tablemode.handleReturn(cursor, markupClass,
-					newRow=(event.modifiers() & Qt.ShiftModifier)):
+					newRow=(event.modifiers() & Qt.KeyboardModifier.ShiftModifier)):
 				self.setTextCursor(cursor)
 				self.ensureCursorVisible()
 			else:
-				if event.modifiers() & Qt.ShiftModifier and markupClass == MarkdownMarkup:
+				if event.modifiers() & Qt.KeyboardModifier.ShiftModifier and markupClass == MarkdownMarkup:
 					# Insert Markdown-style line break
 					cursor.insertText('  ')
 				self.handleReturn(cursor)
@@ -298,7 +298,7 @@ class ReTextEdit(QTextEdit):
 
 	def handleReturn(self, cursor):
 		# Select text between the cursor and the line start
-		cursor.movePosition(QTextCursor.StartOfBlock, QTextCursor.KeepAnchor)
+		cursor.movePosition(QTextCursor.MoveOperation.StartOfBlock, QTextCursor.MoveMode.KeepAnchor)
 		text = cursor.selectedText()
 		length = len(text)
 		match = self.returnBlockPattern.search(text)
@@ -322,25 +322,25 @@ class ReTextEdit(QTextEdit):
 		self.ensureCursorVisible()
 
 	def moveLineUp(self):
-		self.moveLine(QTextCursor.PreviousBlock)
+		self.moveLine(QTextCursor.MoveOperation.PreviousBlock)
 
 	def moveLineDown(self):
-		self.moveLine(QTextCursor.NextBlock)
+		self.moveLine(QTextCursor.MoveOperation.NextBlock)
 
 	def moveLine(self, direction):
 		cursor = self.textCursor()
 		# Select the current block
-		cursor.movePosition(QTextCursor.StartOfBlock, QTextCursor.MoveAnchor)
-		cursor.movePosition(QTextCursor.NextBlock, QTextCursor.KeepAnchor)
+		cursor.movePosition(QTextCursor.MoveOperation.StartOfBlock, QTextCursor.MoveMode.MoveAnchor)
+		cursor.movePosition(QTextCursor.MoveOperation.NextBlock, QTextCursor.MoveMode.KeepAnchor)
 		text = cursor.selectedText()
 		# Remove it
 		cursor.removeSelectedText()
 		# Move to the wanted block
-		cursor.movePosition(direction, QTextCursor.MoveAnchor)
+		cursor.movePosition(direction, QTextCursor.MoveMode.MoveAnchor)
 		# Paste the line
 		cursor.insertText(text)
 		# Move to the pasted block
-		cursor.movePosition(QTextCursor.PreviousBlock, QTextCursor.MoveAnchor)
+		cursor.movePosition(QTextCursor.MoveOperation.PreviousBlock, QTextCursor.MoveMode.MoveAnchor)
 		# Update cursor
 		self.setTextCursor(cursor)
 
@@ -348,7 +348,7 @@ class ReTextEdit(QTextEdit):
 		if not globalSettings.lineNumbersEnabled:
 			return 0
 		cursor = QTextCursor(self.document())
-		cursor.movePosition(QTextCursor.End)
+		cursor.movePosition(QTextCursor.MoveOperation.End)
 		if globalSettings.relativeLineNumbers:
 			digits = len(str(cursor.blockNumber())) + 1
 		else:
@@ -376,18 +376,18 @@ class ReTextEdit(QTextEdit):
 			return self.setExtraSelections([])
 		selection = QTextEdit.ExtraSelection()
 		selection.format.setBackground(colorValues['currentLineHighlight'])
-		selection.format.setProperty(QTextFormat.FullWidthSelection, True)
+		selection.format.setProperty(QTextFormat.Property.FullWidthSelection, True)
 		selection.cursor = self.textCursor()
 		selection.cursor.clearSelection()
 		selections = [selection]
 		if globalSettings.highlightCurrentLine == 'wrapped-line':
 			selections.append(QTextEdit.ExtraSelection())
-			selections[0].cursor.movePosition(QTextCursor.StartOfBlock)
-			selections[0].cursor.movePosition(QTextCursor.EndOfBlock, QTextCursor.KeepAnchor)
+			selections[0].cursor.movePosition(QTextCursor.MoveOperation.StartOfBlock)
+			selections[0].cursor.movePosition(QTextCursor.MoveOperation.EndOfBlock, QTextCursor.MoveMode.KeepAnchor)
 			selections[1].format.setBackground(colorValues['currentLineHighlight'])
-			selections[1].format.setProperty(QTextFormat.FullWidthSelection, True)
+			selections[1].format.setProperty(QTextFormat.Property.FullWidthSelection, True)
 			selections[1].cursor = self.textCursor()
-			selections[1].cursor.movePosition(QTextCursor.EndOfBlock)
+			selections[1].cursor.movePosition(QTextCursor.MoveOperation.EndOfBlock)
 		self.setExtraSelections(selections)
 
 	def enableTableMode(self, enable):
@@ -518,11 +518,11 @@ class LineNumberArea(QWidget):
 				break
 			number = str(cursor.blockNumber() - relativeTo).replace('-', '−')
 			painter.drawText(0, rect.top(), self.width() - 2,
-			                 fontHeight, Qt.AlignRight, number)
-			cursor.movePosition(QTextCursor.EndOfBlock)
+			                 fontHeight, Qt.AlignmentFlag.AlignRight, number)
+			cursor.movePosition(QTextCursor.MoveOperation.EndOfBlock)
 			atEnd = cursor.atEnd()
 			if not atEnd:
-				cursor.movePosition(QTextCursor.NextBlock)
+				cursor.movePosition(QTextCursor.MoveOperation.NextBlock)
 
 class InfoArea(QLabel):
 	def __init__(self, editor, baseColor):
@@ -533,9 +533,9 @@ class InfoArea(QLabel):
 		self.setAutoFillBackground(True)
 		self.baseColor = baseColor
 		palette = self.palette()
-		palette.setColor(QPalette.Window, self.baseColor)
+		palette.setColor(QPalette.ColorRole.Window, self.baseColor)
 		self.setPalette(palette)
-		self.setCursor(Qt.IBeamCursor)
+		self.setCursor(Qt.CursorShape.IBeamCursor)
 
 	def updateTextAndGeometry(self):
 		text = self.getText()
@@ -562,17 +562,17 @@ class InfoArea(QLabel):
 		palette = self.palette()
 		windowColor = QColor(self.baseColor)
 		windowColor.setAlpha(0x20)
-		palette.setColor(QPalette.Window, windowColor)
-		textColor = palette.color(QPalette.WindowText)
+		palette.setColor(QPalette.ColorRole.Window, windowColor)
+		textColor = palette.color(QPalette.ColorRole.WindowText)
 		textColor.setAlpha(0x20)
-		palette.setColor(QPalette.WindowText, textColor)
+		palette.setColor(QPalette.ColorRole.WindowText, textColor)
 		self.setPalette(palette)
 
 	def leaveEvent(self, event):
 		palette = self.palette()
-		palette.setColor(QPalette.Window, self.baseColor)
-		palette.setColor(QPalette.WindowText,
-			self.editor.palette().color(QPalette.WindowText))
+		palette.setColor(QPalette.ColorRole.Window, self.baseColor)
+		palette.setColor(QPalette.ColorRole.WindowText,
+			self.editor.palette().color(QPalette.ColorRole.WindowText))
 		self.setPalette(palette)
 
 	def mousePressEvent(self, event):

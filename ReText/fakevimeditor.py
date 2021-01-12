@@ -234,18 +234,18 @@ class ReTextFakeVimHandler (QObject):
 		while not cur.isNull():
 			if cur.hasSelection():
 				selection = QTextEdit.ExtraSelection()
-				selection.format.setBackground(Qt.yellow)
-				selection.format.setForeground(Qt.black)
+				selection.format.setBackground(Qt.GlobalColor.yellow)
+				selection.format.setForeground(Qt.GlobalColor.black)
 				selection.cursor = cur
 				searchSelections.append(selection)
 			else:
-				cur.movePosition(QTextCursor.NextCharacter)
+				cur.movePosition(QTextCursor.MoveOperation.NextCharacter)
 
 			cur = self.__editor.document().find(re, cur)
 			b = cur.position()
 
 			if a == b:
-				cur.movePosition(QTextCursor.NextCharacter)
+				cur.movePosition(QTextCursor.MoveOperation.NextCharacter)
 				cur = self.__editor.document().find(re, cur)
 				b = cur.position()
 

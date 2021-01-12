@@ -26,8 +26,8 @@ class InsertTableDialog(QDialog):
         self.parent = parent
         self.setWindowTitle(self.tr('Insert table'))
         buttonBox = QDialogButtonBox(self)
-        buttonBox.setStandardButtons(QDialogButtonBox.Ok |
-                                     QDialogButtonBox.Cancel)
+        buttonBox.setStandardButtons(QDialogButtonBox.StandardButton.Ok |
+                                     QDialogButtonBox.StandardButton.Cancel)
         buttonBox.accepted.connect(self.makeTable)
         buttonBox.rejected.connect(self.close)
 
@@ -44,9 +44,9 @@ class InsertTableDialog(QDialog):
         self.columnsSpinBox.setValue(3)
 
         layout.addWidget(rowsLabel, 0, 0)
-        layout.addWidget(self.rowsSpinBox, 0, 1, Qt.AlignRight)
+        layout.addWidget(self.rowsSpinBox, 0, 1, Qt.AlignmentFlag.AlignRight)
         layout.addWidget(columnsLabel, 1, 0)
-        layout.addWidget(self.columnsSpinBox, 1, 1, Qt.AlignRight)
+        layout.addWidget(self.columnsSpinBox, 1, 1, Qt.AlignmentFlag.AlignRight)
         layout.addWidget(buttonBox, 2, 0, 1, 2)
 
     def makeTable(self):

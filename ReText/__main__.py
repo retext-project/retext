@@ -59,8 +59,8 @@ def main():
 		pass
 
 	# Needed for Qt WebEngine on Windows
-	QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
-	QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps);
+	QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
+	QApplication.setAttribute(Qt.ApplicationAttribute.AA_UseHighDpiPixmaps)
 	app = QApplication(sys.argv)
 	app.setOrganizationName("ReText project")
 	app.setApplicationName("ReText")
@@ -95,13 +95,13 @@ def main():
 			break
 	QtTranslator = QTranslator()
 	QtTranslator.load("qtbase_" + globalSettings.uiLanguage,
-		QLibraryInfo.location(QLibraryInfo.TranslationsPath))
+		QLibraryInfo.location(QLibraryInfo.LibraryLocation.TranslationsPath))
 	app.installTranslator(RtTranslator)
 	app.installTranslator(QtTranslator)
 	print('Using configuration file:', settings.fileName())
 	if globalSettings.appStyleSheet:
 		sheetfile = QFile(globalSettings.appStyleSheet)
-		sheetfile.open(QIODevice.ReadOnly)
+		sheetfile.open(QIODevice.OpenModeFlag.ReadOnly)
 		app.setStyleSheet(QTextStream(sheetfile).readAll())
 		sheetfile.close()
 	window = ReTextWindow()
@@ -110,7 +110,7 @@ def main():
 		and not parser.isSet(newWindowOption))
 	connection = QDBusConnection.sessionBus()
 	if connection.isConnected() and openInExistingWindow:
-		connection.registerObject('/', window, QDBusConnection.ExportAllSlots)
+		connection.registerObject('/', window, QDBusConnection.RegisterOption.ExportAllSlots)
 		serviceName = 'me.mitya57.ReText'
 		if not connection.registerService(serviceName) and filesToOpen:
 			print('Opening the file(s) in the existing window of ReText.')

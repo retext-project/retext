@@ -30,17 +30,17 @@ from ReText.highlighter import colorScheme, updateColorScheme
 # only have one QCoreApplication instance for all tests in a process. As
 # other tests need QApplication, we should not create a bare QCoreApplication
 # here. Also, keep a reference so it is not garbage collected.
-QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
+QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
 app = QApplication.instance() or QApplication(sys.argv)
 
 class TestSettings(unittest.TestCase):
 	def setUp(self):
 		self.tempFile = tempfile.NamedTemporaryFile(prefix='retext-', suffix='.ini')
 		baseName = splitext(basename(self.tempFile.name))[0]
-		QSettings.setPath(QSettings.IniFormat, QSettings.UserScope,
+		QSettings.setPath(QSettings.Format.IniFormat, QSettings.Scope.UserScope,
 		                  dirname(self.tempFile.name))
-		self.settings = QSettings(QSettings.IniFormat,
-		                          QSettings.UserScope, baseName)
+		self.settings = QSettings(QSettings.Format.IniFormat,
+		                          QSettings.Scope.UserScope, baseName)
 
 	def tearDown(self):
 		del self.settings # this should be deleted before tempFile
@@ -86,7 +86,7 @@ class TestSettings(unittest.TestCase):
 		updateColorScheme(self.settings)
 		self.assertEqual(colorScheme['htmlTags'], QColor(0x00, 0x80, 0x00))
 		self.assertEqual(colorScheme['htmlSymbols'], QColor(0xff, 0x88, 0x00))
-		self.assertEqual(colorScheme['htmlStrings'], Qt.darkYellow) # default
+		self.assertEqual(colorScheme['htmlStrings'], Qt.GlobalColor.darkYellow) # default
 		self.assertEqual(colorScheme['htmlComments'], QColor(0xaa, 0xbb, 0xcc))
 
 if __name__ == '__main__':

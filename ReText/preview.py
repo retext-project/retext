@@ -83,7 +83,7 @@ class ReTextWebPreview:
 		self.syncscroll.handleEditorResized(rect.height())
 
 	def wheelEvent(self, event):
-		if QGuiApplication.keyboardModifiers() == Qt.ControlModifier:
+		if QGuiApplication.keyboardModifiers() == Qt.KeyboardModifier.ControlModifier:
 			zoomFactor = self.zoomFactor()
 			zoomFactor *= 1.001 ** event.angleDelta().y()
 			self.setZoomFactor(zoomFactor)

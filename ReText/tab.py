@@ -61,7 +61,7 @@ class ReTextTab(QSplitter):
 		return self._fileName
 
 	def __init__(self, parent, fileName, previewState=PreviewDisabled):
-		super().__init__(Qt.Horizontal, parent=parent)
+		super().__init__(Qt.Orientation.Horizontal, parent=parent)
 		self.p = parent
 		self._fileName = fileName
 		self.editBox = ReTextEdit(self)
@@ -206,7 +206,7 @@ class ReTextTab(QSplitter):
 			if globalSettings.useWebKit:
 				# https://github.com/retext-project/retext/pull/187
 				palette = QApplication.palette()
-				style += '@media screen { html { color: %s; } }\n' % palette.color(QPalette.WindowText).name()
+				style += '@media screen { html { color: %s; } }\n' % palette.color(QPalette.ColorRole.WindowText).name()
 				# https://github.com/retext-project/retext/issues/408
 				style += '@media print { html { background-color: white; } }\n'
 			headers += '<style type="text/css">\n' + style + '</style>\n'
@@ -374,7 +374,7 @@ class ReTextTab(QSplitter):
 		# see https://bugreports.qt.io/browse/QTBUG-57552 and
 		# https://github.com/retext-project/retext/issues/216
 		cursor = self.editBox.textCursor()
-		cursor.select(QTextCursor.Document)
+		cursor.select(QTextCursor.SelectionType.Document)
 		text = cursor.selectedText().replace('\u2029', '\n')
 
 		savefile = QFile(fileName or self._fileName)
@@ -414,10 +414,10 @@ class ReTextTab(QSplitter):
 
 	def find(self, text, flags, replaceText=None, wrap=False):
 		cursor = self.editBox.textCursor()
-		if wrap and flags & QTextDocument.FindBackward:
-			cursor.movePosition(QTextCursor.End)
+		if wrap and flags & QTextDocument.FindFlag.FindBackward:
+			cursor.movePosition(QTextCursor.MoveOperation.End)
 		elif wrap:
-			cursor.movePosition(QTextCursor.Start)
+			cursor.movePosition(QTextCursor.MoveOperation.Start)
 		if replaceText is not None and cursor.selectedText() == text:
 			newCursor = cursor
 		else:
@@ -425,8 +425,8 @@ class ReTextTab(QSplitter):
 		if not newCursor.isNull():
 			if replaceText is not None:
 				newCursor.insertText(replaceText)
-				newCursor.movePosition(QTextCursor.Left, QTextCursor.MoveAnchor, len(replaceText))
-				newCursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, len(replaceText))
+				newCursor.movePosition(QTextCursor.MoveOperation.Left, QTextCursor.MoveMode.MoveAnchor, len(replaceText))
+				newCursor.movePosition(QTextCursor.MoveOperation.Right, QTextCursor.MoveMode.KeepAnchor, len(replaceText))
 			self.editBox.setTextCursor(newCursor)
 			if self.editBox.cursorRect().bottom() >= self.editBox.height() - 3:
 				scrollValue = self.editBox.verticalScrollBar().value()
@@ -440,7 +440,7 @@ class ReTextTab(QSplitter):
 	def replaceAll(self, text, replaceText):
 		cursor = self.editBox.textCursor()
 		cursor.beginEditBlock()
-		cursor.movePosition(QTextCursor.Start)
+		cursor.movePosition(QTextCursor.MoveOperation.Start)
 		flags = QTextDocument.FindFlags()
 		cursor = lastCursor = self.editBox.document().find(text, cursor, flags)
 		while not cursor.isNull():
@@ -448,8 +448,8 @@ class ReTextTab(QSplitter):
 			lastCursor = cursor
 			cursor = self.editBox.document().find(text, cursor, flags)
 		if not lastCursor.isNull():
-			lastCursor.movePosition(QTextCursor.Left, QTextCursor.MoveAnchor, len(replaceText))
-			lastCursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, len(replaceText))
+			lastCursor.movePosition(QTextCursor.MoveOperation.Left, QTextCursor.MoveMode.MoveAnchor, len(replaceText))
+			lastCursor.movePosition(QTextCursor.MoveOperation.Right, QTextCursor.MoveMode.KeepAnchor, len(replaceText))
 			self.editBox.setTextCursor(lastCursor)
 		self.editBox.textCursor().endEditBlock()
 		return not lastCursor.isNull()
@@ -479,11 +479,11 @@ class ReTextTab(QSplitter):
 		"""
 		buttonReply = QMessageBox.question(self, self.tr('Create missing file?'),
 		                                   self.tr("The file '%s' does not exist.\n\nDo you want to create it?") % fileToCreate,
-		                                   QMessageBox.Yes | QMessageBox.No,
-		                                   QMessageBox.No)
-		if buttonReply == QMessageBox.Yes:
+		                                   QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+		                                   QMessageBox.StandardButton.No)
+		if buttonReply == QMessageBox.StandardButton.Yes:
 			return self.createFile(fileToCreate)
-		elif buttonReply == QMessageBox.No:
+		elif buttonReply == QMessageBox.StandardButton.No:
 			return False
 
 	def resolveSourceFile(self, linkPath):

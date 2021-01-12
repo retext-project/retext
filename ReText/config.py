@@ -95,8 +95,8 @@ class ConfigDialog(QDialog):
 		self.tabWidget = QTabWidget(self)
 		self.layout.addWidget(self.tabWidget)
 		buttonBox = QDialogButtonBox(self)
-		buttonBox.setStandardButtons(QDialogButtonBox.Ok |
-			QDialogButtonBox.Cancel)
+		buttonBox.setStandardButtons(QDialogButtonBox.StandardButton.Ok |
+			QDialogButtonBox.StandardButton.Cancel)
 		buttonBox.accepted.connect(self.saveSettings)
 		buttonBox.rejected.connect(self.close)
 		self.initWidgets()
@@ -155,7 +155,7 @@ class ConfigDialog(QDialog):
 			fileselector = option[2] if len(option) > 2 else False
 			if name is None:
 				header = QLabel('<h3>%s</h3>' % displayname, self)
-				layout.addWidget(header, index, 0, 1, 2, Qt.AlignHCenter)
+				layout.addWidget(header, index, 0, 1, 2, Qt.AlignmentFlag.AlignHCenter)
 				continue
 			if displayname:
 				label = ClickableLabel(displayname + ':', self)
@@ -219,7 +219,7 @@ class ConfigDialog(QDialog):
 				self.configurators[name] = QLineEdit(self)
 				self.configurators[name].setText(value)
 			layout.addWidget(label, index, 0)
-			layout.addWidget(self.configurators[name], index, 1, Qt.AlignRight)
+			layout.addWidget(self.configurators[name], index, 1, Qt.AlignmentFlag.AlignRight)
 		return page
 
 	def handleRightMarginSet(self, value):
@@ -227,7 +227,7 @@ class ConfigDialog(QDialog):
 			self.configurators['rightMarginWrap'].setChecked(False)
 
 	def handleRightMarginWrapSet(self, state):
-		if state == Qt.Checked and self.configurators['rightMargin'].value() < 10:
+		if state == Qt.CheckState.Checked and self.configurators['rightMargin'].value() < 10:
 			self.configurators['rightMargin'].setValue(80)
 
 	def saveSettings(self):

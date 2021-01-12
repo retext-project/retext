@@ -239,7 +239,7 @@ def handleReturn(cursor, markupClass, newRow):
 	if markupClass not in (MarkdownMarkup, ReStructuredTextMarkup):
 		return False
 	positionInBlock = cursor.positionInBlock()
-	cursor.select(QTextCursor.BlockUnderCursor)
+	cursor.select(QTextCursor.SelectionType.BlockUnderCursor)
 	oldLine = cursor.selectedText().lstrip('\u2029')
 	if not ('| ' in oldLine or ' |' in oldLine):
 		cursor.setPosition(cursor.block().position() + positionInBlock)
@@ -249,7 +249,7 @@ def handleReturn(cursor, markupClass, newRow):
 		indent += 1
 	indentChars, oldLine = oldLine[:indent], oldLine[indent:]
 	newLine = ''.join('|' if c in '+|' else ' ' for c in oldLine).rstrip()
-	cursor.movePosition(QTextCursor.EndOfBlock)
+	cursor.movePosition(QTextCursor.MoveOperation.EndOfBlock)
 	if newRow and markupClass == MarkdownMarkup:
 		sepLine = ''.join(c if c in ' |' else '-' for c in oldLine)
 		cursor.insertText('\n' + indentChars + sepLine)

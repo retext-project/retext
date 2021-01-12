@@ -86,14 +86,14 @@ class ReTextWebEnginePreview(ReTextWebPreview, QWebEngineView):
         ReTextWebPreview.__init__(self, tab.editBox)
 
         settings = self.settings()
-        settings.setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls,
+        settings.setAttribute(QWebEngineSettings.WebAttribute.LocalContentCanAccessFileUrls,
                               False)
 
     def updateFontSettings(self):
         settings = self.settings()
-        settings.setFontFamily(QWebEngineSettings.StandardFont,
+        settings.setFontFamily(QWebEngineSettings.FontFamily.StandardFont,
                                globalSettings.font.family())
-        settings.setFontSize(QWebEngineSettings.DefaultFontSize,
+        settings.setFontSize(QWebEngineSettings.FontSize.DefaultFontSize,
                              globalSettings.font.pointSize())
 
     def setHtml(self, html, baseUrl):
@@ -110,15 +110,15 @@ class ReTextWebEnginePreview(ReTextWebPreview, QWebEngineView):
 
     def event(self, event):
         # Work-around https://bugreports.qt.io/browse/QTBUG-43602
-        if event.type() == QEvent.ChildAdded:
+        if event.type() == QEvent.Type.ChildAdded:
             event.child().installEventFilter(self)
-        elif event.type() == QEvent.ChildRemoved:
+        elif event.type() == QEvent.Type.ChildRemoved:
             event.child().removeEventFilter(self)
         return super().event(event)
 
     def eventFilter(self, object, event):
-        if event.type() == QEvent.Wheel:
-            if QGuiApplication.keyboardModifiers() == Qt.ControlModifier:
+        if event.type() == QEvent.Type.Wheel:
+            if QGuiApplication.keyboardModifiers() == Qt.KeyboardModifier.ControlModifier:
                 self.wheelEvent(event)
                 return True
         return False
