@@ -17,7 +17,7 @@ download the tarball from [PyPI].
 ReText requires the following Python modules to run (`pip` will install them
 automatically):
 
-* [PyQt5](https://riverbankcomputing.com/software/pyqt/intro) (5.6 or later)
+* [PyQt5](https://riverbankcomputing.com/software/pyqt/intro) (5.11 or later)
 * [Markups](https://pypi.org/project/Markups/) (2.0 or later)
 
 We also recommend having these packages installed:
