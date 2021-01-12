@@ -46,7 +46,7 @@ from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
  QKeySequence, QPageLayout, QPageSize, QPagedPaintDevice, QPalette, \
  QTextDocument, QTextDocumentWriter
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
- QComboBox, QDesktopWidget, QDialog, QFileDialog, QFileSystemModel, QFontDialog, \
+ QComboBox, QDialog, QFileDialog, QFileSystemModel, QFontDialog, \
  QInputDialog, QLineEdit, QMainWindow, QMenu, QMessageBox, QSplitter, QTabWidget, \
  QToolBar, QTreeView
 from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
@@ -55,7 +55,7 @@ class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
 		QMainWindow.__init__(self, parent)
 		self.resize(950, 700)
-		screenRect = QDesktopWidget().screenGeometry()
+		screenRect = self.screen().geometry()
 		if globalSettings.windowGeometry:
 			self.restoreGeometry(globalSettings.windowGeometry)
 		else:
