@@ -139,8 +139,8 @@ class ReTextEdit(QTextEdit):
 		self.setFont(globalSettings.editorFont)
 		metrics = self.fontMetrics()
 		self.marginx = (int(self.document().documentMargin())
-			+ metrics.width(' ' * globalSettings.rightMargin))
-		self.setTabStopWidth(globalSettings.tabWidth * self.fontMetrics().width(' '))
+			+ metrics.horizontalAdvance(' ' * globalSettings.rightMargin))
+		self.setTabStopWidth(globalSettings.tabWidth * metrics.horizontalAdvance(' '))
 		self.updateLineNumberAreaWidth()
 		self.infoArea.updateTextAndGeometry()
 		self.updateTextStatistics()
@@ -353,7 +353,7 @@ class ReTextEdit(QTextEdit):
 			digits = len(str(cursor.blockNumber())) + 1
 		else:
 			digits = len(str(cursor.blockNumber() + 1))
-		return 5 + self.fontMetrics().width('9') * digits
+		return 5 + self.fontMetrics().horizontalAdvance('9') * digits
 
 	def updateLineNumberAreaWidth(self, blockcount=0):
 		self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, 0)
@@ -548,7 +548,7 @@ class InfoArea(QLabel):
 
 	def getAreaSize(self, text):
 		metrics = self.fontMetrics()
-		width = metrics.width(text)
+		width = metrics.horizontalAdvance(text)
 		height = metrics.height()
 		return width, height
 
