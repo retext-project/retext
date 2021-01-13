@@ -261,7 +261,10 @@ class ReTextWindow(QMainWindow):
 		self.formattingBox = QComboBox(self.editBar)
 		self.formattingBox.addItem(self.tr('Formatting'))
 		self.formattingBox.addItems(self.usefulTags)
-		self.formattingBox.activated[str].connect(self.insertFormatting)
+		if hasattr(self.formattingBox, 'textActivated'):  # Available since Qt 5.14
+			self.formattingBox.textActivated.connect(self.insertFormatting)
+		else:
+			self.formattingBox.activated[str].connect(self.insertFormatting)
 		self.symbolBox = QComboBox(self.editBar)
 		self.symbolBox.addItem(self.tr('Symbols'))
 		self.symbolBox.addItems(self.usefulChars)
