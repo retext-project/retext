@@ -99,7 +99,7 @@ class ReTextWebEnginePreview(ReTextWebPreview, QWebEngineView):
     def setHtml(self, html, baseUrl):
         # A hack to prevent WebEngine from stealing the focus
         self.setEnabled(False)
-        QWebEngineView.setHtml(self, html, baseUrl)
+        super().setHtml(html, baseUrl)
         self.setEnabled(True)
 
     def _handleWheelEvent(self, event):

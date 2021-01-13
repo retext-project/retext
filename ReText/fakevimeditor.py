@@ -141,7 +141,7 @@ class BlockSelection (QWidget):
 		x = self.__lineWidth / 2
 		rect.adjust(-x, -x, x - w, x)
 
-		QWidget.setGeometry(self, rect)
+		self.setGeometry(rect)
 
 	def paintEvent(self, paintEvent):
 		painter = QPainter(self)

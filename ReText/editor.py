@@ -150,13 +150,13 @@ class ReTextEdit(QTextEdit):
 
 	def paintEvent(self, event):
 		if not globalSettings.rightMargin:
-			return QTextEdit.paintEvent(self, event)
+			return super().paintEvent(event)
 		painter = QPainter(self.viewport())
 		painter.setPen(colorValues['marginLine'])
 		y1 = self.rect().topLeft().y()
 		y2 = self.rect().bottomLeft().y()
 		painter.drawLine(self.marginx, y1, self.marginx, y2)
-		QTextEdit.paintEvent(self, event)
+		super().paintEvent(event)
 
 	def wheelEvent(self, event):
 		modifiers = QGuiApplication.keyboardModifiers()
@@ -173,7 +173,7 @@ class ReTextEdit(QTextEdit):
 			font.setPointSize(size)
 			self.parent.setEditorFont(font)
 		else:
-			QTextEdit.wheelEvent(self, event)
+			super().wheelEvent(event)
 
 			if event.angleDelta().y() < 0:
 				scrollBarLimit = self.verticalScrollBar().maximum()
@@ -184,7 +184,7 @@ class ReTextEdit(QTextEdit):
 				self.scrollLimitReached.emit(event)
 
 	def scrollContentsBy(self, dx, dy):
-		QTextEdit.scrollContentsBy(self, dx, dy)
+		super().scrollContentsBy(dx, dy)
 		self.lineNumberArea.update()
 
 	def contextMenuEvent(self, event):
@@ -292,7 +292,7 @@ class ReTextEdit(QTextEdit):
 		else:
 			if event.text() and self.tableModeEnabled:
 				cursor.beginEditBlock()
-			QTextEdit.keyPressEvent(self, event)
+			super().keyPressEvent(event)
 			if event.text() and self.tableModeEnabled:
 				cursor.endEditBlock()
 
@@ -359,7 +359,7 @@ class ReTextEdit(QTextEdit):
 		self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, 0)
 
 	def resizeEvent(self, event):
-		QTextEdit.resizeEvent(self, event)
+		super().resizeEvent(event)
 		rect = self.contentsRect()
 		self.resized.emit(rect)
 		self.lineNumberArea.setGeometry(rect.left(), rect.top(),
@@ -500,7 +500,7 @@ class LineNumberArea(QWidget):
 
 	def paintEvent(self, event):
 		if not globalSettings.lineNumbersEnabled:
-			return QWidget.paintEvent(self, event)
+			return super().paintEvent(event)
 		painter = QPainter(self)
 		painter.fillRect(event.rect(), colorValues['lineNumberArea'])
 		painter.setPen(colorValues['lineNumberAreaText'])
