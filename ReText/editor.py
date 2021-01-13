@@ -140,7 +140,7 @@ class ReTextEdit(QTextEdit):
 		metrics = self.fontMetrics()
 		self.marginx = (int(self.document().documentMargin())
 			+ metrics.horizontalAdvance(' ' * globalSettings.rightMargin))
-		self.setTabStopWidth(globalSettings.tabWidth * metrics.horizontalAdvance(' '))
+		self.setTabStopDistance(globalSettings.tabWidth * metrics.horizontalAdvance(' '))
 		self.updateLineNumberAreaWidth()
 		self.infoArea.updateTextAndGeometry()
 		self.updateTextStatistics()
