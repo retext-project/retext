@@ -21,13 +21,27 @@ from ReText.preview import ReTextWebPreview
 from ReText.syncscroll import SyncScroll
 from PyQt5.QtCore import QEvent, Qt
 from PyQt5.QtGui import QDesktopServices, QGuiApplication
+from PyQt5.QtWebEngineCore import QWebEngineUrlRequestInfo, QWebEngineUrlRequestInterceptor
 from PyQt5.QtWebEngineWidgets import QWebEnginePage, QWebEngineView, QWebEngineSettings
+
+
+class ReTextWebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
+    def interceptRequest(self, info):
+        if (info.resourceType() == QWebEngineUrlRequestInfo.ResourceType.ResourceTypeXhr
+                and info.requestUrl().isLocalFile()):
+            # For security reasons, disable XMLHttpRequests to local files
+            info.block(True)
 
 
 class ReTextWebEnginePage(QWebEnginePage):
     def __init__(self, parent, tab):
         QWebEnginePage.__init__(self, parent)
         self.tab = tab
+        self.interceptor = ReTextWebEngineUrlRequestInterceptor(self)
+        if hasattr(self, 'setUrlRequestInterceptor'):  # Available since Qt 5.13
+            self.setUrlRequestInterceptor(self.interceptor)
+        else:
+            self.profile().setRequestInterceptor(self.interceptor)
 
     def setScrollPosition(self, pos):
         self.runJavaScript("window.scrollTo(%s, %s);" % (pos.x(), pos.y()))
@@ -84,10 +98,6 @@ class ReTextWebEnginePreview(ReTextWebPreview, QWebEngineView):
                                      editorPositionToSourceLineFunc,
                                      sourceLineToEditorPositionFunc)
         ReTextWebPreview.__init__(self, tab.editBox)
-
-        settings = self.settings()
-        settings.setAttribute(QWebEngineSettings.WebAttribute.LocalContentCanAccessFileUrls,
-                              False)
 
     def updateFontSettings(self):
         settings = self.settings()
