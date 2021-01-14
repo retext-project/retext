@@ -55,7 +55,11 @@ class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
 		QMainWindow.__init__(self, parent)
 		self.resize(950, 700)
-		screenRect = self.screen().geometry()
+		qApp = QApplication.instance()
+		if hasattr(self, 'screen'):  # Available since Qt 5.14
+			screenRect = self.screen().geometry()
+		else:
+			screenRect = qApp.desktop().screenGeometry()
 		if globalSettings.windowGeometry:
 			self.restoreGeometry(globalSettings.windowGeometry)
 		else:
@@ -196,7 +200,6 @@ class ReTextWindow(QMainWindow):
 		self.actionRedo.setEnabled(False)
 		self.actionCopy.setEnabled(False)
 		self.actionCut.setEnabled(False)
-		qApp = QApplication.instance()
 		qApp.clipboard().dataChanged.connect(self.clipboardDataChanged)
 		self.clipboardDataChanged()
 		if enchant is not None:
