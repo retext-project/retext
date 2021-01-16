@@ -22,7 +22,7 @@ from ReText.syncscroll import SyncScroll
 from ReText.preview import ReTextWebPreview
 
 from PyQt5.QtCore import QStandardPaths
-from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtGui import QDesktopServices, QTextDocument
 from PyQt5.QtNetwork import QNetworkDiskCache
 from PyQt5.QtWebKit import QWebSettings
 from PyQt5.QtWebKitWidgets import QWebPage, QWebView
@@ -78,3 +78,11 @@ class ReTextWebKitPreview(ReTextWebPreview, QWebView):
 			self.load(url)
 		else:
 			QDesktopServices.openUrl(url)
+
+	def findText(self, text, flags):
+		options = QWebPage.FindFlag.FindWrapsAroundDocument
+		if flags & QTextDocument.FindFlag.FindBackward:
+			options |= QWebPage.FindFlag.FindBackward
+		if flags & QTextDocument.FindFlag.FindCaseSensitively:
+			options |= QWebPage.FindFlag.FindCaseSensitively
+		return super().findText(text, options)

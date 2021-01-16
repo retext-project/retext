@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5.QtCore import QDir, Qt
-from PyQt5.QtGui import QDesktopServices, QGuiApplication
+from PyQt5.QtGui import QDesktopServices, QGuiApplication, QTextCursor, QTextDocument
 from PyQt5.QtWidgets import QTextBrowser
 from ReText import globalSettings
 
@@ -47,6 +47,20 @@ class ReTextPreview(QTextBrowser):
 			self.setSource(link)
 		else:
 			QDesktopServices.openUrl(link)
+
+	def findText(self, text, flags, wrap=False):
+		cursor = self.textCursor()
+		if wrap and flags & QTextDocument.FindFlag.FindBackward:
+			cursor.movePosition(QTextCursor.MoveOperation.End)
+		elif wrap:
+			cursor.movePosition(QTextCursor.MoveOperation.Start)
+		newCursor = self.document().find(text, cursor, flags)
+		if not newCursor.isNull():
+			self.setTextCursor(newCursor)
+			return True
+		if not wrap:
+			return self.findText(text, flags, wrap=True)
+		return False
 
 
 class ReTextWebPreview:

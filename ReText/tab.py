@@ -413,6 +413,8 @@ class ReTextTab(QSplitter):
 			self.editBox.setTextCursor(newCursor)
 
 	def find(self, text, flags, replaceText=None, wrap=False):
+		if self.previewState == PreviewNormal and replaceText is None:
+			return self.previewBox.findText(text, flags)
 		cursor = self.editBox.textCursor()
 		if wrap and flags & QTextDocument.FindFlag.FindBackward:
 			cursor.movePosition(QTextCursor.MoveOperation.End)

@@ -20,7 +20,7 @@ from ReText import globalSettings
 from ReText.preview import ReTextWebPreview
 from ReText.syncscroll import SyncScroll
 from PyQt5.QtCore import QEvent, Qt
-from PyQt5.QtGui import QDesktopServices, QGuiApplication
+from PyQt5.QtGui import QDesktopServices, QGuiApplication, QTextDocument
 from PyQt5.QtWebEngineCore import QWebEngineUrlRequestInfo, QWebEngineUrlRequestInterceptor
 from PyQt5.QtWebEngineWidgets import QWebEnginePage, QWebEngineView, QWebEngineSettings
 
@@ -132,3 +132,12 @@ class ReTextWebEnginePreview(ReTextWebPreview, QWebEngineView):
                 self.wheelEvent(event)
                 return True
         return False
+
+    def findText(self, text, flags):
+        options = QWebEnginePage.FindFlags()
+        if flags & QTextDocument.FindFlag.FindBackward:
+            options |= QWebEnginePage.FindFlag.FindBackward
+        if flags & QTextDocument.FindFlag.FindCaseSensitively:
+            options |= QWebEnginePage.FindFlag.FindCaseSensitively
+        super().findText(text, options)
+        return True
