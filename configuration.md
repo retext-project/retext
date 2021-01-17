@@ -22,7 +22,7 @@ option name                    | type      | description
 `fontSize`                     | integer   | font to use for previews: font size
 `handleWebLinks`               | boolean   | whether to use ReText preview area to open external links (default: false)
 `hideToolBar`                  | boolean   | whether to hide the toolbars from the UI (default: false)
-`highlightCurrentLine`         | boolean   | whether to highlight current line in editor (default: false)
+`highlightCurrentLine`         | string    | current line highlight mode: `disabled`, `cursor-line` or `wrapped-line` (default: `disabled`)
 `iconTheme`                    | string    | name of the system icon theme to use (see below)
 `lineNumbersEnabled`           | boolean   | whether to show column with line numbers in editor (default: false)
 `markdownDefaultFileExtension` | string    | default file extension for Markdown files (default: `.mkd`)
@@ -93,6 +93,7 @@ color name             | main setting           | description
 `marginLine`           | `rightMargin`          | the vertical right margin line
 `currentLineHighlight` | `highlightCurrentLine` | highlighting of the text line being edited
 `infoArea`             |                        | the info box in the bottom-right corner
+`statsArea`            | `documentStatsEnabled` | the stats box in the bottom-right corner
 `lineNumberArea`       | `lineNumbersEnabled`   | the line numbers area background
 `lineNumberAreaText`   | `lineNumbersEnabled`   | the line numbers area foreground
 
