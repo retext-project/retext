@@ -388,6 +388,10 @@ class ReTextEdit(QTextEdit):
 			selections[1].format.setProperty(QTextFormat.Property.FullWidthSelection, True)
 			selections[1].cursor = self.textCursor()
 			selections[1].cursor.movePosition(QTextCursor.MoveOperation.EndOfBlock)
+		elif selection.cursor.block().textDirection() == Qt.LayoutDirection.RightToLeft:
+			# FullWidthSelection does not work correctly for RTL direction
+			selection.cursor.movePosition(QTextCursor.MoveOperation.StartOfLine)
+			selection.cursor.movePosition(QTextCursor.MoveOperation.EndOfLine, QTextCursor.MoveMode.KeepAnchor)
 		self.setExtraSelections(selections)
 
 	def enableTableMode(self, enable):
