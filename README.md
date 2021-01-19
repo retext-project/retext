@@ -1,8 +1,7 @@
 Welcome to ReText!
 ==================
 
-[![Travis CI status][Travis SVG]][Travis]
-[![Appveyor CI status][Appveyor SVG]][Appveyor]
+[![GitHub Actions status][GitHub Actions SVG]][GitHub Actions]
 
 ReText is a simple but powerful editor for Markdown and reStructuredText markup
 languages. One can also add support for [custom markups] using Python modules.
@@ -46,9 +45,7 @@ You can read more about ReText in the [wiki].
 [wiki]: https://github.com/retext-project/retext/wiki
 [PyPI]: https://pypi.org/project/ReText/
 [Transifex]: https://www.transifex.com/mitya57/ReText/
-[Travis]: https://travis-ci.org/retext-project/retext
-[Travis SVG]: https://api.travis-ci.org/retext-project/retext.svg?branch=master
-[Appveyor]: https://ci.appveyor.com/project/mitya57/retext
-[Appveyor SVG]: https://ci.appveyor.com/api/projects/status/github/retext-project/retext?branch=master&svg=true
+[GitHub Actions]: https://github.com/retext-project/retext/actions
+[GitHub Actions SVG]: https://github.com/retext-project/retext/workflows/tests/badge.svg
 [custom markups]: https://pymarkups.readthedocs.io/en/latest/custom_markups.html
 [Python]: https://www.python.org/
