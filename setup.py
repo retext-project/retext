@@ -17,11 +17,11 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 import os
 import sys
 from os.path import join, basename
-from distutils import log
-from distutils.command.build import build
 from setuptools import setup, Command
 from setuptools.command.sdist import sdist
 from setuptools.command.install import install
+from distutils import log
+from distutils.command.build import build
 from subprocess import check_call
 from glob import glob, iglob
 
