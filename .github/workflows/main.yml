@@ -51,10 +51,10 @@ jobs:
           python -m pip install git+https://github.com/retext-project/pymarkups.git
       - name: Run tests in Xvfb
         if: ${{ startsWith(matrix.platform, 'ubuntu') }}
-        run: xvfb-run -a -s "-screen 0 1024x768x24" python setup.py test
+        run: xvfb-run -a -s "-screen 0 1024x768x24" python -m unittest discover -s tests -v
       - name: Run tests
         if: ${{ !startsWith(matrix.platform, 'ubuntu') }}
-        run: python setup.py test
+        run: python -m unittest discover -s tests -v
   pyflakes:
     runs-on: ubuntu-latest
     steps:
