@@ -22,7 +22,7 @@ import markups.common
 from os.path import dirname, exists, join, expanduser
 
 from PyQt5.QtCore import QByteArray, QLocale, QSettings, QStandardPaths
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QFontDatabase
 
 app_version = "7.1.0"
 
@@ -157,10 +157,6 @@ def writeListToSettings(key, value, settings=settings):
 def getSettingsFilePath(settings=settings):
 	return settings.fileName()
 
-def chooseMonospaceFont():
-	font = QFont('monospace')
-	font.setStyleHint(QFont.StyleHint.TypeWriter)
-	return font
 
 class ReTextSettings(object):
 	def __init__(self):
@@ -182,7 +178,7 @@ class ReTextSettings(object):
 		if option == 'font' and not value.family():
 			value = QFont()
 		if option == 'editorFont' and not value.family():
-			value = chooseMonospaceFont()
+			value = QFontDatabase.systemFont(QFontDatabase.SystemFont.FixedFont)
 		return value
 
 globalSettings = ReTextSettings()
