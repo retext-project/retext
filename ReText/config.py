@@ -95,9 +95,10 @@ class ConfigDialog(QDialog):
 		self.tabWidget = QTabWidget(self)
 		self.layout.addWidget(self.tabWidget)
 		buttonBox = QDialogButtonBox(self)
-		buttonBox.setStandardButtons(QDialogButtonBox.StandardButton.Ok |
-			QDialogButtonBox.StandardButton.Cancel)
-		buttonBox.accepted.connect(self.saveSettings)
+		buttonBox.setStandardButtons(QDialogButtonBox.Ok |
+			QDialogButtonBox.Apply | QDialogButtonBox.Cancel)
+		buttonBox.accepted.connect(self.acceptSettings)
+		buttonBox.button(QDialogButtonBox.Apply).clicked.connect(self.saveAndApplySettings)
 		buttonBox.rejected.connect(self.close)
 		self.initWidgets()
 		self.configurators['rightMargin'].valueChanged.connect(self.handleRightMarginSet)
@@ -245,8 +246,6 @@ class ConfigDialog(QDialog):
 			elif isinstance(configurator, FileDialogButton):
 				value = configurator.fileName
 			setattr(globalSettings, name, value)
-		self.applySettings()
-		self.close()
 
 	def applySettings(self):
 		setIconThemeFromSettings()
@@ -267,6 +266,14 @@ class ConfigDialog(QDialog):
 		self.parent.toolBar.setVisible(not globalSettings.hideToolBar)
 		self.parent.editBar.setVisible(not globalSettings.hideToolBar)
 		self.parent.initDirectoryTree(globalSettings.showDirectoryTree, globalSettings.directoryPath)
+
+	def saveAndApplySettings(self):
+		self.saveSettings()
+		self.applySettings()
+
+	def acceptSettings(self):
+		self.saveAndApplySettings()
+		self.close()
 
 	def openLink(self, link):
 		QDesktopServices.openUrl(QUrl.fromLocalFile(link))
