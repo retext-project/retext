@@ -39,8 +39,9 @@ jobs:
       - name: Install apt dependencies
         if: ${{ startsWith(matrix.platform, 'ubuntu') }}
         run: |
-          sudo apt-get install libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0
-          sudo apt-get install libegl1-mesa libxkbcommon-x11-0
+          sudo apt update
+          sudo apt install libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0
+          sudo apt install libegl1-mesa libxkbcommon-x11-0
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
