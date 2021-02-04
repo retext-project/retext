@@ -48,7 +48,7 @@ from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
 from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
  QComboBox, QDialog, QFileDialog, QFileSystemModel, QFontDialog, \
  QInputDialog, QLineEdit, QMainWindow, QMenu, QMessageBox, QSplitter, QTabWidget, \
- QToolBar, QTreeView
+ QToolBar, QToolButton, QTreeView
 from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
 
 class ReTextWindow(QMainWindow):
@@ -101,10 +101,8 @@ class ReTextWindow(QMainWindow):
 		self.editBar.setVisible(not globalSettings.hideToolBar)
 		self.actionNew = self.act(self.tr('New'), 'document-new',
 			self.createNew, shct=QKeySequence.StandardKey.New)
-		self.actionNew.setPriority(QAction.Priority.LowPriority)
 		self.actionOpen = self.act(self.tr('Open'), 'document-open',
 			self.openFile, shct=QKeySequence.StandardKey.Open)
-		self.actionOpen.setPriority(QAction.Priority.LowPriority)
 		self.actionSetEncoding = self.act(self.tr('Set encoding'),
 			trig=self.showEncodingDialog)
 		self.actionSetEncoding.setEnabled(False)
@@ -114,7 +112,6 @@ class ReTextWindow(QMainWindow):
 		self.actionSave = self.act(self.tr('Save'), 'document-save',
 			self.saveFile, shct=QKeySequence.StandardKey.Save)
 		self.actionSave.setEnabled(False)
-		self.actionSave.setPriority(QAction.Priority.LowPriority)
 		self.actionSaveAs = self.act(self.tr('Save as'), 'document-save-as',
 			self.saveFileAs, shct=QKeySequence.StandardKey.SaveAs)
 		self.actionNextTab = self.act(self.tr('Next tab'), 'go-next',
@@ -125,7 +122,6 @@ class ReTextWindow(QMainWindow):
 			lambda: self.closeTab(self.ind), shct=QKeySequence.StandardKey.Close)
 		self.actionPrint = self.act(self.tr('Print'), 'document-print',
 			self.printFile, shct=QKeySequence.StandardKey.Print)
-		self.actionPrint.setPriority(QAction.Priority.LowPriority)
 		self.actionPrintPreview = self.act(self.tr('Print preview'), 'document-print-preview',
 			self.printPreview)
 		self.actionViewHtml = self.act(self.tr('View HTML code'), 'text-html', self.viewHtml)
@@ -152,7 +148,6 @@ class ReTextWindow(QMainWindow):
 		trigbool=self.enableLivePreview)
 		menuPreview = QMenu()
 		menuPreview.addAction(self.actionLivePreview)
-		self.actionPreview.setMenu(menuPreview)
 		self.actionInsertTable = self.act(self.tr('Insert table'),
 			trig=lambda: self.insertFormatting('table'))
 		self.actionTableMode = self.act(self.tr('Table editing mode'),
@@ -169,7 +164,6 @@ class ReTextWindow(QMainWindow):
 		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), 'view-fullscreen',
 			shct=Qt.Key.Key_F11, trigbool=self.enableFullScreen)
 		self.actionFullScreen.setChecked(self.isFullScreen())
-		self.actionFullScreen.setPriority(QAction.Priority.LowPriority)
 		self.actionConfig = self.act(self.tr('Preferences'), icon='preferences-system',
 			trig=self.openConfigDialog)
 		self.actionConfig.setMenuRole(QAction.MenuRole.PreferencesRole)
@@ -340,6 +334,7 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionViewHtml)
 		menuEdit.addAction(self.actionPreview)
+		menuEdit.addAction(self.actionLivePreview)
 		menuEdit.addAction(self.actionInsertTable)
 		menuEdit.addAction(self.actionTableMode)
 		menuEdit.addAction(self.actionInsertImages)
@@ -352,14 +347,18 @@ class ReTextWindow(QMainWindow):
 		menuHelp.addSeparator()
 		menuHelp.addAction(self.actionAbout)
 		menuHelp.addAction(self.actionAboutQt)
-		self.toolBar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
 		self.toolBar.addAction(self.actionNew)
 		self.toolBar.addSeparator()
 		self.toolBar.addAction(self.actionOpen)
 		self.toolBar.addAction(self.actionSave)
 		self.toolBar.addAction(self.actionPrint)
 		self.toolBar.addSeparator()
-		self.toolBar.addAction(self.actionPreview)
+		previewButton = QToolButton(self.toolBar)
+		previewButton.setDefaultAction(self.actionPreview)
+		previewButton.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+		previewButton.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
+		previewButton.setMenu(menuPreview)
+		self.toolBar.addWidget(previewButton)
 		self.toolBar.addAction(self.actionFullScreen)
 		self.editBar.addAction(self.actionUndo)
 		self.editBar.addAction(self.actionRedo)
