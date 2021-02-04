@@ -219,7 +219,6 @@ class ReTextWindow(QMainWindow):
 		self.actionReplaceAll = self.act(self.tr('Replace all'), trig=self.replaceAll)
 		menuReplace = QMenu()
 		menuReplace.addAction(self.actionReplaceAll)
-		self.actionReplace.setMenu(menuReplace)
 		self.actionCloseSearch = self.act(self.tr('Close'), 'window-close',
 			lambda: self.searchBar.setVisible(False),
 			shct=QKeySequence.StandardKey.Cancel)
@@ -382,7 +381,12 @@ class ReTextWindow(QMainWindow):
 		self.searchBar.addWidget(self.csBox)
 		self.searchBar.addAction(self.actionFindPrev)
 		self.searchBar.addAction(self.actionFind)
-		self.searchBar.addAction(self.actionReplace)
+		replaceButton = QToolButton(self.searchBar)
+		replaceButton.setDefaultAction(self.actionReplace)
+		replaceButton.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+		replaceButton.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
+		replaceButton.setMenu(menuReplace)
+		self.searchBar.addWidget(replaceButton)
 		self.searchBar.addAction(self.actionCloseSearch)
 		self.searchBar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
 		self.searchBar.setVisible(False)
