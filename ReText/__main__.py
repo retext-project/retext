@@ -70,6 +70,18 @@ def main():
 	app.setDesktopFileName('me.mitya57.ReText.desktop')
 	QNetworkProxyFactory.setUseSystemConfiguration(True)
 
+	initializeDataDirs()
+	RtTranslator = QTranslator()
+	for path in datadirs:
+		if RtTranslator.load('retext_' + globalSettings.uiLanguage,
+		                     join(path, 'locale')):
+			break
+	QtTranslator = QTranslator()
+	QtTranslator.load("qtbase_" + globalSettings.uiLanguage,
+		QLibraryInfo.location(QLibraryInfo.LibraryLocation.TranslationsPath))
+	app.installTranslator(RtTranslator)
+	app.installTranslator(QtTranslator)
+
 	parser = QCommandLineParser()
 	parser.addHelpOption()
 	parser.addVersionOption()
@@ -86,17 +98,6 @@ def main():
 	parser.process(app)
 	filesToOpen = parser.positionalArguments()
 
-	initializeDataDirs()
-	RtTranslator = QTranslator()
-	for path in datadirs:
-		if RtTranslator.load('retext_' + globalSettings.uiLanguage,
-		                     join(path, 'locale')):
-			break
-	QtTranslator = QTranslator()
-	QtTranslator.load("qtbase_" + globalSettings.uiLanguage,
-		QLibraryInfo.location(QLibraryInfo.LibraryLocation.TranslationsPath))
-	app.installTranslator(RtTranslator)
-	app.installTranslator(QtTranslator)
 	print('Using configuration file:', settings.fileName())
 	if globalSettings.appStyleSheet:
 		sheetfile = QFile(globalSettings.appStyleSheet)
