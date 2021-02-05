@@ -1,146 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="pl_PL" sourcelanguage="">
+<!DOCTYPE TS><TS version="2.0" language="ar" sourcelanguage="">
 <context>
     <name>ConfigDialog</name>
     <message>
         <location filename="../ReText/config.py" line="91"/>
         <source>Using configuration file at:</source>
-        <translation>Używany plik konfiguracyjny:</translation>
+        <translation>استخدام اعداد الملف عند:</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Behavior</source>
-        <translation>Zachowanie</translation>
+        <translation>السلوك</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Automatically save documents</source>
-        <translation>Automatycznie zapisuj dokumenty</translation>
+        <translation>حفظ المستندات آلياً</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Automatically open last documents on startup</source>
-        <translation>Automatycznie otwieraj ostatnie dokumenty podczas uruchamiania</translation>
+        <translation>افتح اخر مستندات عند التشغيل</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Number of recent documents</source>
-        <translation>Liczba ostatnich dokumentów</translation>
+        <translation>عدد من اخر المستندات</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Restore window geometry</source>
-        <translation>Przywróć geometrię okna</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Default preview state</source>
-        <translation>Domyślny stan podglądu</translation>
+        <translation>حالة المعاينة الافتراضية</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Open external links in ReText window</source>
-        <translation>Otwieraj linki zewnątrzne w ReText</translation>
+        <translation>فتح الروابط الخارجية في نافذة ريتيكست</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Markdown syntax extensions (comma-separated)</source>
-        <translation>Rozszerzenia składni Markdown (oddzielone przecinkami)</translation>
+        <translation>اضافات مارك داون لتركيب الجملة (مفصولة بفواصل)</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Enable synchronized scrolling for Markdown</source>
-        <translation>Włącz zsynchronizowane przewijanie dla Markdown</translation>
+        <translation>تفعيل التمرير المتزامن لمارك داون</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="184"/>
         <source>Editor</source>
-        <translation>Edytor</translation>
+        <translation>المحرر</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Highlight current line</source>
-        <translation>Podświetlaj bieżącą linię</translation>
+        <translation>تمميز السطر الحالي</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Show line numbers</source>
-        <translation>Pokaż numery linii</translation>
+        <translation>اظهر رقم السطر</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Line numbers are relative to current line</source>
-        <translation>Numery linii są względne do bieżącej linii</translation>
+        <translation>ان ارقام السطر مرتبطة بالسطر الحالي</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Tab key inserts spaces</source>
-        <translation>Klawisz Tab wstawia spacje</translation>
+        <translation>زر التاب (Tab) يدرج مساحات </translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Tabulation width</source>
-        <translation>Głębokość tabulacji</translation>
+        <translation>عِرض الجدولة</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Draw vertical line at column</source>
-        <translation>Rysuj pionową linię w podanej kolumnie</translation>
+        <translation>ارسم خط عمودي عند العمود</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Enable soft wrap</source>
-        <translation>Włącz miękkie zawijanie wierszy</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Show document stats</source>
-        <translation>Pokaż statystykę dokumentu</translation>
+        <translation>اظهر حالة المستند</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Interface</source>
-        <translation>Interfejs</translation>
+        <translation>الواجهة</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Hide toolbar</source>
-        <translation>Ukryj pasek narzędzi</translation>
+        <translation>اخفاء شريط الادوات</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Icon theme name</source>
-        <translation>Nazwa motywu ikon</translation>
+        <translation>اسم ايقونة القالب</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Stylesheet file</source>
-        <translation>Plik arkusza stylów</translation>
+        <translation>ملف Stylesheet </translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Hide tabs bar when there is only one tab</source>
-        <translation>Ukryj nagłówek jedynej widocznej karty</translation>
+        <translation>اخفاء شريط التبويبات عندما هنالك تبوب واحد فقط</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Show full path in window title</source>
-        <translation>Pokaż pełną ścieżkę w tytule okna</translation>
+        <translation>اظهر المسار الكامل في عنوان النافذة</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="166"/>
         <source>Help</source>
-        <translation>Pomoc</translation>
+        <translation>مساعدة</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="185"/>
         <source>Live preview</source>
-        <translation>Podgląd na żywo</translation>
+        <translation>معاينة مباشرة</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="186"/>
         <source>Normal preview</source>
-        <translation>Normalny podgląd</translation>
+        <translation>معاينة طبيعية</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
@@ -196,7 +196,7 @@
     <message>
         <location filename="../ReText/config.py" line="35"/>
         <source>(none)</source>
-        <translation>(brak)</translation>
+        <translation type="unfinished">(لا شيئ)</translation>
     </message>
 </context>
 <context>
@@ -204,7 +204,7 @@
     <message>
         <location filename="../ReText/config.py" line="52"/>
         <source>Select file to open</source>
-        <translation>Wybierz plik do otwarcia</translation>
+        <translation>اختر الملف لفتحه</translation>
     </message>
 </context>
 <context>
@@ -212,17 +212,17 @@
     <message>
         <location filename="../ReText/tabledialog.py" line="27"/>
         <source>Insert table</source>
-        <translation>Wstaw tabelę</translation>
+        <translation>ادرج الجدول</translation>
     </message>
     <message>
         <location filename="../ReText/tabledialog.py" line="36"/>
         <source>Number of rows</source>
-        <translation>Liczba rzędów</translation>
+        <translation>عدد الصفوف</translation>
     </message>
     <message>
         <location filename="../ReText/tabledialog.py" line="37"/>
         <source>Number of columns</source>
-        <translation>Liczba kolumn</translation>
+        <translation>عدد الاعمدة</translation>
     </message>
 </context>
 <context>
@@ -230,12 +230,12 @@
     <message>
         <location filename="../ReText/dialogs.py" line="44"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation>Podaj kod języka (np.: pl_PL)</translation>
+        <translation>ادخل اسم اللغة (مثلا en_US)</translation>
     </message>
     <message>
         <location filename="../ReText/dialogs.py" line="50"/>
         <source>Set as default</source>
-        <translation>Ustaw jako domyślne</translation>
+        <translation>وضعه كافتراضي</translation>
     </message>
 </context>
 <context>
@@ -243,12 +243,12 @@
     <message>
         <location filename="../ReText/fakevimeditor.py" line="61"/>
         <source>No write since last change (add ! to override)</source>
-        <translation>Nic nie zmieniono (dodaj ! żeby nadpisać)</translation>
+        <translation>لا امكانية الكتابة منذ اخر تغيير (اضف ! لتجاوزه)</translation>
     </message>
     <message>
         <location filename="../ReText/fakevimeditor.py" line="118"/>
         <source>Information</source>
-        <translation>informacje</translation>
+        <translation>معلومة</translation>
     </message>
 </context>
 <context>
@@ -256,17 +256,17 @@
     <message>
         <location filename="../ReText/editor.py" line="223"/>
         <source>Add to dictionary</source>
-        <translation>Dodaj do słownika</translation>
+        <translation>اضف القاموس</translation>
     </message>
     <message>
         <location filename="../ReText/editor.py" line="435"/>
         <source>Save image</source>
-        <translation>Zapisz obraz</translation>
+        <translation>احفظ الصورة</translation>
     </message>
     <message>
         <location filename="../ReText/editor.py" line="435"/>
         <source>Images (*.png *.jpg)</source>
-        <translation>Obrazy (*.png *.jpg)</translation>
+        <translation>الصور (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
@@ -274,36 +274,36 @@
     <message>
         <location filename="../ReText/tab.py" line="184"/>
         <source>New document</source>
-        <translation>Nowy dokument</translation>
+        <translation>مستند جديد</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="189"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation>Nie można przeanalizować zawartości pliku, sprawdź czy masz zainstalowany &lt;a href=&quot;%s&quot;&gt;odpowiedni moduł&lt;/a&gt;!</translation>
+        <translation>تعذر تحليل محتويات الملف، تفقد اذا كنت تمتلك ال&lt;a href=&quot;%s&quot;&gt; الوحدة اللازمة &lt;/a&gt; منصبة!</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="482"/>
         <source>Create missing file?</source>
-        <translation>Utworzyć brakujący plik?</translation>
+        <translation>انشاء ملف مفقود؟</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="482"/>
         <source>The file &apos;%s&apos; does not exist.
 
 Do you want to create it?</source>
-        <translation>Plik &apos;%s&apos; nie istnieje.
+        <translation>الملف &apos;%s&apos; غير موجود
 
-Czy chcesz go utworzyć?</translation>
+هل تريد انشائه؟</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="515"/>
         <source>File could not be created</source>
-        <translation>Nie można utworzyć pliku</translation>
+        <translation>الملف لم يُستطع انشاءه</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="515"/>
         <source>Could not create file &apos;%s&apos;: %s</source>
-        <translation>Nie udało się utworzyć pliku &apos;%s&apos;: %s</translation>
+        <translation>لم يُستطع انشاء ملف &apos;%s&apos;: %s</translation>
     </message>
 </context>
 <context>
@@ -311,496 +311,496 @@ Czy chcesz go utworzyć?</translation>
     <message>
         <location filename="../ReText/window.py" line="94"/>
         <source>File toolbar</source>
-        <translation>Pasek pliku</translation>
+        <translation>ملف شريط الادوات</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="96"/>
         <source>Edit toolbar</source>
-        <translation>Pasek edycji</translation>
+        <translation>تعديل شريط الادوات</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="98"/>
         <source>Search toolbar</source>
-        <translation>Pasek wyszukiwania</translation>
+        <translation>البحث عن شريط الادوات</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="102"/>
         <source>New</source>
-        <translation>Nowy</translation>
+        <translation>جديد</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="104"/>
         <source>Open</source>
-        <translation>Otwórz</translation>
+        <translation>فتح</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="106"/>
         <source>Set encoding</source>
-        <translation>Ustaw kodowanie</translation>
+        <translation>تعيين التشفير</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1231"/>
         <source>Reload</source>
-        <translation>Przeładuj</translation>
+        <translation>اعادة تحميل</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="112"/>
         <source>Save</source>
-        <translation>Zapisz</translation>
+        <translation>حفظ</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="115"/>
         <source>Save as</source>
-        <translation>Zapisz jako</translation>
+        <translation>حفظ كـــ</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="117"/>
         <source>Next tab</source>
-        <translation>Nowa karta</translation>
+        <translation>التبويب التالي</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="119"/>
         <source>Previous tab</source>
-        <translation>Poprzednia karta</translation>
+        <translation>التبويب الماضي</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="121"/>
         <source>Close tab</source>
-        <translation>Zamknij kartę</translation>
+        <translation>غلق التبويب</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="123"/>
         <source>Print</source>
-        <translation>Drukuj</translation>
+        <translation>طباع</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="125"/>
         <source>Print preview</source>
-        <translation>Podgląd wydruku</translation>
+        <translation>معاينة الطباعة</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="127"/>
         <source>View HTML code</source>
-        <translation>Zobacz źródło HTML</translation>
+        <translation>عرض ترميز ال HTML</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="128"/>
         <source>Change editor font</source>
-        <translation>Zmień czcionkę edytora</translation>
+        <translation>تغيير خط المحرر </translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="130"/>
         <source>Change preview font</source>
-        <translation>Zmień czcionkę podglądu</translation>
+        <translation>تغيير خط المعاين</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="132"/>
         <source>Find text</source>
-        <translation>Znajdź tekst</translation>
+        <translation>ايجاد نص</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="719"/>
         <source>Go to line</source>
-        <translation>Idź do linii</translation>
+        <translation>اذهب الى سطر</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="137"/>
         <source>Preview</source>
-        <translation>Podgląd</translation>
+        <translation>معاينة</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="147"/>
         <source>Live preview</source>
-        <translation>Podgląd na żywo</translation>
+        <translation>معاينة مباشرة</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="151"/>
         <source>Insert table</source>
-        <translation>Wstaw tabelę</translation>
+        <translation>ادرج جدول</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="153"/>
         <source>Table editing mode</source>
-        <translation>Tryb edycji tabeli</translation>
+        <translation>وضع تحرير الجدول</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="156"/>
         <source>Insert images by file path</source>
-        <translation>Wstaw obrazy według ścieżki pliku</translation>
+        <translation>ادراج الصور بواسطة مسار الملف</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="159"/>
         <source>FakeVim mode</source>
-        <translation>Tryb FakeVim</translation>
+        <translation>وضع فيك في ام FakeVim </translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="164"/>
         <source>Fullscreen mode</source>
-        <translation>Pełny ekran</translation>
+        <translation>وضع كامل الشاشة</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="671"/>
         <source>Preferences</source>
-        <translation>Preferencje</translation>
+        <translation>التفضيلات</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="174"/>
         <source>Quit</source>
-        <translation>Zakończ</translation>
+        <translation>خروج</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="177"/>
         <source>Undo</source>
-        <translation>Cofnij</translation>
+        <translation>الغاء التغيير</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="179"/>
         <source>Redo</source>
-        <translation>Ponów</translation>
+        <translation>اعد التغيير</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="181"/>
         <source>Copy</source>
-        <translation>Skopiuj</translation>
+        <translation>نسخ</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="183"/>
         <source>Cut</source>
-        <translation>Wytnij</translation>
+        <translation>قطع</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="185"/>
         <source>Paste</source>
-        <translation>Wklej</translation>
+        <translation>لصق</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="187"/>
         <source>Paste image</source>
-        <translation>Wklej obraz</translation>
+        <translation>لصق صورة</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="189"/>
         <source>Move line up</source>
-        <translation>Przesuń linię w górę</translation>
+        <translation>تحريك سطر للاعلى</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="191"/>
         <source>Move line down</source>
-        <translation>Przesuń linię w dół</translation>
+        <translation>تحريك سطر للاسفل</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="200"/>
         <source>Enable</source>
-        <translation>Włącz</translation>
+        <translation>تفعيل</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="201"/>
         <source>Set locale</source>
-        <translation>Ustaw język</translation>
+        <translation>تعيين محلي</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="202"/>
         <source>Use WebKit renderer</source>
-        <translation>Używaj silnika WebKit</translation>
+        <translation>استخدم ويب كت (WebKit ) المعالج</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="207"/>
         <source>Use WebEngine (Chromium) renderer</source>
-        <translation>Używaj silnika WebEngine (Chromium)</translation>
+        <translation>استخدم ويب اينجن (WebEngine) كروميموم المعالج</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="212"/>
         <source>Show directory</source>
-        <translation>Pokaż katalog</translation>
+        <translation>اظهار الدليل</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="213"/>
         <source>Next</source>
-        <translation>Następny</translation>
+        <translation>التالي</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="215"/>
         <source>Previous</source>
-        <translation>Poprzedni</translation>
+        <translation>السابق</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="217"/>
         <source>Replace</source>
-        <translation>Zastąp</translation>
+        <translation>استبدال</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="219"/>
         <source>Replace all</source>
-        <translation>Zastąp wszystkie</translation>
+        <translation>استبدال الجميع</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="222"/>
         <source>Close</source>
-        <translation>Zamknij</translation>
+        <translation>غلق</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="226"/>
         <source>Get help online</source>
-        <translation>Pomoc online</translation>
+        <translation>طلب مساعدة على الانترنيت</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="227"/>
         <source>About ReText</source>
-        <translation>O ReText</translation>
+        <translation>عن ريتيكست (ReText)</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="230"/>
         <source>About Qt</source>
-        <translation>O Qt</translation>
+        <translation>عن كيو تي QT</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="245"/>
         <source>Bold</source>
-        <translation>Pogrubienie</translation>
+        <translation>غامق</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="247"/>
         <source>Italic</source>
-        <translation>Kursywa</translation>
+        <translation>مائل</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="249"/>
         <source>Underline</source>
-        <translation>Podkreślenie</translation>
+        <translation>تحت الخط</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="325"/>
         <source>Formatting</source>
-        <translation>Formatowanie</translation>
+        <translation>التنسيق</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="265"/>
         <source>Symbols</source>
-        <translation>Symbole</translation>
+        <translation>رموز</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="275"/>
         <source>Open recent</source>
-        <translation>Otwórz ostatnie</translation>
+        <translation>فتح المؤخر</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="288"/>
         <source>Export</source>
-        <translation>Eksportuj</translation>
+        <translation>تصدير</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="313"/>
         <source>Spell check</source>
-        <translation>Sprawdzanie pisowni</translation>
+        <translation>تفقد الاملاء</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="322"/>
         <source>Default markup</source>
-        <translation>Domyślne znaczniki</translation>
+        <translation>الترميز الافتراضي</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="372"/>
         <source>Search</source>
-        <translation>Wyszukaj</translation>
+        <translation>بحث</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="375"/>
         <source>Replace with</source>
-        <translation>Zastąp</translation>
+        <translation>استبدال مع</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="377"/>
         <source>Case sensitively</source>
-        <translation>Rozróżnianie wielkości znaków</translation>
+        <translation>حساسية الحروف الكبيرة والصغيرة</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="567"/>
         <source>New document</source>
-        <translation>Nowy dokument</translation>
+        <translation>مستند جديد</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="719"/>
         <source>Type the line number</source>
-        <translation>Podaj numer linii</translation>
+        <translation>نوع رقم السطر </translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="755"/>
         <source>Please, save the file somewhere.</source>
-        <translation>Proszę najpierw zapisać plik.</translation>
+        <translation>رجاءاً، حفظ الملف بمكان ما.</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="871"/>
         <source>Select one or several files to open</source>
-        <translation>Zaznacz jeden lub więcej plików do otwarcia</translation>
+        <translation>تحديد واحد او عدّة ملفات لفتحها</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1289"/>
         <source>Supported files</source>
-        <translation>Obsługiwane pliki</translation>
+        <translation>الملفات المدعومة</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1289"/>
         <source>All files (*)</source>
-        <translation>Wszystkie pliki (*)</translation>
+        <translation>جميع الملفات (*)</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="910"/>
         <source>Select file encoding from the list:</source>
-        <translation>Wybierz kodowanie pliku z listy:</translation>
+        <translation>اختر ملف الترميز من القائمة:</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="933"/>
         <source>Plain text (*.txt)</source>
-        <translation>Zwykły tekst (*.txt)</translation>
+        <translation>نص عادي (*.txt)</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="936"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
-        <translation>%s pliki</translation>
+        <translation>%s ملفات </translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1011"/>
         <source>Save file</source>
-        <translation>Zapisz plik</translation>
+        <translation>حفظ الملف</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="956"/>
         <source>Cannot save to file which is open in another tab!</source>
-        <translation>Nie można zapisać pliku, który jest otwarty w innej karcie!</translation>
+        <translation>لايمكن حفظ الملف الذي فتح في تبويب اخر</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="979"/>
         <source>Cannot save to file because it is read-only!</source>
-        <translation>Nie można zapisać pliku, ponieważ jest on tylko do odczytu!</translation>
+        <translation>لا يستطيع الحفظ للملف لانه بوضع القراءة فقط!</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1001"/>
         <source>Export document to ODT</source>
-        <translation>Eksportuj do ODT</translation>
+        <translation>تصدير المستند الى صيغة ODT</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1001"/>
         <source>OpenDocument text files (*.odt)</source>
-        <translation>Dokumenty OpenDocument (*.odt)</translation>
+        <translation>فتح مستند نص ملفات (*.odt)</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1011"/>
         <source>HTML files (*.html *.htm)</source>
-        <translation>Pliki HTML (*.html *.htm)</translation>
+        <translation>ملفات HTML (*.html *.htm) </translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1034"/>
         <source>Unrecognized paperSize setting &quot;%s&quot;.</source>
-        <translation>Nierozpoznane ustawienie paperSize &quot;%s&quot;.</translation>
+        <translation>غير واضح اعدادات حجم الورقة &quot;%s&quot;.</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1060"/>
         <source>Export document to PDF</source>
-        <translation>Eksportuj do PDF</translation>
+        <translation>تصدير الملف الى بيدي اف PDF</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1060"/>
         <source>PDF files (*.pdf)</source>
-        <translation>Pliki PDF (*.pdf)</translation>
+        <translation>ملفات PDF (*.pdf)</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1087"/>
         <source>Print document</source>
-        <translation>Drukuj dokument</translation>
+        <translation>طباعة مستند</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1110"/>
         <source>Export document</source>
-        <translation>Eksportuj dokument</translation>
+        <translation>تصدير مستند</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1131"/>
         <source>Failed to execute the command:</source>
-        <translation>Nie udało się wykonać polecenia:</translation>
+        <translation>فشل في تنفيذ الامر:</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1172"/>
         <source>Alt text</source>
-        <translation>tekst alternatywny</translation>
+        <translation>نص بديل</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1173"/>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation>رابط</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1173"/>
         <source>Link text</source>
-        <translation>tekst linku</translation>
+        <translation>نص الرابط</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1214"/>
         <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
-        <translation>Ten plik został usunięty przez inną aplikację.
-Upewnij się, że zapisałeś plik zanim zamkniesz.</translation>
+        <translation>هذا الملف تم مسحه من تطبيق اخر
+تأكد من حفظ هذا الملف قبل الخروج</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1222"/>
         <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
-        <translation>Ten dokument został zmodyfikowany przez inną aplikację.
-Czy chcesz przeładować ten plik (to może spowodować cofnięcie twoich zmian)?
+        <translation>هذا الملف تم التعديل عليه من تطبيق اخر
+هل تريد اعادة تحميل الملف (سيلغي جميع تعديلاتك)؟
 </translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1227"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
-        <translation>Jeśli wybierzesz nie przeładowywanie dokumentu, automatyczny zapis zostanie wyłączony, żeby zapobiec utracie danych.</translation>
+        <translation>اذا اخترت عدم اعادة تحميل الملف، وضع الحفظ الذاتي سيتوقف تفعيله لهذه الجلسة لمنع فقدان البيانات.</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1251"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
-        <translation>Dokument został zmieniony.
-Czy chcesz zapisać zmiany?</translation>
+        <translation>المستند تم التعديل عليه.
+هل تريد حفظ تعديلاتك؟</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1279"/>
         <source>HTML code</source>
-        <translation>Kod HTML</translation>
+        <translation>نص ال HTML</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1289"/>
         <source>Select one or several images to open</source>
-        <translation>Zaznacz jeden lub więcej obrazów do otwarcia</translation>
+        <translation>اختر واحد او عدّة صور لفتحها</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
         <source>ReText %s (using PyMarkups %s)</source>
-        <translation>ReText %s (używając PyMarkups %s)</translation>
+        <translation>ري تيكست ReText  %s (يستخدم PyMarkups %s)</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>Prosty, ale potężny edytor Markdown i RestructuredText</translation>
+        <translation>بسيط لكن محرر قوي ل مارك داون Markdown  و ريستركجر تيكست reStructuredText</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
         <source>Author: Dmitry Shachnev, 2011</source>
-        <translation>Autor: Dmitry Shachnev, 2011</translation>
+        <translation>المحرر: ديمتر شاكنيف، 2011</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
         <source>Website</source>
-        <translation>Strona internetowa</translation>
+        <translation>الموقع</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
         <source>Markdown syntax</source>
-        <translation>Składnia Markdown</translation>
+        <translation>بناء الجملة ل مارك داون Markdown </translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
         <source>reStructuredText syntax</source>
-        <translation>Składnia reStructuredText</translation>
+        <translation>بناء الجملة ل ريستكرجرتيكست reStructuredText </translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="270"/>
@@ -824,7 +824,7 @@ Czy chcesz zapisać zmiany?</translation>
         <location filename="../ReText/editor.py" line="626"/>
         <source>%d w | %d a | %d c</source>
         <comment>count of words, alphanumeric characters, all characters</comment>
-        <translation>%d w | %d a | %d c</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -832,17 +832,17 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <location filename="../ReText/__main__.py" line="76"/>
         <source>Open the files in preview mode</source>
-        <translation>Otwórz pliki w trybie podglądu</translation>
+        <translation>فتح الملف بوضع العرض</translation>
     </message>
     <message>
         <location filename="../ReText/__main__.py" line="78"/>
         <source>Create a new window even if there is an existing one</source>
-        <translation>Utwórz nowe okno, nawet jeśli istnieje</translation>
+        <translation>انشاء نافذة جديدة حتى اذا وجدت واحدة</translation>
     </message>
     <message>
         <location filename="../ReText/__main__.py" line="82"/>
         <source>List of files to open</source>
-        <translation>Lista plików do otwarcia</translation>
+        <translation>قائمة الملفات لفتحها</translation>
     </message>
 </context>
 </TS>

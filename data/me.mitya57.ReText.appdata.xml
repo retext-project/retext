@@ -4,19 +4,23 @@
   <id>me.mitya57.ReText</id>
   <name>ReText</name>
   <summary>Simple text editor for Markdown and reStructuredText</summary>
+  <summary xml:lang="ar">محرر نصوص بسيط لمارك داون Markdown  و ريستكرجر تيكست reStructuredText</summary>
   <summary xml:lang="ca">Editor de Markdown i reStructuredText senzill alhora que potent</summary>
   <summary xml:lang="cs">Jednoduchý editor pro Markdown a reStructuredText</summary>
   <summary xml:lang="cy">Golygydd testun syml ar gyfer Markdown a reStructuredText</summary>
   <summary xml:lang="da">Enkel editor til Markdown og reStructuredText</summary>
   <summary xml:lang="de">Einfacher Texteditor für Markdown und reStructuredText</summary>
+  <summary xml:lang="el">Απλός επεξεργαστής κειμένου για Markdown και ReStructuredText</summary>
   <summary xml:lang="es">Editor básico de texto para Markdown y reStructuredText</summary>
   <summary xml:lang="et">Lihtne tekstiredaktor Markdown ning reStructuredText süntaksitele</summary>
   <summary xml:lang="eu">Markdown et reStructuredText-erako editore sinple</summary>
+  <summary xml:lang="fa">یک ویرایشگر متن ساده برای متن های قالب Markdown و reStructuredText</summary>
   <summary xml:lang="fi">Yksinkertainen tekstieditori Markdownille ja reStructuredTextille</summary>
   <summary xml:lang="fr">Éditeur de texte simple pour Markdown et reStructuredText</summary>
   <summary xml:lang="hu">Egyszerű Markdown és reStructuredText szövegszerkesztő</summary>
   <summary xml:lang="it">Semplice editor di testo per Markdown e reStructuredText</summary>
   <summary xml:lang="ja">MarkdownとreStructuredTextのためのシンプルで強力なエディタ</summary>
+  <summary xml:lang="nl">Eenvoudige teksteditor voor Markdown en reStructuredText</summary>
   <summary xml:lang="pl">Prosty edytor Markdown i reStructuredText</summary>
   <summary xml:lang="pt_BR">Editor simples para Markdown e reStructuredText</summary>
   <summary xml:lang="ru">Простой редактор для Markdown и reStructuredText</summary>

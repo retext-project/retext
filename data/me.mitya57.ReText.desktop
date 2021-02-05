@@ -2,14 +2,17 @@
 Version=1.0
 Name=ReText
 Comment=Simple text editor for Markdown and reStructuredText
+Comment[ar]=محرر نصوص بسيط لمارك داون Markdown  و ريستكرجر تيكست reStructuredText
 Comment[ca]=Editor de Markdown i reStructuredText senzill alhora que potent
 Comment[cs]=Jednoduchý editor pro Markdown a reStructuredText
 Comment[cy]=Golygydd testun syml ar gyfer Markdown a reStructuredText
 Comment[da]=Enkel editor til Markdown og reStructuredText
 Comment[de]=Einfacher Texteditor für Markdown und reStructuredText
+Comment[el]=Απλός επεξεργαστής κειμένου για Markdown και ReStructuredText
 Comment[es]=Editor básico de texto para Markdown y reStructuredText
 Comment[et]=Lihtne tekstiredaktor Markdown ning reStructuredText süntaksitele
 Comment[eu]=Markdown et reStructuredText-erako editore sinple
+Comment[fa]=یک ویرایشگر متن ساده برای متن های قالب Markdown و reStructuredText
 Comment[fi]=Yksinkertainen tekstieditori Markdownille ja reStructuredTextille
 Comment[fr]=Éditeur de texte simple pour Markdown et reStructuredText
 Comment[hu]=Egyszerű Markdown és reStructuredText szövegszerkesztő
