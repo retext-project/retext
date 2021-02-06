@@ -28,6 +28,11 @@ from glob import glob, iglob
 if sys.version_info[0] < 3:
 	sys.exit('Error: Python 3.x is required.')
 
+if len(sys.argv) > 1 and sys.argv[1] == 'bdist_wheel':
+	sys.exit('Building wheels is disabled, because it breaks .desktop files. '
+	         'See issues #452 and #497 for details.\n'
+	         'If you are using pip, please ignore this error, installation '
+	         'should still succeed.')
 
 def bundle_icons():
 	import urllib.request
@@ -87,11 +92,6 @@ class retext_install(install):
 		if self.root is None:
 			self.orig_install_scripts = self.install_scripts
 			self.orig_install_data = self.install_data
-		elif self.root.endswith("/wheel"):
-			raise RuntimeError("Building wheels is disabled, because it breaks .desktop"
-			                   " files. See issues #452 and #497 for details.\n"
-			                   "If you are using pip, please ignore this error,"
-			                   " installation should still succeed.")
 		retext = join(self.orig_install_scripts, 'retext')
 
 		# Fix Exec and Icon fields in the desktop file
