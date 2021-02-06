@@ -64,4 +64,4 @@ jobs:
       - name: Install Python dependencies
         run: python -m pip install pyflakes
       - name: Run pyflakes
-        run: python -m pyflakes ReText/*.py setup.py
+        run: python -m pyflakes ReText/ tests/ setup.py
