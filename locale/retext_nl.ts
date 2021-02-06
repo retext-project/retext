@@ -20,7 +20,7 @@
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Automatically open last documents on startup</source>
-        <translation>Recentste document automatisch openen bij opstarten</translation>
+        <translation>Recentste document automatisch openen na opstarten</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
@@ -70,7 +70,7 @@
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Line numbers are relative to current line</source>
-        <translation>Lijnnummers zijn gekoppeld aan de huidige regel</translation>
+        <translation>Regelnummers zijn gekoppeld aan de huidige regel</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
@@ -90,7 +90,7 @@
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Enable soft wrap</source>
-        <translation>Licht omslaan inschakelen</translation>
+        <translation>Lichte regelafbreking inschakelen</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
@@ -99,8 +99,13 @@
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
+        <source>Ordered list mode</source>
+        <translation>Geordende lijstmodus</translation>
+    </message>
+    <message>
+        <location filename="../ReText/config.py" line="109"/>
         <source>Interface</source>
-        <translation>Uiterlijk</translation>
+        <translation>Vormgeving</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
@@ -128,6 +133,16 @@
         <translation>Volledige pad tonen in venstertitiel</translation>
     </message>
     <message>
+        <location filename="../ReText/config.py" line="109"/>
+        <source>Show directory tree</source>
+        <translation>Mapstructuur tonen</translation>
+    </message>
+    <message>
+        <location filename="../ReText/config.py" line="109"/>
+        <source>Working directory</source>
+        <translation>Werkmap</translation>
+    </message>
+    <message>
         <location filename="../ReText/config.py" line="166"/>
         <source>Help</source>
         <translation>Hulp</translation>
@@ -143,44 +158,29 @@
         <translation>Normale voorvertoning</translation>
     </message>
     <message>
-        <location filename="../ReText/config.py" line="109"/>
-        <source>Ordered list mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ReText/config.py" line="109"/>
-        <source>Show directory tree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ReText/config.py" line="109"/>
-        <source>Working directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../ReText/config.py" line="191"/>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitgeschakeld</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="192"/>
         <source>Cursor Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Cursorregel</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="193"/>
         <source>Wrapped Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Afgebroken regel</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="198"/>
         <source>Increment</source>
-        <translation type="unfinished"></translation>
+        <translation>Verhogen</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="199"/>
         <source>Repeat</source>
-        <translation type="unfinished"></translation>
+        <translation>Herhalen</translation>
     </message>
 </context>
 <context>
@@ -188,7 +188,7 @@
     <message>
         <location filename="../ReText/config.py" line="60"/>
         <source>Select directory to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies de te openen map</translation>
     </message>
 </context>
 <context>
@@ -230,7 +230,7 @@
     <message>
         <location filename="../ReText/dialogs.py" line="44"/>
         <source>Enter locale name (example: en_US)</source>
-        <translation>Voer landinstelling in (bijv.: en_US)</translation>
+        <translation>Voer de landinstelling in (bijv.: en_US)</translation>
     </message>
     <message>
         <location filename="../ReText/dialogs.py" line="50"/>
@@ -243,7 +243,7 @@
     <message>
         <location filename="../ReText/fakevimeditor.py" line="61"/>
         <source>No write since last change (add ! to override)</source>
-        <translation>Niet weggeschreven sinds laatste aanpassing (voeg ! toe om te overschrijven)</translation>
+        <translation>Niet weggeschreven sinds recentste aanpassing (voeg ! toe om te overschrijven)</translation>
     </message>
     <message>
         <location filename="../ReText/fakevimeditor.py" line="118"/>
@@ -279,12 +279,12 @@
     <message>
         <location filename="../ReText/tab.py" line="189"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
-        <translation>Kan bestandsinhoud niet verwerken. Controleer of je de &lt;a href=&quot;%s&quot;&gt;vereiste module&lt;/a&gt; hebt geïnstalleerd!</translation>
+        <translation>De bestandsinhoud kan niet worden verwerkt. Controleer de &lt;a href=&quot;%s&quot;&gt;vereiste module&lt;/a&gt; geïnstalleerd is!</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="482"/>
         <source>Create missing file?</source>
-        <translation>Ontbrekend bestand creëren?</translation>
+        <translation>Ontbrekend bestand aanmaken?</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="482"/>
@@ -293,17 +293,17 @@
 Do you want to create it?</source>
         <translation>Het bestand &apos;%s&apos; bestaat niet.
 
-Wil je het creëren?</translation>
+Wil je het aanmaken?</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="515"/>
         <source>File could not be created</source>
-        <translation>Bestand kan niet worden gecreëerd</translation>
+        <translation>Het bestand kan niet worden aangemaakt</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="515"/>
         <source>Could not create file &apos;%s&apos;: %s</source>
-        <translation>Kan het bestand &apos;%s&apos; niet creëren: %s</translation>
+        <translation>Het bestand &apos;%s&apos; kan niet worden aangemaakt: %s</translation>
     </message>
 </context>
 <context>
@@ -381,7 +381,7 @@ Wil je het creëren?</translation>
     <message>
         <location filename="../ReText/window.py" line="127"/>
         <source>View HTML code</source>
-        <translation>HTML code bekijken</translation>
+        <translation>HTML-code bekijken</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="128"/>
@@ -496,17 +496,17 @@ Wil je het creëren?</translation>
     <message>
         <location filename="../ReText/window.py" line="201"/>
         <source>Set locale</source>
-        <translation>Landsinstelling instellen</translation>
+        <translation>Landinstelling instellen</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="202"/>
         <source>Use WebKit renderer</source>
-        <translation>WebKit-renderer gebruiken</translation>
+        <translation>WebKit-weergave gebruiken</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="207"/>
         <source>Use WebEngine (Chromium) renderer</source>
-        <translation>WebEngine (Chromium)-renderer gebruiken</translation>
+        <translation>WebEngine (Chromium)-weergave gebruiken</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="212"/>
@@ -556,7 +556,7 @@ Wil je het creëren?</translation>
     <message>
         <location filename="../ReText/window.py" line="245"/>
         <source>Bold</source>
-        <translation>Dikgedrukt</translation>
+        <translation>Vetgedrukt</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="247"/>
@@ -579,6 +579,21 @@ Wil je het creëren?</translation>
         <translation>Symbolen</translation>
     </message>
     <message>
+        <location filename="../ReText/window.py" line="270"/>
+        <source>&amp;File</source>
+        <translation>&amp;Bestand</translation>
+    </message>
+    <message>
+        <location filename="../ReText/window.py" line="271"/>
+        <source>&amp;Edit</source>
+        <translation>B&amp;ewerken</translation>
+    </message>
+    <message>
+        <location filename="../ReText/window.py" line="272"/>
+        <source>&amp;Help</source>
+        <translation>&amp;Hulp</translation>
+    </message>
+    <message>
         <location filename="../ReText/window.py" line="275"/>
         <source>Open recent</source>
         <translation>Recent bestand openen</translation>
@@ -591,12 +606,12 @@ Wil je het creëren?</translation>
     <message>
         <location filename="../ReText/window.py" line="313"/>
         <source>Spell check</source>
-        <translation>Spellingscontrole</translation>
+        <translation>Spellingcontrole</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="322"/>
         <source>Default markup</source>
-        <translation>Standaard markup</translation>
+        <translation>Standaardopmaak</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="372"/>
@@ -621,7 +636,7 @@ Wil je het creëren?</translation>
     <message>
         <location filename="../ReText/window.py" line="719"/>
         <source>Type the line number</source>
-        <translation>Typ een regelnummer</translation>
+        <translation>Voer een regelnummer in</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="755"/>
@@ -677,7 +692,7 @@ Wil je het creëren?</translation>
     <message>
         <location filename="../ReText/window.py" line="1001"/>
         <source>Export document to ODT</source>
-        <translation>Document exporteren naar ODT</translation>
+        <translation>Document exporteren naar odt</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1001"/>
@@ -697,7 +712,7 @@ Wil je het creëren?</translation>
     <message>
         <location filename="../ReText/window.py" line="1060"/>
         <source>Export document to PDF</source>
-        <translation>Document exporteren naar PDF</translation>
+        <translation>Document exporteren naar pdf</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1060"/>
@@ -753,7 +768,7 @@ Wil je het bestand herladen (dit verwerpt al je aanpassingen)?
     <message>
         <location filename="../ReText/window.py" line="1227"/>
         <source>If you choose to not reload the file, auto save mode will be disabled for this session to prevent data loss.</source>
-        <translation>Als je ervoor kiest het bestand niet te herladen, dan wordt automatisch opslaan uitgeschakeld in deze sessie om gegevensverlies te voorkomen. </translation>
+        <translation>Als je er voor kiest het bestand niet te herladen, dan wordt automatisch opslaan in deze sessie uitgeschakeld om gegevensverlies te voorkomen. </translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1251"/>
@@ -770,7 +785,7 @@ Wil je je aanpassingen opslaan?</translation>
     <message>
         <location filename="../ReText/window.py" line="1289"/>
         <source>Select one or several images to open</source>
-        <translation>Selecteer één of meerdere te openen bestanden</translation>
+        <translation>Selecteer één of meerdere te openen afbeeldingen</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
@@ -780,12 +795,12 @@ Wil je je aanpassingen opslaan?</translation>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>Eenvoudige maar krachtige bewerker voor Markdown en reStructuredText</translation>
+        <translation>Eenvoudige, maar krachtige bewerker voor Markdown en reStructuredText</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
         <source>Author: Dmitry Shachnev, 2011</source>
-        <translation>Auteur: Dmitry Shachnev, 2011</translation>
+        <translation>Maker: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
@@ -802,21 +817,6 @@ Wil je je aanpassingen opslaan?</translation>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText-syntax</translation>
     </message>
-    <message>
-        <location filename="../ReText/window.py" line="270"/>
-        <source>&amp;File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ReText/window.py" line="271"/>
-        <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ReText/window.py" line="272"/>
-        <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>TextInfoArea</name>
@@ -830,19 +830,19 @@ Wil je je aanpassingen opslaan?</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../ReText/__main__.py" line="76"/>
+        <location filename="../ReText/__main__.py" line="88"/>
         <source>Open the files in preview mode</source>
         <translation>Bestanden openen in voorvertoningsmodus</translation>
     </message>
     <message>
-        <location filename="../ReText/__main__.py" line="78"/>
+        <location filename="../ReText/__main__.py" line="90"/>
         <source>Create a new window even if there is an existing one</source>
         <translation>Nieuw venster openen, zelfs als er al een geopend venster is</translation>
     </message>
     <message>
-        <location filename="../ReText/__main__.py" line="82"/>
+        <location filename="../ReText/__main__.py" line="94"/>
         <source>List of files to open</source>
-        <translation>Lijst van te openen bestanden</translation>
+        <translation>Lijst met te openen bestanden</translation>
     </message>
 </context>
 </TS>
