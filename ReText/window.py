@@ -162,7 +162,7 @@ class ReTextWindow(QMainWindow):
 				self.actionFakeVimMode.setChecked(True)
 				self.enableFakeVimMode(True)
 		self.actionFullScreen = self.act(self.tr('Fullscreen mode'), 'view-fullscreen',
-			shct=Qt.Key.Key_F11, trigbool=self.enableFullScreen)
+			shct=QKeySequence.StandardKey.FullScreen, trigbool=self.enableFullScreen)
 		self.actionFullScreen.setChecked(self.isFullScreen())
 		self.actionConfig = self.act(self.tr('Preferences'), icon='preferences-system',
 			trig=self.openConfigDialog)
