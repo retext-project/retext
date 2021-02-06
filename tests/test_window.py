@@ -33,7 +33,6 @@ from PyQt5.QtWidgets import QApplication
 import ReText
 from ReText.window import ReTextWindow
 
-defaultEventTimeout = 0.0
 path_to_testdata = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'testdata')
 
 QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
@@ -43,18 +42,6 @@ ReText.initializeDataDirs()
 def handle_timer_event():
     print('timer event received')
 
-def processEventsUntilIdle(eventTimeout=defaultEventTimeout):
-    '''
-    Process Qt events until the application has not had any events for `eventTimeout` seconds
-    '''
-    if not app.hasPendingEvents():
-        time.sleep(eventTimeout)
-    while app.hasPendingEvents():
-        #print ('outer loop')
-        while app.hasPendingEvents():
-            #print('inner loop')
-            app.processEvents()
-        time.sleep(eventTimeout)
 
 class FakeConverterProcess(QObject):
     conversionDone = pyqtSignal()
@@ -143,7 +130,7 @@ class TestWindow(unittest.TestCase):
     def test_windowTitleAndTabs_afterStartWithEmptyTab(self):
         self.window = ReTextWindow()
         self.window.createNew('')
-        processEventsUntilIdle()
+        app.processEvents()
 
         self.assertEqual(1, self.window.tabWidget.count())
         self.assertEqual('New document[*]', self.window.windowTitle())
@@ -154,7 +141,7 @@ class TestWindow(unittest.TestCase):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
-        processEventsUntilIdle()
+        app.processEvents()
 
         # Check that file is opened in the existing empty tab
         self.assertEqual(1, self.window.tabWidget.count())
@@ -168,12 +155,12 @@ class TestWindow(unittest.TestCase):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
-        processEventsUntilIdle()
+        app.processEvents()
 
         tab_with_file = self.window.currentTab
 
         self.window.createNew('bla')
-        processEventsUntilIdle()
+        app.processEvents()
 
         tab_with_unsaved_content = self.window.currentTab
 
@@ -185,7 +172,7 @@ class TestWindow(unittest.TestCase):
         self.assertEqual(self.window.tabWidget.tabText(1), 'New document*')
 
         self.window.switchTab()
-        processEventsUntilIdle()
+        app.processEvents()
 
         self.assertEqual('existing_file.md[*]', self.window.windowTitle())
         self.assertIs(self.window.currentTab, tab_with_file)
@@ -196,18 +183,18 @@ class TestWindow(unittest.TestCase):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
-        processEventsUntilIdle()
+        app.processEvents()
         tab_with_file = self.window.currentTab
 
         self.window.createNew('')
-        processEventsUntilIdle()
+        app.processEvents()
 
         # Make sure that the newly created tab is the active one
         self.assertFalse(self.window.currentTab.fileName)
 
         # Load the same document again
         self.window.actionOpen.trigger()
-        processEventsUntilIdle()
+        app.processEvents()
 
         # Check that we have indeed been switched back to the previous tab
         self.assertIs(self.window.currentTab, tab_with_file)
@@ -216,7 +203,7 @@ class TestWindow(unittest.TestCase):
     def test_markupDependentWidgetStates_afterStartWithEmptyTabAndMarkdownAsDefaultMarkup(self):
         self.window = ReTextWindow()
         self.window.createNew('')
-        processEventsUntilIdle()
+        app.processEvents()
 
         # markdown is the default markup
         self.check_widgets_enabled_for_markdown(self.window)
@@ -225,14 +212,14 @@ class TestWindow(unittest.TestCase):
         self.globalSettingsMock.defaultMarkup = 'reStructuredText'
         self.window = ReTextWindow()
         self.window.createNew('')
-        processEventsUntilIdle()
+        app.processEvents()
 
         self.check_widgets_enabled_for_restructuredtext(self.window)
 
     def test_markupDependentWidgetStates_afterChangingDefaultMarkup(self):
         self.window = ReTextWindow()
         self.window.createNew('')
-        processEventsUntilIdle()
+        app.processEvents()
 
         self.window.setDefaultMarkup(markups.ReStructuredTextMarkup)
 
@@ -243,7 +230,7 @@ class TestWindow(unittest.TestCase):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
-        processEventsUntilIdle()
+        app.processEvents()
 
         self.check_widgets_enabled_for_markdown(self.window)
 
@@ -252,7 +239,7 @@ class TestWindow(unittest.TestCase):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
-        processEventsUntilIdle()
+        app.processEvents()
 
         self.check_widgets_enabled_for_restructuredtext(self.window)
 
@@ -263,13 +250,13 @@ class TestWindow(unittest.TestCase):
         self.window.createNew('')
         self.window.actionOpen.trigger()
         self.window.actionOpen.trigger()
-        processEventsUntilIdle()
+        app.processEvents()
 
         # Just to make sure that sending two actionOpen triggers has had the desired effect
         self.assertIn('.rst', self.window.windowTitle())
 
         self.window.switchTab()
-        processEventsUntilIdle()
+        app.processEvents()
 
         self.assertIn('.md', self.window.windowTitle())
         self.check_widgets_enabled_for_markdown(self.window)
@@ -280,11 +267,11 @@ class TestWindow(unittest.TestCase):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
-        processEventsUntilIdle()
+        app.processEvents()
 
         try:
             self.window.actionSaveAs.trigger()
-            processEventsUntilIdle()
+            app.processEvents()
 
         finally:
             os.remove(os.path.join(path_to_testdata, 'not_existing_file.rst'))
@@ -298,21 +285,21 @@ class TestWindow(unittest.TestCase):
 
         # check if save is disabled at first
         self.window.createNew('')
-        processEventsUntilIdle()
+        app.processEvents()
         self.check_widgets_disabled(self.window, ('actionSave',))
         self.assertFalse(self.window.isWindowModified())
         self.assertEqual(self.window.tabWidget.tabText(0), 'New document')
 
         # check if it's enabled after inserting some text
         self.window.currentTab.editBox.textCursor().insertText('some text')
-        processEventsUntilIdle()
+        app.processEvents()
         self.check_widgets_enabled(self.window, ('actionSave',))
         self.assertTrue(self.window.isWindowModified())
         self.assertEqual(self.window.tabWidget.tabText(0), 'New document*')
 
         # check if it's disabled again after loading a file in a second tab and switching to it
         self.window.actionOpen.trigger()
-        processEventsUntilIdle()
+        app.processEvents()
         self.check_widgets_disabled(self.window, ('actionSave',))
         self.assertFalse(self.window.isWindowModified())
         self.assertEqual(self.window.tabWidget.tabText(0), 'New document*')
@@ -320,7 +307,7 @@ class TestWindow(unittest.TestCase):
 
         # check if it's enabled again after switching back
         self.window.switchTab()
-        processEventsUntilIdle()
+        app.processEvents()
         self.check_widgets_enabled(self.window, ('actionSave',))
         self.assertTrue(self.window.isWindowModified())
         self.assertEqual(self.window.tabWidget.tabText(0), 'New document*')
@@ -329,7 +316,7 @@ class TestWindow(unittest.TestCase):
         # check if it's disabled after saving
         try:
             self.window.actionSaveAs.trigger()
-            processEventsUntilIdle()
+            app.processEvents()
             self.check_widgets_disabled(self.window, ('actionSave',))
             self.assertFalse(self.window.isWindowModified())
             self.assertEqual(self.window.tabWidget.tabText(0), 'not_existing_file')
@@ -345,25 +332,25 @@ class TestWindow(unittest.TestCase):
 
         # check if save is disabled at first
         self.window.createNew('')
-        processEventsUntilIdle()
+        app.processEvents()
         self.check_widgets_disabled(self.window, ('actionSave',))
 
         # check if it stays enabled after inserting some text (because autosave
         # can't save without a filename)
         self.window.currentTab.editBox.textCursor().insertText('some text')
-        processEventsUntilIdle()
+        app.processEvents()
         self.check_widgets_enabled(self.window, ('actionSave',))
 
         # check if it's disabled after saving
         try:
             self.window.actionSaveAs.trigger()
-            processEventsUntilIdle()
+            app.processEvents()
             self.check_widgets_disabled(self.window, ('actionSave',))
 
             # check if it is still disabled after inserting some text (because
             # autosave will take care of saving now that the filename is known)
             self.window.currentTab.editBox.textCursor().insertText('some text')
-            processEventsUntilIdle()
+            app.processEvents()
             self.check_widgets_disabled(self.window, ('actionSave',))
         finally:
             os.remove(os.path.join(path_to_testdata, 'not_existing_file.md'))
@@ -374,11 +361,11 @@ class TestWindow(unittest.TestCase):
 
         # check if reload/set encoding is disabled for a tab without filename set
         self.window.createNew('')
-        processEventsUntilIdle()
+        app.processEvents()
         self.check_widgets_disabled(self.window, ('actionReload','actionSetEncoding'))
 
         self.window.actionOpen.trigger()
-        processEventsUntilIdle()
+        app.processEvents()
         self.check_widgets_enabled(self.window, ('actionReload','actionSetEncoding'))
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
@@ -388,11 +375,11 @@ class TestWindow(unittest.TestCase):
 
         # check if reload/set encoding is disabled for a tab without filename set
         self.window.createNew('')
-        processEventsUntilIdle()
+        app.processEvents()
         self.check_widgets_disabled(self.window, ('actionReload','actionSetEncoding'))
 
         self.window.actionOpen.trigger()
-        processEventsUntilIdle()
+        app.processEvents()
         self.check_widgets_disabled(self.window, ('actionReload','actionSetEncoding'))
 
     def test_doesNotTweakSpecialCharacters(self):
