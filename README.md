@@ -24,6 +24,8 @@ We also recommend having these packages installed:
 * [Markdown](https://pypi.org/project/Markdown/) — for Markdown support
 * [docutils](https://pypi.org/project/docutils/) — for reStructuredText support
 * [pyenchant](https://pypi.org/project/pyenchant/) — for spell checking support
+* [PyQtWebEngine](https://pypi.org/project/PyQtWebEngine/) — a more powerful
+  preview engine with JavaScript support
 
 Translation files are already compiled for release tarballs and will be
 automatically loaded. For development snapshots, compile translations using
