@@ -1,3 +1,44 @@
+## ReText 7.2.0
+
+* Dependency changes:
+    - Python ≥ 3.6 is now required.
+    - Qt and PyQt ≥ 5.11 are now required.
+* General improvements:
+    - Added ability to show a side panel with directory tree (contributed by
+      Xavier Gouchet in #531).
+    - Added support for searching in the preview mode.
+    - When some text is selected and a quote, bracket or emphasis key is
+      pressed, the text is surrounded rather than replaced (contributed by
+      Daniel Venturini in #520).
+    - Added an option to fully highlight wrapped lines (contributed by
+      nihillum in #523).
+    - Improved current line highlighting for right-to-left text layout.
+    - Ordered list behavior can now be configured to repeat or increment the
+      list item number (contributed by Binokkio in #527).
+    - Added mnemonics to open the menus from keyboard (contributed by David
+      Hebbeker in #528).
+    - Added Apply button to the Preferences dialog (contributed by Amos Kong
+      in #543).
+    - Removed use of deprecated Python, Python-Markdown, Qt and PyQt API.
+* Bugs fixed:
+    - Issue #507 — Improved the error message when trying to build ReText as a
+      wheel package.
+    - Issue #529 — Markup that intersects with code blocks is no longer
+      highlighted.
+    - PR #530 — Preview is no longer updated when it is not shown (contributed
+      by rhn in #530).
+    - Issue #533 — Fixed showing local images with Qt WebEngine 5.15.
+* Translations updated:
+    - Arabic (contributed by ZamanOof).
+    - Chinese (China) (contributed by liulitchi).
+    - Dutch (contributed by Heimen Stoffels).
+    - Japanese (contributed by YAMADA Shinichirou).
+    - Persian (contributed by Hadi F).
+    - Polish (contributed by Maciej Haudek).
+    - Russian.
+    - Spanish (contributed by Félix Fischer).
+    - Swedish (contributed by Philip Andersen).
+
 ## ReText 7.1.0 (2020-04-04)
 
 * General improvements:
