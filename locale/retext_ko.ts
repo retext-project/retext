@@ -402,17 +402,17 @@ Do you want to create it?</source>
     </message>
     <message>
         <location filename="../ReText/window.py" line="263"/>
-        <source>File</source>
+        <source>&amp;File</source>
         <translation>파일</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="264"/>
-        <source>Edit</source>
+        <source>&amp;Edit</source>
         <translation>에디트</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="265"/>
-        <source>Help</source>
+        <source>&amp;Help</source>
         <translation>도움</translation>
     </message>
     <message>

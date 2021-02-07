@@ -507,18 +507,18 @@ Do you want to create it?</source>
     </message>
     <message>
         <location filename="../ReText/window.py" line="263"/>
-        <source>File</source>
-        <translation>Soubor</translation>
+        <source>&amp;File</source>
+        <translation>&amp;Soubor</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="264"/>
-        <source>Edit</source>
-        <translation>Upravit</translation>
+        <source>&amp;Edit</source>
+        <translation>&amp;Upravit</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="265"/>
-        <source>Help</source>
-        <translation>Nápověda</translation>
+        <source>&amp;Help</source>
+        <translation>&amp;Nápověda</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="268"/>

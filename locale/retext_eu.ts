@@ -402,18 +402,18 @@ Do you want to create it?</source>
     </message>
     <message>
         <location filename="../ReText/window.py" line="263"/>
-        <source>File</source>
-        <translation>Fitxategia</translation>
+        <source>&amp;File</source>
+        <translation>&amp;Fitxategia</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="264"/>
-        <source>Edit</source>
-        <translation>Editatu</translation>
+        <source>&amp;Edit</source>
+        <translation>&amp;Editatu</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="265"/>
-        <source>Help</source>
-        <translation>Laguntza</translation>
+        <source>&amp;Help</source>
+        <translation>&amp;Laguntza</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="281"/>

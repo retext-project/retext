@@ -805,17 +805,17 @@ Vill du spara dina ändringar?</translation>
     <message>
         <location filename="../ReText/window.py" line="270"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Arkiv</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="271"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Redigera</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="272"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hjälp</translation>
     </message>
 </context>
 <context>

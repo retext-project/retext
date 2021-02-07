@@ -803,17 +803,17 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../ReText/window.py" line="270"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>文件</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="271"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="272"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>帮助</translation>
     </message>
 </context>
 <context>

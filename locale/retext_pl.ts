@@ -805,17 +805,17 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <location filename="../ReText/window.py" line="270"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Plik</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="271"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Edycja</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="272"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>P&amp;omoc</translation>
     </message>
 </context>
 <context>

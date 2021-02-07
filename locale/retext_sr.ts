@@ -522,18 +522,18 @@ Do you want to create it?</source>
     </message>
     <message>
         <location filename="../ReText/window.py" line="263"/>
-        <source>File</source>
-        <translation>Фајл</translation>
+        <source>&amp;File</source>
+        <translation>&amp;Фајл</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="264"/>
-        <source>Edit</source>
-        <translation>Уређивање</translation>
+        <source>&amp;Edit</source>
+        <translation>&amp;Уређивање</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="265"/>
-        <source>Help</source>
-        <translation>Помоћ</translation>
+        <source>&amp;Help</source>
+        <translation>&amp;Помоћ</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="268"/>

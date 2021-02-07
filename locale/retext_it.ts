@@ -524,18 +524,18 @@ Crearlo?</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="263"/>
-        <source>File</source>
-        <translation>File</translation>
+        <source>&amp;File</source>
+        <translation>&amp;File</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="264"/>
-        <source>Edit</source>
-        <translation>Modifica</translation>
+        <source>&amp;Edit</source>
+        <translation>&amp;Modifica</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="265"/>
-        <source>Help</source>
-        <translation>Aiuto</translation>
+        <source>&amp;Help</source>
+        <translation>&amp;Aiuto</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="268"/>

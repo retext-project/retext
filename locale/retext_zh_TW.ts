@@ -307,17 +307,17 @@ Do you want to create it?</source>
     </message>
     <message>
         <location filename="../ReText/window.py" line="263"/>
-        <source>File</source>
+        <source>&amp;File</source>
         <translation>檔案</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="264"/>
-        <source>Edit</source>
+        <source>&amp;Edit</source>
         <translation>編輯</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="265"/>
-        <source>Help</source>
+        <source>&amp;Help</source>
         <translation>說明</translation>
     </message>
     <message>

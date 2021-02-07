@@ -417,18 +417,18 @@ Do you want to create it?</source>
     </message>
     <message>
         <location filename="../ReText/window.py" line="263"/>
-        <source>File</source>
-        <translation>Ffeil</translation>
+        <source>&amp;File</source>
+        <translation>&amp;Ffeil</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="264"/>
-        <source>Edit</source>
-        <translation>Golygu</translation>
+        <source>&amp;Edit</source>
+        <translation>&amp;Golygu</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="265"/>
-        <source>Help</source>
-        <translation>Cymorth</translation>
+        <source>&amp;Help</source>
+        <translation>&amp;Cymorth</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="268"/>
