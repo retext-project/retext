@@ -1,5 +1,5 @@
 # This file is part of ReText
-# Copyright: 2015 Dmitry Shachnev
+# Copyright: 2015-2017 Dmitry Shachnev
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
