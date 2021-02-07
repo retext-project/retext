@@ -19,15 +19,10 @@ import multiprocessing as mp
 import os
 import pickle
 import signal
+from socket import socketpair
 import struct
 import traceback
 import weakref
-
-try:
-	from socket import socketpair
-except ImportError:
-	# Windows compatibility: socket.socketpair backport for Python < 3.5
-	from backports.socketpair import socketpair
 
 from PyQt5.QtCore import pyqtSignal, QObject, QSocketNotifier
 
