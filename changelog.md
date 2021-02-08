@@ -1,4 +1,4 @@
-## ReText 7.2.0
+## ReText 7.2.0 (2021-02-08)
 
 * Dependency changes:
     - Python ≥ 3.6 is now required.
