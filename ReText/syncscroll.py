@@ -66,6 +66,8 @@ class SyncScroll:
     def _handlePreviewResized(self):
         self._recalculatePositionMap()
         self._updatePreviewScrollPosition()
+        if not self.posmap and self.frame.scrollPosition().y() == 0:
+            self.frame.setScrollPosition(self.previewPositionBeforeLoad)
 
     def _linearScale(self, fromValue, fromMin, fromMax, toMin, toMax):
         fromRange = fromMax - fromMin
