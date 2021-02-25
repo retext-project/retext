@@ -257,8 +257,14 @@ class ReTextTab(QSplitter):
 			# If scrollbar was at bottom (and that was not the same as top),
 			# set it to bottom again
 			if scrollbarValue:
-				newValue = scrollbar.maximum() - distToBottom
-				scrollbar.setValue(newValue)
+				def updateScrollPosition():
+					newValue = scrollbar.maximum() - distToBottom
+					scrollbar.setValue(newValue)
+				updateScrollPosition()
+				# Sometimes, scrollbar.maximum() value is wrong (too big)
+				# immediately after rendering, but normalizes soon after that.
+				# Update the position again to handle that case.
+				QTimer.singleShot(50, updateScrollPosition)
 		else:
 			self.previewBox.updateFontSettings()
 
