@@ -16,7 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt5.QtCore import QDir, Qt
+from os.path import exists
+from PyQt5.QtCore import QDir, QUrl, Qt
 from PyQt5.QtGui import QDesktopServices, QGuiApplication, QTextCursor, QTextDocument
 from PyQt5.QtWidgets import QTextBrowser
 from ReText import globalSettings
@@ -35,18 +36,24 @@ class ReTextPreview(QTextBrowser):
 
 	def openInternal(self, link):
 		url = link.url()
-		isLocalHtml = (link.scheme() in ('file', '') and url.endswith('.html'))
 		if url.startswith('#'):
 			self.scrollToAnchor(url[1:])
 			return
 		elif link.isRelative():
 			fileToOpen = QDir.current().filePath(url)
+		else:
+			fileToOpen = link.toLocalFile() if link.isLocalFile() else None
+		if fileToOpen is not None:
+			if exists(fileToOpen):
+				link = QUrl.fromLocalFile(fileToOpen)
+				if globalSettings.handleWebLinks and fileToOpen.endswith('.html'):
+					self.setSource(link)
+					return
+			# This is outside the "if exists" block because we can prompt for
+			# creating the file
 			if self.tab.openSourceFile(fileToOpen):
 				return
-		if globalSettings.handleWebLinks and isLocalHtml:
-			self.setSource(link)
-		else:
-			QDesktopServices.openUrl(link)
+		QDesktopServices.openUrl(link)
 
 	def findText(self, text, flags, wrap=False):
 		cursor = self.textCursor()
