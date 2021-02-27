@@ -365,6 +365,7 @@ class ReTextTab(QSplitter):
 
 		self.editBox.setPlainText(text)
 		self.editBox.document().setModified(False)
+		self.handleModificationChanged()
 
 		cssFileName = self.getBaseName() + '.css'
 		self.cssFileExists = QFile.exists(cssFileName)
