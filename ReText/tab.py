@@ -391,6 +391,7 @@ class ReTextTab(QSplitter):
 
 			# Save the file with original encoding
 			encoding = self.editBox.document().property("encoding")
+			encoding = encoding or globalSettings.defaultCodec
 			if encoding is not None:
 				savestream.setCodec(encoding)
 
