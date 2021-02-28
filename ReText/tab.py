@@ -329,10 +329,11 @@ class ReTextTab(QSplitter):
 
 		result = chardet.detect(raw)
 		if result['confidence'] > 0.9:
-			if result['encoding'].lower() == 'ascii':
+			if result['encoding'].lower() in ('ascii', 'utf-8-sig'):
 				# UTF-8 files can be falsely detected as ASCII files if they
 				# don't contain non-ASCII characters in first 2048 bytes.
 				# We map ASCII to UTF-8 to avoid such situations.
+				# Also map UTF-8-SIG to UTF-8 because Qt does not understand it.
 				return 'utf-8'
 			return result['encoding']
 
