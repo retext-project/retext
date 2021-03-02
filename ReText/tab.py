@@ -203,10 +203,18 @@ class ReTextTab(QSplitter):
 			style += 'table { border-collapse: collapse; }\n'
 			style += 'img { max-width: 100%; }\n'
 			# QTextDocument seems to use media=screen even for printing
-			if globalSettings.useWebKit:
+			if not isinstance(self.previewBox, QTextEdit) and not webenv:
 				# https://github.com/retext-project/retext/pull/187
 				palette = QApplication.palette()
-				style += '@media screen { html { color: %s; } }\n' % palette.color(QPalette.ColorRole.WindowText).name()
+				fgColor = palette.color(QPalette.ColorRole.WindowText).name()
+				bgColor = palette.color(QPalette.ColorRole.Window).name()
+				linkColor = palette.color(QPalette.ColorRole.Link).name()
+				visitedLinkColor = palette.color(QPalette.ColorRole.LinkVisited).name()
+				style += ('@media screen {\n'
+				          f'  html {{ color: {fgColor}; background-color: {bgColor}; }}\n'
+				          f'  a, a * {{ color: {linkColor}; }}\n'
+				          f'  a:visited, a:visited * {{ color: {visitedLinkColor}; }}\n'
+				          '}\n')
 				# https://github.com/retext-project/retext/issues/408
 				style += '@media print { html { background-color: white; } }\n'
 			headers += '<style type="text/css">\n' + style + '</style>\n'
