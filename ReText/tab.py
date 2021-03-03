@@ -209,6 +209,9 @@ class ReTextTab(QSplitter):
 				palette = QApplication.palette()
 				fgColor = palette.color(QPalette.ColorRole.WindowText).name()
 				bgColor = palette.color(QPalette.ColorRole.Window).name()
+				if palette.color(QPalette.ColorRole.Window).lightness() > 150:
+					# Use palette color only for dark themes, for light themes use white
+					bgColor = 'white'
 				linkColor = palette.color(QPalette.ColorRole.Link).name()
 				visitedLinkColor = palette.color(QPalette.ColorRole.LinkVisited).name()
 				style += ('@media screen {\n'
