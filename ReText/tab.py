@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from os.path import exists, splitext
+import time
 from markups import get_markup_for_file_name, find_markup_class_by_name
 from markups.common import MODULE_HOME_PAGE
 
@@ -254,25 +255,22 @@ class ReTextTab(QSplitter):
 		if isinstance(self.previewBox, QTextEdit):
 			scrollbar = self.previewBox.verticalScrollBar()
 			scrollbarValue = scrollbar.value()
-			distToBottom = scrollbar.maximum() - scrollbarValue
+			# If scrollbar was not on top, save its distance to bottom so that
+			# it will be restored in previewBox.updateScrollPosition() later.
+			if scrollbarValue:
+				self.previewBox.distToBottom = scrollbar.maximum() - scrollbarValue
+			else:
+				self.previewBox.distToBottom = None
 		try:
 			html = self.getHtmlFromConverted(self.converted)
 		except Exception:
 			return self.p.printError()
 		if isinstance(self.previewBox, QTextEdit):
+			self.previewBox.lastRenderTime = time.time()
 			self.previewBox.setHtml(html)
 			self.previewBox.document().setDefaultFont(globalSettings.font)
-			# If scrollbar was at bottom (and that was not the same as top),
-			# set it to bottom again
-			if scrollbarValue:
-				def updateScrollPosition():
-					newValue = scrollbar.maximum() - distToBottom
-					scrollbar.setValue(newValue)
-				updateScrollPosition()
-				# Sometimes, scrollbar.maximum() value is wrong (too big)
-				# immediately after rendering, but normalizes soon after that.
-				# Update the position again to handle that case.
-				QTimer.singleShot(50, updateScrollPosition)
+			self.previewBox.updateScrollPosition(scrollbar.minimum(),
+			                                     scrollbar.maximum())
 		else:
 			self.previewBox.updateFontSettings()
 

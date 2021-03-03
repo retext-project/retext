@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from os.path import exists
+import time
 from PyQt5.QtCore import QDir, QUrl, Qt
 from PyQt5.QtGui import QDesktopServices, QGuiApplication, QTextCursor, QTextDocument
 from PyQt5.QtWidgets import QTextBrowser
@@ -30,6 +31,9 @@ class ReTextPreview(QTextBrowser):
 		# if set to True, links to other files will unsuccessfully be opened as anchors
 		self.setOpenLinks(False)
 		self.anchorClicked.connect(self.openInternal)
+		self.lastRenderTime = 0
+		self.distToBottom = None
+		self.verticalScrollBar().rangeChanged.connect(self.updateScrollPosition)
 
 	def disconnectExternalSignals(self):
 		pass
@@ -68,6 +72,19 @@ class ReTextPreview(QTextBrowser):
 		if not wrap:
 			return self.findText(text, flags, wrap=True)
 		return False
+
+	def updateScrollPosition(self, minimum, maximum):
+		"""Called when vertical scroll bar range changes.
+
+		If this happened during preview rendering (less than 0.5s since it
+		was started), set the position such that distance to bottom is the
+		same as before refresh.
+		"""
+		timeSinceRender = time.time() - self.lastRenderTime
+		if timeSinceRender < 0.5 and self.distToBottom is not None and maximum:
+			newValue = maximum - self.distToBottom
+			if newValue >= minimum:
+				self.verticalScrollBar().setValue(newValue)
 
 
 class ReTextWebPreview:
