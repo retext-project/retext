@@ -56,18 +56,21 @@ colors = {
 
 colorValues = {}
 
-def getColor(colorName, settings=settings):
+def updateColorScheme(settings=settings):
+	palette = QApplication.palette()
+	windowColor = palette.color(QPalette.ColorRole.Window)
+	themeVariant = 'light' if windowColor.lightness() > 150 else 'dark'
+	settings.beginGroup('ColorScheme')
+	for key in colors:
+		if settings.contains(key):
+			colorValues[key] = settings.value(key, type=QColor)
+		else:
+			colorValues[key] = QColor(colors[key][themeVariant])
+	settings.endGroup()
+
+def getColor(colorName):
 	if not colorValues:
-		palette = QApplication.palette()
-		windowColor = palette.color(QPalette.ColorRole.Window)
-		themeVariant = 'light' if windowColor.lightness() > 150 else 'dark'
-		settings.beginGroup('ColorScheme')
-		for key in colors:
-			if settings.contains(key):
-				colorValues[key] = settings.value(key, type=QColor)
-			else:
-				colorValues[key] = QColor(colors[key][themeVariant])
-		settings.endGroup()
+		updateColorScheme()
 	return colorValues[colorName]
 
 def documentIndentMore(document, cursor, globalSettings=globalSettings):
