@@ -21,7 +21,7 @@ import re
 import weakref
 
 from markups import MarkdownMarkup, ReStructuredTextMarkup, TextileMarkup
-from ReText import globalSettings, tablemode, readFromSettings
+from ReText import globalSettings, settings, tablemode
 
 from PyQt5.QtCore import pyqtSignal, QFileInfo, QPoint, QRect, QSize, Qt
 from PyQt5.QtGui import QColor, QImage, QKeyEvent, QMouseEvent, QPainter, \
@@ -34,24 +34,40 @@ except ImportError:
 	ReTextFakeVimHandler = None
 
 colors = {
+	# Editor
 	'marginLine':           {'light': '#dcd2dc', 'dark': '#3daee9'},
 	'currentLineHighlight': {'light': '#ffffc8', 'dark': '#31363b'},
 	'infoArea':             {'light': '#aaaaff55', 'dark': '#aa557f2a'},
 	'statsArea':            {'light': '#aaffaa55', 'dark': '#aa7f552a'},
 	'lineNumberArea':       {'light': '#00ffff', 'dark': '#31363b'},
 	'lineNumberAreaText':   {'light': '#008080', 'dark': '#bdc3c7'},
+	# Highlighter
+	'htmlTags':             {'light': '#800080', 'dark': '#d070d0'},
+	'htmlSymbols':          {'light': '#008080', 'dark': '#70d0a0'},
+	'htmlStrings':          {'light': '#808000', 'dark': '#d0d070'},
+	'htmlComments':         {'light': '#a0a0a4', 'dark': '#b0b0aa'},
+	'codeSpans':            {'light': '#505050', 'dark': '#afafaf'},
+	'markdownLinks':        {'light': '#000090', 'dark': '#8080ff'},
+	'blockquotes':          {'light': '#808080', 'dark': '#b0b0b0'},
+	'restDirectives':       {'light': '#800080', 'dark': '#d070d0'},
+	'restRoles':            {'light': '#800000', 'dark': '#d07070'},
+	'whitespaceOnEnd':      {'light': '#80e1e1a5', 'dark': '#8096966e'},
 }
 
 colorValues = {}
 
-def getColor(colorName):
-	if colorName not in colorValues:
+def getColor(colorName, settings=settings):
+	if not colorValues:
 		palette = QApplication.palette()
 		windowColor = palette.color(QPalette.ColorRole.Window)
 		themeVariant = 'light' if windowColor.lightness() > 150 else 'dark'
-		defaultColor = QColor(colors[colorName][themeVariant])
-		colorValues[colorName] = readFromSettings('ColorScheme/' + colorName, QColor,
-		                                          default=defaultColor)
+		settings.beginGroup('ColorScheme')
+		for key in colors:
+			if settings.contains(key):
+				colorValues[key] = settings.value(key, type=QColor)
+			else:
+				colorValues[key] = QColor(colors[key][themeVariant])
+		settings.endGroup()
 	return colorValues[colorName]
 
 def documentIndentMore(document, cursor, globalSettings=globalSettings):

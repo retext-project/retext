@@ -24,7 +24,7 @@ from PyQt5.QtGui import QColor, QFont
 from PyQt5.QtWidgets import QApplication
 from ReText import readListFromSettings, writeListToSettings, \
  readFromSettings, writeToSettings
-from ReText.highlighter import colorScheme, updateColorScheme
+from ReText.editor import getColor
 
 # For this particular test, QCoreApplication is enough. However, we should
 # only have one QCoreApplication instance for all tests in a process. As
@@ -83,11 +83,10 @@ class TestSettings(unittest.TestCase):
 		self.settings.setValue('ColorScheme/htmlTags', 'green')
 		self.settings.setValue('ColorScheme/htmlSymbols', '#ff8800')
 		self.settings.setValue('ColorScheme/htmlComments', '#abc')
-		updateColorScheme(self.settings)
-		self.assertEqual(colorScheme['htmlTags'], QColor(0x00, 0x80, 0x00))
-		self.assertEqual(colorScheme['htmlSymbols'], QColor(0xff, 0x88, 0x00))
-		self.assertEqual(colorScheme['htmlStrings'], Qt.GlobalColor.darkYellow) # default
-		self.assertEqual(colorScheme['htmlComments'], QColor(0xaa, 0xbb, 0xcc))
+		self.assertEqual(getColor('htmlTags', self.settings), QColor(0x00, 0x80, 0x00))
+		self.assertEqual(getColor('htmlSymbols', self.settings), QColor(0xff, 0x88, 0x00))
+		self.assertEqual(getColor('htmlStrings', self.settings), Qt.GlobalColor.darkYellow) # default
+		self.assertEqual(getColor('htmlComments', self.settings), QColor(0xaa, 0xbb, 0xcc))
 
 if __name__ == '__main__':
 	unittest.main()

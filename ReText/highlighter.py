@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from ReText import settings
+from ReText.editor import getColor
 from enum import IntFlag, auto
 import re
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QColor, QFont, QSyntaxHighlighter, QTextCharFormat
+from PyQt5.QtGui import QFont, QSyntaxHighlighter, QTextCharFormat
 
 reHtmlTags     = re.compile('<[^<>@]*>')
 reHtmlSymbols  = re.compile(r'&#?\w+;')
@@ -48,30 +48,6 @@ reReSTCodeSpan = re.compile('``.+?``')
 reWords        = re.compile('[^_\\W]+')
 reSpacesOnEnd  = re.compile(r'\s+$')
 
-defaultColorScheme = {
-	'htmlTags': Qt.GlobalColor.darkMagenta,
-	'htmlSymbols': Qt.GlobalColor.darkCyan,
-	'htmlStrings': Qt.GlobalColor.darkYellow,
-	'htmlComments': Qt.GlobalColor.gray,
-	'codeSpans': QColor(0x50, 0x50, 0x50),
-	'markdownLinks': QColor(0, 0, 0x90),
-	'blockquotes': Qt.GlobalColor.darkGray,
-	'restDirectives': Qt.GlobalColor.darkMagenta,
-	'restRoles': Qt.GlobalColor.darkRed,
-	'whitespaceOnEnd': QColor(0xe1, 0xe1, 0xa5, 0x80)
-}
-colorScheme = {}
-
-def updateColorScheme(settings=settings):
-	settings.beginGroup('ColorScheme')
-	for key in defaultColorScheme:
-		if settings.contains(key):
-			colorScheme[key] = settings.value(key, type=QColor)
-		else:
-			colorScheme[key] = defaultColorScheme[key]
-	settings.endGroup()
-
-updateColorScheme()
 
 class Formatter:
 	def __init__(self, funcs=None):
@@ -94,8 +70,7 @@ ITAL = Formatter([lambda f: f.setFontItalic(True)])
 UNDL = Formatter([lambda f: f.setFontUnderline(True)])
 
 def FG(colorName):
-	color = colorScheme[colorName]
-	func = lambda f: f.setForeground(color)
+	func = lambda f: f.setForeground(getColor(colorName))
 	return Formatter([func])
 
 def QString_length(text):
@@ -182,7 +157,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 						               charFormat)
 		for match in reSpacesOnEnd.finditer(text):
 			charFormat = QTextCharFormat()
-			charFormat.setBackground(colorScheme['whitespaceOnEnd'])
+			charFormat.setBackground(getColor('whitespaceOnEnd'))
 			self.setFormat(QString_length(text[:match.start()]),
 			               QString_length(match.group(0)),
 			               charFormat)
