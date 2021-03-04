@@ -207,11 +207,8 @@ class ReTextTab(QSplitter):
 			if not isinstance(self.previewBox, QTextEdit) and not webenv:
 				# https://github.com/retext-project/retext/pull/187
 				palette = QApplication.palette()
-				fgColor = palette.color(QPalette.ColorRole.WindowText).name()
-				bgColor = palette.color(QPalette.ColorRole.Window).name()
-				if palette.color(QPalette.ColorRole.Window).lightness() > 150:
-					# Use palette color only for dark themes, for light themes use white
-					bgColor = 'white'
+				fgColor = palette.color(QPalette.ColorRole.Text).name()
+				bgColor = palette.color(QPalette.ColorRole.Base).name()
 				linkColor = palette.color(QPalette.ColorRole.Link).name()
 				visitedLinkColor = palette.color(QPalette.ColorRole.LinkVisited).name()
 				style += ('@media screen {\n'
