@@ -34,19 +34,25 @@ except ImportError:
 	ReTextFakeVimHandler = None
 
 colors = {
-	'marginLine': QColor(0xdc, 0xd2, 0xdc),
-	'currentLineHighlight': QColor(0xff, 0xff, 0xc8),
-	'infoArea': QColor(0xaa, 0xff, 0x55, 0xaa),
-	'statsArea': QColor(0xff, 0xaa, 0x55, 0xaa),
-	'lineNumberArea': Qt.GlobalColor.cyan,
-	'lineNumberAreaText': Qt.GlobalColor.darkCyan
+	'marginLine':           {'light': '#dcd2dc', 'dark': '#3daee9'},
+	'currentLineHighlight': {'light': '#ffffc8', 'dark': '#31363b'},
+	'infoArea':             {'light': '#aaaaff55', 'dark': '#aa557f2a'},
+	'statsArea':            {'light': '#aaffaa55', 'dark': '#aa7f552a'},
+	'lineNumberArea':       {'light': '#00ffff', 'dark': '#31363b'},
+	'lineNumberAreaText':   {'light': '#008080', 'dark': '#bdc3c7'},
 }
 
-colorValues = {
-	colorName: readFromSettings(
-		'ColorScheme/' + colorName, QColor, default=colors[colorName])
-	for colorName in colors
-}
+colorValues = {}
+
+def getColor(colorName):
+	if colorName not in colorValues:
+		palette = QApplication.palette()
+		windowColor = palette.color(QPalette.ColorRole.Window)
+		themeVariant = 'light' if windowColor.lightness() > 150 else 'dark'
+		defaultColor = QColor(colors[colorName][themeVariant])
+		colorValues[colorName] = readFromSettings('ColorScheme/' + colorName, QColor,
+		                                          default=defaultColor)
+	return colorValues[colorName]
 
 def documentIndentMore(document, cursor, globalSettings=globalSettings):
 	if cursor.hasSelection():
@@ -152,7 +158,7 @@ class ReTextEdit(QTextEdit):
 		if not globalSettings.rightMargin:
 			return super().paintEvent(event)
 		painter = QPainter(self.viewport())
-		painter.setPen(colorValues['marginLine'])
+		painter.setPen(getColor('marginLine'))
 		y1 = self.rect().topLeft().y()
 		y2 = self.rect().bottomLeft().y()
 		painter.drawLine(self.marginx, y1, self.marginx, y2)
@@ -375,7 +381,7 @@ class ReTextEdit(QTextEdit):
 		if globalSettings.highlightCurrentLine == 'disabled':
 			return self.setExtraSelections([])
 		selection = QTextEdit.ExtraSelection()
-		selection.format.setBackground(colorValues['currentLineHighlight'])
+		selection.format.setBackground(getColor('currentLineHighlight'))
 		selection.format.setProperty(QTextFormat.Property.FullWidthSelection, True)
 		selection.cursor = self.textCursor()
 		selection.cursor.clearSelection()
@@ -384,7 +390,7 @@ class ReTextEdit(QTextEdit):
 			selections.append(QTextEdit.ExtraSelection())
 			selections[0].cursor.movePosition(QTextCursor.MoveOperation.StartOfBlock)
 			selections[0].cursor.movePosition(QTextCursor.MoveOperation.EndOfBlock, QTextCursor.MoveMode.KeepAnchor)
-			selections[1].format.setBackground(colorValues['currentLineHighlight'])
+			selections[1].format.setBackground(getColor('currentLineHighlight'))
 			selections[1].format.setProperty(QTextFormat.Property.FullWidthSelection, True)
 			selections[1].cursor = self.textCursor()
 			selections[1].cursor.movePosition(QTextCursor.MoveOperation.EndOfBlock)
@@ -506,8 +512,8 @@ class LineNumberArea(QWidget):
 		if not globalSettings.lineNumbersEnabled:
 			return super().paintEvent(event)
 		painter = QPainter(self)
-		painter.fillRect(event.rect(), colorValues['lineNumberArea'])
-		painter.setPen(colorValues['lineNumberAreaText'])
+		painter.fillRect(event.rect(), getColor('lineNumberArea'))
+		painter.setPen(getColor('lineNumberAreaText'))
 		cursor = self.editor.cursorForPosition(QPoint(0, 0))
 		atEnd = False
 		fontHeight = self.fontMetrics().height()
@@ -593,7 +599,7 @@ class InfoArea(QLabel):
 
 class LineInfoArea(InfoArea):
 	def __init__(self, editor):
-		InfoArea.__init__(self, editor, colorValues['infoArea'])
+		InfoArea.__init__(self, editor, getColor('infoArea'))
 
 	def getAreaPosition(self, width, height):
 		viewport = self.editor.viewport()
@@ -613,7 +619,7 @@ class LineInfoArea(InfoArea):
 
 class TextInfoArea(InfoArea):
 	def __init__(self, editor):
-		InfoArea.__init__(self, editor, colorValues['statsArea'])
+		InfoArea.__init__(self, editor, getColor('statsArea'))
 
 	def getAreaPosition(self, width, height):
 		viewport = self.editor.viewport()
