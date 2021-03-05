@@ -254,17 +254,17 @@
 <context>
     <name>ReTextEdit</name>
     <message>
-        <location filename="../ReText/editor.py" line="223"/>
+        <location filename="../ReText/editor.py" line="248"/>
         <source>Add to dictionary</source>
         <translation>Añadir al diccionario</translation>
     </message>
     <message>
-        <location filename="../ReText/editor.py" line="435"/>
+        <location filename="../ReText/editor.py" line="460"/>
         <source>Save image</source>
         <translation>Guardar imagen</translation>
     </message>
     <message>
-        <location filename="../ReText/editor.py" line="435"/>
+        <location filename="../ReText/editor.py" line="460"/>
         <source>Images (*.png *.jpg)</source>
         <translation>Imágenes (*.png *.jpg)</translation>
     </message>
@@ -272,34 +272,34 @@
 <context>
     <name>ReTextTab</name>
     <message>
-        <location filename="../ReText/tab.py" line="184"/>
+        <location filename="../ReText/tab.py" line="185"/>
         <source>New document</source>
         <translation>Documento nuevo</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="189"/>
+        <location filename="../ReText/tab.py" line="190"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation>No fue posible entender el contenido del archivo, compruebe si tiene el &lt;a href=&quot;%s&quot;&gt;módulo necesario&lt;/a&gt; instalado</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="482"/>
+        <location filename="../ReText/tab.py" line="497"/>
         <source>Create missing file?</source>
         <translation>¿Crear archivo faltante?</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="482"/>
+        <location filename="../ReText/tab.py" line="497"/>
         <source>The file &apos;%s&apos; does not exist.
 
 Do you want to create it?</source>
         <translation>¿Desea crearlo?</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="515"/>
+        <location filename="../ReText/tab.py" line="530"/>
         <source>File could not be created</source>
         <translation>No fue posible crear el archivo</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="515"/>
+        <location filename="../ReText/tab.py" line="530"/>
         <source>Could not create file &apos;%s&apos;: %s</source>
         <translation>No fue posible crear el archivo &apos;%s&apos;: %s</translation>
     </message>
@@ -787,11 +787,6 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
-        <source>Website</source>
-        <translation>Sitio web</translation>
-    </message>
-    <message>
-        <location filename="../ReText/window.py" line="1307"/>
         <source>Markdown syntax</source>
         <translation>Sintaxis de Markdown</translation>
     </message>
@@ -819,7 +814,7 @@ Do you want to save your changes?</source>
 <context>
     <name>TextInfoArea</name>
     <message>
-        <location filename="../ReText/editor.py" line="626"/>
+        <location filename="../ReText/editor.py" line="651"/>
         <source>%d w | %d a | %d c</source>
         <comment>count of words, alphanumeric characters, all characters</comment>
         <translation>%d p | %d a | %d c</translation>
@@ -828,17 +823,17 @@ Do you want to save your changes?</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../ReText/__main__.py" line="76"/>
+        <location filename="../ReText/__main__.py" line="88"/>
         <source>Open the files in preview mode</source>
         <translation>Abrir archivos en modo de vista previa</translation>
     </message>
     <message>
-        <location filename="../ReText/__main__.py" line="78"/>
+        <location filename="../ReText/__main__.py" line="90"/>
         <source>Create a new window even if there is an existing one</source>
         <translation>Crear una ventana nueva, incluso si ya existe una</translation>
     </message>
     <message>
-        <location filename="../ReText/__main__.py" line="82"/>
+        <location filename="../ReText/__main__.py" line="94"/>
         <source>List of files to open</source>
         <translation>Lista de archivos a abrir</translation>
     </message>

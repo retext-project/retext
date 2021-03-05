@@ -254,17 +254,17 @@
 <context>
     <name>ReTextEdit</name>
     <message>
-        <location filename="../ReText/editor.py" line="223"/>
+        <location filename="../ReText/editor.py" line="248"/>
         <source>Add to dictionary</source>
         <translation>Lägg till i ordboken</translation>
     </message>
     <message>
-        <location filename="../ReText/editor.py" line="435"/>
+        <location filename="../ReText/editor.py" line="460"/>
         <source>Save image</source>
         <translation>Spara bild</translation>
     </message>
     <message>
-        <location filename="../ReText/editor.py" line="435"/>
+        <location filename="../ReText/editor.py" line="460"/>
         <source>Images (*.png *.jpg)</source>
         <translation>Bilder (*.png *.jpg)</translation>
     </message>
@@ -272,22 +272,22 @@
 <context>
     <name>ReTextTab</name>
     <message>
-        <location filename="../ReText/tab.py" line="184"/>
+        <location filename="../ReText/tab.py" line="185"/>
         <source>New document</source>
         <translation>Nytt dokument</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="189"/>
+        <location filename="../ReText/tab.py" line="190"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation>Misslyckades att analysera filinnehållet, kontrollera att du har installerat den &lt;a href=&quot;%s&quot;&gt;nödvändiga modulen&lt;/a&gt;!</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="482"/>
+        <location filename="../ReText/tab.py" line="497"/>
         <source>Create missing file?</source>
         <translation>Skapa saknad fil?</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="482"/>
+        <location filename="../ReText/tab.py" line="497"/>
         <source>The file &apos;%s&apos; does not exist.
 
 Do you want to create it?</source>
@@ -296,12 +296,12 @@ Do you want to create it?</source>
 Vill du skapa den?</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="515"/>
+        <location filename="../ReText/tab.py" line="530"/>
         <source>File could not be created</source>
         <translation>Filen kunde inte bli skapad</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="515"/>
+        <location filename="../ReText/tab.py" line="530"/>
         <source>Could not create file &apos;%s&apos;: %s</source>
         <translation>Kunde inte skapa filen &apos;%s&apos;: %s</translation>
     </message>
@@ -789,11 +789,6 @@ Vill du spara dina ändringar?</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
-        <source>Website</source>
-        <translation>Hemsida</translation>
-    </message>
-    <message>
-        <location filename="../ReText/window.py" line="1307"/>
         <source>Markdown syntax</source>
         <translation>Markdown-syntax</translation>
     </message>
@@ -821,7 +816,7 @@ Vill du spara dina ändringar?</translation>
 <context>
     <name>TextInfoArea</name>
     <message>
-        <location filename="../ReText/editor.py" line="626"/>
+        <location filename="../ReText/editor.py" line="651"/>
         <source>%d w | %d a | %d c</source>
         <comment>count of words, alphanumeric characters, all characters</comment>
         <translation>%d ord | %d alfanumeriska tecken | %d tecken totalt</translation>
@@ -830,17 +825,17 @@ Vill du spara dina ändringar?</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../ReText/__main__.py" line="76"/>
+        <location filename="../ReText/__main__.py" line="88"/>
         <source>Open the files in preview mode</source>
         <translation>Öppna filerna i förhandsvisningsläge</translation>
     </message>
     <message>
-        <location filename="../ReText/__main__.py" line="78"/>
+        <location filename="../ReText/__main__.py" line="90"/>
         <source>Create a new window even if there is an existing one</source>
         <translation>Skapa ett nytt fönster även om det finns ett befintligt</translation>
     </message>
     <message>
-        <location filename="../ReText/__main__.py" line="82"/>
+        <location filename="../ReText/__main__.py" line="94"/>
         <source>List of files to open</source>
         <translation>Lista över filer att öppna</translation>
     </message>

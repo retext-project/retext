@@ -196,7 +196,7 @@
     <message>
         <location filename="../ReText/config.py" line="35"/>
         <source>(none)</source>
-        <translation type="unfinished">(لا شيئ)</translation>
+        <translation>(لا شيئ)</translation>
     </message>
 </context>
 <context>
@@ -254,17 +254,17 @@
 <context>
     <name>ReTextEdit</name>
     <message>
-        <location filename="../ReText/editor.py" line="223"/>
+        <location filename="../ReText/editor.py" line="248"/>
         <source>Add to dictionary</source>
         <translation>اضف القاموس</translation>
     </message>
     <message>
-        <location filename="../ReText/editor.py" line="435"/>
+        <location filename="../ReText/editor.py" line="460"/>
         <source>Save image</source>
         <translation>احفظ الصورة</translation>
     </message>
     <message>
-        <location filename="../ReText/editor.py" line="435"/>
+        <location filename="../ReText/editor.py" line="460"/>
         <source>Images (*.png *.jpg)</source>
         <translation>الصور (*.png *.jpg)</translation>
     </message>
@@ -272,22 +272,22 @@
 <context>
     <name>ReTextTab</name>
     <message>
-        <location filename="../ReText/tab.py" line="184"/>
+        <location filename="../ReText/tab.py" line="185"/>
         <source>New document</source>
         <translation>مستند جديد</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="189"/>
+        <location filename="../ReText/tab.py" line="190"/>
         <source>Could not parse file contents, check if you have the &lt;a href=&quot;%s&quot;&gt;necessary module&lt;/a&gt; installed!</source>
         <translation>تعذر تحليل محتويات الملف، تفقد اذا كنت تمتلك ال&lt;a href=&quot;%s&quot;&gt; الوحدة اللازمة &lt;/a&gt; منصبة!</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="482"/>
+        <location filename="../ReText/tab.py" line="497"/>
         <source>Create missing file?</source>
         <translation>انشاء ملف مفقود؟</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="482"/>
+        <location filename="../ReText/tab.py" line="497"/>
         <source>The file &apos;%s&apos; does not exist.
 
 Do you want to create it?</source>
@@ -296,12 +296,12 @@ Do you want to create it?</source>
 هل تريد انشائه؟</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="515"/>
+        <location filename="../ReText/tab.py" line="530"/>
         <source>File could not be created</source>
         <translation>الملف لم يُستطع انشاءه</translation>
     </message>
     <message>
-        <location filename="../ReText/tab.py" line="515"/>
+        <location filename="../ReText/tab.py" line="530"/>
         <source>Could not create file &apos;%s&apos;: %s</source>
         <translation>لم يُستطع انشاء ملف &apos;%s&apos;: %s</translation>
     </message>
@@ -789,11 +789,6 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
-        <source>Website</source>
-        <translation>الموقع</translation>
-    </message>
-    <message>
-        <location filename="../ReText/window.py" line="1307"/>
         <source>Markdown syntax</source>
         <translation>بناء الجملة ل مارك داون Markdown </translation>
     </message>
@@ -821,7 +816,7 @@ Do you want to save your changes?</source>
 <context>
     <name>TextInfoArea</name>
     <message>
-        <location filename="../ReText/editor.py" line="626"/>
+        <location filename="../ReText/editor.py" line="651"/>
         <source>%d w | %d a | %d c</source>
         <comment>count of words, alphanumeric characters, all characters</comment>
         <translation type="unfinished"></translation>
@@ -830,17 +825,17 @@ Do you want to save your changes?</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../ReText/__main__.py" line="76"/>
+        <location filename="../ReText/__main__.py" line="88"/>
         <source>Open the files in preview mode</source>
         <translation>فتح الملف بوضع العرض</translation>
     </message>
     <message>
-        <location filename="../ReText/__main__.py" line="78"/>
+        <location filename="../ReText/__main__.py" line="90"/>
         <source>Create a new window even if there is an existing one</source>
         <translation>انشاء نافذة جديدة حتى اذا وجدت واحدة</translation>
     </message>
     <message>
-        <location filename="../ReText/__main__.py" line="82"/>
+        <location filename="../ReText/__main__.py" line="94"/>
         <source>List of files to open</source>
         <translation>قائمة الملفات لفتحها</translation>
     </message>
