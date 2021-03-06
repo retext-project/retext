@@ -1,3 +1,13 @@
+## ReText 7.2.1 (2021-03-06)
+
+* Issues #255, #492 — Improved support for dark Qt themes.
+* Fixed preview jumping to top during MathJax rendering.
+* Issue #544 — Fixed QTextBrowser-based preview jumping.
+* Issue #548 — Fixed opening files with spaces from QTextBrowser-based
+  preview.
+* Issue #549 — Use `defaultCodec` setting by default when saving files;
+  correctly detect encoding for UTF-8 files with BOM.
+
 ## ReText 7.2.0 (2021-02-08)
 
 * Dependency changes:
