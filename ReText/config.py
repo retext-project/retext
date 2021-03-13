@@ -74,11 +74,6 @@ def setIconThemeFromSettings():
 	if QIcon.themeName() in ('hicolor', ''):
 		if not QFile.exists(getBundledIcon('document-new')):
 			QIcon.setThemeName(get_icon_theme())
-	if QIcon.themeName() == 'Yaru' and not QIcon.hasThemeIcon('document-new'):
-		# Old Yaru does not have non-symbolic action icons, so all
-		# document-* icons fall back to mimetypes/document.png.
-		# See https://github.com/ubuntu/yaru/issues/1294
-		QIcon.setThemeName('Humanity')
 
 
 class ConfigDialog(QDialog):
