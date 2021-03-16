@@ -224,6 +224,7 @@ class ReTextWindow(QMainWindow):
 			shct=QKeySequence.StandardKey.Cancel)
 		self.actionCloseSearch.setPriority(QAction.Priority.LowPriority)
 		self.actionHelp = self.act(self.tr('Get help online'), 'help-contents', self.openHelp)
+		self.actionWhatsNew = self.act(self.tr("What's new"), trig=self.openReleases)
 		self.aboutWindowTitle = self.tr('About ReText')
 		self.actionAbout = self.act(self.aboutWindowTitle, 'help-about', self.aboutDialog)
 		self.actionAbout.setMenuRole(QAction.MenuRole.AboutRole)
@@ -343,6 +344,7 @@ class ReTextWindow(QMainWindow):
 		menuEdit.addAction(self.actionFullScreen)
 		menuEdit.addAction(self.actionConfig)
 		menuHelp.addAction(self.actionHelp)
+		menuHelp.addAction(self.actionWhatsNew)
 		menuHelp.addSeparator()
 		menuHelp.addAction(self.actionAbout)
 		menuHelp.addAction(self.actionAboutQt)
@@ -1302,6 +1304,9 @@ class ReTextWindow(QMainWindow):
 
 	def openHelp(self):
 		QDesktopServices.openUrl(QUrl('https://github.com/retext-project/retext/wiki'))
+
+	def openReleases(self):
+		QDesktopServices.openUrl(QUrl('https://github.com/retext-project/retext/releases'))
 
 	def aboutDialog(self):
 		QMessageBox.about(self, self.aboutWindowTitle,
