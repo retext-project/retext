@@ -291,7 +291,9 @@
         <source>The file &apos;%s&apos; does not exist.
 
 Do you want to create it?</source>
-        <translation>¿Desea crearlo?</translation>
+        <translation>El archivo &apos;%s&apos; no existe.
+
+¿Desea crearlo?</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="530"/>
