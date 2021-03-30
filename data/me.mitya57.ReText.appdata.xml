@@ -33,18 +33,14 @@
   <summary xml:lang="zh_TW">簡單高效的 Markdown 與 reStructuredText 編輯器</summary>
   <description>
     <p>ReText is a text editor for plain text markup languages, such as Markdown and reStructuredText.</p>
-    <p>It supports tabs, live text preview, synchronized scrolling (for Markdown) and syntax highlighting.</p>
+    <p xml:lang="de">ReText ist ein Texteditor für vereinfachten Auszeichnungssprachen wie Markdown und reStructuredText.</p>
+    <p xml:lang="ru">ReText — это текстовый редактор для языков разметки, таких как Markdown и reStructuredText.</p>
+    <p>It supports tabs, live text preview, synchronized scrolling and syntax highlighting.</p>
+    <p xml:lang="de">Er unterstützt Reiter, Live-Vorschau, synchrones Scrollen und Syntaxhervorhebung.</p>
+    <p xml:lang="ru">Он поддерживает вкладки, живой просмотр, синхронную прокрутку и подсветку синтаксиса.</p>
     <p>ReText can export to HTML, ODT and PDF formats. It is also possible to write custom export extensions.</p>
-  </description>
-  <description xml:lang="de">
-    <p>ReText ist ein Texteditor für vereinfachten Auszeichnungssprachen wie Markdown und reStructuredText.</p>
-    <p>Er unterstützt Reiter, Live-Vorschau, synchrones Scrollen (für Markdown) und Syntaxhervorhebung.</p>
-    <p>ReText kann Dokumente in HTML, ODT und PDF exportieren. Es ist auch möglich, benutzerdefinierte Export-Erweiterungen zu schreiben.</p>
-  </description>
-  <description xml:lang="ru">
-    <p>ReText — это текстовый редактор для языков разметки, таких как Markdown и reStructuredText.</p>
-    <p>Он поддерживает вкладки, живой просмотр, синхронную прокрутку (для Markdown) и подсветку синтаксиса.</p>
-    <p>ReText может экспортировать в форматы HTML, ODT и PDF. Также возможно написание собственных расширений экспорта.</p>
+    <p xml:lang="de">ReText kann Dokumente in HTML, ODT und PDF exportieren. Es ist auch möglich, benutzerdefinierte Export-Erweiterungen zu schreiben.</p>
+    <p xml:lang="ru">ReText может экспортировать в форматы HTML, ODT и PDF. Также возможно написание собственных расширений экспорта.</p>
   </description>
   <url type="homepage">https://github.com/retext-project/retext</url>
   <metadata_license>CC0</metadata_license>
