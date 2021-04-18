@@ -244,7 +244,7 @@
     <message>
         <location filename="../ReText/fakevimeditor.py" line="61"/>
         <source>No write since last change (add ! to override)</source>
-        <translation>Son değişiklikten bu yana yazma yok (geçersiz kılmak için! Ekleyin)</translation>
+        <translation>Son değişiklikten bu yana yazma yok (geçersiz kılmak için ekleyin !)</translation>
     </message>
     <message>
         <location filename="../ReText/fakevimeditor.py" line="118"/>
@@ -292,9 +292,9 @@
         <source>The file &apos;%s&apos; does not exist.
 
 Do you want to create it?</source>
-        <translation>&apos;% S&apos; dosyası mevcut değil.
+        <translation>&apos;%s&apos; dosyası mevcut değil.
 
-Onu yaratmak ister misin?</translation>
+Onu oluşturmak ister misin?</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="515"/>
@@ -791,7 +791,7 @@ Değişikliklerinizi kaydetmek istiyor musunuz?</translation>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
         <source>ReText %s (using PyMarkups %s)</source>
-        <translation>ReText %s (using PyMarkups %s)</translation>
+        <translation>ReText %s (kullanılan PyMarkups %s)</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1307"/>
