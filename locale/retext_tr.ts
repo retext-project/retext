@@ -795,7 +795,7 @@ Değişikliklerinizi kaydetmek istiyor musunuz?</translation>
     <message>
         <location filename="../ReText/window.py" line="1312"/>
         <source>Simple but powerful editor for Markdown and reStructuredText</source>
-        <translation>Markdown ve Yeniden Yapılandırılmış Metin için basit ama güçlü düzenleyici</translation>
+        <translation>Markdown ve reStructuredText için basit ama güçlü düzenleyici</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1312"/>
