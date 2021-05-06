@@ -47,9 +47,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Install Python dependencies
-        run: |
-          python -m pip install "${{ matrix.pyqt }}" Markdown pymdown-extensions docutils chardet Pygments
-          python -m pip install git+https://github.com/retext-project/pymarkups.git
+        run: python -m pip install "${{ matrix.pyqt }}" Markdown pymdown-extensions docutils chardet Pygments Markups
       - name: Run tests in Xvfb
         if: ${{ startsWith(matrix.platform, 'ubuntu') }}
         run: xvfb-run -a -s "-screen 0 1024x768x24" python -m unittest discover -s tests -v
