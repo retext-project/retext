@@ -67,7 +67,7 @@ If ReText starts and does not show icons, go to Preferences dialog
 and fill the "icon theme" field with the icon theme being used.
 
 By default Qt (the toolkit used by ReText) can correctly detect icon
-theme only on KDE and on a fixed list of Gtk+-based environments (when
+theme only on KDE and on a fixed list of GTK-based environments (when
 the gtk platformtheme is used).
 
 If you don't know name of your icon theme, look at the names of
