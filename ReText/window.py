@@ -196,9 +196,8 @@ class ReTextWindow(QMainWindow):
 		self.actionCut.setEnabled(False)
 		qApp.clipboard().dataChanged.connect(self.clipboardDataChanged)
 		self.clipboardDataChanged()
-		if enchant is not None:
-			self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSpellCheck)
-			self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
+		self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSpellCheck)
+		self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
 		self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
 		if ReTextWebKitPreview is None:
 			globalSettings.useWebKit = False
