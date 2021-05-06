@@ -399,11 +399,11 @@ class ReTextWindow(QMainWindow):
 			timer.timeout.connect(self.saveAll)
 		self.ind = None
 		if enchant is not None:
-			self.sl = globalSettings.spellCheckLocale
-			try:
-				enchant.Dict(self.sl or None)
-			except enchant.errors.Error as e:
-				warnings.warn(str(e), RuntimeWarning)
+			self.spellCheckLanguages = globalSettings.spellCheckLocale
+			languages, errors = self.getSpellCheckDictionaries()
+			for error in errors:
+				warnings.warn(error, RuntimeWarning)
+			if not languages:
 				globalSettings.spellCheck = False
 			if globalSettings.spellCheck:
 				self.actionEnableSC.setChecked(True)
@@ -682,36 +682,40 @@ class ReTextWindow(QMainWindow):
 		else:
 			FakeVimMode.exit(self)
 
-	def enableSpellCheck(self, yes):
-		try:
-			dict = enchant.Dict(self.sl or None)
-		except enchant.errors.Error as e:
-			QMessageBox.warning(self, '', str(e))
-			self.actionEnableSC.setChecked(False)
-			yes = False
-		self.setAllDictionaries(dict if yes else None)
-		globalSettings.spellCheck = yes
+	def getSpellCheckDictionaries(self):
+		"""Returns the list of languages and the list of errors."""
+		dictionaries = []
+		errors = []
+		if enchant is None:
+			return dictionaries, errors
+		for language in self.spellCheckLanguages.split(','):
+			try:
+				dict = enchant.Dict(language.strip() or None)
+			except enchant.errors.Error as e:
+				errors.append(str(e))
+			else:
+				dictionaries.append(dict)
+		return dictionaries, errors
 
-	def setAllDictionaries(self, dictionary):
+	def enableSpellCheck(self, yes):
+		dictionaries = []
+		if yes:
+			dictionaries, errors = self.getSpellCheckDictionaries()
+			if errors:
+				QMessageBox.warning(self, '', '\n'.join(errors))
 		for tab in self.iterateTabs():
-			hl = tab.highlighter
-			hl.dictionary = dictionary
-			hl.rehighlight()
+			tab.highlighter.dictionaries = dictionaries
+			tab.highlighter.rehighlight()
+		globalSettings.spellCheck = bool(dictionaries)
+		self.actionEnableSC.setChecked(bool(dictionaries))
 
 	def changeLocale(self):
-		localedlg = LocaleDialog(self, defaultText=self.sl)
+		localedlg = LocaleDialog(self, defaultText=self.spellCheckLanguages)
 		if localedlg.exec() != QDialog.DialogCode.Accepted:
 			return
-		sl = localedlg.localeEdit.text()
-		try:
-			enchant.Dict(sl or None)
-		except enchant.errors.Error as e:
-			QMessageBox.warning(self, '', str(e))
-		else:
-			self.sl = sl or None
-			self.enableSpellCheck(self.actionEnableSC.isChecked())
-			if localedlg.checkBox.isChecked():
-				globalSettings.spellCheckLocale = sl
+		self.spellCheckLanguages = localedlg.localeEdit.text()
+		self.enableSpellCheck(True)
+		globalSettings.spellCheckLocale = self.spellCheckLanguages
 
 	def search(self):
 		self.searchBar.setVisible(True)

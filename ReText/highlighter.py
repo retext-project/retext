@@ -99,7 +99,7 @@ docTypesMapping = {
 
 
 class ReTextHighlighter(QSyntaxHighlighter):
-	dictionary = None
+	dictionaries = None
 	docType = None
 
 	patterns = (
@@ -162,7 +162,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
 			               QString_length(match.group(0)),
 			               charFormat)
 		# Spell checker
-		if self.dictionary:
+		if self.dictionaries:
 			charFormat = QTextCharFormat()
 			charFormat.setUnderlineColor(Qt.GlobalColor.red)
 			charFormat.setUnderlineStyle(QTextCharFormat.UnderlineStyle.SpellCheckUnderline)
@@ -170,7 +170,9 @@ class ReTextHighlighter(QSyntaxHighlighter):
 				finalFormat = QTextCharFormat()
 				finalFormat.merge(charFormat)
 				finalFormat.merge(self.format(match.start()))
-				if not self.dictionary.check(match.group(0)):
+				word = match.group(0)
+				correct = any(dictionary.check(word) for dictionary in self.dictionaries)
+				if not correct:
 					self.setFormat(QString_length(text[:match.start()]),
-					               QString_length(match.group(0)),
+					               QString_length(word),
 					               finalFormat)

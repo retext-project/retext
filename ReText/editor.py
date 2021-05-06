@@ -231,15 +231,18 @@ class ReTextEdit(QTextEdit):
 		cursor = self.cursorForPosition(event.pos())
 		curchar = self.document().characterAt(cursor.position())
 		isalpha = curchar.isalpha()
-		dictionary = self.tab.highlighter.dictionary
 		word = None
 		if isalpha and not (oldcursor.hasSelection() and oldcursor.selectedText() != cursor.selectedText()):
 			cursor.select(QTextCursor.SelectionType.WordUnderCursor)
 			word = cursor.selectedText()
 
-		if word is not None and dictionary and not dictionary.check(word):
+		correct = True
+		if word is not None and self.tab.highlighter.dictionaries:
+			correct = any(dictionary.check(word) for dictionary in self.tab.highlighter.dictionaries)
+
+		if not correct:
 			self.setTextCursor(cursor)
-			suggestions = dictionary.suggest(word)
+			suggestions = self.tab.highlighter.dictionaries[0].suggest(word)
 			actions = [self.parent.act(sug, trig=self.fixWord(sug)) for sug in suggestions]
 			menu.insertSeparator(menu.actions()[0])
 			for action in actions[::-1]:
@@ -264,11 +267,10 @@ class ReTextEdit(QTextEdit):
 		block = cursor.block()
 		cursor.clearSelection()
 		self.setTextCursor(cursor)
-		dictionary = self.tab.highlighter.dictionary
-		if (dictionary is None) or not newword:
-			return
-		dictionary.add(newword)
-		self.tab.highlighter.rehighlightBlock(block)
+		if self.tab.highlighter.dictionaries and newword:
+			dictionary = self.tab.highlighter.dictionaries[0]
+			dictionary.add(newword)
+			self.tab.highlighter.rehighlightBlock(block)
 
 	def isSurroundKey(self, key):
 		return key in self.surroundKeysSelfClose or key in self.surroundKeysOtherClose

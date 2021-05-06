@@ -39,7 +39,7 @@ option name                    | type      | description
 `saveWindowGeometry`           | boolean   | whether to restore window geometry from previous session (default: false)
 `showDirectoryTree`            | boolean   | whether to show a directory tree on the left side of the window (default: false)
 `spellCheck`                   | boolean   | whether to enable spell checking
-`spellCheckLocale`             | string    | short name of spell check locale to use (examples: `en_US`, `ru`, `pt_BR`)
+`spellCheckLocale`             | string    | spell check locale to use, possibly comma-separated (examples: `pt_BR`, `ru,en_US`)
 `styleSheet`                   | file path | CSS file to use in preview area
 `syncScroll`                   | boolean   | whether to enable synchronized scrolling for Markdown (default: true)
 `tabBarAutoHide`               | boolean   | whether to hide the tabs bar when only one tab is open (default: false)

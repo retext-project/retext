@@ -40,9 +40,9 @@ class LocaleDialog(QDialog):
 	def __init__(self, parent, defaultText=None):
 		QDialog.__init__(self, parent)
 		verticalLayout = QVBoxLayout(self)
-		self.label = QLabel(self)
-		self.label.setText(self.tr('Enter locale name (example: en_US)'))
-		verticalLayout.addWidget(self.label)
+		labelText = self.tr('Enter locale name (example: en_US)') + '\n'
+		labelText += self.tr('It is possible to specify multiple languages, separated by comma.')
+		verticalLayout.addWidget(QLabel(labelText, self))
 		self.localeEdit = QLineEdit(self)
 		if defaultText:
 			self.localeEdit.setText(defaultText)
