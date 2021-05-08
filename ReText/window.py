@@ -115,9 +115,9 @@ class ReTextWindow(QMainWindow):
 		self.actionSaveAs = self.act(self.tr('Save as'), 'document-save-as',
 			self.saveFileAs, shct=QKeySequence.StandardKey.SaveAs)
 		self.actionNextTab = self.act(self.tr('Next tab'), 'go-next',
-			lambda: self.switchTab(1), shct=Qt.Modifier.CTRL+Qt.Key.Key_PageDown)
+			lambda: self.switchTab(1), shct=Qt.Modifier.CTRL | Qt.Key.Key_PageDown)
 		self.actionPrevTab = self.act(self.tr('Previous tab'), 'go-previous',
-			lambda: self.switchTab(-1), shct=Qt.Modifier.CTRL+Qt.Key.Key_PageUp)
+			lambda: self.switchTab(-1), shct=Qt.Modifier.CTRL | Qt.Key.Key_PageUp)
 		self.actionCloseCurrentTab = self.act(self.tr('Close tab'), 'window-close',
 			lambda: self.closeTab(self.ind), shct=QKeySequence.StandardKey.Close)
 		self.actionPrint = self.act(self.tr('Print'), 'document-print',
@@ -132,9 +132,9 @@ class ReTextWindow(QMainWindow):
 		self.actionSearch = self.act(self.tr('Find text'), 'edit-find',
 			self.search, shct=QKeySequence.StandardKey.Find)
 		self.actionGoToLine = self.act(self.tr('Go to line'),
-			trig=self.goToLine, shct=Qt.Modifier.CTRL+Qt.Key.Key_G)
+			trig=self.goToLine, shct=Qt.Modifier.CTRL | Qt.Key.Key_G)
 		self.searchBar.visibilityChanged.connect(self.searchBarVisibilityChanged)
-		self.actionPreview = self.act(self.tr('Preview'), shct=Qt.Modifier.CTRL+Qt.Key.Key_E,
+		self.actionPreview = self.act(self.tr('Preview'), shct=Qt.Modifier.CTRL | Qt.Key.Key_E,
 			trigbool=self.preview)
 		if QIcon.hasThemeIcon('document-preview'):
 			self.actionPreview.setIcon(QIcon.fromTheme('document-preview'))
@@ -144,20 +144,20 @@ class ReTextWindow(QMainWindow):
 			self.actionPreview.setIcon(QIcon.fromTheme('x-office-document'))
 		else:
 			self.actionPreview.setIcon(QIcon(getBundledIcon('document-preview')))
-		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.Modifier.CTRL+Qt.Key.Key_L,
+		self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.Modifier.CTRL | Qt.Key.Key_L,
 		trigbool=self.enableLivePreview)
 		menuPreview = QMenu()
 		menuPreview.addAction(self.actionLivePreview)
 		self.actionInsertTable = self.act(self.tr('Insert table'),
 			trig=lambda: self.insertFormatting('table'))
 		self.actionTableMode = self.act(self.tr('Table editing mode'),
-			shct=Qt.Modifier.CTRL+Qt.Key.Key_T,
+			shct=Qt.Modifier.CTRL | Qt.Key.Key_T,
 			trigbool=lambda x: self.currentTab.editBox.enableTableMode(x))
 		self.actionInsertImages = self.act(self.tr('Insert images by file path'),
 			trig=lambda: self.insertImages())
 		if ReTextFakeVimHandler:
 			self.actionFakeVimMode = self.act(self.tr('FakeVim mode'),
-				shct=Qt.Modifier.CTRL+Qt.Modifier.ALT+Qt.Key.Key_V, trigbool=self.enableFakeVimMode)
+				shct=Qt.Modifier.CTRL | Qt.Modifier.ALT | Qt.Key.Key_V, trigbool=self.enableFakeVimMode)
 			if globalSettings.useFakeVim:
 				self.actionFakeVimMode.setChecked(True)
 				self.enableFakeVimMode(True)
@@ -185,11 +185,11 @@ class ReTextWindow(QMainWindow):
 		self.actionPaste = self.act(self.tr('Paste'), 'edit-paste',
 			lambda: self.currentTab.editBox.paste(), shct=QKeySequence.StandardKey.Paste)
 		self.actionPasteImage = self.act(self.tr('Paste image'), 'edit-paste',
-			lambda: self.currentTab.editBox.pasteImage(), shct=Qt.Modifier.CTRL+Qt.Modifier.SHIFT+Qt.Key.Key_V)
+			lambda: self.currentTab.editBox.pasteImage(), shct=Qt.Modifier.CTRL | Qt.Modifier.SHIFT | Qt.Key.Key_V)
 		self.actionMoveUp = self.act(self.tr('Move line up'), 'go-up',
-			lambda: self.currentTab.editBox.moveLineUp(), shct=Qt.Modifier.ALT+Qt.Key.Key_Up)
+			lambda: self.currentTab.editBox.moveLineUp(), shct=Qt.Modifier.ALT | Qt.Key.Key_Up)
 		self.actionMoveDown = self.act(self.tr('Move line down'), 'go-down',
-			lambda: self.currentTab.editBox.moveLineDown(), shct=Qt.Modifier.ALT+Qt.Key.Key_Down)
+			lambda: self.currentTab.editBox.moveLineDown(), shct=Qt.Modifier.ALT | Qt.Key.Key_Down)
 		self.actionUndo.setEnabled(False)
 		self.actionRedo.setEnabled(False)
 		self.actionCopy.setEnabled(False)
