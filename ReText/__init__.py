@@ -73,8 +73,8 @@ configOptions = {
 	'detectEncoding': True,
 	'directoryPath': expanduser("~"),
 	'documentStatsEnabled': False,
-	'editorFont': QFont(),
-	'font': QFont(),
+	'editorFont': '',
+	'font': '',
 	'handleWebLinks': False,
 	'hideToolBar': False,
 	'highlightCurrentLine': 'disabled',
@@ -111,10 +111,6 @@ configOptions = {
 }
 
 def readFromSettings(key, keytype, settings=settings, default=None):
-	if isinstance(default, QFont):
-		family = readFromSettings(key, str, settings, default.family())
-		size = readFromSettings(key + 'Size', int, settings, 0)
-		return QFont(family, size)
 	if not settings.contains(key):
 		return default
 	try:
@@ -138,10 +134,7 @@ def readListFromSettings(key, settings=settings):
 		return value
 
 def writeToSettings(key, value, default, settings=settings):
-	if isinstance(value, QFont):
-		writeToSettings(key, value.family(), '', settings)
-		writeToSettings(key + 'Size', max(value.pointSize(), 0), 0, settings)
-	elif value == default:
+	if value == default:
 		settings.remove(key)
 	else:
 		settings.setValue(key, value)
@@ -171,15 +164,17 @@ class ReTextSettings(object):
 		object.__setattr__(self, option, value)
 		writeToSettings(option, value, configOptions[option])
 
-	def __getattribute__(self, option):
-		value = object.__getattribute__(self, option)
-		# Choose a font just-in-time, because when the settings are
-		# loaded it is too early to work.
-		if option == 'font' and not value.family():
-			value = QFont()
-		if option == 'editorFont' and not value.family():
-			value = QFontDatabase.systemFont(QFontDatabase.SystemFont.FixedFont)
-		return value
+	def getPreviewFont(self):
+		font = QFont()
+		if self.font:
+			font.fromString(self.font)
+		return font
+
+	def getEditorFont(self):
+		font = QFontDatabase.systemFont(QFontDatabase.SystemFont.FixedFont)
+		if self.editorFont:
+			font.fromString(self.editorFont)
+		return font
 
 globalSettings = ReTextSettings()
 

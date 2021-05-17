@@ -86,6 +86,9 @@ class ReTextPreview(QTextBrowser):
 			if newValue >= minimum:
 				self.verticalScrollBar().setValue(newValue)
 
+	def setFont(self, font):
+		self.document().setDefaultFont(font)
+
 
 class ReTextWebPreview:
 	"""This is a common class shared between WebKit and WebEngine

@@ -16,10 +16,8 @@ option name                    | type      | description
 `detectEncoding`               | boolean   | whether to automatically detect files encoding; needs chardet package (default: true)
 `directoryPath`                | string    | the path to the root directory to display in the side panel if `showDirectoryTree` is true (default: `~`)
 `documentStatsEnabled`         | boolean   | whether to show document stats (word count, character count) (default: false)
-`editorFont`                   | string    | font to use for editor: name (default: `monospace`)
-`editorFontSize`               | integer   | font to use for editor: font size
-`font`                         | string    | font to use for previews: name
-`fontSize`                     | integer   | font to use for previews: font size
+`editorFont`                   | string    | font to use for editor (comma-separated string as returned by [QFont.toString()])
+`font`                         | string    | font to use for previews (comma-separated string as returned by [QFont.toString()])
 `handleWebLinks`               | boolean   | whether to use ReText preview area to open external links (default: false)
 `hideToolBar`                  | boolean   | whether to hide the toolbars from the UI (default: false)
 `highlightCurrentLine`         | string    | current line highlight mode: `disabled`, `cursor-line` or `wrapped-line` (default: `disabled`)
@@ -53,6 +51,7 @@ option name                    | type      | description
 `windowTitleFullPath`          | boolean   | whether the window title should show the full path of file (default: false)
 
 [Qt stylesheet file]: https://doc.qt.io/qt-5/stylesheet-reference.html
+[QFont.toString()]: https://doc.qt.io/qt-5/qfont.html#toString
 
 If the type is 'file path', then the value should be an absolute path
 to a file.

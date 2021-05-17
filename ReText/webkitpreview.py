@@ -53,12 +53,12 @@ class ReTextWebKitPreview(ReTextWebPreview, QWebView):
 		self.cache.setCacheDirectory(cacheDirectory)
 		self.page().networkAccessManager().setCache(self.cache)
 
-	def updateFontSettings(self):
+	def setFont(self, font):
 		settings = self.settings()
 		settings.setFontFamily(QWebSettings.FontFamily.StandardFont,
-		                       globalSettings.font.family())
+		                       font.family())
 		settings.setFontSize(QWebSettings.FontSize.DefaultFontSize,
-		                     globalSettings.font.pointSize())
+		                     font.pointSize())
 
 	def _handleWheelEvent(self, event):
 		# Only pass wheelEvents on to the preview if syncscroll is

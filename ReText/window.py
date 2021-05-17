@@ -612,22 +612,22 @@ class ReTextWindow(QMainWindow):
 		self.tabActiveMarkupChanged(self.currentTab)
 
 	def changeEditorFont(self):
-		font, ok = QFontDialog.getFont(globalSettings.editorFont, self)
+		font, ok = QFontDialog.getFont(globalSettings.getEditorFont(), self)
 		if ok:
 			self.setEditorFont(font)
 
 	def setEditorFont(self, font):
-		globalSettings.editorFont = font
+		globalSettings.editorFont = font.toString()
 		for tab in self.iterateTabs():
 			tab.editBox.updateFont()
 
 	def changePreviewFont(self):
-		font, ok = QFontDialog.getFont(globalSettings.font, self)
+		font, ok = QFontDialog.getFont(globalSettings.getPreviewFont(), self)
 		if ok:
 			self.setPreviewFont(font)
 
 	def setPreviewFont(self, font):
-		globalSettings.font = font
+		globalSettings.font = font.toString()
 		for tab in self.iterateTabs():
 			tab.triggerPreviewUpdate()
 
@@ -994,7 +994,7 @@ class ReTextWindow(QMainWindow):
 		td = QTextDocument()
 		td.setMetaInformation(QTextDocument.MetaInformation.DocumentTitle, title)
 		td.setHtml(htmltext)
-		td.setDefaultFont(globalSettings.font)
+		td.setDefaultFont(globalSettings.getPreviewFont())
 		return td
 
 	def saveOdf(self):

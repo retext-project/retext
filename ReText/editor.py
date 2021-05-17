@@ -161,7 +161,7 @@ class ReTextEdit(QTextEdit):
 			self.setLineWrapMode(QTextEdit.LineWrapMode.WidgetWidth)
 
 	def updateFont(self):
-		self.setFont(globalSettings.editorFont)
+		self.setFont(globalSettings.getEditorFont())
 		metrics = self.fontMetrics()
 		self.marginx = (int(self.document().documentMargin())
 			+ metrics.horizontalAdvance(' ' * globalSettings.rightMargin))
@@ -186,7 +186,7 @@ class ReTextEdit(QTextEdit):
 	def wheelEvent(self, event):
 		modifiers = QGuiApplication.keyboardModifiers()
 		if modifiers == Qt.KeyboardModifier.ControlModifier:
-			font = globalSettings.editorFont
+			font = globalSettings.getEditorFont()
 			size = font.pointSize()
 			scroll = event.angleDelta().y()
 			if scroll > 0:

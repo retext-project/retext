@@ -99,12 +99,12 @@ class ReTextWebEnginePreview(ReTextWebPreview, QWebEngineView):
                                      sourceLineToEditorPositionFunc)
         ReTextWebPreview.__init__(self, tab.editBox)
 
-    def updateFontSettings(self):
+    def setFont(self, font):
         settings = self.settings()
         settings.setFontFamily(QWebEngineSettings.FontFamily.StandardFont,
-                               globalSettings.font.family())
+                               font.family())
         settings.setFontSize(QWebEngineSettings.FontSize.DefaultFontSize,
-                             globalSettings.font.pointSize())
+                             font.pointSize())
 
     def setHtml(self, html, baseUrl):
         # A hack to prevent WebEngine from stealing the focus

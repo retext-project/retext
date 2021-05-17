@@ -27,7 +27,7 @@ class HtmlDialog(QDialog):
 		verticalLayout = QVBoxLayout(self)
 		self.textEdit = QTextEdit(self)
 		self.textEdit.setReadOnly(True)
-		self.textEdit.setFont(globalSettings.editorFont)
+		self.textEdit.setFont(globalSettings.getEditorFont())
 		self.hl = ReTextHighlighter(self.textEdit.document())
 		self.hl.docType = 'html'
 		verticalLayout.addWidget(self.textEdit)

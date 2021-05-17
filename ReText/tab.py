@@ -261,15 +261,13 @@ class ReTextTab(QSplitter):
 			html = self.getHtmlFromConverted(self.converted)
 		except Exception:
 			return self.p.printError()
+		self.previewBox.setFont(globalSettings.getPreviewFont())
 		if isinstance(self.previewBox, QTextEdit):
 			self.previewBox.lastRenderTime = time.time()
 			self.previewBox.setHtml(html)
-			self.previewBox.document().setDefaultFont(globalSettings.font)
 			self.previewBox.updateScrollPosition(scrollbar.minimum(),
 			                                     scrollbar.maximum())
 		else:
-			self.previewBox.updateFontSettings()
-
 			# Always provide a baseUrl otherwise QWebView will
 			# refuse to show images or other external objects
 			if self._fileName:
