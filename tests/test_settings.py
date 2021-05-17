@@ -20,7 +20,7 @@ import sys
 
 from os.path import basename, dirname, splitext
 from PyQt5.QtCore import Qt, QSettings
-from PyQt5.QtGui import QColor, QFont
+from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QApplication
 from ReText import readListFromSettings, writeListToSettings, \
  readFromSettings, writeToSettings
@@ -65,19 +65,6 @@ class TestSettings(unittest.TestCase):
 		self.assertFalse(readFromSettings('testBool', bool, self.settings))
 		writeToSettings('testBool', 0, None, self.settings)
 		self.assertFalse(readFromSettings('testBool', bool, self.settings))
-
-	def test_storingFonts(self):
-		font = QFont()
-		font.setFamily('my family')
-		font.setPointSize(20)
-		writeToSettings('testFont', font, None, self.settings)
-		family = readFromSettings('testFont', str, self.settings)
-		size = readFromSettings('testFontSize', int, self.settings)
-		self.assertEqual(family, 'my family')
-		self.assertEqual(size, 20)
-		newFont = readFromSettings('testFont', QFont, self.settings, QFont())
-		self.assertEqual(newFont.family(), family)
-		self.assertEqual(newFont.pointSize(), size)
 
 	def test_storingColors(self):
 		self.settings.setValue('ColorScheme/htmlTags', 'green')
