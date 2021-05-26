@@ -18,11 +18,11 @@ automatically):
 
 * [PyQt5](https://riverbankcomputing.com/software/pyqt/intro) (5.11 or later)
 * [Markups](https://pypi.org/project/Markups/) (2.0 or later)
+* [Markdown](https://pypi.org/project/Markdown/) — for Markdown support
+* [docutils](https://pypi.org/project/docutils/) — for reStructuredText support
 
 We also recommend having these packages installed:
 
-* [Markdown](https://pypi.org/project/Markdown/) — for Markdown support
-* [docutils](https://pypi.org/project/docutils/) — for reStructuredText support
 * [pyenchant](https://pypi.org/project/pyenchant/) — for spell checking support
 * [PyQtWebEngine](https://pypi.org/project/PyQtWebEngine/) — a more powerful
   preview engine with JavaScript support
