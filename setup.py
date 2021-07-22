@@ -23,7 +23,7 @@ from setuptools.command.install import install
 from distutils import log
 from distutils.command.build import build
 from subprocess import check_call
-from glob import glob, iglob
+from glob import glob
 
 if sys.version_info[0] < 3:
 	sys.exit('Error: Python 3.x is required.')
@@ -45,8 +45,8 @@ def bundle_icons():
 	for member in tar:
 		if member.isfile():
 			member.path = basename(member.path)
-			log.info('bundling icons/%s', member.path)
-			tar.extract(member, 'icons')
+			log.info('bundling ReText/icons/%s', member.path)
+			tar.extract(member, join('ReText', 'icons'))
 	tar.close()
 
 
@@ -62,7 +62,7 @@ class retext_build_translations(Command):
 
 	def run(self):
 		environment = dict(os.environ, QT_SELECT='5')
-		for ts_file in glob(join('locale', '*.ts')):
+		for ts_file in glob(join('ReText', 'locale', '*.ts')):
 			try:
 				check_call(('lrelease', ts_file), env=environment)
 			except Exception as e:
@@ -97,7 +97,7 @@ class retext_install(install):
 		# Fix Exec and Icon fields in the desktop file
 		desktop_file_path = join(self.install_data, 'share', 'applications',
 		                         'me.mitya57.ReText.desktop')
-		icon_path = join(self.orig_install_data, 'share', 'retext', 'icons', 'retext.svg')
+		icon_path = join(self.install_lib, 'ReText', 'icons', 'retext.svg')
 		with open(desktop_file_path, encoding="utf-8") as desktop_file:
 			desktop_contents = desktop_file.read()
 		log.info('fixing Exec line in %s', desktop_file_path)
@@ -131,11 +131,12 @@ setup(name='ReText',
       },
       data_files=[
         ('share/applications', ['data/me.mitya57.ReText.desktop']),
-        ('share/icons/hicolor/scalable/apps', ['icons/retext.svg']),
+        ('share/icons/hicolor/scalable/apps', ['ReText/icons/retext.svg']),
         ('share/metainfo', ['data/me.mitya57.ReText.appdata.xml']),
-        ('share/retext/icons', iglob('icons/*')),
-        ('share/retext/locale', iglob('locale/*.qm'))
       ],
+      package_data={
+        'ReText': ['icons/*.png', 'icons/*.svg', 'locale/*.qm'],
+      },
       python_requires='>=3.6',
       requires=['docutils', 'Markdown', 'Markups(>=2.0)', 'pyenchant', 'Pygments', 'PyQt5(>=5.11)'],
       install_requires=[

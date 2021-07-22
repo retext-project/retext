@@ -23,7 +23,7 @@ from subprocess import Popen
 import warnings
 
 from ReText import (getBundledIcon, app_version, globalSettings,
-                    readListFromSettings, writeListToSettings, datadirs)
+                    readListFromSettings, writeListToSettings)
 from ReText.tab import (ReTextTab, ReTextWebKitPreview, ReTextWebEnginePreview,
                         PreviewDisabled, PreviewNormal, PreviewLive)
 from ReText.dialogs import HtmlDialog, LocaleDialog
@@ -41,7 +41,8 @@ except ImportError:
 	enchant = None
 
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
- QIODevice, QLocale, QMarginsF, QTextCodec, QTextStream, QTimer, QUrl, Qt, pyqtSlot
+ QIODevice, QLocale, QMarginsF, QStandardPaths, QTextCodec, QTextStream, QTimer, \
+ QUrl, Qt, pyqtSlot
 from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
  QKeySequence, QPageLayout, QPageSize, QPagedPaintDevice, QPalette, \
  QTextDocument, QTextDocumentWriter
@@ -805,8 +806,10 @@ class ReTextWindow(QMainWindow):
 
 	def getExportExtensionsList(self):
 		extensions = []
-		for extsprefix in datadirs:
-			extsdir = QDir(extsprefix+'/export-extensions/')
+		datadirs = QStandardPaths.standardLocations(
+			QStandardPaths.StandardLocation.GenericDataLocation)
+		for datadir in datadirs:
+			extsdir = QDir(os.path.join(datadir, 'retext', 'export-extensions'))
 			if extsdir.exists():
 				for fileInfo in extsdir.entryInfoList(['*.desktop', '*.ini'],
 				QDir.Filter.Files | QDir.Filter.Readable):

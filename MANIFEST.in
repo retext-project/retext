@@ -4,5 +4,5 @@ include changelog.md
 include configuration.md
 include data/retext-kde5.png
 recursive-include tests *.py *.md *.rst
-recursive-include locale retext_*.ts retext_*.qm
-recursive-include icons *.png *.svg
+recursive-include ReText/locale retext_*.ts retext_*.qm
+recursive-include ReText/icons *.png *.svg

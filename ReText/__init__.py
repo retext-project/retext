@@ -16,12 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
 import markups
 import markups.common
-from os.path import dirname, exists, join, expanduser
+from os.path import abspath, dirname, join, expanduser
 
-from PyQt5.QtCore import QByteArray, QLocale, QSettings, QStandardPaths
+from PyQt5.QtCore import QByteArray, QLocale, QSettings
 from PyQt5.QtGui import QFont, QFontDatabase
 
 app_version = "7.2.1"
@@ -33,36 +32,12 @@ if not str(settings.fileName()).endswith('.conf'):
 	settings = QSettings(QSettings.Format.IniFormat, QSettings.Scope.UserScope,
 		'ReText project', 'ReText')
 
-datadirs = []
 
-def initializeDataDirs():
-	assert not datadirs
-
-	try:
-		datadirs.append(dirname(dirname(__file__)))
-	except NameError:
-		pass
-
-	dataLocations = QStandardPaths.standardLocations(QStandardPaths.StandardLocation.GenericDataLocation)
-	datadirs.extend(join(d, 'retext') for d in dataLocations)
-
-	if sys.platform == "win32":
-		# Windows compatibility: Add "PythonXXX\share\" path
-		datadirs.append(join(dirname(sys.executable), 'share', 'retext'))
-
-	# For virtualenvs
-	datadirs.append(join(dirname(dirname(sys.executable)), 'share', 'retext'))
-
-_iconPath = None
+packageDir = abspath(dirname(__file__))
 
 def getBundledIcon(iconName):
-	global _iconPath
-	if _iconPath is None:
-		for dir in ['icons'] + datadirs:
-			_iconPath = join(dir, 'icons')
-			if exists(_iconPath):
-				break
-	return join(_iconPath, iconName + '.png')
+	return join(packageDir, 'icons', iconName + '.png')
+
 
 configOptions = {
 	'appStyleSheet': '',

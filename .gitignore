@@ -1,11 +1,11 @@
 ReText/__pycache__
+ReText/icons/*
+!ReText/icons/retext.png
+!ReText/icons/retext.svg
+ReText/locale/*.qm
 ReText.egg-info
-locale/*.qm
 MANIFEST
 build
 dist
 tests/__pycache__
 *.pyc
-icons/*
-!icons/retext.png
-!icons/retext.svg
