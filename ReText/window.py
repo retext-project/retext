@@ -26,7 +26,7 @@ from ReText import (getBundledIcon, app_version, globalSettings,
                     readListFromSettings, writeListToSettings)
 from ReText.tab import (ReTextTab, ReTextWebKitPreview, ReTextWebEnginePreview,
                         PreviewDisabled, PreviewNormal, PreviewLive)
-from ReText.dialogs import HtmlDialog, LocaleDialog
+from ReText.dialogs import EncodingDialog, HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog, setIconThemeFromSettings
 from ReText.tabledialog import InsertTableDialog
 
@@ -41,7 +41,7 @@ except ImportError:
 	enchant = None
 
 from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
- QIODevice, QLocale, QMarginsF, QStandardPaths, QTextCodec, QTextStream, QTimer, \
+ QIODevice, QLocale, QMarginsF, QStandardPaths, QTextStream, QTimer, \
  QUrl, Qt, pyqtSlot
 from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
  QKeySequence, QPageLayout, QPageSize, QPagedPaintDevice, QPalette, \
@@ -913,13 +913,9 @@ class ReTextWindow(QMainWindow):
 	def showEncodingDialog(self):
 		if not self.maybeSave(self.ind):
 			return
-		codecsSet = set(bytes(QTextCodec.codecForName(alias).name())
-		                for alias in QTextCodec.availableCodecs())
-		encoding, ok = QInputDialog.getItem(self, '',
-			self.tr('Select file encoding from the list:'),
-			[bytes(b).decode() for b in sorted(codecsSet)],
-			0, False)
-		if ok:
+		dialog = EncodingDialog(self)
+		if dialog.exec() == QDialog.DialogCode.Accepted:
+			encoding = dialog.encodingEdit.text()
 			self.currentTab.readTextFromFile(None, encoding)
 
 	def saveFileAs(self):
@@ -969,9 +965,6 @@ class ReTextWindow(QMainWindow):
 			if self.currentTab.saveTextToFile(fileNameToSave):
 				self.moveToTopOfRecentFileList(self.currentTab.fileName)
 				return True
-			else:
-				QMessageBox.warning(self, '',
-				self.tr("Cannot save to file because it is read-only!"))
 		return False
 
 	def saveHtml(self, fileName):
@@ -981,17 +974,13 @@ class ReTextWindow(QMainWindow):
 			_, htmltext, _ = self.currentTab.getDocumentForExport(webenv=True)
 		except Exception:
 			return self.printError()
-		htmlFile = QFile(fileName)
-		result = htmlFile.open(QIODevice.OpenModeFlag.WriteOnly)
-		if not result:
-			QMessageBox.warning(self, '',
-				self.tr("Cannot save to file because it is read-only!"))
-			return
-		html = QTextStream(htmlFile)
-		if globalSettings.defaultCodec:
-			html.setCodec(globalSettings.defaultCodec)
-		html << htmltext
-		htmlFile.close()
+
+		encoding = globalSettings.defaultCodec or None
+		try:
+			with open(fileName, encoding=encoding) as htmlFile:
+				htmlFile.write(htmltext)
+		except (OSError, UnicodeEncodeError, LookupError) as ex:
+			QMessageBox.warning(self, '', str(ex))
 
 	def textDocument(self, title, htmltext):
 		td = QTextDocument()

@@ -26,7 +26,7 @@ from ReText.editor import ReTextEdit
 from ReText.highlighter import ReTextHighlighter
 from ReText.preview import ReTextPreview
 
-from PyQt5.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QPoint, QTextStream, QTimer, QUrl
+from PyQt5.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QPoint, QTimer, QUrl
 from PyQt5.QtGui import QPalette, QTextCursor, QTextDocument
 from PyQt5.QtWidgets import QApplication, QTextEdit, QSplitter, QMessageBox
 
@@ -329,38 +329,37 @@ class ReTextTab(QSplitter):
 
 		result = chardet.detect(raw)
 		if result['confidence'] > 0.9:
-			if result['encoding'].lower() in ('ascii', 'utf-8-sig'):
+			if result['encoding'].lower() == 'ascii':
 				# UTF-8 files can be falsely detected as ASCII files if they
 				# don't contain non-ASCII characters in first 2048 bytes.
 				# We map ASCII to UTF-8 to avoid such situations.
-				# Also map UTF-8-SIG to UTF-8 because Qt does not understand it.
 				return 'utf-8'
 			return result['encoding']
 
 	def readTextFromFile(self, fileName=None, encoding=None):
 		previousFileName = self._fileName
-		if fileName:
-			self._fileName = fileName
+		fileName = fileName or self._fileName
 
 		# Only try to detect encoding if it is not specified
 		if encoding is None and globalSettings.detectEncoding:
-			encoding = self.detectFileEncoding(self._fileName)
+			encoding = self.detectFileEncoding(fileName)
+		encoding = encoding or globalSettings.defaultCodec or None
 
 		# TODO: why do we open the file twice: for detecting encoding
 		# and for actual read? Can we open it just once?
-		openfile = QFile(self._fileName)
-		openfile.open(QFile.OpenModeFlag.ReadOnly)
-		stream = QTextStream(openfile)
-		encoding = encoding or globalSettings.defaultCodec
+		try:
+			with open(fileName, encoding=encoding) as openfile:
+				text = openfile.read()
+		except (OSError, UnicodeDecodeError, LookupError) as ex:
+			QMessageBox.warning(self, '', str(ex))
+			return
+
 		if encoding:
-			stream.setCodec(encoding)
 			# If encoding is specified or detected, we should save the file with
 			# the same encoding
 			self.editBox.document().setProperty("encoding", encoding)
 
-		text = stream.readAll()
-		openfile.close()
-
+		self._fileName = fileName
 		if previousFileName != self._fileName:
 			self.updateActiveMarkupClass()
 
@@ -385,20 +384,16 @@ class ReTextTab(QSplitter):
 		cursor.select(QTextCursor.SelectionType.Document)
 		text = cursor.selectedText().replace('\u2029', '\n')
 
-		savefile = QFile(fileName or self._fileName)
-		result = savefile.open(QFile.OpenModeFlag.WriteOnly)
-		if result:
-			savestream = QTextStream(savefile)
-
-			# Save the file with original encoding
-			encoding = self.editBox.document().property("encoding")
-			encoding = encoding or globalSettings.defaultCodec
-			if encoding is not None:
-				savestream.setCodec(encoding)
-
-			savestream << text
-			savefile.close()
-		return result
+		fileName = fileName or self._fileName
+		encoding = self.editBox.document().property("encoding")
+		encoding = encoding or globalSettings.defaultCodec or None
+		try:
+			with open(fileName, 'w', encoding=encoding) as savefile:
+				savefile.write(text)
+		except (OSError, UnicodeEncodeError, LookupError) as ex:
+			QMessageBox.warning(self, '', str(ex))
+			return False
+		return True
 
 	def saveTextToFile(self, fileName=None):
 		# Sets fileName as tab fileName and writes the text to that file
