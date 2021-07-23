@@ -1231,7 +1231,7 @@ class ReTextWindow(QMainWindow):
 				tab.readTextFromFile()
 			else:
 				self.autoSaveEnabled = False
-				tab.editBox.document().setModified(True)
+				self.tabModificationStateChanged(tab)
 		if fileName not in self.fileSystemWatcher.files():
 			# https://github.com/retext-project/retext/issues/137
 			self.fileSystemWatcher.addPath(fileName)
