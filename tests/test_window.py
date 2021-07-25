@@ -323,37 +323,6 @@ class TestWindow(unittest.TestCase):
             os.remove(os.path.join(path_to_testdata, 'not_existing_file.md'))
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
-    @patch('ReText.window.QFileDialog.getSaveFileName', return_value=(os.path.join(path_to_testdata, 'not_existing_file.md'), None))
-    def test_saveWidgetStates_autosaveEnabled(self, getOpenFileNamesMock, getSaveFileNameMock):
-        self.globalSettingsMock.autoSave = True
-        self.window = ReTextWindow()
-
-        # check if save is disabled at first
-        self.window.createNew('')
-        app.processEvents()
-        self.check_widgets_disabled(self.window, ('actionSave',))
-
-        # check if it stays enabled after inserting some text (because autosave
-        # can't save without a filename)
-        self.window.currentTab.editBox.textCursor().insertText('some text')
-        app.processEvents()
-        self.check_widgets_enabled(self.window, ('actionSave',))
-
-        # check if it's disabled after saving
-        try:
-            self.window.actionSaveAs.trigger()
-            app.processEvents()
-            self.check_widgets_disabled(self.window, ('actionSave',))
-
-            # check if it is still disabled after inserting some text (because
-            # autosave will take care of saving now that the filename is known)
-            self.window.currentTab.editBox.textCursor().insertText('some text')
-            app.processEvents()
-            self.check_widgets_disabled(self.window, ('actionSave',))
-        finally:
-            os.remove(os.path.join(path_to_testdata, 'not_existing_file.md'))
-
-    @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
     def test_encodingAndReloadWidgetStates(self, getOpenFileNamesMock):
         self.window = ReTextWindow()
 
