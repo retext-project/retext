@@ -325,8 +325,11 @@ class ReTextTab(QSplitter):
 		except ImportError:
 			return
 
-		with open(fileName, 'rb') as inputFile:
-			raw = inputFile.read(2048)
+		try:
+			with open(fileName, 'rb') as inputFile:
+				raw = inputFile.read(2048)
+		except OSError:
+			return None
 
 		result = chardet.detect(raw)
 		if result['confidence'] > 0.9:
