@@ -392,8 +392,7 @@ class ReTextWindow(QMainWindow):
 		self.searchBar.addAction(self.actionCloseSearch)
 		self.searchBar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
 		self.searchBar.setVisible(False)
-		self.autoSaveEnabled = globalSettings.autoSave
-		if self.autoSaveEnabled:
+		if globalSettings.autoSave:
 			timer = QTimer(self)
 			timer.start(60000)
 			timer.timeout.connect(self.saveAll)
@@ -496,7 +495,7 @@ class ReTextWindow(QMainWindow):
 
 	def updateTabTitle(self, ind, tab):
 		changed = tab.editBox.document().isModified()
-		if changed and not self.autoSaveActive(tab):
+		if changed and not tab.autoSaveActive():
 			title = tab.getBaseName() + '*'
 		else:
 			title = tab.getBaseName()
@@ -520,7 +519,7 @@ class ReTextWindow(QMainWindow):
 				self.setWindowFilePath('')
 				self.setWindowTitle(self.tr('New document') + '[*]')
 
-			canReload = bool(tab.fileName) and not self.autoSaveActive(tab)
+			canReload = bool(tab.fileName) and not tab.autoSaveActive()
 			self.actionSetEncoding.setEnabled(canReload)
 			self.actionReload.setEnabled(canReload)
 
@@ -547,7 +546,7 @@ class ReTextWindow(QMainWindow):
 
 		if tab == self.currentTab:
 			changed = tab.editBox.document().isModified()
-			if self.autoSaveActive(tab):
+			if tab.autoSaveActive():
 				changed = False
 			self.actionSave.setEnabled(changed)
 			self.updateTabTitle(self.ind, tab)
@@ -923,7 +922,7 @@ class ReTextWindow(QMainWindow):
 
 	def saveAll(self):
 		for tab in self.iterateTabs():
-			if self.autoSaveActive(tab) and tab.editBox.document().isModified():
+			if tab.autoSaveActive() and tab.editBox.document().isModified():
 				tab.saveTextToFile()
 
 	def saveFile(self, dlg=False):
@@ -959,7 +958,7 @@ class ReTextWindow(QMainWindow):
 						QMessageBox.warning(self, "",
 							self.tr("Cannot save to file which is open in another tab!"))
 						return False
-				self.actionSetEncoding.setDisabled(self.autoSaveActive())
+				self.actionSetEncoding.setDisabled(self.currentTab.autoSaveActive())
 		if fileNameToSave:
 			if self.currentTab.saveTextToFile(fileNameToSave):
 				self.moveToTopOfRecentFileList(self.currentTab.fileName)
@@ -1128,11 +1127,6 @@ class ReTextWindow(QMainWindow):
 			+ '\n' + errorstr)
 		QFile(tmpname).remove()
 
-	def autoSaveActive(self, tab=None):
-		tab = tab if tab else self.currentTab
-		return bool(self.autoSaveEnabled and tab.fileName and
-			    QFileInfo(tab.fileName).isWritable())
-
 	def clipboardDataChanged(self):
 		mimeData = QApplication.instance().clipboard().mimeData()
 		if mimeData is not None:
@@ -1219,7 +1213,7 @@ class ReTextWindow(QMainWindow):
 				'This document has been modified by other application.\n'
 				'Do you want to reload the file (this will discard all '
 				'your changes)?\n')
-			if self.autoSaveEnabled:
+			if globalSettings.autoSave:
 				text += self.tr(
 					'If you choose to not reload the file, auto save mode will '
 					'be disabled for this session to prevent data loss.')
@@ -1230,7 +1224,7 @@ class ReTextWindow(QMainWindow):
 			if messageBox.clickedButton() is reloadButton:
 				tab.readTextFromFile()
 			else:
-				self.autoSaveEnabled = False
+				tab.forceDisableAutoSave = True
 				self.tabModificationStateChanged(tab)
 		if fileName not in self.fileSystemWatcher.files():
 			# https://github.com/retext-project/retext/issues/137
@@ -1238,7 +1232,7 @@ class ReTextWindow(QMainWindow):
 
 	def maybeSave(self, ind):
 		tab = self.tabWidget.widget(ind)
-		if self.autoSaveActive(tab):
+		if tab.autoSaveActive():
 			tab.saveTextToFile()
 			return True
 		if not tab.editBox.document().isModified():

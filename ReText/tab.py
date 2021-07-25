@@ -69,6 +69,7 @@ class ReTextTab(QSplitter):
 		self.previewOutdated = False
 		self.conversionPending = False
 		self.cssFileExists = False
+		self.forceDisableAutoSave = False
 
 		self.converterProcess = converterprocess.ConverterProcess()
 		self.converterProcess.conversionDone.connect(self.updatePreviewBox)
@@ -519,3 +520,9 @@ class ReTextTab(QSplitter):
 			QMessageBox.warning(self, self.tr("File could not be created"),
 			                    self.tr("Could not create file '%s': %s") % (fileToCreate, err))
 			return False
+
+	def autoSaveActive(self) -> bool:
+		return (globalSettings.autoSave
+		        and not self.forceDisableAutoSave
+		        and self.fileName is not None
+		        and QFileInfo(self.fileName).isWritable())
