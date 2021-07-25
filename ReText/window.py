@@ -392,10 +392,10 @@ class ReTextWindow(QMainWindow):
 		self.searchBar.addAction(self.actionCloseSearch)
 		self.searchBar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
 		self.searchBar.setVisible(False)
+		self.autoSaveTimer = QTimer(self)
+		self.autoSaveTimer.timeout.connect(self.saveAll)
 		if globalSettings.autoSave:
-			timer = QTimer(self)
-			timer.start(60000)
-			timer.timeout.connect(self.saveAll)
+			self.autoSaveTimer.start(60000)
 		self.ind = None
 		if enchant is not None:
 			self.spellCheckLanguages = globalSettings.spellCheckLocale
@@ -495,7 +495,7 @@ class ReTextWindow(QMainWindow):
 
 	def updateTabTitle(self, ind, tab):
 		changed = tab.editBox.document().isModified()
-		if changed and not tab.autoSaveActive():
+		if changed:
 			title = tab.getBaseName() + '*'
 		else:
 			title = tab.getBaseName()
@@ -546,8 +546,6 @@ class ReTextWindow(QMainWindow):
 
 		if tab == self.currentTab:
 			changed = tab.editBox.document().isModified()
-			if tab.autoSaveActive():
-				changed = False
 			self.actionSave.setEnabled(changed)
 			self.updateTabTitle(self.ind, tab)
 			self.setWindowModified(changed)
@@ -1209,7 +1207,6 @@ class ReTextWindow(QMainWindow):
 			tab.readTextFromFile()
 		else:
 			tab.forceDisableAutoSave = True
-			self.tabModificationStateChanged(tab)
 			self.tabWidget.setCurrentWidget(tab)
 			text = self.tr(
 				'This document has been modified by other application.\n'

@@ -262,6 +262,10 @@ class ConfigDialog(QDialog):
 		self.parent.toolBar.setVisible(not globalSettings.hideToolBar)
 		self.parent.editBar.setVisible(not globalSettings.hideToolBar)
 		self.parent.initDirectoryTree(globalSettings.showDirectoryTree, globalSettings.directoryPath)
+		if globalSettings.autoSave:
+			self.parent.autoSaveTimer.start(60000)
+		else:
+			self.parent.autoSaveTimer.stop()
 
 	def acceptSettings(self):
 		self.saveSettings()
