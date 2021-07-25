@@ -364,6 +364,7 @@ class ReTextTab(QSplitter):
 		if previousFileName != self._fileName:
 			self.updateActiveMarkupClass()
 
+		self.forceDisableAutoSave = False
 		self.editBox.setPlainText(text)
 		self.editBox.document().setModified(False)
 		self.handleModificationChanged()
@@ -402,6 +403,7 @@ class ReTextTab(QSplitter):
 			self.p.fileSystemWatcher.removePath(self._fileName)
 		result = self.writeTextToFile(fileName)
 		if result:
+			self.forceDisableAutoSave = False
 			self.editBox.document().setModified(False)
 			self.p.fileSystemWatcher.addPath(fileName or self._fileName)
 			if fileName and self._fileName != fileName:

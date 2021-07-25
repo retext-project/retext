@@ -1208,6 +1208,8 @@ class ReTextWindow(QMainWindow):
 			# File was not modified in ReText, reload silently
 			tab.readTextFromFile()
 		else:
+			tab.forceDisableAutoSave = True
+			self.tabModificationStateChanged(tab)
 			self.tabWidget.setCurrentWidget(tab)
 			text = self.tr(
 				'This document has been modified by other application.\n'
@@ -1215,17 +1217,15 @@ class ReTextWindow(QMainWindow):
 				'your changes)?\n')
 			if globalSettings.autoSave:
 				text += self.tr(
-					'If you choose to not reload the file, auto save mode will '
-					'be disabled for this session to prevent data loss.')
+					'Automatic saving has been temporarily disabled for this '
+					'tab to prevent data loss. It will be re-enabled when you '
+					'reload the file or save it manually.')
 			messageBox = QMessageBox(QMessageBox.Icon.Warning, '', text)
 			reloadButton = messageBox.addButton(self.tr('Reload'), QMessageBox.ButtonRole.YesRole)
 			messageBox.addButton(QMessageBox.StandardButton.Cancel)
 			messageBox.exec()
 			if messageBox.clickedButton() is reloadButton:
 				tab.readTextFromFile()
-			else:
-				tab.forceDisableAutoSave = True
-				self.tabModificationStateChanged(tab)
 		if fileName not in self.fileSystemWatcher.files():
 			# https://github.com/retext-project/retext/issues/137
 			self.fileSystemWatcher.addPath(fileName)
