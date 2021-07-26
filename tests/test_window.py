@@ -264,7 +264,7 @@ class TestWindow(unittest.TestCase):
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
     @patch('ReText.window.QFileDialog.getSaveFileName', return_value=(os.path.join(path_to_testdata, 'not_existing_file.rst'), None))
-    def test_markupDependentWidgetStates_afterSavingDocumentAsDifferentMarkup(self, getOpenFileNamesMock, getSaveFileNameMock):
+    def test_markupDependentWidgetStates_afterSavingDocumentAsDifferentMarkup(self, getSaveFileNameMock, getOpenFileNamesMock):
         self.window = ReTextWindow()
         self.window.createNew('')
         self.window.actionOpen.trigger()
@@ -281,7 +281,7 @@ class TestWindow(unittest.TestCase):
 
     @patch('ReText.window.QFileDialog.getOpenFileNames', return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None))
     @patch('ReText.window.QFileDialog.getSaveFileName', return_value=(os.path.join(path_to_testdata, 'not_existing_file.md'), None))
-    def test_saveWidgetStates(self, getOpenFileNamesMock, getSaveFileNameMock):
+    def test_saveWidgetStates(self, getSaveFileNameMock, getOpenFileNamesMock):
         self.window = ReTextWindow()
 
         # check if save is disabled at first
