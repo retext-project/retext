@@ -75,8 +75,11 @@ def main():
 	RtTranslator.load('retext_' + globalSettings.uiLanguage,
 	                  join(packageDir, 'locale'))
 	QtTranslator = QTranslator()
-	QtTranslator.load("qtbase_" + globalSettings.uiLanguage,
-		QLibraryInfo.location(QLibraryInfo.LibraryLocation.TranslationsPath))
+	if hasattr(QLibraryInfo, 'path'):  # Qt 6
+		translationsPath = QLibraryInfo.path(QLibraryInfo.LibraryPath.TranslationsPath)
+	else:  # Qt 5
+		translationsPath = QLibraryInfo.location(QLibraryInfo.LibraryLocation.TranslationsPath)
+	QtTranslator.load("qtbase_" + globalSettings.uiLanguage, translationsPath)
 	app.installTranslator(RtTranslator)
 	app.installTranslator(QtTranslator)
 
