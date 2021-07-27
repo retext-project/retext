@@ -453,7 +453,7 @@ class ReTextTab(QSplitter):
 		cursor = self.editBox.textCursor()
 		cursor.beginEditBlock()
 		cursor.movePosition(QTextCursor.MoveOperation.Start)
-		flags = QTextDocument.FindFlags()
+		flags = QTextDocument.FindFlag(0)
 		cursor = lastCursor = self.editBox.document().find(text, cursor, flags)
 		while not cursor.isNull():
 			cursor.insertText(replaceText)

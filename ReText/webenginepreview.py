@@ -134,7 +134,7 @@ class ReTextWebEnginePreview(ReTextWebPreview, QWebEngineView):
         return False
 
     def findText(self, text, flags):
-        options = QWebEnginePage.FindFlags()
+        options = QWebEnginePage.FindFlag(0)
         if flags & QTextDocument.FindFlag.FindBackward:
             options |= QWebEnginePage.FindFlag.FindBackward
         if flags & QTextDocument.FindFlag.FindCaseSensitively:

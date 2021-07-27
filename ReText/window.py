@@ -728,7 +728,7 @@ class ReTextWindow(QMainWindow):
 			self.searchEdit.setFocus(Qt.FocusReason.ShortcutFocusReason)
 
 	def find(self, back=False, replace=False):
-		flags = QTextDocument.FindFlags()
+		flags = QTextDocument.FindFlag(0)
 		if back:
 			flags |= QTextDocument.FindFlag.FindBackward
 		if self.csBox.isChecked():
