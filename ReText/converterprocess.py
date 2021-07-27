@@ -117,8 +117,7 @@ class ConverterProcess(QObject):
 
         # TODO: figure out which of the two sockets should be set to 
         #       inheritable and which should be passed to the child
-        if hasattr(conn_child, 'set_inheritable'):
-            conn_child.set_inheritable(True)
+        conn_child.set_inheritable(True)
 
         # Use a local variable for child so that we can talk to the child in
         # on_finalize without needing a reference to self
