@@ -24,7 +24,7 @@ import warnings
 
 from ReText import (getBundledIcon, app_version, globalSettings,
                     readListFromSettings, writeListToSettings)
-from ReText.tab import (ReTextTab, ReTextWebKitPreview, ReTextWebEnginePreview,
+from ReText.tab import (ReTextTab, ReTextWebEnginePreview,
                         PreviewDisabled, PreviewNormal, PreviewLive)
 from ReText.dialogs import EncodingDialog, HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog, setIconThemeFromSettings
@@ -199,15 +199,11 @@ class ReTextWindow(QMainWindow):
 		self.clipboardDataChanged()
 		self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSpellCheck)
 		self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
-		self.actionWebKit = self.act(self.tr('Use WebKit renderer'), trigbool=self.enableWebKit)
-		if ReTextWebKitPreview is None:
-			globalSettings.useWebKit = False
-			self.actionWebKit.setEnabled(False)
-		self.actionWebKit.setChecked(globalSettings.useWebKit)
 		self.actionWebEngine = self.act(self.tr('Use WebEngine (Chromium) renderer'),
 			trigbool=self.enableWebEngine)
 		if ReTextWebEnginePreview is None:
 			globalSettings.useWebEngine = False
+			self.actionWebEngine.setEnabled(False)
 		self.actionWebEngine.setChecked(globalSettings.useWebEngine)
 		self.actionShow = self.act(self.tr('Show directory'), 'system-file-manager', self.showInDir)
 		self.actionFind = self.act(self.tr('Next'), 'go-next', self.find,
@@ -327,10 +323,7 @@ class ReTextWindow(QMainWindow):
 		menuFormat.addAction(self.actionBold)
 		menuFormat.addAction(self.actionItalic)
 		menuFormat.addAction(self.actionUnderline)
-		if ReTextWebKitPreview is not None or ReTextWebEnginePreview is None:
-			menuEdit.addAction(self.actionWebKit)
-		else:
-			menuEdit.addAction(self.actionWebEngine)
+		menuEdit.addAction(self.actionWebEngine)
 		menuEdit.addSeparator()
 		menuEdit.addAction(self.actionViewHtml)
 		menuEdit.addAction(self.actionPreview)
@@ -643,14 +636,7 @@ class ReTextWindow(QMainWindow):
 		self.currentTab.updateBoxesVisibility()
 		self.currentTab.triggerPreviewUpdate()
 
-	def enableWebKit(self, enable):
-		globalSettings.useWebKit = enable
-		globalSettings.useWebEngine = False
-		for tab in self.iterateTabs():
-			tab.rebuildPreviewBox()
-
 	def enableWebEngine(self, enable):
-		globalSettings.useWebKit = False
 		globalSettings.useWebEngine = enable
 		for tab in self.iterateTabs():
 			tab.rebuildPreviewBox()
@@ -1008,8 +994,6 @@ class ReTextWindow(QMainWindow):
 			self.saveHtml(fileName)
 
 	def getDocumentForPrint(self, title, htmltext, preview):
-		if globalSettings.useWebKit:
-			return preview
 		try:
 			return self.textDocument(title, htmltext)
 		except Exception:

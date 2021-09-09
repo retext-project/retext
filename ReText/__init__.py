@@ -79,7 +79,6 @@ configOptions = {
 	'uiLanguage': QLocale.system().name(),
 	'useFakeVim': False,
 	'useWebEngine': False,
-	'useWebKit': False,
 	'wideCursor': False,
 	'windowGeometry': QByteArray(),
 	'windowTitleFullPath': False,

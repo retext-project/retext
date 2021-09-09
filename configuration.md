@@ -46,7 +46,6 @@ option name                    | type      | description
 `uiLanguage`                   | string    | short name of locale to use for interface (examples: `en_US`, `ru`, `pt_BR`)
 `useFakeVim`                   | boolean   | whether to use the FakeVim editor, if available (default: false)
 `useWebEngine`                 | boolean   | whether to use the WebEngine (Chromium) as HTML previewer (default: false)
-`useWebKit`                    | boolean   | whether to use the WebKit instead of QTextEdit as HTML previewer (default: false)
 `wideCursor`                   | boolean   | make cursor as wide as characters (default: false)
 `windowTitleFullPath`          | boolean   | whether the window title should show the full path of file (default: false)
 
