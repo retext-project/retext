@@ -17,7 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from ReText import globalSettings
-from ReText.preview import ReTextWebPreview
 from ReText.syncscroll import SyncScroll
 from PyQt5.QtCore import QEvent, Qt
 from PyQt5.QtGui import QDesktopServices, QGuiApplication, QTextDocument
@@ -84,7 +83,7 @@ class ReTextWebEnginePage(QWebEnginePage):
         return False
 
 
-class ReTextWebEnginePreview(ReTextWebPreview, QWebEngineView):
+class ReTextWebEnginePreview(QWebEngineView):
 
     def __init__(self, tab,
                  editorPositionToSourceLineFunc,
@@ -97,7 +96,18 @@ class ReTextWebEnginePreview(ReTextWebPreview, QWebEngineView):
         self.syncscroll = SyncScroll(webPage,
                                      editorPositionToSourceLineFunc,
                                      sourceLineToEditorPositionFunc)
-        ReTextWebPreview.__init__(self, tab.editBox)
+        self.editBox = tab.editBox
+
+        self.settings().setDefaultTextEncoding('utf-8')
+
+        # Events relevant to sync scrolling
+        self.editBox.cursorPositionChanged.connect(self._handleCursorPositionChanged)
+        self.editBox.verticalScrollBar().valueChanged.connect(self.syncscroll.handleEditorScrolled)
+        self.editBox.resized.connect(self._handleEditorResized)
+
+        # Scroll the preview when the mouse wheel is used to scroll
+        # beyond the beginning/end of the editor
+        self.editBox.scrollLimitReached.connect(self._handleWheelEvent)
 
     def setFont(self, font):
         settings = self.settings()
@@ -141,3 +151,25 @@ class ReTextWebEnginePreview(ReTextWebPreview, QWebEngineView):
             options |= QWebEnginePage.FindFlag.FindCaseSensitively
         super().findText(text, options)
         return True
+
+    def disconnectExternalSignals(self):
+        self.editBox.cursorPositionChanged.disconnect(self._handleCursorPositionChanged)
+        self.editBox.verticalScrollBar().valueChanged.disconnect(self.syncscroll.handleEditorScrolled)
+        self.editBox.resized.disconnect(self._handleEditorResized)
+
+        self.editBox.scrollLimitReached.disconnect(self._handleWheelEvent)
+
+    def _handleCursorPositionChanged(self):
+        editorCursorPosition = self.editBox.verticalScrollBar().value() + \
+                       self.editBox.cursorRect().top()
+        self.syncscroll.handleCursorPositionChanged(editorCursorPosition)
+
+    def _handleEditorResized(self, rect):
+        self.syncscroll.handleEditorResized(rect.height())
+
+    def wheelEvent(self, event):
+        if QGuiApplication.keyboardModifiers() == Qt.KeyboardModifier.ControlModifier:
+            zoomFactor = self.zoomFactor()
+            zoomFactor *= 1.001 ** event.angleDelta().y()
+            self.setZoomFactor(zoomFactor)
+        return super().wheelEvent(event)

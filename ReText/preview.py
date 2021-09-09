@@ -18,8 +18,8 @@
 
 from os.path import exists
 import time
-from PyQt5.QtCore import QDir, QUrl, Qt
-from PyQt5.QtGui import QDesktopServices, QGuiApplication, QTextCursor, QTextDocument
+from PyQt5.QtCore import QDir, QUrl
+from PyQt5.QtGui import QDesktopServices, QTextCursor, QTextDocument
 from PyQt5.QtWidgets import QTextBrowser
 from ReText import globalSettings
 
@@ -88,44 +88,3 @@ class ReTextPreview(QTextBrowser):
 
 	def setFont(self, font):
 		self.document().setDefaultFont(font)
-
-
-class ReTextWebPreview:
-	"""This is a common class shared between WebKit and WebEngine
-	based previews."""
-
-	def __init__(self, editBox):
-		self.editBox = editBox
-
-		self.settings().setDefaultTextEncoding('utf-8')
-
-		# Events relevant to sync scrolling
-		self.editBox.cursorPositionChanged.connect(self._handleCursorPositionChanged)
-		self.editBox.verticalScrollBar().valueChanged.connect(self.syncscroll.handleEditorScrolled)
-		self.editBox.resized.connect(self._handleEditorResized)
-
-		# Scroll the preview when the mouse wheel is used to scroll
-		# beyond the beginning/end of the editor
-		self.editBox.scrollLimitReached.connect(self._handleWheelEvent)
-
-	def disconnectExternalSignals(self):
-		self.editBox.cursorPositionChanged.disconnect(self._handleCursorPositionChanged)
-		self.editBox.verticalScrollBar().valueChanged.disconnect(self.syncscroll.handleEditorScrolled)
-		self.editBox.resized.disconnect(self._handleEditorResized)
-
-		self.editBox.scrollLimitReached.disconnect(self._handleWheelEvent)
-
-	def _handleCursorPositionChanged(self):
-		editorCursorPosition = self.editBox.verticalScrollBar().value() + \
-				       self.editBox.cursorRect().top()
-		self.syncscroll.handleCursorPositionChanged(editorCursorPosition)
-
-	def _handleEditorResized(self, rect):
-		self.syncscroll.handleEditorResized(rect.height())
-
-	def wheelEvent(self, event):
-		if QGuiApplication.keyboardModifiers() == Qt.KeyboardModifier.ControlModifier:
-			zoomFactor = self.zoomFactor()
-			zoomFactor *= 1.001 ** event.angleDelta().y()
-			self.setZoomFactor(zoomFactor)
-		return super().wheelEvent(event)
