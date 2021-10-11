@@ -12,6 +12,7 @@ jobs:
           - py38-pyqt514-ubuntu
           - py39-pyqt515-ubuntu
           - py39-pyqt515-windows
+          - py310-pyqt515-ubuntu
         include:
           - environment: py36-pyqt511-ubuntu1804
             python: 3.6
@@ -33,6 +34,10 @@ jobs:
             python: 3.9
             pyqt: PyQt5
             platform: windows-latest
+          - environment: py310-pyqt515-ubuntu
+            python: '3.10'
+            pyqt: PyQt5
+            platform: ubuntu-latest
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
