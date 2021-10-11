@@ -23,7 +23,7 @@ from os.path import abspath, dirname, join, expanduser
 from PyQt5.QtCore import QByteArray, QLocale, QSettings
 from PyQt5.QtGui import QFont, QFontDatabase
 
-app_version = "7.2.1"
+app_version = "7.3.0 (Git)"
 
 settings = QSettings('ReText project', 'ReText')
 

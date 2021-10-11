@@ -1,3 +1,10 @@
+## ReText 7.2.2 (2021-10-11)
+
+* Issue #552 — Fixed bad Spanish translation causing a crash.
+* Fixed `TypeError: index 0 has type 'float' but 'int' is expected` with
+  Python 3.10.
+* Fixed `RuntimeError: ffi_prep_cif_var failed` in XSettings code.
+
 ## ReText 7.2.1 (2021-03-06)
 
 * Issues #255, #492 — Improved support for dark Qt themes.
