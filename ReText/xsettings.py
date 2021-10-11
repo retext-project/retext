@@ -81,7 +81,7 @@ def get_raw_xsettings(display=0):
 	xcb.xcb_get_selection_owner_reply.argtypes = [ctypes.c_void_p, _xcb_cookie_t, ctypes.c_void_p]
 	xcb.xcb_get_selection_owner_reply.restype = ctypes.POINTER(_xcb_reply_t)
 	xcb.xcb_get_property.argtypes = [ctypes.c_void_p, ctypes.c_uint8, ctypes.c_uint32, ctypes.c_uint32,
-	                                 ctypes.c_uint32, ctypes.c_uint32]
+	                                 ctypes.c_uint32, ctypes.c_uint32, ctypes.c_uint32]
 	xcb.xcb_get_property.restype = _xcb_cookie_t
 	xcb.xcb_get_property_reply.argtypes = [ctypes.c_void_p, _xcb_cookie_t, ctypes.c_void_p]
 	xcb.xcb_get_property_reply.restype = ctypes.c_void_p
