@@ -61,10 +61,10 @@ class SyncScroll:
     def _handleLoadFinished(self):
         self.frame.setScrollPosition(self.previewPositionBeforeLoad)
         self.contentIsLoading = False
-        self._recalculatePositionMap()
+        self.frame.getPositionMap(self._setPositionMap)
 
     def _handlePreviewResized(self):
-        self._recalculatePositionMap()
+        self.frame.getPositionMap(self._setPositionMap)
         self._updatePreviewScrollPosition()
         if not self.posmap and self.frame.scrollPosition().y() == 0:
             self.frame.setScrollPosition(self.previewPositionBeforeLoad)
@@ -141,30 +141,3 @@ class SyncScroll:
         self.posmap = posmap
         if posmap:
             self.posmap[0] = 0
-
-    def _recalculatePositionMap(self):
-        if hasattr(self.frame, 'getPositionMap'):
-            # For WebEngine the update has to be asynchronous
-            self.frame.getPositionMap(self._setPositionMap)
-            return
-
-        # Create a list of input line positions mapped to vertical pixel positions in the preview
-        self.posmap = {}
-        elements = self.frame.findAllElements('[data-posmap]')
-
-        if elements:
-            # If there are posmap attributes, then build a posmap
-            # dictionary from them that will be used whenever the
-            # cursor is moved.
-            for el in elements:
-                value = el.attribute('data-posmap', 'invalid')
-                bottom = el.geometry().bottom()
-
-                # Ignore data-posmap entries that do not have integer values
-                try:
-                    self.posmap[int(value)] = bottom
-                except ValueError:
-                    pass
-
-            self.posmap[0] = 0
-
