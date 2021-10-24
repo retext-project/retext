@@ -959,7 +959,7 @@ class ReTextWindow(QMainWindow):
 
 		encoding = globalSettings.defaultCodec or None
 		try:
-			with open(fileName, encoding=encoding) as htmlFile:
+			with open(fileName, 'w', encoding=encoding) as htmlFile:
 				htmlFile.write(htmltext)
 		except (OSError, UnicodeEncodeError, LookupError) as ex:
 			QMessageBox.warning(self, '', str(ex))
