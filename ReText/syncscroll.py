@@ -134,6 +134,9 @@ class SyncScroll:
         preview_scroll_offset = preview_pixel_to_scroll_to - distance_to_top_of_viewport
 
         pos = self.frame.scrollPosition()
+        # scrollPosition() returns QPoint for WebKit and QPointF for WebEngine
+        if isinstance(pos, QPoint):
+            preview_scroll_offset = int(preview_scroll_offset)
         pos.setY(preview_scroll_offset)
         self.frame.setScrollPosition(pos)
 
