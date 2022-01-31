@@ -645,7 +645,7 @@ Do you want to create it?</source>
         <location filename="../ReText/window.py" line="936"/>
         <source>%s files</source>
         <comment>Example of final string: Markdown files</comment>
-        <translation>%s soubory</translation>
+        <translation>Soubory %s</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1011"/>

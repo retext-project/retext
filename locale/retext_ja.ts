@@ -800,17 +800,17 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../ReText/window.py" line="270"/>
         <source>&amp;File</source>
-        <translation>ファイル</translation>
+        <translation>ファイル(&amp;F)</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="271"/>
         <source>&amp;Edit</source>
-        <translation>編集</translation>
+        <translation>編集(&amp;E)</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="272"/>
         <source>&amp;Help</source>
-        <translation>ヘルプ</translation>
+        <translation>ヘルプ(&amp;H)</translation>
     </message>
 </context>
 <context>

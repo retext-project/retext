@@ -99,6 +99,11 @@
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
+        <source>Ordered list mode</source>
+        <translation>有序列表模式</translation>
+    </message>
+    <message>
+        <location filename="../ReText/config.py" line="109"/>
         <source>Interface</source>
         <translation>交互界面</translation>
     </message>
@@ -128,6 +133,16 @@
         <translation>窗口标题显示全部路径</translation>
     </message>
     <message>
+        <location filename="../ReText/config.py" line="109"/>
+        <source>Show directory tree</source>
+        <translation>显示文件夹结构</translation>
+    </message>
+    <message>
+        <location filename="../ReText/config.py" line="109"/>
+        <source>Working directory</source>
+        <translation>工作目录</translation>
+    </message>
+    <message>
         <location filename="../ReText/config.py" line="166"/>
         <source>Help</source>
         <translation>帮助</translation>
@@ -143,44 +158,29 @@
         <translation>正常预览</translation>
     </message>
     <message>
-        <location filename="../ReText/config.py" line="109"/>
-        <source>Ordered list mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ReText/config.py" line="109"/>
-        <source>Show directory tree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ReText/config.py" line="109"/>
-        <source>Working directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../ReText/config.py" line="191"/>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>禁止</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="192"/>
         <source>Cursor Line</source>
-        <translation type="unfinished"></translation>
+        <translation>光标线</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="193"/>
         <source>Wrapped Line</source>
-        <translation type="unfinished"></translation>
+        <translation>包装线</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="198"/>
         <source>Increment</source>
-        <translation type="unfinished"></translation>
+        <translation>增量</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="199"/>
         <source>Repeat</source>
-        <translation type="unfinished"></translation>
+        <translation>重复</translation>
     </message>
 </context>
 <context>
@@ -188,7 +188,7 @@
     <message>
         <location filename="../ReText/config.py" line="60"/>
         <source>Select directory to open</source>
-        <translation type="unfinished"></translation>
+        <translation>选择要打开的目录</translation>
     </message>
 </context>
 <context>
@@ -578,6 +578,21 @@ Do you want to create it?</source>
         <translation>符号</translation>
     </message>
     <message>
+        <location filename="../ReText/window.py" line="270"/>
+        <source>&amp;File</source>
+        <translation>文件(&amp;F)</translation>
+    </message>
+    <message>
+        <location filename="../ReText/window.py" line="271"/>
+        <source>&amp;Edit</source>
+        <translation>编辑(&amp;E)</translation>
+    </message>
+    <message>
+        <location filename="../ReText/window.py" line="272"/>
+        <source>&amp;Help</source>
+        <translation>帮助(&amp;H)</translation>
+    </message>
+    <message>
         <location filename="../ReText/window.py" line="275"/>
         <source>Open recent</source>
         <translation>打开最近使用</translation>
@@ -794,21 +809,6 @@ Do you want to save your changes?</source>
         <location filename="../ReText/window.py" line="1307"/>
         <source>reStructuredText syntax</source>
         <translation>reStructuredText 语法</translation>
-    </message>
-    <message>
-        <location filename="../ReText/window.py" line="270"/>
-        <source>&amp;File</source>
-        <translation>文件</translation>
-    </message>
-    <message>
-        <location filename="../ReText/window.py" line="271"/>
-        <source>&amp;Edit</source>
-        <translation>编辑</translation>
-    </message>
-    <message>
-        <location filename="../ReText/window.py" line="272"/>
-        <source>&amp;Help</source>
-        <translation>帮助</translation>
     </message>
 </context>
 <context>
