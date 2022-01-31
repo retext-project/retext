@@ -25,7 +25,7 @@
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Number of recent documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de documentos recentes</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
@@ -35,7 +35,7 @@
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Default preview state</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado de previsão padrão</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
@@ -99,13 +99,18 @@
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
+        <source>Ordered list mode</source>
+        <translation>Modo de lista ordenada</translation>
+    </message>
+    <message>
+        <location filename="../ReText/config.py" line="109"/>
         <source>Interface</source>
         <translation>Interface</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Hide toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar barra de ferramentas</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
@@ -120,12 +125,22 @@
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Hide tabs bar when there is only one tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar barra de abas quando só há uma aba</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="109"/>
         <source>Show full path in window title</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar caminho completo no título da janela</translation>
+    </message>
+    <message>
+        <location filename="../ReText/config.py" line="109"/>
+        <source>Show directory tree</source>
+        <translation>Mostrar árvore de diretórios</translation>
+    </message>
+    <message>
+        <location filename="../ReText/config.py" line="109"/>
+        <source>Working directory</source>
+        <translation>Diretório de trabalho</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="166"/>
@@ -135,52 +150,37 @@
     <message>
         <location filename="../ReText/config.py" line="185"/>
         <source>Live preview</source>
-        <translation type="unfinished">Visualização automática</translation>
+        <translation>Visualização atual</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="186"/>
         <source>Normal preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ReText/config.py" line="109"/>
-        <source>Ordered list mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ReText/config.py" line="109"/>
-        <source>Show directory tree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ReText/config.py" line="109"/>
-        <source>Working directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualização normal</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="191"/>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Desabilitado</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="192"/>
         <source>Cursor Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linha de Cursor</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="193"/>
         <source>Wrapped Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linha Envolvida</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="198"/>
         <source>Increment</source>
-        <translation type="unfinished"></translation>
+        <translation>Incrementar</translation>
     </message>
     <message>
         <location filename="../ReText/config.py" line="199"/>
         <source>Repeat</source>
-        <translation type="unfinished"></translation>
+        <translation>Repetir</translation>
     </message>
 </context>
 <context>
@@ -188,7 +188,7 @@
     <message>
         <location filename="../ReText/config.py" line="60"/>
         <source>Select directory to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecionar diretório para abrir</translation>
     </message>
 </context>
 <context>
@@ -212,17 +212,17 @@
     <message>
         <location filename="../ReText/tabledialog.py" line="27"/>
         <source>Insert table</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserir tabela</translation>
     </message>
     <message>
         <location filename="../ReText/tabledialog.py" line="36"/>
         <source>Number of rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de linhas</translation>
     </message>
     <message>
         <location filename="../ReText/tabledialog.py" line="37"/>
         <source>Number of columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de colunas</translation>
     </message>
 </context>
 <context>
@@ -284,24 +284,26 @@
     <message>
         <location filename="../ReText/tab.py" line="497"/>
         <source>Create missing file?</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar arquivo ausente?</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="497"/>
         <source>The file &apos;%s&apos; does not exist.
 
 Do you want to create it?</source>
-        <translation type="unfinished"></translation>
+        <translation>O arquivo &apos;%s&apos; não existe.
+
+Deseja criá-lo?</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="530"/>
         <source>File could not be created</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo não pode ser criado</translation>
     </message>
     <message>
         <location filename="../ReText/tab.py" line="530"/>
         <source>Could not create file &apos;%s&apos;: %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível criar arquivo &apos;%s&apos;: %s</translation>
     </message>
 </context>
 <context>
@@ -399,7 +401,7 @@ Do you want to create it?</source>
     <message>
         <location filename="../ReText/window.py" line="719"/>
         <source>Go to line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ir para a linha</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="137"/>
@@ -414,12 +416,17 @@ Do you want to create it?</source>
     <message>
         <location filename="../ReText/window.py" line="151"/>
         <source>Insert table</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserir tabela</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="153"/>
         <source>Table editing mode</source>
         <translation>Modo de edição de tabelas</translation>
+    </message>
+    <message>
+        <location filename="../ReText/window.py" line="156"/>
+        <source>Insert images by file path</source>
+        <translation>Inserir imagens por caminho de arquivo</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="159"/>
@@ -469,17 +476,17 @@ Do you want to create it?</source>
     <message>
         <location filename="../ReText/window.py" line="187"/>
         <source>Paste image</source>
-        <translation type="unfinished"></translation>
+        <translation>Colar imagem</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="189"/>
         <source>Move line up</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover para cima</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="191"/>
         <source>Move line down</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover para baixo</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="200"/>
@@ -629,7 +636,7 @@ Do you want to create it?</source>
     <message>
         <location filename="../ReText/window.py" line="719"/>
         <source>Type the line number</source>
-        <translation type="unfinished"></translation>
+        <translation>Digite o número da linha</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="755"/>
@@ -700,7 +707,7 @@ Do you want to create it?</source>
     <message>
         <location filename="../ReText/window.py" line="1034"/>
         <source>Unrecognized paperSize setting &quot;%s&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajuste de tamanho do papel não reconhecido &quot;%s&quot;.</translation>
     </message>
     <message>
         <location filename="../ReText/window.py" line="1060"/>
@@ -776,6 +783,11 @@ Deseja salvar as alterações?</translation>
         <translation>Código HTML</translation>
     </message>
     <message>
+        <location filename="../ReText/window.py" line="1289"/>
+        <source>Select one or several images to open</source>
+        <translation>Selecione uma ou várias imagens para abrir</translation>
+    </message>
+    <message>
         <location filename="../ReText/window.py" line="1307"/>
         <source>ReText %s (using PyMarkups %s)</source>
         <translation>ReText %s (usando PyMarkups %s)</translation>
@@ -800,16 +812,6 @@ Deseja salvar as alterações?</translation>
         <source>reStructuredText syntax</source>
         <translation>Sintaxe reStructuredText</translation>
     </message>
-    <message>
-        <location filename="../ReText/window.py" line="156"/>
-        <source>Insert images by file path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ReText/window.py" line="1289"/>
-        <source>Select one or several images to open</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>TextInfoArea</name>
@@ -825,17 +827,17 @@ Deseja salvar as alterações?</translation>
     <message>
         <location filename="../ReText/__main__.py" line="88"/>
         <source>Open the files in preview mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Abra os arquivos no modo de visualização</translation>
     </message>
     <message>
         <location filename="../ReText/__main__.py" line="90"/>
         <source>Create a new window even if there is an existing one</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar uma nova janela, mesmo que já exista uma janela</translation>
     </message>
     <message>
         <location filename="../ReText/__main__.py" line="94"/>
         <source>List of files to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de arquivos para abrir</translation>
     </message>
 </context>
 </TS>
