@@ -1,3 +1,11 @@
+## ReText 7.2.3 (2022-02-03)
+
+* Issues #573, #574 — Fixed TypeError crash with Python 3.10 and Qt WebKit.
+* Translations updated:
+    - Chinese (China) (contributed by liulitchi).
+    - Portuguese (Brazil) (contributed by Igor Garcia and Christiano Morais).
+    - Slovak (contributed by Jose Riha).
+
 ## ReText 7.2.2 (2021-10-11)
 
 * Issue #552 — Fixed bad Spanish translation causing a crash.
