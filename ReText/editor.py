@@ -126,6 +126,7 @@ class ReTextEdit(QTextEdit):
 		Qt.Key.Key_Underscore,
 		Qt.Key.Key_Asterisk,
 		Qt.Key.Key_QuoteDbl,
+		Qt.Key.Key_QuoteLeft,
 		Qt.Key.Key_Apostrophe
 	]
 	surroundKeysOtherClose = {
