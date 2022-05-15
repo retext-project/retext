@@ -16,22 +16,27 @@ jobs:
           - environment: py36-pyqt61-ubuntu2004
             python: 3.6
             pyqt: PyQt6>=6.1,<6.2
+            pygments: Pygments>=2.11,<2.12
             platform: ubuntu-20.04
           - environment: py37-pyqt62-ubuntu2204
             python: 3.7
             pyqt: PyQt6>=6.2,<6.3
+            pygments: Pygments
             platform: ubuntu-22.04
           - environment: py38-pyqt63-ubuntu
             python: 3.8
             pyqt: PyQt6>=6.3,<6.4
+            pygments: Pygments
             platform: ubuntu-latest
           - environment: py39-windows
             python: 3.9
             pyqt: PyQt6
+            pygments: Pygments
             platform: windows-latest
           - environment: py310-ubuntu
             python: '3.10'
             pyqt: PyQt6
+            pygments: Pygments
             platform: ubuntu-latest
     runs-on: ${{ matrix.platform }}
     steps:
@@ -47,7 +52,9 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Install Python dependencies
-        run: python -m pip install "${{ matrix.pyqt }}" Markdown pymdown-extensions docutils chardet Pygments Markups
+        run: |
+          python -m pip install "${{ matrix.pyqt }}" "${{ matrix.pygments }}"
+          python -m pip install Markdown pymdown-extensions docutils chardet Markups
       - name: Run tests in Xvfb
         if: ${{ startsWith(matrix.platform, 'ubuntu') }}
         run: xvfb-run -a -s "-screen 0 1024x768x24" python -m unittest discover -s tests -v
