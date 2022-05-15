@@ -16,7 +16,7 @@ download the tarball from [PyPI].
 ReText requires the following Python modules to run (`pip` will install them
 automatically):
 
-* [PyQt5](https://riverbankcomputing.com/software/pyqt/intro) (5.11 or later)
+* [PyQt6](https://pypi.org/project/PyQt6/)
 * [Markups](https://pypi.org/project/Markups/) (2.0 or later)
 * [Markdown](https://pypi.org/project/Markdown/) — for Markdown support
 * [docutils](https://pypi.org/project/docutils/) — for reStructuredText support
@@ -24,8 +24,8 @@ automatically):
 We also recommend having these packages installed:
 
 * [pyenchant](https://pypi.org/project/pyenchant/) — for spell checking support
-* [PyQtWebEngine](https://pypi.org/project/PyQtWebEngine/) — a more powerful
-  preview engine with JavaScript support
+* [PyQt6-WebEngine](https://pypi.org/project/PyQt6-WebEngine/) — a more
+  powerful preview engine with JavaScript support
 
 Translation files are already compiled for release tarballs and will be
 automatically loaded. For development snapshots, compile translations using

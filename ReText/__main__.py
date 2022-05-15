@@ -27,11 +27,11 @@ from os.path import join
 from ReText import packageDir, settings, globalSettings, app_version
 from ReText.window import ReTextWindow
 
-from PyQt5.QtCore import QCommandLineOption, QCommandLineParser, QFile, \
+from PyQt6.QtCore import QCommandLineOption, QCommandLineParser, QFile, \
  QFileInfo, QIODevice, QLibraryInfo, QTextStream, QTranslator, Qt
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtNetwork import QNetworkProxyFactory
-from PyQt5.QtDBus import QDBusConnection, QDBusInterface
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtNetwork import QNetworkProxyFactory
+from PyQt6.QtDBus import QDBusConnection, QDBusInterface
 
 def canonicalize(option):
 	if option == '-':
@@ -59,9 +59,6 @@ def main():
 
 	# Needed for Qt WebEngine on Windows
 	QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
-	# Needed only for Qt 5, enabled by default in Qt 6
-	if hasattr(Qt.ApplicationAttribute, 'AA_UseHighDpiPixmaps'):
-		QApplication.setAttribute(Qt.ApplicationAttribute.AA_UseHighDpiPixmaps)
 	app = QApplication(sys.argv)
 	app.setOrganizationName("ReText project")
 	app.setApplicationName("ReText")
@@ -75,10 +72,7 @@ def main():
 	RtTranslator.load('retext_' + globalSettings.uiLanguage,
 	                  join(packageDir, 'locale'))
 	QtTranslator = QTranslator()
-	if hasattr(QLibraryInfo, 'path'):  # Qt 6
-		translationsPath = QLibraryInfo.path(QLibraryInfo.LibraryPath.TranslationsPath)
-	else:  # Qt 5
-		translationsPath = QLibraryInfo.location(QLibraryInfo.LibraryLocation.TranslationsPath)
+	translationsPath = QLibraryInfo.path(QLibraryInfo.LibraryPath.TranslationsPath)
 	QtTranslator.load("qtbase_" + globalSettings.uiLanguage, translationsPath)
 	app.installTranslator(RtTranslator)
 	app.installTranslator(QtTranslator)

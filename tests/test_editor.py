@@ -22,10 +22,10 @@ from unittest.mock import patch
 
 from ReText.editor import ReTextEdit
 from ReText.editor import documentIndentMore, documentIndentLess
-from PyQt5.QtGui import QImage, QTextCursor, QTextDocument, QKeyEvent
-from PyQt5.QtCore import Qt, QMimeData, QEvent
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtTest import QTest
+from PyQt6.QtGui import QImage, QTextCursor, QTextDocument, QKeyEvent
+from PyQt6.QtCore import Qt, QMimeData, QEvent
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtTest import QTest
 from markups import MarkdownMarkup, ReStructuredTextMarkup
 
 QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)

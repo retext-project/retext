@@ -7,36 +7,31 @@ jobs:
     strategy:
       matrix:
         environment:
-          - py36-pyqt511-ubuntu1804
-          - py37-pyqt512-ubuntu2004
-          - py38-pyqt514-ubuntu
-          - py39-pyqt515-ubuntu
-          - py39-pyqt515-windows
-          - py310-pyqt515-ubuntu
+          - py36-pyqt61-ubuntu2004
+          - py37-pyqt62-ubuntu2204
+          - py38-pyqt63-ubuntu
+          - py39-windows
+          - py310-ubuntu
         include:
-          - environment: py36-pyqt511-ubuntu1804
+          - environment: py36-pyqt61-ubuntu2004
             python: 3.6
-            pyqt: PyQt5>=5.11,<5.12
-            platform: ubuntu-18.04
-          - environment: py37-pyqt512-ubuntu2004
-            python: 3.7
-            pyqt: PyQt5>=5.12,<5.13
+            pyqt: PyQt6>=6.1,<6.2
             platform: ubuntu-20.04
-          - environment: py38-pyqt514-ubuntu
+          - environment: py37-pyqt62-ubuntu2204
+            python: 3.7
+            pyqt: PyQt6>=6.2,<6.3
+            platform: ubuntu-22.04
+          - environment: py38-pyqt63-ubuntu
             python: 3.8
-            pyqt: PyQt5>=5.14,<5.15
+            pyqt: PyQt6>=6.3,<6.4
             platform: ubuntu-latest
-          - environment: py39-pyqt515-ubuntu
+          - environment: py39-windows
             python: 3.9
-            pyqt: PyQt5
-            platform: ubuntu-latest
-          - environment: py39-pyqt515-windows
-            python: 3.9
-            pyqt: PyQt5
+            pyqt: PyQt6
             platform: windows-latest
-          - environment: py310-pyqt515-ubuntu
+          - environment: py310-ubuntu
             python: '3.10'
-            pyqt: PyQt5
+            pyqt: PyQt6
             platform: ubuntu-latest
     runs-on: ${{ matrix.platform }}
     steps:

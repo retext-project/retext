@@ -18,10 +18,15 @@
 
 from ReText import globalSettings
 from ReText.syncscroll import SyncScroll
-from PyQt5.QtCore import QEvent, Qt
-from PyQt5.QtGui import QDesktopServices, QGuiApplication, QTextDocument
-from PyQt5.QtWebEngineCore import QWebEngineUrlRequestInfo, QWebEngineUrlRequestInterceptor
-from PyQt5.QtWebEngineWidgets import QWebEnginePage, QWebEngineView, QWebEngineSettings
+from PyQt6.QtCore import QEvent, Qt
+from PyQt6.QtGui import QDesktopServices, QGuiApplication, QTextDocument
+from PyQt6.QtWebEngineCore import (
+    QWebEnginePage,
+    QWebEngineSettings,
+    QWebEngineUrlRequestInfo,
+    QWebEngineUrlRequestInterceptor,
+)
+from PyQt6.QtWebEngineWidgets import QWebEngineView
 
 
 class ReTextWebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
@@ -37,10 +42,7 @@ class ReTextWebEnginePage(QWebEnginePage):
         QWebEnginePage.__init__(self, parent)
         self.tab = tab
         self.interceptor = ReTextWebEngineUrlRequestInterceptor(self)
-        if hasattr(self, 'setUrlRequestInterceptor'):  # Available since Qt 5.13
-            self.setUrlRequestInterceptor(self.interceptor)
-        else:
-            self.profile().setRequestInterceptor(self.interceptor)
+        self.setUrlRequestInterceptor(self.interceptor)
 
     def setScrollPosition(self, pos):
         self.runJavaScript("window.scrollTo(%s, %s);" % (pos.x(), pos.y()))

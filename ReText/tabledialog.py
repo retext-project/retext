@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from markups import ReStructuredTextMarkup
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLabel, \
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLabel, \
     QSpinBox
 
 

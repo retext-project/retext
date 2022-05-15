@@ -20,9 +20,9 @@ from ReText.icontheme import get_icon_theme
 from markups.common import CONFIGURATION_DIR
 from os.path import join
 
-from PyQt5.QtCore import pyqtSignal, QFile, QFileInfo, QUrl, Qt
-from PyQt5.QtGui import QDesktopServices, QIcon
-from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
+from PyQt6.QtCore import pyqtSignal, QFile, QFileInfo, QUrl, Qt
+from PyQt6.QtGui import QDesktopServices, QIcon
+from PyQt6.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
  QFileDialog, QGridLayout, QLabel, QLineEdit, QPushButton, QSpinBox, \
  QComboBox, QTabWidget, QVBoxLayout, QWidget
 

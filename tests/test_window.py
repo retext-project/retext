@@ -27,10 +27,10 @@ import warnings
 
 from markups.abstract import ConvertedMarkup
 
-from PyQt5.QtCore import pyqtSignal, QObject, Qt
-from PyQt5.QtGui import QTextCursor
-from PyQt5.QtTest import QTest
-from PyQt5.QtWidgets import QApplication, QMessageBox
+from PyQt6.QtCore import pyqtSignal, QObject, Qt
+from PyQt6.QtGui import QTextCursor
+from PyQt6.QtTest import QTest
+from PyQt6.QtWidgets import QApplication, QMessageBox
 import ReText
 from ReText.window import ReTextWindow
 

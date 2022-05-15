@@ -17,12 +17,12 @@
 from FakeVim import FakeVimProxy, FakeVimHandler, FAKEVIM_PYQT_VERSION, \
 	MessageError
 
-if FAKEVIM_PYQT_VERSION != 5:
-	raise ImportError("FakeVim must be compiled with Qt 5")
+if FAKEVIM_PYQT_VERSION != 6:
+	raise ImportError("FakeVim must be compiled with Qt 6")
 
-from PyQt5.QtCore import QDir, QRegExp, QObject, Qt
-from PyQt5.QtGui import QPainter, QPen, QTextCursor
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, \
+from PyQt6.QtCore import QDir, QRegExp, QObject, Qt
+from PyQt6.QtGui import QPainter, QPen, QTextCursor
+from PyQt6.QtWidgets import QWidget, QLabel, QLineEdit, \
 	QMessageBox, QStatusBar, QTextEdit
 
 class FakeVimMode:

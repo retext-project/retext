@@ -18,8 +18,8 @@ from ReText.editor import getColor
 from enum import IntFlag, auto
 import re
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont, QSyntaxHighlighter, QTextCharFormat
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QFont, QSyntaxHighlighter, QTextCharFormat
 
 reHtmlTags     = re.compile('<[^<>@]*>')
 reHtmlSymbols  = re.compile(r'&#?\w+;')

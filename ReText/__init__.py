@@ -20,8 +20,8 @@ import markups
 import markups.common
 from os.path import abspath, dirname, join, expanduser
 
-from PyQt5.QtCore import QByteArray, QLocale, QSettings
-from PyQt5.QtGui import QFont, QFontDatabase
+from PyQt6.QtCore import QByteArray, QLocale, QSettings
+from PyQt6.QtGui import QFont, QFontDatabase
 
 app_version = "7.3.0 (Git)"
 

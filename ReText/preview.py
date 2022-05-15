@@ -18,9 +18,9 @@
 
 from os.path import exists
 import time
-from PyQt5.QtCore import QDir, QUrl
-from PyQt5.QtGui import QDesktopServices, QTextCursor, QTextDocument
-from PyQt5.QtWidgets import QTextBrowser
+from PyQt6.QtCore import QDir, QUrl
+from PyQt6.QtGui import QDesktopServices, QTextCursor, QTextDocument
+from PyQt6.QtWidgets import QTextBrowser
 from ReText import globalSettings
 
 class ReTextPreview(QTextBrowser):

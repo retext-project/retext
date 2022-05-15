@@ -19,9 +19,9 @@ import tempfile
 import sys
 
 from os.path import basename, dirname, splitext
-from PyQt5.QtCore import Qt, QSettings
-from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QApplication
+from PyQt6.QtCore import Qt, QSettings
+from PyQt6.QtGui import QColor
+from PyQt6.QtWidgets import QApplication
 from ReText import readListFromSettings, writeListToSettings, \
  readFromSettings, writeToSettings
 from ReText.editor import getColor, updateColorScheme

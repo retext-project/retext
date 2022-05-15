@@ -19,7 +19,7 @@
 import sys
 from markups import MarkdownMarkup, ReStructuredTextMarkup
 
-from PyQt5.QtGui import QTextCursor
+from PyQt6.QtGui import QTextCursor
 
 LARGER_THAN_ANYTHING = sys.maxsize
 

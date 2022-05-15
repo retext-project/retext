@@ -24,7 +24,7 @@ import struct
 import traceback
 import weakref
 
-from PyQt5.QtCore import pyqtSignal, QObject, QSocketNotifier
+from PyQt6.QtCore import pyqtSignal, QObject, QSocketNotifier
 
 def recvall(sock, remaining):
     alldata = bytearray()

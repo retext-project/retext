@@ -17,7 +17,7 @@
 from ReText import globalSettings
 from ReText.highlighter import ReTextHighlighter
 
-from PyQt5.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
+from PyQt6.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
  QLabel, QLineEdit, QTextEdit, QVBoxLayout
 
 class HtmlDialog(QDialog):

@@ -40,27 +40,23 @@ try:
 except ImportError:
 	enchant = None
 
-from PyQt5.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
+from PyQt6.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
  QIODevice, QLocale, QMarginsF, QStandardPaths, QTextStream, QTimer, \
  QUrl, Qt, pyqtSlot
-from PyQt5.QtGui import QColor, QDesktopServices, QIcon, \
- QKeySequence, QPageLayout, QPageSize, QPagedPaintDevice, QPalette, \
- QTextDocument, QTextDocumentWriter
-from PyQt5.QtWidgets import QAction, QActionGroup, QApplication, QCheckBox, \
- QComboBox, QDialog, QFileDialog, QFileSystemModel, QFontDialog, \
- QInputDialog, QLineEdit, QMainWindow, QMenu, QMessageBox, QSplitter, QTabWidget, \
- QToolBar, QToolButton, QTreeView
-from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
+from PyQt6.QtGui import QAction, QActionGroup, QColor, QDesktopServices, \
+ QFileSystemModel, QIcon, QKeySequence, QPageLayout, QPageSize, \
+ QPagedPaintDevice, QPalette, QTextDocument, QTextDocumentWriter
+from PyQt6.QtWidgets import QApplication, QCheckBox, QComboBox, QDialog, \
+ QFileDialog, QFontDialog, QInputDialog, QLineEdit, QMainWindow, QMenu, \
+ QMessageBox, QSplitter, QTabWidget, QToolBar, QToolButton, QTreeView
+from PyQt6.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
 
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
 		QMainWindow.__init__(self, parent)
 		self.resize(950, 700)
 		qApp = QApplication.instance()
-		if hasattr(self, 'screen'):  # Available since Qt 5.14
-			screenRect = self.screen().geometry()
-		else:
-			screenRect = qApp.desktop().screenGeometry()
+		screenRect = self.screen().geometry()
 		if globalSettings.windowGeometry:
 			self.restoreGeometry(globalSettings.windowGeometry)
 		else:
@@ -254,10 +250,7 @@ class ReTextWindow(QMainWindow):
 		self.formattingBox = QComboBox(self.editBar)
 		self.formattingBox.addItem(self.tr('Formatting'))
 		self.formattingBox.addItems(self.usefulTags)
-		if hasattr(self.formattingBox, 'textActivated'):  # Available since Qt 5.14
-			self.formattingBox.textActivated.connect(self.insertFormatting)
-		else:
-			self.formattingBox.activated[str].connect(self.insertFormatting)
+		self.formattingBox.textActivated.connect(self.insertFormatting)
 		self.symbolBox = QComboBox(self.editBar)
 		self.symbolBox.addItem(self.tr('Symbols'))
 		self.symbolBox.addItems(self.usefulChars)
