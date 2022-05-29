@@ -49,8 +49,8 @@ option name                    | type      | description
 `wideCursor`                   | boolean   | make cursor as wide as characters (default: false)
 `windowTitleFullPath`          | boolean   | whether the window title should show the full path of file (default: false)
 
-[Qt stylesheet file]: https://doc.qt.io/qt-5/stylesheet-reference.html
-[QFont.toString()]: https://doc.qt.io/qt-5/qfont.html#toString
+[Qt stylesheet file]: https://doc.qt.io/qt-6/stylesheet-reference.html
+[QFont.toString()]: https://doc.qt.io/qt-6/qfont.html#toString
 
 If the type is 'file path', then the value should be an absolute path
 to a file.
