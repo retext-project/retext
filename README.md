@@ -29,9 +29,9 @@ We also recommend having these packages installed:
 
 Translation files are already compiled for release tarballs and will be
 automatically loaded. For development snapshots, compile translations using
-`lrelease ReText/locale/*.ts` command (on Debian-based systems, `lrelease` is
-available in `qttools5-dev-tools` package). Translation files can also be
-loaded from `/usr/share/retext/` directory.
+`lrelease ReText/locale/*.ts` command (on Debian-based systems, use
+`/usr/lib/qt6/bin/lrelease` from `qt6-l10n-tools` package). Translation files
+can also be loaded from `/usr/share/retext/` directory.
 
 You can translate ReText into your language on [Transifex].
 

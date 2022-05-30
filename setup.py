@@ -22,7 +22,7 @@ from setuptools.command.sdist import sdist
 from setuptools.command.install import install
 from distutils import log
 from distutils.command.build import build
-from subprocess import check_call
+from subprocess import check_call, check_output
 from glob import glob
 
 if sys.version_info[0] < 3:
@@ -61,7 +61,15 @@ class retext_build_translations(Command):
 		pass
 
 	def run(self):
-		environment = dict(os.environ, QT_SELECT='5')
+		environment = dict(os.environ, QT_SELECT='6')
+		# Add Qt 6 binaries directory to PATH.
+		try:
+			qt6_path = check_output(('qmake6', '-query', 'QT_INSTALL_BINS'))
+		except OSError as e:
+			log.warn('Could not run qmake6: %s', e)
+		else:
+			qt6_path = qt6_path.decode('utf-8').rstrip()
+			environment['PATH'] = qt6_path + os.pathsep + environment['PATH']
 		for ts_file in glob(join('ReText', 'locale', '*.ts')):
 			try:
 				check_call(('lrelease', ts_file), env=environment)
