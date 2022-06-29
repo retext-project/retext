@@ -92,6 +92,7 @@ class retext_install(install):
 	def change_roots(self, *names):
 		self.orig_install_scripts = self.install_scripts
 		self.orig_install_data = self.install_data
+		self.orig_install_lib = self.install_lib
 		install.change_roots(self, *names)
 
 	def run(self):
@@ -100,12 +101,13 @@ class retext_install(install):
 		if self.root is None:
 			self.orig_install_scripts = self.install_scripts
 			self.orig_install_data = self.install_data
+			self.orig_install_lib = self.install_lib
 		retext = join(self.orig_install_scripts, 'retext')
 
 		# Fix Exec and Icon fields in the desktop file
 		desktop_file_path = join(self.install_data, 'share', 'applications',
 		                         'me.mitya57.ReText.desktop')
-		icon_path = join(self.install_lib, 'ReText', 'icons', 'retext.svg')
+		icon_path = join(self.orig_install_lib, 'ReText', 'icons', 'retext.svg')
 		with open(desktop_file_path, encoding="utf-8") as desktop_file:
 			desktop_contents = desktop_file.read()
 		log.info('fixing Exec line in %s', desktop_file_path)
