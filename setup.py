@@ -28,11 +28,6 @@ from glob import glob
 if sys.version_info[0] < 3:
 	sys.exit('Error: Python 3.x is required.')
 
-if len(sys.argv) > 1 and sys.argv[1] == 'bdist_wheel':
-	sys.exit('Building wheels is disabled, because it breaks .desktop files. '
-	         'See issues #452 and #497 for details.\n'
-	         'If you are using pip, please ignore this error, installation '
-	         'should still succeed.')
 
 def bundle_icons():
 	import urllib.request
@@ -104,9 +99,15 @@ class retext_install(install):
 			self.orig_install_lib = self.install_lib
 		retext = join(self.orig_install_scripts, 'retext')
 
-		# Fix Exec and Icon fields in the desktop file
 		desktop_file_path = join(self.install_data, 'share', 'applications',
 		                         'me.mitya57.ReText.desktop')
+		if self.root and self.root.endswith('/wheel'):
+			# Desktop files don't allow relative paths, and we don't know the
+			# absolute path when building a wheel.
+			log.info('removing the .desktop file from the wheel')
+			os.remove(desktop_file_path)
+			return
+		# Fix Exec and Icon fields in the desktop file
 		icon_path = join(self.orig_install_lib, 'ReText', 'icons', 'retext.svg')
 		with open(desktop_file_path, encoding="utf-8") as desktop_file:
 			desktop_contents = desktop_file.read()
