@@ -132,7 +132,7 @@ class BlockSelection (QWidget):
 		self.__lineWidth = 4
 
 	def updateSelection(self, tc):
-		# block selection rectagle
+		# block selection rectangle
 		rect = self.__editor.cursorRect(tc)
 		w = rect.width()
 		tc2 = QTextCursor(tc)
