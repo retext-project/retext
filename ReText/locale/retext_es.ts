@@ -87,7 +87,7 @@
     <message>
       <location filename="../config.py" line="124" />
       <source>Draw vertical line at column</source>
-      <translation>Dibujar linea vertical en columna</translation>
+      <translation>Dibujar línea vertical en columna</translation>
     </message>
     <message>
       <location filename="../config.py" line="125" />
@@ -102,7 +102,7 @@
     <message>
       <location filename="../config.py" line="127" />
       <source>Ordered list mode</source>
-      <translation type="unfinished" />
+      <translation>Modo de lista ordenada</translation>
     </message>
     <message>
       <location filename="../config.py" line="129" />
@@ -137,12 +137,12 @@
     <message>
       <location filename="../config.py" line="135" />
       <source>Show directory tree</source>
-      <translation type="unfinished" />
+      <translation>Mostrar el árbol de directorios</translation>
     </message>
     <message>
       <location filename="../config.py" line="136" />
       <source>Working directory</source>
-      <translation type="unfinished" />
+      <translation>Directorio de trabajo</translation>
     </message>
     <message>
       <location filename="../config.py" line="161" />
@@ -162,27 +162,27 @@
     <message>
       <location filename="../config.py" line="186" />
       <source>Disabled</source>
-      <translation type="unfinished" />
+      <translation>Desactivado</translation>
     </message>
     <message>
       <location filename="../config.py" line="187" />
       <source>Cursor Line</source>
-      <translation type="unfinished" />
+      <translation>Línea del cursor</translation>
     </message>
     <message>
       <location filename="../config.py" line="188" />
       <source>Wrapped Line</source>
-      <translation type="unfinished" />
+      <translation>Línea ajustada</translation>
     </message>
     <message>
       <location filename="../config.py" line="193" />
       <source>Increment</source>
-      <translation type="unfinished" />
+      <translation>Incremento</translation>
     </message>
     <message>
       <location filename="../config.py" line="194" />
       <source>Repeat</source>
-      <translation type="unfinished" />
+      <translation>Repetir</translation>
     </message>
   </context>
   <context>
@@ -190,7 +190,7 @@
     <message>
       <location filename="../config.py" line="61" />
       <source>Select directory to open</source>
-      <translation type="unfinished" />
+      <translation>Seleccione el directorio que desea abrir</translation>
     </message>
   </context>
   <context>

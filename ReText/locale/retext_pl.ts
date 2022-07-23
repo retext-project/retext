@@ -102,7 +102,7 @@
     <message>
       <location filename="../config.py" line="127" />
       <source>Ordered list mode</source>
-      <translation type="unfinished" />
+      <translation>Tryb listy uporządkowanej</translation>
     </message>
     <message>
       <location filename="../config.py" line="129" />
@@ -137,12 +137,12 @@
     <message>
       <location filename="../config.py" line="135" />
       <source>Show directory tree</source>
-      <translation type="unfinished" />
+      <translation>Pokaż drzewo folderów</translation>
     </message>
     <message>
       <location filename="../config.py" line="136" />
       <source>Working directory</source>
-      <translation type="unfinished" />
+      <translation>Folder roboczy</translation>
     </message>
     <message>
       <location filename="../config.py" line="161" />
@@ -162,27 +162,27 @@
     <message>
       <location filename="../config.py" line="186" />
       <source>Disabled</source>
-      <translation type="unfinished" />
+      <translation>Wyłączone</translation>
     </message>
     <message>
       <location filename="../config.py" line="187" />
       <source>Cursor Line</source>
-      <translation type="unfinished" />
+      <translation>Linia z kursorem</translation>
     </message>
     <message>
       <location filename="../config.py" line="188" />
       <source>Wrapped Line</source>
-      <translation type="unfinished" />
+      <translation>Linia z zawiniętym tekstem</translation>
     </message>
     <message>
       <location filename="../config.py" line="193" />
       <source>Increment</source>
-      <translation type="unfinished" />
+      <translation>Przyrostowo</translation>
     </message>
     <message>
       <location filename="../config.py" line="194" />
       <source>Repeat</source>
-      <translation type="unfinished" />
+      <translation>Powtarzaj</translation>
     </message>
   </context>
   <context>
@@ -190,7 +190,7 @@
     <message>
       <location filename="../config.py" line="61" />
       <source>Select directory to open</source>
-      <translation type="unfinished" />
+      <translation>Wybierz folder do otwarcia</translation>
     </message>
   </context>
   <context>
@@ -610,7 +610,7 @@ Czy chcesz go utworzyć?</translation>
     <message>
       <location filename="../window.py" line="262" />
       <source>&amp;Help</source>
-      <translation>P&amp;omoc</translation>
+      <translation>Pomo&amp;c</translation>
     </message>
     <message>
       <location filename="../window.py" line="265" />
