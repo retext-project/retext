@@ -57,7 +57,7 @@ class MarkupNotAvailableError(Exception):
     pass
 
 def _indent(text, prefix):
-    return ''.join(('%s%s\n' % (prefix, line) for line in text.splitlines()))
+    return ''.join('%s%s\n' % (prefix, line) for line in text.splitlines())
 
 def _converter_process_func(conn_parent, conn_child):
     conn_parent.close()
