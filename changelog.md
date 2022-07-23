@@ -1,3 +1,23 @@
+## ReText 8.0.0 (2022-07-24)
+
+* Dependency changes:
+    - ReText is now using Qt 6 and PyQt6.
+    - PyQt6-WebEngine is required for JavaScript support.
+    - WebKit is no longer supported.
+* Improvements and bugs fixed:
+    - PR #543 — Added Apply button to Preferences dialog (contributed by Amos
+      Kong).
+    - Issue #384 — Save button is now enabled in auto-save mode.
+    - Issue #536 — Support spell checking for multiple languages.
+    - Issue #555 — Support setting bold font for editor.
+    - Issue #581 — Added backtick key to surround keys.
+    - Run-time resources are now installed into package directory.
+    - `setup.py` now allows building wheels.
+* Translations updated:
+    - Polish (contributed by Maciej Haudek).
+    - Spanish (contributed by Pedro Torcatt).
+    - Turkish (contributed by Serkan ÖNDER in #556).
+
 ## ReText 7.2.3 (2022-02-03)
 
 * Issues #573, #574 — Fixed TypeError crash with Python 3.10 and Qt WebKit.
