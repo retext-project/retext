@@ -15,8 +15,6 @@ License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 
 '''
 
-from __future__ import unicode_literals
-
 import re
 from xml.etree.ElementTree import SubElement
 
