@@ -100,7 +100,9 @@ class ReTextWebEnginePreview(QWebEngineView):
                                      sourceLineToEditorPositionFunc)
         self.editBox = tab.editBox
 
-        self.settings().setDefaultTextEncoding('utf-8')
+        settings = self.settings()
+        settings.setDefaultTextEncoding('utf-8')
+        settings.setAttribute(QWebEngineSettings.WebAttribute.LocalContentCanAccessRemoteUrls, True)
 
         # Events relevant to sync scrolling
         self.editBox.cursorPositionChanged.connect(self._handleCursorPositionChanged)
