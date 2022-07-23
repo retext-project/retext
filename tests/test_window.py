@@ -378,7 +378,7 @@ class TestWindow(unittest.TestCase):
         cursor.select(QTextCursor.SelectionType.Document)
         cursor.insertText('second content')
         QTest.qWait(300)  # more than the timer interval
-        with open(fileName, 'r', encoding='utf-8') as tempFile:
+        with open(fileName, encoding='utf-8') as tempFile:
             self.assertEqual(tempFile.read(), 'second content')
 
         window.closeTab(0)
