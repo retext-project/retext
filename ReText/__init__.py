@@ -125,7 +125,7 @@ def getSettingsFilePath(settings=settings):
 	return settings.fileName()
 
 
-class ReTextSettings(object):
+class ReTextSettings:
 	def __init__(self):
 		for option in configOptions:
 			value = configOptions[option]
