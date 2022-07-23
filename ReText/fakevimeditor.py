@@ -175,7 +175,7 @@ class ReTextFakeVimHandler (QObject):
 		self.__handler.installEventFilter()
 		self.__handler.setupWidget()
 		self.__handler.handleCommand(
-				'source {home}/.vimrc'.format(home = QDir.homePath()))
+				f'source {QDir.homePath()}/.vimrc')
 
 		self.__saveAction = None
 		self.__quitAction = None
