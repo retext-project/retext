@@ -198,7 +198,7 @@
     <message>
       <location filename="../dialogs.py" line="63" />
       <source>Enter encoding name:</source>
-      <translation type="unfinished" />
+      <translation>Введите название кодировки:</translation>
     </message>
   </context>
   <context>
@@ -245,7 +245,7 @@
     <message>
       <location filename="../dialogs.py" line="44" />
       <source>It is possible to specify multiple languages, separated by comma.</source>
-      <translation type="unfinished" />
+      <translation>Можно указать несколько языков, разделённых запятой.</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="50" />
@@ -559,7 +559,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="219" />
       <source>What's new</source>
-      <translation type="unfinished" />
+      <translation>Что нового</translation>
     </message>
     <message>
       <location filename="../window.py" line="220" />
@@ -782,7 +782,7 @@ Do you want to reload the file (this will discard all your changes)?
     <message>
       <location filename="../window.py" line="1182" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
-      <translation type="unfinished" />
+      <translation>Автоматическое сохранение было отключено для этой вкладки во избежание потери данных. Оно будет включено снова, если вы загрузите файл заново или сохраните его вручную.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1205" />
