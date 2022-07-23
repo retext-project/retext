@@ -160,6 +160,7 @@ setup(name='ReText',
       ],
       extras_require={
         'spellcheck': ['pyenchant'],
+        'webengine': ['PyQt6-WebEngine'],
       },
       cmdclass={
         'build_translations': retext_build_translations,
