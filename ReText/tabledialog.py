@@ -1,5 +1,5 @@
 # This file is part of ReText
-# Copyright: 2018 Changhee Kim, 2018-2021 Dmitry Shachnev
+# Copyright: 2018 Changhee Kim, 2018-2022 Dmitry Shachnev
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
