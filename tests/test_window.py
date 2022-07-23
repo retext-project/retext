@@ -74,8 +74,8 @@ class TestWindow(unittest.TestCase):
 
     @staticmethod
     def get_ui_enabled_states(window):
-        enabled = set([])
-        disabled = set([])
+        enabled = set()
+        disabled = set()
 
         for item in ('actionBold',
                      'actionCopy',
@@ -105,13 +105,13 @@ class TestWindow(unittest.TestCase):
 
     def check_widgets_enabled_for_markdown(self, window):
         self.check_widget_state(window,
-                                set(['actionBold', 'actionItalic', 'actionUnderline', 'formattingBox', 'symbolBox']),
+                                {'actionBold', 'actionItalic', 'actionUnderline', 'formattingBox', 'symbolBox'},
                                 set())
 
     def check_widgets_enabled_for_restructuredtext(self, window):
         self.check_widget_state(window,
-                                set(['actionBold', 'actionItalic']),
-                                set(['actionUnderline', 'formattingBox', 'symbolBox']))
+                                {'actionBold', 'actionItalic'},
+                                {'actionUnderline', 'formattingBox', 'symbolBox'})
 
     def check_widgets_enabled(self, window, widgets):
         self.check_widget_state(window,
