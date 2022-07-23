@@ -37,7 +37,7 @@ class FakeVimMode:
 class Proxy (FakeVimProxy):
 	""" Used by FakeVim to modify or retrieve editor state. """
 	def __init__(self, window, editor, handler):
-		super(Proxy, self).__init__(handler.handler())
+		super().__init__(handler.handler())
 		self.__handler = handler
 		self.__window = window
 		self.__editor = editor
@@ -127,7 +127,7 @@ class Proxy (FakeVimProxy):
 
 class BlockSelection (QWidget):
 	def __init__(self, editor):
-		super(BlockSelection, self).__init__(editor.viewport())
+		super().__init__(editor.viewport())
 		self.__editor = editor
 		self.__lineWidth = 4
 
@@ -154,7 +154,7 @@ class BlockSelection (QWidget):
 class ReTextFakeVimHandler (QObject):
 	""" Editor widget driven by FakeVim. """
 	def __init__(self, editor, window):
-		super(ReTextFakeVimHandler, self).__init__(window)
+		super().__init__(window)
 
 		self.__window = window
 		self.__editor = editor
@@ -274,7 +274,7 @@ class ReTextFakeVimHandler (QObject):
 
 class StatusBar (QStatusBar):
 	def __init__(self):
-		super(StatusBar, self).__init__()
+		super().__init__()
 
 		self.__statusMessageLabel = QLabel(self)
 		self.__statusDataLabel = QLabel(self)
