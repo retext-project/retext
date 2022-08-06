@@ -32,6 +32,13 @@ if not str(settings.fileName()).endswith('.conf'):
 	settings = QSettings(QSettings.Format.IniFormat, QSettings.Scope.UserScope,
 		'ReText project', 'ReText')
 
+cache = QSettings('ReText project', 'ReText cache')
+
+if not str(cache.fileName()).endswith('.conf'):
+	# We are on Windows probably
+	cache = QSettings(QSettings.Format.IniFormat, QSettings.Scope.UserScope,
+		'ReText project', 'ReText cache')
+
 
 packageDir = abspath(dirname(__file__))
 
@@ -54,7 +61,6 @@ configOptions = {
 	'hideToolBar': False,
 	'highlightCurrentLine': 'disabled',
 	'iconTheme': '',
-	'lastTabIndex': 0,
 	'lineNumbersEnabled': False,
 	'markdownDefaultFileExtension': '.mkd',
 	'openFilesInExistingWindow': True,
@@ -80,11 +86,17 @@ configOptions = {
 	'useFakeVim': False,
 	'useWebEngine': False,
 	'wideCursor': False,
-	'windowGeometry': QByteArray(),
 	'windowTitleFullPath': False,
 }
 
-def readFromSettings(key, keytype, settings=settings, default=None):
+cacheOptions = {
+	'lastFileList': [],
+	'lastTabIndex': 0,
+	'recentFileList': [],
+	'windowGeometry': QByteArray(),
+}
+
+def readFromSettings(key, keytype, settings, default=None):
 	if not settings.contains(key):
 		return default
 	try:
@@ -98,7 +110,7 @@ def readFromSettings(key, keytype, settings=settings, default=None):
 		# Return an instance of keytype
 		return default if (default is not None) else keytype()
 
-def readListFromSettings(key, settings=settings):
+def readListFromSettings(key, settings):
 	if not settings.contains(key):
 		return []
 	value = settings.value(key)
@@ -107,13 +119,13 @@ def readListFromSettings(key, settings=settings):
 	else:
 		return value
 
-def writeToSettings(key, value, default, settings=settings):
+def writeToSettings(key, value, default, settings):
 	if value == default:
 		settings.remove(key)
 	else:
 		settings.setValue(key, value)
 
-def writeListToSettings(key, value, settings=settings):
+def writeListToSettings(key, value, settings):
 	if len(value) > 1:
 		settings.setValue(key, value)
 	elif len(value) == 1:
@@ -121,7 +133,7 @@ def writeListToSettings(key, value, settings=settings):
 	else:
 		settings.remove(key)
 
-def getSettingsFilePath(settings=settings):
+def getSettingsFilePath():
 	return settings.fileName()
 
 
@@ -130,13 +142,13 @@ class ReTextSettings:
 		for option in configOptions:
 			value = configOptions[option]
 			object.__setattr__(self, option, readFromSettings(
-				option, type(value), default=value))
+				option, type(value), default=value, settings=settings))
 
 	def __setattr__(self, option, value):
 		if not option in configOptions:
 			raise AttributeError('Unknown attribute')
 		object.__setattr__(self, option, value)
-		writeToSettings(option, value, configOptions[option])
+		writeToSettings(option, value, configOptions[option], settings=settings)
 
 	def getPreviewFont(self):
 		font = QFont()
@@ -150,6 +162,44 @@ class ReTextSettings:
 			font.fromString(self.editorFont)
 		return font
 
+class ReTextCache:
+	def __init__(self):
+		for option in cacheOptions:
+			value = cacheOptions[option]
+			if isinstance(value, list):
+				object.__setattr__(self, option, readListFromSettings(
+					option, settings=cache))
+			else:
+				object.__setattr__(self, option, readFromSettings(
+					option, type(value), default=value, settings=cache))
+
+	def __setattr__(self, option, value):
+		if not option in cacheOptions:
+			raise AttributeError('Unknown attribute')
+		default = cacheOptions[option]
+		if isinstance(default, list):
+			object.__setattr__(self, option, value.copy())
+			writeListToSettings(option, value, settings=cache)
+		else:
+			object.__setattr__(self, option, value)
+			writeToSettings(option, value, cacheOptions[option], settings=cache)
+
+def moveSettingsToCache():
+	# Moves the non-editable config options to the cache file
+	# This is here for backwards compatibility
+	for option in cacheOptions:
+		if not cache.contains(option):
+			default = cacheOptions[option]
+			if isinstance(default, list):
+				value = readListFromSettings(option, settings)
+				writeListToSettings(option, value, cache)
+			else:
+				value = readFromSettings(option, type(default), settings, default)
+				writeToSettings(option, value, default, cache)
+		settings.remove(option)
+
+moveSettingsToCache()
 globalSettings = ReTextSettings()
+globalCache = ReTextCache()
 
 markups.common.PYGMENTS_STYLE = globalSettings.pygmentsStyle

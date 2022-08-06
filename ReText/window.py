@@ -22,8 +22,7 @@ import os
 from subprocess import Popen
 import warnings
 
-from ReText import (getBundledIcon, app_version, globalSettings,
-                    readListFromSettings, writeListToSettings)
+from ReText import getBundledIcon, app_version, globalSettings, globalCache
 from ReText.tab import (ReTextTab, ReTextWebEnginePreview,
                         PreviewDisabled, PreviewNormal, PreviewLive)
 from ReText.dialogs import EncodingDialog, HtmlDialog, LocaleDialog
@@ -57,8 +56,8 @@ class ReTextWindow(QMainWindow):
 		self.resize(950, 700)
 		qApp = QApplication.instance()
 		screenRect = self.screen().geometry()
-		if globalSettings.windowGeometry:
-			self.restoreGeometry(globalSettings.windowGeometry)
+		if globalCache.windowGeometry:
+			self.restoreGeometry(globalCache.windowGeometry)
 		else:
 			self.move((screenRect.width() - self.width()) // 2,
 			          (screenRect.height() - self.height()) // 2)
@@ -396,11 +395,11 @@ class ReTextWindow(QMainWindow):
 		self.fileSystemWatcher.fileChanged.connect(self.fileChanged)
 
 	def restoreLastOpenedFiles(self):
-		for file in readListFromSettings("lastFileList"):
+		for file in globalCache.lastFileList:
 			self.openFileWrapper(file)
 
 		# Show the tab of last opened file
-		lastTabIndex = globalSettings.lastTabIndex
+		lastTabIndex = globalCache.lastTabIndex
 		if lastTabIndex >= 0 and lastTabIndex < self.tabWidget.count():
 			self.tabWidget.setCurrentIndex(lastTabIndex)
 
@@ -738,14 +737,14 @@ class ReTextWindow(QMainWindow):
 
 	def moveToTopOfRecentFileList(self, fileName):
 		if fileName:
-			files = readListFromSettings("recentFileList")
+			files = globalCache.recentFileList
 			if fileName in files:
 				files.remove(fileName)
 			files.insert(0, fileName)
 			recentCount = globalSettings.recentDocumentsCount
 			if len(files) > recentCount:
 				del files[recentCount:]
-			writeListToSettings("recentFileList", files)
+			globalCache.recentFileList = files
 
 	def createNew(self, text=None):
 		self.createTab("")
@@ -760,13 +759,13 @@ class ReTextWindow(QMainWindow):
 	def updateRecentFiles(self):
 		self.menuRecentFiles.clear()
 		self.recentFilesActions = []
-		filesOld = readListFromSettings("recentFileList")
+		filesOld = globalCache.recentFileList
 		files = []
 		for f in filesOld:
 			if QFile.exists(f):
 				files.append(f)
 				self.recentFilesActions.append(self.act(f, trig=self.openFunction(f)))
-		writeListToSettings("recentFileList", files)
+		globalCache.recentFileList = files
 		for action in self.recentFilesActions:
 			self.menuRecentFiles.addAction(action)
 
@@ -1215,11 +1214,11 @@ class ReTextWindow(QMainWindow):
 			if not self.maybeSave(ind):
 				return closeevent.ignore()
 		if globalSettings.saveWindowGeometry:
-			globalSettings.windowGeometry = self.saveGeometry()
+			globalCache.windowGeometry = self.saveGeometry()
 		if globalSettings.openLastFilesOnStartup:
 			files = [tab.fileName for tab in self.iterateTabs()]
-			writeListToSettings("lastFileList", files)
-			globalSettings.lastTabIndex = self.tabWidget.currentIndex()
+			globalCache.lastFileList = files
+			globalCache.lastTabIndex = self.tabWidget.currentIndex()
 		closeevent.accept()
 
 	def viewHtml(self):

@@ -24,7 +24,7 @@ import signal
 import markups
 from os import devnull
 from os.path import join
-from ReText import packageDir, settings, globalSettings, app_version
+from ReText import packageDir, settings, cache, globalSettings, app_version
 from ReText.window import ReTextWindow
 
 from PyQt6.QtCore import QCommandLineOption, QCommandLineParser, QFile, \
@@ -94,6 +94,7 @@ def main():
 	filesToOpen = parser.positionalArguments()
 
 	print('Using configuration file:', settings.fileName())
+	print('Using cache file:', cache.fileName())
 	if globalSettings.appStyleSheet:
 		sheetfile = QFile(globalSettings.appStyleSheet)
 		sheetfile.open(QIODevice.OpenModeFlag.ReadOnly)
