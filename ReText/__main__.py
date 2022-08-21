@@ -101,25 +101,26 @@ def main():
 		sheetfile.close()
 	window = ReTextWindow()
 
+	# ReText can change directory when loading files, so we
+	# need to have a list of canonical names before loading
+	fileNames = list(map(canonicalize, filesToOpen))
+
 	openInExistingWindow = (globalSettings.openFilesInExistingWindow
 		and not parser.isSet(newWindowOption))
 	connection = QDBusConnection.sessionBus()
 	if connection.isConnected() and openInExistingWindow:
 		connection.registerObject('/', window, QDBusConnection.RegisterOption.ExportAllSlots)
 		serviceName = 'me.mitya57.ReText'
-		if not connection.registerService(serviceName) and filesToOpen:
+		if not connection.registerService(serviceName) and fileNames:
 			print('Opening the file(s) in the existing window of ReText.')
 			iface = QDBusInterface(serviceName, '/', '', connection)
-			for fileName in filesToOpen:
+			for fileName in fileNames:
 				iface.call('openFileWrapper', fileName)
 			qWidgetIface = QDBusInterface(serviceName, '/', 'org.qtproject.Qt.QWidget', connection)
 			qWidgetIface.call('raise')
 			sys.exit(0)
 
 	window.show()
-	# ReText can change directory when loading files, so we
-	# need to have a list of canonical names before loading
-	fileNames = list(map(canonicalize, filesToOpen))
 	readStdIn = False
 
 	if globalSettings.openLastFilesOnStartup:
