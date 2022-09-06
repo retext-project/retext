@@ -138,17 +138,30 @@ def getSettingsFilePath():
 
 
 class ReTextSettings:
-	def __init__(self):
-		for option in configOptions:
-			value = configOptions[option]
-			object.__setattr__(self, option, readFromSettings(
-				option, type(value), default=value, settings=settings))
+
+	def __init__(self, settings, defaults):
+		# We have to do this to go around the custom __setattr__ method
+		object.__setattr__(self, "settings", settings)
+		object.__setattr__(self, "defaults", defaults)
+		for option in defaults:
+			default = defaults[option]
+			if isinstance(default, list):
+				object.__setattr__(self, option, readListFromSettings(
+					option, settings=settings))
+			else:
+				object.__setattr__(self, option, readFromSettings(
+					option, type(default), default=default, settings=settings))
 
 	def __setattr__(self, option, value):
-		if not option in configOptions:
+		if not option in self.defaults:
 			raise AttributeError('Unknown attribute')
-		object.__setattr__(self, option, value)
-		writeToSettings(option, value, configOptions[option], settings=settings)
+		default = self.defaults[option]
+		if isinstance(default, list):
+			object.__setattr__(self, option, value.copy())
+			writeListToSettings(option, value, settings=self.settings)
+		else:
+			object.__setattr__(self, option, value)
+			writeToSettings(option, value, default=default, settings=self.settings)
 
 	def getPreviewFont(self):
 		font = QFont()
@@ -161,28 +174,6 @@ class ReTextSettings:
 		if self.editorFont:
 			font.fromString(self.editorFont)
 		return font
-
-class ReTextCache:
-	def __init__(self):
-		for option in cacheOptions:
-			value = cacheOptions[option]
-			if isinstance(value, list):
-				object.__setattr__(self, option, readListFromSettings(
-					option, settings=cache))
-			else:
-				object.__setattr__(self, option, readFromSettings(
-					option, type(value), default=value, settings=cache))
-
-	def __setattr__(self, option, value):
-		if not option in cacheOptions:
-			raise AttributeError('Unknown attribute')
-		default = cacheOptions[option]
-		if isinstance(default, list):
-			object.__setattr__(self, option, value.copy())
-			writeListToSettings(option, value, settings=cache)
-		else:
-			object.__setattr__(self, option, value)
-			writeToSettings(option, value, cacheOptions[option], settings=cache)
 
 def moveSettingsToCache():
 	# Moves the non-editable config options to the cache file
@@ -199,7 +190,7 @@ def moveSettingsToCache():
 		settings.remove(option)
 
 moveSettingsToCache()
-globalSettings = ReTextSettings()
-globalCache = ReTextCache()
+globalSettings = ReTextSettings(settings, configOptions)
+globalCache = ReTextSettings(cache, cacheOptions)
 
 markups.common.PYGMENTS_STYLE = globalSettings.pygmentsStyle
