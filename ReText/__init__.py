@@ -37,7 +37,7 @@ cache = QSettings('ReText project', 'cache')
 if not str(cache.fileName()).endswith('.conf'):
 	# We are on Windows probably
 	cache = QSettings(QSettings.Format.IniFormat, QSettings.Scope.UserScope,
-		'ReText project', 'ReText cache')
+		'ReText project', 'cache')
 
 
 packageDir = abspath(dirname(__file__))
