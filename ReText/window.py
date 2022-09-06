@@ -22,7 +22,8 @@ import os
 from subprocess import Popen
 import warnings
 
-from ReText import getBundledIcon, app_version, globalSettings, globalCache
+from ReText import (getBundledIcon, app_version, globalSettings, globalCache, 
+	readListFromSettings, writeListToSettings)
 from ReText.tab import (ReTextTab, ReTextWebEnginePreview,
                         PreviewDisabled, PreviewNormal, PreviewLive)
 from ReText.dialogs import EncodingDialog, HtmlDialog, LocaleDialog
