@@ -32,7 +32,7 @@ if not str(settings.fileName()).endswith('.conf'):
 	settings = QSettings(QSettings.Format.IniFormat, QSettings.Scope.UserScope,
 		'ReText project', 'ReText')
 
-cache = QSettings('ReText project', 'ReText cache')
+cache = QSettings('ReText project', 'cache')
 
 if not str(cache.fileName()).endswith('.conf'):
 	# We are on Windows probably
