@@ -521,6 +521,11 @@ class ReTextEdit(QTextEdit):
 		characterCount = len(text)
 		self.statistics = (wordCount, alphaNumCount, characterCount)
 
+	def inputMethodEvent(self, event):
+		# Empty events cause layout issues (issue #597), so ignore them.
+		if event.preeditString() or event.commitString() or event.attributes():
+			super().inputMethodEvent(event)
+
 
 class LineNumberArea(QWidget):
 	def __init__(self, editor):
