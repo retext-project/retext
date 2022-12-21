@@ -24,6 +24,7 @@ import tempfile
 import unittest
 from unittest.mock import patch, MagicMock
 import warnings
+import platform
 
 from markups.abstract import ConvertedMarkup
 
@@ -386,6 +387,7 @@ class TestWindow(unittest.TestCase):
         with suppress(PermissionError):
             os.remove(fileName)
 
+    @unittest.skipIf(platform.system() == 'Windows', 'QFileSystemWatcher does not work reliably')
     @patch('ReText.window.QMessageBox.exec', return_value=None)
     def test_reloadFileNotModified(self, messageBoxExecMock):
         self.fileSystemWatcherPatcher.stop()
@@ -411,6 +413,7 @@ class TestWindow(unittest.TestCase):
         with suppress(PermissionError):
             os.remove(fileName)
 
+    @unittest.skipIf(platform.system() == 'Windows', 'QFileSystemWatcher does not work reliably')
     @patch('ReText.window.QMessageBox.warning', return_value=QMessageBox.StandardButton.Discard)
     @patch('ReText.window.QMessageBox.exec', return_value=None)
     def test_reloadFileModified(self, messageBoxExecMock, messageBoxWarningMock):
