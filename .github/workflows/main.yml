@@ -11,7 +11,8 @@ jobs:
           - py37-pyqt62-ubuntu2204
           - py38-pyqt63-ubuntu
           - py39-windows
-          - py310-ubuntu
+          - py310-pyqt64-ubuntu
+          - py311-ubuntu
         include:
           - environment: py36-pyqt61-ubuntu2004
             python: 3.6
@@ -33,8 +34,13 @@ jobs:
             pyqt: PyQt6
             pygments: Pygments
             platform: windows-latest
-          - environment: py310-ubuntu
+          - environment: py310-pyqt64-ubuntu
             python: '3.10'
+            pyqt: PyQt6>=6.4,<6.5
+            pygments: Pygments
+            platform: ubuntu-latest
+          - environment: py311-ubuntu
+            python: '3.11'
             pyqt: PyQt6
             pygments: Pygments
             platform: ubuntu-latest
