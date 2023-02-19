@@ -19,7 +19,7 @@
 from ReText import globalSettings
 from ReText.syncscroll import SyncScroll
 from PyQt6.QtCore import QEvent, Qt
-from PyQt6.QtGui import QDesktopServices, QGuiApplication, QTextDocument
+from PyQt6.QtGui import QDesktopServices, QFontInfo, QGuiApplication, QTextDocument
 from PyQt6.QtWebEngineCore import (
     QWebEnginePage,
     QWebEngineSettings,
@@ -120,7 +120,7 @@ class ReTextWebEnginePreview(QWebEngineView):
         settings.setFontFamily(QWebEngineSettings.FontFamily.StandardFont,
                                font.family())
         settings.setFontSize(QWebEngineSettings.FontSize.DefaultFontSize,
-                             font.pointSize())
+                             QFontInfo(font).pixelSize())
 
     def setHtml(self, html, baseUrl):
         # A hack to prevent WebEngine from stealing the focus
