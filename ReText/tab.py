@@ -16,8 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from os.path import exists, splitext
+from os.path import exists, join, split, splitext
 import locale
+import os
+import shutil
 import time
 from markups import get_markup_for_file_name, find_markup_class_by_name
 from markups.common import MODULE_HOME_PAGE
@@ -382,17 +384,34 @@ class ReTextTab(QSplitter):
 		fileName = fileName or self._fileName
 		encoding = self.editBox.document().property("encoding")
 		encoding = encoding or globalSettings.defaultCodec or None
+
 		try:
 			data = text.encode(encoding or locale.getpreferredencoding(False))
 		except (UnicodeEncodeError, LookupError) as ex:
 			QMessageBox.warning(self, '', str(ex))
 			return False
+
+		# If the original file exists, make a backup of it. So if something
+		# goes wrong while we are writing new version (e.g. the system shuts
+		# down, or ReText crashes), we will have a backup of the old version,
+		# rather than just a blank or half-written file.
+		dir, baseName = split(fileName)
+		tempFileName = join(dir, f'.{baseName}.{os.getpid()}~')
+		try:
+			shutil.copy(fileName, tempFileName)
+			backupCreated = True
+		except OSError:
+			backupCreated = False
+
 		try:
 			with open(fileName, 'wb') as savefile:
 				savefile.write(data)
 		except OSError as ex:
 			QMessageBox.warning(self, '', str(ex))
 			return False
+
+		if backupCreated:
+			os.remove(tempFileName)
 		return True
 
 	def saveTextToFile(self, fileName=None):
