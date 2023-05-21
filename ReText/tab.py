@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from os.path import exists, splitext
+import locale
 import time
 from markups import get_markup_for_file_name, find_markup_class_by_name
 from markups.common import MODULE_HOME_PAGE
@@ -384,9 +385,14 @@ class ReTextTab(QSplitter):
 		encoding = self.editBox.document().property("encoding")
 		encoding = encoding or globalSettings.defaultCodec or None
 		try:
-			with open(fileName, 'w', encoding=encoding) as savefile:
-				savefile.write(text)
-		except (OSError, UnicodeEncodeError, LookupError) as ex:
+			data = text.encode(encoding or locale.getpreferredencoding(False))
+		except (UnicodeEncodeError, LookupError) as ex:
+			QMessageBox.warning(self, '', str(ex))
+			return False
+		try:
+			with open(fileName, 'wb') as savefile:
+				savefile.write(data)
+		except OSError as ex:
 			QMessageBox.warning(self, '', str(ex))
 			return False
 		return True
