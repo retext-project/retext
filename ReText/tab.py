@@ -306,9 +306,9 @@ class ReTextTab(QSplitter):
 		self.triggerPreviewUpdate()
 		self.updateBoxesVisibility()
 
-	def detectFileEncoding(self, fileName):
+	def detectEncoding(self, raw: bytes):
 		'''
-		Detect content encoding of specific file.
+		Detect content encoding of the given data.
 
 		It will return None if it can't determine the encoding.
 		'''
@@ -316,12 +316,6 @@ class ReTextTab(QSplitter):
 			import chardet
 		except ImportError:
 			return
-
-		try:
-			with open(fileName, 'rb') as inputFile:
-				raw = inputFile.read(2048)
-		except OSError:
-			return None
 
 		result = chardet.detect(raw)
 		if result['confidence'] > 0.9:
@@ -336,17 +330,21 @@ class ReTextTab(QSplitter):
 		previousFileName = self._fileName
 		fileName = fileName or self._fileName
 
+		try:
+			with open(fileName, 'rb') as openfile:
+				data = openfile.read()
+		except OSError as ex:
+			QMessageBox.warning(self, '', str(ex))
+			return
+
 		# Only try to detect encoding if it is not specified
 		if encoding is None and globalSettings.detectEncoding:
-			encoding = self.detectFileEncoding(fileName)
+			encoding = self.detectEncoding(data[:2048])
 		encoding = encoding or globalSettings.defaultCodec or None
 
-		# TODO: why do we open the file twice: for detecting encoding
-		# and for actual read? Can we open it just once?
 		try:
-			with open(fileName, encoding=encoding) as openfile:
-				text = openfile.read()
-		except (OSError, UnicodeDecodeError, LookupError) as ex:
+			text = data.decode(encoding or locale.getpreferredencoding(False))
+		except (UnicodeDecodeError, LookupError) as ex:
 			QMessageBox.warning(self, '', str(ex))
 			return
 
