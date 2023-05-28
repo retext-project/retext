@@ -287,22 +287,22 @@
   <context>
     <name>ReTextTab</name>
     <message>
-      <location filename="../tab.py" line="173" />
+      <location filename="../tab.py" line="174" />
       <source>New document</source>
       <translation>Новый документ</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="178" />
+      <location filename="../tab.py" line="179" />
       <source>Could not parse file contents, check if you have the &lt;a href="%s"&gt;necessary module&lt;/a&gt; installed!</source>
       <translation>Не удалось обработать содержимое файла, убедитесь, что установлен &lt;a href="%s"&gt;необходимый модуль&lt;/a&gt;!</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="483" />
+      <location filename="../tab.py" line="489" />
       <source>Create missing file?</source>
       <translation>Создать недостающий файл?</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="484" />
+      <location filename="../tab.py" line="490" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
@@ -311,12 +311,12 @@ Do you want to create it?</source>
 Вы хотите создать его?</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="516" />
+      <location filename="../tab.py" line="522" />
       <source>File could not be created</source>
       <translation>Не удалось создать файл</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="517" />
+      <location filename="../tab.py" line="523" />
       <source>Could not create file '%s': %s</source>
       <translation>Не удалось создать файл «%s»: %s</translation>
     </message>
@@ -830,7 +830,7 @@ Do you want to save your changes?</source>
   <context>
     <name>TextInfoArea</name>
     <message>
-      <location filename="../editor.py" line="654" />
+      <location filename="../editor.py" line="659" />
       <source>%d w | %d a | %d c</source>
       <comment>count of words, alphanumeric characters, all characters</comment>
       <translation>%d w | %d a | %d c</translation>

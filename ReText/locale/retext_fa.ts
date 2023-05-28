@@ -287,22 +287,22 @@
   <context>
     <name>ReTextTab</name>
     <message>
-      <location filename="../tab.py" line="173" />
+      <location filename="../tab.py" line="174" />
       <source>New document</source>
       <translation>سند جدید</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="178" />
+      <location filename="../tab.py" line="179" />
       <source>Could not parse file contents, check if you have the &lt;a href="%s"&gt;necessary module&lt;/a&gt; installed!</source>
       <translation>امکان تجزیه و تحلیل محتوای فایل نبود. بررسی کنید که آیا &lt;a href="%s"&gt;پیمانه ضروری &lt;/a&gt; این کار را نصب کرده اید یا نه.</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="483" />
+      <location filename="../tab.py" line="489" />
       <source>Create missing file?</source>
       <translation>فایل گم شده ایجاد شود؟</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="484" />
+      <location filename="../tab.py" line="490" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
@@ -311,12 +311,12 @@ Do you want to create it?</source>
 آیا می خواهید آن را ایجاد کنید؟</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="516" />
+      <location filename="../tab.py" line="522" />
       <source>File could not be created</source>
       <translation>امکان ایجاد فایل نبود.</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="517" />
+      <location filename="../tab.py" line="523" />
       <source>Could not create file '%s': %s</source>
       <translation>امکان ایجاد فایل '%s': %s نبود</translation>
     </message>
@@ -829,7 +829,7 @@ Do you want to save your changes?</source>
   <context>
     <name>TextInfoArea</name>
     <message>
-      <location filename="../editor.py" line="654" />
+      <location filename="../editor.py" line="659" />
       <source>%d w | %d a | %d c</source>
       <comment>count of words, alphanumeric characters, all characters</comment>
       <translation>%d w | %d a | %d c</translation>

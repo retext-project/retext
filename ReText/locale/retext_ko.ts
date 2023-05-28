@@ -287,34 +287,34 @@
   <context>
     <name>ReTextTab</name>
     <message>
-      <location filename="../tab.py" line="173" />
+      <location filename="../tab.py" line="174" />
       <source>New document</source>
       <translation>새 문서</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="178" />
+      <location filename="../tab.py" line="179" />
       <source>Could not parse file contents, check if you have the &lt;a href="%s"&gt;necessary module&lt;/a&gt; installed!</source>
       <translation>파일 내용을 파싱할 수 업습니다. &lt;a href="%s"&gt;필수 모듈&lt;/a&gt; 가 있는지 보고 설치하세요!</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="483" />
+      <location filename="../tab.py" line="489" />
       <source>Create missing file?</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="484" />
+      <location filename="../tab.py" line="490" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="516" />
+      <location filename="../tab.py" line="522" />
       <source>File could not be created</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="517" />
+      <location filename="../tab.py" line="523" />
       <source>Could not create file '%s': %s</source>
       <translation type="unfinished" />
     </message>
@@ -824,7 +824,7 @@ Do you want to save your changes?</source>
   <context>
     <name>TextInfoArea</name>
     <message>
-      <location filename="../editor.py" line="654" />
+      <location filename="../editor.py" line="659" />
       <source>%d w | %d a | %d c</source>
       <comment>count of words, alphanumeric characters, all characters</comment>
       <translation type="unfinished" />
