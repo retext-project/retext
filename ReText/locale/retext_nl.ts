@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="">
+<TS version="2.1" language="nl">
   <context>
     <name>ConfigDialog</name>
     <message>
@@ -21,12 +21,12 @@
     <message>
       <location filename="../config.py" line="107" />
       <source>Automatically open last documents on startup</source>
-      <translation>Recentste document automatisch openen na opstarten</translation>
+      <translation>Vorige document automatisch openen na opstarten</translation>
     </message>
     <message>
       <location filename="../config.py" line="108" />
       <source>Number of recent documents</source>
-      <translation>Aantal recente documenten</translation>
+      <translation>Aantal onlangs geopende documenten</translation>
     </message>
     <message>
       <location filename="../config.py" line="109" />
@@ -46,7 +46,7 @@
     <message>
       <location filename="../config.py" line="112" />
       <source>Markdown syntax extensions (comma-separated)</source>
-      <translation>Markdown-syntaxextensies (kommagescheiden)</translation>
+      <translation>Markdown-syntaxisextensies (kommagescheiden)</translation>
     </message>
     <message>
       <location filename="../config.py" line="114" />
@@ -77,7 +77,7 @@
     <message>
       <location filename="../config.py" line="122" />
       <source>Tab key inserts spaces</source>
-      <translation>Tab-toets voegt spaties in</translation>
+      <translation>Spaties invoegen met tabtoets</translation>
     </message>
     <message>
       <location filename="../config.py" line="123" />
@@ -132,7 +132,7 @@
     <message>
       <location filename="../config.py" line="134" />
       <source>Show full path in window title</source>
-      <translation>Volledige pad tonen in venstertitiel</translation>
+      <translation>Volledige locatie tonen in venstertitiel</translation>
     </message>
     <message>
       <location filename="../config.py" line="135" />
@@ -198,7 +198,7 @@
     <message>
       <location filename="../dialogs.py" line="63" />
       <source>Enter encoding name:</source>
-      <translation type="unfinished" />
+      <translation>Voer een versleutelingsnaam in:</translation>
     </message>
   </context>
   <context>
@@ -245,7 +245,7 @@
     <message>
       <location filename="../dialogs.py" line="44" />
       <source>It is possible to specify multiple languages, separated by comma.</source>
-      <translation type="unfinished" />
+      <translation>Meerdere talen kunnen kommagescheiden worden ingevoerd.</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="50" />
@@ -294,7 +294,7 @@
     <message>
       <location filename="../tab.py" line="179" />
       <source>Could not parse file contents, check if you have the &lt;a href="%s"&gt;necessary module&lt;/a&gt; installed!</source>
-      <translation>De bestandsinhoud kan niet worden verwerkt. Controleer de &lt;a href="%s"&gt;vereiste module&lt;/a&gt; geïnstalleerd is!</translation>
+      <translation>De bestandsinhoud kan niet worden verwerkt. Controleer of de &lt;a href="%s"&gt;vereiste module&lt;/a&gt; geïnstalleerd is!</translation>
     </message>
     <message>
       <location filename="../tab.py" line="489" />
@@ -306,7 +306,7 @@
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
-      <translation>Het bestand '%s' bestaat niet.
+      <translation>Het bestand (‘%s’) bestaat niet.
 
 Wil je het aanmaken?</translation>
     </message>
@@ -318,7 +318,7 @@ Wil je het aanmaken?</translation>
     <message>
       <location filename="../tab.py" line="523" />
       <source>Could not create file '%s': %s</source>
-      <translation>Het bestand '%s' kan niet worden aangemaakt: %s</translation>
+      <translation>Het bestand (‘%s’) kan niet worden aangemaakt: %s</translation>
     </message>
   </context>
   <context>
@@ -397,7 +397,7 @@ Wil je het aanmaken?</translation>
     <message>
       <location filename="../window.py" line="124" />
       <source>View HTML code</source>
-      <translation>HTML-code bekijken</translation>
+      <translation>Html-code bekijken</translation>
     </message>
     <message>
       <location filename="../window.py" line="125" />
@@ -443,7 +443,7 @@ Wil je het aanmaken?</translation>
     <message>
       <location filename="../window.py" line="153" />
       <source>Insert images by file path</source>
-      <translation>Afbeeldingen invoegen via bestandspad</translation>
+      <translation>Afbeeldingen invoegen op basis van bestandslocatie</translation>
     </message>
     <message>
       <location filename="../window.py" line="156" />
@@ -559,7 +559,7 @@ Wil je het aanmaken?</translation>
     <message>
       <location filename="../window.py" line="219" />
       <source>What's new</source>
-      <translation type="unfinished" />
+      <translation>Wijzigingslog</translation>
     </message>
     <message>
       <location filename="../window.py" line="220" />
@@ -715,12 +715,12 @@ Wil je het aanmaken?</translation>
     <message>
       <location filename="../window.py" line="985" />
       <source>HTML files (*.html *.htm)</source>
-      <translation>HTML-bestanden (*.html *.htm)</translation>
+      <translation>Html-bestanden (*.html *.htm)</translation>
     </message>
     <message>
       <location filename="../window.py" line="1005" />
       <source>Unrecognized paperSize setting "%s".</source>
-      <translation>Niet-herkend papierformaat: '%s'.</translation>
+      <translation>Onbekend papierformaat: ‘%s’.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1020" />
@@ -730,7 +730,7 @@ Wil je het aanmaken?</translation>
     <message>
       <location filename="../window.py" line="1022" />
       <source>PDF files (*.pdf)</source>
-      <translation>PDF-bestanden (*.pdf)</translation>
+      <translation>Pdf-bestanden (*.pdf)</translation>
     </message>
     <message>
       <location filename="../window.py" line="1046" />
@@ -756,7 +756,7 @@ Wil je het aanmaken?</translation>
       <location filename="../window.py" line="1127" />
       <location filename="../window.py" line="1126" />
       <source>URL</source>
-      <translation>URL</translation>
+      <translation>Url</translation>
     </message>
     <message>
       <location filename="../window.py" line="1127" />
@@ -767,7 +767,7 @@ Wil je het aanmaken?</translation>
       <location filename="../window.py" line="1168" />
       <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
-      <translation>Dit bestand is verwijderd door een andere toepassing.
+      <translation>Dit bestand is verwijderd door een ander programma.
 Sla het bestand op voordat je afsluit.</translation>
     </message>
     <message>
@@ -775,31 +775,31 @@ Sla het bestand op voordat je afsluit.</translation>
       <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
-      <translation>Dit document is aangepast door een andere toepassing.
-Wil je het bestand herladen (dit verwerpt al je aanpassingen)?
+      <translation>Dit document is aangepast door een ander programma.
+Wil je het bestand herladen en je aanpassingen verwerpen?
 </translation>
     </message>
     <message>
       <location filename="../window.py" line="1182" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
-      <translation type="unfinished" />
+      <translation>Automatisch opslaan is tijdelijk uitgeschakeld op dit tabblad om gegevensverlies te voorkomen. De functie wordt weer ingeschakeld zodra je het bestand herlaadt of opslaat.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1205" />
       <source>The document has been modified.
 Do you want to save your changes?</source>
       <translation>Dit document is aangepast.
-Wil je je aanpassingen opslaan?</translation>
+Wil je de aanpassingen opslaan?</translation>
     </message>
     <message>
       <location filename="../window.py" line="1232" />
       <source>HTML code</source>
-      <translation>HTML-code</translation>
+      <translation>Html-code</translation>
     </message>
     <message>
       <location filename="../window.py" line="1243" />
       <source>Select one or several images to open</source>
-      <translation>Selecteer één of meerdere te openen afbeeldingen</translation>
+      <translation>Selecteer een of meerdere te openen afbeeldingen</translation>
     </message>
     <message>
       <location filename="../window.py" line="1264" />
@@ -824,7 +824,7 @@ Wil je je aanpassingen opslaan?</translation>
     <message>
       <location filename="../window.py" line="1272" />
       <source>reStructuredText syntax</source>
-      <translation>reStructuredText-syntax</translation>
+      <translation>reStructuredText-syntaxis</translation>
     </message>
   </context>
   <context>

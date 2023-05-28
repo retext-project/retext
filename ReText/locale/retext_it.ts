@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="it_IT" sourcelanguage="en_US">
+<TS version="2.1" language="it_IT">
   <context>
     <name>ConfigDialog</name>
     <message>
@@ -137,12 +137,12 @@
     <message>
       <location filename="../config.py" line="135" />
       <source>Show directory tree</source>
-      <translation type="unfinished" />
+      <translation>Mostra l'albero delle directory</translation>
     </message>
     <message>
       <location filename="../config.py" line="136" />
       <source>Working directory</source>
-      <translation type="unfinished" />
+      <translation>Directory di lavoro</translation>
     </message>
     <message>
       <location filename="../config.py" line="161" />
@@ -162,7 +162,7 @@
     <message>
       <location filename="../config.py" line="186" />
       <source>Disabled</source>
-      <translation type="unfinished" />
+      <translation>Disabilitato</translation>
     </message>
     <message>
       <location filename="../config.py" line="187" />
@@ -182,7 +182,7 @@
     <message>
       <location filename="../config.py" line="194" />
       <source>Repeat</source>
-      <translation type="unfinished" />
+      <translation>Ripeti</translation>
     </message>
   </context>
   <context>
@@ -190,7 +190,7 @@
     <message>
       <location filename="../config.py" line="61" />
       <source>Select directory to open</source>
-      <translation type="unfinished" />
+      <translation>Seleziona una directory da aprire</translation>
     </message>
   </context>
   <context>
@@ -245,7 +245,7 @@
     <message>
       <location filename="../dialogs.py" line="44" />
       <source>It is possible to specify multiple languages, separated by comma.</source>
-      <translation type="unfinished" />
+      <translation>È possibile specificare più lingue, separate dalla virgola</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="50" />
@@ -559,7 +559,7 @@ Crearlo?</translation>
     <message>
       <location filename="../window.py" line="219" />
       <source>What's new</source>
-      <translation type="unfinished" />
+      <translation>Novità</translation>
     </message>
     <message>
       <location filename="../window.py" line="220" />
@@ -841,7 +841,7 @@ Vuoi salvare le modifiche?</translation>
     <message>
       <location filename="../__main__.py" line="84" />
       <source>Open the files in preview mode</source>
-      <translation type="unfinished" />
+      <translation>Apri file in anteprima</translation>
     </message>
     <message>
       <location filename="../__main__.py" line="86" />

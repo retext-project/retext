@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="tr_TR" sourcelanguage="">
+<TS version="2.1" language="tr_TR">
   <context>
     <name>ConfigDialog</name>
     <message>
@@ -198,7 +198,7 @@
     <message>
       <location filename="../dialogs.py" line="63" />
       <source>Enter encoding name:</source>
-      <translation type="unfinished" />
+      <translation>Kodlama adını girin:</translation>
     </message>
   </context>
   <context>
@@ -245,7 +245,7 @@
     <message>
       <location filename="../dialogs.py" line="44" />
       <source>It is possible to specify multiple languages, separated by comma.</source>
-      <translation type="unfinished" />
+      <translation>Virgülle ayırarak birden çok dil belirtmek mümkündür.</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="50" />
@@ -559,7 +559,7 @@ Onu oluşturmak ister misin?</translation>
     <message>
       <location filename="../window.py" line="219" />
       <source>What's new</source>
-      <translation type="unfinished" />
+      <translation>Neler yeni</translation>
     </message>
     <message>
       <location filename="../window.py" line="220" />
@@ -782,7 +782,7 @@ Dosyayı yeniden yüklemek istiyor musunuz (bu, tüm değişikliklerinizi atacak
     <message>
       <location filename="../window.py" line="1182" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
-      <translation type="unfinished" />
+      <translation>Veri kaybını önlemek için bu sekme için otomatik kaydetme geçici olarak devre dışı bırakıldı. Dosyayı yeniden yüklediğinizde veya kaydettiğinizde yeniden etkinleştirilecektir.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1205" />
@@ -809,7 +809,7 @@ Değişikliklerinizi kaydetmek istiyor musunuz?</translation>
     <message>
       <location filename="../window.py" line="1265" />
       <source>Simple but powerful editor for Markdown and reStructuredText</source>
-      <translation>Markdown ve reStructuredText için basit ama güçlü düzenleyici</translation>
+      <translation>Markdown ve Yeniden Yapılandırılmış Metin için basit ama güçlü düzenleyici</translation>
     </message>
     <message>
       <location filename="../window.py" line="1267" />

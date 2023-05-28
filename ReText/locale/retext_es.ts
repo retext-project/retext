@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es" sourcelanguage="">
+<TS version="2.1" language="es">
   <context>
     <name>ConfigDialog</name>
     <message>
@@ -198,7 +198,7 @@
     <message>
       <location filename="../dialogs.py" line="63" />
       <source>Enter encoding name:</source>
-      <translation type="unfinished" />
+      <translation>Introduzca el nombre de codificación:</translation>
     </message>
   </context>
   <context>
@@ -245,7 +245,7 @@
     <message>
       <location filename="../dialogs.py" line="44" />
       <source>It is possible to specify multiple languages, separated by comma.</source>
-      <translation type="unfinished" />
+      <translation>Es posible especificar varios idiomas separados por comas.</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="50" />
@@ -559,7 +559,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="219" />
       <source>What's new</source>
-      <translation type="unfinished" />
+      <translation>Qué es nuevo</translation>
     </message>
     <message>
       <location filename="../window.py" line="220" />
@@ -782,7 +782,7 @@ Do you want to reload the file (this will discard all your changes)?
     <message>
       <location filename="../window.py" line="1182" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
-      <translation type="unfinished" />
+      <translation>El guardado automático ha sido deshabilitado temporalmente en esta pestaña para prevenir la pérdida de datos. Será reactivado en el momento que recargue el fichero o guarde manualmente.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1205" />
