@@ -1264,7 +1264,7 @@ class ReTextWindow(QMainWindow):
 		'<p><b>' + (self.tr('ReText %s (using PyMarkups %s)') % (app_version, markups.__version__))
 		+'</b></p>' + self.tr('Simple but powerful editor'
 		' for Markdown and reStructuredText')
-		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011').replace('2011', '2011–2022')
+		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011').replace('2011', '2011–2023')
 		+'<br><a href="https://github.com/retext-project/retext">GitHub</a> | '
 		+'<a href="https://daringfireball.net/projects/markdown/syntax">'
 		+self.tr('Markdown syntax')
