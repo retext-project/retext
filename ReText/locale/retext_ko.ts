@@ -287,34 +287,34 @@
   <context>
     <name>ReTextTab</name>
     <message>
-      <location filename="../tab.py" line="173" />
+      <location filename="../tab.py" line="174" />
       <source>New document</source>
       <translation>새 문서</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="178" />
+      <location filename="../tab.py" line="179" />
       <source>Could not parse file contents, check if you have the &lt;a href="%s"&gt;necessary module&lt;/a&gt; installed!</source>
       <translation>파일 내용을 파싱할 수 업습니다. &lt;a href="%s"&gt;필수 모듈&lt;/a&gt; 가 있는지 보고 설치하세요!</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="483" />
+      <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="484" />
+      <location filename="../tab.py" line="488" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="516" />
+      <location filename="../tab.py" line="520" />
       <source>File could not be created</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="517" />
+      <location filename="../tab.py" line="521" />
       <source>Could not create file '%s': %s</source>
       <translation type="unfinished" />
     </message>
@@ -322,501 +322,501 @@ Do you want to create it?</source>
   <context>
     <name>ReTextWindow</name>
     <message>
-      <location filename="../window.py" line="91" />
+      <location filename="../window.py" line="90" />
       <source>File toolbar</source>
       <translation>파일 툴바</translation>
     </message>
     <message>
-      <location filename="../window.py" line="93" />
+      <location filename="../window.py" line="92" />
       <source>Edit toolbar</source>
       <translation>툴바 에디트</translation>
     </message>
     <message>
-      <location filename="../window.py" line="95" />
+      <location filename="../window.py" line="94" />
       <source>Search toolbar</source>
       <translation>툴바 찾기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="99" />
+      <location filename="../window.py" line="98" />
       <source>New</source>
       <translation>새로 열기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="101" />
+      <location filename="../window.py" line="100" />
       <source>Open</source>
       <translation>열기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="103" />
+      <location filename="../window.py" line="102" />
       <source>Set encoding</source>
       <translation>인코딩 설정</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1187" />
-      <location filename="../window.py" line="106" />
+      <location filename="../window.py" line="1186" />
+      <location filename="../window.py" line="105" />
       <source>Reload</source>
       <translation>리로드</translation>
     </message>
     <message>
-      <location filename="../window.py" line="109" />
+      <location filename="../window.py" line="108" />
       <source>Save</source>
       <translation>저장하기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="112" />
+      <location filename="../window.py" line="111" />
       <source>Save as</source>
       <translation>다른이름으로 저장</translation>
     </message>
     <message>
-      <location filename="../window.py" line="114" />
+      <location filename="../window.py" line="113" />
       <source>Next tab</source>
       <translation>다음 탭</translation>
     </message>
     <message>
-      <location filename="../window.py" line="116" />
+      <location filename="../window.py" line="115" />
       <source>Previous tab</source>
       <translation>이전 탭</translation>
     </message>
     <message>
-      <location filename="../window.py" line="118" />
+      <location filename="../window.py" line="117" />
       <source>Close tab</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="120" />
+      <location filename="../window.py" line="119" />
       <source>Print</source>
       <translation>출력</translation>
     </message>
     <message>
-      <location filename="../window.py" line="122" />
+      <location filename="../window.py" line="121" />
       <source>Print preview</source>
       <translation>미리보기 출력</translation>
     </message>
     <message>
-      <location filename="../window.py" line="124" />
+      <location filename="../window.py" line="123" />
       <source>View HTML code</source>
       <translation>HTML 코드 보기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="125" />
+      <location filename="../window.py" line="124" />
       <source>Change editor font</source>
       <translation>에디터 글꼴 변경</translation>
     </message>
     <message>
-      <location filename="../window.py" line="127" />
+      <location filename="../window.py" line="126" />
       <source>Change preview font</source>
       <translation>미리보기 글꼴 바꾸기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="129" />
+      <location filename="../window.py" line="128" />
       <source>Find text</source>
       <translation>문자 찾기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="701" />
-      <location filename="../window.py" line="131" />
+      <location filename="../window.py" line="700" />
+      <location filename="../window.py" line="130" />
       <source>Go to line</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="134" />
+      <location filename="../window.py" line="133" />
       <source>Preview</source>
       <translation>미리보기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="144" />
+      <location filename="../window.py" line="143" />
       <source>Live preview</source>
       <translation>실시간 미리보기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="148" />
+      <location filename="../window.py" line="147" />
       <source>Insert table</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="150" />
+      <location filename="../window.py" line="149" />
       <source>Table editing mode</source>
       <translation>표에디트모드</translation>
     </message>
     <message>
-      <location filename="../window.py" line="153" />
+      <location filename="../window.py" line="152" />
       <source>Insert images by file path</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="156" />
+      <location filename="../window.py" line="155" />
       <source>FakeVim mode</source>
       <translation>페이크빔 모드</translation>
     </message>
     <message>
-      <location filename="../window.py" line="161" />
+      <location filename="../window.py" line="160" />
       <source>Fullscreen mode</source>
       <translation>전체화면</translation>
     </message>
     <message>
-      <location filename="../window.py" line="649" />
-      <location filename="../window.py" line="164" />
+      <location filename="../window.py" line="648" />
+      <location filename="../window.py" line="163" />
       <source>Preferences</source>
       <translation>선택</translation>
     </message>
     <message>
-      <location filename="../window.py" line="171" />
+      <location filename="../window.py" line="170" />
       <source>Quit</source>
       <translation>나가기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="174" />
+      <location filename="../window.py" line="173" />
       <source>Undo</source>
       <translation>되돌리기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="176" />
+      <location filename="../window.py" line="175" />
       <source>Redo</source>
       <translation>다시하기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="178" />
+      <location filename="../window.py" line="177" />
       <source>Copy</source>
       <translation>복사</translation>
     </message>
     <message>
-      <location filename="../window.py" line="180" />
+      <location filename="../window.py" line="179" />
       <source>Cut</source>
       <translation>잘라내기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="182" />
+      <location filename="../window.py" line="181" />
       <source>Paste</source>
       <translation>붙여넣기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="184" />
+      <location filename="../window.py" line="183" />
       <source>Paste image</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="186" />
+      <location filename="../window.py" line="185" />
       <source>Move line up</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="188" />
+      <location filename="../window.py" line="187" />
       <source>Move line down</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="196" />
+      <location filename="../window.py" line="195" />
       <source>Enable</source>
       <translation>활성화</translation>
     </message>
     <message>
-      <location filename="../window.py" line="197" />
+      <location filename="../window.py" line="196" />
       <source>Set locale</source>
       <translation>언어 설정</translation>
     </message>
     <message>
-      <location filename="../window.py" line="198" />
+      <location filename="../window.py" line="197" />
       <source>Use WebEngine (Chromium) renderer</source>
       <translation>웹 엔진(크로뮴) 렌더러</translation>
     </message>
     <message>
-      <location filename="../window.py" line="204" />
+      <location filename="../window.py" line="203" />
       <source>Show directory</source>
       <translation>디렉토리 보기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="205" />
+      <location filename="../window.py" line="204" />
       <source>Next</source>
       <translation>다음</translation>
     </message>
     <message>
-      <location filename="../window.py" line="207" />
+      <location filename="../window.py" line="206" />
       <source>Previous</source>
       <translation>이전</translation>
     </message>
     <message>
-      <location filename="../window.py" line="209" />
+      <location filename="../window.py" line="208" />
       <source>Replace</source>
       <translation>바꾸기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="211" />
+      <location filename="../window.py" line="210" />
       <source>Replace all</source>
       <translation>모두바꾸기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="214" />
+      <location filename="../window.py" line="213" />
       <source>Close</source>
       <translation>닫기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="218" />
+      <location filename="../window.py" line="217" />
       <source>Get help online</source>
       <translation>온라인 도움</translation>
     </message>
     <message>
-      <location filename="../window.py" line="219" />
+      <location filename="../window.py" line="218" />
       <source>What's new</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="220" />
+      <location filename="../window.py" line="219" />
       <source>About ReText</source>
       <translation>ReText란?</translation>
     </message>
     <message>
-      <location filename="../window.py" line="223" />
+      <location filename="../window.py" line="222" />
       <source>About Qt</source>
       <translation>Qt란?</translation>
     </message>
     <message>
-      <location filename="../window.py" line="238" />
+      <location filename="../window.py" line="237" />
       <source>Bold</source>
       <translation>굵은 글꼴</translation>
     </message>
     <message>
-      <location filename="../window.py" line="240" />
+      <location filename="../window.py" line="239" />
       <source>Italic</source>
       <translation>이탤릭체</translation>
     </message>
     <message>
-      <location filename="../window.py" line="242" />
+      <location filename="../window.py" line="241" />
       <source>Underline</source>
       <translation>밑줄</translation>
     </message>
     <message>
-      <location filename="../window.py" line="315" />
-      <location filename="../window.py" line="251" />
+      <location filename="../window.py" line="314" />
+      <location filename="../window.py" line="250" />
       <source>Formatting</source>
       <translation>서식 지정</translation>
     </message>
     <message>
-      <location filename="../window.py" line="255" />
+      <location filename="../window.py" line="254" />
       <source>Symbols</source>
       <translation>심볼</translation>
     </message>
     <message>
-      <location filename="../window.py" line="260" />
+      <location filename="../window.py" line="259" />
       <source>&amp;File</source>
       <translation>파일</translation>
     </message>
     <message>
-      <location filename="../window.py" line="261" />
+      <location filename="../window.py" line="260" />
       <source>&amp;Edit</source>
       <translation>에디트</translation>
     </message>
     <message>
-      <location filename="../window.py" line="262" />
+      <location filename="../window.py" line="261" />
       <source>&amp;Help</source>
       <translation>도움</translation>
     </message>
     <message>
-      <location filename="../window.py" line="265" />
+      <location filename="../window.py" line="264" />
       <source>Open recent</source>
       <translation>최근문서 열기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="278" />
+      <location filename="../window.py" line="277" />
       <source>Export</source>
       <translation>내보내기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="303" />
+      <location filename="../window.py" line="302" />
       <source>Spell check</source>
       <translation>스펠링 체크</translation>
     </message>
     <message>
-      <location filename="../window.py" line="312" />
+      <location filename="../window.py" line="311" />
       <source>Default markup</source>
       <translation>기존 마크업</translation>
     </message>
     <message>
-      <location filename="../window.py" line="360" />
+      <location filename="../window.py" line="359" />
       <source>Search</source>
       <translation>찾기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="363" />
+      <location filename="../window.py" line="362" />
       <source>Replace with</source>
       <translation>~으로 바꾸기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="365" />
+      <location filename="../window.py" line="364" />
       <source>Case sensitively</source>
       <translation>대소문자 구분</translation>
     </message>
     <message>
-      <location filename="../window.py" line="552" />
-      <location filename="../window.py" line="506" />
+      <location filename="../window.py" line="551" />
+      <location filename="../window.py" line="505" />
       <source>New document</source>
       <translation>새로운 문서</translation>
     </message>
     <message>
-      <location filename="../window.py" line="701" />
+      <location filename="../window.py" line="700" />
       <source>Type the line number</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="737" />
+      <location filename="../window.py" line="736" />
       <source>Please, save the file somewhere.</source>
       <translation>파일을 저장해주십시오</translation>
     </message>
     <message>
-      <location filename="../window.py" line="856" />
+      <location filename="../window.py" line="855" />
       <source>Select one or several files to open</source>
       <translation>열기를 할 파일, 파일들을 선택하십시오</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1244" />
-      <location filename="../window.py" line="857" />
+      <location filename="../window.py" line="1243" />
+      <location filename="../window.py" line="856" />
       <source>Supported files</source>
       <translation>파일 서포팅</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1244" />
-      <location filename="../window.py" line="857" />
+      <location filename="../window.py" line="1243" />
+      <location filename="../window.py" line="856" />
       <source>All files (*)</source>
       <translation>모든 파일들 (*)</translation>
     </message>
     <message>
-      <location filename="../window.py" line="912" />
+      <location filename="../window.py" line="911" />
       <source>Plain text (*.txt)</source>
       <translation>일반 텍스트 (*.txt)</translation>
     </message>
     <message>
-      <location filename="../window.py" line="915" />
+      <location filename="../window.py" line="914" />
       <source>%s files</source>
       <comment>Example of final string: Markdown files</comment>
       <translation>%s 파일</translation>
     </message>
     <message>
-      <location filename="../window.py" line="984" />
-      <location filename="../window.py" line="928" />
+      <location filename="../window.py" line="983" />
+      <location filename="../window.py" line="927" />
       <source>Save file</source>
       <translation>파일 저장</translation>
     </message>
     <message>
-      <location filename="../window.py" line="936" />
+      <location filename="../window.py" line="935" />
       <source>Cannot save to file which is open in another tab!</source>
       <translation>다른 탭에 열려있는 파일은 저장하지 못합니다.</translation>
     </message>
     <message>
-      <location filename="../window.py" line="974" />
+      <location filename="../window.py" line="973" />
       <source>Export document to ODT</source>
       <translation>ODT로 내보내기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="975" />
+      <location filename="../window.py" line="974" />
       <source>OpenDocument text files (*.odt)</source>
       <translation>텍스트파일로 열기 (*.odt)</translation>
     </message>
     <message>
-      <location filename="../window.py" line="985" />
+      <location filename="../window.py" line="984" />
       <source>HTML files (*.html *.htm)</source>
       <translation>HTML 파일들 (*.html *.htm)</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1005" />
+      <location filename="../window.py" line="1004" />
       <source>Unrecognized paperSize setting "%s".</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="1020" />
+      <location filename="../window.py" line="1019" />
       <source>Export document to PDF</source>
       <translation>PDF로 내보내기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1022" />
+      <location filename="../window.py" line="1021" />
       <source>PDF files (*.pdf)</source>
       <translation>PDF파일 (*.pdf)</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1046" />
+      <location filename="../window.py" line="1045" />
       <source>Print document</source>
       <translation>문서 출력</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1070" />
+      <location filename="../window.py" line="1069" />
       <source>Export document</source>
       <translation>문서 내보내기</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1090" />
+      <location filename="../window.py" line="1089" />
       <source>Failed to execute the command:</source>
       <translation>명령수행에 실패</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1126" />
+      <location filename="../window.py" line="1125" />
       <source>Alt text</source>
       <translation>Alt속성 텍스트</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1127" />
       <location filename="../window.py" line="1126" />
+      <location filename="../window.py" line="1125" />
       <source>URL</source>
       <translation />
     </message>
     <message>
-      <location filename="../window.py" line="1127" />
+      <location filename="../window.py" line="1126" />
       <source>Link text</source>
       <translation>링크 텍스트</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1168" />
+      <location filename="../window.py" line="1167" />
       <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
       <translation>이 파일은 다른 앱에 의해 삭제되었습니다. 종료 전에 저장을 꼭 해주십시오.</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1177" />
+      <location filename="../window.py" line="1176" />
       <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
       <translation>이 파일은 다른 앱에 의해 삭제되었습니다. 이 파일을 리로드 하길 원합니까(이것은 당신의 변경사항을 버릴겁니다)?</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1182" />
+      <location filename="../window.py" line="1181" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="1205" />
+      <location filename="../window.py" line="1204" />
       <source>The document has been modified.
 Do you want to save your changes?</source>
       <translation>문서가 변경되었습니다. 저장하시겠습니까?</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1232" />
+      <location filename="../window.py" line="1231" />
       <source>HTML code</source>
       <translation>HTML 코드</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1243" />
+      <location filename="../window.py" line="1242" />
       <source>Select one or several images to open</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="1264" />
+      <location filename="../window.py" line="1263" />
       <source>ReText %s (using PyMarkups %s)</source>
       <translation>ReText %s (PyMarkups %s 사용)</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1265" />
+      <location filename="../window.py" line="1264" />
       <source>Simple but powerful editor for Markdown and reStructuredText</source>
       <translation>마크다운과 리스트럭트텍스트를 위한 심플하지만 강력한 에디터</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1267" />
+      <location filename="../window.py" line="1266" />
       <source>Author: Dmitry Shachnev, 2011</source>
       <translation>원작자 : Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1270" />
+      <location filename="../window.py" line="1269" />
       <source>Markdown syntax</source>
       <translation>마크다운 구문</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1272" />
+      <location filename="../window.py" line="1271" />
       <source>reStructuredText syntax</source>
       <translation>리스트럭트텍스트 구문</translation>
     </message>
@@ -824,7 +824,7 @@ Do you want to save your changes?</source>
   <context>
     <name>TextInfoArea</name>
     <message>
-      <location filename="../editor.py" line="654" />
+      <location filename="../editor.py" line="659" />
       <source>%d w | %d a | %d c</source>
       <comment>count of words, alphanumeric characters, all characters</comment>
       <translation type="unfinished" />

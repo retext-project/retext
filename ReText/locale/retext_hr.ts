@@ -287,34 +287,34 @@
   <context>
     <name>ReTextTab</name>
     <message>
-      <location filename="../tab.py" line="173" />
+      <location filename="../tab.py" line="174" />
       <source>New document</source>
       <translation>Novi dokument</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="178" />
+      <location filename="../tab.py" line="179" />
       <source>Could not parse file contents, check if you have the &lt;a href="%s"&gt;necessary module&lt;/a&gt; installed!</source>
       <translation>Nije moguće raščlaniti sadržaj datoteke. Provjerite imate li instaliran &lt;a href="%s"&gt;potreban modul&lt;/a&gt;!</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="483" />
+      <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="484" />
+      <location filename="../tab.py" line="488" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="516" />
+      <location filename="../tab.py" line="520" />
       <source>File could not be created</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="517" />
+      <location filename="../tab.py" line="521" />
       <source>Could not create file '%s': %s</source>
       <translation type="unfinished" />
     </message>
@@ -322,454 +322,454 @@ Do you want to create it?</source>
   <context>
     <name>ReTextWindow</name>
     <message>
-      <location filename="../window.py" line="91" />
+      <location filename="../window.py" line="90" />
       <source>File toolbar</source>
       <translation>Alatna traka datoteka</translation>
     </message>
     <message>
-      <location filename="../window.py" line="93" />
+      <location filename="../window.py" line="92" />
       <source>Edit toolbar</source>
       <translation>Alatna traka uređivanja</translation>
     </message>
     <message>
-      <location filename="../window.py" line="95" />
+      <location filename="../window.py" line="94" />
       <source>Search toolbar</source>
       <translation>Alatna traka traženja</translation>
     </message>
     <message>
-      <location filename="../window.py" line="99" />
+      <location filename="../window.py" line="98" />
       <source>New</source>
       <translation>Novo</translation>
     </message>
     <message>
-      <location filename="../window.py" line="101" />
+      <location filename="../window.py" line="100" />
       <source>Open</source>
       <translation>Otvori</translation>
     </message>
     <message>
-      <location filename="../window.py" line="103" />
+      <location filename="../window.py" line="102" />
       <source>Set encoding</source>
       <translation>Postavi kodiranje</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1187" />
-      <location filename="../window.py" line="106" />
+      <location filename="../window.py" line="1186" />
+      <location filename="../window.py" line="105" />
       <source>Reload</source>
       <translation>Ponovno učitaj</translation>
     </message>
     <message>
-      <location filename="../window.py" line="109" />
+      <location filename="../window.py" line="108" />
       <source>Save</source>
       <translation>Spremi</translation>
     </message>
     <message>
-      <location filename="../window.py" line="112" />
+      <location filename="../window.py" line="111" />
       <source>Save as</source>
       <translation>Spremi kao</translation>
     </message>
     <message>
-      <location filename="../window.py" line="114" />
+      <location filename="../window.py" line="113" />
       <source>Next tab</source>
       <translation>Sljedeća kartica</translation>
     </message>
     <message>
-      <location filename="../window.py" line="116" />
+      <location filename="../window.py" line="115" />
       <source>Previous tab</source>
       <translation>Prethodna kartica</translation>
     </message>
     <message>
-      <location filename="../window.py" line="118" />
+      <location filename="../window.py" line="117" />
       <source>Close tab</source>
       <translation>Zatvori karticu</translation>
     </message>
     <message>
-      <location filename="../window.py" line="120" />
+      <location filename="../window.py" line="119" />
       <source>Print</source>
       <translation>Ispis</translation>
     </message>
     <message>
-      <location filename="../window.py" line="122" />
+      <location filename="../window.py" line="121" />
       <source>Print preview</source>
       <translation>Prikaz ispisa</translation>
     </message>
     <message>
-      <location filename="../window.py" line="124" />
+      <location filename="../window.py" line="123" />
       <source>View HTML code</source>
       <translation>Pregled HTML koda</translation>
     </message>
     <message>
-      <location filename="../window.py" line="125" />
+      <location filename="../window.py" line="124" />
       <source>Change editor font</source>
       <translation>Promjena fonta uređivača</translation>
     </message>
     <message>
-      <location filename="../window.py" line="127" />
+      <location filename="../window.py" line="126" />
       <source>Change preview font</source>
       <translation>Promjena fonta pregleda</translation>
     </message>
     <message>
-      <location filename="../window.py" line="129" />
+      <location filename="../window.py" line="128" />
       <source>Find text</source>
       <translation>Traži u tekstu</translation>
     </message>
     <message>
-      <location filename="../window.py" line="701" />
-      <location filename="../window.py" line="131" />
+      <location filename="../window.py" line="700" />
+      <location filename="../window.py" line="130" />
       <source>Go to line</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="134" />
+      <location filename="../window.py" line="133" />
       <source>Preview</source>
       <translation>Pregled</translation>
     </message>
     <message>
-      <location filename="../window.py" line="144" />
+      <location filename="../window.py" line="143" />
       <source>Live preview</source>
       <translation>Pregled uživo</translation>
     </message>
     <message>
-      <location filename="../window.py" line="148" />
+      <location filename="../window.py" line="147" />
       <source>Insert table</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="150" />
+      <location filename="../window.py" line="149" />
       <source>Table editing mode</source>
       <translation>Uređivanje tablica kao način rada</translation>
     </message>
     <message>
-      <location filename="../window.py" line="153" />
+      <location filename="../window.py" line="152" />
       <source>Insert images by file path</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="156" />
+      <location filename="../window.py" line="155" />
       <source>FakeVim mode</source>
       <translation>Lažni Vim kao način rada</translation>
     </message>
     <message>
-      <location filename="../window.py" line="161" />
+      <location filename="../window.py" line="160" />
       <source>Fullscreen mode</source>
       <translation>Prikaz preko cijeloga zaslona kao način rada</translation>
     </message>
     <message>
-      <location filename="../window.py" line="649" />
-      <location filename="../window.py" line="164" />
+      <location filename="../window.py" line="648" />
+      <location filename="../window.py" line="163" />
       <source>Preferences</source>
       <translation>Podešavanja</translation>
     </message>
     <message>
-      <location filename="../window.py" line="171" />
+      <location filename="../window.py" line="170" />
       <source>Quit</source>
       <translation>Zatvori</translation>
     </message>
     <message>
-      <location filename="../window.py" line="174" />
+      <location filename="../window.py" line="173" />
       <source>Undo</source>
       <translation>Vrati prethodno</translation>
     </message>
     <message>
-      <location filename="../window.py" line="176" />
+      <location filename="../window.py" line="175" />
       <source>Redo</source>
       <translation>Ponovi prethodno</translation>
     </message>
     <message>
-      <location filename="../window.py" line="178" />
+      <location filename="../window.py" line="177" />
       <source>Copy</source>
       <translation>Kopiraj</translation>
     </message>
     <message>
-      <location filename="../window.py" line="180" />
+      <location filename="../window.py" line="179" />
       <source>Cut</source>
       <translation>Izreži</translation>
     </message>
     <message>
-      <location filename="../window.py" line="182" />
+      <location filename="../window.py" line="181" />
       <source>Paste</source>
       <translation>Umetni</translation>
     </message>
     <message>
-      <location filename="../window.py" line="184" />
+      <location filename="../window.py" line="183" />
       <source>Paste image</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="186" />
+      <location filename="../window.py" line="185" />
       <source>Move line up</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="188" />
+      <location filename="../window.py" line="187" />
       <source>Move line down</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="196" />
+      <location filename="../window.py" line="195" />
       <source>Enable</source>
       <translation>Omogući</translation>
     </message>
     <message>
-      <location filename="../window.py" line="197" />
+      <location filename="../window.py" line="196" />
       <source>Set locale</source>
       <translation>Postavljanje jezika</translation>
     </message>
     <message>
-      <location filename="../window.py" line="198" />
+      <location filename="../window.py" line="197" />
       <source>Use WebEngine (Chromium) renderer</source>
       <translation>Koristi WebEngine (Chromium) crtač</translation>
     </message>
     <message>
-      <location filename="../window.py" line="204" />
+      <location filename="../window.py" line="203" />
       <source>Show directory</source>
       <translation>Prikaži sadržaj mape</translation>
     </message>
     <message>
-      <location filename="../window.py" line="205" />
+      <location filename="../window.py" line="204" />
       <source>Next</source>
       <translation>Sljedeće</translation>
     </message>
     <message>
-      <location filename="../window.py" line="207" />
+      <location filename="../window.py" line="206" />
       <source>Previous</source>
       <translation>Prethodno</translation>
     </message>
     <message>
-      <location filename="../window.py" line="209" />
+      <location filename="../window.py" line="208" />
       <source>Replace</source>
       <translation>Zamijeni</translation>
     </message>
     <message>
-      <location filename="../window.py" line="211" />
+      <location filename="../window.py" line="210" />
       <source>Replace all</source>
       <translation>Zamijeni sve</translation>
     </message>
     <message>
-      <location filename="../window.py" line="214" />
+      <location filename="../window.py" line="213" />
       <source>Close</source>
       <translation>Zatvori</translation>
     </message>
     <message>
-      <location filename="../window.py" line="218" />
+      <location filename="../window.py" line="217" />
       <source>Get help online</source>
       <translation>Traženje pomoći na internetu</translation>
     </message>
     <message>
-      <location filename="../window.py" line="219" />
+      <location filename="../window.py" line="218" />
       <source>What's new</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="220" />
+      <location filename="../window.py" line="219" />
       <source>About ReText</source>
       <translation>O ReTextu</translation>
     </message>
     <message>
-      <location filename="../window.py" line="223" />
+      <location filename="../window.py" line="222" />
       <source>About Qt</source>
       <translation>O Qt-u</translation>
     </message>
     <message>
-      <location filename="../window.py" line="238" />
+      <location filename="../window.py" line="237" />
       <source>Bold</source>
       <translation>Podebljano</translation>
     </message>
     <message>
-      <location filename="../window.py" line="240" />
+      <location filename="../window.py" line="239" />
       <source>Italic</source>
       <translation>Ukošeno</translation>
     </message>
     <message>
-      <location filename="../window.py" line="242" />
+      <location filename="../window.py" line="241" />
       <source>Underline</source>
       <translation>Podvučeno</translation>
     </message>
     <message>
-      <location filename="../window.py" line="315" />
-      <location filename="../window.py" line="251" />
+      <location filename="../window.py" line="314" />
+      <location filename="../window.py" line="250" />
       <source>Formatting</source>
       <translation>Oblikovanje</translation>
     </message>
     <message>
-      <location filename="../window.py" line="255" />
+      <location filename="../window.py" line="254" />
       <source>Symbols</source>
       <translation>Simboli</translation>
     </message>
     <message>
-      <location filename="../window.py" line="260" />
+      <location filename="../window.py" line="259" />
       <source>&amp;File</source>
       <translation>&amp;Datoteka</translation>
     </message>
     <message>
-      <location filename="../window.py" line="261" />
+      <location filename="../window.py" line="260" />
       <source>&amp;Edit</source>
       <translation>&amp;Uređivanje</translation>
     </message>
     <message>
-      <location filename="../window.py" line="262" />
+      <location filename="../window.py" line="261" />
       <source>&amp;Help</source>
       <translation>&amp;Pomoć</translation>
     </message>
     <message>
-      <location filename="../window.py" line="265" />
+      <location filename="../window.py" line="264" />
       <source>Open recent</source>
       <translation>Otvori nedavno uređivane dokumente</translation>
     </message>
     <message>
-      <location filename="../window.py" line="278" />
+      <location filename="../window.py" line="277" />
       <source>Export</source>
       <translation>Izvoz</translation>
     </message>
     <message>
-      <location filename="../window.py" line="303" />
+      <location filename="../window.py" line="302" />
       <source>Spell check</source>
       <translation>Provjera pravopisa</translation>
     </message>
     <message>
-      <location filename="../window.py" line="312" />
+      <location filename="../window.py" line="311" />
       <source>Default markup</source>
       <translation>Zadana sintaksa</translation>
     </message>
     <message>
-      <location filename="../window.py" line="360" />
+      <location filename="../window.py" line="359" />
       <source>Search</source>
       <translation>Traži</translation>
     </message>
     <message>
-      <location filename="../window.py" line="363" />
+      <location filename="../window.py" line="362" />
       <source>Replace with</source>
       <translation>Zamijeni s</translation>
     </message>
     <message>
-      <location filename="../window.py" line="365" />
+      <location filename="../window.py" line="364" />
       <source>Case sensitively</source>
       <translation>Razlikuj velika i mala slova</translation>
     </message>
     <message>
-      <location filename="../window.py" line="552" />
-      <location filename="../window.py" line="506" />
+      <location filename="../window.py" line="551" />
+      <location filename="../window.py" line="505" />
       <source>New document</source>
       <translation>Novi dokument</translation>
     </message>
     <message>
-      <location filename="../window.py" line="701" />
+      <location filename="../window.py" line="700" />
       <source>Type the line number</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="737" />
+      <location filename="../window.py" line="736" />
       <source>Please, save the file somewhere.</source>
       <translation>Spremite datoteku.</translation>
     </message>
     <message>
-      <location filename="../window.py" line="856" />
+      <location filename="../window.py" line="855" />
       <source>Select one or several files to open</source>
       <translation>Odaberite jednu ili više datoteka za otvaranje</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1244" />
-      <location filename="../window.py" line="857" />
+      <location filename="../window.py" line="1243" />
+      <location filename="../window.py" line="856" />
       <source>Supported files</source>
       <translation>Podržani tipovi datoteka</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1244" />
-      <location filename="../window.py" line="857" />
+      <location filename="../window.py" line="1243" />
+      <location filename="../window.py" line="856" />
       <source>All files (*)</source>
       <translation>Sve tipovi datoteka (*)</translation>
     </message>
     <message>
-      <location filename="../window.py" line="912" />
+      <location filename="../window.py" line="911" />
       <source>Plain text (*.txt)</source>
       <translation>Običan tekst (*.txt)</translation>
     </message>
     <message>
-      <location filename="../window.py" line="915" />
+      <location filename="../window.py" line="914" />
       <source>%s files</source>
       <comment>Example of final string: Markdown files</comment>
       <translation>%s datoteke</translation>
     </message>
     <message>
-      <location filename="../window.py" line="984" />
-      <location filename="../window.py" line="928" />
+      <location filename="../window.py" line="983" />
+      <location filename="../window.py" line="927" />
       <source>Save file</source>
       <translation>Spremi datoteku</translation>
     </message>
     <message>
-      <location filename="../window.py" line="936" />
+      <location filename="../window.py" line="935" />
       <source>Cannot save to file which is open in another tab!</source>
       <translation>Datoteku nije moguće spremiti jer je otvorena u drugoj kartici.</translation>
     </message>
     <message>
-      <location filename="../window.py" line="974" />
+      <location filename="../window.py" line="973" />
       <source>Export document to ODT</source>
       <translation>Izvezi datoteku kao ODT</translation>
     </message>
     <message>
-      <location filename="../window.py" line="975" />
+      <location filename="../window.py" line="974" />
       <source>OpenDocument text files (*.odt)</source>
       <translation>OpenDocument tekstna datoteka (*.odt)</translation>
     </message>
     <message>
-      <location filename="../window.py" line="985" />
+      <location filename="../window.py" line="984" />
       <source>HTML files (*.html *.htm)</source>
       <translation>HTML datoteka (*.html *.htm)</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1005" />
+      <location filename="../window.py" line="1004" />
       <source>Unrecognized paperSize setting "%s".</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="1020" />
+      <location filename="../window.py" line="1019" />
       <source>Export document to PDF</source>
       <translation>Izvezi datoteku kao PDF</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1022" />
+      <location filename="../window.py" line="1021" />
       <source>PDF files (*.pdf)</source>
       <translation>PDF datoteke (*.pdf)</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1046" />
+      <location filename="../window.py" line="1045" />
       <source>Print document</source>
       <translation>Ispis dokumenta</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1070" />
+      <location filename="../window.py" line="1069" />
       <source>Export document</source>
       <translation>Izvezi dokument</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1090" />
+      <location filename="../window.py" line="1089" />
       <source>Failed to execute the command:</source>
       <translation>Naredba nije izvršena:</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1126" />
+      <location filename="../window.py" line="1125" />
       <source>Alt text</source>
       <translation>Tekst kao alternativa</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1127" />
       <location filename="../window.py" line="1126" />
+      <location filename="../window.py" line="1125" />
       <source>URL</source>
       <translation>URL</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1127" />
+      <location filename="../window.py" line="1126" />
       <source>Link text</source>
       <translation>Poveznica na tekst</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1168" />
+      <location filename="../window.py" line="1167" />
       <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
       <translation>Datoteku izbrisala neka druga aplikacija.
 Spremite datoteku prije zatvaranja.</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1177" />
+      <location filename="../window.py" line="1176" />
       <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
@@ -777,49 +777,49 @@ Do you want to reload the file (this will discard all your changes)?
 Želite li je ponovno učitati? Ovo će poništiti vaše izmjene.</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1182" />
+      <location filename="../window.py" line="1181" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="1205" />
+      <location filename="../window.py" line="1204" />
       <source>The document has been modified.
 Do you want to save your changes?</source>
       <translation>Dokument je izmijenjen.
 Želite li spremiti izmjene?</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1232" />
+      <location filename="../window.py" line="1231" />
       <source>HTML code</source>
       <translation>HTML kod</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1243" />
+      <location filename="../window.py" line="1242" />
       <source>Select one or several images to open</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../window.py" line="1264" />
+      <location filename="../window.py" line="1263" />
       <source>ReText %s (using PyMarkups %s)</source>
       <translation>ReText %s (koristeći PyMarkups %s)</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1265" />
+      <location filename="../window.py" line="1264" />
       <source>Simple but powerful editor for Markdown and reStructuredText</source>
       <translation>Jednostavan ali moćan uređivač Markdowna i reStructuredTexta</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1267" />
+      <location filename="../window.py" line="1266" />
       <source>Author: Dmitry Shachnev, 2011</source>
       <translation>Autor: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1270" />
+      <location filename="../window.py" line="1269" />
       <source>Markdown syntax</source>
       <translation>Sintaksa Markdowna</translation>
     </message>
     <message>
-      <location filename="../window.py" line="1272" />
+      <location filename="../window.py" line="1271" />
       <source>reStructuredText syntax</source>
       <translation>Sintaksa reStructuredTexta</translation>
     </message>
@@ -827,7 +827,7 @@ Do you want to save your changes?</source>
   <context>
     <name>TextInfoArea</name>
     <message>
-      <location filename="../editor.py" line="654" />
+      <location filename="../editor.py" line="659" />
       <source>%d w | %d a | %d c</source>
       <comment>count of words, alphanumeric characters, all characters</comment>
       <translation type="unfinished">%d m | %d a | %d c</translation>
