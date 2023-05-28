@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR" sourcelanguage="">
+<TS version="2.1" language="fr_FR">
   <context>
     <name>ConfigDialog</name>
     <message>
       <location filename="../config.py" line="86" />
       <source>Using configuration file at:</source>
-      <translation type="unfinished">Fichier de configuration situé à :</translation>
+      <translation>Utilisation du fichier de configuration suivant :</translation>
     </message>
     <message>
       <location filename="../config.py" line="105" />
@@ -26,7 +26,7 @@
     <message>
       <location filename="../config.py" line="108" />
       <source>Number of recent documents</source>
-      <translation type="unfinished" />
+      <translation>Nombre de documents récents</translation>
     </message>
     <message>
       <location filename="../config.py" line="109" />
@@ -36,7 +36,7 @@
     <message>
       <location filename="../config.py" line="110" />
       <source>Default preview state</source>
-      <translation type="unfinished" />
+      <translation>État par défaut de la prévisualisation</translation>
     </message>
     <message>
       <location filename="../config.py" line="111" />
@@ -72,7 +72,7 @@
     <message>
       <location filename="../config.py" line="121" />
       <source>Line numbers are relative to current line</source>
-      <translation type="unfinished" />
+      <translation>Les numéros de lignes sont relatifs à la ligne active</translation>
     </message>
     <message>
       <location filename="../config.py" line="122" />
@@ -92,7 +92,7 @@
     <message>
       <location filename="../config.py" line="125" />
       <source>Enable soft wrap</source>
-      <translation type="unfinished" />
+      <translation>Activer le renvoi à la ligne doux</translation>
     </message>
     <message>
       <location filename="../config.py" line="126" />
@@ -102,7 +102,7 @@
     <message>
       <location filename="../config.py" line="127" />
       <source>Ordered list mode</source>
-      <translation type="unfinished" />
+      <translation>Mode liste ordonnée</translation>
     </message>
     <message>
       <location filename="../config.py" line="129" />
@@ -112,7 +112,7 @@
     <message>
       <location filename="../config.py" line="130" />
       <source>Hide toolbar</source>
-      <translation type="unfinished" />
+      <translation>Masquer la barre d'outils</translation>
     </message>
     <message>
       <location filename="../config.py" line="131" />
@@ -127,22 +127,22 @@
     <message>
       <location filename="../config.py" line="133" />
       <source>Hide tabs bar when there is only one tab</source>
-      <translation type="unfinished" />
+      <translation>Masquer la barre des onglets lorsqu'il n'y en a qu'un</translation>
     </message>
     <message>
       <location filename="../config.py" line="134" />
       <source>Show full path in window title</source>
-      <translation type="unfinished" />
+      <translation>Afficher le chemin complet dans le titre de la fenêtre</translation>
     </message>
     <message>
       <location filename="../config.py" line="135" />
       <source>Show directory tree</source>
-      <translation type="unfinished" />
+      <translation>Afficher l'arborescence des dossiers</translation>
     </message>
     <message>
       <location filename="../config.py" line="136" />
       <source>Working directory</source>
-      <translation type="unfinished" />
+      <translation>Dossier de travail</translation>
     </message>
     <message>
       <location filename="../config.py" line="161" />
@@ -152,37 +152,37 @@
     <message>
       <location filename="../config.py" line="180" />
       <source>Live preview</source>
-      <translation type="unfinished">Aperçu dynamique</translation>
+      <translation>Prévisualisation en temps réel</translation>
     </message>
     <message>
       <location filename="../config.py" line="181" />
       <source>Normal preview</source>
-      <translation type="unfinished" />
+      <translation>Prévisualisation normale</translation>
     </message>
     <message>
       <location filename="../config.py" line="186" />
       <source>Disabled</source>
-      <translation type="unfinished" />
+      <translation>Désactivé</translation>
     </message>
     <message>
       <location filename="../config.py" line="187" />
       <source>Cursor Line</source>
-      <translation type="unfinished" />
+      <translation>Ligne active</translation>
     </message>
     <message>
       <location filename="../config.py" line="188" />
       <source>Wrapped Line</source>
-      <translation type="unfinished" />
+      <translation>Lignes renvoyées</translation>
     </message>
     <message>
       <location filename="../config.py" line="193" />
       <source>Increment</source>
-      <translation type="unfinished" />
+      <translation>Incrémenter</translation>
     </message>
     <message>
       <location filename="../config.py" line="194" />
       <source>Repeat</source>
-      <translation type="unfinished" />
+      <translation>Répéter</translation>
     </message>
   </context>
   <context>
@@ -190,7 +190,7 @@
     <message>
       <location filename="../config.py" line="61" />
       <source>Select directory to open</source>
-      <translation type="unfinished" />
+      <translation>Choisir le dossier à ouvrir</translation>
     </message>
   </context>
   <context>
@@ -198,7 +198,7 @@
     <message>
       <location filename="../dialogs.py" line="63" />
       <source>Enter encoding name:</source>
-      <translation type="unfinished" />
+      <translation>Entrez le nom de l'encodage :</translation>
     </message>
   </context>
   <context>
@@ -206,7 +206,7 @@
     <message>
       <location filename="../config.py" line="35" />
       <source>(none)</source>
-      <translation>(aucun)</translation>
+      <translation>(sans)</translation>
     </message>
   </context>
   <context>
@@ -222,17 +222,17 @@
     <message>
       <location filename="../tabledialog.py" line="27" />
       <source>Insert table</source>
-      <translation type="unfinished" />
+      <translation>Insérer un tableau</translation>
     </message>
     <message>
       <location filename="../tabledialog.py" line="36" />
       <source>Number of rows</source>
-      <translation type="unfinished" />
+      <translation>Nombre de lignes</translation>
     </message>
     <message>
       <location filename="../tabledialog.py" line="37" />
       <source>Number of columns</source>
-      <translation type="unfinished" />
+      <translation>Nombre de colonnes</translation>
     </message>
   </context>
   <context>
@@ -245,7 +245,7 @@
     <message>
       <location filename="../dialogs.py" line="44" />
       <source>It is possible to specify multiple languages, separated by comma.</source>
-      <translation type="unfinished" />
+      <translation>Il est possible de spécifier plusieurs langages, séparés par des virgules.</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="50" />
@@ -299,24 +299,26 @@
     <message>
       <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
-      <translation>Créer le document manquant ?</translation>
+      <translation>Créer le fichier manquant ?</translation>
     </message>
     <message>
       <location filename="../tab.py" line="488" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
-      <translation type="unfinished" />
+      <translation>Le fichier "%s" n'existe pas.
+
+Voulez-vous le créer ?</translation>
     </message>
     <message>
       <location filename="../tab.py" line="520" />
       <source>File could not be created</source>
-      <translation type="unfinished" />
+      <translation>Le fichier n'a pas pu être créé</translation>
     </message>
     <message>
       <location filename="../tab.py" line="521" />
       <source>Could not create file '%s': %s</source>
-      <translation type="unfinished" />
+      <translation>Impossible de créer le fichier "%s" : %s</translation>
     </message>
   </context>
   <context>
@@ -431,7 +433,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="147" />
       <source>Insert table</source>
-      <translation type="unfinished" />
+      <translation>Insérer un tableau</translation>
     </message>
     <message>
       <location filename="../window.py" line="149" />
@@ -441,7 +443,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="152" />
       <source>Insert images by file path</source>
-      <translation type="unfinished" />
+      <translation>Insérer des images par chemin d'accès</translation>
     </message>
     <message>
       <location filename="../window.py" line="155" />
@@ -492,17 +494,17 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="183" />
       <source>Paste image</source>
-      <translation type="unfinished" />
+      <translation>Coller l'image</translation>
     </message>
     <message>
       <location filename="../window.py" line="185" />
       <source>Move line up</source>
-      <translation type="unfinished" />
+      <translation>Remonter la ligne</translation>
     </message>
     <message>
       <location filename="../window.py" line="187" />
       <source>Move line down</source>
-      <translation type="unfinished" />
+      <translation>Redescendre la ligne</translation>
     </message>
     <message>
       <location filename="../window.py" line="195" />
@@ -557,7 +559,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="218" />
       <source>What's new</source>
-      <translation type="unfinished" />
+      <translation>Nouveautés</translation>
     </message>
     <message>
       <location filename="../window.py" line="219" />
@@ -603,7 +605,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="260" />
       <source>&amp;Edit</source>
-      <translation>&amp;Édition</translation>
+      <translation>&amp;Editer</translation>
     </message>
     <message>
       <location filename="../window.py" line="261" />
@@ -654,7 +656,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="700" />
       <source>Type the line number</source>
-      <translation>Entrer le numéro de ligne</translation>
+      <translation>Saisir le numéro de ligne</translation>
     </message>
     <message>
       <location filename="../window.py" line="736" />
@@ -718,7 +720,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="1004" />
       <source>Unrecognized paperSize setting "%s".</source>
-      <translation type="unfinished" />
+      <translation>Paramètre paperSize non reconnu "%s".</translation>
     </message>
     <message>
       <location filename="../window.py" line="1019" />
@@ -780,7 +782,7 @@ Voulez-vous recharger le fichier (vos modifications seront perdues) ?
     <message>
       <location filename="../window.py" line="1181" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
-      <translation type="unfinished" />
+      <translation>La sauvegarde automatique a été temporairement désactivée pour cet onglet pour éviter une perte de données. Elle sera réactivée lorsque vous rechargerez ou enregistrerez le fichier manuellement.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1204" />
@@ -797,7 +799,7 @@ Voulez vous enregistrer vos changements ?</translation>
     <message>
       <location filename="../window.py" line="1242" />
       <source>Select one or several images to open</source>
-      <translation type="unfinished" />
+      <translation>Choisir une ou plusieurs image(s) à ouvrir</translation>
     </message>
     <message>
       <location filename="../window.py" line="1263" />
@@ -831,7 +833,7 @@ Voulez vous enregistrer vos changements ?</translation>
       <location filename="../editor.py" line="659" />
       <source>%d w | %d a | %d c</source>
       <comment>count of words, alphanumeric characters, all characters</comment>
-      <translation type="unfinished">%d m | %d a | %d c</translation>
+      <translation>%d m | %d a | %d c</translation>
     </message>
   </context>
   <context>
@@ -839,17 +841,17 @@ Voulez vous enregistrer vos changements ?</translation>
     <message>
       <location filename="../__main__.py" line="84" />
       <source>Open the files in preview mode</source>
-      <translation type="unfinished" />
+      <translation>Ouvrir les fichiers en mode prévisualisation</translation>
     </message>
     <message>
       <location filename="../__main__.py" line="86" />
       <source>Create a new window even if there is an existing one</source>
-      <translation type="unfinished" />
+      <translation>Ouvrir une nouvelle fenêtre même s'il en existe déjà une</translation>
     </message>
     <message>
       <location filename="../__main__.py" line="90" />
       <source>List of files to open</source>
-      <translation type="unfinished" />
+      <translation>Liste des fichiers à ouvrir</translation>
     </message>
   </context>
 </TS>

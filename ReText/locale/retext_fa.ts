@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fa_IR" sourcelanguage="">
+<TS version="2.1" language="fa_IR">
   <context>
     <name>ConfigDialog</name>
     <message>
       <location filename="../config.py" line="86" />
       <source>Using configuration file at:</source>
-      <translation>استفاده از فایل تنظیمات در نشانی:</translation>
+      <translation>استفاده از پروندهٔ تنظیمات در نشانی:</translation>
     </message>
     <message>
       <location filename="../config.py" line="105" />
@@ -16,7 +16,7 @@
     <message>
       <location filename="../config.py" line="106" />
       <source>Automatically save documents</source>
-      <translation>ذخیره ی خودکار سندها</translation>
+      <translation>ذخیرهٔ خودکار سندها</translation>
     </message>
     <message>
       <location filename="../config.py" line="107" />
@@ -26,32 +26,32 @@
     <message>
       <location filename="../config.py" line="108" />
       <source>Number of recent documents</source>
-      <translation>تعداد  اسناد به خاطر سپرده ی اخیر</translation>
+      <translation>تعداد اسناد به خاطر سپردهٔ اخیر</translation>
     </message>
     <message>
       <location filename="../config.py" line="109" />
       <source>Restore window geometry</source>
-      <translation>بازیابی اندازه قبلی پنجره</translation>
+      <translation>بازیابی اندازهٔ قبلی پنجره</translation>
     </message>
     <message>
       <location filename="../config.py" line="110" />
       <source>Default preview state</source>
-      <translation>وضعیّت نمایش پیش فرض</translation>
+      <translation>وضعیّت نمایش پیش‌فرض</translation>
     </message>
     <message>
       <location filename="../config.py" line="111" />
       <source>Open external links in ReText window</source>
-      <translation>باز کردن پیوندهای خارجی در پنجره ی ReText</translation>
+      <translation>باز کردن پیوندهای خارجی در پنجرهٔ ReText</translation>
     </message>
     <message>
       <location filename="../config.py" line="112" />
       <source>Markdown syntax extensions (comma-separated)</source>
-      <translation>افزونه های قواعد Markdown ( با کاما «,» از هم جدا نوشته شوند)</translation>
+      <translation>افزونه‌های قواعد Markdown ( با کاما «,» از هم جدا نوشته شوند)</translation>
     </message>
     <message>
       <location filename="../config.py" line="114" />
       <source>Enable synchronized scrolling for Markdown</source>
-      <translation>فعّال سازی پیمایش هم زمان برای Markdown </translation>
+      <translation>فعّال‌سازی پیمایش هم‌زمان برای Markdown </translation>
     </message>
     <message>
       <location filename="../config.py" line="179" />
@@ -67,12 +67,12 @@
     <message>
       <location filename="../config.py" line="120" />
       <source>Show line numbers</source>
-      <translation>نمایش شماره ی سطرها</translation>
+      <translation>نمایش شمارهٔ سطرها</translation>
     </message>
     <message>
       <location filename="../config.py" line="121" />
       <source>Line numbers are relative to current line</source>
-      <translation>نمایش شماره ی سطرها نسبت به سطر کنونی</translation>
+      <translation>نمایش شمارهٔ سطرها نسبت به سطر کنونی</translation>
     </message>
     <message>
       <location filename="../config.py" line="122" />
@@ -82,7 +82,7 @@
     <message>
       <location filename="../config.py" line="123" />
       <source>Tabulation width</source>
-      <translation>عرض جدول بندی</translation>
+      <translation>عرض جدول‌بندی</translation>
     </message>
     <message>
       <location filename="../config.py" line="124" />
@@ -92,7 +92,7 @@
     <message>
       <location filename="../config.py" line="125" />
       <source>Enable soft wrap</source>
-      <translation>فعّال سازی حالت گنجاندن متن تمام متن در محیط قابل نمایش</translation>
+      <translation>فعّال‌سازی حالت گنجاندن تمام متن در محیط قابل نمایش</translation>
     </message>
     <message>
       <location filename="../config.py" line="126" />
@@ -102,7 +102,7 @@
     <message>
       <location filename="../config.py" line="127" />
       <source>Ordered list mode</source>
-      <translation type="unfinished" />
+      <translation>حالت فهرست ترتیبی</translation>
     </message>
     <message>
       <location filename="../config.py" line="129" />
@@ -122,12 +122,12 @@
     <message>
       <location filename="../config.py" line="132" />
       <source>Stylesheet file</source>
-      <translation>فایل قالب</translation>
+      <translation>پروندهٔ قالب</translation>
     </message>
     <message>
       <location filename="../config.py" line="133" />
       <source>Hide tabs bar when there is only one tab</source>
-      <translation>نهفتن نوار سربرگ ها هنگامی که فقط یک سربرگ هست</translation>
+      <translation>نهفتن نوار سربرگ‌ها هنگامی که فقط یک سربرگ هست</translation>
     </message>
     <message>
       <location filename="../config.py" line="134" />
@@ -137,12 +137,12 @@
     <message>
       <location filename="../config.py" line="135" />
       <source>Show directory tree</source>
-      <translation type="unfinished" />
+      <translation>نمایش درختی مسیر</translation>
     </message>
     <message>
       <location filename="../config.py" line="136" />
       <source>Working directory</source>
-      <translation type="unfinished" />
+      <translation>مسیر اجرا</translation>
     </message>
     <message>
       <location filename="../config.py" line="161" />
@@ -152,37 +152,37 @@
     <message>
       <location filename="../config.py" line="180" />
       <source>Live preview</source>
-      <translation>پیش نمایش زنده</translation>
+      <translation> پیش‌نمایش زنده</translation>
     </message>
     <message>
       <location filename="../config.py" line="181" />
       <source>Normal preview</source>
-      <translation>پیش نمایش عادی</translation>
+      <translation>پیش‌نمایش عادی</translation>
     </message>
     <message>
       <location filename="../config.py" line="186" />
       <source>Disabled</source>
-      <translation type="unfinished" />
+      <translation>غیرفعّال</translation>
     </message>
     <message>
       <location filename="../config.py" line="187" />
       <source>Cursor Line</source>
-      <translation type="unfinished" />
+      <translation>مکان‌نما</translation>
     </message>
     <message>
       <location filename="../config.py" line="188" />
       <source>Wrapped Line</source>
-      <translation type="unfinished" />
+      <translation>پوشش سطر</translation>
     </message>
     <message>
       <location filename="../config.py" line="193" />
       <source>Increment</source>
-      <translation type="unfinished" />
+      <translation>افزایش</translation>
     </message>
     <message>
       <location filename="../config.py" line="194" />
       <source>Repeat</source>
-      <translation type="unfinished" />
+      <translation>تکرار</translation>
     </message>
   </context>
   <context>
@@ -190,7 +190,7 @@
     <message>
       <location filename="../config.py" line="61" />
       <source>Select directory to open</source>
-      <translation type="unfinished" />
+      <translation>انتخاب مسیر برای باز کردن</translation>
     </message>
   </context>
   <context>
@@ -198,7 +198,7 @@
     <message>
       <location filename="../dialogs.py" line="63" />
       <source>Enter encoding name:</source>
-      <translation type="unfinished" />
+      <translation>وارد کردن نظام نویسه</translation>
     </message>
   </context>
   <context>
@@ -206,7 +206,7 @@
     <message>
       <location filename="../config.py" line="35" />
       <source>(none)</source>
-      <translation>(هیچی)</translation>
+      <translation>(هیچ کدام)</translation>
     </message>
   </context>
   <context>
@@ -214,7 +214,7 @@
     <message>
       <location filename="../config.py" line="53" />
       <source>Select file to open</source>
-      <translation>انتخاب فایل برای باز کردن</translation>
+      <translation>انتخاب پرونده برای باز کردن</translation>
     </message>
   </context>
   <context>
@@ -227,12 +227,12 @@
     <message>
       <location filename="../tabledialog.py" line="36" />
       <source>Number of rows</source>
-      <translation>شمار ردیف ها</translation>
+      <translation>شمار ردیف‌ها</translation>
     </message>
     <message>
       <location filename="../tabledialog.py" line="37" />
       <source>Number of columns</source>
-      <translation>شمار ستون ها</translation>
+      <translation>شمار ستون‌ها</translation>
     </message>
   </context>
   <context>
@@ -245,12 +245,13 @@
     <message>
       <location filename="../dialogs.py" line="44" />
       <source>It is possible to specify multiple languages, separated by comma.</source>
-      <translation type="unfinished" />
+      <translation>می‌توان چند زبان مختلف را تعریف کرد،
+با ویرگول از هم جدا شوند.</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="50" />
       <source>Set as default</source>
-      <translation>تعیین به عنوان پیش فرض</translation>
+      <translation>تعیین به عنوان پیش‌فرض</translation>
     </message>
   </context>
   <context>
@@ -258,7 +259,7 @@
     <message>
       <location filename="../fakevimeditor.py" line="62" />
       <source>No write since last change (add ! to override)</source>
-      <translation>از زمان ذخیره ی قبلی چیزی نوشته نشده ( برای نادیده گرفتن  چیزی اضافه کنید!)</translation>
+      <translation>از زمان ذخیرهٔ قبلی چیزی نوشته نشده (برای نادیده گرفتن چیزی اضافه کنید!)</translation>
     </message>
     <message>
       <location filename="../fakevimeditor.py" line="118" />
@@ -276,7 +277,7 @@
     <message>
       <location filename="../editor.py" line="464" />
       <source>Save image</source>
-      <translation>ذخیره ی تصویر</translation>
+      <translation>ذخیرهٔ تصویر</translation>
     </message>
     <message>
       <location filename="../editor.py" line="466" />
@@ -294,31 +295,31 @@
     <message>
       <location filename="../tab.py" line="179" />
       <source>Could not parse file contents, check if you have the &lt;a href="%s"&gt;necessary module&lt;/a&gt; installed!</source>
-      <translation>امکان تجزیه و تحلیل محتوای فایل نبود. بررسی کنید که آیا &lt;a href="%s"&gt;پیمانه ضروری &lt;/a&gt; این کار را نصب کرده اید یا نه.</translation>
+      <translation>امکان تجزیه و تحلیل محتوای پرونده نبود. بررسی کنید که آیا &lt;a href="%s"&gt;پیمانهٔ لازم  &lt;/a&gt; برای این کار را نصب کرده‌اید یا نه.</translation>
     </message>
     <message>
       <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
-      <translation>فایل گم شده ایجاد شود؟</translation>
+      <translation>پرونده گم شده ایجاد شود؟</translation>
     </message>
     <message>
       <location filename="../tab.py" line="488" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
-      <translation>فایل  '%s' وجود ندارد.
+      <translation>پروندهٔ  '%s' وجود ندارد.
 
 آیا می خواهید آن را ایجاد کنید؟</translation>
     </message>
     <message>
       <location filename="../tab.py" line="520" />
       <source>File could not be created</source>
-      <translation>امکان ایجاد فایل نبود.</translation>
+      <translation>امکان ایجاد پرونده نبود.</translation>
     </message>
     <message>
       <location filename="../tab.py" line="521" />
       <source>Could not create file '%s': %s</source>
-      <translation>امکان ایجاد فایل '%s': %s نبود</translation>
+      <translation>امکان ایجاد پرونده '%s': %s نبود</translation>
     </message>
   </context>
   <context>
@@ -326,7 +327,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="90" />
       <source>File toolbar</source>
-      <translation>نوار ابزار فایل</translation>
+      <translation>نوار ابزار پرونده</translation>
     </message>
     <message>
       <location filename="../window.py" line="92" />
@@ -351,7 +352,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="102" />
       <source>Set encoding</source>
-      <translation>تعیین کدگذاری</translation>
+      <translation>تعیین نظام نویسه</translation>
     </message>
     <message>
       <location filename="../window.py" line="1186" />
@@ -392,7 +393,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="121" />
       <source>Print preview</source>
-      <translation>پیش نمایش چاپ</translation>
+      <translation>پیش‌نمایش چاپ</translation>
     </message>
     <message>
       <location filename="../window.py" line="123" />
@@ -407,7 +408,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="126" />
       <source>Change preview font</source>
-      <translation>تغییر رسم الخطّ پیش نمایش</translation>
+      <translation>تغییر رسم الخطّ پیش‌نمایش</translation>
     </message>
     <message>
       <location filename="../window.py" line="128" />
@@ -418,17 +419,17 @@ Do you want to create it?</source>
       <location filename="../window.py" line="700" />
       <location filename="../window.py" line="130" />
       <source>Go to line</source>
-      <translation>رفتن به خط شماره ی</translation>
+      <translation>رفتن به خط شمارهٔ</translation>
     </message>
     <message>
       <location filename="../window.py" line="133" />
       <source>Preview</source>
-      <translation>پیش نمایش</translation>
+      <translation>پیش‌نمایش</translation>
     </message>
     <message>
       <location filename="../window.py" line="143" />
       <source>Live preview</source>
-      <translation>پیش نمایش زنده</translation>
+      <translation>پیش‌نمایش زنده</translation>
     </message>
     <message>
       <location filename="../window.py" line="147" />
@@ -443,7 +444,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="152" />
       <source>Insert images by file path</source>
-      <translation>درج تصویر با استفاده از مسیر فایل</translation>
+      <translation>درج تصویر با استفاده از مسیر پرونده</translation>
     </message>
     <message>
       <location filename="../window.py" line="155" />
@@ -509,7 +510,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="195" />
       <source>Enable</source>
-      <translation>فعّال سازی</translation>
+      <translation>فعّال‌سازی</translation>
     </message>
     <message>
       <location filename="../window.py" line="196" />
@@ -519,7 +520,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="197" />
       <source>Use WebEngine (Chromium) renderer</source>
-      <translation>استفاده از موتور WebEngine (Chromium) برای تهیّه ی خروجی</translation>
+      <translation>استفاده از موتور WebEngine (Chromium) برای تهیّهٔ خروجی</translation>
     </message>
     <message>
       <location filename="../window.py" line="203" />
@@ -559,17 +560,17 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="218" />
       <source>What's new</source>
-      <translation type="unfinished" />
+      <translation>چیزهای نوین</translation>
     </message>
     <message>
       <location filename="../window.py" line="219" />
       <source>About ReText</source>
-      <translation>درباره ی ReText</translation>
+      <translation>دربارهٔ ReText</translation>
     </message>
     <message>
       <location filename="../window.py" line="222" />
       <source>About Qt</source>
-      <translation>درباره ی Qt</translation>
+      <translation>دربارهٔ Qt</translation>
     </message>
     <message>
       <location filename="../window.py" line="237" />
@@ -584,13 +585,13 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="241" />
       <source>Underline</source>
-      <translation>زیر خط دار</translation>
+      <translation>زیر خط‌دار</translation>
     </message>
     <message>
       <location filename="../window.py" line="314" />
       <location filename="../window.py" line="250" />
       <source>Formatting</source>
-      <translation>قالب بندی</translation>
+      <translation>قالب‌بندی</translation>
     </message>
     <message>
       <location filename="../window.py" line="254" />
@@ -600,17 +601,17 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="259" />
       <source>&amp;File</source>
-      <translation type="unfinished" />
+      <translation>پرونده</translation>
     </message>
     <message>
       <location filename="../window.py" line="260" />
       <source>&amp;Edit</source>
-      <translation type="unfinished" />
+      <translation>ویرایش</translation>
     </message>
     <message>
       <location filename="../window.py" line="261" />
       <source>&amp;Help</source>
-      <translation type="unfinished" />
+      <translation>کمک</translation>
     </message>
     <message>
       <location filename="../window.py" line="264" />
@@ -630,7 +631,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="311" />
       <source>Default markup</source>
-      <translation>نشانه گذاری پیش فرض</translation>
+      <translation>نشانه‌گذاری پیش‌فرض</translation>
     </message>
     <message>
       <location filename="../window.py" line="359" />
@@ -656,29 +657,29 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="700" />
       <source>Type the line number</source>
-      <translation>تایپ شماره ی سطر</translation>
+      <translation>تایپ شمارهٔ سطر</translation>
     </message>
     <message>
       <location filename="../window.py" line="736" />
       <source>Please, save the file somewhere.</source>
-      <translation>لطفاً فایل را در محلّی ذخیره کنید.</translation>
+      <translation>لطفاً پرونده را در محلّی ذخیره کنید.</translation>
     </message>
     <message>
       <location filename="../window.py" line="855" />
       <source>Select one or several files to open</source>
-      <translation>یک یا چند فایل را برای باز کردن انتخاب کنید</translation>
+      <translation>یک یا چند پرونده را برای باز کردن انتخاب کنید</translation>
     </message>
     <message>
       <location filename="../window.py" line="1243" />
       <location filename="../window.py" line="856" />
       <source>Supported files</source>
-      <translation>فایل های پشتیبانی شده</translation>
+      <translation>پرونده‌های پشتیبانی شده</translation>
     </message>
     <message>
       <location filename="../window.py" line="1243" />
       <location filename="../window.py" line="856" />
       <source>All files (*)</source>
-      <translation>همه ی فایل ها  (*)</translation>
+      <translation>همهٔ پرونده‌ها  (*)</translation>
     </message>
     <message>
       <location filename="../window.py" line="911" />
@@ -689,28 +690,28 @@ Do you want to create it?</source>
       <location filename="../window.py" line="914" />
       <source>%s files</source>
       <comment>Example of final string: Markdown files</comment>
-      <translation>فایل %s</translation>
+      <translation>پرونده %s</translation>
     </message>
     <message>
       <location filename="../window.py" line="983" />
       <location filename="../window.py" line="927" />
       <source>Save file</source>
-      <translation>ذخیره ی فایل</translation>
+      <translation>ذخیرهٔ پرونده</translation>
     </message>
     <message>
       <location filename="../window.py" line="935" />
       <source>Cannot save to file which is open in another tab!</source>
-      <translation>امکان ذخیره ی فایلی که در سربرگ دیگری باز شده نیست!</translation>
+      <translation>امکان ذخیرهٔ پرونده‌ای که در سربرگ دیگری باز شده نیست!</translation>
     </message>
     <message>
       <location filename="../window.py" line="973" />
       <source>Export document to ODT</source>
-      <translation>صدور خروجی سند به قالب فایل ODT</translation>
+      <translation>صدور خروجی سند به قالب پروندهٔ ODT</translation>
     </message>
     <message>
       <location filename="../window.py" line="974" />
       <source>OpenDocument text files (*.odt)</source>
-      <translation>فایل متنی کد باز  (*.odt)</translation>
+      <translation>پروندهٔ متنی کد باز  (*.odt)</translation>
     </message>
     <message>
       <location filename="../window.py" line="984" />
@@ -720,7 +721,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="1004" />
       <source>Unrecognized paperSize setting "%s".</source>
-      <translation>اندازه ی صفحه ی نامشخّص در تنظیمات "%s".</translation>
+      <translation>اندازهٔ صفحهٔ نامشخّص در تنظیمات "%s".</translation>
     </message>
     <message>
       <location filename="../window.py" line="1019" />
@@ -767,28 +768,28 @@ Do you want to create it?</source>
       <location filename="../window.py" line="1167" />
       <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
-      <translation>این فایل را برنامه ی دیگری جذف کرده است.
-لطفاً قبل از خروج خاطر جمع شوید که فایل را ذخیره کرده اید.</translation>
+      <translation>این پرونده را برنامهٔ دیگری حذف کرده است.
+لطفاً قبل از خروج خاطر جمع شوید که پرونده را ذخیره کرده‌اید.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1176" />
       <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
-      <translation>این سند را برنامه ی دیگری تغییر داده است.
-می خواهید آن ها را دوباره بارگذاری کنید (این کار همه تغییرات شما را از بین می برد)؟
+      <translation>این سند را برنامهٔ دیگری تغییر داده است.
+می‌خواهید آن‌ها را دوباره بارگذاری کنید (این کار همهٔ تغییرات شما را از بین می‌برد)؟
 </translation>
     </message>
     <message>
       <location filename="../window.py" line="1181" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
-      <translation type="unfinished" />
+      <translation>ذخیرهٔ خودکار موقّتاً برای این سربرگ غیرفعّال شده است تا دادهها از دست نروند. هر گاه سند را دوباره باز کنید فعّال خواهد شد؛ یا می‌توانید سند را به صورت دستی ذخیره کنید.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1204" />
       <source>The document has been modified.
 Do you want to save your changes?</source>
-      <translation>سند تغییر کرده است. می خواهید آن ها را ذخیره کنید؟</translation>
+      <translation>سند تغییر کرده است. می‌خواهید آن ها را ذخیره کنید؟</translation>
     </message>
     <message>
       <location filename="../window.py" line="1231" />
@@ -808,7 +809,7 @@ Do you want to save your changes?</source>
     <message>
       <location filename="../window.py" line="1264" />
       <source>Simple but powerful editor for Markdown and reStructuredText</source>
-      <translation>یک ویرایشگر متن ساده ولی توانمند برای متن های قالب Markdown و reStructuredText</translation>
+      <translation>یک ویرایشگر متن ساده ولی توانمند برای ویرایش متن‌ در قالب‌های Markdown و reStructuredText</translation>
     </message>
     <message>
       <location filename="../window.py" line="1266" />
@@ -840,17 +841,17 @@ Do you want to save your changes?</source>
     <message>
       <location filename="../__main__.py" line="84" />
       <source>Open the files in preview mode</source>
-      <translation>باز کردن فایل ها در حالت پیش نمایش</translation>
+      <translation>باز کردن پرونده‌ها در حالت پیش‌نمایش</translation>
     </message>
     <message>
       <location filename="../__main__.py" line="86" />
       <source>Create a new window even if there is an existing one</source>
-      <translation>ایجاد یک پنجره ی جدید حتّی اگر یکی از قبل باشد</translation>
+      <translation>ایجاد یک پنجرهٔ تازه، حتّی اگر یکی از قبل باشد</translation>
     </message>
     <message>
       <location filename="../__main__.py" line="90" />
       <source>List of files to open</source>
-      <translation>لیست فایل های مورد نظر برای باز شدن</translation>
+      <translation>فهرست پرونده‌های مورد نظر برای باز شدن</translation>
     </message>
   </context>
 </TS>
