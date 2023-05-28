@@ -1,3 +1,24 @@
+## ReText 8.0.1 (2023-05-28)
+
+* Bugs fixed:
+    - Issue #594 — Fix opening files in existing window by relative path.
+    - Issue #597 — Fix unreachable text at the bottom of the file.
+    - Issue #599 — Fix truncating file when new text cannot be encoded with
+      the selected encoding.
+    - Issue #604 — Allow WebEngine renderer to load iframes such as YouTube
+      embeds.
+    - Issue #609 — Fix incorrect font size with WebEngine renderer.
+    - Issue #620 — LICENSE_GPL file now has text of GPL v2.
+* Translations updated:
+    - Dutch (contributed by Heimen Stoffels).
+    - French (contributed by uGwA0XP3cm2w).
+    - Italian (contributed by Alessandro Melillo).
+    - Norwegian (Bokmål) (new, contributed by Sverre Våbenø).
+    - Persian (contributed by Hadi F and Arya Younesi).
+    - Portuguese (Brazil) (contributed by Rodrigo Zimmermann).
+    - Spanish (contributed by Antonio Villamarin).
+    - Turkish (contributed by Serkan ÖNDER).
+
 ## ReText 8.0.0 (2022-07-24)
 
 * Dependency changes:
