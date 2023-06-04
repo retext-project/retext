@@ -156,11 +156,11 @@ setup(name='ReText',
         'Markdown>=3.0',
         'Markups>=2.0',
         'Pygments',
-        'chardet>=2.3',
         'PyQt6',
       ],
       extras_require={
         'spellcheck': ['pyenchant'],
+        'encoding-detection': ['chardet'],
         'webengine': ['PyQt6-WebEngine'],
       },
       cmdclass={

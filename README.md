@@ -24,6 +24,7 @@ automatically):
 We also recommend having these packages installed:
 
 * [pyenchant](https://pypi.org/project/pyenchant/) — for spell checking support
+* [chardet](https://pypi.org/project/chardet/) — for encoding detection support
 * [PyQt6-WebEngine](https://pypi.org/project/PyQt6-WebEngine/) — a more
   powerful preview engine with JavaScript support
 
