@@ -14,14 +14,14 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 .. _`home page`: https://github.com/retext-project/retext
 .. _`wiki`: https://github.com/retext-project/retext/wiki'''
 
+import logging
 import os
 import sys
 from os.path import join, basename
 from setuptools import setup, Command
 from setuptools.command.sdist import sdist
 from setuptools.command.install import install
-from distutils import log
-from distutils.command.build import build
+from setuptools.command.build import build
 from subprocess import check_call, check_output
 from glob import glob
 
@@ -40,7 +40,7 @@ def bundle_icons():
 	for member in tar:
 		if member.isfile():
 			member.path = basename(member.path)
-			log.info('bundling ReText/icons/%s', member.path)
+			logging.info('bundling ReText/icons/%s', member.path)
 			tar.extract(member, join('ReText', 'icons'))
 	tar.close()
 
@@ -60,16 +60,16 @@ class retext_build_translations(Command):
 		# Add Qt 6 binaries directory to PATH.
 		try:
 			qt6_path = check_output(('qmake6', '-query', 'QT_INSTALL_BINS'))
-		except OSError as e:
-			log.warn('Could not run qmake6: %s', e)
+		except OSError:
+			logging.exception('Could not run qmake6:')
 		else:
 			qt6_path = qt6_path.decode('utf-8').rstrip()
 			environment['PATH'] = qt6_path + os.pathsep + environment['PATH']
 		for ts_file in glob(join('ReText', 'locale', '*.ts')):
 			try:
 				check_call(('lrelease', ts_file), env=environment)
-			except Exception as e:
-				log.warn('Failed to build translations: %s', e)
+			except Exception:
+				logging.exception('Failed to build translations:')
 				break
 
 
@@ -104,17 +104,17 @@ class retext_install(install):
 		if self.root and self.root.endswith('/wheel'):
 			# Desktop files don't allow relative paths, and we don't know the
 			# absolute path when building a wheel.
-			log.info('removing the .desktop file from the wheel')
+			logging.info('removing the .desktop file from the wheel')
 			os.remove(desktop_file_path)
 			return
 		# Fix Exec and Icon fields in the desktop file
 		icon_path = join(self.orig_install_lib, 'ReText', 'icons', 'retext.svg')
 		with open(desktop_file_path, encoding="utf-8") as desktop_file:
 			desktop_contents = desktop_file.read()
-		log.info('fixing Exec line in %s', desktop_file_path)
+		logging.info('fixing Exec line in %s', desktop_file_path)
 		desktop_contents = desktop_contents.replace('Exec=retext', 'Exec=%s' % retext)
 		if self.orig_install_data != '/usr':
-			log.info('fixing Icon line in %s', desktop_file_path)
+			logging.info('fixing Icon line in %s', desktop_file_path)
 			desktop_contents = desktop_contents.replace('Icon=retext', 'Icon=%s' % icon_path)
 		with open(desktop_file_path, 'w', encoding="utf-8") as desktop_file:
 			desktop_file.write(desktop_contents)
