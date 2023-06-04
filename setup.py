@@ -17,22 +17,23 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 import logging
 import os
 import sys
-from os.path import join, basename
-from setuptools import setup, Command
-from setuptools.command.sdist import sdist
-from setuptools.command.install import install
-from setuptools.command.build import build
-from subprocess import check_call, check_output
+import tarfile
+import urllib.request
 from glob import glob
+from io import BytesIO
+from os.path import basename, join
+from subprocess import check_call, check_output
+
+from setuptools import Command, setup
+from setuptools.command.build import build
+from setuptools.command.install import install
+from setuptools.command.sdist import sdist
 
 if sys.version_info[0] < 3:
 	sys.exit('Error: Python 3.x is required.')
 
 
 def bundle_icons():
-	import urllib.request
-	import tarfile
-	from io import BytesIO
 	icons_tgz = 'https://github.com/retext-project/retext/archive/icons.tar.gz'
 	response = urllib.request.urlopen(icons_tgz)
 	tario = BytesIO(response.read())
