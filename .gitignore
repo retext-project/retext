@@ -1,3 +1,4 @@
+.idea
 ReText/__pycache__
 ReText/icons/*
 !ReText/icons/retext.png
