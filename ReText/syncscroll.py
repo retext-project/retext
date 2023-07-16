@@ -130,8 +130,9 @@ class SyncScroll:
                                                       min_textedit_pos, max_textedit_pos,
                                                       min_preview_pos, max_preview_pos)
 
-        distance_to_top_of_viewport = textedit_pixel_to_scroll_to - self.editorViewportOffset
-        preview_scroll_offset = preview_pixel_to_scroll_to - distance_to_top_of_viewport
+        distance_to_top_of_viewport_editor = textedit_pixel_to_scroll_to - self.editorViewportOffset
+        distance_to_top_of_viewport_preview = distance_to_top_of_viewport_editor / self.frame.zoomFactor()
+        preview_scroll_offset = preview_pixel_to_scroll_to - distance_to_top_of_viewport_preview
 
         pos = self.frame.scrollPosition()
         pos.setY(preview_scroll_offset)
