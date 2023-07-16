@@ -44,6 +44,7 @@ class TestSettings(unittest.TestCase):
 
 	def tearDown(self):
 		del self.settings # this should be deleted before tempFile
+		self.tempFile.close()
 
 	def test_storingLists(self):
 		data = (
