@@ -43,6 +43,7 @@ class ReTextWebEnginePage(QWebEnginePage):
         self.tab = tab
         self.interceptor = ReTextWebEngineUrlRequestInterceptor(self)
         self.setUrlRequestInterceptor(self.interceptor)
+        self.linkHovered.connect(self.onLinkHover)
 
     def setScrollPosition(self, pos):
         self.runJavaScript("window.scrollTo(%s, %s);" % (pos.x(), pos.y()))
@@ -85,6 +86,21 @@ class ReTextWebEnginePage(QWebEnginePage):
             return True
         QDesktopServices.openUrl(url)
         return False
+
+    def onLinkHover(self, url):
+        """ Show link target on mouse hover """
+        if url:
+            # TODO: Show popup in lower left corner (as custom QWidget?...)
+            #       - Don't want statusbar to take space all the time
+            #       - Using statusBar() and setting it visible and invisible
+            #         makes scrollbar flicker
+            # TODO: Show only if hovered for more than.. say 0.2s
+            #       - Fade in/out would be even nicer
+            self.tab.p.statusBar().setVisible(True)
+            self.tab.p.statusBar().showMessage(url)
+        else:
+            self.tab.p.statusBar().clearMessage()
+            self.tab.p.statusBar().setVisible(False)
 
 
 class ReTextWebEnginePreview(QWebEngineView):
