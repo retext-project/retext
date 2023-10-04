@@ -88,9 +88,9 @@ class urlPopup(QLabel):
 		self.p = parent
 
 		self.setStyleSheet('''
-			border: 1px solid rgba(50, 50, 50, 100);
+			border: 1px solid #64323232;
 			border-radius: 3px;
-			background: rgba(250, 250, 250, 250);
+			background: #FAFAFAFA;
 		''')
 		self.fh = self.p.fontMetrics().height()
 		self.setVisible(False)
