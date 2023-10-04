@@ -25,7 +25,7 @@ import warnings
 from ReText import getBundledIcon, app_version, globalSettings, globalCache
 from ReText.tab import (ReTextTab, ReTextWebEnginePreview,
                         PreviewDisabled, PreviewNormal, PreviewLive)
-from ReText.dialogs import EncodingDialog, HtmlDialog, LocaleDialog
+from ReText.dialogs import EncodingDialog, HtmlDialog, LocaleDialog, urlPopup
 from ReText.config import ConfigDialog, setIconThemeFromSettings
 from ReText.tabledialog import InsertTableDialog
 
@@ -95,6 +95,7 @@ class ReTextWindow(QMainWindow):
 		self.addToolBar(Qt.ToolBarArea.BottomToolBarArea, self.searchBar)
 		self.toolBar.setVisible(not globalSettings.hideToolBar)
 		self.editBar.setVisible(not globalSettings.hideToolBar)
+		self.urlPopup = urlPopup(self)
 		self.actionNew = self.act(self.tr('New'), 'document-new',
 			self.createNew, shct=QKeySequence.StandardKey.New)
 		self.actionOpen = self.act(self.tr('Open'), 'document-open',
