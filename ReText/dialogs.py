@@ -79,28 +79,3 @@ class EncodingDialog(QDialog):
 			button.setEnabled(False)
 		else:
 			button.setEnabled(True)
-
-
-class urlPopup(QLabel):
-
-	def __init__(self, parent):
-		super().__init__(parent)
-		self.p = parent
-
-		self.setStyleSheet('''
-			border: 1px solid #64323232;
-			border-radius: 3px;
-			background: #FAFAFAFA;
-		''')
-		self.fh = self.p.fontMetrics().height()
-		self.setVisible(False)
-
-	def popup(self, url):
-		if url:
-			self.setText(url)
-			bot = self.p.rect().bottom()
-			tw = self.p.fontMetrics().horizontalAdvance(url)
-			self.setGeometry(-2, bot-self.fh-5, tw+10, self.fh+10)
-			self.setVisible(True)
-		else:
-			self.setVisible(False)

@@ -20,6 +20,7 @@ from ReText import globalSettings
 from ReText.syncscroll import SyncScroll
 from PyQt6.QtCore import QEvent, Qt
 from PyQt6.QtGui import QDesktopServices, QFontInfo, QGuiApplication, QTextDocument
+from PyQt6.QtWidgets import QLabel
 from PyQt6.QtWebEngineCore import (
     QWebEnginePage,
     QWebEngineSettings,
@@ -37,12 +38,39 @@ class ReTextWebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
             info.block(True)
 
 
+class UrlPopup(QLabel):
+
+    def __init__(self, window):
+        super().__init__(window)
+        self.window = window
+
+        self.setStyleSheet('''
+            border: 1px solid #64323232;
+            border-radius: 3px;
+            background: #FAFAFAFA;
+        ''')
+        self.fontHeight = self.fontMetrics().height()
+        self.setVisible(False)
+
+    def pop(self, url):
+        if url:
+            self.setText(url)
+            windowBottom = self.window.rect().bottom()
+            textWidth = self.fontMetrics().horizontalAdvance(url)
+            self.setGeometry(-2, windowBottom-self.fontHeight-5,
+                    textWidth+10, self.fontHeight+10)
+            self.setVisible(True)
+        else:
+            self.setVisible(False)
+
+
 class ReTextWebEnginePage(QWebEnginePage):
     def __init__(self, parent, tab):
         QWebEnginePage.__init__(self, parent)
         self.tab = tab
         self.interceptor = ReTextWebEngineUrlRequestInterceptor(self)
         self.setUrlRequestInterceptor(self.interceptor)
+        self.urlPopup = UrlPopup(self.tab.p)
         self.linkHovered.connect(self.onLinkHover)
 
     def setScrollPosition(self, pos):
@@ -89,7 +117,7 @@ class ReTextWebEnginePage(QWebEnginePage):
 
     def onLinkHover(self, url):
         """ Show link target on mouse hover """
-        self.tab.p.urlPopup.popup(url)
+        self.urlPopup.pop(url)
 
 
 class ReTextWebEnginePreview(QWebEngineView):
