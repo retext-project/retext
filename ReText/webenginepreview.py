@@ -52,7 +52,8 @@ class UrlPopup(QLabel):
         self.fontHeight = self.fontMetrics().height()
         self.setVisible(False)
 
-    def pop(self, url):
+    def pop(self, url: str):
+        """ Show link target on mouse hover """
         if url:
             self.setText(url)
             windowBottom = self.window.rect().bottom()
@@ -71,7 +72,7 @@ class ReTextWebEnginePage(QWebEnginePage):
         self.interceptor = ReTextWebEngineUrlRequestInterceptor(self)
         self.setUrlRequestInterceptor(self.interceptor)
         self.urlPopup = UrlPopup(self.tab.p)
-        self.linkHovered.connect(self.onLinkHover)
+        self.linkHovered.connect(self.urlPopup.pop)
 
     def setScrollPosition(self, pos):
         self.runJavaScript("window.scrollTo(%s, %s);" % (pos.x(), pos.y()))
@@ -114,10 +115,6 @@ class ReTextWebEnginePage(QWebEnginePage):
             return True
         QDesktopServices.openUrl(url)
         return False
-
-    def onLinkHover(self, url):
-        """ Show link target on mouse hover """
-        self.urlPopup.pop(url)
 
 
 class ReTextWebEnginePreview(QWebEngineView):
