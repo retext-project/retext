@@ -72,6 +72,11 @@ class PosMapMarkPreprocessor(Preprocessor):
         for i, line in enumerate(lines):
             new_text.append(line)
             if line == '':
+                # Do not insert markers in the middle of an indented block.
+                if 0 < i < len(lines) - 1:
+                    if lines[i - 1].startswith(" ") and lines[i + 1].startswith(" "):
+                        continue
+
                 new_text.append('__posmapmarker__%d' % i)
                 new_text.append('')
         return new_text
