@@ -139,3 +139,25 @@ class PosMapTest(TestCase):
         self.assertNotIn("posmapmarker", html)
         expected = markdown(text, extensions=[SuperFencesCodeExtension()])
         self.assertMultiLineEqual(html, expected)
+
+    @skipIf(SuperFencesCodeExtension is None,
+            "pymdownx module is not available")
+    def test_superFencesInList(self):
+        text = dedent("""\
+        1.  List item 1
+
+            ```python
+            import sys
+
+            sys.stdout.write("Hello, world!")
+            ```
+
+        2.  List item 2
+        """)
+        extensions = [SuperFencesCodeExtension(), PosMapExtension()]
+        html = markdown(text, extensions=extensions)
+        self.assertIn('<ol data-posmap="9">', html)
+        html = html.replace(' data-posmap="9"', "")
+        self.assertNotIn("posmapmarker", html)
+        expected = markdown(text, extensions=[SuperFencesCodeExtension()])
+        self.assertMultiLineEqual(html, expected)
