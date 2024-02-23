@@ -150,14 +150,17 @@ class PosMapTest(TestCase):
             import sys
 
             sys.stdout.write("Hello, world!")
+
+
+            sys.stdout.write("One more call.")
             ```
 
         2.  List item 2
         """)
         extensions = [SuperFencesCodeExtension(), PosMapExtension()]
         html = markdown(text, extensions=extensions)
-        self.assertIn('<ol data-posmap="9">', html)
-        html = html.replace(' data-posmap="9"', "")
+        self.assertIn('<ol data-posmap="12">', html)
+        html = html.replace(' data-posmap="12"', "")
         self.assertNotIn("posmapmarker", html)
         expected = markdown(text, extensions=[SuperFencesCodeExtension()])
         self.assertMultiLineEqual(html, expected)
