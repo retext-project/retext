@@ -74,7 +74,15 @@ class PosMapMarkPreprocessor(Preprocessor):
             if line == '':
                 # Do not insert markers in the middle of an indented block.
                 if 0 < i < len(lines) - 1:
-                    if lines[i - 1].startswith(" ") and lines[i + 1].startswith(" "):
+                    # Find the closest lines before and after this one that have
+                    # non-whitespace characters, and check if they are indented.
+                    i_prev = i - 1
+                    while i_prev > 0 and lines[i_prev].strip() == "":
+                        i_prev -= 1
+                    i_next = i + 1
+                    while i_next < len(lines) - 1 and lines[i_next].strip() == "":
+                        i_next += 1
+                    if lines[i_prev].startswith(" ") and lines[i_next].startswith(" "):
                         continue
 
                 new_text.append('__posmapmarker__%d' % i)
