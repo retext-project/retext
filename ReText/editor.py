@@ -23,7 +23,7 @@ import weakref
 from markups import MarkdownMarkup, ReStructuredTextMarkup, TextileMarkup
 from ReText import globalSettings, settings, tablemode
 
-from PyQt6.QtCore import pyqtSignal, QFileInfo, QPoint, QRect, QSize, Qt
+from PyQt6.QtCore import pyqtSignal, QFileInfo, QPoint, QPointF, QRect, QSize, Qt
 from PyQt6.QtGui import QAction, QColor, QImage, QKeyEvent, QMouseEvent, QPainter, \
 QPalette, QTextCursor, QTextFormat, QWheelEvent, QGuiApplication
 from PyQt6.QtWidgets import QApplication, QFileDialog, QLabel, QTextEdit, QWidget
@@ -613,7 +613,7 @@ class InfoArea(QLabel):
 		self.setPalette(palette)
 
 	def mousePressEvent(self, event):
-		pos = self.mapToParent(event.pos())
+		pos: QPointF = self.mapToParent(event.position())
 		pos.setX(pos.x() - self.editor.lineNumberAreaWidth())
 		newEvent = QMouseEvent(event.type(), pos,
 		                       event.button(), event.buttons(),
