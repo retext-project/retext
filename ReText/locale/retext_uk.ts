@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="uk" sourcelanguage="">
+<TS version="2.1" language="uk">
   <context>
     <name>ConfigDialog</name>
     <message>
@@ -26,7 +26,7 @@
     <message>
       <location filename="../config.py" line="108" />
       <source>Number of recent documents</source>
-      <translation type="unfinished" />
+      <translation>Кількість недавніх документів</translation>
     </message>
     <message>
       <location filename="../config.py" line="109" />
@@ -102,7 +102,7 @@
     <message>
       <location filename="../config.py" line="127" />
       <source>Ordered list mode</source>
-      <translation type="unfinished" />
+      <translation>Режим впорядкованого списку</translation>
     </message>
     <message>
       <location filename="../config.py" line="129" />
@@ -112,7 +112,7 @@
     <message>
       <location filename="../config.py" line="130" />
       <source>Hide toolbar</source>
-      <translation type="unfinished" />
+      <translation>Приховати панель інструментів</translation>
     </message>
     <message>
       <location filename="../config.py" line="131" />
@@ -127,7 +127,7 @@
     <message>
       <location filename="../config.py" line="133" />
       <source>Hide tabs bar when there is only one tab</source>
-      <translation type="unfinished" />
+      <translation>Приховати панель вкладок, коли лише одна вкладка</translation>
     </message>
     <message>
       <location filename="../config.py" line="134" />
@@ -137,12 +137,12 @@
     <message>
       <location filename="../config.py" line="135" />
       <source>Show directory tree</source>
-      <translation type="unfinished" />
+      <translation>Показати дерево директорій</translation>
     </message>
     <message>
       <location filename="../config.py" line="136" />
       <source>Working directory</source>
-      <translation type="unfinished" />
+      <translation>Робоча директорія</translation>
     </message>
     <message>
       <location filename="../config.py" line="161" />
@@ -152,12 +152,12 @@
     <message>
       <location filename="../config.py" line="180" />
       <source>Live preview</source>
-      <translation type="unfinished">Одночасний перегляд</translation>
+      <translation>Одночасний перегляд</translation>
     </message>
     <message>
       <location filename="../config.py" line="181" />
       <source>Normal preview</source>
-      <translation type="unfinished" />
+      <translation>Звичайний перегляд</translation>
     </message>
     <message>
       <location filename="../config.py" line="186" />
@@ -182,7 +182,7 @@
     <message>
       <location filename="../config.py" line="194" />
       <source>Repeat</source>
-      <translation type="unfinished" />
+      <translation>Повторити</translation>
     </message>
   </context>
   <context>
@@ -222,17 +222,17 @@
     <message>
       <location filename="../tabledialog.py" line="27" />
       <source>Insert table</source>
-      <translation type="unfinished" />
+      <translation>Вставити таблицю</translation>
     </message>
     <message>
       <location filename="../tabledialog.py" line="36" />
       <source>Number of rows</source>
-      <translation type="unfinished" />
+      <translation>Кількість рядків</translation>
     </message>
     <message>
       <location filename="../tabledialog.py" line="37" />
       <source>Number of columns</source>
-      <translation type="unfinished" />
+      <translation>Кількість стовпців</translation>
     </message>
   </context>
   <context>
@@ -299,7 +299,7 @@
     <message>
       <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
-      <translation type="unfinished" />
+      <translation>Створити пропущений файл?</translation>
     </message>
     <message>
       <location filename="../tab.py" line="488" />
@@ -416,7 +416,7 @@ Do you want to create it?</source>
       <location filename="../window.py" line="700" />
       <location filename="../window.py" line="130" />
       <source>Go to line</source>
-      <translation type="unfinished" />
+      <translation>Перейти до рядка</translation>
     </message>
     <message>
       <location filename="../window.py" line="133" />
@@ -431,7 +431,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="147" />
       <source>Insert table</source>
-      <translation type="unfinished" />
+      <translation>Вставити таблицю</translation>
     </message>
     <message>
       <location filename="../window.py" line="149" />
@@ -492,7 +492,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="183" />
       <source>Paste image</source>
-      <translation type="unfinished" />
+      <translation>Вставити зображення</translation>
     </message>
     <message>
       <location filename="../window.py" line="185" />
@@ -557,7 +557,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="218" />
       <source>What's new</source>
-      <translation type="unfinished" />
+      <translation>Що нового</translation>
     </message>
     <message>
       <location filename="../window.py" line="219" />
