@@ -1,7 +1,7 @@
 # vim: ts=8:sts=8:sw=8:noexpandtab
 #
 # This file is part of ReText
-# Copyright: 2012-2022 Dmitry Shachnev
+# Copyright: 2012-2024 Dmitry Shachnev
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1264,7 +1264,7 @@ class ReTextWindow(QMainWindow):
 		'<p><b>' + (self.tr('ReText %s (using PyMarkups %s)') % (app_version, markups.__version__))
 		+'</b></p>' + self.tr('Simple but powerful editor'
 		' for Markdown and reStructuredText')
-		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011').replace('2011', '2011–2023')
+		+'</p><p>'+self.tr('Author: Dmitry Shachnev, 2011').replace('2011', '2011–2024')
 		+'<br><a href="https://github.com/retext-project/retext">GitHub</a> | '
 		+'<a href="https://daringfireball.net/projects/markdown/syntax">'
 		+self.tr('Markdown syntax')

@@ -1,5 +1,5 @@
 # This file is part of ReText
-# Copyright: 2016 Maurice van der Pot
+# Copyright: 2016-2023 Maurice van der Pot
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

@@ -10,6 +10,7 @@ Note: the line number stored in the data-posmap attribute corresponds to the
       empty line *after* the markdown block that the HTML was generated from.
 
 Copyright 2016 [Maurice van der Pot](griffon26@kfk4ever.com)
+          2017-2024 Dmitry Shachnev
 
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 
