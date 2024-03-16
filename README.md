@@ -36,8 +36,8 @@ can also be loaded from `/usr/share/retext/` directory.
 
 You can translate ReText into your language on [Transifex].
 
-ReText is Copyright 2011–2023 [Dmitry Shachnev](https://mitya57.me),
-2011–2017 [Maurice van der Pot](mailto:griffon26@kfk4ever.com), and is
+ReText is Copyright 2011–2024 [Dmitry Shachnev](https://mitya57.me),
+2011–2023 [Maurice van der Pot](mailto:griffon26@kfk4ever.com), and is
 licensed under GNU GPL (v2+) license, the current version is available in
 `LICENSE_GPL` file.
 
