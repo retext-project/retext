@@ -298,12 +298,12 @@
       <translation>امکان تجزیه و تحلیل محتوای پرونده نبود. بررسی کنید که آیا &lt;a href="%s"&gt;پیمانهٔ لازم  &lt;/a&gt; برای این کار را نصب کرده‌اید یا نه.</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="489" />
+      <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
       <translation>پرونده گم شده ایجاد شود؟</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="490" />
+      <location filename="../tab.py" line="488" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
@@ -312,12 +312,12 @@ Do you want to create it?</source>
 آیا می خواهید آن را ایجاد کنید؟</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="522" />
+      <location filename="../tab.py" line="520" />
       <source>File could not be created</source>
       <translation>امکان ایجاد پرونده نبود.</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="523" />
+      <location filename="../tab.py" line="521" />
       <source>Could not create file '%s': %s</source>
       <translation>امکان ایجاد پرونده '%s': %s نبود</translation>
     </message>

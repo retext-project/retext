@@ -297,12 +297,12 @@
       <translation>De bestandsinhoud kan niet worden verwerkt. Controleer of de &lt;a href="%s"&gt;vereiste module&lt;/a&gt; geïnstalleerd is!</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="489" />
+      <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
       <translation>Ontbrekend bestand aanmaken?</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="490" />
+      <location filename="../tab.py" line="488" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
@@ -311,12 +311,12 @@ Do you want to create it?</source>
 Wil je het aanmaken?</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="522" />
+      <location filename="../tab.py" line="520" />
       <source>File could not be created</source>
       <translation>Het bestand kan niet worden aangemaakt</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="523" />
+      <location filename="../tab.py" line="521" />
       <source>Could not create file '%s': %s</source>
       <translation>Het bestand (‘%s’) kan niet worden aangemaakt: %s</translation>
     </message>

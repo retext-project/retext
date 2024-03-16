@@ -297,12 +297,12 @@
       <translation>Dosya içeriği ayrıştırılamadı, &lt;a href="%s"&gt;gerekli modülün&lt;/a&gt; kurulu olup olmadığını kontrol edin!</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="489" />
+      <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
       <translation>Eksik dosya oluşturulsun mu?</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="490" />
+      <location filename="../tab.py" line="488" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
@@ -311,12 +311,12 @@ Do you want to create it?</source>
 Onu oluşturmak ister misin?</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="522" />
+      <location filename="../tab.py" line="520" />
       <source>File could not be created</source>
       <translation>Dosya oluşturulamadı</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="523" />
+      <location filename="../tab.py" line="521" />
       <source>Could not create file '%s': %s</source>
       <translation>'%s' dosyası oluşturulamadı: %s</translation>
     </message>

@@ -297,24 +297,24 @@
       <translation>Konnte den Dateiinhalt nicht parsen. Überprüfen Sie, ob das &lt;a href="%s"&gt;benötigte Modul&lt;/a&gt; installiert ist!</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="489" />
+      <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="490" />
+      <location filename="../tab.py" line="488" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="522" />
+      <location filename="../tab.py" line="520" />
       <source>File could not be created</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="523" />
+      <location filename="../tab.py" line="521" />
       <source>Could not create file '%s': %s</source>
       <translation type="unfinished" />
     </message>

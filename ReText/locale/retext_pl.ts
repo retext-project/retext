@@ -297,12 +297,12 @@
       <translation>Nie można przeanalizować zawartości pliku, sprawdź czy masz zainstalowany &lt;a href="%s"&gt;odpowiedni moduł&lt;/a&gt;!</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="489" />
+      <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
       <translation>Utworzyć brakujący plik?</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="490" />
+      <location filename="../tab.py" line="488" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
@@ -311,12 +311,12 @@ Do you want to create it?</source>
 Czy chcesz go utworzyć?</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="522" />
+      <location filename="../tab.py" line="520" />
       <source>File could not be created</source>
       <translation>Nie można utworzyć pliku</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="523" />
+      <location filename="../tab.py" line="521" />
       <source>Could not create file '%s': %s</source>
       <translation>Nie udało się utworzyć pliku '%s': %s</translation>
     </message>

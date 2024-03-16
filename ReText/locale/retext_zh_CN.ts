@@ -297,12 +297,12 @@
       <translation>不能粘贴文件内容，检查下是否安装了 &lt;a href="%s"&gt;必要模块&lt;/a&gt; ！</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="489" />
+      <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
       <translation>创建丢失文件？</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="490" />
+      <location filename="../tab.py" line="488" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
@@ -310,12 +310,12 @@ Do you want to create it?</source>
 是否创建？</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="522" />
+      <location filename="../tab.py" line="520" />
       <source>File could not be created</source>
       <translation>无法创建文件</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="523" />
+      <location filename="../tab.py" line="521" />
       <source>Could not create file '%s': %s</source>
       <translation>无法创建文件 '%s': %s</translation>
     </message>

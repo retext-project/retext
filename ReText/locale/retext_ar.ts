@@ -297,12 +297,12 @@
       <translation>تعذر تحليل محتويات الملف، تفقد اذا كنت تمتلك ال&lt;a href="%s"&gt; الوحدة اللازمة &lt;/a&gt; منصبة!</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="489" />
+      <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
       <translation>انشاء ملف مفقود؟</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="490" />
+      <location filename="../tab.py" line="488" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
@@ -311,12 +311,12 @@ Do you want to create it?</source>
 هل تريد انشائه؟</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="522" />
+      <location filename="../tab.py" line="520" />
       <source>File could not be created</source>
       <translation>الملف لم يُستطع انشاءه</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="523" />
+      <location filename="../tab.py" line="521" />
       <source>Could not create file '%s': %s</source>
       <translation>لم يُستطع انشاء ملف '%s': %s</translation>
     </message>

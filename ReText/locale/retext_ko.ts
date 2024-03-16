@@ -297,24 +297,24 @@
       <translation>파일 내용을 파싱할 수 업습니다. &lt;a href="%s"&gt;필수 모듈&lt;/a&gt; 가 있는지 보고 설치하세요!</translation>
     </message>
     <message>
-      <location filename="../tab.py" line="489" />
+      <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="490" />
+      <location filename="../tab.py" line="488" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="522" />
+      <location filename="../tab.py" line="520" />
       <source>File could not be created</source>
       <translation type="unfinished" />
     </message>
     <message>
-      <location filename="../tab.py" line="523" />
+      <location filename="../tab.py" line="521" />
       <source>Could not create file '%s': %s</source>
       <translation type="unfinished" />
     </message>
