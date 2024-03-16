@@ -62,6 +62,7 @@
   <update_contact>mitya57_AT_gmail.com</update_contact>
   <content_rating type="oars-1.0"/>
   <releases>
+    <release version="8.0.2" date="2024-03-16"/>
     <release version="8.0.1" date="2023-05-28"/>
     <release version="8.0.0" date="2022-07-24"/>
     <release version="7.2.3" date="2022-02-03"/>

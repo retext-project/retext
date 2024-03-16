@@ -1,3 +1,19 @@
+## ReText 8.0.2 (2024-03-16)
+
+* Improvements and bugs fixed:
+    - Fixed synchronized scrolling for zoom factors other than 1 (contributed
+      by Maurice van der Pot).
+    - Stopped passing `.desktop` suffix to setDesktopFileName() (contributed
+      by Chris Mayo in #633).
+    - Issue #98 — Made `mdx_posmap` not break indented code blocks which use
+      `pymdownx.superfences` extension.
+    - Issue #637 — Fixed crash when clicking on line information area.
+* Translations updated:
+    - Basque (contributed by Aitor Salaberria).
+    - German (contributed by cosmic_snow).
+    - Korean (contributed by Minpa Lee).
+    - Ukrainian (contributed by Oleksandr Tsvirkun).
+
 ## ReText 8.0.1 (2023-05-28)
 
 * Bugs fixed:
