@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de" sourcelanguage="">
+<TS version="2.1" language="de">
   <context>
     <name>ConfigDialog</name>
     <message>
@@ -26,7 +26,7 @@
     <message>
       <location filename="../config.py" line="108" />
       <source>Number of recent documents</source>
-      <translation type="unfinished" />
+      <translation>Anzahl zuletzt geöffneter Dokumente</translation>
     </message>
     <message>
       <location filename="../config.py" line="109" />
@@ -102,7 +102,7 @@
     <message>
       <location filename="../config.py" line="127" />
       <source>Ordered list mode</source>
-      <translation type="unfinished" />
+      <translation>Aufzählungsmodus</translation>
     </message>
     <message>
       <location filename="../config.py" line="129" />
@@ -112,7 +112,7 @@
     <message>
       <location filename="../config.py" line="130" />
       <source>Hide toolbar</source>
-      <translation type="unfinished" />
+      <translation>Werkzeugleiste verstecken</translation>
     </message>
     <message>
       <location filename="../config.py" line="131" />
@@ -127,22 +127,22 @@
     <message>
       <location filename="../config.py" line="133" />
       <source>Hide tabs bar when there is only one tab</source>
-      <translation type="unfinished" />
+      <translation>Reisterleiste verbergen wenn nur ein Reiter offen ist</translation>
     </message>
     <message>
       <location filename="../config.py" line="134" />
       <source>Show full path in window title</source>
-      <translation type="unfinished" />
+      <translation>Kompletten Pfad im Fenstertitel anzeigen</translation>
     </message>
     <message>
       <location filename="../config.py" line="135" />
       <source>Show directory tree</source>
-      <translation type="unfinished" />
+      <translation>Verzeichnisbaum anzeigen</translation>
     </message>
     <message>
       <location filename="../config.py" line="136" />
       <source>Working directory</source>
-      <translation type="unfinished" />
+      <translation>Arbeitsverzeichnis</translation>
     </message>
     <message>
       <location filename="../config.py" line="161" />
@@ -157,17 +157,17 @@
     <message>
       <location filename="../config.py" line="181" />
       <source>Normal preview</source>
-      <translation type="unfinished" />
+      <translation>Normale Vorschau</translation>
     </message>
     <message>
       <location filename="../config.py" line="186" />
       <source>Disabled</source>
-      <translation type="unfinished" />
+      <translation>Deaktiviert</translation>
     </message>
     <message>
       <location filename="../config.py" line="187" />
       <source>Cursor Line</source>
-      <translation type="unfinished" />
+      <translation>Cursor-Zeile</translation>
     </message>
     <message>
       <location filename="../config.py" line="188" />
@@ -190,7 +190,7 @@
     <message>
       <location filename="../config.py" line="61" />
       <source>Select directory to open</source>
-      <translation type="unfinished" />
+      <translation>Zu öffnendes Verzeichnis auswählen</translation>
     </message>
   </context>
   <context>
@@ -222,17 +222,17 @@
     <message>
       <location filename="../tabledialog.py" line="27" />
       <source>Insert table</source>
-      <translation type="unfinished" />
+      <translation>Tabelle einfügen</translation>
     </message>
     <message>
       <location filename="../tabledialog.py" line="36" />
       <source>Number of rows</source>
-      <translation type="unfinished" />
+      <translation>Anzahl Zeilen</translation>
     </message>
     <message>
       <location filename="../tabledialog.py" line="37" />
       <source>Number of columns</source>
-      <translation type="unfinished" />
+      <translation>Anzahl Spalten</translation>
     </message>
   </context>
   <context>
@@ -245,7 +245,7 @@
     <message>
       <location filename="../dialogs.py" line="44" />
       <source>It is possible to specify multiple languages, separated by comma.</source>
-      <translation type="unfinished" />
+      <translation>Es können mehrere Sprachen durch Komma getrennt angegeben werden.</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="50" />
@@ -416,7 +416,7 @@ Do you want to create it?</source>
       <location filename="../window.py" line="701" />
       <location filename="../window.py" line="131" />
       <source>Go to line</source>
-      <translation type="unfinished" />
+      <translation>Zur Zeile springen</translation>
     </message>
     <message>
       <location filename="../window.py" line="134" />
@@ -431,7 +431,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="148" />
       <source>Insert table</source>
-      <translation type="unfinished" />
+      <translation>Tabelle einfügen</translation>
     </message>
     <message>
       <location filename="../window.py" line="150" />
@@ -441,7 +441,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="153" />
       <source>Insert images by file path</source>
-      <translation type="unfinished" />
+      <translation>Bilder nach Pfad einfügen</translation>
     </message>
     <message>
       <location filename="../window.py" line="156" />
@@ -492,7 +492,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="184" />
       <source>Paste image</source>
-      <translation type="unfinished" />
+      <translation>Bild einfügen</translation>
     </message>
     <message>
       <location filename="../window.py" line="186" />
@@ -654,7 +654,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="701" />
       <source>Type the line number</source>
-      <translation type="unfinished" />
+      <translation>Zeilennummer eingeben</translation>
     </message>
     <message>
       <location filename="../window.py" line="737" />
@@ -780,7 +780,7 @@ verworfen werden)?</translation>
     <message>
       <location filename="../window.py" line="1182" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
-      <translation type="unfinished" />
+      <translation>Automatisches Speichern für diesen Reiter wurde vorübergehend deaktiviert um Datenverlust zu verhindern. Es wird reaktiviert wenn Sie die Datei neu laden oder manuell speichern.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1205" />

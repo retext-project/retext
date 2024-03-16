@@ -1,188 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr" sourcelanguage="">
+<TS version="2.1" language="eu">
   <context>
     <name>ConfigDialog</name>
     <message>
       <location filename="../config.py" line="86" />
       <source>Using configuration file at:</source>
-      <translation type="unfinished" />
+      <translation>Ezarpen-fitxategia erabiltzen hemen:</translation>
     </message>
     <message>
       <location filename="../config.py" line="105" />
       <source>Behavior</source>
-      <translation type="unfinished" />
+      <translation>Jarrera</translation>
     </message>
     <message>
       <location filename="../config.py" line="106" />
       <source>Automatically save documents</source>
-      <translation type="unfinished" />
+      <translation>Automatikoki gorde dokumentuak</translation>
     </message>
     <message>
       <location filename="../config.py" line="107" />
       <source>Automatically open last documents on startup</source>
-      <translation type="unfinished" />
+      <translation>Automatikoki ireki azken dokumentuak hasieran</translation>
     </message>
     <message>
       <location filename="../config.py" line="108" />
       <source>Number of recent documents</source>
-      <translation type="unfinished" />
+      <translation>Azken dokumentuen kopurua</translation>
     </message>
     <message>
       <location filename="../config.py" line="109" />
       <source>Restore window geometry</source>
-      <translation type="unfinished" />
+      <translation>Leheneratu leihoaren geometria</translation>
     </message>
     <message>
       <location filename="../config.py" line="110" />
       <source>Default preview state</source>
-      <translation type="unfinished" />
+      <translation>Lehenetsitako aurrebistaren egoera</translation>
     </message>
     <message>
       <location filename="../config.py" line="111" />
       <source>Open external links in ReText window</source>
-      <translation type="unfinished" />
+      <translation>Ireki kanpoko estekak ReText-eko leihoan</translation>
     </message>
     <message>
       <location filename="../config.py" line="112" />
       <source>Markdown syntax extensions (comma-separated)</source>
-      <translation type="unfinished" />
+      <translation>Markdown-en sintaxi-luzapenak (komaz bereizia)</translation>
     </message>
     <message>
       <location filename="../config.py" line="114" />
       <source>Enable synchronized scrolling for Markdown</source>
-      <translation type="unfinished" />
+      <translation>Gaitu sinkronizatutako korritzea Markdown-erako</translation>
     </message>
     <message>
       <location filename="../config.py" line="179" />
       <location filename="../config.py" line="118" />
       <source>Editor</source>
-      <translation type="unfinished" />
+      <translation>Editorea</translation>
     </message>
     <message>
       <location filename="../config.py" line="119" />
       <source>Highlight current line</source>
-      <translation type="unfinished" />
+      <translation>Nabarmendu oraingo lerroa</translation>
     </message>
     <message>
       <location filename="../config.py" line="120" />
       <source>Show line numbers</source>
-      <translation type="unfinished" />
+      <translation>Erakutsi lerroen kopurua</translation>
     </message>
     <message>
       <location filename="../config.py" line="121" />
       <source>Line numbers are relative to current line</source>
-      <translation type="unfinished" />
+      <translation>Lerroen kopurua oraingo lerroari dagokio</translation>
     </message>
     <message>
       <location filename="../config.py" line="122" />
       <source>Tab key inserts spaces</source>
-      <translation type="unfinished" />
+      <translation>Tab teklak espazioak gehitzen ditu</translation>
     </message>
     <message>
       <location filename="../config.py" line="123" />
       <source>Tabulation width</source>
-      <translation type="unfinished" />
+      <translation>Tabulazioaren zabalera</translation>
     </message>
     <message>
       <location filename="../config.py" line="124" />
       <source>Draw vertical line at column</source>
-      <translation type="unfinished" />
+      <translation>Marraztu lerro bertikala zutabean</translation>
     </message>
     <message>
       <location filename="../config.py" line="125" />
       <source>Enable soft wrap</source>
-      <translation type="unfinished" />
+      <translation>Gaitu doitze leuna</translation>
     </message>
     <message>
       <location filename="../config.py" line="126" />
       <source>Show document stats</source>
-      <translation type="unfinished" />
+      <translation>Erakutsi dokumentuaren estatistikak</translation>
     </message>
     <message>
       <location filename="../config.py" line="127" />
       <source>Ordered list mode</source>
-      <translation type="unfinished" />
+      <translation>Ordenatutako zerrenda modua</translation>
     </message>
     <message>
       <location filename="../config.py" line="129" />
       <source>Interface</source>
-      <translation type="unfinished" />
+      <translation>Interfazea</translation>
     </message>
     <message>
       <location filename="../config.py" line="130" />
       <source>Hide toolbar</source>
-      <translation type="unfinished" />
+      <translation>Ezkutatu tresna-barra</translation>
     </message>
     <message>
       <location filename="../config.py" line="131" />
       <source>Icon theme name</source>
-      <translation type="unfinished" />
+      <translation>Ikonoaren gaiaren izena</translation>
     </message>
     <message>
       <location filename="../config.py" line="132" />
       <source>Stylesheet file</source>
-      <translation type="unfinished" />
+      <translation>Estilo-orriaren fitxategia</translation>
     </message>
     <message>
       <location filename="../config.py" line="133" />
       <source>Hide tabs bar when there is only one tab</source>
-      <translation type="unfinished" />
+      <translation>Ezkutatu fitxen barra fitxa bakarra dagoenean</translation>
     </message>
     <message>
       <location filename="../config.py" line="134" />
       <source>Show full path in window title</source>
-      <translation type="unfinished" />
+      <translation>Erakutsi bide-izen osoa leihoaren izenburuan</translation>
     </message>
     <message>
       <location filename="../config.py" line="135" />
       <source>Show directory tree</source>
-      <translation type="unfinished" />
+      <translation>Erakutsi direktorioaren zuhaitza</translation>
     </message>
     <message>
       <location filename="../config.py" line="136" />
       <source>Working directory</source>
-      <translation type="unfinished" />
+      <translation>Lan-direktorioa</translation>
     </message>
     <message>
       <location filename="../config.py" line="161" />
       <source>Help</source>
-      <translation type="unfinished">Laguntza</translation>
+      <translation>Laguntza</translation>
     </message>
     <message>
       <location filename="../config.py" line="180" />
       <source>Live preview</source>
-      <translation type="unfinished">Aurrebista zuzenean</translation>
+      <translation>Zuzeneko aurrebista</translation>
     </message>
     <message>
       <location filename="../config.py" line="181" />
       <source>Normal preview</source>
-      <translation type="unfinished" />
+      <translation>Aurrebista normala</translation>
     </message>
     <message>
       <location filename="../config.py" line="186" />
       <source>Disabled</source>
-      <translation type="unfinished" />
+      <translation>Desgaituta</translation>
     </message>
     <message>
       <location filename="../config.py" line="187" />
       <source>Cursor Line</source>
-      <translation type="unfinished" />
+      <translation>Kurtsorearen lerroa</translation>
     </message>
     <message>
       <location filename="../config.py" line="188" />
       <source>Wrapped Line</source>
-      <translation type="unfinished" />
+      <translation>Doitutako lerroa</translation>
     </message>
     <message>
       <location filename="../config.py" line="193" />
       <source>Increment</source>
-      <translation type="unfinished" />
+      <translation>Gehitze</translation>
     </message>
     <message>
       <location filename="../config.py" line="194" />
       <source>Repeat</source>
-      <translation type="unfinished" />
+      <translation>Errepikatu</translation>
     </message>
   </context>
   <context>
@@ -190,7 +190,7 @@
     <message>
       <location filename="../config.py" line="61" />
       <source>Select directory to open</source>
-      <translation type="unfinished" />
+      <translation>Aukeratu direktorioa irekitzeko</translation>
     </message>
   </context>
   <context>
@@ -198,7 +198,7 @@
     <message>
       <location filename="../dialogs.py" line="63" />
       <source>Enter encoding name:</source>
-      <translation type="unfinished" />
+      <translation>Sartu kodeketa-izena:</translation>
     </message>
   </context>
   <context>
@@ -206,7 +206,7 @@
     <message>
       <location filename="../config.py" line="35" />
       <source>(none)</source>
-      <translation type="unfinished" />
+      <translation>(ezer)</translation>
     </message>
   </context>
   <context>
@@ -214,7 +214,7 @@
     <message>
       <location filename="../config.py" line="53" />
       <source>Select file to open</source>
-      <translation type="unfinished" />
+      <translation>Aukeratu fitxategia irekitzeko</translation>
     </message>
   </context>
   <context>
@@ -222,17 +222,17 @@
     <message>
       <location filename="../tabledialog.py" line="27" />
       <source>Insert table</source>
-      <translation type="unfinished" />
+      <translation>Txertatu taula</translation>
     </message>
     <message>
       <location filename="../tabledialog.py" line="36" />
       <source>Number of rows</source>
-      <translation type="unfinished" />
+      <translation>Errenkaden kopurua</translation>
     </message>
     <message>
       <location filename="../tabledialog.py" line="37" />
       <source>Number of columns</source>
-      <translation type="unfinished" />
+      <translation>Zutabeen kopurua</translation>
     </message>
   </context>
   <context>
@@ -240,17 +240,17 @@
     <message>
       <location filename="../dialogs.py" line="43" />
       <source>Enter locale name (example: en_US)</source>
-      <translation type="unfinished" />
+      <translation>Sartu eskualdearen izena (adibidea: eu)</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="44" />
       <source>It is possible to specify multiple languages, separated by comma.</source>
-      <translation type="unfinished" />
+      <translation>Posible da hainbat hizkuntza zehaztea, komaz bereizia</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="50" />
       <source>Set as default</source>
-      <translation type="unfinished" />
+      <translation>Ezarri lehenetsitako gisa</translation>
     </message>
   </context>
   <context>
@@ -258,12 +258,12 @@
     <message>
       <location filename="../fakevimeditor.py" line="62" />
       <source>No write since last change (add ! to override)</source>
-      <translation type="unfinished" />
+      <translation>Idazketarik ez azken aldaketatik (gehitu ! gainidazteko)</translation>
     </message>
     <message>
       <location filename="../fakevimeditor.py" line="118" />
       <source>Information</source>
-      <translation type="unfinished" />
+      <translation>Informazioa</translation>
     </message>
   </context>
   <context>
@@ -271,17 +271,17 @@
     <message>
       <location filename="../editor.py" line="252" />
       <source>Add to dictionary</source>
-      <translation type="unfinished" />
+      <translation>Gehitu hiztegira</translation>
     </message>
     <message>
       <location filename="../editor.py" line="464" />
       <source>Save image</source>
-      <translation type="unfinished" />
+      <translation>Gorde irudia</translation>
     </message>
     <message>
       <location filename="../editor.py" line="466" />
       <source>Images (*.png *.jpg)</source>
-      <translation type="unfinished" />
+      <translation>Irudiak (*.png *.jpg)</translation>
     </message>
   </context>
   <context>
@@ -294,29 +294,30 @@
     <message>
       <location filename="../tab.py" line="179" />
       <source>Could not parse file contents, check if you have the &lt;a href="%s"&gt;necessary module&lt;/a&gt; installed!</source>
-      <translation type="unfinished" />
+      <translation>Ezin izan dira analizatu fitxategiaren edukiak, begiratu ea &lt;a href="%s"&gt;beharrezko modulua&lt;/a&gt; instalatuta duzun!</translation>
     </message>
     <message>
       <location filename="../tab.py" line="487" />
       <source>Create missing file?</source>
-      <translation type="unfinished" />
+      <translation>Sortu falta den fitxategia?</translation>
     </message>
     <message>
       <location filename="../tab.py" line="488" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
-      <translation type="unfinished" />
+      <translation>'%s' fitxategia ez dago.
+Sortu nahi duzu?</translation>
     </message>
     <message>
       <location filename="../tab.py" line="520" />
       <source>File could not be created</source>
-      <translation type="unfinished" />
+      <translation>Ezin izan da fitxategia sortu</translation>
     </message>
     <message>
       <location filename="../tab.py" line="521" />
       <source>Could not create file '%s': %s</source>
-      <translation type="unfinished" />
+      <translation>Ezin izan da '%s' fitxategia sortu: %s</translation>
     </message>
   </context>
   <context>
@@ -324,17 +325,17 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="91" />
       <source>File toolbar</source>
-      <translation>Fitxategi menu barra</translation>
+      <translation>Fitxategiaren tresna-barra</translation>
     </message>
     <message>
       <location filename="../window.py" line="93" />
       <source>Edit toolbar</source>
-      <translation>Edizio menu barra</translation>
+      <translation>Editatu tresna-barra</translation>
     </message>
     <message>
       <location filename="../window.py" line="95" />
       <source>Search toolbar</source>
-      <translation>Bilakera menu barra</translation>
+      <translation>Bilaketaren tresna-barra</translation>
     </message>
     <message>
       <location filename="../window.py" line="99" />
@@ -349,13 +350,13 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="103" />
       <source>Set encoding</source>
-      <translation type="unfinished" />
+      <translation>Ezarri kodeketa</translation>
     </message>
     <message>
       <location filename="../window.py" line="1187" />
       <location filename="../window.py" line="106" />
       <source>Reload</source>
-      <translation type="unfinished" />
+      <translation>Birkargatu</translation>
     </message>
     <message>
       <location filename="../window.py" line="109" />
@@ -370,17 +371,17 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="114" />
       <source>Next tab</source>
-      <translation type="unfinished" />
+      <translation>Hurrengo fitxa</translation>
     </message>
     <message>
       <location filename="../window.py" line="116" />
       <source>Previous tab</source>
-      <translation type="unfinished" />
+      <translation>Aurreko fitxa</translation>
     </message>
     <message>
       <location filename="../window.py" line="118" />
       <source>Close tab</source>
-      <translation type="unfinished" />
+      <translation>Itxi fitxa</translation>
     </message>
     <message>
       <location filename="../window.py" line="120" />
@@ -395,17 +396,17 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="124" />
       <source>View HTML code</source>
-      <translation>HTML iturburua ikusi</translation>
+      <translation>Ikusi HTMLren kodea</translation>
     </message>
     <message>
       <location filename="../window.py" line="125" />
       <source>Change editor font</source>
-      <translation type="unfinished" />
+      <translation>Aldatu editorearen letra-tipoa</translation>
     </message>
     <message>
       <location filename="../window.py" line="127" />
       <source>Change preview font</source>
-      <translation type="unfinished" />
+      <translation>Aldatu aurrebistaren letra-tipoa</translation>
     </message>
     <message>
       <location filename="../window.py" line="129" />
@@ -416,7 +417,7 @@ Do you want to create it?</source>
       <location filename="../window.py" line="701" />
       <location filename="../window.py" line="131" />
       <source>Go to line</source>
-      <translation type="unfinished" />
+      <translation>Joan lerro honetara</translation>
     </message>
     <message>
       <location filename="../window.py" line="134" />
@@ -426,27 +427,27 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="144" />
       <source>Live preview</source>
-      <translation>Aurrebista zuzenean</translation>
+      <translation>Zuzeneko aurrebista</translation>
     </message>
     <message>
       <location filename="../window.py" line="148" />
       <source>Insert table</source>
-      <translation type="unfinished" />
+      <translation>Txertatu taula</translation>
     </message>
     <message>
       <location filename="../window.py" line="150" />
       <source>Table editing mode</source>
-      <translation type="unfinished" />
+      <translation>Taularen editatze modua</translation>
     </message>
     <message>
       <location filename="../window.py" line="153" />
       <source>Insert images by file path</source>
-      <translation type="unfinished" />
+      <translation>Txertatu irudiak bide-izenaren arabera</translation>
     </message>
     <message>
       <location filename="../window.py" line="156" />
       <source>FakeVim mode</source>
-      <translation type="unfinished" />
+      <translation>FakeVim modua</translation>
     </message>
     <message>
       <location filename="../window.py" line="161" />
@@ -457,7 +458,7 @@ Do you want to create it?</source>
       <location filename="../window.py" line="649" />
       <location filename="../window.py" line="164" />
       <source>Preferences</source>
-      <translation type="unfinished" />
+      <translation>Ezarpenak</translation>
     </message>
     <message>
       <location filename="../window.py" line="171" />
@@ -492,17 +493,17 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="184" />
       <source>Paste image</source>
-      <translation type="unfinished" />
+      <translation>Itsatsi irudia</translation>
     </message>
     <message>
       <location filename="../window.py" line="186" />
       <source>Move line up</source>
-      <translation type="unfinished" />
+      <translation>Eraman lerroa gora</translation>
     </message>
     <message>
       <location filename="../window.py" line="188" />
       <source>Move line down</source>
-      <translation type="unfinished" />
+      <translation>Eraman lerroa behera</translation>
     </message>
     <message>
       <location filename="../window.py" line="196" />
@@ -512,17 +513,17 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="197" />
       <source>Set locale</source>
-      <translation>Lokala aukeratu</translation>
+      <translation>Eskualdea aukeratu</translation>
     </message>
     <message>
       <location filename="../window.py" line="198" />
       <source>Use WebEngine (Chromium) renderer</source>
-      <translation type="unfinished" />
+      <translation>Erabili WebEngine (Chromium) errendatzailea</translation>
     </message>
     <message>
       <location filename="../window.py" line="204" />
       <source>Show directory</source>
-      <translation>Karpeta erakutsi</translation>
+      <translation>Erakutsi direktorioa</translation>
     </message>
     <message>
       <location filename="../window.py" line="205" />
@@ -537,27 +538,27 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="209" />
       <source>Replace</source>
-      <translation type="unfinished" />
+      <translation>Ordeztu</translation>
     </message>
     <message>
       <location filename="../window.py" line="211" />
       <source>Replace all</source>
-      <translation type="unfinished" />
+      <translation>Ordeztu guztiak</translation>
     </message>
     <message>
       <location filename="../window.py" line="214" />
       <source>Close</source>
-      <translation type="unfinished" />
+      <translation>Itxi</translation>
     </message>
     <message>
       <location filename="../window.py" line="218" />
       <source>Get help online</source>
-      <translation>Laguntza on-line</translation>
+      <translation>Lortu laguntza online</translation>
     </message>
     <message>
       <location filename="../window.py" line="219" />
       <source>What's new</source>
-      <translation type="unfinished" />
+      <translation>Zer berri</translation>
     </message>
     <message>
       <location filename="../window.py" line="220" />
@@ -567,17 +568,17 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="223" />
       <source>About Qt</source>
-      <translation>Qt-i buruz</translation>
+      <translation>Qt-ri buruz</translation>
     </message>
     <message>
       <location filename="../window.py" line="238" />
       <source>Bold</source>
-      <translation type="unfinished" />
+      <translation>Lodia</translation>
     </message>
     <message>
       <location filename="../window.py" line="240" />
       <source>Italic</source>
-      <translation type="unfinished" />
+      <translation>Etzana</translation>
     </message>
     <message>
       <location filename="../window.py" line="242" />
