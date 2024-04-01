@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from ReText import globalSettings
+from ReText.editor import getColor
 from ReText.syncscroll import SyncScroll
 from PyQt6.QtCore import QEvent, Qt
 from PyQt6.QtGui import QDesktopServices, QFontInfo, QGuiApplication, QTextDocument
@@ -39,21 +40,32 @@ class ReTextWebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
 
 
 class UrlPopup(QLabel):
-
     def __init__(self, window):
         super().__init__(window)
         self.window = window
 
+        def hex_rgba(color):
+            ''' color:QColor '''
+            return "rgba({r}, {g}, {b}, {a})".format(
+                r = color.red(),
+                g = color.green(),
+                b = color.blue(),
+                a = color.alpha())
         self.setStyleSheet('''
-            border: 1px solid #64323232;
+            border: 1px solid {:s};
             border-radius: 3px;
-            background: #FAFAFAFA;
-        ''')
+            background: {:s};
+        '''.format(hex_rgba(getColor('UrlPopupBorder')),
+                   hex_rgba(getColor('UrlPopup'))))
         self.fontHeight = self.fontMetrics().height()
         self.setVisible(False)
 
     def pop(self, url: str):
-        """ Show link target on mouse hover """
+        """ Show link target on mouse hover
+
+        QWebEnginePage emits signal 'linkHovered' which provides
+        url: str -- target of link hovered (or empty on mouse-release)
+        """
         if url:
             self.setText(url)
             windowBottom = self.window.rect().bottom()

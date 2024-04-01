@@ -52,6 +52,8 @@ colors = {
 	'restDirectives':       {'light': '#800080', 'dark': '#d070d0'},
 	'restRoles':            {'light': '#800000', 'dark': '#d07070'},
 	'whitespaceOnEnd':      {'light': '#80e1e1a5', 'dark': '#8096966e'},
+	'UrlPopup':             {'light': '#fafafafa', 'dark': '#fa323232'},
+	'UrlPopupBorder':       {'light': '#64323232', 'dark': '#64fafafa'}
 }
 
 colorValues = {}
