@@ -20,7 +20,7 @@ from ReText import globalSettings
 from ReText.editor import getColor
 from ReText.syncscroll import SyncScroll
 from PyQt6.QtCore import QEvent, Qt
-from PyQt6.QtGui import QDesktopServices, QFontInfo, QGuiApplication, QTextDocument
+from PyQt6.QtGui import QDesktopServices, QFontInfo, QGuiApplication, QTextDocument, QColor
 from PyQt6.QtWidgets import QLabel
 from PyQt6.QtWebEngineCore import (
     QWebEnginePage,
@@ -39,24 +39,25 @@ class ReTextWebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
             info.block(True)
 
 
+def hex_rgba(color: QColor):
+    """ Todo: More elegant use of QColor with alpha in stylesheet """
+    return "rgba({r}, {g}, {b}, {a})".format(
+        r = color.red(),
+        g = color.green(),
+        b = color.blue(),
+        a = color.alpha())
+
 class UrlPopup(QLabel):
     def __init__(self, window):
         super().__init__(window)
         self.window = window
 
-        def hex_rgba(color):
-            ''' color:QColor '''
-            return "rgba({r}, {g}, {b}, {a})".format(
-                r = color.red(),
-                g = color.green(),
-                b = color.blue(),
-                a = color.alpha())
         self.setStyleSheet('''
             border: 1px solid {:s};
             border-radius: 3px;
             background: {:s};
-        '''.format(hex_rgba(getColor('UrlPopupBorder')),
-                   hex_rgba(getColor('UrlPopup'))))
+            '''.format(hex_rgba(getColor('urlPopupBorder')),
+                       hex_rgba(getColor('urlPopupArea'))))
         self.fontHeight = self.fontMetrics().height()
         self.setVisible(False)
 
@@ -70,7 +71,7 @@ class UrlPopup(QLabel):
             self.setText(url)
             windowBottom = self.window.rect().bottom()
             textWidth = self.fontMetrics().horizontalAdvance(url)
-            self.setGeometry(-2, windowBottom-self.fontHeight-5,
+            self.setGeometry(-2, windowBottom-self.fontHeight-6,
                     textWidth+10, self.fontHeight+10)
             self.setVisible(True)
         else:
