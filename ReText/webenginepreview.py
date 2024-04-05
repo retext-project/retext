@@ -39,7 +39,7 @@ class ReTextWebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
             info.block(True)
 
 
-def hex_rgba(color: QColor):
+def str_rgba(color: QColor):
     """ Todo: More elegant use of QColor with alpha in stylesheet """
     return "rgba({r}, {g}, {b}, {a})".format(
         r = color.red(),
@@ -56,8 +56,8 @@ class UrlPopup(QLabel):
             border: 1px solid {:s};
             border-radius: 3px;
             background: {:s};
-            '''.format(hex_rgba(getColor('urlPopupBorder')),
-                       hex_rgba(getColor('urlPopupArea'))))
+            '''.format(str_rgba(getColor('urlPopupBorder')),
+                       str_rgba(getColor('urlPopupArea'))))
         self.fontHeight = self.fontMetrics().height()
         self.setVisible(False)
 
