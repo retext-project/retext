@@ -20,7 +20,7 @@ from ReText import globalSettings
 from ReText.editor import getColor
 from ReText.syncscroll import SyncScroll
 from PyQt6.QtCore import QEvent, Qt
-from PyQt6.QtGui import QDesktopServices, QFontInfo, QGuiApplication, QTextDocument, QColor
+from PyQt6.QtGui import QCursor, QDesktopServices, QFontInfo, QGuiApplication, QTextDocument, QColor
 from PyQt6.QtWidgets import QLabel
 from PyQt6.QtWebEngineCore import (
     QWebEnginePage,
@@ -138,6 +138,11 @@ class ReTextWebEnginePreview(QWebEngineView):
 
         QWebEngineView.__init__(self, parent=tab)
         webPage = ReTextWebEnginePage(self, tab)
+
+        handCursor = QCursor(Qt.CursorShape.PointingHandCursor)
+        arrowCursor = QCursor(Qt.CursorShape.ArrowCursor)
+        webPage.linkHovered.connect(lambda value: self.setCursor(handCursor if value else arrowCursor))
+
         self.setPage(webPage)
 
         self.syncscroll = SyncScroll(webPage,
