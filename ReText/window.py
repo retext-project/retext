@@ -111,9 +111,19 @@ class ReTextWindow(QMainWindow):
 		self.actionSaveAs = self.act(self.tr('Save as'), 'document-save-as',
 			self.saveFileAs, shct=QKeySequence.StandardKey.SaveAs)
 		self.actionNextTab = self.act(self.tr('Next tab'), 'go-next',
-			lambda: self.switchTab(1), shct=QKeySequence.StandardKey.NextChild)
+			lambda: self.switchTab(1))
+		self.actionNextTab.setShortcuts([
+			*QKeySequence.keyBindings(QKeySequence.StandardKey.NextChild),
+			QKeySequence(Qt.Modifier.CTRL | Qt.Key.Key_PageDown),
+		])
 		self.actionPrevTab = self.act(self.tr('Previous tab'), 'go-previous',
-			lambda: self.switchTab(-1), shct=QKeySequence.StandardKey.PreviousChild)
+			lambda: self.switchTab(-1))
+		self.actionPrevTab.setShortcuts([
+			*QKeySequence.keyBindings(QKeySequence.StandardKey.PreviousChild),
+			QKeySequence(Qt.Modifier.CTRL | Qt.Key.Key_PageUp),
+			# https://bugreports.qt.io/browse/QTBUG-15746
+			QKeySequence(Qt.Modifier.CTRL | Qt.Key.Key_Backtab),
+		])
 		self.actionCloseCurrentTab = self.act(self.tr('Close tab'), 'window-close',
 			lambda: self.closeTab(self.ind), shct=QKeySequence.StandardKey.Close)
 		self.actionPrint = self.act(self.tr('Print'), 'document-print',
