@@ -122,7 +122,7 @@
     <message>
       <location filename="../config.py" line="132" />
       <source>Stylesheet file</source>
-      <translation>Файл стилю Qt</translation>
+      <translation>Файл стилю</translation>
     </message>
     <message>
       <location filename="../config.py" line="133" />
