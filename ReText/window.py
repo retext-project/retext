@@ -83,7 +83,7 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget = QTabWidget(self.splitter)
 		self.initTabWidget()
 		self.splitter.setSizes([self.width() // 5, self.width() * 4 // 5])
-		self.initDirectoryTree(globalSettings.showDirectoryTree, globalSettings.directoryPath)
+		self.initDirectoryTree(globalSettings.showDirectoryTree)
 		self.setCentralWidget(self.splitter)
 		self.tabWidget.currentChanged.connect(self.changeIndex)
 		self.tabWidget.tabCloseRequested.connect(self.closeTab)
@@ -211,6 +211,10 @@ class ReTextWindow(QMainWindow):
 			self.actionWebEngine.setEnabled(False)
 		self.actionWebEngine.setChecked(globalSettings.useWebEngine)
 		self.actionShow = self.act(self.tr('Show directory'), 'system-file-manager', self.showInDir)
+		self.actionShowDirectoryTree = self.act(self.tr('Show directory tree'),
+			trigbool=self.initDirectoryTree,
+			shct=Qt.Key.Key_F9)
+		self.actionShowDirectoryTree.setChecked(globalSettings.showDirectoryTree)
 		self.actionFind = self.act(self.tr('Next'), 'go-next', self.find,
 			shct=QKeySequence.StandardKey.FindNext)
 		self.actionFindPrev = self.act(self.tr('Previous'), 'go-previous',
@@ -274,6 +278,7 @@ class ReTextWindow(QMainWindow):
 		self.menuRecentFiles = menuFile.addMenu(self.tr('Open recent'))
 		self.menuRecentFiles.aboutToShow.connect(self.updateRecentFiles)
 		menuFile.addAction(self.actionShow)
+		menuFile.addAction(self.actionShowDirectoryTree)
 		menuFile.addAction(self.actionSetEncoding)
 		menuFile.addAction(self.actionReload)
 		menuFile.addSeparator()
@@ -440,7 +445,8 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.dropEvent = dropEvent
 		self.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
 
-	def initDirectoryTree(self, visible, path):
+	def initDirectoryTree(self, visible):
+		path = globalSettings.directoryPath
 		if visible:
 			self.fileSystemModel = QFileSystemModel(self.treeView)
 			self.fileSystemModel.setRootPath(path)
