@@ -28,6 +28,7 @@ from ReText.tab import (ReTextTab, ReTextWebEnginePreview,
 from ReText.dialogs import EncodingDialog, HtmlDialog, LocaleDialog
 from ReText.config import ConfigDialog, setIconThemeFromSettings
 from ReText.tabledialog import InsertTableDialog
+from ReText.filesystemmodel import ReTextFileSystemModel
 
 try:
 	from ReText.fakevimeditor import ReTextFakeVimHandler, FakeVimMode
@@ -43,7 +44,7 @@ from PyQt6.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
  QIODevice, QLocale, QMarginsF, QStandardPaths, QTextStream, QTimer, \
  QUrl, Qt, pyqtSlot
 from PyQt6.QtGui import QAction, QActionGroup, QColor, QDesktopServices, \
- QFileSystemModel, QIcon, QKeySequence, QPageLayout, QPageSize, \
+ QIcon, QKeySequence, QPageLayout, QPageSize, \
  QPalette, QTextDocument, QTextDocumentWriter
 from PyQt6.QtWidgets import QApplication, QCheckBox, QComboBox, QDialog, \
  QFileDialog, QFontDialog, QInputDialog, QLineEdit, QMainWindow, QMenu, \
@@ -448,7 +449,7 @@ class ReTextWindow(QMainWindow):
 	def initDirectoryTree(self, visible):
 		path = globalSettings.directoryPath
 		if visible:
-			self.fileSystemModel = QFileSystemModel(self.treeView)
+			self.fileSystemModel = ReTextFileSystemModel(self.treeView)
 			self.fileSystemModel.setRootPath(path)
 			supportedExtensions = ['.txt']
 			for markup in markups.get_all_markups():
