@@ -51,6 +51,13 @@ from PyQt6.QtWidgets import QApplication, QCheckBox, QComboBox, QDialog, \
  QMessageBox, QSplitter, QTabWidget, QToolBar, QToolButton, QTreeView
 from PyQt6.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
 
+previewStatesByName = {
+	'editor': PreviewDisabled,
+	'normal-preview': PreviewNormal,
+	'live-preview': PreviewLive,
+}
+
+
 class ReTextWindow(QMainWindow):
 	def __init__(self, parent=None):
 		QMainWindow.__init__(self, parent)
@@ -553,11 +560,6 @@ class ReTextWindow(QMainWindow):
 			self.setWindowModified(changed)
 
 	def createTab(self, fileName):
-		previewStatesByName = {
-			'editor': PreviewDisabled,
-			'normal-preview': PreviewNormal,
-			'live-preview': PreviewLive,
-		}
 		previewState = previewStatesByName.get(globalSettings.defaultPreviewState, PreviewDisabled)
 		if previewState == PreviewNormal and not fileName:
 			previewState = PreviewDisabled  # Opening empty document in preview mode makes no sense
@@ -897,6 +899,11 @@ class ReTextWindow(QMainWindow):
 				self.createTab(fileName)
 				self.ind = self.tabWidget.count()-1
 				self.tabWidget.setCurrentIndex(self.ind)
+			else:
+				self.currentTab.previewState = previewStatesByName.get(
+					globalSettings.defaultPreviewState, PreviewDisabled
+				)
+				self.currentTab.updateBoxesVisibility()
 			if fileName:
 				self.fileSystemWatcher.addPath(fileName)
 			self.currentTab.readTextFromFile(fileName)
