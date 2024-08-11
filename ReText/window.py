@@ -88,10 +88,11 @@ class ReTextWindow(QMainWindow):
 		self.splitter = QSplitter(self)
 		self.treeView = QTreeView(self.splitter)
 		self.treeView.doubleClicked.connect(self.treeItemSelected)
+		self.initDirectoryTree()
+		self.treeView.setVisible(globalSettings.showDirectoryTree)
 		self.tabWidget = QTabWidget(self.splitter)
 		self.initTabWidget()
 		self.splitter.setSizes([self.width() // 5, self.width() * 4 // 5])
-		self.initDirectoryTree(globalSettings.showDirectoryTree)
 		self.setCentralWidget(self.splitter)
 		self.tabWidget.currentChanged.connect(self.changeIndex)
 		self.tabWidget.tabCloseRequested.connect(self.closeTab)
@@ -220,7 +221,7 @@ class ReTextWindow(QMainWindow):
 		self.actionWebEngine.setChecked(globalSettings.useWebEngine)
 		self.actionShow = self.act(self.tr('Show directory'), 'system-file-manager', self.showInDir)
 		self.actionShowDirectoryTree = self.act(self.tr('Show directory tree'),
-			trigbool=self.initDirectoryTree,
+			trigbool=self.treeView.setVisible,
 			shct=Qt.Key.Key_F9)
 		self.actionShowDirectoryTree.setChecked(globalSettings.showDirectoryTree)
 		self.actionFind = self.act(self.tr('Next'), 'go-next', self.find,
@@ -453,24 +454,22 @@ class ReTextWindow(QMainWindow):
 		self.tabWidget.dropEvent = dropEvent
 		self.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
 
-	def initDirectoryTree(self, visible):
+	def initDirectoryTree(self):
 		path = globalSettings.directoryPath
-		if visible:
-			self.fileSystemModel = ReTextFileSystemModel(self.treeView)
-			self.fileSystemModel.setRootPath(path)
-			supportedExtensions = ['.txt']
-			for markup in markups.get_all_markups():
-				supportedExtensions += markup.file_extensions
-			filters = ["*" + s for s in supportedExtensions]
-			self.fileSystemModel.setNameFilters(filters)
-			self.fileSystemModel.setNameFilterDisables(False)
-			self.treeView.setModel(self.fileSystemModel)
-			self.treeView.setRootIndex(self.fileSystemModel.index(path))
-			self.treeView.setColumnHidden(1, True)
-			self.treeView.setColumnHidden(2, True)
-			self.treeView.setColumnHidden(3, True)
-			self.treeView.setHeaderHidden(True)
-		self.treeView.setVisible(visible)
+		self.fileSystemModel = ReTextFileSystemModel(self.treeView)
+		self.fileSystemModel.setRootPath(path)
+		supportedExtensions = ['.txt']
+		for markup in markups.get_all_markups():
+			supportedExtensions += markup.file_extensions
+		filters = ["*" + s for s in supportedExtensions]
+		self.fileSystemModel.setNameFilters(filters)
+		self.fileSystemModel.setNameFilterDisables(False)
+		self.treeView.setModel(self.fileSystemModel)
+		self.treeView.setRootIndex(self.fileSystemModel.index(path))
+		self.treeView.setColumnHidden(1, True)
+		self.treeView.setColumnHidden(2, True)
+		self.treeView.setColumnHidden(3, True)
+		self.treeView.setHeaderHidden(True)
 
 	def treeItemSelected(self, signal):
 		file_path = self.fileSystemModel.filePath(signal)

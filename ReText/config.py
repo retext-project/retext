@@ -261,8 +261,11 @@ class ConfigDialog(QDialog):
 		self.parent.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
 		self.parent.toolBar.setVisible(not globalSettings.hideToolBar)
 		self.parent.editBar.setVisible(not globalSettings.hideToolBar)
+		path = globalSettings.directoryPath
+		self.parent.fileSystemModel.setRootPath(path)
+		self.parent.treeView.setRootIndex(self.parent.fileSystemModel.index(path))
 		self.parent.actionShowDirectoryTree.setChecked(globalSettings.showDirectoryTree)
-		self.parent.initDirectoryTree(globalSettings.showDirectoryTree)
+		self.parent.treeView.setVisible(globalSettings.showDirectoryTree)
 		if globalSettings.autoSave:
 			self.parent.autoSaveTimer.start(60000)
 		else:
