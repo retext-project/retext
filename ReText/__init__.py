@@ -93,6 +93,7 @@ cacheOptions = {
 	'lastFileList': [],
 	'lastTabIndex': 0,
 	'recentFileList': [],
+	'splitterState': QByteArray(),
 	'windowGeometry': QByteArray(),
 }
 

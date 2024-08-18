@@ -40,9 +40,9 @@ try:
 except ImportError:
 	enchant = None
 
-from PyQt6.QtCore import QDir, QFile, QFileInfo, QFileSystemWatcher, \
- QIODevice, QLocale, QMarginsF, QStandardPaths, QTextStream, QTimer, \
- QUrl, Qt, pyqtSlot
+from PyQt6.QtCore import QByteArray, QDir, QFile, QFileInfo, \
+ QFileSystemWatcher, QIODevice, QLocale, QMarginsF, QStandardPaths, \
+ QTextStream, QTimer, QUrl, Qt, pyqtSlot
 from PyQt6.QtGui import QAction, QActionGroup, QColor, QDesktopServices, \
  QIcon, QKeySequence, QPageLayout, QPageSize, \
  QPalette, QTextDocument, QTextDocumentWriter
@@ -92,7 +92,10 @@ class ReTextWindow(QMainWindow):
 		self.treeView.setVisible(globalSettings.showDirectoryTree)
 		self.tabWidget = QTabWidget(self.splitter)
 		self.initTabWidget()
-		self.splitter.setSizes([self.width() // 5, self.width() * 4 // 5])
+		if globalCache.splitterState:
+			self.splitter.restoreState(globalCache.splitterState)
+		else:
+			self.splitter.setSizes([self.width() // 5, self.width() * 4 // 5])
 		self.setCentralWidget(self.splitter)
 		self.tabWidget.currentChanged.connect(self.changeIndex)
 		self.tabWidget.tabCloseRequested.connect(self.closeTab)
@@ -1238,6 +1241,13 @@ class ReTextWindow(QMainWindow):
 				return closeevent.ignore()
 		if globalSettings.saveWindowGeometry:
 			globalCache.windowGeometry = self.saveGeometry()
+			if self.treeView.isVisible():
+				globalCache.splitterState = self.splitter.saveState()
+			else:
+				globalCache.splitterState = QByteArray()
+		else:
+			globalCache.windowGeometry = QByteArray()
+			globalCache.splitterState = QByteArray()
 		if globalSettings.openLastFilesOnStartup:
 			files = [tab.fileName for tab in self.iterateTabs()]
 			globalCache.lastFileList = files

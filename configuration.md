@@ -55,8 +55,14 @@ option name                    | type      | description
 If the type is 'file path', then the value should be an absolute path
 to a file.
 
-These options can be set internally by ReText and should never be set
-manually: `recentFileList`, `lastFileList`, `lastTabIndex` and `windowGeometry`.
+There is also a separate file called `cache.conf` which contains options
+that are set internally by ReText and should never be set manually:
+
+- `lastFileList`
+- `lastTabIndex`
+- `recentFileList`
+- `splitterState`
+- `windowGeometry`
 
 Icon themes
 ===========
