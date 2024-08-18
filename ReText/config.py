@@ -41,7 +41,10 @@ class FileDialogButton(QPushButton):
 
 	def updateButtonText(self):
 		if self.fileName:
-			self.setText(QFileInfo(self.fileName).fileName())
+			components = self.fileName.split('/')
+			if len([x for x in components if x]) > 3:
+				components[:-3] = '…'
+			self.setText('/'.join(components))
 		else:
 			self.setText(self.defaultText)
 
