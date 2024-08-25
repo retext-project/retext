@@ -53,7 +53,11 @@ class FileSelectButton(FileDialogButton):
 		startDir = (QFileInfo(self.fileName).absolutePath()
 		            if self.fileName else '')
 		self.fileName = QFileDialog.getOpenFileName(
-			self, self.tr('Select file to open'), startDir)[0]
+			self,
+			self.tr('Select file to open'),
+			startDir,
+			self.tr('CSS files (*.css)') + ';;' + self.tr('All files (*)'),
+		)[0]
 		self.updateLabelText()
 
 class DirectorySelectButton(FileDialogButton):
