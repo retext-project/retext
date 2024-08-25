@@ -29,24 +29,24 @@ from PyQt6.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
 MKD_EXTS_FILE = join(CONFIGURATION_DIR, 'markdown-extensions.txt')
 
 class FileDialogButton(QPushButton):
-	def __init__(self, parent, fileName):
-		QPushButton.__init__(self, parent)
+	def __init__(self, parent, fileName, label):
+		icon = parent.parent.actIcon('document-open')
+		super().__init__(icon, self.tr('Select'), parent)
 		self.fileName = fileName
+		self.label = label
 		self.defaultText = self.tr('(none)')
-		self.updateButtonText()
+		self.updateLabelText()
 		self.clicked.connect(self.processClick)
 
 	def processClick(self):
-		pass
+		raise NotImplementedError
 
-	def updateButtonText(self):
+	def updateLabelText(self):
+		template = '<small>' + self.tr('Currently selected: %s') + '</small>'
 		if self.fileName:
-			components = self.fileName.split('/')
-			if len([x for x in components if x]) > 3:
-				components[:-3] = '…'
-			self.setText('/'.join(components))
+			self.label.setText(template % f'<a href="{self.fileName}">{self.fileName}</a>')
 		else:
-			self.setText(self.defaultText)
+			self.label.setText(template % self.defaultText)
 
 class FileSelectButton(FileDialogButton):
 	def processClick(self):
@@ -54,7 +54,7 @@ class FileSelectButton(FileDialogButton):
 		            if self.fileName else '')
 		self.fileName = QFileDialog.getOpenFileName(
 			self, self.tr('Select file to open'), startDir)[0]
-		self.updateButtonText()
+		self.updateLabelText()
 
 class DirectorySelectButton(FileDialogButton):
 	def processClick(self):
@@ -62,7 +62,7 @@ class DirectorySelectButton(FileDialogButton):
 		            if self.fileName else '')
 		self.fileName = QFileDialog.getExistingDirectory(
 			self, self.tr('Select directory to open'), startDir)
-		self.updateButtonText()
+		self.updateLabelText()
 
 class ClickableLabel(QLabel):
 	clicked = pyqtSignal()
@@ -113,7 +113,6 @@ class ConfigDialog(QDialog):
 				(self.tr('Default preview state'), 'defaultPreviewState'),
 				(self.tr('Open external links in ReText window'), 'handleWebLinks'),
 				(self.tr('Markdown syntax extensions (comma-separated)'), 'markdownExtensions'),
-				(None, 'markdownExtensions'),
 				(self.tr('Enable synchronized scrolling for Markdown'), 'syncScroll'),
 			#	(self.tr('Default Markdown file extension'), 'markdownDefaultFileExtension'),
 			#	(self.tr('Default reStructuredText file extension'), 'restDefaultFileExtension'),
@@ -135,7 +134,7 @@ class ConfigDialog(QDialog):
 				(self.tr('Stylesheet file'), 'styleSheet', True),
 				(self.tr('Hide tabs bar when there is only one tab'), 'tabBarAutoHide'),
 				(self.tr('Show full path in window title'), 'windowTitleFullPath'),
-				(self.tr('Show directory tree'), 'showDirectoryTree', False),
+				(self.tr('Show directory tree'), 'showDirectoryTree'),
 				(self.tr('Working directory'), 'directoryPath', True),
 			))
 		)
@@ -149,23 +148,18 @@ class ConfigDialog(QDialog):
 	def getPageWidget(self, options):
 		page = QWidget(self)
 		layout = QGridLayout(page)
-		for index, option in enumerate(options):
+		index = 0
+		for option in options:
 			displayname, name = option[:2]
 			fileselector = option[2] if len(option) > 2 else False
-			if name is None:
-				header = QLabel('<h3>%s</h3>' % displayname, self)
-				layout.addWidget(header, index, 0, 1, 2, Qt.AlignmentFlag.AlignHCenter)
-				continue
-			if displayname:
-				label = ClickableLabel(displayname + ':', self)
+			label = ClickableLabel(displayname + ':', self)
 			if name == 'markdownExtensions':
-				if displayname:
-					url = QUrl('https://github.com/retext-project/retext/wiki/Markdown-extensions')
-					helpButton = QPushButton(self.tr('Help'), self)
-					helpButton.clicked.connect(lambda: QDesktopServices.openUrl(url))
-					layout.addWidget(label, index, 0)
-					layout.addWidget(helpButton, index, 1)
-					continue
+				url = QUrl('https://github.com/retext-project/retext/wiki/Markdown-extensions')
+				helpButton = QPushButton(self.tr('Help'), self)
+				helpButton.clicked.connect(lambda: QDesktopServices.openUrl(url))
+				layout.addWidget(label, index, 0)
+				layout.addWidget(helpButton, index, 1)
+				index += 1
 				try:
 					extsFile = open(MKD_EXTS_FILE)
 					value = extsFile.read().rstrip().replace(extsFile.newlines, ', ')
@@ -175,7 +169,13 @@ class ConfigDialog(QDialog):
 				self.configurators[name] = QLineEdit(self)
 				self.configurators[name].setText(value)
 				layout.addWidget(self.configurators[name], index, 0, 1, 2)
+				index += 1
 				continue
+			fileLabel = None
+			if fileselector:
+				fileLabel = QLabel(self)
+				fileLabel.setIndent(15)
+				fileLabel.linkActivated.connect(self.openLink)
 			value = getattr(globalSettings, name)
 			if name == 'defaultPreviewState':
 				self.configurators[name] = QComboBox(self)
@@ -198,7 +198,7 @@ class ConfigDialog(QDialog):
 				comboBoxIndex = self.configurators[name].findData(value)
 				self.configurators[name].setCurrentIndex(comboBoxIndex)
 			elif name == 'directoryPath':
-				self.configurators[name] = DirectorySelectButton(self, value)
+				self.configurators[name] = DirectorySelectButton(self, value, fileLabel)
 			elif isinstance(value, bool):
 				self.configurators[name] = QCheckBox(self)
 				self.configurators[name].setChecked(value)
@@ -213,12 +213,16 @@ class ConfigDialog(QDialog):
 					self.configurators[name].setMaximum(200)
 				self.configurators[name].setValue(value)
 			elif isinstance(value, str) and fileselector:
-				self.configurators[name] = FileSelectButton(self, value)
+				self.configurators[name] = FileSelectButton(self, value, fileLabel)
 			elif isinstance(value, str):
 				self.configurators[name] = QLineEdit(self)
 				self.configurators[name].setText(value)
 			layout.addWidget(label, index, 0)
 			layout.addWidget(self.configurators[name], index, 1, Qt.AlignmentFlag.AlignRight)
+			if fileLabel is not None:
+				index += 1
+				layout.addWidget(fileLabel, index, 0, 1, 2)
+			index += 1
 		return page
 
 	def handleRightMarginSet(self, value):
