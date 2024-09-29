@@ -901,11 +901,9 @@ class ReTextWindow(QMainWindow):
 				self.createTab(fileName)
 				self.ind = self.tabWidget.count()-1
 				self.tabWidget.setCurrentIndex(self.ind)
-			else:
-				self.currentTab.previewState = previewStatesByName.get(
-					globalSettings.defaultPreviewState, PreviewDisabled
-				)
-				self.currentTab.updateBoxesVisibility()
+			elif globalSettings.defaultPreviewState == "normal-preview":
+				self.actionPreview.setChecked(True)
+				self.preview(True)
 			if fileName:
 				self.fileSystemWatcher.addPath(fileName)
 			self.currentTab.readTextFromFile(fileName)
