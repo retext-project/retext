@@ -23,7 +23,7 @@ import sys
 import signal
 import markups
 from os import devnull
-from os.path import join
+from os.path import exists, isdir, join
 from ReText import packageDir, settings, cache, globalSettings, app_version
 from ReText.window import ReTextWindow
 
@@ -127,7 +127,12 @@ def main():
 	if globalSettings.openLastFilesOnStartup:
 		window.restoreLastOpenedFiles()
 	for fileName in fileNames:
-		if QFile.exists(fileName):
+		if isdir(fileName):
+			window.fileSystemModel.setRootPath(fileName)
+			window.treeView.setRootIndex(window.fileSystemModel.index(fileName))
+			window.actionShowDirectoryTree.setChecked(True)
+			window.treeView.setVisible(True)
+		elif exists(fileName):
 			window.openFileWrapper(fileName)
 			if parser.isSet(previewOption):
 				window.actionPreview.setChecked(True)
