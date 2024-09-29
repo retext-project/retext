@@ -319,6 +319,16 @@ class ReTextEdit(QTextEdit):
 					# Insert Markdown-style line break
 					cursor.insertText('  ')
 				self.handleReturn(cursor)
+		elif key == Qt.Key.Key_Up:
+			oldPos = cursor.position()
+			self.moveCursor(QTextCursor.MoveOperation.Up)
+			if self.textCursor().position() == oldPos:
+				self.moveCursor(QTextCursor.MoveOperation.Start)
+		elif key == Qt.Key.Key_Down:
+			oldPos = cursor.position()
+			self.moveCursor(QTextCursor.MoveOperation.Down)
+			if self.textCursor().position() == oldPos:
+				self.moveCursor(QTextCursor.MoveOperation.End)
 		elif cursor.selectedText() and self.isSurroundKey(key):
 			self.surroundText(cursor, event, key)
 		else:
