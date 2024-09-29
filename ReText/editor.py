@@ -23,7 +23,7 @@ import weakref
 from markups import MarkdownMarkup, ReStructuredTextMarkup, TextileMarkup
 from ReText import globalSettings, settings, tablemode
 
-from PyQt6.QtCore import pyqtSignal, QFileInfo, QPoint, QPointF, QRect, QSize, Qt
+from PyQt6.QtCore import pyqtSignal, QFileInfo, QMimeDatabase, QPoint, QPointF, QRect, QSize, Qt
 from PyQt6.QtGui import QAction, QColor, QImage, QKeyEvent, QMouseEvent, QPainter, \
 QPalette, QTextCursor, QTextFormat, QWheelEvent, QGuiApplication
 from PyQt6.QtWidgets import QApplication, QFileDialog, QLabel, QTextEdit, QWidget
@@ -156,6 +156,7 @@ class ReTextEdit(QTextEdit):
 		self.settings = settings
 		if globalSettings.useFakeVim:
 			self.installFakeVimHandler()
+		self.mimeDatabase = QMimeDatabase()
 
 	def setWrapModeAndWidth(self):
 		if globalSettings.rightMarginWrap and (self.rect().topRight().x() > self.marginx):
@@ -528,6 +529,18 @@ class ReTextEdit(QTextEdit):
 		# Empty events cause layout issues (issue #597), so ignore them.
 		if event.preeditString() or event.commitString() or event.attributes():
 			super().inputMethodEvent(event)
+
+	def insertFromMimeData(self, source):
+		if source.hasUrls():
+			url = source.urls()[0]
+			mimeType = self.mimeDatabase.mimeTypeForUrl(url)
+			if mimeType.name().startswith("image/"):
+				if url.isLocalFile():
+					url = url.toLocalFile()
+				imageText = self.getImageMarkup(url)
+				self.textCursor().insertText(imageText)
+				return
+		return super().insertFromMimeData(source)
 
 
 class LineNumberArea(QWidget):
