@@ -22,7 +22,6 @@ import multiprocessing
 import sys
 import signal
 import markups
-from os import devnull
 from os.path import exists, isdir, join
 from ReText import packageDir, settings, cache, globalSettings, app_version
 from ReText.window import ReTextWindow
@@ -43,12 +42,6 @@ def main():
 
 	if markups.__version_tuple__ < (2, ):
 		sys.exit('Error: ReText needs PyMarkups 2.0 or newer to run.')
-
-	# If we're running on Windows without a console, then discard stdout
-	# and save stderr to a file to facilitate debugging in case of crashes.
-	if sys.executable.endswith('pythonw.exe'):
-		sys.stdout = open(devnull, 'w')
-		sys.stderr = open('stderr.log', 'w')
 
 	try:
 		# See https://github.com/retext-project/retext/issues/399
