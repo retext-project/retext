@@ -18,17 +18,17 @@ jobs:
         include:
           - environment: py36-pyqt61-ubuntu2004
             python: 3.6
-            pyqt: PyQt6~=6.1.0 PyQt6-Qt6~=6.1.0
+            pyqt: PyQt6~=6.1.0 PyQt6-Qt6~=6.1.0 PyQt6-sip~=13.2.1
             pygments: Pygments~=2.11.0
             platform: ubuntu-20.04
           - environment: py37-pyqt62-ubuntu2204
             python: 3.7
-            pyqt: PyQt6~=6.2.0 PyQt6-Qt6~=6.2.0
+            pyqt: PyQt6~=6.2.0 PyQt6-Qt6~=6.2.0 PyQt6-sip~=13.6.0
             pygments: Pygments
             platform: ubuntu-22.04
           - environment: py38-pyqt63-ubuntu
             python: 3.8
-            pyqt: PyQt6~=6.3.0 PyQt6-Qt6~=6.3.0
+            pyqt: PyQt6~=6.3.0 PyQt6-Qt6~=6.3.0 PyQt6-sip~=13.8.0
             pygments: Pygments
             platform: ubuntu-latest
           - environment: py39-windows
