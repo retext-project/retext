@@ -7,7 +7,6 @@ jobs:
     strategy:
       matrix:
         environment:
-          - py36-pyqt61-ubuntu2004
           - py37-pyqt62-ubuntu2204
           - py38-pyqt63-ubuntu
           - py39-windows
@@ -16,11 +15,6 @@ jobs:
           - py312-pyqt67-ubuntu2404
           - py313-ubuntu
         include:
-          - environment: py36-pyqt61-ubuntu2004
-            python: 3.6
-            pyqt: PyQt6~=6.1.0 PyQt6-Qt6~=6.1.0 PyQt6-sip~=13.2.1
-            pygments: Pygments~=2.11.0
-            platform: ubuntu-20.04
           - environment: py37-pyqt62-ubuntu2204
             python: 3.7
             pyqt: PyQt6~=6.2.0 PyQt6-Qt6~=6.2.0 PyQt6-sip~=13.6.0

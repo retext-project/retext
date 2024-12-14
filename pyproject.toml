@@ -17,7 +17,7 @@ classifiers = [
   "Topic :: Text Editors",
   "Topic :: Text Processing :: Markup",
 ]
-requires-python = ">=3.6"
+requires-python = ">=3.7"
 dependencies = [
   "docutils",
   "Markdown>=3.0",
