@@ -6,7 +6,7 @@ Welcome to ReText!
 ReText is a simple but powerful editor for Markdown and reStructuredText markup
 languages. One can also add support for [custom markups] using Python modules.
 
-![ReText on Plasma 5 desktop](data/retext-kde5.png)
+![ReText on Plasma 5 desktop][Screenshot]
 
 To install ReText, make sure that you have [Python] (3.6 or later) installed,
 and run `pip3 install ReText`. By default it installs system wide, pass
@@ -45,6 +45,7 @@ ReText icon is based on `accessories-text-editor` icon from the Faenza theme.
 
 You can read more about ReText in the [wiki].
 
+[Screenshot]: https://raw.githubusercontent.com/retext-project/retext/refs/heads/master/data/retext-kde5.png
 [wiki]: https://github.com/retext-project/retext/wiki
 [PyPI]: https://pypi.org/project/ReText/
 [Transifex]: https://www.transifex.com/mitya57/ReText/
