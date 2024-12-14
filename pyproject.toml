@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ReText"
+version = "8.1.0"
+description = "Simple editor for Markdown and reStructuredText"
+readme = "README.md"
+authors = [{ name = "Dmitry Shachnev", email = "mitya57@gmail.com" }]
+license = { text = "GPL-2.0-or-later" }
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: X11 Applications :: Qt",
+  "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Text Editors",
+  "Topic :: Text Processing :: Markup",
+]
+requires-python = ">=3.6"
+dependencies = [
+  "docutils",
+  "Markdown>=3.0",
+  "Markups>=2.0",
+  "Pygments",
+  "PyQt6",
+]
+
+[project.gui-scripts]
+retext = "ReText.__main__:main"
+
+[project.optional-dependencies]
+spellcheck = ["pyenchant"]
+encoding-detection = ["chardet"]
+webengine = ["PyQt6-WebEngine"]
+
+[project.urls]
+Homepage = "https://github.com/retext-project/retext"
+Wiki = "https://github.com/retext-project/retext/wiki"
+"Issue Tracker" = "https://github.com/retext-project/retext/issues"
+
+[tool.setuptools]
+packages = ["ReText"]
+include-package-data = false
+
+[tool.setuptools.data-files]
+"share/applications" = ["data/me.mitya57.ReText.desktop"]
+"share/icons/hicolor/scalable/apps" = ["ReText/icons/retext.svg"]
+"share/metainfo" = ["data/me.mitya57.ReText.appdata.xml"]
+
+[tool.setuptools.package-data]
+ReText = ["icons/*.png", "icons/*.svg", "locale/*.qm"]

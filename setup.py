@@ -1,22 +1,7 @@
 #!/usr/bin/env python3
 
-VERSION = '8.1.0'
-
-long_description = '''\
-ReText is simple text editor that supports Markdown and reStructuredText
-markup languages. It is written in Python using PyQt libraries.
-
-It supports live preview, tabs, math formulas, export to various formats
-including PDF and HTML.
-
-For more details, please go to the `home page`_ or to the `wiki`_.
-
-.. _`home page`: https://github.com/retext-project/retext
-.. _`wiki`: https://github.com/retext-project/retext/wiki'''
-
 import logging
 import os
-import sys
 from glob import glob
 from os.path import join
 from subprocess import check_call, check_output
@@ -25,9 +10,6 @@ from setuptools import Command, setup
 from setuptools.command.build import build
 from setuptools.command.install import install
 from setuptools.command.sdist import sdist
-
-if sys.version_info[0] < 3:
-	sys.exit('Error: Python 3.x is required.')
 
 
 class retext_build_translations(Command):
@@ -104,55 +86,11 @@ class retext_install(install):
 			desktop_file.write(desktop_contents)
 
 
-classifiers = [
-	'Development Status :: 5 - Production/Stable',
-	'Environment :: X11 Applications :: Qt',
-	'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
-	'Programming Language :: Python :: 3 :: Only',
-	'Topic :: Text Editors',
-	'Topic :: Text Processing :: Markup'
-]
-
-setup(name='ReText',
-      version=VERSION,
-      description='Simple editor for Markdown and reStructuredText',
-      long_description=long_description,
-      author='Dmitry Shachnev',
-      author_email='mitya57@gmail.com',
-      url='https://github.com/retext-project/retext',
-      packages=['ReText'],
-      entry_points={
-        'gui_scripts': ['retext = ReText.__main__:main'],
-      },
-      data_files=[
-        ('share/applications', ['data/me.mitya57.ReText.desktop']),
-        ('share/icons/hicolor/scalable/apps', ['ReText/icons/retext.svg']),
-        ('share/metainfo', ['data/me.mitya57.ReText.appdata.xml']),
-      ],
-      package_data={
-        'ReText': ['icons/*.png', 'icons/*.svg', 'locale/*.qm'],
-      },
-      python_requires='>=3.6',
-      requires=['docutils', 'Markdown', 'Markups(>=2.0)', 'pyenchant', 'Pygments', 'PyQt6'],
-      install_requires=[
-        'docutils',
-        'Markdown>=3.0',
-        'Markups>=2.0',
-        'Pygments',
-        'PyQt6',
-      ],
-      extras_require={
-        'spellcheck': ['pyenchant'],
-        'encoding-detection': ['chardet'],
-        'webengine': ['PyQt6-WebEngine'],
-      },
-      cmdclass={
+setup(
+    cmdclass={
         'build_translations': retext_build_translations,
         'build': retext_build,
         'sdist': retext_sdist,
         'install': retext_install,
-      },
-      test_suite='tests',
-      classifiers=classifiers,
-      license='GPL 2+'
+    }
 )
