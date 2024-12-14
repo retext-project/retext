@@ -17,11 +17,8 @@ For more details, please go to the `home page`_ or to the `wiki`_.
 import logging
 import os
 import sys
-import tarfile
-import urllib.request
 from glob import glob
-from io import BytesIO
-from os.path import basename, join
+from os.path import join
 from subprocess import check_call, check_output
 
 from setuptools import Command, setup
@@ -31,19 +28,6 @@ from setuptools.command.sdist import sdist
 
 if sys.version_info[0] < 3:
 	sys.exit('Error: Python 3.x is required.')
-
-
-def bundle_icons():
-	icons_tgz = 'https://github.com/retext-project/retext/archive/icons.tar.gz'
-	response = urllib.request.urlopen(icons_tgz)
-	tario = BytesIO(response.read())
-	tar = tarfile.open(fileobj=tario, mode='r')
-	for member in tar:
-		if member.isfile():
-			member.path = basename(member.path)
-			logging.info('bundling ReText/icons/%s', member.path)
-			tar.extract(member, join('ReText', 'icons'))
-	tar.close()
 
 
 class retext_build_translations(Command):
@@ -81,7 +65,6 @@ class retext_build(build):
 class retext_sdist(sdist):
 	def run(self):
 		self.run_command('build_translations')
-		bundle_icons()
 		sdist.run(self)
 
 class retext_install(install):
