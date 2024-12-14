@@ -41,7 +41,7 @@ class retext_build_translations(Command):
 
 
 class retext_build(build):
-	sub_commands = build.sub_commands + [('build_translations', None)]
+	sub_commands = [('build_translations', None)] + build.sub_commands
 
 
 class retext_sdist(sdist):
