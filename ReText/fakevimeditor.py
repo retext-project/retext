@@ -113,7 +113,7 @@ class Proxy (FakeVimProxy):
         self.__cursorPosition = cursorPosition
         self.__cursorAnchor = cursorAnchor
         self.__statusMessage = msg
-        self.__updateStatusBar();
+        self.__updateStatusBar()
         self.__eventFilter = eventFilter
 
     def statusDataChanged(self, msg):
