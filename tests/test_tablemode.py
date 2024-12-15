@@ -1,4 +1,4 @@
-# vim: noexpandtab:ts=4:sw=4
+# vim: ts=4:sw=4:expandtab
 #
 # This file is part of ReText
 # Copyright: 2014 Maurice van der Pot

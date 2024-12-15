@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# vim: ts=8:sts=8:sw=8:noexpandtab
+# vim: ts=4:sw=4:expandtab
 
 # ReText
 # Copyright 2011-2023 Dmitry Shachnev

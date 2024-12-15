@@ -1,4 +1,4 @@
-# vim: ts=8:sts=8:sw=8:noexpandtab
+# vim: ts=4:sw=4:expandtab
 #
 # This file is part of ReText
 # Copyright: 2012-2024 Dmitry Shachnev
