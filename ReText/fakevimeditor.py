@@ -14,16 +14,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from FakeVim import FakeVimProxy, FakeVimHandler, FAKEVIM_PYQT_VERSION, \
-    MessageError
+from FakeVim import FAKEVIM_PYQT_VERSION, FakeVimHandler, FakeVimProxy, MessageError
 
 if FAKEVIM_PYQT_VERSION != 6:
     raise ImportError("FakeVim must be compiled with Qt 6")
 
-from PyQt6.QtCore import QDir, QRegExp, QObject, Qt
+from PyQt6.QtCore import QDir, QObject, QRegExp, Qt
 from PyQt6.QtGui import QPainter, QPen, QTextCursor
-from PyQt6.QtWidgets import QWidget, QLabel, QLineEdit, \
-    QMessageBox, QStatusBar, QTextEdit
+from PyQt6.QtWidgets import (
+    QLabel,
+    QLineEdit,
+    QMessageBox,
+    QStatusBar,
+    QTextEdit,
+    QWidget,
+)
+
 
 class FakeVimMode:
     @staticmethod

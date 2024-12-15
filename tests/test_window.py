@@ -16,22 +16,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from contextlib import suppress
-import markups
 import os
+import platform
 import sys
 import tempfile
 import unittest
-from unittest.mock import patch, MagicMock
 import warnings
-import platform
+from contextlib import suppress
+from unittest.mock import MagicMock, patch
 
+import markups
 from markups.abstract import ConvertedMarkup
-
-from PyQt6.QtCore import pyqtSignal, QObject, Qt
+from PyQt6.QtCore import QObject, Qt, pyqtSignal
 from PyQt6.QtGui import QTextCursor
 from PyQt6.QtTest import QTest
 from PyQt6.QtWidgets import QApplication, QMessageBox
+
 import ReText
 from ReText.window import ReTextWindow
 

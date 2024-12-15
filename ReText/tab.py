@@ -16,20 +16,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from os.path import exists, splitext
 import locale
 import time
-from markups import get_markup_for_file_name, find_markup_class_by_name
-from markups.common import MODULE_HOME_PAGE
+from os.path import exists, splitext
 
-from ReText import app_version, globalSettings, converterprocess
+from markups import find_markup_class_by_name, get_markup_for_file_name
+from markups.common import MODULE_HOME_PAGE
+from PyQt6.QtCore import QDir, QFile, QFileInfo, QPoint, Qt, QTimer, QUrl, pyqtSignal
+from PyQt6.QtGui import QPalette, QTextCursor, QTextDocument
+from PyQt6.QtWidgets import QApplication, QMessageBox, QSplitter, QTextEdit
+
+from ReText import app_version, converterprocess, globalSettings
 from ReText.editor import ReTextEdit
 from ReText.highlighter import ReTextHighlighter
 from ReText.preview import ReTextPreview
-
-from PyQt6.QtCore import pyqtSignal, Qt, QDir, QFile, QFileInfo, QPoint, QTimer, QUrl
-from PyQt6.QtGui import QPalette, QTextCursor, QTextDocument
-from PyQt6.QtWidgets import QApplication, QTextEdit, QSplitter, QMessageBox
 
 try:
     from ReText.webenginepreview import ReTextWebEnginePreview

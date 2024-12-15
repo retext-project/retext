@@ -14,17 +14,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import markups
 import multiprocessing as mp
 import os
 import pickle
 import signal
-from socket import socketpair
 import struct
 import traceback
 import weakref
+from socket import socketpair
 
-from PyQt6.QtCore import pyqtSignal, QObject, QSocketNotifier
+import markups
+from PyQt6.QtCore import QObject, QSocketNotifier, pyqtSignal
+
 
 def recvall(sock, remaining):
     alldata = bytearray()

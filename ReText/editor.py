@@ -21,12 +21,32 @@ import re
 import weakref
 
 from markups import MarkdownMarkup, ReStructuredTextMarkup, TextileMarkup
-from ReText import globalSettings, settings, tablemode
-
-from PyQt6.QtCore import pyqtSignal, QFileInfo, QMimeDatabase, QPoint, QPointF, QRect, QSize, Qt
-from PyQt6.QtGui import QAction, QColor, QImage, QKeyEvent, QMouseEvent, QPainter, \
-QPalette, QTextCursor, QTextFormat, QWheelEvent, QGuiApplication
+from PyQt6.QtCore import (
+    QFileInfo,
+    QMimeDatabase,
+    QPoint,
+    QPointF,
+    QRect,
+    QSize,
+    Qt,
+    pyqtSignal,
+)
+from PyQt6.QtGui import (
+    QAction,
+    QColor,
+    QGuiApplication,
+    QImage,
+    QKeyEvent,
+    QMouseEvent,
+    QPainter,
+    QPalette,
+    QTextCursor,
+    QTextFormat,
+    QWheelEvent,
+)
 from PyQt6.QtWidgets import QApplication, QFileDialog, QLabel, QTextEdit, QWidget
+
+from ReText import globalSettings, settings, tablemode
 
 try:
     from ReText.fakevimeditor import ReTextFakeVimHandler

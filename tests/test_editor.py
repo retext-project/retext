@@ -20,13 +20,13 @@ import sys
 import unittest
 from unittest.mock import patch
 
-from ReText.editor import ReTextEdit
-from ReText.editor import documentIndentMore, documentIndentLess
-from PyQt6.QtGui import QImage, QTextCursor, QTextDocument, QKeyEvent
-from PyQt6.QtCore import Qt, QMimeData, QEvent
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtTest import QTest
 from markups import MarkdownMarkup, ReStructuredTextMarkup
+from PyQt6.QtCore import QEvent, QMimeData, Qt
+from PyQt6.QtGui import QImage, QKeyEvent, QTextCursor, QTextDocument
+from PyQt6.QtTest import QTest
+from PyQt6.QtWidgets import QApplication
+
+from ReText.editor import ReTextEdit, documentIndentLess, documentIndentMore
 
 QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
 # Keep a reference so it is not garbage collected

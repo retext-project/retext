@@ -16,10 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from os.path import abspath, dirname, expanduser, join
+
 import markups
 import markups.common
-from os.path import abspath, dirname, join, expanduser
-
 from PyQt6.QtCore import QByteArray, QLocale, QSettings
 from PyQt6.QtGui import QFont, QFontDatabase
 

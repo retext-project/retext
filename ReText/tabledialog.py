@@ -16,8 +16,7 @@
 
 from markups import ReStructuredTextMarkup
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLabel, \
-    QSpinBox
+from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QGridLayout, QLabel, QSpinBox
 
 
 class InsertTableDialog(QDialog):

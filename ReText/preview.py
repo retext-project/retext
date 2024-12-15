@@ -16,11 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from os.path import exists
 import time
+from os.path import exists
+
 from PyQt6.QtCore import QDir, QUrl
 from PyQt6.QtGui import QDesktopServices, QTextCursor, QTextDocument
 from PyQt6.QtWidgets import QTextBrowser
+
 from ReText import globalSettings
 
 class ReTextPreview(QTextBrowser):

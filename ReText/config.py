@@ -15,16 +15,29 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from ReText import globalSettings, getBundledIcon, getSettingsFilePath
-from ReText.icontheme import get_icon_theme
-from markups.common import CONFIGURATION_DIR
 from os.path import join
 
-from PyQt6.QtCore import pyqtSignal, QFile, QFileInfo, QUrl, Qt
+from markups.common import CONFIGURATION_DIR
+from PyQt6.QtCore import QFile, QFileInfo, Qt, QUrl, pyqtSignal
 from PyQt6.QtGui import QDesktopServices, QIcon
-from PyQt6.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
- QFileDialog, QGridLayout, QLabel, QLineEdit, QPushButton, QSpinBox, \
- QComboBox, QTabWidget, QVBoxLayout, QWidget
+from PyQt6.QtWidgets import (
+    QCheckBox,
+    QComboBox,
+    QDialog,
+    QDialogButtonBox,
+    QFileDialog,
+    QGridLayout,
+    QLabel,
+    QLineEdit,
+    QPushButton,
+    QSpinBox,
+    QTabWidget,
+    QVBoxLayout,
+    QWidget,
+)
+
+from ReText import getBundledIcon, getSettingsFilePath, globalSettings
+from ReText.icontheme import get_icon_theme
 
 MKD_EXTS_FILE = join(CONFIGURATION_DIR, 'markdown-extensions.txt')
 

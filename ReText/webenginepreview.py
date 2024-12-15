@@ -16,12 +16,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from ReText import globalSettings
-from ReText.editor import getColor
-from ReText.syncscroll import SyncScroll
 from PyQt6.QtCore import QEvent, Qt
-from PyQt6.QtGui import QCursor, QDesktopServices, QFontInfo, QGuiApplication, QTextDocument, QColor
-from PyQt6.QtWidgets import QLabel
+from PyQt6.QtGui import (
+    QColor,
+    QCursor,
+    QDesktopServices,
+    QFontInfo,
+    QGuiApplication,
+    QTextDocument,
+)
 from PyQt6.QtWebEngineCore import (
     QWebEnginePage,
     QWebEngineSettings,
@@ -29,6 +32,11 @@ from PyQt6.QtWebEngineCore import (
     QWebEngineUrlRequestInterceptor,
 )
 from PyQt6.QtWebEngineWidgets import QWebEngineView
+from PyQt6.QtWidgets import QLabel
+
+from ReText import globalSettings
+from ReText.editor import getColor
+from ReText.syncscroll import SyncScroll
 
 
 class ReTextWebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):

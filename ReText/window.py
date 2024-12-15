@@ -16,22 +16,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import markups
-import sys
 import os
-from subprocess import Popen
+import sys
 import warnings
+from subprocess import Popen
 
-from ReText import getBundledIcon, app_version, globalSettings, globalCache
-from ReText.tab import (ReTextTab, ReTextWebEnginePreview,
-                        PreviewDisabled, PreviewNormal, PreviewLive)
-from ReText.dialogs import EncodingDialog, HtmlDialog, LocaleDialog
+import markups
+
+from ReText import app_version, getBundledIcon, globalCache, globalSettings
 from ReText.config import ConfigDialog, setIconThemeFromSettings
-from ReText.tabledialog import InsertTableDialog
+from ReText.dialogs import EncodingDialog, HtmlDialog, LocaleDialog
 from ReText.filesystemmodel import ReTextFileSystemModel
+from ReText.tab import (
+    PreviewDisabled,
+    PreviewLive,
+    PreviewNormal,
+    ReTextTab,
+    ReTextWebEnginePreview,
+)
+from ReText.tabledialog import InsertTableDialog
 
 try:
-    from ReText.fakevimeditor import ReTextFakeVimHandler, FakeVimMode
+    from ReText.fakevimeditor import FakeVimMode, ReTextFakeVimHandler
 except ImportError:
     ReTextFakeVimHandler = None
 
@@ -40,16 +46,54 @@ try:
 except ImportError:
     enchant = None
 
-from PyQt6.QtCore import QByteArray, QDir, QFile, QFileInfo, \
- QFileSystemWatcher, QIODevice, QLocale, QMarginsF, QStandardPaths, \
- QTextStream, QTimer, QUrl, Qt, pyqtSlot
-from PyQt6.QtGui import QAction, QActionGroup, QColor, QDesktopServices, \
- QIcon, QKeySequence, QPageLayout, QPageSize, \
- QPalette, QTextDocument, QTextDocumentWriter
-from PyQt6.QtWidgets import QApplication, QCheckBox, QComboBox, QDialog, \
- QFileDialog, QFontDialog, QInputDialog, QLineEdit, QMainWindow, QMenu, \
- QMessageBox, QSplitter, QTabWidget, QToolBar, QToolButton, QTreeView
-from PyQt6.QtPrintSupport import QPrintDialog, QPrintPreviewDialog, QPrinter
+from PyQt6.QtCore import (
+    QByteArray,
+    QDir,
+    QFile,
+    QFileInfo,
+    QFileSystemWatcher,
+    QIODevice,
+    QLocale,
+    QMarginsF,
+    QStandardPaths,
+    Qt,
+    QTextStream,
+    QTimer,
+    QUrl,
+    pyqtSlot,
+)
+from PyQt6.QtGui import (
+    QAction,
+    QActionGroup,
+    QColor,
+    QDesktopServices,
+    QIcon,
+    QKeySequence,
+    QPageLayout,
+    QPageSize,
+    QPalette,
+    QTextDocument,
+    QTextDocumentWriter,
+)
+from PyQt6.QtPrintSupport import QPrintDialog, QPrinter, QPrintPreviewDialog
+from PyQt6.QtWidgets import (
+    QApplication,
+    QCheckBox,
+    QComboBox,
+    QDialog,
+    QFileDialog,
+    QFontDialog,
+    QInputDialog,
+    QLineEdit,
+    QMainWindow,
+    QMenu,
+    QMessageBox,
+    QSplitter,
+    QTabWidget,
+    QToolBar,
+    QToolButton,
+    QTreeView,
+)
 
 previewStatesByName = {
     'editor': PreviewDisabled,

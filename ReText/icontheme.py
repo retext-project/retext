@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 def get_from_xsettings():
-    from ReText.xsettings import get_xsettings, XSettingsError
+    from ReText.xsettings import XSettingsError, get_xsettings
     try:
         xsettings = get_xsettings()
     except XSettingsError:

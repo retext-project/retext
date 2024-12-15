@@ -14,12 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from ReText.editor import getColor
-from enum import IntFlag, auto
 import re
+from enum import IntFlag, auto
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont, QSyntaxHighlighter, QTextCharFormat
+
+from ReText.editor import getColor
 
 reHtmlTags     = re.compile('<[^<>@]*>')
 reHtmlSymbols  = re.compile(r'&#?\w+;')

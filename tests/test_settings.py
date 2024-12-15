@@ -14,16 +14,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import unittest
-import tempfile
 import sys
-
+import tempfile
+import unittest
 from os.path import basename, dirname, splitext
-from PyQt6.QtCore import Qt, QSettings
+
+from PyQt6.QtCore import QSettings, Qt
 from PyQt6.QtGui import QColor
 from PyQt6.QtWidgets import QApplication
-from ReText import readListFromSettings, writeListToSettings, \
- readFromSettings, writeToSettings
+
+from ReText import (
+    readFromSettings,
+    readListFromSettings,
+    writeListToSettings,
+    writeToSettings,
+)
 from ReText.editor import getColor, updateColorScheme
 
 # For this particular test, QCoreApplication is enough. However, we should

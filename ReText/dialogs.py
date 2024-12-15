@@ -14,11 +14,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from PyQt6.QtWidgets import (
+    QCheckBox,
+    QDialog,
+    QDialogButtonBox,
+    QLabel,
+    QLineEdit,
+    QTextEdit,
+    QVBoxLayout,
+)
+
 from ReText import globalSettings
 from ReText.highlighter import ReTextHighlighter
 
-from PyQt6.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, \
- QLabel, QLineEdit, QTextEdit, QVBoxLayout
 
 class HtmlDialog(QDialog):
     def __init__(self, parent=None):

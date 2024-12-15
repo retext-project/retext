@@ -19,18 +19,29 @@
 
 import ctypes
 import multiprocessing
-import sys
 import signal
-import markups
+import sys
 from os.path import exists, isdir, join
-from ReText import packageDir, settings, cache, globalSettings, app_version
+
+import markups
+from PyQt6.QtCore import (
+    QCommandLineOption,
+    QCommandLineParser,
+    QFile,
+    QFileInfo,
+    QIODevice,
+    QLibraryInfo,
+    Qt,
+    QTextStream,
+    QTranslator,
+)
+from PyQt6.QtDBus import QDBusConnection, QDBusInterface
+from PyQt6.QtNetwork import QNetworkProxyFactory
+from PyQt6.QtWidgets import QApplication
+
+from ReText import app_version, cache, globalSettings, packageDir, settings
 from ReText.window import ReTextWindow
 
-from PyQt6.QtCore import QCommandLineOption, QCommandLineParser, QFile, \
- QFileInfo, QIODevice, QLibraryInfo, QTextStream, QTranslator, Qt
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtNetwork import QNetworkProxyFactory
-from PyQt6.QtDBus import QDBusConnection, QDBusInterface
 
 def canonicalize(option):
     if option == '-':

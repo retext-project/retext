@@ -17,8 +17,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from markups import MarkdownMarkup, ReStructuredTextMarkup
 
+from markups import MarkdownMarkup, ReStructuredTextMarkup
 from PyQt6.QtGui import QTextCursor
 
 LARGER_THAN_ANYTHING = sys.maxsize
