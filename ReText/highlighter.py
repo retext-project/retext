@@ -71,7 +71,8 @@ ITAL = Formatter([lambda f: f.setFontItalic(True)])
 UNDL = Formatter([lambda f: f.setFontUnderline(True)])
 
 def FG(colorName):
-    func = lambda f: f.setForeground(getColor(colorName))
+    def func(f):
+        return f.setForeground(getColor(colorName))
     return Formatter([func])
 
 def QString_length(text):
