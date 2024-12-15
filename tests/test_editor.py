@@ -147,12 +147,18 @@ class TestSurround(unittest.TestCase):
         self.cursor = QTextCursor(self.document)
 
     def getText(self, key):
-        if key == Qt.Key.Key_ParenLeft: return '('
-        if key == Qt.Key.Key_BracketLeft: return '['
-        if key == Qt.Key.Key_Underscore: return '_'
-        if key == Qt.Key.Key_Asterisk: return '*'
-        if key == Qt.Key.Key_QuoteDbl: return '"'
-        if key == Qt.Key.Key_Apostrophe: return '\''
+        if key == Qt.Key.Key_ParenLeft:
+            return '('
+        if key == Qt.Key.Key_BracketLeft:
+            return '['
+        if key == Qt.Key.Key_Underscore:
+            return '_'
+        if key == Qt.Key.Key_Asterisk:
+            return '*'
+        if key == Qt.Key.Key_QuoteDbl:
+            return '"'
+        if key == Qt.Key.Key_Apostrophe:
+            return '\''
 
     def getEvent(self, key):
         return QKeyEvent(QEvent.Type.KeyPress, key, Qt.KeyboardModifier.NoModifier, text=self.getText(key))
