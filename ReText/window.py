@@ -916,7 +916,7 @@ class ReTextWindow(QMainWindow):
         supportedExtensions = ['.txt']
         for markup in markups.get_all_markups():
             supportedExtensions += markup.file_extensions
-        fileFilter = ' (' + str.join(' ', ['*'+ext for ext in supportedExtensions]) + ');;'
+        fileFilter = ' (' + ' '.join('*' + ext for ext in supportedExtensions) + ');;'
         fileNames = QFileDialog.getOpenFileNames(self,
             self.tr("Select one or several files to open"), QDir.currentPath(),
             self.tr("Supported files") + fileFilter + self.tr("All files (*)"))
@@ -980,10 +980,12 @@ class ReTextWindow(QMainWindow):
                 defaultExt = self.tr("Plain text (*.txt)")
                 ext = ".txt"
             else:
-                defaultExt = self.tr('%s files',
-                    'Example of final string: Markdown files') \
-                    % markupClass.name + ' (' + str.join(' ',
-                    ('*'+extension for extension in markupClass.file_extensions)) + ')'
+                defaultExt = (
+                    self.tr('%s files', 'Example of final string: Markdown files') % markupClass.name
+                    + ' ('
+                    + ' '.join('*' + extension for extension in markupClass.file_extensions)
+                    + ')'
+                )
                 if markupClass == markups.MarkdownMarkup:
                     ext = globalSettings.markdownDefaultFileExtension
                 elif markupClass == markups.ReStructuredTextMarkup:
