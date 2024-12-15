@@ -116,7 +116,7 @@ class ConverterProcess(QObject):
 
         conn_parent, conn_child = socketpair()
 
-        # TODO: figure out which of the two sockets should be set to 
+        # TODO: figure out which of the two sockets should be set to
         #       inheritable and which should be passed to the child
         conn_child.set_inheritable(True)
 
