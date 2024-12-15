@@ -59,10 +59,10 @@ class TestSettings(unittest.TestCase):
             ['true'],
             ['foo, bar', 'foo, bar']
         )
-        for l in data:
-            writeListToSettings('testList', l, self.settings)
+        for lst in data:
+            writeListToSettings('testList', lst, self.settings)
             lnew = readListFromSettings('testList', self.settings)
-            self.assertListEqual(lnew, l)
+            self.assertListEqual(lnew, lst)
 
     def test_storingBooleans(self):
         writeToSettings('testBool', 1, None, self.settings)
