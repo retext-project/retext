@@ -73,14 +73,14 @@ jobs:
       - name: Run tests
         if: ${{ !startsWith(matrix.platform, 'ubuntu') }}
         run: python -m unittest discover -s tests -v
-  pyflakes:
+  ruff:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      - name: Install Python dependencies
-        run: python -m pip install pyflakes
-      - name: Run pyflakes
-        run: python -m pyflakes ReText/ tests/ setup.py
+      - name: Install ruff
+        run: python -m pip install ruff
+      - name: Run ruff check
+        run: ruff check --select F,E,I --ignore E501 .
