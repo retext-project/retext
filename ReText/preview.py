@@ -25,66 +25,66 @@ from ReText import globalSettings
 
 class ReTextPreview(QTextBrowser):
 
-	def __init__(self, tab):
-		QTextBrowser.__init__(self)
-		self.tab = tab
-		# if set to True, links to other files will unsuccessfully be opened as anchors
-		self.setOpenLinks(False)
-		self.anchorClicked.connect(self.openInternal)
-		self.lastRenderTime = 0
-		self.distToBottom = None
-		self.verticalScrollBar().rangeChanged.connect(self.updateScrollPosition)
+    def __init__(self, tab):
+        QTextBrowser.__init__(self)
+        self.tab = tab
+        # if set to True, links to other files will unsuccessfully be opened as anchors
+        self.setOpenLinks(False)
+        self.anchorClicked.connect(self.openInternal)
+        self.lastRenderTime = 0
+        self.distToBottom = None
+        self.verticalScrollBar().rangeChanged.connect(self.updateScrollPosition)
 
-	def disconnectExternalSignals(self):
-		pass
+    def disconnectExternalSignals(self):
+        pass
 
-	def openInternal(self, link):
-		url = link.url()
-		if url.startswith('#'):
-			self.scrollToAnchor(url[1:])
-			return
-		elif link.isRelative():
-			fileToOpen = QDir.current().filePath(url)
-		else:
-			fileToOpen = link.toLocalFile() if link.isLocalFile() else None
-		if fileToOpen is not None:
-			if exists(fileToOpen):
-				link = QUrl.fromLocalFile(fileToOpen)
-				if globalSettings.handleWebLinks and fileToOpen.endswith('.html'):
-					self.setSource(link)
-					return
-			# This is outside the "if exists" block because we can prompt for
-			# creating the file
-			if self.tab.openSourceFile(fileToOpen):
-				return
-		QDesktopServices.openUrl(link)
+    def openInternal(self, link):
+        url = link.url()
+        if url.startswith('#'):
+            self.scrollToAnchor(url[1:])
+            return
+        elif link.isRelative():
+            fileToOpen = QDir.current().filePath(url)
+        else:
+            fileToOpen = link.toLocalFile() if link.isLocalFile() else None
+        if fileToOpen is not None:
+            if exists(fileToOpen):
+                link = QUrl.fromLocalFile(fileToOpen)
+                if globalSettings.handleWebLinks and fileToOpen.endswith('.html'):
+                    self.setSource(link)
+                    return
+            # This is outside the "if exists" block because we can prompt for
+            # creating the file
+            if self.tab.openSourceFile(fileToOpen):
+                return
+        QDesktopServices.openUrl(link)
 
-	def findText(self, text, flags, wrap=False):
-		cursor = self.textCursor()
-		if wrap and flags & QTextDocument.FindFlag.FindBackward:
-			cursor.movePosition(QTextCursor.MoveOperation.End)
-		elif wrap:
-			cursor.movePosition(QTextCursor.MoveOperation.Start)
-		newCursor = self.document().find(text, cursor, flags)
-		if not newCursor.isNull():
-			self.setTextCursor(newCursor)
-			return True
-		if not wrap:
-			return self.findText(text, flags, wrap=True)
-		return False
+    def findText(self, text, flags, wrap=False):
+        cursor = self.textCursor()
+        if wrap and flags & QTextDocument.FindFlag.FindBackward:
+            cursor.movePosition(QTextCursor.MoveOperation.End)
+        elif wrap:
+            cursor.movePosition(QTextCursor.MoveOperation.Start)
+        newCursor = self.document().find(text, cursor, flags)
+        if not newCursor.isNull():
+            self.setTextCursor(newCursor)
+            return True
+        if not wrap:
+            return self.findText(text, flags, wrap=True)
+        return False
 
-	def updateScrollPosition(self, minimum, maximum):
-		"""Called when vertical scroll bar range changes.
+    def updateScrollPosition(self, minimum, maximum):
+        """Called when vertical scroll bar range changes.
 
-		If this happened during preview rendering (less than 0.5s since it
-		was started), set the position such that distance to bottom is the
-		same as before refresh.
-		"""
-		timeSinceRender = time.time() - self.lastRenderTime
-		if timeSinceRender < 0.5 and self.distToBottom is not None and maximum:
-			newValue = maximum - self.distToBottom
-			if newValue >= minimum:
-				self.verticalScrollBar().setValue(newValue)
+        If this happened during preview rendering (less than 0.5s since it
+        was started), set the position such that distance to bottom is the
+        same as before refresh.
+        """
+        timeSinceRender = time.time() - self.lastRenderTime
+        if timeSinceRender < 0.5 and self.distToBottom is not None and maximum:
+            newValue = maximum - self.distToBottom
+            if newValue >= minimum:
+                self.verticalScrollBar().setValue(newValue)
 
-	def setFont(self, font):
-		self.document().setDefaultFont(font)
+    def setFont(self, font):
+        self.document().setDefaultFont(font)
