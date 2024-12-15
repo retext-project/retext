@@ -118,7 +118,7 @@ class PosMapBlockProcessor(BlockProcessor):
         block = blocks.pop(0)
         line_nr = block.split('__')[2]
         last_child = self.lastChild(parent)
-        if last_child != None:
+        if last_child is not None:
             # Avoid setting the attribute on HTML placeholders, because it
             # would interfere with later replacement with literal HTML
             # fragments. In this case just add an empty <p> with the attribute.

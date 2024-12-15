@@ -1103,7 +1103,7 @@ class ReTextWindow(QMainWindow):
             printer.setOutputFormat(QPrinter.OutputFormat.PdfFormat)
             printer.setOutputFileName(fileName)
             document = self.getDocumentForPrint(title, htmltext, preview)
-            if document != None:
+            if document is not None:
                 document.print(printer)
 
     def printFile(self):
@@ -1113,7 +1113,7 @@ class ReTextWindow(QMainWindow):
         dlg.setWindowTitle(self.tr("Print document"))
         if (dlg.exec() == QDialog.DialogCode.Accepted):
             document = self.getDocumentForPrint(title, htmltext, preview)
-            if document != None:
+            if document is not None:
                 document.print(printer)
 
     def printPreview(self):

@@ -270,7 +270,7 @@ class ReTextFakeVimHandler (QObject):
                     oldSelections.pop(i)
                     break
 
-        if searchSelections != None:
+        if searchSelections is not None:
             self.__searchSelections = searchSelections
 
         self.__editor.setExtraSelections(oldSelections + self.__searchSelections)
