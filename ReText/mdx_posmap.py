@@ -24,6 +24,7 @@ from markdown.extensions import Extension
 from markdown.extensions.codehilite import CodeHilite
 from markdown.preprocessors import Preprocessor
 from markdown.util import HTML_PLACEHOLDER_RE
+
 try:
     from pymdownx.highlight import Highlight
 except ImportError:

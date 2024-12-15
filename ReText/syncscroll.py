@@ -16,6 +16,7 @@
 
 from PyQt6.QtCore import QPoint
 
+
 class SyncScroll:
 
     def __init__(self, previewFrame,

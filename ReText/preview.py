@@ -25,6 +25,7 @@ from PyQt6.QtWidgets import QTextBrowser
 
 from ReText import globalSettings
 
+
 class ReTextPreview(QTextBrowser):
 
     def __init__(self, tab):

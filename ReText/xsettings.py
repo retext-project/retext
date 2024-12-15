@@ -21,6 +21,7 @@ import ctypes
 import ctypes.util
 import struct
 
+
 class _xcb_reply_t(ctypes.Structure):
     # this can be used instead of xcb_intern_atom_reply_t,
     # xcb_get_selection_owner_reply_t, etc
