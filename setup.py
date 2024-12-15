@@ -78,10 +78,10 @@ class retext_install(install):
         with open(desktop_file_path, encoding="utf-8") as desktop_file:
             desktop_contents = desktop_file.read()
         logging.info('fixing Exec line in %s', desktop_file_path)
-        desktop_contents = desktop_contents.replace('Exec=retext', 'Exec=%s' % retext)
+        desktop_contents = desktop_contents.replace('Exec=retext', f'Exec={retext}')
         if self.orig_install_data != '/usr':
             logging.info('fixing Icon line in %s', desktop_file_path)
-            desktop_contents = desktop_contents.replace('Icon=retext', 'Icon=%s' % icon_path)
+            desktop_contents = desktop_contents.replace('Icon=retext', f'Icon={icon_path}')
         with open(desktop_file_path, 'w', encoding="utf-8") as desktop_file:
             desktop_file.write(desktop_contents)
 

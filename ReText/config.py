@@ -104,7 +104,7 @@ class ConfigDialog(QDialog):
         self.layout = QVBoxLayout(self)
         path = getSettingsFilePath()
         pathLabel = QLabel(self.tr('Using configuration file at:') +
-            ' <a href="%(path)s">%(path)s</a>' % {'path': path}, self)
+            f' <a href="{path}">{path}</a>', self)
         pathLabel.linkActivated.connect(self.openLink)
         self.layout.addWidget(pathLabel)
         self.tabWidget = QTabWidget(self)

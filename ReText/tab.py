@@ -184,7 +184,7 @@ class ReTextTab(QSplitter):
             except (AttributeError, KeyError):
                 # Remove the link if markupClass doesn't have the needed attribute
                 errMsg = errMsg.replace('<a href="%s">', '').replace('</a>', '')
-            return '<p style="color: red">%s</p>' % errMsg
+            return f'<p style="color: red">{errMsg}</p>'
         headers = ''
         if includeStyleSheet and self.p.ss is not None:
             headers += '<style type="text/css">\n' + self.p.ss + '</style>\n'
@@ -210,9 +210,8 @@ class ReTextTab(QSplitter):
             headers += '<style type="text/css">\n' + style + '</style>\n'
         baseName = self.getBaseName()
         if self.cssFileExists:
-            headers += ('<link rel="stylesheet" type="text/css" href="%s.css">\n'
-            % baseName)
-        headers += ('<meta name="generator" content="ReText %s">\n' % app_version)
+            headers += f'<link rel="stylesheet" type="text/css" href="{baseName}.css">\n'
+        headers += f'<meta name="generator" content="ReText {app_version}">\n'
         return converted.get_whole_html(
             custom_headers=headers, include_stylesheet=includeStyleSheet,
             fallback_title=baseName, webenv=webenv)

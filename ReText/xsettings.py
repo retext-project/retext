@@ -98,7 +98,7 @@ def get_raw_xsettings(display=0):
         raise XSettingsError(_xcb_error_messages[error])
 
     # get selection atom cookie
-    buffer = ('_XSETTINGS_S%d' % display).encode()
+    buffer = f'_XSETTINGS_S{display}'.encode()
     cookie = xcb.xcb_intern_atom(connection, 0, len(buffer), buffer)
 
     # get selection atom reply
@@ -148,7 +148,7 @@ def parse_xsettings(raw_xsettings):
         raise XSettingsParseError('length < 12')
 
     if raw_xsettings[0] not in (0, 1):
-        raise XSettingsParseError('wrong order byte: %d' % raw_xsettings[0])
+        raise XSettingsParseError(f'wrong order byte: {raw_xsettings[0]}')
     byte_order = '<>'[raw_xsettings[0]]
     settings_count = struct.unpack(byte_order + 'I', raw_xsettings[8:12])[0]
 
@@ -182,7 +182,7 @@ def parse_xsettings(raw_xsettings):
             value = struct.unpack(byte_order + 'HHHH', raw_xsettings[offset:offset + 8])
             offset += 8
         else:
-            raise XSettingsParseError('Wrong setting type: %d' % setting_type)
+            raise XSettingsParseError(f'Wrong setting type: {setting_type}')
         result[name] = value
     return result
 

@@ -31,7 +31,7 @@ class Row:
         self.paddingchar = paddingchar
 
     def __repr__(self):
-        return "<Row '%s' %s '%s'>" % (self.text, self.separatorline, self.paddingchar)
+        return f"<Row '{self.text}' {self.separatorline} '{self.paddingchar}'>"
 
 def _getTableLines(doc, pos, markupClass):
     startblock = doc.findBlock(pos)

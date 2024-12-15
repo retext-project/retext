@@ -858,10 +858,11 @@ class ReTextWindow(QMainWindow):
         self.extensionActions = []
         for extension in extensions:
             try:
-                if ('Name[%s]' % locale) in extension:
-                    name = extension['Name[%s]' % locale]
-                elif ('Name[%s]' % locale.split('_')[0]) in extension:
-                    name = extension['Name[%s]' % locale.split('_')[0]]
+                locale_short = locale.split('_')[0]
+                if f'Name[{locale}]' in extension:
+                    name = extension[f'Name[{locale}]']
+                elif f'Name[{locale_short}]' in extension:
+                    name = extension[f'Name[{locale_short}]']
                 else:
                     name = extension['Name']
                 data = {}
@@ -1062,7 +1063,7 @@ class ReTextWindow(QMainWindow):
     def standardPrinter(self, title):
         printer = QPrinter(QPrinter.PrinterMode.HighResolution)
         printer.setDocName(title)
-        printer.setCreator('ReText %s' % app_version)
+        printer.setCreator(f'ReText {app_version}')
         if globalSettings.paperSize:
             pageSize = self.getPageSizeByName(globalSettings.paperSize)
             if pageSize is not None:
@@ -1141,7 +1142,7 @@ class ReTextWindow(QMainWindow):
                 fileName += defaultext
         else:
             fileName = 'out' + defaultext
-        basename = '.%s.retext-temp' % self.currentTab.getBaseName()
+        basename = f'.{self.currentTab.getBaseName()}.retext-temp'
         if html:
             tmpname = basename+'.html'
             self.saveHtml(tmpname)
@@ -1312,7 +1313,7 @@ class ReTextWindow(QMainWindow):
 
     def insertImages(self):
         supportedExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp']
-        fileFilter = ' (%s);;' % ' '.join('*' + ext for ext in supportedExtensions)
+        fileFilter = ' (' + ' '.join('*' + ext for ext in supportedExtensions) + ');;'
         fileNames, _selectedFilter = QFileDialog.getOpenFileNames(self,
             self.tr("Select one or several images to open"), QDir.currentPath(),
             self.tr("Supported files") + fileFilter + self.tr("All files (*)"))

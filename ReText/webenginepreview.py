@@ -49,11 +49,7 @@ class ReTextWebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
 
 def str_rgba(color: QColor):
     """ Todo: More elegant use of QColor with alpha in stylesheet """
-    return "rgba({r}, {g}, {b}, {a})".format(
-        r = color.red(),
-        g = color.green(),
-        b = color.blue(),
-        a = color.alpha())
+    return f"rgba({color.red()}, {color.green()}, {color.blue()}, {color.alpha()})"
 
 class UrlPopup(QLabel):
     def __init__(self, window):
@@ -96,7 +92,7 @@ class ReTextWebEnginePage(QWebEnginePage):
         self.linkHovered.connect(self.urlPopup.pop)
 
     def setScrollPosition(self, pos):
-        self.runJavaScript("window.scrollTo(%s, %s);" % (pos.x(), pos.y()))
+        self.runJavaScript(f"window.scrollTo({pos.x()}, {pos.y()});")
 
     def getPositionMap(self, callback):
         def resultCallback(result):
@@ -118,7 +114,7 @@ class ReTextWebEnginePage(QWebEnginePage):
         self.runJavaScript(script, resultCallback)
 
     def javaScriptConsoleMessage(self, level, message, lineNumber, sourceId):
-        print("level=%r message=%r lineNumber=%r sourceId=%r" % (level, message, lineNumber, sourceId))
+        print(f"level={level!r} message={message!r} lineNumber={lineNumber!r} sourceId={sourceId!r}")
 
     def acceptNavigationRequest(self, url, type, isMainFrame):
         if not isMainFrame:

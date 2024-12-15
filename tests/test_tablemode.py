@@ -95,19 +95,19 @@ class TestTableMode(unittest.TestCase):
             else:
                 alignmentScenario = "when only aligning edges of cells in the same column"
 
-            assertMessage = ["Output differs %s." % alignmentScenario,
+            assertMessage = [f"Output differs {alignmentScenario}.",
                              "",
                              "Input:"] + \
-                            ["%3d '%s'" % (i, line) for i, line in enumerate(before)] + \
+                            [f"{i:3d} '{line}'" for i, line in enumerate(before)] + \
                             ["",
                              "Edit:",
-                             "%3d '%s'" % edit,
+                             "{:3d} '{}'".format(*edit),
                              "",
                              "Expected output:"] + \
-                            ["%3d '%s'" % (i, line) for i, line in enumerate(after)] + \
+                            [f"{i:3d} '{line}'" for i, line in enumerate(after)] + \
                             ["",
                              "Actual output:"] + \
-                            ["%3d '%s'" % (i, line) for i, line in enumerate(editedRows)]
+                            [f"{i:3d} '{line}'" for i, line in enumerate(editedRows)]
 
             self.fail('\n'.join(assertMessage))
 

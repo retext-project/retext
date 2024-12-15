@@ -484,7 +484,7 @@ class ReTextEdit(QTextEdit):
             if m:
                 number = int(m.group(1))
                 highestNumber = max(number, highestNumber)
-        return 'image%04d.png' % (highestNumber + 1)
+        return f'image{highestNumber + 1:04d}.png'
 
     def getImageFilename(self):
         if self.tab.fileName:
@@ -520,11 +520,11 @@ class ReTextEdit(QTextEdit):
         link = self.makeFileNameRelative(fileName)
         markupClass = self.tab.getActiveMarkupClass()
         if markupClass == MarkdownMarkup:
-            return '![%s](%s)' % (QFileInfo(link).baseName(), link)
+            return f'![{QFileInfo(link).baseName()}]({link})'
         elif markupClass == ReStructuredTextMarkup:
-            return '.. image:: %s' % link
+            return f'.. image:: {link}'
         elif markupClass == TextileMarkup:
-            return '!%s!' % link
+            return f'!{link}!'
 
     def pasteImage(self):
         mimeData = QApplication.instance().clipboard().mimeData()

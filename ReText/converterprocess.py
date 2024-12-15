@@ -58,7 +58,7 @@ class MarkupNotAvailableError(Exception):
     pass
 
 def _indent(text, prefix):
-    return ''.join('%s%s\n' % (prefix, line) for line in text.splitlines())
+    return ''.join(f'{prefix}{line}\n' for line in text.splitlines())
 
 def _converter_process_func(conn_parent, conn_child):
     conn_parent.close()
@@ -92,7 +92,7 @@ def _converter_process_func(conn_parent, conn_child):
                 result = ('markupnotavailableerror', e.args)
             except Exception:
                 result = ('conversionerror',
-                          'The background markup conversion process received this exception:\n%s' %
+                          'The background markup conversion process received this exception:\n' +
                           _indent(traceback.format_exc(), '    '))
 
             try:

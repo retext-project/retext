@@ -87,7 +87,7 @@ class PosMapMarkPreprocessor(Preprocessor):
                     if lines[i_prev].startswith(" ") and lines[i_next].startswith(" "):
                         continue
 
-                new_text.append('__posmapmarker__%d' % i)
+                new_text.append(f'__posmapmarker__{i}')
                 new_text.append('')
         return new_text
 
