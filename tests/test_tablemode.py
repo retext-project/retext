@@ -32,7 +32,7 @@ class TestTableMode(unittest.TestCase):
         return text
 
     def checkDetermineEditLists(self, paddingChars, before, edit, after, alignWithAnyEdge):
-        class Row():
+        class Row:
             def __init__(self, text, separatorLine, paddingChar):
                 self.text = text
                 self.separatorline = separatorLine

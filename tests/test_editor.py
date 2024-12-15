@@ -88,7 +88,7 @@ class TestIndentation(unittest.TestCase):
 
 
 class TestClipboardHandling(unittest.TestCase):
-    class DummyReTextTab():
+    class DummyReTextTab:
         def __init__(self):
             self.markupClass = None
 
@@ -215,7 +215,7 @@ class TestSurround(unittest.TestCase):
 
 class TestOrderedListMode(unittest.TestCase):
 
-    class DummyReTextTab():
+    class DummyReTextTab:
         def __init__(self):
             self.markupClass = None
 
