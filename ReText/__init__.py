@@ -154,7 +154,7 @@ class ReTextSettings:
                     option, type(default), default=default, settings=settings))
 
     def __setattr__(self, option, value):
-        if not option in self.defaults:
+        if option not in self.defaults:
             raise AttributeError('Unknown attribute')
         default = self.defaults[option]
         if isinstance(default, list):
