@@ -318,39 +318,46 @@ class ReTextEdit(QTextEdit):
 
     def keyPressEvent(self, event):
         key = event.key()
+        modifiers = event.modifiers()
         cursor = self.textCursor()
-        if key == Qt.Key.Key_Backspace and event.modifiers() & Qt.KeyboardModifier.GroupSwitchModifier:
+        if key == Qt.Key.Key_Backspace and modifiers & Qt.KeyboardModifier.GroupSwitchModifier:
             # Workaround for https://bugreports.qt.io/browse/QTBUG-49771
             event = QKeyEvent(event.type(), event.key(),
-                event.modifiers() ^ Qt.KeyboardModifier.GroupSwitchModifier)
+                modifiers ^ Qt.KeyboardModifier.GroupSwitchModifier)
         if key == Qt.Key.Key_Tab:
             documentIndentMore(self.document(), cursor)
         elif key == Qt.Key.Key_Backtab:
             documentIndentLess(self.document(), cursor)
         elif key == Qt.Key.Key_Return:
             markupClass = self.tab.getActiveMarkupClass()
-            if event.modifiers() & Qt.KeyboardModifier.ControlModifier:
+            if modifiers & Qt.KeyboardModifier.ControlModifier:
                 cursor.insertText('\n')
                 self.ensureCursorVisible()
             elif self.tableModeEnabled and tablemode.handleReturn(cursor, markupClass,
-                    newRow=(event.modifiers() & Qt.KeyboardModifier.ShiftModifier)):
+                    newRow=(modifiers & Qt.KeyboardModifier.ShiftModifier)):
                 self.setTextCursor(cursor)
                 self.ensureCursorVisible()
             else:
-                if event.modifiers() & Qt.KeyboardModifier.ShiftModifier and markupClass == MarkdownMarkup:
+                if modifiers & Qt.KeyboardModifier.ShiftModifier and markupClass == MarkdownMarkup:
                     # Insert Markdown-style line break
                     cursor.insertText('  ')
                 self.handleReturn(cursor)
         elif key == Qt.Key.Key_Up:
+            mode = QTextCursor.MoveMode.MoveAnchor
+            if modifiers & Qt.KeyboardModifier.ShiftModifier:
+                mode = QTextCursor.MoveMode.KeepAnchor
             oldPos = cursor.position()
-            self.moveCursor(QTextCursor.MoveOperation.Up)
+            self.moveCursor(QTextCursor.MoveOperation.Up, mode)
             if self.textCursor().position() == oldPos:
-                self.moveCursor(QTextCursor.MoveOperation.Start)
+                self.moveCursor(QTextCursor.MoveOperation.Start, mode)
         elif key == Qt.Key.Key_Down:
+            mode = QTextCursor.MoveMode.MoveAnchor
+            if modifiers & Qt.KeyboardModifier.ShiftModifier:
+                mode = QTextCursor.MoveMode.KeepAnchor
             oldPos = cursor.position()
-            self.moveCursor(QTextCursor.MoveOperation.Down)
+            self.moveCursor(QTextCursor.MoveOperation.Down, mode)
             if self.textCursor().position() == oldPos:
-                self.moveCursor(QTextCursor.MoveOperation.End)
+                self.moveCursor(QTextCursor.MoveOperation.End, mode)
         elif cursor.selectedText() and self.isSurroundKey(key):
             self.surroundText(cursor, event, key)
         else:
