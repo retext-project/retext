@@ -42,6 +42,7 @@ from PyQt6.QtGui import (
     QPalette,
     QTextCursor,
     QTextFormat,
+    QTextOption,
     QWheelEvent,
 )
 from PyQt6.QtWidgets import QApplication, QFileDialog, QLabel, QTextEdit, QWidget
@@ -179,11 +180,12 @@ class ReTextEdit(QTextEdit):
         self.mimeDatabase = QMimeDatabase()
 
     def setWrapModeAndWidth(self):
-        if globalSettings.rightMarginWrap and (self.rect().topRight().x() > self.marginx):
-            self.setLineWrapMode(QTextEdit.LineWrapMode.FixedPixelWidth)
-            self.setLineWrapColumnOrWidth(self.marginx)
+        if globalSettings.rightMarginWrap:
+            self.setLineWrapMode(QTextEdit.LineWrapMode.FixedColumnWidth)
+            self.setLineWrapColumnOrWidth(globalSettings.rightMargin or 80)
         else:
             self.setLineWrapMode(QTextEdit.LineWrapMode.WidgetWidth)
+        self.setWordWrapMode(QTextOption.WrapMode.WrapAtWordBoundaryOrAnywhere)
 
     def updateFont(self):
         self.setFont(globalSettings.getEditorFont())
