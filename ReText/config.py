@@ -117,7 +117,13 @@ class ConfigDialog(QDialog):
         buttonBox.rejected.connect(self.close)
         self.initWidgets()
         self.configurators['rightMargin'].valueChanged.connect(self.handleRightMarginSet)
-        self.configurators['rightMarginWrap'].stateChanged.connect(self.handleRightMarginWrapSet)
+        rightMarginWrap = self.configurators['rightMarginWrap']
+        if hasattr(rightMarginWrap, 'checkStateChanged'):  # Qt >= 6.7
+            rightMarginWrap.checkStateChanged.connect(self.handleRightMarginWrapSet)
+        else:
+            rightMarginWrap.stateChanged.connect(
+                lambda state: self.handleRightMarginWrapSet(Qt.CheckState(state))
+            )
         self.layout.addWidget(buttonBox)
 
     def initConfigOptions(self):
