@@ -17,7 +17,7 @@ ReText requires the following Python modules to run (`pip` will install them
 automatically):
 
 * [PyQt6](https://pypi.org/project/PyQt6/)
-* [Markups](https://pypi.org/project/Markups/) (2.0 or later)
+* [Markups](https://pypi.org/project/Markups/) (3.1 or later)
 * [Markdown](https://pypi.org/project/Markdown/) — for Markdown support
 * [docutils](https://pypi.org/project/docutils/) — for reStructuredText support
 

@@ -19,9 +19,7 @@ classifiers = [
 ]
 requires-python = ">=3.7"
 dependencies = [
-  "docutils",
-  "Markdown>=3.0",
-  "Markups>=2.0",
+  "Markups[markdown,restructuredtext]>=3.1",
   "Pygments",
   "PyQt6",
 ]
