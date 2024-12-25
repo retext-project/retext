@@ -38,7 +38,7 @@ def get_from_gsettings():
 def get_from_gtk():
     try:
         from gi import require_version
-        require_version('Gtk', '3.0')
+        require_version('Gtk', '4.0')
         from gi.repository import Gtk
     except (ImportError, ValueError):
         return
