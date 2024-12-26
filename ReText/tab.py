@@ -24,7 +24,14 @@ from markups import find_markup_class_by_name, get_markup_for_file_name
 from markups.common import MODULE_HOME_PAGE
 from PyQt6.QtCore import QDir, QFile, QFileInfo, QPoint, Qt, QTimer, QUrl, pyqtSignal
 from PyQt6.QtGui import QPalette, QTextCursor, QTextDocument
-from PyQt6.QtWidgets import QApplication, QMessageBox, QSplitter, QTextEdit
+from PyQt6.QtWidgets import (
+    QApplication,
+    QFrame,
+    QMessageBox,
+    QSplitter,
+    QTextEdit,
+    QVBoxLayout,
+)
 
 from ReText import app_version, converterprocess, globalSettings
 from ReText.editor import ReTextEdit
@@ -57,7 +64,7 @@ class ReTextTab(QSplitter):
         self.p = parent
         self._fileName = fileName
         self.editBox = ReTextEdit(self)
-        self.previewBox = self.createPreviewBox(self.editBox)
+        self.previewBox, self.previewBoxWidget = self.createPreviewBox(self.editBox)
         self.activeMarkupClass = None
         self.markup = None
         self.converted = None
@@ -85,7 +92,7 @@ class ReTextTab(QSplitter):
 
         # Give both boxes a minimum size so the minimumSizeHint will be
         # ignored when splitter.setSizes is called below
-        for widget in self.editBox, self.previewBox:
+        for widget in self.editBox, self.previewBoxWidget:
             widget.setMinimumWidth(125)
             self.addWidget(widget)
         self.setSizes((50, 50))
@@ -116,13 +123,18 @@ class ReTextTab(QSplitter):
             return rect.top()
 
         if ReTextWebEnginePreview and globalSettings.useWebEngine:
+            frame = QFrame()
+            frame.setFrameStyle(QFrame.Shape.StyledPanel | QFrame.Shadow.Sunken)
+            layout = QVBoxLayout(frame)
+            layout.setContentsMargins(0, 0, 0, 0)
             preview = ReTextWebEnginePreview(self,
                                              editorPositionToSourceLine,
                                              sourceLineToEditorPosition)
-        else:
-            preview = ReTextPreview(self)
+            layout.addWidget(preview)
+            return preview, frame
 
-        return preview
+        preview = ReTextPreview(self)
+        return preview, preview
 
     def getActiveMarkupClass(self):
         '''
@@ -292,15 +304,15 @@ class ReTextTab(QSplitter):
 
     def updateBoxesVisibility(self):
         self.editBox.setVisible(self.previewState < PreviewNormal)
-        self.previewBox.setVisible(self.previewState > PreviewDisabled)
+        self.previewBoxWidget.setVisible(self.previewState > PreviewDisabled)
 
     def rebuildPreviewBox(self):
         self.previewBox.disconnectExternalSignals()
-        self.previewBox.setParent(None)
-        self.previewBox.deleteLater()
-        self.previewBox = self.createPreviewBox(self.editBox)
+        self.previewBoxWidget.setParent(None)
+        self.previewBoxWidget.deleteLater()
+        self.previewBox, self.previewBoxWidget = self.createPreviewBox(self.editBox)
         self.previewBox.setMinimumWidth(125)
-        self.addWidget(self.previewBox)
+        self.addWidget(self.previewBoxWidget)
         self.setSizes((50, 50))
         self.triggerPreviewUpdate()
         self.updateBoxesVisibility()
