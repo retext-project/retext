@@ -44,7 +44,7 @@ include-package-data = false
 [tool.setuptools.data-files]
 "share/applications" = ["data/me.mitya57.ReText.desktop"]
 "share/icons/hicolor/scalable/apps" = ["ReText/icons/retext.svg"]
-"share/metainfo" = ["data/me.mitya57.ReText.appdata.xml"]
+"share/metainfo" = ["data/me.mitya57.ReText.metainfo.xml"]
 
 [tool.setuptools.package-data]
 ReText = ["icons/*.png", "icons/*.svg", "locale/*.qm"]
