@@ -3,23 +3,23 @@ Welcome to ReText!
 
 [![GitHub Actions status][GitHub Actions SVG]][GitHub Actions]
 
-ReText is a simple but powerful editor for Markdown and reStructuredText markup
-languages. One can also add support for [custom markups] using Python modules.
+ReText is a simple but powerful editor for markup languages. It is based on
+[Markups] module which supports Markdown, reStructuredText, Textile and
+AsciiDoc. One can also add support for [custom markups] using Python modules.
 
 ![ReText on Plasma 5 desktop][Screenshot]
 
 To install ReText, make sure that you have [Python] (3.7 or later) installed,
-and run `pip3 install ReText`. By default it installs system wide, pass
-`--user` for installing into the user’s home directory. You can also manually
+and run `pip3 install ReText`. To avoid system-wide installation, you can
+create a [virtual environment] and install from there. You can also manually
 download the tarball from [PyPI].
 
-ReText requires the following Python modules to run (`pip` will install them
-automatically):
+ReText requires [PyQt6] and [Markups] (3.1 or later) to run. When you run
+`pip3 install ReText`, pip will install them automatically, but you can also
+install manually and specify markups that you are going to use using extras
+syntax, e.g.:
 
-* [PyQt6](https://pypi.org/project/PyQt6/)
-* [Markups](https://pypi.org/project/Markups/) (3.1 or later)
-* [Markdown](https://pypi.org/project/Markdown/) — for Markdown support
-* [docutils](https://pypi.org/project/docutils/) — for reStructuredText support
+    pip3 install Markups[markdown,restructuredtext,textile]
 
 We also recommend having these packages installed:
 
@@ -53,3 +53,6 @@ You can read more about ReText in the [wiki].
 [GitHub Actions SVG]: https://github.com/retext-project/retext/workflows/tests/badge.svg
 [custom markups]: https://pymarkups.readthedocs.io/en/latest/custom_markups.html
 [Python]: https://www.python.org/
+[PyQt6]: https://pypi.org/project/PyQt6/
+[Markups]: https://pypi.org/project/Markups/
+[virtual environment]: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/
