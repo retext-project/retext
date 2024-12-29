@@ -23,8 +23,8 @@ from os.path import exists, splitext
 from markups import find_markup_class_by_name, get_markup_for_file_name
 from markups.common import MODULE_HOME_PAGE
 from PyQt6.QtCore import QDir, QFile, QFileInfo, QPoint, Qt, QTimer, QUrl, pyqtSignal
-from PyQt6.QtGui import QPalette, QTextCursor, QTextDocument
-from PyQt6.QtWidgets import QApplication, QMessageBox, QSplitter, QTextEdit
+from PyQt6.QtGui import QTextCursor, QTextDocument
+from PyQt6.QtWidgets import QMessageBox, QSplitter, QTextEdit
 
 from ReText import app_version, converterprocess, globalSettings
 from ReText.editor import ReTextEdit
@@ -192,21 +192,6 @@ class ReTextTab(QSplitter):
             style = 'td, th { border: 1px solid #c3c3c3; padding: 0 3px 0 3px; }\n'
             style += 'table { border-collapse: collapse; }\n'
             style += 'img { max-width: 100%; }\n'
-            # QTextDocument seems to use media=screen even for printing
-            if not isinstance(self.previewBox, QTextEdit) and not webenv:
-                # https://github.com/retext-project/retext/pull/187
-                palette = QApplication.palette()
-                fgColor = palette.color(QPalette.ColorRole.Text).name()
-                bgColor = palette.color(QPalette.ColorRole.Base).name()
-                linkColor = palette.color(QPalette.ColorRole.Link).name()
-                visitedLinkColor = palette.color(QPalette.ColorRole.LinkVisited).name()
-                style += ('@media screen {\n'
-                          f'  html {{ color: {fgColor}; background-color: {bgColor}; }}\n'
-                          f'  a, a * {{ color: {linkColor}; }}\n'
-                          f'  a:visited, a:visited * {{ color: {visitedLinkColor}; }}\n'
-                          '}\n')
-                # https://github.com/retext-project/retext/issues/408
-                style += '@media print { html { background-color: white; } }\n'
             headers += '<style type="text/css">\n' + style + '</style>\n'
         baseName = self.getBaseName()
         if self.cssFileExists:

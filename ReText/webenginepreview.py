@@ -23,6 +23,7 @@ from PyQt6.QtGui import (
     QDesktopServices,
     QFontInfo,
     QGuiApplication,
+    QPalette,
     QTextDocument,
 )
 from PyQt6.QtWebEngineCore import (
@@ -32,7 +33,7 @@ from PyQt6.QtWebEngineCore import (
     QWebEngineUrlRequestInterceptor,
 )
 from PyQt6.QtWebEngineWidgets import QWebEngineView
-from PyQt6.QtWidgets import QLabel
+from PyQt6.QtWidgets import QApplication, QLabel
 
 from ReText import globalSettings
 from ReText.editor import getColor
@@ -157,6 +158,14 @@ class ReTextWebEnginePreview(QWebEngineView):
         settings = self.settings()
         settings.setDefaultTextEncoding('utf-8')
         settings.setAttribute(QWebEngineSettings.WebAttribute.LocalContentCanAccessRemoteUrls, True)
+        if hasattr(QWebEngineSettings.WebAttribute, 'ForceDarkMode'):  # Qt >= 6.7
+            # QGuiApplication.instance().styleHints().colorScheme() does not seem to
+            # work properly on KDE Plasma, so let's re-use the same approach as our
+            # editor uses.
+            palette = QApplication.palette()
+            windowColor = palette.color(QPalette.ColorRole.Window)
+            if windowColor.lightness() <= 150:
+                settings.setAttribute(QWebEngineSettings.WebAttribute.ForceDarkMode, True)
 
         # Events relevant to sync scrolling
         self.editBox.cursorPositionChanged.connect(self._handleCursorPositionChanged)
