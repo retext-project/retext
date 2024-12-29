@@ -226,8 +226,11 @@ class ReTextWindow(QMainWindow):
         self.actionFullScreen = self.act(self.tr('Fullscreen mode'), 'view-fullscreen',
             shct=QKeySequence.StandardKey.FullScreen, trigbool=self.enableFullScreen)
         self.actionFullScreen.setChecked(self.isFullScreen())
-        self.actionConfig = self.act(self.tr('Preferences'), icon='preferences-system',
-            trig=self.openConfigDialog)
+        self.actionConfig = self.act(self.tr('Preferences'), trig=self.openConfigDialog)
+        if QIcon.hasThemeIcon('configure'):
+            self.actionConfig.setIcon(QIcon.fromTheme('configure'))
+        else:
+            self.actionConfig.setIcon(QIcon.fromTheme('preferences-system'))
         self.actionConfig.setMenuRole(QAction.MenuRole.PreferencesRole)
         self.actionSaveHtml = self.act('HTML', 'text-html', self.saveFileHtml)
         self.actionPdf = self.act('PDF', 'application-pdf', self.savePdf)
@@ -266,7 +269,7 @@ class ReTextWindow(QMainWindow):
             globalSettings.useWebEngine = False
             self.actionWebEngine.setEnabled(False)
         self.actionWebEngine.setChecked(globalSettings.useWebEngine)
-        self.actionShow = self.act(self.tr('Show directory'), 'system-file-manager', self.showInDir)
+        self.actionShow = self.act(self.tr('Show directory'), 'document-open-folder', self.showInDir)
         self.actionShowDirectoryTree = self.act(self.tr('Show directory tree'),
             trigbool=self.treeView.setVisible,
             shct=Qt.Key.Key_F9)
