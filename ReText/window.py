@@ -331,7 +331,10 @@ class ReTextWindow(QMainWindow):
         menuHelp = menubar.addMenu(self.tr('&Help'))
         menuFile.addAction(self.actionNew)
         menuFile.addAction(self.actionOpen)
-        self.menuRecentFiles = menuFile.addMenu(self.tr('Open recent'))
+        self.menuRecentFiles = menuFile.addMenu(
+            self.actIcon('document-open-recent'),
+            self.tr('Open recent'),
+        )
         self.menuRecentFiles.aboutToShow.connect(self.updateRecentFiles)
         menuFile.addAction(self.actionShow)
         menuFile.addAction(self.actionShowDirectoryTree)
