@@ -53,12 +53,15 @@
   </provides>
   <launchable type="desktop-id">me.mitya57.ReText.desktop</launchable>
   <screenshots>
-    <screenshot type="default">
-      <image width="1090" height="624">https://raw.githubusercontent.com/retext-project/retext/master/data/retext-kde5.png</image>
+    <screenshot type="default" environment="plasma">
+      <caption>ReText running in KDE Plasma environment</caption>
+      <image type="source" width="1090" height="624">https://raw.githubusercontent.com/retext-project/retext/master/data/retext-kde5.png</image>
     </screenshot>
   </screenshots>
   <translation type="qt">retext</translation>
-  <developer_name>Dmitry Shachnev</developer_name>
+  <developer id="me.mitya57">
+    <name>Dmitry Shachnev</name>
+  </developer>
   <update_contact>mitya57_AT_gmail.com</update_contact>
   <content_rating type="oars-1.0"/>
   <releases>
