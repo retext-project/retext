@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import configparser
 import os
 import sys
 import warnings
@@ -906,17 +907,10 @@ class ReTextWindow(QMainWindow):
             action[0].setEnabled(enabled)
 
     def readExtension(self, fileName):
-        extFile = QFile(fileName)
-        extFile.open(QIODevice.OpenModeFlag.ReadOnly)
-        extension = {}
-        stream = QTextStream(extFile)
-        while not stream.atEnd():
-            line = stream.readLine()
-            if '=' in line:
-                index = line.index('=')
-                extension[line[:index].rstrip()] = line[index+1:].lstrip()
-        extFile.close()
-        return extension
+        parser = configparser.ConfigParser(interpolation=None)
+        parser.optionxform = str
+        parser.read(fileName)
+        return dict(parser.items('Desktop Entry'))
 
     def openFile(self):
         supportedExtensions = ['.txt']
