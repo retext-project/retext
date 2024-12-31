@@ -119,7 +119,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
         (reDblUnderline, NF | QFont.Weight.Bold,               Markup.Mkd),
         (reTrpAsterisks, ITAL | QFont.Weight.Bold,             Markup.Mkd),
         (reTrpUnderline, ITAL | QFont.Weight.Bold,             Markup.Mkd),
-        (reMkdHeaders,   NF | QFont.Weight.Black,              Markup.Mkd),
+        (reMkdHeaders,   FG('markdownHeaders') | QFont.Weight.Black, Markup.Mkd),
         (reMkdLinksImgs, FG('markdownLinks'),                  Markup.Mkd),
         (reMkdLinkRefs,  ITAL | UNDL,                          Markup.Mkd),
         (reBlockQuotes,  FG('blockquotes'),                    Markup.Mkd),

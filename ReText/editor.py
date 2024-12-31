@@ -68,6 +68,7 @@ colors = {
     'htmlStrings':          {'light': '#808000', 'dark': '#d0d070'},
     'htmlComments':         {'light': '#a0a0a4', 'dark': '#b0b0aa'},
     'codeSpans':            {'light': '#505050', 'dark': '#afafaf'},
+    'markdownHeaders':      {'light': '#000000', 'dark': '#ffffff'},
     'markdownLinks':        {'light': '#000090', 'dark': '#8080ff'},
     'blockquotes':          {'light': '#808080', 'dark': '#b0b0b0'},
     'restDirectives':       {'light': '#800080', 'dark': '#d070d0'},

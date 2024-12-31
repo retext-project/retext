@@ -109,6 +109,7 @@ color name        | description
 `htmlStrings`     | string properties inside HTML tags, e.g. `"baz"` inside `<foo bar="baz">`
 `htmlSymbols`     | HTML symbols, e.g. `&bar;`
 `htmlComments`    | HTML comments, e.g. `<!-- comment -->`
+`markdownHeaders` | Markdown headers, e.g. `# Header`
 `markdownLinks`   | Markdown links and images text, e.g. `foo` inside `[foo](http://example.com)`
 `blockquotes`     | blockquotes, e.g. `> quote` in Markdown
 `codeSpans`       | code spans, e.g. `` `code` `` in Markdown
