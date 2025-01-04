@@ -27,12 +27,9 @@ import markups
 from PyQt6.QtCore import (
     QCommandLineOption,
     QCommandLineParser,
-    QFile,
     QFileInfo,
-    QIODevice,
     QLibraryInfo,
     Qt,
-    QTextStream,
     QTranslator,
 )
 from PyQt6.QtDBus import QDBusConnection, QDBusInterface
@@ -100,10 +97,8 @@ def main():
     print('Using configuration file:', settings.fileName())
     print('Using cache file:', cache.fileName())
     if globalSettings.appStyleSheet:
-        sheetfile = QFile(globalSettings.appStyleSheet)
-        sheetfile.open(QIODevice.OpenModeFlag.ReadOnly)
-        app.setStyleSheet(QTextStream(sheetfile).readAll())
-        sheetfile.close()
+        with open(globalSettings.appStyleSheet) as sheetfile:
+            app.setStyleSheet(sheetfile.read())
     window = ReTextWindow()
 
     # ReText can change directory when loading files, so we

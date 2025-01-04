@@ -53,12 +53,10 @@ from PyQt6.QtCore import (
     QFile,
     QFileInfo,
     QFileSystemWatcher,
-    QIODevice,
     QLocale,
     QMarginsF,
     QStandardPaths,
     Qt,
-    QTextStream,
     QTimer,
     QUrl,
     pyqtSlot,
@@ -488,10 +486,8 @@ class ReTextWindow(QMainWindow):
     def updateStyleSheet(self):
         self.ss = None
         if globalSettings.styleSheet:
-            sheetfile = QFile(globalSettings.styleSheet)
-            sheetfile.open(QIODevice.OpenModeFlag.ReadOnly)
-            self.ss = QTextStream(sheetfile).readAll()
-            sheetfile.close()
+            with open(globalSettings.styleSheet) as sheetfile:
+                self.ss = sheetfile.read()
 
     def initTabWidget(self):
         def dragEnterEvent(e):
