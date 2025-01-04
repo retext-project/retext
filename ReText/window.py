@@ -18,7 +18,9 @@
 
 import configparser
 import os
+import shlex
 import sys
+import traceback
 import warnings
 from subprocess import Popen
 
@@ -547,7 +549,6 @@ class ReTextWindow(QMainWindow):
         return QIcon.fromTheme(name, QIcon(getBundledIcon(name)))
 
     def printError(self):
-        import traceback
         print('Exception occurred while parsing document:', file=sys.stderr)
         traceback.print_exc()
 
@@ -1126,7 +1127,6 @@ class ReTextWindow(QMainWindow):
         preview.exec()
 
     def runExtensionCommand(self, command, filefilter, defaultext):
-        import shlex
         of = ('%of' in command)
         html = ('%html' in command)
         if of:
