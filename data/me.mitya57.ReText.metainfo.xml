@@ -55,7 +55,7 @@
   <screenshots>
     <screenshot type="default" environment="plasma">
       <caption>ReText running in KDE Plasma environment</caption>
-      <image type="source" width="1090" height="624">https://raw.githubusercontent.com/retext-project/retext/master/data/retext-kde5.png</image>
+      <image type="source" width="1072" height="603">https://raw.githubusercontent.com/retext-project/retext/master/data/retext-kde6.png</image>
     </screenshot>
   </screenshots>
   <translation type="qt">retext</translation>

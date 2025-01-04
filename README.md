@@ -46,7 +46,7 @@ ReText icon is based on `accessories-text-editor` icon from the Faenza theme.
 
 You can read more about ReText in the [wiki].
 
-[Screenshot]: https://raw.githubusercontent.com/retext-project/retext/refs/heads/master/data/retext-kde5.png
+[Screenshot]: https://raw.githubusercontent.com/retext-project/retext/master/data/retext-kde6.png
 [wiki]: https://github.com/retext-project/retext/wiki
 [PyPI]: https://pypi.org/project/ReText/
 [Transifex]: https://www.transifex.com/mitya57/ReText/

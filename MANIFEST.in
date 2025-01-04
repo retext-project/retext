@@ -2,7 +2,7 @@ include LICENSE_GPL
 include README.md
 include changelog.md
 include configuration.md
-include data/retext-kde5.png
+include data/retext-kde6.png
 recursive-include tests *.py *.md *.rst
 recursive-include ReText/locale retext_*.ts retext_*.qm
 recursive-include ReText/icons *
