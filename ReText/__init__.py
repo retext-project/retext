@@ -94,6 +94,7 @@ cacheOptions = {
     'lastTabIndex': 0,
     'recentFileList': [],
     'splitterState': QByteArray(),
+    'webEngineZoomFactor': 1.0,
     'windowGeometry': QByteArray(),
 }
 

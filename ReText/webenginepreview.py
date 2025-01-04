@@ -35,7 +35,7 @@ from PyQt6.QtWebEngineCore import (
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 from PyQt6.QtWidgets import QApplication, QLabel
 
-from ReText import globalSettings
+from ReText import globalCache, globalSettings
 from ReText.editor import getColor
 from ReText.syncscroll import SyncScroll
 
@@ -236,7 +236,12 @@ class ReTextWebEnginePreview(QWebEngineView):
 
     def wheelEvent(self, event):
         if QGuiApplication.keyboardModifiers() == Qt.KeyboardModifier.ControlModifier:
-            zoomFactor = self.zoomFactor()
-            zoomFactor *= 1.001 ** event.angleDelta().y()
-            self.setZoomFactor(zoomFactor)
+            newZoomFactor = globalCache.webEngineZoomFactor * (1.001 ** event.angleDelta().y())
+            # Valid values are within the range from 0.25 to 5.0.
+            globalCache.webEngineZoomFactor = max(min(newZoomFactor, 5.0), 0.25)
+            self.setZoomFactor(globalCache.webEngineZoomFactor)
         return super().wheelEvent(event)
+
+    def showEvent(self, event):
+        self.setZoomFactor(globalCache.webEngineZoomFactor)
+        return super().showEvent(event)

@@ -62,6 +62,7 @@ that are set internally by ReText and should never be set manually:
 - `lastTabIndex`
 - `recentFileList`
 - `splitterState`
+- `webEngineZoomFactor`
 - `windowGeometry`
 
 Icon themes
