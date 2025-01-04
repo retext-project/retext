@@ -416,8 +416,16 @@ class ReTextTab(QSplitter):
         if not newCursor.isNull():
             if replaceText is not None:
                 newCursor.insertText(replaceText)
-                newCursor.movePosition(QTextCursor.MoveOperation.Left, QTextCursor.MoveMode.MoveAnchor, len(replaceText))
-                newCursor.movePosition(QTextCursor.MoveOperation.Right, QTextCursor.MoveMode.KeepAnchor, len(replaceText))
+                newCursor.movePosition(
+                    QTextCursor.MoveOperation.Left,
+                    QTextCursor.MoveMode.MoveAnchor,
+                    len(replaceText),
+                )
+                newCursor.movePosition(
+                    QTextCursor.MoveOperation.Right,
+                    QTextCursor.MoveMode.KeepAnchor,
+                    len(replaceText),
+                )
             self.editBox.setTextCursor(newCursor)
             if self.editBox.cursorRect().bottom() >= self.editBox.height() - 3:
                 scrollValue = self.editBox.verticalScrollBar().value()
@@ -439,8 +447,16 @@ class ReTextTab(QSplitter):
             lastCursor = cursor
             cursor = self.editBox.document().find(text, cursor, flags)
         if not lastCursor.isNull():
-            lastCursor.movePosition(QTextCursor.MoveOperation.Left, QTextCursor.MoveMode.MoveAnchor, len(replaceText))
-            lastCursor.movePosition(QTextCursor.MoveOperation.Right, QTextCursor.MoveMode.KeepAnchor, len(replaceText))
+            lastCursor.movePosition(
+                QTextCursor.MoveOperation.Left,
+                QTextCursor.MoveMode.MoveAnchor,
+                len(replaceText),
+            )
+            lastCursor.movePosition(
+                QTextCursor.MoveOperation.Right,
+                QTextCursor.MoveMode.KeepAnchor,
+                len(replaceText),
+            )
             self.editBox.setTextCursor(lastCursor)
         self.editBox.textCursor().endEditBlock()
         return not lastCursor.isNull()
@@ -468,10 +484,13 @@ class ReTextTab(QSplitter):
         Prompt user if a file should be created for the clicked link,
         and try to create it. Return True on success.
         """
-        buttonReply = QMessageBox.question(self, self.tr('Create missing file?'),
-                                           self.tr("The file '%s' does not exist.\n\nDo you want to create it?") % fileToCreate,
-                                           QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-                                           QMessageBox.StandardButton.No)
+        buttonReply = QMessageBox.question(
+            self,
+            self.tr('Create missing file?'),
+            self.tr("The file '%s' does not exist.\n\nDo you want to create it?") % fileToCreate,
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
         if buttonReply == QMessageBox.StandardButton.Yes:
             return self.createFile(fileToCreate)
         elif buttonReply == QMessageBox.StandardButton.No:

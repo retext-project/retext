@@ -83,4 +83,4 @@ jobs:
       - name: Install ruff
         run: python -m pip install ruff
       - name: Run ruff check
-        run: ruff check --select F,E,W,I,UP --ignore E501 .
+        run: ruff check --select F,E,W,I,UP --line-length=106 .

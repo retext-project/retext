@@ -72,8 +72,13 @@ class TestTableMode(unittest.TestCase):
         else:
             editoffset = contentsChangeOffset
 
-        editLists = tablemode._determineEditLists(rows, edit[0], contentsChangeOffset, editsize, alignWithAnyEdge)
-
+        editLists = tablemode._determineEditLists(
+            rows,
+            edit[0],
+            contentsChangeOffset,
+            editsize,
+            alignWithAnyEdge,
+        )
 
         editedRows = []
 
@@ -83,11 +88,21 @@ class TestTableMode(unittest.TestCase):
             editedText = row.text
 
             for editEntry in editList:
-                editedText = self.performEdit(editedText, editEntry[0], editEntry[1], paddingchar=row.paddingchar)
+                editedText = self.performEdit(
+                    editedText,
+                    editEntry[0],
+                    editEntry[1],
+                    paddingchar=row.paddingchar,
+                )
 
             editedRows.append(editedText)
 
-        editedRows[editedline] = self.performEdit(editedRows[editedline], editoffset, editsize, fragment=editstripped)
+        editedRows[editedline] = self.performEdit(
+            editedRows[editedline],
+            editoffset,
+            editsize,
+            fragment=editstripped,
+        )
 
         if editedRows != after:
             if alignWithAnyEdge:

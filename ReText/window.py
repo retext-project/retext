@@ -237,7 +237,11 @@ class ReTextWindow(QMainWindow):
         self.actionPdf = self.act('PDF', 'application-pdf', self.savePdf)
         self.actionOdf = self.act('ODT', 'x-office-document', self.saveOdf)
         self.getExportExtensionsList()
-        self.actionQuit = self.act(self.tr('Quit'), 'application-exit', shct=QKeySequence.StandardKey.Quit)
+        self.actionQuit = self.act(
+            self.tr('Quit'),
+            'application-exit',
+            shct=QKeySequence.StandardKey.Quit,
+        )
         self.actionQuit.setMenuRole(QAction.MenuRole.QuitRole)
         self.actionQuit.triggered.connect(self.close)
         self.actionUndo = self.act(self.tr('Undo'), 'edit-undo',
@@ -250,8 +254,12 @@ class ReTextWindow(QMainWindow):
             lambda: self.currentTab.editBox.cut(), shct=QKeySequence.StandardKey.Cut)
         self.actionPaste = self.act(self.tr('Paste'), 'edit-paste',
             lambda: self.currentTab.editBox.paste(), shct=QKeySequence.StandardKey.Paste)
-        self.actionPasteImage = self.act(self.tr('Paste image'), 'edit-paste',
-            lambda: self.currentTab.editBox.pasteImage(), shct=Qt.Modifier.CTRL | Qt.Modifier.SHIFT | Qt.Key.Key_V)
+        self.actionPasteImage = self.act(
+            self.tr('Paste image'),
+            'edit-paste',
+            lambda: self.currentTab.editBox.pasteImage(),
+            shct=Qt.Modifier.CTRL | Qt.Modifier.SHIFT | Qt.Key.Key_V,
+        )
         self.actionMoveUp = self.act(self.tr('Move line up'), 'go-up',
             lambda: self.currentTab.editBox.moveLineUp(), shct=Qt.Modifier.ALT | Qt.Key.Key_Up)
         self.actionMoveDown = self.act(self.tr('Move line down'), 'go-down',
@@ -615,7 +623,9 @@ class ReTextWindow(QMainWindow):
             previewState = PreviewDisabled  # Opening empty document in preview mode makes no sense
         self.currentTab = ReTextTab(self, fileName, previewState)
         self.currentTab.fileNameChanged.connect(lambda: self.tabFileNameChanged(self.currentTab))
-        self.currentTab.modificationStateChanged.connect(lambda: self.tabModificationStateChanged(self.currentTab))
+        self.currentTab.modificationStateChanged.connect(
+            lambda: self.tabModificationStateChanged(self.currentTab)
+        )
         self.currentTab.activeMarkupChanged.connect(lambda: self.tabActiveMarkupChanged(self.currentTab))
         self.tabWidget.addTab(self.currentTab, self.tr("New document"))
         self.currentTab.updateBoxesVisibility()
@@ -1096,7 +1106,12 @@ class ReTextWindow(QMainWindow):
                 if pageSize is None:
                     pageSize = QPageSize(QPageSize.PageSizeId.A4)
                 margins = QMarginsF(20, 20, 13, 20)  # left, top, right, bottom (in millimeters)
-                layout = QPageLayout(pageSize, QPageLayout.Orientation.Portrait, margins, QPageLayout.Unit.Millimeter)
+                layout = QPageLayout(
+                    pageSize,
+                    QPageLayout.Orientation.Portrait,
+                    margins,
+                    QPageLayout.Unit.Millimeter,
+                )
                 preview.page().printToPdf(fileName, layout)
                 return
             printer = self.standardPrinter(title)
@@ -1267,9 +1282,14 @@ class ReTextWindow(QMainWindow):
         if not tab.editBox.document().isModified():
             return True
         self.tabWidget.setCurrentIndex(ind)
-        ret = QMessageBox.warning(self, '',
+        ret = QMessageBox.warning(
+            self,
+            '',
             self.tr("The document has been modified.\nDo you want to save your changes?"),
-            QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel)
+            QMessageBox.StandardButton.Save
+            | QMessageBox.StandardButton.Discard
+            | QMessageBox.StandardButton.Cancel,
+        )
         if ret == QMessageBox.StandardButton.Save:
             return self.saveFile(False)
         elif ret == QMessageBox.StandardButton.Cancel:

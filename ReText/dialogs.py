@@ -58,7 +58,9 @@ class LocaleDialog(QDialog):
         self.checkBox = QCheckBox(self.tr('Set as default'), self)
         verticalLayout.addWidget(self.checkBox)
         buttonBox = QDialogButtonBox(self)
-        buttonBox.setStandardButtons(QDialogButtonBox.StandardButton.Cancel | QDialogButtonBox.StandardButton.Ok)
+        buttonBox.setStandardButtons(
+            QDialogButtonBox.StandardButton.Cancel | QDialogButtonBox.StandardButton.Ok
+        )
         verticalLayout.addWidget(buttonBox)
         buttonBox.accepted.connect(self.accept)
         buttonBox.rejected.connect(self.reject)

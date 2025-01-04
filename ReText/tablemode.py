@@ -180,19 +180,33 @@ def _determineEditLists(rows, editedlineindex, offset, editsize, alignWithAnyEdg
         if editsize < 0:
             # How much an edge shifts to the left depends on how much room
             # there is in the cells on any row that shares this edge.
-            leastLeftShift = min((-rowShift + _determineRoomInCell(row, currentedge, currentedgeindex, True)
-                for row, rowShift in zip(rows, rowShifts)))
+            leastLeftShift = min(
+                -rowShift + _determineRoomInCell(row, currentedge, currentedgeindex, True)
+                for row, rowShift in zip(rows, rowShifts)
+            )
 
             shift = max(editsize, -leastLeftShift)
         else:
             # When shifting right, determine how much only once based on how
             # much the edited cell needs to expand
             if firstEdge:
-                room = _determineRoomInCell(rows[editedlineindex], currentedge, currentedgeindex, False, offset)
+                room = _determineRoomInCell(
+                    rows[editedlineindex],
+                    currentedge,
+                    currentedgeindex,
+                    False,
+                    offset,
+                )
                 shift = max(0, editsize - room)
 
         for i, row in enumerate(rows):
-            editList, newRowShift = _performShift(row, rowShifts[i], currentedge, currentedgeindex, shift)
+            editList, newRowShift = _performShift(
+                row,
+                rowShifts[i],
+                currentedge,
+                currentedgeindex,
+                shift,
+            )
             rowShifts[i] = newRowShift
             editLists[i].extend(editList)
 

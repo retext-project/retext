@@ -32,7 +32,10 @@ def recvall(sock, remaining):
     while remaining > 0:
         data = sock.recv(remaining)
         if len(data) == 0:
-            raise EOFError('Received 0 bytes from socket while more bytes were expected. Did the sender process exit unexpectedly?')
+            raise EOFError(
+                'Received 0 bytes from socket while more bytes were expected.'
+                ' Did the sender process exit unexpectedly?'
+            )
         alldata.extend(data)
         remaining -= len(data)
 

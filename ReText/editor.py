@@ -260,7 +260,10 @@ class ReTextEdit(QTextEdit):
         curchar = self.document().characterAt(cursor.position())
         isalpha = curchar.isalpha()
         word = None
-        if isalpha and not (oldcursor.hasSelection() and oldcursor.selectedText() != cursor.selectedText()):
+        if isalpha and not (
+            oldcursor.hasSelection()
+            and oldcursor.selectedText() != cursor.selectedText()
+        ):
             cursor.select(QTextCursor.SelectionType.WordUnderCursor)
             word = cursor.selectedText()
 
@@ -276,7 +279,10 @@ class ReTextEdit(QTextEdit):
             for action in actions[::-1]:
                 menu.insertAction(menu.actions()[0], action)
             menu.insertSeparator(menu.actions()[0])
-            menu.insertAction(menu.actions()[0], self.parent.act(self.tr('Add to dictionary'), trig=self.learnWord(word)))
+            menu.insertAction(
+                menu.actions()[0],
+                self.parent.act(self.tr('Add to dictionary'), trig=self.learnWord(word)),
+            )
 
         menu.addSeparator()
         menu.addAction(self.parent.actionMoveUp)
@@ -384,7 +390,11 @@ class ReTextEdit(QTextEdit):
                 if matchOL is not None:
                     matchedPrefix = matchOL.group(1)
                     matchedNumber = int(matchOL.group(2))
-                    nextNumber = matchedNumber if self.settings.orderedListMode == 'repeat' else matchedNumber + 1
+                    nextNumber = (
+                        matchedNumber
+                        if self.settings.orderedListMode == 'repeat'
+                        else matchedNumber + 1
+                    )
                     matchedText = matchedPrefix + str(nextNumber) + ". "
         else:
             matchedText = ''
@@ -455,7 +465,10 @@ class ReTextEdit(QTextEdit):
         if globalSettings.highlightCurrentLine == 'wrapped-line':
             selections.append(QTextEdit.ExtraSelection())
             selections[0].cursor.movePosition(QTextCursor.MoveOperation.StartOfBlock)
-            selections[0].cursor.movePosition(QTextCursor.MoveOperation.EndOfBlock, QTextCursor.MoveMode.KeepAnchor)
+            selections[0].cursor.movePosition(
+                QTextCursor.MoveOperation.EndOfBlock,
+                QTextCursor.MoveMode.KeepAnchor,
+            )
             selections[1].format.setBackground(getColor('currentLineHighlight'))
             selections[1].format.setProperty(QTextFormat.Property.FullWidthSelection, True)
             selections[1].cursor = self.textCursor()
@@ -463,7 +476,10 @@ class ReTextEdit(QTextEdit):
         elif selection.cursor.block().textDirection() == Qt.LayoutDirection.RightToLeft:
             # FullWidthSelection does not work correctly for RTL direction
             selection.cursor.movePosition(QTextCursor.MoveOperation.StartOfLine)
-            selection.cursor.movePosition(QTextCursor.MoveOperation.EndOfLine, QTextCursor.MoveMode.KeepAnchor)
+            selection.cursor.movePosition(
+                QTextCursor.MoveOperation.EndOfLine,
+                QTextCursor.MoveMode.KeepAnchor,
+            )
         self.setExtraSelections(selections)
 
     def enableTableMode(self, enable):
