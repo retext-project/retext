@@ -48,6 +48,14 @@ reMkdMathSpans = re.compile(r'\\[\(\[].*?\\[\)\]]')
 reReSTCodeSpan = re.compile('``.+?``')
 reWords        = re.compile('[^_\\W]+')
 reSpacesOnEnd  = re.compile(r'\s+$')
+reADocHeaders  = re.compile('^={1,5} .*')
+reADocConsBold = re.compile(r'(?<!\w|\*)\*[^\*]+\*(?!\w|\*)')
+reADocConsItal = re.compile(r'(?<!\w|_)_[^_]+_(?!\w|_)')
+reADocUnCnItal = re.compile('__[^_]+__')
+reADocConsCode = re.compile(r'(?<!\w|`)`[^`]+`(?!\w|`)')
+reADocLinks    = re.compile(r'(https?://[^ ]+)(\[[^\]]+\])')
+reADocDocAttr  = re.compile('^:.+?:')
+reADocBlckAttr = re.compile(r'^\[.+?\]$')
 
 
 class Formatter:
@@ -88,6 +96,7 @@ class Markup(IntFlag):
     Mkd = auto()
     ReST = auto()
     Textile = auto()
+    ADoc = auto()
     HTML = auto()
 
     # Special value which means that no other markup is allowed inside this pattern
@@ -98,6 +107,7 @@ docTypesMapping = {
     'Markdown': Markup.Mkd,
     'reStructuredText': Markup.ReST,
     'Textile': Markup.Textile,
+    'asciidoc': Markup.ADoc,
     'html': Markup.HTML,
 }
 
@@ -110,14 +120,14 @@ class ReTextHighlighter(QSyntaxHighlighter):
         # regex,         color,                                markups
         (reMkdCodeSpans, FG('codeSpans'),                      Markup.Mkd | Markup.CodeSpan),
         (reMkdMathSpans, FG('codeSpans'),                      Markup.Mkd | Markup.CodeSpan),
-        (reReSTCodeSpan, FG('codeSpans'),                      Markup.ReST | Markup.CodeSpan),
+        (reReSTCodeSpan, FG('codeSpans'),                      Markup.ReST | Markup.ADoc | Markup.CodeSpan),  # noqa: E501
         (reHtmlTags,     FG('htmlTags') | Weight.Bold,         Markup.Mkd | Markup.Textile | Markup.HTML),
         (reHtmlSymbols,  FG('htmlSymbols') | Weight.Bold,      Markup.Mkd | Markup.HTML),
         (reHtmlStrings,  FG('htmlStrings') | Weight.Bold,      Markup.Mkd | Markup.HTML),
         (reHtmlComments, FG('htmlComments'),                   Markup.Mkd | Markup.HTML),
         (reAsterisks,    ITAL,                                 Markup.Mkd | Markup.ReST),
         (reUnderline,    ITAL,                                 Markup.Mkd | Markup.Textile),
-        (reDblAsterisks, NF | Weight.Bold,                     Markup.Mkd | Markup.ReST | Markup.Textile),
+        (reDblAsterisks, NF | Weight.Bold,                     Markup.Mkd | Markup.ReST | Markup.Textile | Markup.ADoc),  # noqa: E501
         (reDblUnderline, NF | Weight.Bold,                     Markup.Mkd),
         (reTrpAsterisks, ITAL | Weight.Bold,                   Markup.Mkd),
         (reTrpUnderline, ITAL | Weight.Bold,                   Markup.Mkd),
@@ -134,6 +144,14 @@ class ReTextHighlighter(QSyntaxHighlighter):
         (reReSTLinks,    NF, NF, ITAL | UNDL, NF,              Markup.ReST),
         (reReSTLinkRefs, NF, FG('markdownLinks'), ITAL | UNDL, Markup.ReST),
         (reReSTFldLists, NF, FG('restDirectives'),             Markup.ReST),
+        (reADocHeaders,  FG('markdownHeaders') | Weight.Black, Markup.ADoc),
+        (reADocConsBold, NF | Weight.Bold,                     Markup.ADoc),
+        (reADocConsItal, ITAL,                                 Markup.ADoc),
+        (reADocUnCnItal, ITAL,                                 Markup.ADoc),
+        (reADocConsCode, FG('codeSpans'),                      Markup.ADoc | Markup.CodeSpan),
+        (reADocLinks,    FG('markdownLinks'), ITAL | UNDL,     Markup.ADoc),
+        (reADocDocAttr,  FG('htmlTags'),                       Markup.ADoc),
+        (reADocBlckAttr, FG('htmlTags'),                       Markup.ADoc),
     )
 
     def highlightBlock(self, text):

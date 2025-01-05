@@ -20,7 +20,12 @@ import os
 import re
 import weakref
 
-from markups import MarkdownMarkup, ReStructuredTextMarkup, TextileMarkup
+from markups import (
+    AsciiDocMarkup,
+    MarkdownMarkup,
+    ReStructuredTextMarkup,
+    TextileMarkup,
+)
 from PyQt6.QtCore import (
     QFileInfo,
     QMimeDatabase,
@@ -551,6 +556,8 @@ class ReTextEdit(QTextEdit):
             return f'.. image:: {link}'
         elif markupClass == TextileMarkup:
             return f'!{link}!'
+        elif markupClass == AsciiDocMarkup:
+            return f'image::{link}[]'
 
     def pasteImage(self):
         mimeData = QApplication.instance().clipboard().mimeData()
