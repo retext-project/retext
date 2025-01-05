@@ -187,7 +187,12 @@ class ReTextWindow(QMainWindow):
             self.printFile, shct=QKeySequence.StandardKey.Print)
         self.actionPrintPreview = self.act(self.tr('Print preview'), 'document-print-preview',
             self.printPreview)
-        self.actionViewHtml = self.act(self.tr('View HTML code'), 'text-html', self.viewHtml)
+        self.actionViewHtml = self.act(
+            self.tr('View HTML code'),
+            'text-html',
+            self.viewHtml,
+            shct=Qt.Modifier.CTRL | Qt.Key.Key_H,
+        )
         self.actionChangeEditorFont = self.act(self.tr('Change editor font'),
             trig=self.changeEditorFont)
         self.actionChangePreviewFont = self.act(self.tr('Change preview font'),
