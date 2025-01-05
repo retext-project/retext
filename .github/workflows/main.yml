@@ -70,4 +70,4 @@ jobs:
       - name: Install ruff
         run: python -m pip install ruff
       - name: Run ruff check
-        run: ruff check --select F,E,W,I,UP --line-length=106 .
+        run: ruff check --select F,E,W,I,UP --line-length=106 --target-version=py39 .
