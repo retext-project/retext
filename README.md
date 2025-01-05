@@ -9,13 +9,13 @@ AsciiDoc. One can also add support for [custom markups] using Python modules.
 
 ![ReText on Plasma 5 desktop][Screenshot]
 
-To install ReText, make sure that you have [Python] (3.7 or later) installed,
+To install ReText, make sure that you have [Python] (3.9 or later) installed,
 and run `pip3 install ReText`. To avoid system-wide installation, you can
 create a [virtual environment] and install from there. You can also manually
 download the tarball from [PyPI] or clone the repository, and then run
 `./retext.py`.
 
-ReText requires [PyQt6] and [Markups] (3.1 or later) to run. When you run
+ReText requires [PyQt6] and [Markups] (4.0 or later) to run. When you run
 `pip3 install ReText`, pip will install them automatically, but you can also
 install manually and specify markups that you are going to use using extras
 syntax, e.g.:

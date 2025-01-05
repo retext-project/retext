@@ -17,9 +17,9 @@ classifiers = [
   "Topic :: Text Editors",
   "Topic :: Text Processing :: Markup",
 ]
-requires-python = ">=3.7"
+requires-python = ">=3.9"
 dependencies = [
-  "Markups[markdown,restructuredtext]>=3.1",
+  "Markups[markdown,restructuredtext]>=4.0",
   "Pygments",
   "PyQt6",
 ]
