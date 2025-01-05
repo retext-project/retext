@@ -21,7 +21,7 @@ from PyQt6.QtGui import QFileSystemModel
 class ReTextFileSystemModel(QFileSystemModel):
 
     def data(self, index, role):
-        # Show file path in tooltip
+        # Show file name in tooltip
         if role == Qt.ItemDataRole.ToolTipRole:
             role = QFileSystemModel.Roles.FileNameRole
         return super().data(index, role)
