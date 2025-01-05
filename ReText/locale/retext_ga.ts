@@ -1,188 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.1" language="ga">
   <context>
     <name>ConfigDialog</name>
     <message>
       <location filename="../config.py" line="106" />
       <source>Using configuration file at:</source>
-      <translation>Используются настройки из файла:</translation>
+      <translation>Comhad cumraíochta á úsáid ag:</translation>
     </message>
     <message>
       <location filename="../config.py" line="131" />
       <source>Behavior</source>
-      <translation>Поведение</translation>
+      <translation>Iompar</translation>
     </message>
     <message>
       <location filename="../config.py" line="132" />
       <source>Automatically save documents</source>
-      <translation>Автоматически сохранять документы</translation>
+      <translation>Sábháil doiciméid go huathoibríoch</translation>
     </message>
     <message>
       <location filename="../config.py" line="133" />
       <source>Automatically open last documents on startup</source>
-      <translation>Автоматически открывать последние документы при запуске</translation>
+      <translation>Oscail na doiciméid dheireanacha go huathoibríoch ar an am tosaithe</translation>
     </message>
     <message>
       <location filename="../config.py" line="134" />
       <source>Number of recent documents</source>
-      <translation>Число последних документов</translation>
+      <translation>Líon doiciméad le déanaí</translation>
     </message>
     <message>
       <location filename="../config.py" line="135" />
       <source>Restore window geometry</source>
-      <translation>Сохранять геометрию окна</translation>
+      <translation>Athchóirigh céimseata na bhfuinneog</translation>
     </message>
     <message>
       <location filename="../config.py" line="136" />
       <source>Default preview state</source>
-      <translation>Режим отображения по умолчанию</translation>
+      <translation>Staid réamhamhairc réamhshocraithe</translation>
     </message>
     <message>
       <location filename="../config.py" line="137" />
       <source>Open external links in ReText window</source>
-      <translation>Открывать внешние ссылки в окне ReText</translation>
+      <translation>Oscail naisc sheachtracha i bhfuinneog ReText</translation>
     </message>
     <message>
       <location filename="../config.py" line="138" />
       <source>Markdown syntax extensions (comma-separated)</source>
-      <translation>Расширения синтаксиса Markdown (разделённые запятыми)</translation>
+      <translation>Síntí ar chomhréir Markdown (scartha le camóg)</translation>
     </message>
     <message>
       <location filename="../config.py" line="139" />
       <source>Enable synchronized scrolling for Markdown</source>
-      <translation>Включить синхронную прокрутку для Markdown</translation>
+      <translation>Cumasaigh scrollaigh sioncronaithe le haghaidh Markdown</translation>
     </message>
     <message>
       <location filename="../config.py" line="205" />
       <location filename="../config.py" line="143" />
       <source>Editor</source>
-      <translation>Редактор</translation>
+      <translation>Eagarthóir</translation>
     </message>
     <message>
       <location filename="../config.py" line="144" />
       <source>Highlight current line</source>
-      <translation>Подсвечивать текущую строку</translation>
+      <translation>Aibhsigh an líne reatha</translation>
     </message>
     <message>
       <location filename="../config.py" line="145" />
       <source>Show line numbers</source>
-      <translation>Показывать номера строк</translation>
+      <translation>Taispeáin uimhreacha líne</translation>
     </message>
     <message>
       <location filename="../config.py" line="146" />
       <source>Line numbers are relative to current line</source>
-      <translation>Начинать нумерацию строк с текущей строки</translation>
+      <translation>Tá líon na línte i gcoibhneas leis an líne reatha</translation>
     </message>
     <message>
       <location filename="../config.py" line="147" />
       <source>Tab key inserts spaces</source>
-      <translation>Tab вставляет пробелы</translation>
+      <translation>Cuireann eochair na gcluaisíní spásanna isteach</translation>
     </message>
     <message>
       <location filename="../config.py" line="148" />
       <source>Tabulation width</source>
-      <translation>Ширина табуляции</translation>
+      <translation>Leithead tábla</translation>
     </message>
     <message>
       <location filename="../config.py" line="149" />
       <source>Draw vertical line at column</source>
-      <translation>Рисовать вертикальную линию в столбце</translation>
+      <translation>Tarraing líne ingearach ag an gcolún</translation>
     </message>
     <message>
       <location filename="../config.py" line="150" />
       <source>Enable soft wrap</source>
-      <translation>Переносить строки</translation>
+      <translation>Cumasaigh wrap bog</translation>
     </message>
     <message>
       <location filename="../config.py" line="151" />
       <source>Show document stats</source>
-      <translation>Отображать статистику документа</translation>
+      <translation>Taispeáin staitisticí doiciméad</translation>
     </message>
     <message>
       <location filename="../config.py" line="152" />
       <source>Ordered list mode</source>
-      <translation>Режим для нумерованных списков</translation>
+      <translation>Modh liosta ordaithe</translation>
     </message>
     <message>
       <location filename="../config.py" line="154" />
       <source>Interface</source>
-      <translation>Внешний вид</translation>
+      <translation>Comhéadan</translation>
     </message>
     <message>
       <location filename="../config.py" line="155" />
       <source>Hide toolbar</source>
-      <translation>Скрыть панель инструментов</translation>
+      <translation>Folaigh barra uirlisí</translation>
     </message>
     <message>
       <location filename="../config.py" line="156" />
       <source>Icon theme name</source>
-      <translation>Тема значков</translation>
+      <translation>Ainm téama deilbhín</translation>
     </message>
     <message>
       <location filename="../config.py" line="157" />
       <source>Stylesheet file</source>
-      <translation>Файл стиля</translation>
+      <translation>Comhad stílbhileog</translation>
     </message>
     <message>
       <location filename="../config.py" line="158" />
       <source>Hide tabs bar when there is only one tab</source>
-      <translation>Скрыть панель вкладок, если вкладка всего одна</translation>
+      <translation>Folaigh barra na gcluaisíní nuair nach bhfuil ach cluaisín amháin ann</translation>
     </message>
     <message>
       <location filename="../config.py" line="159" />
       <source>Show full path in window title</source>
-      <translation>Показывать полный путь в заголовке окна</translation>
+      <translation>Taispeáin cosán iomlán i dteideal na fuinneoige</translation>
     </message>
     <message>
       <location filename="../config.py" line="160" />
       <source>Show directory tree</source>
-      <translation>Показать структуру папки</translation>
+      <translation>Taispeáin crann eolaire</translation>
     </message>
     <message>
       <location filename="../config.py" line="161" />
       <source>Working directory</source>
-      <translation>Рабочая папка</translation>
+      <translation>Eolaire oibre</translation>
     </message>
     <message>
       <location filename="../config.py" line="181" />
       <source>Help</source>
-      <translation>Справка</translation>
+      <translation>Cabhrú</translation>
     </message>
     <message>
       <location filename="../config.py" line="206" />
       <source>Live preview</source>
-      <translation>Живой просмотр</translation>
+      <translation>Réamhamharc beo</translation>
     </message>
     <message>
       <location filename="../config.py" line="207" />
       <source>Normal preview</source>
-      <translation>Обычный просмотр</translation>
+      <translation>Réamhamharc gnáth</translation>
     </message>
     <message>
       <location filename="../config.py" line="212" />
       <source>Disabled</source>
-      <translation>Отключено</translation>
+      <translation>Díchumasaithe</translation>
     </message>
     <message>
       <location filename="../config.py" line="213" />
       <source>Cursor Line</source>
-      <translation>Строка с курсором</translation>
+      <translation>Líne Cúrsóir</translation>
     </message>
     <message>
       <location filename="../config.py" line="214" />
       <source>Wrapped Line</source>
-      <translation>Полная строка с переносами</translation>
+      <translation>Líne Fillte</translation>
     </message>
     <message>
       <location filename="../config.py" line="219" />
       <source>Increment</source>
-      <translation>Увеличить</translation>
+      <translation>Incrimint</translation>
     </message>
     <message>
       <location filename="../config.py" line="220" />
       <source>Repeat</source>
-      <translation>Повторить</translation>
+      <translation>Déan arís</translation>
     </message>
   </context>
   <context>
@@ -190,7 +190,7 @@
     <message>
       <location filename="../config.py" line="81" />
       <source>Select directory to open</source>
-      <translation>Выберите папку для открытия</translation>
+      <translation>Roghnaigh eolaire le hoscailt</translation>
     </message>
   </context>
   <context>
@@ -198,7 +198,7 @@
     <message>
       <location filename="../dialogs.py" line="73" />
       <source>Enter encoding name:</source>
-      <translation>Введите название кодировки:</translation>
+      <translation>Cuir isteach ainm an ionchódaithe:</translation>
     </message>
   </context>
   <context>
@@ -206,17 +206,17 @@
     <message>
       <location filename="../config.py" line="47" />
       <source>Select</source>
-      <translation>Выбрать</translation>
+      <translation type="unfinished" />
     </message>
     <message>
       <location filename="../config.py" line="50" />
       <source>(none)</source>
-      <translation>(не выбрано)</translation>
+      <translation>(aon cheann)</translation>
     </message>
     <message>
       <location filename="../config.py" line="58" />
       <source>Currently selected: %s</source>
-      <translation>Текущий выбор: %s</translation>
+      <translation type="unfinished" />
     </message>
   </context>
   <context>
@@ -224,17 +224,17 @@
     <message>
       <location filename="../config.py" line="70" />
       <source>Select file to open</source>
-      <translation>Выберите файл для открытия</translation>
+      <translation>Roghnaigh comhad le hoscailt</translation>
     </message>
     <message>
       <location filename="../config.py" line="72" />
       <source>CSS files (*.css)</source>
-      <translation>Файлы CSS (*.css)</translation>
+      <translation type="unfinished" />
     </message>
     <message>
       <location filename="../config.py" line="72" />
       <source>All files (*)</source>
-      <translation>Все файлы (*)</translation>
+      <translation type="unfinished" />
     </message>
   </context>
   <context>
@@ -242,17 +242,17 @@
     <message>
       <location filename="../tabledialog.py" line="26" />
       <source>Insert table</source>
-      <translation>Вставить таблицу</translation>
+      <translation>Ionsáigh tábla</translation>
     </message>
     <message>
       <location filename="../tabledialog.py" line="35" />
       <source>Number of rows</source>
-      <translation>Число строк</translation>
+      <translation>Líon na sraitheanna</translation>
     </message>
     <message>
       <location filename="../tabledialog.py" line="36" />
       <source>Number of columns</source>
-      <translation>Число столбцов</translation>
+      <translation>Líon na gcolún</translation>
     </message>
   </context>
   <context>
@@ -260,17 +260,17 @@
     <message>
       <location filename="../dialogs.py" line="51" />
       <source>Enter locale name (example: en_US)</source>
-      <translation>Введите код локали (например: en_US)</translation>
+      <translation>Cuir isteach ainm logánta (mar shampla: en_US)</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="52" />
       <source>It is possible to specify multiple languages, separated by comma.</source>
-      <translation>Можно указать несколько языков, разделённых запятой.</translation>
+      <translation>Is féidir teangacha iolracha a shonrú, scartha le camóg.</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="58" />
       <source>Set as default</source>
-      <translation>Установить по умолчанию</translation>
+      <translation>Socraigh mar réamhshocrú</translation>
     </message>
   </context>
   <context>
@@ -278,12 +278,12 @@
     <message>
       <location filename="../fakevimeditor.py" line="68" />
       <source>No write since last change (add ! to override)</source>
-      <translation>Есть несохранённые изменения (добавьте ! для игнорирования)</translation>
+      <translation>Gan scríobh ón athrú deireanach (cuir! le sáraíocht)</translation>
     </message>
     <message>
       <location filename="../fakevimeditor.py" line="124" />
       <source>Information</source>
-      <translation>Информация</translation>
+      <translation>Eolas</translation>
     </message>
   </context>
   <context>
@@ -291,17 +291,17 @@
     <message>
       <location filename="../editor.py" line="289" />
       <source>Add to dictionary</source>
-      <translation>Добавить в словарь</translation>
+      <translation>Cuir leis an bhfoclóir</translation>
     </message>
     <message>
       <location filename="../editor.py" line="529" />
       <source>Save image</source>
-      <translation>Сохранить изображение</translation>
+      <translation>Sábháil íomhá</translation>
     </message>
     <message>
       <location filename="../editor.py" line="531" />
       <source>Images (*.png *.jpg)</source>
-      <translation>Изображения (*.png *.jpg)</translation>
+      <translation>Íomhánna (*.png *.jpg)</translation>
     </message>
   </context>
   <context>
@@ -309,36 +309,36 @@
     <message>
       <location filename="../tab.py" line="174" />
       <source>New document</source>
-      <translation>Новый документ</translation>
+      <translation>Doiciméad nua</translation>
     </message>
     <message>
       <location filename="../tab.py" line="179" />
       <source>Could not parse file contents, check if you have the &lt;a href="%s"&gt;necessary module&lt;/a&gt; installed!</source>
-      <translation>Не удалось обработать содержимое файла, убедитесь, что установлен &lt;a href="%s"&gt;необходимый модуль&lt;/a&gt;!</translation>
+      <translation>Níorbh fhéidir inneachar an chomhaid a pharsáil, seiceáil an bhfuil an &lt;a href="%s"&gt;modúl riachtanach&lt;/a&gt; suiteáilte agat!</translation>
     </message>
     <message>
       <location filename="../tab.py" line="489" />
       <source>Create missing file?</source>
-      <translation>Создать недостающий файл?</translation>
+      <translation>Cruthaigh comhad in easnamh?</translation>
     </message>
     <message>
       <location filename="../tab.py" line="490" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
-      <translation>Файла «%s» не существует.
+      <translation>Níl an comhad '%s' ann.
 
-Вы хотите создать его?</translation>
+Ar mhaith leat é a chruthú?</translation>
     </message>
     <message>
       <location filename="../tab.py" line="523" />
       <source>File could not be created</source>
-      <translation>Не удалось создать файл</translation>
+      <translation>Níorbh fhéidir an comhad a chruthú</translation>
     </message>
     <message>
       <location filename="../tab.py" line="524" />
       <source>Could not create file '%s': %s</source>
-      <translation>Не удалось создать файл «%s»: %s</translation>
+      <translation>Níorbh fhéidir comhad '%s' a chruthú: %s</translation>
     </message>
   </context>
   <context>
@@ -346,436 +346,436 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="147" />
       <source>File toolbar</source>
-      <translation>Панель файла</translation>
+      <translation>Barra uirlisí comhaid</translation>
     </message>
     <message>
       <location filename="../window.py" line="149" />
       <source>Edit toolbar</source>
-      <translation>Панель редактирования</translation>
+      <translation>Cuir barra uirlisí in eagar</translation>
     </message>
     <message>
       <location filename="../window.py" line="151" />
       <source>Search toolbar</source>
-      <translation>Панель поиска</translation>
+      <translation>Barra uirlisí cuardaigh</translation>
     </message>
     <message>
       <location filename="../window.py" line="155" />
       <source>New</source>
-      <translation>Новый</translation>
+      <translation>Nua</translation>
     </message>
     <message>
       <location filename="../window.py" line="157" />
       <source>Open</source>
-      <translation>Открыть</translation>
+      <translation>Oscail</translation>
     </message>
     <message>
       <location filename="../window.py" line="159" />
       <source>Set encoding</source>
-      <translation>Установить кодировку</translation>
+      <translation>Socraigh ionchódú</translation>
     </message>
     <message>
       <location filename="../window.py" line="1273" />
       <location filename="../window.py" line="162" />
       <source>Reload</source>
-      <translation>Загрузить заново</translation>
+      <translation>Athlódáil</translation>
     </message>
     <message>
       <location filename="../window.py" line="165" />
       <source>Save</source>
-      <translation>Сохранить</translation>
+      <translation>Sábháil</translation>
     </message>
     <message>
       <location filename="../window.py" line="168" />
       <source>Save as</source>
-      <translation>Сохранить как</translation>
+      <translation>Sábháil mar</translation>
     </message>
     <message>
       <location filename="../window.py" line="170" />
       <source>Next tab</source>
-      <translation>Следующая вкладка</translation>
+      <translation>Cluaisín eile</translation>
     </message>
     <message>
       <location filename="../window.py" line="176" />
       <source>Previous tab</source>
-      <translation>Предыдущая вкладка</translation>
+      <translation>Cluaisín roimhe seo</translation>
     </message>
     <message>
       <location filename="../window.py" line="184" />
       <source>Close tab</source>
-      <translation>Закрыть вкладку</translation>
+      <translation>Dún cluaisín</translation>
     </message>
     <message>
       <location filename="../window.py" line="186" />
       <source>Print</source>
-      <translation>Распечатать</translation>
+      <translation>Priontáil</translation>
     </message>
     <message>
       <location filename="../window.py" line="188" />
       <source>Print preview</source>
-      <translation>Предпросмотр печати</translation>
+      <translation>Réamhamharc priontála</translation>
     </message>
     <message>
       <location filename="../window.py" line="191" />
       <source>View HTML code</source>
-      <translation>Просмотр кода HTML</translation>
+      <translation>Féach ar an gcód HTML</translation>
     </message>
     <message>
       <location filename="../window.py" line="196" />
       <source>Change editor font</source>
-      <translation>Изменить шрифт редактора</translation>
+      <translation>Athraigh cló eagarthóir</translation>
     </message>
     <message>
       <location filename="../window.py" line="198" />
       <source>Change preview font</source>
-      <translation>Изменить шрифт просмотра</translation>
+      <translation>Athraigh an cló réamhamhairc</translation>
     </message>
     <message>
       <location filename="../window.py" line="200" />
       <source>Find text</source>
-      <translation>Поиск текста</translation>
+      <translation>Faigh téacs</translation>
     </message>
     <message>
       <location filename="../window.py" line="784" />
       <location filename="../window.py" line="202" />
       <source>Go to line</source>
-      <translation>Перейти к строке</translation>
+      <translation>Téigh go dtí an líne</translation>
     </message>
     <message>
       <location filename="../window.py" line="205" />
       <source>Preview</source>
-      <translation>Просмотр</translation>
+      <translation>Réamhamharc</translation>
     </message>
     <message>
       <location filename="../window.py" line="215" />
       <source>Live preview</source>
-      <translation>Живой просмотр</translation>
+      <translation>Réamhamharc beo</translation>
     </message>
     <message>
       <location filename="../window.py" line="219" />
       <source>Insert table</source>
-      <translation>Вставить таблицу</translation>
+      <translation>Ionsáigh tábla</translation>
     </message>
     <message>
       <location filename="../window.py" line="221" />
       <source>Table editing mode</source>
-      <translation>Режим редактирования таблиц</translation>
+      <translation>Modh eagarthóireacht tábla</translation>
     </message>
     <message>
       <location filename="../window.py" line="224" />
       <source>Insert images by file path</source>
-      <translation>Вставить изображения из файлов</translation>
+      <translation>Cuir isteach íomhánna de réir cosán comhaid</translation>
     </message>
     <message>
       <location filename="../window.py" line="227" />
       <source>FakeVim mode</source>
-      <translation>Режим FakeVim</translation>
+      <translation>mód FakeVim</translation>
     </message>
     <message>
       <location filename="../window.py" line="232" />
       <source>Fullscreen mode</source>
-      <translation>Полноэкранный режим</translation>
+      <translation>Mód lánscáileáin</translation>
     </message>
     <message>
       <location filename="../window.py" line="732" />
       <location filename="../window.py" line="235" />
       <source>Preferences</source>
-      <translation>Настройки</translation>
+      <translation>Roghanna</translation>
     </message>
     <message>
       <location filename="../window.py" line="246" />
       <source>Quit</source>
-      <translation>Выход</translation>
+      <translation>Scoir</translation>
     </message>
     <message>
       <location filename="../window.py" line="252" />
       <source>Undo</source>
-      <translation>Отменить действие</translation>
+      <translation>Cealaigh</translation>
     </message>
     <message>
       <location filename="../window.py" line="254" />
       <source>Redo</source>
-      <translation>Повторить действие</translation>
+      <translation>Athdhéan</translation>
     </message>
     <message>
       <location filename="../window.py" line="256" />
       <source>Copy</source>
-      <translation>Копировать</translation>
+      <translation>Cóip</translation>
     </message>
     <message>
       <location filename="../window.py" line="258" />
       <source>Cut</source>
-      <translation>Вырезать</translation>
+      <translation>Gearr</translation>
     </message>
     <message>
       <location filename="../window.py" line="260" />
       <source>Paste</source>
-      <translation>Вставить</translation>
+      <translation>Greamaigh</translation>
     </message>
     <message>
       <location filename="../window.py" line="263" />
       <source>Paste image</source>
-      <translation>Вставить изображение</translation>
+      <translation>Greamaigh íomhá</translation>
     </message>
     <message>
       <location filename="../window.py" line="268" />
       <source>Move line up</source>
-      <translation>Переместить строку вверх</translation>
+      <translation>Íosluchtaigh líne suas</translation>
     </message>
     <message>
       <location filename="../window.py" line="270" />
       <source>Move line down</source>
-      <translation>Переместить строку вниз</translation>
+      <translation>Íosluchtaigh líne síos</translation>
     </message>
     <message>
       <location filename="../window.py" line="278" />
       <source>Enable</source>
-      <translation>Включить</translation>
+      <translation>Cumasaigh</translation>
     </message>
     <message>
       <location filename="../window.py" line="279" />
       <source>Set locale</source>
-      <translation>Установить локаль</translation>
+      <translation>Socraigh locale</translation>
     </message>
     <message>
       <location filename="../window.py" line="280" />
       <source>Use WebEngine (Chromium) renderer</source>
-      <translation>Использовать движок WebEngine (Chromium)</translation>
+      <translation>Úsáid rindreálaí WebEngine (Cróimiam).</translation>
     </message>
     <message>
       <location filename="../window.py" line="286" />
       <source>Show directory</source>
-      <translation>Открыть папку</translation>
+      <translation>Taispeáin eolaire</translation>
     </message>
     <message>
       <location filename="../window.py" line="287" />
       <source>Show directory tree</source>
-      <translation>Показать структуру папки</translation>
+      <translation type="unfinished" />
     </message>
     <message>
       <location filename="../window.py" line="291" />
       <source>Next</source>
-      <translation>Следующее</translation>
+      <translation>Ar aghaidh</translation>
     </message>
     <message>
       <location filename="../window.py" line="293" />
       <source>Previous</source>
-      <translation>Предыдущее</translation>
+      <translation>Roimhe Seo</translation>
     </message>
     <message>
       <location filename="../window.py" line="295" />
       <source>Replace</source>
-      <translation>Заменить</translation>
+      <translation>Ionadaigh</translation>
     </message>
     <message>
       <location filename="../window.py" line="297" />
       <source>Replace all</source>
-      <translation>Заменить все</translation>
+      <translation>Ionadaigh go léir</translation>
     </message>
     <message>
       <location filename="../window.py" line="300" />
       <source>Close</source>
-      <translation>Закрыть</translation>
+      <translation>Dún</translation>
     </message>
     <message>
       <location filename="../window.py" line="304" />
       <source>Get help online</source>
-      <translation>Получить помощь в интернете</translation>
+      <translation>Faigh cabhair ar líne</translation>
     </message>
     <message>
       <location filename="../window.py" line="305" />
       <source>What's new</source>
-      <translation>Что нового</translation>
+      <translation>Cad atá nua</translation>
     </message>
     <message>
       <location filename="../window.py" line="306" />
       <source>About ReText</source>
-      <translation>О ReText</translation>
+      <translation>Maidir le ReText</translation>
     </message>
     <message>
       <location filename="../window.py" line="309" />
       <source>About Qt</source>
-      <translation>О Qt</translation>
+      <translation>Maidir le Qt</translation>
     </message>
     <message>
       <location filename="../window.py" line="324" />
       <source>Bold</source>
-      <translation>Полужирный</translation>
+      <translation>Trom</translation>
     </message>
     <message>
       <location filename="../window.py" line="326" />
       <source>Italic</source>
-      <translation>Курсив</translation>
+      <translation>Iodálach</translation>
     </message>
     <message>
       <location filename="../window.py" line="328" />
       <source>Underline</source>
-      <translation>Подчёркивание</translation>
+      <translation>Cuir líne faoi</translation>
     </message>
     <message>
       <location filename="../window.py" line="405" />
       <location filename="../window.py" line="337" />
       <source>Formatting</source>
-      <translation>Форматирование</translation>
+      <translation>Formáidiú</translation>
     </message>
     <message>
       <location filename="../window.py" line="341" />
       <source>Symbols</source>
-      <translation>Символы</translation>
+      <translation>Siombailí</translation>
     </message>
     <message>
       <location filename="../window.py" line="346" />
       <source>&amp;File</source>
-      <translation>&amp;Файл</translation>
+      <translation>C&amp;omhad</translation>
     </message>
     <message>
       <location filename="../window.py" line="347" />
       <source>&amp;Edit</source>
-      <translation>&amp;Правка</translation>
+      <translation>C&amp;uir in Eagar</translation>
     </message>
     <message>
       <location filename="../window.py" line="348" />
       <source>&amp;Help</source>
-      <translation>&amp;Справка</translation>
+      <translation>C&amp;abhair</translation>
     </message>
     <message>
       <location filename="../window.py" line="353" />
       <source>Open recent</source>
-      <translation>Открыть последние</translation>
+      <translation>Oscail le déanaí</translation>
     </message>
     <message>
       <location filename="../window.py" line="368" />
       <source>Export</source>
-      <translation>Экспорт</translation>
+      <translation>Easpórtáil</translation>
     </message>
     <message>
       <location filename="../window.py" line="393" />
       <source>Spell check</source>
-      <translation>Проверка орфографии</translation>
+      <translation>Seiceáil litrithe</translation>
     </message>
     <message>
       <location filename="../window.py" line="402" />
       <source>Default markup</source>
-      <translation>Язык разметки по умолчанию</translation>
+      <translation>Marcáil réamhshocraithe</translation>
     </message>
     <message>
       <location filename="../window.py" line="450" />
       <source>Search</source>
-      <translation>Поиск</translation>
+      <translation>Cuardach</translation>
     </message>
     <message>
       <location filename="../window.py" line="453" />
       <source>Replace with</source>
-      <translation>Заменить на</translation>
+      <translation>Ionadaigh le</translation>
     </message>
     <message>
       <location filename="../window.py" line="455" />
       <source>Case sensitively</source>
-      <translation>Учитывать регистр</translation>
+      <translation>Cás go híogair</translation>
     </message>
     <message>
       <location filename="../window.py" line="635" />
       <location filename="../window.py" line="592" />
       <source>New document</source>
-      <translation>Новый документ</translation>
+      <translation>Doiciméad nua</translation>
     </message>
     <message>
       <location filename="../window.py" line="784" />
       <source>Type the line number</source>
-      <translation>Введите номер строки</translation>
+      <translation>Clóscríobh uimhir na líne</translation>
     </message>
     <message>
       <location filename="../window.py" line="820" />
       <source>Please, save the file somewhere.</source>
-      <translation>Сначала сохраните файл.</translation>
+      <translation>Le do thoil, sábháil an comhad áit éigin.</translation>
     </message>
     <message>
       <location filename="../window.py" line="933" />
       <source>Select one or several files to open</source>
-      <translation>Выберите один или несколько файлов для открытия</translation>
+      <translation>Roghnaigh comhad amháin nó níos mó le hoscailt</translation>
     </message>
     <message>
       <location filename="../window.py" line="1342" />
       <location filename="../window.py" line="934" />
       <source>Supported files</source>
-      <translation>Поддерживаемые файлы</translation>
+      <translation>Comhaid tacaithe</translation>
     </message>
     <message>
       <location filename="../window.py" line="1342" />
       <location filename="../window.py" line="934" />
       <source>All files (*)</source>
-      <translation>Все файлы (*)</translation>
+      <translation>Gach comhad (*)</translation>
     </message>
     <message>
       <location filename="../window.py" line="992" />
       <source>Plain text (*.txt)</source>
-      <translation>Простой текст (*.txt)</translation>
+      <translation>Gnáth-théacs (*.txt)</translation>
     </message>
     <message>
       <location filename="../window.py" line="996" />
       <source>%s files</source>
       <comment>Example of final string: Markdown files</comment>
-      <translation>Файлы %s</translation>
+      <translation>%s comhad</translation>
     </message>
     <message>
       <location filename="../window.py" line="1066" />
       <location filename="../window.py" line="1010" />
       <source>Save file</source>
-      <translation>Сохранить файл</translation>
+      <translation>Sábháil comhad</translation>
     </message>
     <message>
       <location filename="../window.py" line="1018" />
       <source>Cannot save to file which is open in another tab!</source>
-      <translation>Невозможно сохранить в файл, который открыт в другой вкладке!</translation>
+      <translation>Ní féidir sábháil i gcomhad atá oscailte i gcluaisín eile!</translation>
     </message>
     <message>
       <location filename="../window.py" line="1056" />
       <source>Export document to ODT</source>
-      <translation>Экспортировать документ как ODT</translation>
+      <translation>Easpórtáil doiciméad chuig ODT</translation>
     </message>
     <message>
       <location filename="../window.py" line="1057" />
       <source>OpenDocument text files (*.odt)</source>
-      <translation>Файлы текста OpenDocument (*.odt)</translation>
+      <translation>Comhaid téacs OpenDocument (*.odt)</translation>
     </message>
     <message>
       <location filename="../window.py" line="1067" />
       <source>HTML files (*.html *.htm)</source>
-      <translation>Файлы HTML (*.html *.htm)</translation>
+      <translation>Comhaid HTML (*.html *.htm)</translation>
     </message>
     <message>
       <location filename="../window.py" line="1087" />
       <source>Unrecognized paperSize setting "%s".</source>
-      <translation>Неверное значение параметра paperSize: «%s»</translation>
+      <translation>Socrú paperSize neamhaitheanta "%s".</translation>
     </message>
     <message>
       <location filename="../window.py" line="1102" />
       <source>Export document to PDF</source>
-      <translation>Экспортировать документ как PDF</translation>
+      <translation>Onnmhairiú doiciméad go PDF</translation>
     </message>
     <message>
       <location filename="../window.py" line="1104" />
       <source>PDF files (*.pdf)</source>
-      <translation>Файлы PDF (*.pdf)</translation>
+      <translation>Comhaid PDF (*.pdf)</translation>
     </message>
     <message>
       <location filename="../window.py" line="1133" />
       <source>Print document</source>
-      <translation>Распечатать документ</translation>
+      <translation>Priontáil doiciméad</translation>
     </message>
     <message>
       <location filename="../window.py" line="1156" />
       <source>Export document</source>
-      <translation>Экспортировать документ</translation>
+      <translation>Easpórtáil doiciméad</translation>
     </message>
     <message>
       <location filename="../window.py" line="1176" />
       <source>Failed to execute the command:</source>
-      <translation>Невозможно запустить команду:</translation>
+      <translation>Theip ar an ordú a rith:</translation>
     </message>
     <message>
       <location filename="../window.py" line="1212" />
       <source>Alt text</source>
-      <translation>Альтернативный текст</translation>
+      <translation>Téacs alt</translation>
     </message>
     <message>
       <location filename="../window.py" line="1213" />
@@ -786,70 +786,70 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="1213" />
       <source>Link text</source>
-      <translation>Текст ссылки</translation>
+      <translation>Téacs naisc</translation>
     </message>
     <message>
       <location filename="../window.py" line="1254" />
       <source>This file has been deleted by other application.
 Please make sure you save the file before exit.</source>
-      <translation>Этот файл был удалён другим приложением.
-Пожалуйста, убедитесь перед выходом, что вы сохранили файл.</translation>
+      <translation>Scriosadh an comhad seo ag feidhmchlár eile.
+Cinntigh le do thoil go sábhálann tú an comhad roimh imeacht.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1263" />
       <source>This document has been modified by other application.
 Do you want to reload the file (this will discard all your changes)?
 </source>
-      <translation>Этот документ был изменён другим приложением.
-Хотите ли вы загрузить файл заново (это отменит все ваши изменения)?
+      <translation>Tá an doiciméad seo athraithe ag feidhmchlár eile.
+Ar mhaith leat an comhad a athlódáil (caithfidh sé seo do chuid athruithe ar fad)?
 </translation>
     </message>
     <message>
       <location filename="../window.py" line="1268" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
-      <translation>Автоматическое сохранение было отключено для этой вкладки во избежание потери данных. Оно будет включено снова, если вы загрузите файл заново или сохраните его вручную.</translation>
+      <translation>Díchumasaíodh sábháil uathoibríoch go sealadach don chluaisín seo chun cailleadh sonraí a chosc. Déanfar é a ath-chumasú nuair a athlódálann tú an comhad nó nuair a shábhálann tú é de láimh.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1293" />
       <source>The document has been modified.
 Do you want to save your changes?</source>
-      <translation>Документ был изменён.
-Сохранить изменения?</translation>
+      <translation>Athraíodh an doiciméad.
+Ar mhaith leat do chuid athruithe a shábháil?</translation>
     </message>
     <message>
       <location filename="../window.py" line="1330" />
       <source>HTML code</source>
-      <translation>код HTML</translation>
+      <translation>Cóid HTML</translation>
     </message>
     <message>
       <location filename="../window.py" line="1341" />
       <source>Select one or several images to open</source>
-      <translation>Выберите одно или несколько изображений для вставки</translation>
+      <translation>Roghnaigh íomhá amháin nó níos mó le hoscailt</translation>
     </message>
     <message>
       <location filename="../window.py" line="1362" />
       <source>ReText %s (using PyMarkups %s)</source>
-      <translation>ReText %s (использует PyMarkups %s)</translation>
+      <translation>ReText %s (le PyMarkups %s)</translation>
     </message>
     <message>
       <location filename="../window.py" line="1363" />
       <source>Simple but powerful editor for Markdown and reStructuredText</source>
-      <translation>Простой, но мощный редактор для Markdown и reStructuredText</translation>
+      <translation>Eagarthóir simplí ach cumhachtach le haghaidh Markdown agus ReStructuredText</translation>
     </message>
     <message>
       <location filename="../window.py" line="1365" />
       <source>Author: Dmitry Shachnev, 2011</source>
-      <translation>Автор: Dmitry Shachnev, 2011</translation>
+      <translation>Údar: Dmitry Shachnev, 2011</translation>
     </message>
     <message>
       <location filename="../window.py" line="1368" />
       <source>Markdown syntax</source>
-      <translation>Синтаксис Markdown</translation>
+      <translation>Comhréir Markdown</translation>
     </message>
     <message>
       <location filename="../window.py" line="1370" />
       <source>reStructuredText syntax</source>
-      <translation>Синтаксис reStructuredText</translation>
+      <translation>Comhréir téacs athstruchtúrtha</translation>
     </message>
   </context>
   <context>
@@ -866,17 +866,17 @@ Do you want to save your changes?</source>
     <message>
       <location filename="../__main__.py" line="85" />
       <source>Open the files in preview mode</source>
-      <translation>Открывать файлы в режиме просмотра</translation>
+      <translation>Oscail na comhaid i mód réamhamhairc</translation>
     </message>
     <message>
       <location filename="../__main__.py" line="87" />
       <source>Create a new window even if there is an existing one</source>
-      <translation>Создать новое окно, даже если есть существующее</translation>
+      <translation>Cruthaigh fuinneog nua fiú má tá ceann ann cheana féin</translation>
     </message>
     <message>
       <location filename="../__main__.py" line="91" />
       <source>List of files to open</source>
-      <translation>Перечислите файлы для открытия</translation>
+      <translation>Liosta comhad le hoscailt</translation>
     </message>
   </context>
 </TS>

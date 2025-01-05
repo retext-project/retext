@@ -36,7 +36,7 @@
     <message>
       <location filename="../config.py" line="136" />
       <source>Default preview state</source>
-      <translation type="unfinished" />
+      <translation>Стан попереднього перегляду за замовчуванням</translation>
     </message>
     <message>
       <location filename="../config.py" line="137" />
@@ -132,7 +132,7 @@
     <message>
       <location filename="../config.py" line="159" />
       <source>Show full path in window title</source>
-      <translation type="unfinished" />
+      <translation>Відобразити повний шлях у заголовку вікна</translation>
     </message>
     <message>
       <location filename="../config.py" line="160" />
@@ -162,22 +162,22 @@
     <message>
       <location filename="../config.py" line="212" />
       <source>Disabled</source>
-      <translation type="unfinished" />
+      <translation>Вимкнений</translation>
     </message>
     <message>
       <location filename="../config.py" line="213" />
       <source>Cursor Line</source>
-      <translation type="unfinished" />
+      <translation>Лінія курсору</translation>
     </message>
     <message>
       <location filename="../config.py" line="214" />
       <source>Wrapped Line</source>
-      <translation type="unfinished" />
+      <translation>Загорнута лінія</translation>
     </message>
     <message>
       <location filename="../config.py" line="219" />
       <source>Increment</source>
-      <translation type="unfinished" />
+      <translation>Збільшити</translation>
     </message>
     <message>
       <location filename="../config.py" line="220" />
@@ -190,7 +190,7 @@
     <message>
       <location filename="../config.py" line="81" />
       <source>Select directory to open</source>
-      <translation type="unfinished" />
+      <translation>Оберіть директорію для відкриття</translation>
     </message>
   </context>
   <context>
@@ -198,7 +198,7 @@
     <message>
       <location filename="../dialogs.py" line="73" />
       <source>Enter encoding name:</source>
-      <translation type="unfinished" />
+      <translation>Введіть назву кодування:</translation>
     </message>
   </context>
   <context>
@@ -265,7 +265,7 @@
     <message>
       <location filename="../dialogs.py" line="52" />
       <source>It is possible to specify multiple languages, separated by comma.</source>
-      <translation type="unfinished" />
+      <translation>Можливо вказати кілька мов, розділених комою</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="58" />
@@ -326,17 +326,19 @@
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
-      <translation type="unfinished" />
+      <translation>Файлу '%s' не існує.
+
+Бажаєте його створити?</translation>
     </message>
     <message>
       <location filename="../tab.py" line="523" />
       <source>File could not be created</source>
-      <translation type="unfinished" />
+      <translation>Файл не вдалося створити</translation>
     </message>
     <message>
       <location filename="../tab.py" line="524" />
       <source>Could not create file '%s': %s</source>
-      <translation type="unfinished" />
+      <translation>Не вдалося створити файл '%s': %s</translation>
     </message>
   </context>
   <context>
@@ -461,7 +463,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="224" />
       <source>Insert images by file path</source>
-      <translation type="unfinished" />
+      <translation>Вставка зображень за файловим шляхом</translation>
     </message>
     <message>
       <location filename="../window.py" line="227" />
@@ -679,7 +681,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="784" />
       <source>Type the line number</source>
-      <translation type="unfinished" />
+      <translation>Введіть номер рядка</translation>
     </message>
     <message>
       <location filename="../window.py" line="820" />
@@ -805,7 +807,7 @@ Do you want to reload the file (this will discard all your changes)?
     <message>
       <location filename="../window.py" line="1268" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
-      <translation type="unfinished" />
+      <translation>Автоматичне збереження було тимчасово вимкнено для цієї вкладки задля запобігання втраті даних. Його буде ввімкнено знову коли Ви перезавантажите файл або збережете його вручну.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1293" />
@@ -822,7 +824,7 @@ Do you want to save your changes?</source>
     <message>
       <location filename="../window.py" line="1341" />
       <source>Select one or several images to open</source>
-      <translation type="unfinished" />
+      <translation>Оберіть одне чи кілька зображень для відкриття</translation>
     </message>
     <message>
       <location filename="../window.py" line="1362" />
@@ -865,17 +867,17 @@ Do you want to save your changes?</source>
     <message>
       <location filename="../__main__.py" line="85" />
       <source>Open the files in preview mode</source>
-      <translation type="unfinished" />
+      <translation>Відкрити файл у режимі попереднього перегляду</translation>
     </message>
     <message>
       <location filename="../__main__.py" line="87" />
       <source>Create a new window even if there is an existing one</source>
-      <translation type="unfinished" />
+      <translation>Створити нове вікно навіть якщо таке вже існує</translation>
     </message>
     <message>
       <location filename="../__main__.py" line="91" />
       <source>List of files to open</source>
-      <translation type="unfinished" />
+      <translation>Перелік файлів для відкриття</translation>
     </message>
   </context>
 </TS>

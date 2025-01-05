@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="da" sourcelanguage="">
+<TS version="2.1" language="da">
   <context>
     <name>ConfigDialog</name>
     <message>
@@ -26,7 +26,7 @@
     <message>
       <location filename="../config.py" line="134" />
       <source>Number of recent documents</source>
-      <translation type="unfinished" />
+      <translation>Antal nylige dokumenter</translation>
     </message>
     <message>
       <location filename="../config.py" line="135" />
@@ -36,7 +36,7 @@
     <message>
       <location filename="../config.py" line="136" />
       <source>Default preview state</source>
-      <translation type="unfinished" />
+      <translation>Standard for forhåndsvisning</translation>
     </message>
     <message>
       <location filename="../config.py" line="137" />
@@ -102,7 +102,7 @@
     <message>
       <location filename="../config.py" line="152" />
       <source>Ordered list mode</source>
-      <translation type="unfinished" />
+      <translation>Ordnet listevisning</translation>
     </message>
     <message>
       <location filename="../config.py" line="154" />
@@ -112,7 +112,7 @@
     <message>
       <location filename="../config.py" line="155" />
       <source>Hide toolbar</source>
-      <translation type="unfinished" />
+      <translation>Skjul værktøjslinje</translation>
     </message>
     <message>
       <location filename="../config.py" line="156" />
@@ -127,22 +127,22 @@
     <message>
       <location filename="../config.py" line="158" />
       <source>Hide tabs bar when there is only one tab</source>
-      <translation type="unfinished" />
+      <translation>Skjul rækken med faner, når der kun er én fane</translation>
     </message>
     <message>
       <location filename="../config.py" line="159" />
       <source>Show full path in window title</source>
-      <translation type="unfinished" />
+      <translation>Vis fuld sti i titel på vinduet</translation>
     </message>
     <message>
       <location filename="../config.py" line="160" />
       <source>Show directory tree</source>
-      <translation type="unfinished" />
+      <translation>Vis mappetræ</translation>
     </message>
     <message>
       <location filename="../config.py" line="161" />
       <source>Working directory</source>
-      <translation type="unfinished" />
+      <translation>Arbejdsmappe</translation>
     </message>
     <message>
       <location filename="../config.py" line="181" />
@@ -152,37 +152,37 @@
     <message>
       <location filename="../config.py" line="206" />
       <source>Live preview</source>
-      <translation type="unfinished">Live-forhåndsvisning</translation>
+      <translation>Live-forhåndsvisning</translation>
     </message>
     <message>
       <location filename="../config.py" line="207" />
       <source>Normal preview</source>
-      <translation type="unfinished" />
+      <translation>Almindelig forhåndsvisning</translation>
     </message>
     <message>
       <location filename="../config.py" line="212" />
       <source>Disabled</source>
-      <translation type="unfinished" />
+      <translation>Deaktiveret</translation>
     </message>
     <message>
       <location filename="../config.py" line="213" />
       <source>Cursor Line</source>
-      <translation type="unfinished" />
+      <translation>Cursor-linje</translation>
     </message>
     <message>
       <location filename="../config.py" line="214" />
       <source>Wrapped Line</source>
-      <translation type="unfinished" />
+      <translation>Ombrudt linje</translation>
     </message>
     <message>
       <location filename="../config.py" line="219" />
       <source>Increment</source>
-      <translation type="unfinished" />
+      <translation>Indryk</translation>
     </message>
     <message>
       <location filename="../config.py" line="220" />
       <source>Repeat</source>
-      <translation type="unfinished" />
+      <translation>Gentag</translation>
     </message>
   </context>
   <context>
@@ -190,7 +190,7 @@
     <message>
       <location filename="../config.py" line="81" />
       <source>Select directory to open</source>
-      <translation type="unfinished" />
+      <translation>Vælg mappe for at åbne</translation>
     </message>
   </context>
   <context>
@@ -198,7 +198,7 @@
     <message>
       <location filename="../dialogs.py" line="73" />
       <source>Enter encoding name:</source>
-      <translation type="unfinished" />
+      <translation>Indtast navn på kodning:</translation>
     </message>
   </context>
   <context>
@@ -242,17 +242,17 @@
     <message>
       <location filename="../tabledialog.py" line="26" />
       <source>Insert table</source>
-      <translation type="unfinished" />
+      <translation>Indsæt tabel</translation>
     </message>
     <message>
       <location filename="../tabledialog.py" line="35" />
       <source>Number of rows</source>
-      <translation type="unfinished" />
+      <translation>Antal rækker</translation>
     </message>
     <message>
       <location filename="../tabledialog.py" line="36" />
       <source>Number of columns</source>
-      <translation type="unfinished" />
+      <translation>Antal kolonner</translation>
     </message>
   </context>
   <context>
@@ -265,7 +265,7 @@
     <message>
       <location filename="../dialogs.py" line="52" />
       <source>It is possible to specify multiple languages, separated by comma.</source>
-      <translation type="unfinished" />
+      <translation>Det er muligt at angive flere sprog, adskilt med komma</translation>
     </message>
     <message>
       <location filename="../dialogs.py" line="58" />
@@ -319,24 +319,26 @@
     <message>
       <location filename="../tab.py" line="489" />
       <source>Create missing file?</source>
-      <translation type="unfinished" />
+      <translation>Opret manglende fil?</translation>
     </message>
     <message>
       <location filename="../tab.py" line="490" />
       <source>The file '%s' does not exist.
 
 Do you want to create it?</source>
-      <translation type="unfinished" />
+      <translation>Filen '%s' findes ikke.
+
+Ønsker du at oprette den?</translation>
     </message>
     <message>
       <location filename="../tab.py" line="523" />
       <source>File could not be created</source>
-      <translation type="unfinished" />
+      <translation>Filen kunne ikke oprettes</translation>
     </message>
     <message>
       <location filename="../tab.py" line="524" />
       <source>Could not create file '%s': %s</source>
-      <translation type="unfinished" />
+      <translation>Kunne ikke oprette filen '%s': %s</translation>
     </message>
   </context>
   <context>
@@ -436,7 +438,7 @@ Do you want to create it?</source>
       <location filename="../window.py" line="784" />
       <location filename="../window.py" line="202" />
       <source>Go to line</source>
-      <translation type="unfinished" />
+      <translation>Gå til linje</translation>
     </message>
     <message>
       <location filename="../window.py" line="205" />
@@ -451,7 +453,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="219" />
       <source>Insert table</source>
-      <translation type="unfinished" />
+      <translation>Indsæt tabel</translation>
     </message>
     <message>
       <location filename="../window.py" line="221" />
@@ -461,7 +463,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="224" />
       <source>Insert images by file path</source>
-      <translation type="unfinished" />
+      <translation>Indsæt billeder med sti til fil</translation>
     </message>
     <message>
       <location filename="../window.py" line="227" />
@@ -512,7 +514,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="263" />
       <source>Paste image</source>
-      <translation type="unfinished" />
+      <translation>Indsæt billede</translation>
     </message>
     <message>
       <location filename="../window.py" line="268" />
@@ -582,7 +584,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="305" />
       <source>What's new</source>
-      <translation type="unfinished" />
+      <translation>Hvad er nyt?</translation>
     </message>
     <message>
       <location filename="../window.py" line="306" />
@@ -628,7 +630,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="347" />
       <source>&amp;Edit</source>
-      <translation>&amp;Rediger</translation>
+      <translation>R&amp;ediger</translation>
     </message>
     <message>
       <location filename="../window.py" line="348" />
@@ -679,7 +681,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="784" />
       <source>Type the line number</source>
-      <translation type="unfinished" />
+      <translation>Indtast linjenummeret</translation>
     </message>
     <message>
       <location filename="../window.py" line="820" />
@@ -804,7 +806,7 @@ Vil du genindlæse filen (dette fil kasserer alle finde ændringer)?</translatio
     <message>
       <location filename="../window.py" line="1268" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
-      <translation type="unfinished" />
+      <translation>Automatisk gemning af filer er midlertidigt deaktiveret for denne fane for at undgå at miste data. Funktionen genaktiveres, hvis du genindlæser filen eller gemmer den manuelt.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1293" />
@@ -821,7 +823,7 @@ Do you want to save your changes?</source>
     <message>
       <location filename="../window.py" line="1341" />
       <source>Select one or several images to open</source>
-      <translation type="unfinished" />
+      <translation>Vælg et eller flere billeder for at åbne</translation>
     </message>
     <message>
       <location filename="../window.py" line="1362" />
@@ -863,17 +865,17 @@ Do you want to save your changes?</source>
     <message>
       <location filename="../__main__.py" line="85" />
       <source>Open the files in preview mode</source>
-      <translation type="unfinished" />
+      <translation>Åbn filerne i forhåndsvisning</translation>
     </message>
     <message>
       <location filename="../__main__.py" line="87" />
       <source>Create a new window even if there is an existing one</source>
-      <translation type="unfinished" />
+      <translation>Opret nyt vindue, også hvis der allerede findes et</translation>
     </message>
     <message>
       <location filename="../__main__.py" line="91" />
       <source>List of files to open</source>
-      <translation type="unfinished" />
+      <translation>Liste af filer, der skal åbnes</translation>
     </message>
   </context>
 </TS>

@@ -102,7 +102,7 @@
     <message>
       <location filename="../config.py" line="152" />
       <source>Ordered list mode</source>
-      <translation type="unfinished" />
+      <translation>Modalità elenco ordinato</translation>
     </message>
     <message>
       <location filename="../config.py" line="154" />
@@ -167,7 +167,7 @@
     <message>
       <location filename="../config.py" line="213" />
       <source>Cursor Line</source>
-      <translation type="unfinished" />
+      <translation>Linea del cursore</translation>
     </message>
     <message>
       <location filename="../config.py" line="214" />
@@ -177,7 +177,7 @@
     <message>
       <location filename="../config.py" line="219" />
       <source>Increment</source>
-      <translation type="unfinished" />
+      <translation>Incremento</translation>
     </message>
     <message>
       <location filename="../config.py" line="220" />
@@ -198,7 +198,7 @@
     <message>
       <location filename="../dialogs.py" line="73" />
       <source>Enter encoding name:</source>
-      <translation type="unfinished" />
+      <translation>Inserisci il nome di codifica:</translation>
     </message>
   </context>
   <context>
@@ -463,7 +463,7 @@ Crearlo?</translation>
     <message>
       <location filename="../window.py" line="224" />
       <source>Insert images by file path</source>
-      <translation type="unfinished" />
+      <translation>Inserisci immagini in base al percorso del file</translation>
     </message>
     <message>
       <location filename="../window.py" line="227" />
@@ -807,7 +807,7 @@ Vuoi ricaricare il file (ciò comporterà la perdita di tutti i cambiamenti)?
     <message>
       <location filename="../window.py" line="1268" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
-      <translation type="unfinished" />
+      <translation>Il salvataggio automatico è stato temporaneamente disabilitato per questa scheda per prevenire la perdita di dati. Verrà riattivato quando ricarichi il file o lo salvi manualmente.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1293" />
@@ -824,7 +824,7 @@ Vuoi salvare le modifiche?</translation>
     <message>
       <location filename="../window.py" line="1341" />
       <source>Select one or several images to open</source>
-      <translation type="unfinished" />
+      <translation>Seleziona una o più immagini da aprire</translation>
     </message>
     <message>
       <location filename="../window.py" line="1362" />
@@ -871,12 +871,12 @@ Vuoi salvare le modifiche?</translation>
     <message>
       <location filename="../__main__.py" line="87" />
       <source>Create a new window even if there is an existing one</source>
-      <translation type="unfinished" />
+      <translation>Crea una nuova finestra anche se ne esiste una</translation>
     </message>
     <message>
       <location filename="../__main__.py" line="91" />
       <source>List of files to open</source>
-      <translation type="unfinished" />
+      <translation>Elenco dei file da aprire</translation>
     </message>
   </context>
 </TS>
