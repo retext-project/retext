@@ -70,6 +70,8 @@ NF = Formatter()
 ITAL = Formatter([lambda f: f.setFontItalic(True)])
 UNDL = Formatter([lambda f: f.setFontUnderline(True)])
 
+Weight = QFont.Weight
+
 def FG(colorName):
     def func(f):
         return f.setForeground(getColor(colorName))
@@ -109,25 +111,25 @@ class ReTextHighlighter(QSyntaxHighlighter):
         (reMkdCodeSpans, FG('codeSpans'),                      Markup.Mkd | Markup.CodeSpan),
         (reMkdMathSpans, FG('codeSpans'),                      Markup.Mkd | Markup.CodeSpan),
         (reReSTCodeSpan, FG('codeSpans'),                      Markup.ReST | Markup.CodeSpan),
-        (reHtmlTags,     FG('htmlTags') | QFont.Weight.Bold,   Markup.Mkd | Markup.Textile | Markup.HTML),
-        (reHtmlSymbols,  FG('htmlSymbols') | QFont.Weight.Bold, Markup.Mkd | Markup.HTML),
-        (reHtmlStrings,  FG('htmlStrings') | QFont.Weight.Bold, Markup.Mkd | Markup.HTML),
+        (reHtmlTags,     FG('htmlTags') | Weight.Bold,         Markup.Mkd | Markup.Textile | Markup.HTML),
+        (reHtmlSymbols,  FG('htmlSymbols') | Weight.Bold,      Markup.Mkd | Markup.HTML),
+        (reHtmlStrings,  FG('htmlStrings') | Weight.Bold,      Markup.Mkd | Markup.HTML),
         (reHtmlComments, FG('htmlComments'),                   Markup.Mkd | Markup.HTML),
         (reAsterisks,    ITAL,                                 Markup.Mkd | Markup.ReST),
         (reUnderline,    ITAL,                                 Markup.Mkd | Markup.Textile),
-        (reDblAsterisks, NF | QFont.Weight.Bold,               Markup.Mkd | Markup.ReST | Markup.Textile),
-        (reDblUnderline, NF | QFont.Weight.Bold,               Markup.Mkd),
-        (reTrpAsterisks, ITAL | QFont.Weight.Bold,             Markup.Mkd),
-        (reTrpUnderline, ITAL | QFont.Weight.Bold,             Markup.Mkd),
-        (reMkdHeaders,   FG('markdownHeaders') | QFont.Weight.Black, Markup.Mkd),
+        (reDblAsterisks, NF | Weight.Bold,                     Markup.Mkd | Markup.ReST | Markup.Textile),
+        (reDblUnderline, NF | Weight.Bold,                     Markup.Mkd),
+        (reTrpAsterisks, ITAL | Weight.Bold,                   Markup.Mkd),
+        (reTrpUnderline, ITAL | Weight.Bold,                   Markup.Mkd),
+        (reMkdHeaders,   FG('markdownHeaders') | Weight.Black, Markup.Mkd),
         (reMkdLinksImgs, FG('markdownLinks'),                  Markup.Mkd),
         (reMkdLinkRefs,  ITAL | UNDL,                          Markup.Mkd),
         (reBlockQuotes,  FG('blockquotes'),                    Markup.Mkd),
-        (reReSTDirects,  FG('restDirectives') | QFont.Weight.Bold, Markup.ReST),
-        (reReSTRoles,    NF, FG('restRoles') | QFont.Weight.Bold, FG('htmlStrings'), Markup.ReST),
-        (reTextileHdrs,  NF | QFont.Weight.Black,              Markup.Textile),
+        (reReSTDirects,  FG('restDirectives') | Weight.Bold,   Markup.ReST),
+        (reReSTRoles,    NF, FG('restRoles') | Weight.Bold, FG('htmlStrings'), Markup.ReST),
+        (reTextileHdrs,  NF | Weight.Black,                    Markup.Textile),
         (reTextileQuot,  FG('blockquotes'),                    Markup.Textile),
-        (reAsterisks,    NF | QFont.Weight.Bold,               Markup.Textile),
+        (reAsterisks,    NF | Weight.Bold,                     Markup.Textile),
         (reDblUnderline, ITAL,                                 Markup.Textile),
         (reReSTLinks,    NF, NF, ITAL | UNDL, NF,              Markup.ReST),
         (reReSTLinkRefs, NF, FG('markdownLinks'), ITAL | UNDL, Markup.ReST),
