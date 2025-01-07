@@ -1,7 +1,7 @@
 # vim: ts=4:sw=4:expandtab
 
 # This file is part of ReText
-# Copyright: 2012-2022 Dmitry Shachnev
+# Copyright: 2012-2025 Dmitry Shachnev
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

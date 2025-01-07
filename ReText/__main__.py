@@ -2,7 +2,7 @@
 # vim: ts=4:sw=4:expandtab
 
 # ReText
-# Copyright 2011-2023 Dmitry Shachnev
+# Copyright 2011-2025 Dmitry Shachnev
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
