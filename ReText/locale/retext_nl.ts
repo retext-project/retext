@@ -206,7 +206,7 @@
     <message>
       <location filename="../config.py" line="47" />
       <source>Select</source>
-      <translation type="unfinished" />
+      <translation>Selecteren</translation>
     </message>
     <message>
       <location filename="../config.py" line="50" />
@@ -216,7 +216,7 @@
     <message>
       <location filename="../config.py" line="58" />
       <source>Currently selected: %s</source>
-      <translation type="unfinished" />
+      <translation>Huidige selectie: %s</translation>
     </message>
   </context>
   <context>
@@ -229,7 +229,7 @@
     <message>
       <location filename="../config.py" line="72" />
       <source>CSS files (*.css)</source>
-      <translation type="unfinished" />
+      <translation>Css-bestanden (*.css)</translation>
     </message>
     <message>
       <location filename="../config.py" line="72" />
