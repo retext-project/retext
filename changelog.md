@@ -1,3 +1,44 @@
+## ReText 8.1.0 (2025-01-09)
+
+* Dependency changes:
+    - Python 3.9 or later is now required.
+    - Markups 4.0 or later is now required.
+* Improvements and bugs fixed:
+    - Issue #622 — added support for Ctrl+Tab and Ctrl+Shift+Tab for switching
+      tabs.
+    - PR #634 — WebEngine previewer now shows link on hover (contributed by
+      red-kite).
+    - Issue #623, PR #640 — changed mouse cursor to pointing hand on link
+      hover (contributed by Donjan Rodic).
+    - Added F9 shortcut for showing/hiding directory tree dynamically.
+    - In the directory tree, for files with long names the full name is shown
+      in a tooltip.
+    - Issue #383 — splitter state and WebEngine preview zoom factor are now
+      cached between runs.
+    - Preferences dialog now has links to open the selected stylesheet file
+      and working directories externally.
+    - It is now possible to pass a directory on the command line, it will be
+      shown in the tree.
+    - Issue #649 — pasted image URLs are now converted to image markup.
+    - Issue #650 — pressing Up key on the first line moves the cursor to the
+      beginning of the document, and pressing Down key on the last line moves
+      it to the end of the document.
+    - When the system theme is dark, Qt WebEngine now uses dark mode too.
+    - Issue #617 — added `markdownHeaders` setting for the highlighter.
+    - Issue #489 — added initial AsciiDoc support (beta).
+    - Issue #519 — added Ctrl+H shortcut for viewing HTML code.
+* Internal changes:
+    - PR #592 — auto-generated config options were moved to a separate file,
+      `cache.conf` (contributed by Okko Makkonen).
+    - Build system was ported to `pyproject.toml`.
+    - Adopted `ruff` for code quality checks.
+* Translation updates:
+    - Danish (contributed by Morten Juhl-Johansen).
+    - Dutch (contributed by Heimen Stoffels).
+    - Irish (new, contributed by Aindriú Mac Giolla Eoin).
+    - Italian (contributed by albanobattistella).
+    - Ukrainian (contributed by dmytro22).
+
 ## ReText 8.0.2 (2024-03-16)
 
 * Improvements and bugs fixed:

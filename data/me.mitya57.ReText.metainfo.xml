@@ -66,6 +66,27 @@
   <update_contact>mitya57_AT_gmail.com</update_contact>
   <content_rating type="oars-1.0"/>
   <releases>
+    <release version="8.1.0" date="2025-01-09">
+      <description>
+        <ul>
+          <li>Added support for Ctrl+Tab and Ctrl+Shift+Tab for switching tabs.</li>
+          <li>WebEngine previewer now shows link on hover.</li>
+          <li>Changed mouse cursor to pointing hand on link.</li>
+          <li>Added F9 shortcut for showing/hiding directory tree dynamically.</li>
+          <li>In the directory tree, for files with long names the full name is shown in a tooltip.</li>
+          <li>Splitter state and WebEngine preview zoom factor are now cached between runs.</li>
+          <li>Preferences dialog now has links to open the selected stylesheet file and working directories externally.</li>
+          <li>It is now possible to pass a directory on the command line, it will be shown in the tree.</li>
+          <li>Pasted image URLs are now converted to image markup.</li>
+          <li>Up/Down keys move to document start/end on the first and last lines.</li>
+          <li>When the system theme is dark, Qt WebEngine now uses dark mode too.</li>
+          <li>Added markdownHeaders setting for the highlighter.</li>
+          <li>Added initial AsciiDoc support.</li>
+          <li>Added Ctrl+H shortcut for viewing HTML code.</li>
+          <li>Added Irish translation, updated Danish, Dutch, Italian and Ukrainian.</li>
+        </ul>
+      </description>
+    </release>
     <release version="8.0.2" date="2024-03-16"/>
     <release version="8.0.1" date="2023-05-28"/>
     <release version="8.0.0" date="2022-07-24"/>
