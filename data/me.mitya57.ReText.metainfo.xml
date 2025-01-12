@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2018 Dmitry Shachnev -->
-<component type="desktop">
+<component type="desktop-application">
   <id>me.mitya57.ReText</id>
   <name>ReText</name>
   <summary>Simple text editor for Markdown and reStructuredText</summary>
