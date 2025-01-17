@@ -70,8 +70,6 @@ class retext_install(install):
         if self.root and self.root.endswith('/wheel'):
             # Desktop files don't allow relative paths, and we don't know the
             # absolute path when building a wheel.
-            logging.info('removing the .desktop file from the wheel')
-            os.remove(desktop_file_path)
             return
         # Fix Exec and Icon fields in the desktop file
         icon_path = join(self.orig_install_lib, 'ReText', 'icons', 'retext.svg')
