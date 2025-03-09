@@ -289,8 +289,7 @@ class ConfigDialog(QDialog):
             tab.editBox.viewport().update()
         self.parent.updateStyleSheet()
         self.parent.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
-        self.parent.toolBar.setVisible(not globalSettings.hideToolBar)
-        self.parent.editBar.setVisible(not globalSettings.hideToolBar)
+        self.parent.manage_toolbars_visibility()
         path = globalSettings.directoryPath
         self.parent.fileSystemModel.setRootPath(path)
         self.parent.treeView.setRootIndex(self.parent.fileSystemModel.index(path))

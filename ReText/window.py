@@ -150,11 +150,29 @@ class ReTextWindow(QMainWindow):
         self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.editBar)
         self.searchBar = QToolBar(self.tr('Search toolbar'), self)
         self.addToolBar(Qt.ToolBarArea.BottomToolBarArea, self.searchBar)
-        self.toolBar.setVisible(not globalSettings.hideToolBar)
-        self.editBar.setVisible(not globalSettings.hideToolBar)
 
         self._create_actions()
         self._create_menus()
+        self._create_toolbars()
+
+        self.autoSaveTimer = QTimer(self)
+        self.autoSaveTimer.timeout.connect(self.saveAll)
+        if globalSettings.autoSave:
+            self.autoSaveTimer.start(60000)
+        self.ind = None
+        if enchant is not None:
+            self.spellCheckLanguages = globalSettings.spellCheckLocale
+            languages, errors = self.getSpellCheckDictionaries()
+            for error in errors:
+                warnings.warn(error, RuntimeWarning)
+            if not languages:
+                globalSettings.spellCheck = False
+            if globalSettings.spellCheck:
+                self.actionEnableSC.setChecked(True)
+        self.fileSystemWatcher = QFileSystemWatcher()
+        self.fileSystemWatcher.fileChanged.connect(self.fileChanged)
+
+        self.updateStyleSheet()
 
     def _create_actions(self):
         self.actionNew = self.act(self.tr('New'), 'document-new',
@@ -333,17 +351,76 @@ class ReTextWindow(QMainWindow):
         self.symbolBox.addItem(self.tr('Symbols'))
         self.symbolBox.addItems(self.usefulChars)
         self.symbolBox.activated.connect(self.insertSymbol)
-        self.updateStyleSheet()
 
     def _create_menus(self):
+        self._create_menu_file()
+        self._create_menu_edit()
+        self._create_menu_help()
+
+    def _create_toolbars(self):
+        self._create_toolbar_file()
+        self._create_toolbar_edit()
+        self._create_toolbar_search()
+
+        self.manage_toolbars_visibility()
+
+    def _create_toolbar_file(self):
+        self.toolBar.addAction(self.actionNew)
+        self.toolBar.addSeparator()
+        self.toolBar.addAction(self.actionOpen)
+        self.toolBar.addAction(self.actionSave)
+        self.toolBar.addAction(self.actionPrint)
+        self.toolBar.addSeparator()
+        previewButton = QToolButton(self.toolBar)
+        previewButton.setDefaultAction(self.actionPreview)
+        previewButton.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        previewButton.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
         menuPreview = QMenu()
         menuPreview.addAction(self.actionLivePreview)
+        previewButton.setMenu(menuPreview)
+        self.toolBar.addWidget(previewButton)
+        self.toolBar.addAction(self.actionFullScreen)
+
+    def _create_toolbar_edit(self):
+        self.editBar.addAction(self.actionUndo)
+        self.editBar.addAction(self.actionRedo)
+        self.editBar.addSeparator()
+        self.editBar.addAction(self.actionCut)
+        self.editBar.addAction(self.actionCopy)
+        self.editBar.addAction(self.actionPaste)
+        self.editBar.addSeparator()
+        self.editBar.addWidget(self.formattingBox)
+        self.editBar.addWidget(self.symbolBox)
+
+    def _create_toolbar_search(self):
+        self.searchEdit = QLineEdit(self.searchBar)
+        self.searchEdit.setPlaceholderText(self.tr('Search'))
+        self.searchEdit.returnPressed.connect(self.find)
+        self.replaceEdit = QLineEdit(self.searchBar)
+        self.replaceEdit.setPlaceholderText(self.tr('Replace with'))
+        self.replaceEdit.returnPressed.connect(self.find)
+        self.csBox = QCheckBox(self.tr('Case sensitively'), self.searchBar)
+        self.searchBar.addWidget(self.searchEdit)
+        self.searchBar.addWidget(self.replaceEdit)
+        self.searchBar.addSeparator()
+        self.searchBar.addWidget(self.csBox)
+        self.searchBar.addAction(self.actionFindPrev)
+        self.searchBar.addAction(self.actionFind)
+        replaceButton = QToolButton(self.searchBar)
+        replaceButton.setDefaultAction(self.actionReplace)
+        replaceButton.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        replaceButton.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
+
         menuReplace = QMenu()
         menuReplace.addAction(self.actionReplaceAll)
-        menubar = self.menuBar()
-        menuFile = menubar.addMenu(self.tr('&File'))
-        menuEdit = menubar.addMenu(self.tr('&Edit'))
-        menuHelp = menubar.addMenu(self.tr('&Help'))
+        replaceButton.setMenu(menuReplace)
+        self.searchBar.addWidget(replaceButton)
+        self.searchBar.addAction(self.actionCloseSearch)
+        self.searchBar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        self.searchBar.setVisible(False)
+
+    def _create_menu_file(self):
+        menuFile = self.menuBar().addMenu(self.tr('&File'))
         menuFile.addAction(self.actionNew)
         menuFile.addAction(self.actionOpen)
         self.menuRecentFiles = menuFile.addMenu(
@@ -376,6 +453,9 @@ class ReTextWindow(QMainWindow):
         menuFile.addAction(self.actionPrintPreview)
         menuFile.addSeparator()
         menuFile.addAction(self.actionQuit)
+
+    def _create_menu_edit(self):
+        menuEdit = self.menuBar().addMenu(self.tr('&Edit'))
         menuEdit.addAction(self.actionUndo)
         menuEdit.addAction(self.actionRedo)
         menuEdit.addSeparator()
@@ -429,71 +509,19 @@ class ReTextWindow(QMainWindow):
         menuEdit.addSeparator()
         menuEdit.addAction(self.actionFullScreen)
         menuEdit.addAction(self.actionConfig)
+
+    def _create_menu_help(self):
+        menubar = self.menuBar()
+        menuHelp = menubar.addMenu(self.tr('&Help'))
         menuHelp.addAction(self.actionHelp)
         menuHelp.addAction(self.actionWhatsNew)
         menuHelp.addSeparator()
         menuHelp.addAction(self.actionAbout)
         menuHelp.addAction(self.actionAboutQt)
-        self.toolBar.addAction(self.actionNew)
-        self.toolBar.addSeparator()
-        self.toolBar.addAction(self.actionOpen)
-        self.toolBar.addAction(self.actionSave)
-        self.toolBar.addAction(self.actionPrint)
-        self.toolBar.addSeparator()
-        previewButton = QToolButton(self.toolBar)
-        previewButton.setDefaultAction(self.actionPreview)
-        previewButton.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
-        previewButton.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
-        previewButton.setMenu(menuPreview)
-        self.toolBar.addWidget(previewButton)
-        self.toolBar.addAction(self.actionFullScreen)
-        self.editBar.addAction(self.actionUndo)
-        self.editBar.addAction(self.actionRedo)
-        self.editBar.addSeparator()
-        self.editBar.addAction(self.actionCut)
-        self.editBar.addAction(self.actionCopy)
-        self.editBar.addAction(self.actionPaste)
-        self.editBar.addSeparator()
-        self.editBar.addWidget(self.formattingBox)
-        self.editBar.addWidget(self.symbolBox)
-        self.searchEdit = QLineEdit(self.searchBar)
-        self.searchEdit.setPlaceholderText(self.tr('Search'))
-        self.searchEdit.returnPressed.connect(self.find)
-        self.replaceEdit = QLineEdit(self.searchBar)
-        self.replaceEdit.setPlaceholderText(self.tr('Replace with'))
-        self.replaceEdit.returnPressed.connect(self.find)
-        self.csBox = QCheckBox(self.tr('Case sensitively'), self.searchBar)
-        self.searchBar.addWidget(self.searchEdit)
-        self.searchBar.addWidget(self.replaceEdit)
-        self.searchBar.addSeparator()
-        self.searchBar.addWidget(self.csBox)
-        self.searchBar.addAction(self.actionFindPrev)
-        self.searchBar.addAction(self.actionFind)
-        replaceButton = QToolButton(self.searchBar)
-        replaceButton.setDefaultAction(self.actionReplace)
-        replaceButton.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
-        replaceButton.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
-        replaceButton.setMenu(menuReplace)
-        self.searchBar.addWidget(replaceButton)
-        self.searchBar.addAction(self.actionCloseSearch)
-        self.searchBar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
-        self.searchBar.setVisible(False)
-        self.autoSaveTimer = QTimer(self)
-        self.autoSaveTimer.timeout.connect(self.saveAll)
-        if globalSettings.autoSave:
-            self.autoSaveTimer.start(60000)
-        self.ind = None
-        if enchant is not None:
-            self.spellCheckLanguages = globalSettings.spellCheckLocale
-            languages, errors = self.getSpellCheckDictionaries()
-            for error in errors:
-                warnings.warn(error, RuntimeWarning)
-            if not languages:
-                globalSettings.spellCheck = False
-            if globalSettings.spellCheck:
-                self.actionEnableSC.setChecked(True)
-        self.fileSystemWatcher = QFileSystemWatcher()
-        self.fileSystemWatcher.fileChanged.connect(self.fileChanged)
+
+    def manage_toolbars_visibility(self):
+        self.toolBar.setVisible(not globalSettings.hideToolBar)
+        self.editBar.setVisible(not globalSettings.hideToolBar)
 
     def restoreLastOpenedFiles(self):
         for file in globalCache.lastFileList:
