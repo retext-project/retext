@@ -107,7 +107,7 @@ class ReTextWindow(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
         self.resize(950, 700)
-        qApp = QApplication.instance()
+
         screenRect = self.screen().geometry()
         if globalCache.windowGeometry:
             self.restoreGeometry(globalCache.windowGeometry)
@@ -152,6 +152,10 @@ class ReTextWindow(QMainWindow):
         self.addToolBar(Qt.ToolBarArea.BottomToolBarArea, self.searchBar)
         self.toolBar.setVisible(not globalSettings.hideToolBar)
         self.editBar.setVisible(not globalSettings.hideToolBar)
+
+        self._create_actions()
+
+    def _create_actions(self):
         self.actionNew = self.act(self.tr('New'), 'document-new',
             self.createNew, shct=QKeySequence.StandardKey.New)
         self.actionOpen = self.act(self.tr('Open'), 'document-open',
@@ -273,7 +277,7 @@ class ReTextWindow(QMainWindow):
         self.actionRedo.setEnabled(False)
         self.actionCopy.setEnabled(False)
         self.actionCut.setEnabled(False)
-        qApp.clipboard().dataChanged.connect(self.clipboardDataChanged)
+        QApplication.instance().clipboard().dataChanged.connect(self.clipboardDataChanged)
         self.clipboardDataChanged()
         self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSpellCheck)
         self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
@@ -308,7 +312,7 @@ class ReTextWindow(QMainWindow):
         self.actionAbout.setMenuRole(QAction.MenuRole.AboutRole)
         self.actionAboutQt = self.act(self.tr('About Qt'))
         self.actionAboutQt.setMenuRole(QAction.MenuRole.AboutQtRole)
-        self.actionAboutQt.triggered.connect(qApp.aboutQt)
+        self.actionAboutQt.triggered.connect(QApplication.instance().aboutQt)
         availableMarkups = markups.get_available_markups()
         if not availableMarkups:
             print('Warning: no markups are available!')
