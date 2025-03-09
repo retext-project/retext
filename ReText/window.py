@@ -1463,11 +1463,5 @@ class ReTextWindow(QMainWindow):
 
         self.toolBar.setVisible(shown and globalSettings.showToolBarFile)
         self.editBar.setVisible(shown and globalSettings.showToolBarEdit)
-
-        if shown:
-            if globalSettings.showToolBarFormat:
-                self.formatBar.setVisible(True)
-                self.formattingBoxAction.setVisible(False)
-            else:
-                self.formatBar.setVisible(False)
-                self.formattingBoxAction.setVisible(True)
+        self.formatBar.setVisible(shown and globalSettings.showToolBarFormat)
+        self.formattingBoxAction.setVisible(shown and not globalSettings.showToolBarFormat)

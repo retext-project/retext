@@ -223,7 +223,10 @@ class ConfigDialog(QDialog):
             elif name == 'directoryPath':
                 self.configurators[name] = DirectorySelectButton(self, value, fileLabel)
             elif name == 'hideToolBar':
+                # A label that has been created but not yet laid out could remain visible even after its reference has been dropped
+                label.setParent(None)
                 label = None
+
                 gb = QGroupBox("Toolbars")
                 gb.setCheckable(True)
                 gb.setChecked(not globalSettings.hideToolBar)
