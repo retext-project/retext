@@ -154,6 +154,7 @@ class ReTextWindow(QMainWindow):
         self.editBar.setVisible(not globalSettings.hideToolBar)
 
         self._create_actions()
+        self._create_menus()
 
     def _create_actions(self):
         self.actionNew = self.act(self.tr('New'), 'document-new',
@@ -218,8 +219,7 @@ class ReTextWindow(QMainWindow):
             self.actionPreview.setIcon(QIcon(getBundledIcon('document-preview')))
         self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.Modifier.CTRL | Qt.Key.Key_L,
         trigbool=self.enableLivePreview)
-        menuPreview = QMenu()
-        menuPreview.addAction(self.actionLivePreview)
+
         self.actionInsertTable = self.act(self.tr('Insert table'),
             trig=lambda: self.insertFormatting('table'))
         self.actionTableMode = self.act(self.tr('Table editing mode'),
@@ -299,8 +299,7 @@ class ReTextWindow(QMainWindow):
         self.actionReplace = self.act(self.tr('Replace'), 'edit-find-replace',
             lambda: self.find(replace=True))
         self.actionReplaceAll = self.act(self.tr('Replace all'), trig=self.replaceAll)
-        menuReplace = QMenu()
-        menuReplace.addAction(self.actionReplaceAll)
+
         self.actionCloseSearch = self.act(self.tr('Close'), 'window-close',
             lambda: self.searchBar.setVisible(False),
             shct=QKeySequence.StandardKey.Cancel)
@@ -313,18 +312,7 @@ class ReTextWindow(QMainWindow):
         self.actionAboutQt = self.act(self.tr('About Qt'))
         self.actionAboutQt.setMenuRole(QAction.MenuRole.AboutQtRole)
         self.actionAboutQt.triggered.connect(QApplication.instance().aboutQt)
-        availableMarkups = markups.get_available_markups()
-        if not availableMarkups:
-            print('Warning: no markups are available!')
-        if len(availableMarkups) > 1:
-            self.chooseGroup = QActionGroup(self)
-            markupActions = []
-            for markup in availableMarkups:
-                markupAction = self.act(markup.name, trigbool=self.markupFunction(markup))
-                if markup.name == globalSettings.defaultMarkup:
-                    markupAction.setChecked(True)
-                self.chooseGroup.addAction(markupAction)
-                markupActions.append(markupAction)
+
         self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.StandardKey.Bold,
             trig=lambda: self.insertFormatting('bold'))
         self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.StandardKey.Italic,
@@ -346,6 +334,12 @@ class ReTextWindow(QMainWindow):
         self.symbolBox.addItems(self.usefulChars)
         self.symbolBox.activated.connect(self.insertSymbol)
         self.updateStyleSheet()
+
+    def _create_menus(self):
+        menuPreview = QMenu()
+        menuPreview.addAction(self.actionLivePreview)
+        menuReplace = QMenu()
+        menuReplace.addAction(self.actionReplaceAll)
         menubar = self.menuBar()
         menuFile = menubar.addMenu(self.tr('&File'))
         menuEdit = menubar.addMenu(self.tr('&Edit'))
@@ -402,10 +396,22 @@ class ReTextWindow(QMainWindow):
         menuEdit.addAction(self.actionChangeEditorFont)
         menuEdit.addAction(self.actionChangePreviewFont)
         menuEdit.addSeparator()
+
+        availableMarkups = markups.get_available_markups()
+        if not availableMarkups:
+            print('Warning: no markups are available!')
         if len(availableMarkups) > 1:
             self.menuMode = menuEdit.addMenu(self.tr('Default markup'))
-            for markupAction in markupActions:
+            self.chooseGroup = QActionGroup(self)
+            markupActions = []
+            for markup in availableMarkups:
+                markupAction = self.act(markup.name, trigbool=self.markupFunction(markup))
+                if markup.name == globalSettings.defaultMarkup:
+                    markupAction.setChecked(True)
+                self.chooseGroup.addAction(markupAction)
+                markupActions.append(markupAction)
                 self.menuMode.addAction(markupAction)
+
         menuFormat = menuEdit.addMenu(self.tr('Formatting'))
         menuFormat.addAction(self.actionBold)
         menuFormat.addAction(self.actionItalic)
