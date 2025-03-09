@@ -520,8 +520,8 @@ class ReTextWindow(QMainWindow):
         menuHelp.addAction(self.actionAboutQt)
 
     def manage_toolbars_visibility(self):
-        self.toolBar.setVisible(not globalSettings.hideToolBar)
-        self.editBar.setVisible(not globalSettings.hideToolBar)
+        self.toolBar.setVisible(not globalSettings.hideToolBar and globalSettings.showToolBarFile)
+        self.editBar.setVisible(not globalSettings.hideToolBar and globalSettings.showToolBarEdit)
 
     def restoreLastOpenedFiles(self):
         for file in globalCache.lastFileList:

@@ -59,6 +59,8 @@ configOptions = {
     'font': '',
     'handleWebLinks': False,
     'hideToolBar': False,
+    'showToolBarFile': True,
+    'showToolBarEdit': True,
     'highlightCurrentLine': 'disabled',
     'iconTheme': '',
     'lineNumbersEnabled': False,

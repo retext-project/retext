@@ -33,7 +33,7 @@ from PyQt6.QtWidgets import (
     QSpinBox,
     QTabWidget,
     QVBoxLayout,
-    QWidget,
+    QWidget, QGroupBox, QHBoxLayout,
 )
 
 from ReText import getBundledIcon, getSettingsFilePath, globalSettings
@@ -152,7 +152,7 @@ class ConfigDialog(QDialog):
                 (self.tr('Ordered list mode'), 'orderedListMode'),
             )),
             (self.tr('Interface'), (
-                (self.tr('Hide toolbar'), 'hideToolBar'),
+                (self.tr('Toolbars'), 'hideToolBar'),
                 (self.tr('Icon theme name'), 'iconTheme'),
                 (self.tr('Stylesheet file'), 'styleSheet', True),
                 (self.tr('Hide tabs bar when there is only one tab'), 'tabBarAutoHide'),
@@ -222,6 +222,20 @@ class ConfigDialog(QDialog):
                 self.configurators[name].setCurrentIndex(comboBoxIndex)
             elif name == 'directoryPath':
                 self.configurators[name] = DirectorySelectButton(self, value, fileLabel)
+            elif name == 'hideToolBar':
+                label = None
+                gb = QGroupBox("Toolbars")
+                gb.setCheckable(True)
+                gb.setChecked(not globalSettings.hideToolBar)
+
+                self.configurators[name] = gb
+
+                hBox = QHBoxLayout(gb)
+                for tb, tbOption in [(self.parent.toolBar, "showToolBarFile"),
+                                     (self.parent.editBar, "showToolBarEdit"),
+                                     ]:
+                    self.configurators[tbOption] = self.__create_toolbar_entry(tb)
+                    hBox.addWidget(self.configurators[tbOption])
             elif isinstance(value, bool):
                 self.configurators[name] = QCheckBox(self)
                 self.configurators[name].setChecked(value)
@@ -240,13 +254,23 @@ class ConfigDialog(QDialog):
             elif isinstance(value, str):
                 self.configurators[name] = QLineEdit(self)
                 self.configurators[name].setText(value)
-            layout.addWidget(label, index, 0)
-            layout.addWidget(self.configurators[name], index, 1, Qt.AlignmentFlag.AlignRight)
+
+            if label:
+                layout.addWidget(label, index, 0)
+                layout.addWidget(self.configurators[name], index, 1, Qt.AlignmentFlag.AlignRight)
+            else:
+                layout.addWidget(self.configurators[name], index, 0, 1, 2)
+
             if fileLabel is not None:
                 index += 1
                 layout.addWidget(fileLabel, index, 0, 1, 2)
             index += 1
         return page
+
+    def __create_toolbar_entry(selfself, toolbar):
+        cb = QCheckBox(toolbar.windowTitle())
+        cb.setChecked(toolbar.toggleViewAction().isChecked())
+        return cb
 
     def handleRightMarginSet(self, value):
         if value < 10:
@@ -270,6 +294,10 @@ class ConfigDialog(QDialog):
                 value = configurator.currentData()
             elif isinstance(configurator, FileDialogButton):
                 value = configurator.fileName
+            elif isinstance(configurator, QGroupBox) and configurator.isCheckable():
+                value = configurator.isChecked()
+                if name == 'hideToolBar':
+                    value = not value
             setattr(globalSettings, name, value)
         self.applySettings()
 
@@ -289,7 +317,11 @@ class ConfigDialog(QDialog):
             tab.editBox.viewport().update()
         self.parent.updateStyleSheet()
         self.parent.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
+
         self.parent.manage_toolbars_visibility()
+        self.configurators["showToolBarFile"].setChecked(self.parent.toolBar.toggleViewAction().isChecked())
+        self.configurators["showToolBarEdit"].setChecked(self.parent.editBar.toggleViewAction().isChecked())
+
         path = globalSettings.directoryPath
         self.parent.fileSystemModel.setRootPath(path)
         self.parent.treeView.setRootIndex(self.parent.fileSystemModel.index(path))
