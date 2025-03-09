@@ -332,11 +332,11 @@ class ReTextWindow(QMainWindow):
         self.actionAboutQt.triggered.connect(QApplication.instance().aboutQt)
 
         self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.StandardKey.Bold,
-            trig=lambda: self.insertFormatting('bold'))
+            trig=self._on_formatting_action)
         self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.StandardKey.Italic,
-            trig=lambda: self.insertFormatting('italic'))
+            trig=self._on_formatting_action)
         self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.StandardKey.Underline,
-            trig=lambda: self.insertFormatting('underline'))
+            trig=self._on_formatting_action)
 
     def _create_menus(self):
         self._create_menu_file()
@@ -428,7 +428,10 @@ class ReTextWindow(QMainWindow):
         globalSettings.showToolBarFormat = checked
         self.manage_toolbars_visibility()
 
-
+    def _on_formatting_action(self):
+        act = self.sender()
+        if act:
+            self.insertFormatting(act.text().lower())
 
     def _create_format_toolbar(self):
         self.formatBar = QToolBar(self.tr('Format toolbar'), self)
@@ -441,9 +444,13 @@ class ReTextWindow(QMainWindow):
             self.actionUnderline.text(): self.actionUnderline,
         }
 
+        for action in existing_actions.values():
+            action.triggered.disconnect(self._on_formatting_action)
+
         for useful_tag in self.usefulTags:
             action_name = useful_tag.capitalize()
-            action = existing_actions[action_name] if action_name in existing_actions else self.act( name=action_name)
+            action = existing_actions[action_name] if action_name in existing_actions else self.act(name=action_name)
+            action.triggered.connect(self._on_formatting_action)
             self.formatBar.addAction(action)
 
     def _create_menu_file(self):
@@ -617,6 +624,7 @@ class ReTextWindow(QMainWindow):
             action.triggered[bool].connect(trigbool)
         if shct:
             action.setShortcut(shct)
+
         return action
 
     def actIcon(self, name):
