@@ -1429,7 +1429,7 @@ y=\x2232\x22 width=\x2222\
 \x22 height=\x224\x22></r\
 ect>\x0a    </g>\x0a</\
 svg>\
-\x00\x00\x11\xf2\
+\x00\x00\x11\xf3\
 <\
 ?xml version=\x221.\
 0\x22 encoding=\x22UTF\
@@ -1716,9 +1716,9 @@ C10.375,14.16145\
 32276 11.5520811\
 ,12.984375 12,12\
 .984375 Z\x22 fill=\
-\x22#000000\x22></path\
+\x22#D3D3D3\x22></path\
 >\x0a    </g>\x0a</svg\
->\
+>\x0a\
 \x00\x00\x05\xed\
 <\
 ?xml version=\x221.\
@@ -1757,12 +1757,12 @@ g>\x0a        <g id\
      <path d=\x22M6\
  5H4V19H6V13H11V\
 19H13V5H11V11H6V\
-5Z\x22 fill=\x22#663D5\
-8\x22/>\x0a           \
+5Z\x22 fill=\x22#D3D3D\
+3\x22/>\x0a           \
  <path d=\x22M18 14\
 H15V13L18 11H20V\
 19H18V14Z\x22 fill=\
-\x22#663D58\x22/>\x0a    \
+\x22#D3D3D3\x22/>\x0a    \
     </g>\x0a    </g\
 >\x0a    <defs>\x0a   \
      <filter id=\
@@ -1816,7 +1816,7 @@ _665\x22 result=\x22sh\
 ape\x22/>\x0a        <\
 /filter>\x0a    </d\
 efs>\x0a</svg>\x0a\
-\x00\x00\x04\xaa\
+\x00\x00\x04\xab\
 <\
 ?xml version=\x221.\
 0\x22 encoding=\x22UTF\
@@ -1889,11 +1889,11 @@ L19,13 L19,8 C19\
 15.2141363,16.96\
 64917 15.3560799\
 ,17 15.5,17 Z\x22 f\
-ill=\x22#000000\x22 fi\
+ill=\x22#D3D3D3\x22 fi\
 ll-rule=\x22nonzero\
 \x22></path>\x0a    </\
-g>\x0a</svg>\
-\x00\x00\x0d;\
+g>\x0a</svg>\x0a\
+\x00\x00\x0d<\
 <\
 ?xml version=\x221.\
 0\x22 encoding=\x22UTF\
@@ -1923,18 +1923,18 @@ stroke-width=\x221\x22\
  fill=\x22none\x22 fil\
 l-rule=\x22evenodd\x22\
 >\x0a        <rect \
-fill=\x22#000000\x22 o\
+fill=\x22#D3D3D3\x22 o\
 pacity=\x220.2\x22 x=\x22\
 18\x22 y=\x2212\x22 width\
 =\x2222\x22 height=\x224\x22\
 ></rect>\x0a       \
- <rect fill=\x22#00\
-0000\x22 opacity=\x220\
+ <rect fill=\x22#D3\
+D3D3\x22 opacity=\x220\
 .2\x22 x=\x2218\x22 y=\x2222\
 \x22 width=\x2222\x22 hei\
 ght=\x224\x22></rect>\x0a\
         <rect fi\
-ll=\x22#000000\x22 opa\
+ll=\x22#D3D3D3\x22 opa\
 city=\x220.2\x22 x=\x2218\
 \x22 y=\x2232\x22 width=\x22\
 22\x22 height=\x224\x22><\
@@ -2104,10 +2104,10 @@ C15.5661621,36.8\
 09082 15.2797852\
 ,37.1120605 14.8\
 31543,37.1120605\
- Z\x22 fill=\x22#00000\
-0\x22></path>\x0a    <\
-/g>\x0a</svg>\
-\x00\x00\x04\xb0\
+ Z\x22 fill=\x22#D3D3D\
+3\x22></path>\x0a    <\
+/g>\x0a</svg>\x0a\
+\x00\x00\x04\xb1\
 <\
 ?xml version=\x221.\
 0\x22 encoding=\x22UTF\
@@ -2182,9 +2182,10 @@ L16.5703125,5.56\
 812,4.72265625 L\
 16.7460938,4.722\
 65625 Z\x22 fill=\x22#\
-000000\x22></path>\x0a\
-    </g>\x0a</svg>\
-\x00\x00\x06\xc4\
+D3D3D3\x22></path>\x0a\
+    </g>\x0a</svg>\x0a\
+\
+\x00\x00\x06\xc5\
 <\
 ?xml version=\x221.\
 0\x22 encoding=\x22UTF\
@@ -2292,10 +2293,10 @@ Z M8,17 L16,17 C\
 18 L7,18 C7,17.4\
 477153 7.4477152\
 5,17 8,17 Z\x22 fil\
-l=\x22#000000\x22></pa\
+l=\x22#D3D3D3\x22></pa\
 th>\x0a    </g>\x0a</s\
-vg>\
-\x00\x00\x02\x09\
+vg>\x0a\
+\x00\x00\x02\x0d\
 <\
 svg xmlns=\x22http:\
 //www.w3.org/200\
@@ -2308,29 +2309,29 @@ fill=\x22none\x22 fill\
 stroke=\x22none\x22 st\
 roke-width=\x221\x22><\
 path id=\x22Shape\x22 \
-fill=\x22#000\x22 fill\
--rule=\x22nonzero\x22 \
-d=\x22M19,4 C20.104\
-5695,4 21,4.8954\
-305 21,6 L21,18 \
-C21,19.1045695 2\
-0.1045695,20 19,\
-20 L5,20 C3.8954\
-305,20 3,19.1045\
-695 3,18 L3,6 C3\
-,4.8954305 3.895\
-4305,4 5,4 L19,4\
- Z M5,14 L5,18 L\
-11,18 L11,14 L5,\
-14 Z M19,14 L13,\
-14 L13,18 L19,18\
- L19,14 Z M19,8 \
-L13,8 L13,12 L19\
-,12 L19,8 Z M5,1\
-2 L11,12 L11,8 L\
-5,8 L5,12 Z\x22/></\
-g></svg>\
-\x00\x00\x06\x86\
+fill=\x22#D3D3D3\x22 f\
+ill-rule=\x22nonzer\
+o\x22 d=\x22M19,4 C20.\
+1045695,4 21,4.8\
+954305 21,6 L21,\
+18 C21,19.104569\
+5 20.1045695,20 \
+19,20 L5,20 C3.8\
+954305,20 3,19.1\
+045695 3,18 L3,6\
+ C3,4.8954305 3.\
+8954305,4 5,4 L1\
+9,4 Z M5,14 L5,1\
+8 L11,18 L11,14 \
+L5,14 Z M19,14 L\
+13,14 L13,18 L19\
+,18 L19,14 Z M19\
+,8 L13,8 L13,12 \
+L19,12 L19,8 Z M\
+5,12 L11,12 L11,\
+8 L5,8 L5,12 Z\x22/\
+></g></svg>\x0a\
+\x00\x00\x06\x87\
 <\
 ?xml version=\x221.\
 0\x22 encoding=\x22UTF\
@@ -2388,7 +2389,7 @@ ke=\x22none\x22 stroke\
 .00196691,13.019\
 7819 L10.6689782\
 ,9.21845958 Z\x22 f\
-ill=\x22#000000\x22 fi\
+ill=\x22#D3D3D3\x22 fi\
 ll-rule=\x22nonzero\
 \x22 transform=\x22tra\
 nslate(7.001967,\
@@ -2426,7 +2427,7 @@ L12.2147735,10.3\
 0019669,13.01978\
 19 L20.6689782,9\
 .21845958 Z\x22 fil\
-l=\x22#000000\x22 fill\
+l=\x22#D3D3D3\x22 fill\
 -rule=\x22nonzero\x22 \
 transform=\x22trans\
 late(17.001967, \
@@ -2436,8 +2437,8 @@ late(17.001967, \
 ate(-17.001967, \
 -11.999914) \x22></\
 path>\x0a    </g>\x0a<\
-/svg>\
-\x00\x00\x04\xbe\
+/svg>\x0a\
+\x00\x00\x04\xbf\
 <\
 ?xml version=\x221.\
 0\x22 encoding=\x22UTF\
@@ -2511,11 +2512,11 @@ C11.1045695,11 1\
 ,7.8954305 8,9 C\
 8,10.1045695 8.8\
 954305,11 10,11 \
-Z\x22 fill=\x22#000000\
+Z\x22 fill=\x22#D3D3D3\
 \x22 fill-rule=\x22non\
 zero\x22></path>\x0a  \
-  </g>\x0a</svg>\
-\x00\x00\x0aH\
+  </g>\x0a</svg>\x0a\
+\x00\x00\x0aI\
 <\
 ?xml version=\x221.\
 0\x22 encoding=\x22UTF\
@@ -2547,7 +2548,7 @@ odd\x22>\x0a        <g\
  transform=\x22tran\
 slate(3.000000, \
 3.000000)\x22 fill=\
-\x22#000000\x22 fill-r\
+\x22#D3D3D3\x22 fill-r\
 ule=\x22nonzero\x22>\x0a \
            <path\
  d=\x22M3.19,9.345 \
@@ -2681,7 +2682,7 @@ C12.9011855,-0.3\
 56 L14.81,8.655 \
 Z\x22></path>\x0a     \
    </g>\x0a    </g>\
-\x0a</svg>\
+\x0a</svg>\x0a\
 \x00\x00\x06\xd0\
 <\
 ?xml version=\x221.\
@@ -2790,10 +2791,10 @@ C14.0451201,16.7\
 46513,12.98 L9.2\
 8,12.98 L9.28,16\
 .76 L13.319535,1\
-6.76 Z\x22 fill=\x22#0\
-00000\x22></path>\x0a \
+6.76 Z\x22 fill=\x22#D\
+3D3D3\x22></path>\x0a \
    </g>\x0a</svg>\x0a\
-\x00\x00\x03\x85\
+\x00\x00\x03\x86\
 <\
 ?xml version=\x221.\
 0\x22 encoding=\x22UTF\
@@ -2823,35 +2824,35 @@ efs></defs>\x0a    \
 \x22 fill=\x22none\x22 fi\
 ll-rule=\x22evenodd\
 \x22>\x0a        <circ\
-le fill=\x22#000000\
+le fill=\x22#D3D3D3\
 \x22 cx=\x2211\x22 cy=\x2214\
 \x22 r=\x223\x22></circle\
 >\x0a        <circl\
-e fill=\x22#000000\x22\
+e fill=\x22#D3D3D3\x22\
  cx=\x2211\x22 cy=\x2224\x22\
  r=\x223\x22></circle>\
 \x0a        <circle\
- fill=\x22#000000\x22 \
+ fill=\x22#D3D3D3\x22 \
 cx=\x2211\x22 cy=\x2234\x22 \
 r=\x223\x22></circle>\x0a\
         <rect fi\
-ll=\x22#000000\x22 opa\
+ll=\x22#D3D3D3\x22 opa\
 city=\x220.2\x22 x=\x2218\
 \x22 y=\x2212\x22 width=\x22\
 22\x22 height=\x224\x22><\
 /rect>\x0a        <\
-rect fill=\x22#0000\
-00\x22 opacity=\x220.2\
+rect fill=\x22#D3D3\
+D3\x22 opacity=\x220.2\
 \x22 x=\x2218\x22 y=\x2222\x22 \
 width=\x2222\x22 heigh\
 t=\x224\x22></rect>\x0a  \
       <rect fill\
-=\x22#000000\x22 opaci\
+=\x22#D3D3D3\x22 opaci\
 ty=\x220.2\x22 x=\x2218\x22 \
 y=\x2232\x22 width=\x2222\
 \x22 height=\x224\x22></r\
 ect>\x0a    </g>\x0a</\
-svg>\
+svg>\x0a\
 "
 
 qt_resource_name = b"\
@@ -2962,30 +2963,30 @@ qt_resource_struct = b"\
 \x00\x00\x01\x95{\xc2O\xc5\
 \x00\x00\x01,\x00\x00\x00\x00\x00\x01\x00\x007]\
 \x00\x00\x01\x95{\xc2O\xc5\
-\x00\x00\x00\x98\x00\x00\x00\x00\x00\x01\x00\x00o9\
-\x00\x00\x01\x95x/\x14\xff\
-\x00\x00\x01f\x00\x00\x00\x00\x00\x01\x00\x00\x99\xfb\
-\x00\x00\x01\x95x.\x11\xad\
-\x00\x00\x00\xda\x00\x00\x00\x00\x00\x01\x00\x00\x81&\
-\x00\x00\x01\x95x*\xe1\xae\
+\x00\x00\x00\x98\x00\x00\x00\x00\x00\x01\x00\x00o:\
+\x00\x00\x01\x95{\xceU\xdc\
+\x00\x00\x01f\x00\x00\x00\x00\x00\x01\x00\x00\x9a\x06\
+\x00\x00\x01\x95{\xcd\x9av\
+\x00\x00\x00\xda\x00\x00\x00\x00\x00\x01\x00\x00\x81)\
+\x00\x00\x01\x95{\xcc\xeb9\
 \x00\x00\x00Z\x00\x00\x00\x00\x00\x01\x00\x00WR\
-\x00\x00\x01\x95x.oj\
-\x00\x00\x01|\x00\x00\x00\x00\x00\x01\x00\x00\xa4G\
-\x00\x00\x01\x95x,\xc12\
-\x00\x00\x00\xba\x00\x00\x00\x00\x00\x01\x00\x00s\xe7\
-\x00\x00\x01\x95x-a[\
-\x00\x00\x01N\x00\x00\x00\x00\x00\x01\x00\x00\x959\
-\x00\x00\x01\x95x-\xeal\
-\x00\x00\x00\xf4\x00\x00\x00\x00\x00\x01\x00\x00\x85\xda\
-\x00\x00\x01\x95x,\xe0\x86\
-\x00\x00\x01\x14\x00\x00\x00\x00\x00\x01\x00\x00\x8c\xa2\
-\x00\x00\x01\x95x/vH\
-\x00\x00\x00~\x00\x00\x00\x00\x00\x01\x00\x00iH\
-\x00\x00\x01\x95{\xb4\x06\xe0\
-\x00\x00\x01\x92\x00\x00\x00\x00\x00\x01\x00\x00\xab\x1b\
-\x00\x00\x01\x95x-\xb4\xdc\
-\x00\x00\x01,\x00\x00\x00\x00\x00\x01\x00\x00\x8e\xaf\
-\x00\x00\x01\x95x.\xa9\xda\
+\x00\x00\x01\x95{\xcc\xd1\x09\
+\x00\x00\x01|\x00\x00\x00\x00\x00\x01\x00\x00\xa4S\
+\x00\x00\x01\x95{\xcc\xe5\x15\
+\x00\x00\x00\xba\x00\x00\x00\x00\x00\x01\x00\x00s\xe9\
+\x00\x00\x01\x95{\xcd\xcc;\
+\x00\x00\x01N\x00\x00\x00\x00\x00\x01\x00\x00\x95C\
+\x00\x00\x01\x95{\xce\xaaA\
+\x00\x00\x00\xf4\x00\x00\x00\x00\x00\x01\x00\x00\x85\xde\
+\x00\x00\x01\x95{\xce50\
+\x00\x00\x01\x14\x00\x00\x00\x00\x00\x01\x00\x00\x8c\xa7\
+\x00\x00\x01\x95{\xce\x07\xa7\
+\x00\x00\x00~\x00\x00\x00\x00\x00\x01\x00\x00iI\
+\x00\x00\x01\x95{\xcd\x01\x09\
+\x00\x00\x01\x92\x00\x00\x00\x00\x00\x01\x00\x00\xab'\
+\x00\x00\x01\x95{\xcev`\
+\x00\x00\x01,\x00\x00\x00\x00\x00\x01\x00\x00\x8e\xb8\
+\x00\x00\x01\x95{\xce\x965\
 "
 
 def qInitResources():

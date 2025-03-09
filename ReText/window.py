@@ -455,7 +455,7 @@ class ReTextWindow(QMainWindow):
             action_name = useful_tag.capitalize()
             action = existing_actions[action_name] if action_name in existing_actions else self.act(name=action_name)
             action.triggered.connect(self._on_formatting_action)
-            action.setIcon(QIcon(f":/icn_format/icons/format/{theme_variant}/{useful_tag}.svg")) # TODO: support theming
+            action.setIcon(QIcon(f":/icn_format/icons/format/{theme_variant}/{useful_tag}.svg")) # TODO: support on-the-fly theming instead
             self.formatBar.addAction(action)
 
     def _create_menu_file(self):
