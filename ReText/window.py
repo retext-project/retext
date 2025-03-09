@@ -337,20 +337,6 @@ class ReTextWindow(QMainWindow):
             trig=lambda: self.insertFormatting('italic'))
         self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.StandardKey.Underline,
             trig=lambda: self.insertFormatting('underline'))
-        self.usefulTags = ('header', 'italic', 'bold', 'underline', 'numbering',
-            'bullets', 'image', 'link', 'inline code', 'code block', 'blockquote',
-            'table')
-        self.usefulChars = ('deg', 'divide', 'euro', 'hellip', 'laquo', 'larr',
-            'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
-            'rarr', 'rsquo', 'times')
-        self.formattingBox = QComboBox(self.editBar)
-        self.formattingBox.addItem(self.tr('Formatting'))
-        self.formattingBox.addItems(self.usefulTags)
-        self.formattingBox.textActivated.connect(self.insertFormatting)
-        self.symbolBox = QComboBox(self.editBar)
-        self.symbolBox.addItem(self.tr('Symbols'))
-        self.symbolBox.addItems(self.usefulChars)
-        self.symbolBox.activated.connect(self.insertSymbol)
 
     def _create_menus(self):
         self._create_menu_file()
@@ -361,6 +347,7 @@ class ReTextWindow(QMainWindow):
         self._create_toolbar_file()
         self._create_toolbar_edit()
         self._create_toolbar_search()
+        self._create_format_toolbar()
 
         self.manage_toolbars_visibility()
 
@@ -381,6 +368,14 @@ class ReTextWindow(QMainWindow):
         self.toolBar.addWidget(previewButton)
         self.toolBar.addAction(self.actionFullScreen)
 
+    def __populate_combo(self, parent, title, items, handler):
+        cb = QComboBox(parent)
+        cb.addItem(title)
+        cb.addItems(items)
+        cb.textActivated.connect(handler)
+
+        return cb
+
     def _create_toolbar_edit(self):
         self.editBar.addAction(self.actionUndo)
         self.editBar.addAction(self.actionRedo)
@@ -389,7 +384,17 @@ class ReTextWindow(QMainWindow):
         self.editBar.addAction(self.actionCopy)
         self.editBar.addAction(self.actionPaste)
         self.editBar.addSeparator()
-        self.editBar.addWidget(self.formattingBox)
+
+        self.usefulTags = ('header', 'italic', 'bold', 'underline', 'numbering',
+                           'bullets', 'image', 'link', 'inline code', 'code block', 'blockquote',
+                           'table')
+        self.formattingBox = self.__populate_combo(self.editBar, self.tr('Formatting'), self.usefulTags, self.insertFormatting)
+        self.formattingBoxAction = self.editBar.addWidget(self.formattingBox)
+
+        self.usefulChars = ('deg', 'divide', 'euro', 'hellip', 'laquo', 'larr',
+                            'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
+                            'rarr', 'rsquo', 'times')
+        self.symbolBox = self.__populate_combo(self.editBar, self.tr('Symbols'), self.usefulChars, self.insertSymbol)
         self.editBar.addWidget(self.symbolBox)
 
     def _create_toolbar_search(self):
@@ -418,6 +423,28 @@ class ReTextWindow(QMainWindow):
         self.searchBar.addAction(self.actionCloseSearch)
         self.searchBar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
         self.searchBar.setVisible(False)
+
+    def on_format_toolbar_toggled(self, checked):
+        globalSettings.showToolBarFormat = checked
+        self.manage_toolbars_visibility()
+
+
+
+    def _create_format_toolbar(self):
+        self.formatBar = QToolBar(self.tr('Format toolbar'), self)
+        self.addToolBar(Qt.ToolBarArea.BottomToolBarArea, self.formatBar)
+        self.formatBar.toggleViewAction().toggled.connect(self.on_format_toolbar_toggled)
+
+        existing_actions = {
+            self.actionBold.text(): self.actionBold,
+            self.actionItalic.text(): self.actionItalic,
+            self.actionUnderline.text(): self.actionUnderline,
+        }
+
+        for useful_tag in self.usefulTags:
+            action_name = useful_tag.capitalize()
+            action = existing_actions[action_name] if action_name in existing_actions else self.act( name=action_name)
+            self.formatBar.addAction(action)
 
     def _create_menu_file(self):
         menuFile = self.menuBar().addMenu(self.tr('&File'))
@@ -518,10 +545,6 @@ class ReTextWindow(QMainWindow):
         menuHelp.addSeparator()
         menuHelp.addAction(self.actionAbout)
         menuHelp.addAction(self.actionAboutQt)
-
-    def manage_toolbars_visibility(self):
-        self.toolBar.setVisible(not globalSettings.hideToolBar and globalSettings.showToolBarFile)
-        self.editBar.setVisible(not globalSettings.hideToolBar and globalSettings.showToolBarEdit)
 
     def restoreLastOpenedFiles(self):
         for file in globalCache.lastFileList:
@@ -1412,3 +1435,17 @@ class ReTextWindow(QMainWindow):
         for tab in self.iterateTabs():
             if not tab.fileName:
                 tab.updateActiveMarkupClass()
+
+    def manage_toolbars_visibility(self):
+        shown = not globalSettings.hideToolBar
+
+        self.toolBar.setVisible(shown and globalSettings.showToolBarFile)
+        self.editBar.setVisible(shown and globalSettings.showToolBarEdit)
+
+        if shown:
+            if globalSettings.showToolBarFormat:
+                self.formatBar.setVisible(True)
+                self.formattingBoxAction.setVisible(False)
+            else:
+                self.formatBar.setVisible(False)
+                self.formattingBoxAction.setVisible(True)

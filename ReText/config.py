@@ -233,6 +233,7 @@ class ConfigDialog(QDialog):
                 hBox = QHBoxLayout(gb)
                 for tb, tbOption in [(self.parent.toolBar, "showToolBarFile"),
                                      (self.parent.editBar, "showToolBarEdit"),
+                                     (self.parent.formatBar, "showToolBarFormat"),
                                      ]:
                     self.configurators[tbOption] = self.__create_toolbar_entry(tb)
                     hBox.addWidget(self.configurators[tbOption])
@@ -321,6 +322,8 @@ class ConfigDialog(QDialog):
         self.parent.manage_toolbars_visibility()
         self.configurators["showToolBarFile"].setChecked(self.parent.toolBar.toggleViewAction().isChecked())
         self.configurators["showToolBarEdit"].setChecked(self.parent.editBar.toggleViewAction().isChecked())
+        self.configurators["showToolBarFormat"].setChecked(self.parent.formatBar.toggleViewAction().isChecked())
+
 
         path = globalSettings.directoryPath
         self.parent.fileSystemModel.setRootPath(path)

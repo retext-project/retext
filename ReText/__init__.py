@@ -61,6 +61,7 @@ configOptions = {
     'hideToolBar': False,
     'showToolBarFile': True,
     'showToolBarEdit': True,
+    'showToolBarFormat': True,
     'highlightCurrentLine': 'disabled',
     'iconTheme': '',
     'lineNumbersEnabled': False,
