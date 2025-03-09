@@ -38,8 +38,8 @@ from ReText.tab import (
     ReTextWebEnginePreview,
 )
 from ReText.tabledialog import InsertTableDialog
-from ReText import retext_rc
 from ReText.editor import detectThemeVariant
+from ReText import retext_rc
 
 try:
     from ReText.fakevimeditor import FakeVimMode, ReTextFakeVimHandler
@@ -146,12 +146,6 @@ class ReTextWindow(QMainWindow):
         self.setCentralWidget(self.splitter)
         self.tabWidget.currentChanged.connect(self.changeIndex)
         self.tabWidget.tabCloseRequested.connect(self.closeTab)
-        self.toolBar = QToolBar(self.tr('File toolbar'), self)
-        self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.toolBar)
-        self.editBar = QToolBar(self.tr('Edit toolbar'), self)
-        self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.editBar)
-        self.searchBar = QToolBar(self.tr('Search toolbar'), self)
-        self.addToolBar(Qt.ToolBarArea.BottomToolBarArea, self.searchBar)
 
         self._create_actions()
         self._create_menus()
@@ -226,7 +220,7 @@ class ReTextWindow(QMainWindow):
             self.search, shct=QKeySequence.StandardKey.Find)
         self.actionGoToLine = self.act(self.tr('Go to line'),
             trig=self.goToLine, shct=Qt.Modifier.CTRL | Qt.Key.Key_G)
-        self.searchBar.visibilityChanged.connect(self.searchBarVisibilityChanged)
+
         self.actionPreview = self.act(self.tr('Preview'), shct=Qt.Modifier.CTRL | Qt.Key.Key_E,
             trigbool=self.preview)
         if QIcon.hasThemeIcon('document-preview'):
@@ -354,6 +348,9 @@ class ReTextWindow(QMainWindow):
         self.manage_toolbars_visibility()
 
     def _create_toolbar_file(self):
+        self.toolBar = QToolBar(self.tr('File toolbar'), self)
+        self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.toolBar)
+
         self.toolBar.addAction(self.actionNew)
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.actionOpen)
@@ -379,6 +376,9 @@ class ReTextWindow(QMainWindow):
         return cb
 
     def _create_toolbar_edit(self):
+        self.editBar = QToolBar(self.tr('Edit toolbar'), self)
+        self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.editBar)
+
         self.editBar.addAction(self.actionUndo)
         self.editBar.addAction(self.actionRedo)
         self.editBar.addSeparator()
@@ -400,6 +400,11 @@ class ReTextWindow(QMainWindow):
         self.editBar.addWidget(self.symbolBox)
 
     def _create_toolbar_search(self):
+        self.searchBar = QToolBar(self.tr('Search toolbar'), self)
+        self.addToolBar(Qt.ToolBarArea.BottomToolBarArea, self.searchBar)
+
+        self.searchBar.visibilityChanged.connect(self.searchBarVisibilityChanged)
+
         self.searchEdit = QLineEdit(self.searchBar)
         self.searchEdit.setPlaceholderText(self.tr('Search'))
         self.searchEdit.returnPressed.connect(self.find)
