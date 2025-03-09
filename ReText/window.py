@@ -38,6 +38,8 @@ from ReText.tab import (
     ReTextWebEnginePreview,
 )
 from ReText.tabledialog import InsertTableDialog
+from ReText import retext_rc
+from ReText.editor import detectThemeVariant
 
 try:
     from ReText.fakevimeditor import FakeVimMode, ReTextFakeVimHandler
@@ -447,10 +449,13 @@ class ReTextWindow(QMainWindow):
         for action in existing_actions.values():
             action.triggered.disconnect(self._on_formatting_action)
 
+        theme_variant = detectThemeVariant()
+
         for useful_tag in self.usefulTags:
             action_name = useful_tag.capitalize()
             action = existing_actions[action_name] if action_name in existing_actions else self.act(name=action_name)
             action.triggered.connect(self._on_formatting_action)
+            action.setIcon(QIcon(f":/icn_format/icons/format/{theme_variant}/{useful_tag}.svg")) # TODO: support theming
             self.formatBar.addAction(action)
 
     def _create_menu_file(self):
@@ -624,6 +629,10 @@ class ReTextWindow(QMainWindow):
             action.triggered[bool].connect(trigbool)
         if shct:
             action.setShortcut(shct)
+
+        shortcut_hint = action.shortcut().toString()
+        if shortcut_hint:
+            action.setToolTip(f"{action.text()} ({shortcut_hint})")
 
         return action
 
