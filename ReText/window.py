@@ -528,6 +528,13 @@ class ReTextWindow(QMainWindow):
         menu = QMenu(self)
 
         clicked_tab_index = self.tabWidget.tabBar().tabAt(p)
+        if -1 == clicked_tab_index:
+            raise RuntimeWarning(f"No tab found at [{p.x()};{p.y()}].")
+
+        clicked_tab = self.tabWidget.widget(clicked_tab_index)
+        if not clicked_tab:
+            raise RuntimeWarning(f"No tab found at index {clicked_tab_index}.")
+
         actions = {}
 
         for action_type in TabActionTypes:
@@ -540,7 +547,6 @@ class ReTextWindow(QMainWindow):
 
         total_tabs = self.tabWidget.count()
 
-        clicked_tab = self.tabWidget.widget(clicked_tab_index)
         can_copy_file = clicked_tab and QFileInfo.exists(clicked_tab.fileName)
         actions[TabActionTypes.CopyFileName].setEnabled(can_copy_file)
         actions[TabActionTypes.CopyFilePath].setEnabled(can_copy_file)
