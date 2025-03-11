@@ -522,6 +522,20 @@ class ReTextWindow(QMainWindow):
 
         self._init_tabs_context_menu()
 
+    def _init_tabs_context_menu(self):
+        tabBar = self.tabWidget.tabBar()
+        tabBar.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        tabBar.customContextMenuRequested.connect(self._on_tab_context_menu_requested)
+
+        self._tabs_ctx_menu = QMenu(self)
+        self._tabs_ctx_menu_actions = {}
+
+        for action_type in TabActionTypes:
+            if action_type is not TabActionTypes.Unknown:
+                self._tabs_ctx_menu_actions[action_type] = self._tabs_ctx_menu.addAction(action_type.value)
+            if action_type is TabActionTypes.CopyFilePath:
+                self._tabs_ctx_menu.addSeparator()
+
     def _on_tab_context_menu_requested(self, p):
 
         clicked_tab_index = self.tabWidget.tabBar().tabAt(p)
@@ -543,13 +557,14 @@ class ReTextWindow(QMainWindow):
         self._tabs_ctx_menu_actions[TabActionTypes.CopyFileName].setEnabled(can_copy_file)
         self._tabs_ctx_menu_actions[TabActionTypes.CopyFilePath].setEnabled(can_copy_file)
 
+        self._tabs_ctx_menu_actions[TabActionTypes.CloseAll].setEnabled(total_tabs > 1)
         self._tabs_ctx_menu_actions[TabActionTypes.CloseToLeft].setEnabled(clicked_tab_index > 0)
         self._tabs_ctx_menu_actions[TabActionTypes.CloseToRight].setEnabled(clicked_tab_index < total_tabs-1)
         self._tabs_ctx_menu_actions[TabActionTypes.CloseOther].setEnabled(total_tabs > 1)
 
         has_unmodified = any(not self.tabWidget.widget(i).editBox.document().isModified()
                              for i in range(self.tabWidget.count()))
-        self._tabs_ctx_menu_actions[TabActionTypes.CloseUnmodified].setEnabled(has_unmodified)
+        self._tabs_ctx_menu_actions[TabActionTypes.CloseUnmodified].setEnabled(has_unmodified and total_tabs > 1)
 
         chosen_action = self._tabs_ctx_menu.exec(p)
         self._handle_tab_context_action(chosen_action)
@@ -1461,18 +1476,3 @@ class ReTextWindow(QMainWindow):
         for tab in self.iterateTabs():
             if not tab.fileName:
                 tab.updateActiveMarkupClass()
-
-    def _init_tabs_context_menu(self):
-        tabBar = self.tabWidget.tabBar()
-        tabBar.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
-        tabBar.customContextMenuRequested.connect(self._on_tab_context_menu_requested)
-
-        self._tabs_ctx_menu = QMenu(self)
-        self._tabs_ctx_menu_actions = {}
-
-        for action_type in TabActionTypes:
-            if action_type is not TabActionTypes.Unknown:
-                self._tabs_ctx_menu_actions[action_type] = self._tabs_ctx_menu.addAction(action_type.value)
-            if action_type is TabActionTypes.CopyFilePath:
-                self._tabs_ctx_menu.addSeparator()
-                
