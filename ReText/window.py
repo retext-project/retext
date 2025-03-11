@@ -535,6 +535,8 @@ class ReTextWindow(QMainWindow):
         if not clicked_tab:
             raise RuntimeWarning(f"No tab found at index {clicked_tab_index}.")
 
+        self.tabWidget.setCurrentIndex(clicked_tab_index)
+        
         actions = {}
 
         for action_type in TabActionTypes:
