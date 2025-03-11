@@ -6,6 +6,9 @@ class TabActionTypes(StrEnum):
 
     Unknown = ''
 
+    CopyFileName = QObject.tr('Copy File Name')
+    CopyFilePath = QObject.tr('Copy file path')
+
     Close = QObject.tr('Close')
     CloseAll = QObject.tr('Close All Tabs')
     CloseOther = QObject.tr('Close Other Tabs')

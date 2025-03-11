@@ -535,7 +535,9 @@ class ReTextWindow(QMainWindow):
                 action = menu.addAction(action_type.value)
                 action.target_tab_pos = clicked_tab_index
                 actions[action_type] = action
-
+            if action_type is TabActionTypes.CopyFilePath:
+                menu.addSeparator()
+            
         total_tabs = self.tabWidget.count()
         actions[TabActionTypes.CloseToLeft].setEnabled(clicked_tab_index > 0)
         actions[TabActionTypes.CloseToRight].setEnabled(clicked_tab_index < total_tabs-1)
