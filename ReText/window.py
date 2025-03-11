@@ -37,6 +37,7 @@ from ReText.tab import (
     ReTextTab,
     ReTextWebEnginePreview,
 )
+from ReText.tabactiontypes import TabActionTypes
 from ReText.tabledialog import InsertTableDialog
 
 try:
@@ -518,6 +519,64 @@ class ReTextWindow(QMainWindow):
         self.tabWidget.dragEnterEvent = dragEnterEvent
         self.tabWidget.dropEvent = dropEvent
         self.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
+
+        tabBar = self.tabWidget.tabBar()
+        tabBar.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        tabBar.customContextMenuRequested.connect(self._on_tab_context_menu_requested)
+
+    def _on_tab_context_menu_requested(self, p):
+        menu = QMenu(self)
+
+        clicked_tab_index = self.tabWidget.tabBar().tabAt(p)
+        actions = {}
+
+        for action_type in TabActionTypes:
+            if action_type is not TabActionTypes.Unknown:
+                action = menu.addAction(action_type.value)
+                action.target_tab_pos = clicked_tab_index
+                actions[action_type] = action
+
+        total_tabs = self.tabWidget.count()
+        actions[TabActionTypes.CloseToLeft].setEnabled(clicked_tab_index > 0)
+        actions[TabActionTypes.CloseToRight].setEnabled(clicked_tab_index < total_tabs-1)
+        actions[TabActionTypes.CloseOther].setEnabled(total_tabs > 1)
+
+        has_unmodified = any(not self.tabWidget.widget(i).editBox.document().isModified()
+                             for i in range(self.tabWidget.count()))
+        actions[TabActionTypes.CloseUnmodified].setEnabled(has_unmodified)
+
+        chosen_action = menu.exec(p)
+        self._handle_tab_context_action(chosen_action)
+
+    def _handle_tab_context_action(self, action):
+        if not action or action.text() == TabActionTypes.Unknown.value:
+            return
+
+        curr_tab = action.target_tab_pos
+        total_tabs = self.tabWidget.count()
+        last_tab = total_tabs - 1
+
+        indices_to_close = []
+        action_type = TabActionTypes(action.text())
+
+        if action_type is TabActionTypes.Close:
+            indices_to_close = [curr_tab]
+        elif action_type is TabActionTypes.CloseAll:
+            indices_to_close = list(range(last_tab + 1))
+        elif action_type is TabActionTypes.CloseOther:
+            indices_to_close = [i for i in range(last_tab + 1) if i != curr_tab]
+        elif action_type is TabActionTypes.CloseUnmodified:
+            indices_to_close = [i for i in range(last_tab + 1)
+                                if i != curr_tab and not self.tabWidget.widget(i).editBox.document().isModified()]
+        elif action_type is TabActionTypes.CloseToLeft:
+            indices_to_close = list(range(curr_tab))
+        elif action_type is TabActionTypes.CloseToRight:
+            indices_to_close = list(range(curr_tab + 1, last_tab + 1))
+
+        indices_to_close.sort(reverse=True)
+        
+        for tab_num in indices_to_close:
+            self.closeTab(tab_num)
 
     def initDirectoryTree(self):
         path = globalSettings.directoryPath
