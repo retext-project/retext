@@ -537,8 +537,14 @@ class ReTextWindow(QMainWindow):
                 actions[action_type] = action
             if action_type is TabActionTypes.CopyFilePath:
                 menu.addSeparator()
-            
+
         total_tabs = self.tabWidget.count()
+
+        clicked_tab = self.tabWidget.widget(clicked_tab_index)
+        can_copy_file = clicked_tab and QFileInfo.exists(clicked_tab.fileName)
+        actions[TabActionTypes.CopyFileName].setEnabled(can_copy_file)
+        actions[TabActionTypes.CopyFilePath].setEnabled(can_copy_file)
+
         actions[TabActionTypes.CloseToLeft].setEnabled(clicked_tab_index > 0)
         actions[TabActionTypes.CloseToRight].setEnabled(clicked_tab_index < total_tabs-1)
         actions[TabActionTypes.CloseOther].setEnabled(total_tabs > 1)
@@ -554,12 +560,15 @@ class ReTextWindow(QMainWindow):
         if not action or action.text() == TabActionTypes.Unknown.value:
             return
 
+        action_type = TabActionTypes(action.text())
         curr_tab = action.target_tab_pos
+
+        if action_type in [TabActionTypes.CopyFileName, TabActionTypes.CopyFilePath]:
+            return self._handle_tab_file_copy_action(curr_tab, action_type)
+
         total_tabs = self.tabWidget.count()
         last_tab = total_tabs - 1
-
         indices_to_close = []
-        action_type = TabActionTypes(action.text())
 
         if action_type is TabActionTypes.Close:
             indices_to_close = [curr_tab]
@@ -579,6 +588,25 @@ class ReTextWindow(QMainWindow):
         
         for tab_num in indices_to_close:
             self.closeTab(tab_num)
+
+    def _handle_tab_file_copy_action(self, tab_num, tab_act_type):
+        tab = self.tabWidget.widget(tab_num)
+        if not tab:
+            return
+
+        fi = QFileInfo(tab.fileName)
+        if not fi.exists():
+            return
+
+        text_to_copy = ''
+        if tab_act_type is TabActionTypes.CopyFileName:
+            text_to_copy = fi.fileName()
+        elif tab_act_type is TabActionTypes.CopyFilePath:
+            text_to_copy = fi.absoluteFilePath()
+
+        if text_to_copy:
+            clipboard = QApplication.instance().clipboard()
+            clipboard.setText(text_to_copy)
 
     def initDirectoryTree(self):
         path = globalSettings.directoryPath
