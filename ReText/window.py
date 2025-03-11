@@ -520,12 +520,9 @@ class ReTextWindow(QMainWindow):
         self.tabWidget.dropEvent = dropEvent
         self.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
 
-        tabBar = self.tabWidget.tabBar()
-        tabBar.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
-        tabBar.customContextMenuRequested.connect(self._on_tab_context_menu_requested)
+        self._init_tabs_context_menu()
 
     def _on_tab_context_menu_requested(self, p):
-        menu = QMenu(self)
 
         clicked_tab_index = self.tabWidget.tabBar().tabAt(p)
         if -1 == clicked_tab_index:
@@ -536,32 +533,25 @@ class ReTextWindow(QMainWindow):
             raise RuntimeWarning(f"No tab found at index {clicked_tab_index}.")
 
         self.tabWidget.setCurrentIndex(clicked_tab_index)
-        
-        actions = {}
 
-        for action_type in TabActionTypes:
-            if action_type is not TabActionTypes.Unknown:
-                action = menu.addAction(action_type.value)
-                action.target_tab_pos = clicked_tab_index
-                actions[action_type] = action
-            if action_type is TabActionTypes.CopyFilePath:
-                menu.addSeparator()
+        for action in self._tabs_ctx_menu_actions.values():
+            action.target_tab_pos = clicked_tab_index
 
         total_tabs = self.tabWidget.count()
 
         can_copy_file = clicked_tab and QFileInfo.exists(clicked_tab.fileName)
-        actions[TabActionTypes.CopyFileName].setEnabled(can_copy_file)
-        actions[TabActionTypes.CopyFilePath].setEnabled(can_copy_file)
+        self._tabs_ctx_menu_actions[TabActionTypes.CopyFileName].setEnabled(can_copy_file)
+        self._tabs_ctx_menu_actions[TabActionTypes.CopyFilePath].setEnabled(can_copy_file)
 
-        actions[TabActionTypes.CloseToLeft].setEnabled(clicked_tab_index > 0)
-        actions[TabActionTypes.CloseToRight].setEnabled(clicked_tab_index < total_tabs-1)
-        actions[TabActionTypes.CloseOther].setEnabled(total_tabs > 1)
+        self._tabs_ctx_menu_actions[TabActionTypes.CloseToLeft].setEnabled(clicked_tab_index > 0)
+        self._tabs_ctx_menu_actions[TabActionTypes.CloseToRight].setEnabled(clicked_tab_index < total_tabs-1)
+        self._tabs_ctx_menu_actions[TabActionTypes.CloseOther].setEnabled(total_tabs > 1)
 
         has_unmodified = any(not self.tabWidget.widget(i).editBox.document().isModified()
                              for i in range(self.tabWidget.count()))
-        actions[TabActionTypes.CloseUnmodified].setEnabled(has_unmodified)
+        self._tabs_ctx_menu_actions[TabActionTypes.CloseUnmodified].setEnabled(has_unmodified)
 
-        chosen_action = menu.exec(p)
+        chosen_action = self._tabs_ctx_menu.exec(p)
         self._handle_tab_context_action(chosen_action)
 
     def _handle_tab_context_action(self, action):
@@ -1471,3 +1461,18 @@ class ReTextWindow(QMainWindow):
         for tab in self.iterateTabs():
             if not tab.fileName:
                 tab.updateActiveMarkupClass()
+
+    def _init_tabs_context_menu(self):
+        tabBar = self.tabWidget.tabBar()
+        tabBar.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        tabBar.customContextMenuRequested.connect(self._on_tab_context_menu_requested)
+
+        self._tabs_ctx_menu = QMenu(self)
+        self._tabs_ctx_menu_actions = {}
+
+        for action_type in TabActionTypes:
+            if action_type is not TabActionTypes.Unknown:
+                self._tabs_ctx_menu_actions[action_type] = self._tabs_ctx_menu.addAction(action_type.value)
+            if action_type is TabActionTypes.CopyFilePath:
+                self._tabs_ctx_menu.addSeparator()
+                
