@@ -501,8 +501,11 @@ class ReTextWindow(QMainWindow):
     def updateStyleSheet(self):
         self.ss = None
         if globalSettings.styleSheet:
-            with open(globalSettings.styleSheet) as sheetfile:
-                self.ss = sheetfile.read()
+            try:
+                with open(globalSettings.styleSheet) as sheetfile:
+                    self.ss = sheetfile.read()
+            except OSError as ex:
+                QMessageBox.warning(self, '', str(ex))
 
     def initTabWidget(self):
         def dragEnterEvent(e):
