@@ -84,12 +84,14 @@ colors = {
     'urlPopupBorder':       {'light': '#64323232', 'dark': '#64fafafa'},
 }
 
-colorValues = {}
-
-def updateColorScheme(settings=settings):
+def detectThemeVariant():
     palette = QApplication.palette()
     windowColor = palette.color(QPalette.ColorRole.Window)
-    themeVariant = 'light' if windowColor.lightness() > 150 else 'dark'
+    return 'light' if windowColor.lightness() > 150 else 'dark'
+
+colorValues = {}
+def updateColorScheme(settings=settings):
+    themeVariant = detectThemeVariant()
     settings.beginGroup('ColorScheme')
     for key in colors:
         if settings.contains(key):
