@@ -148,7 +148,7 @@ def documentIndentLess(document, cursor, globalSettings=globalSettings):
 class ReTextEdit(QTextEdit):
     resized = pyqtSignal(QRect)
     scrollLimitReached = pyqtSignal(QWheelEvent)
-    returnBlockPattern = re.compile("^[\\s]*([*>-]|\\d+\\.) ")
+    returnBlockPattern = re.compile("^[\\s]*([*>-]|\\d+\\.)? ")
     orderedListPattern = re.compile("^([\\s]*)(\\d+)\\. $")
     wordPattern = re.compile(r"\w+")
     nonAlphaNumPattern = re.compile(r"\W")
