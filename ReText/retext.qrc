@@ -1,0 +1,28 @@
+<RCC>
+    <qresource prefix="/icn_format">
+        <file>icons/format/light/blockquote.svg</file>
+        <file>icons/format/light/bold.svg</file>
+        <file>icons/format/light/bullets.svg</file>
+        <file>icons/format/light/code block.svg</file>
+        <file>icons/format/light/header.svg</file>
+        <file>icons/format/light/image.svg</file>
+        <file>icons/format/light/inline code.svg</file>
+        <file>icons/format/light/italic.svg</file>
+        <file>icons/format/light/link.svg</file>
+        <file>icons/format/light/numbering.svg</file>
+        <file>icons/format/light/table.svg</file>
+        <file>icons/format/light/underline.svg</file>
+        <file>icons/format/dark/blockquote.svg</file>
+        <file>icons/format/dark/bold.svg</file>
+        <file>icons/format/dark/bullets.svg</file>
+        <file>icons/format/dark/code block.svg</file>
+        <file>icons/format/dark/header.svg</file>
+        <file>icons/format/dark/image.svg</file>
+        <file>icons/format/dark/inline code.svg</file>
+        <file>icons/format/dark/italic.svg</file>
+        <file>icons/format/dark/link.svg</file>
+        <file>icons/format/dark/numbering.svg</file>
+        <file>icons/format/dark/table.svg</file>
+        <file>icons/format/dark/underline.svg</file>
+    </qresource>
+</RCC>
