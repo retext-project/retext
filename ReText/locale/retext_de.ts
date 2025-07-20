@@ -36,7 +36,7 @@
     <message>
       <location filename="../config.py" line="136" />
       <source>Default preview state</source>
-      <translation type="unfinished" />
+      <translation>Standardmäßige Vorschau</translation>
     </message>
     <message>
       <location filename="../config.py" line="137" />
@@ -72,7 +72,7 @@
     <message>
       <location filename="../config.py" line="146" />
       <source>Line numbers are relative to current line</source>
-      <translation>Zeilennummern verstehen sich relativ zur aktuellen Zeile</translation>
+      <translation>Zeilennummern verhalten sich relativ zur aktuellen Zeile</translation>
     </message>
     <message>
       <location filename="../config.py" line="147" />
@@ -127,7 +127,7 @@
     <message>
       <location filename="../config.py" line="158" />
       <source>Hide tabs bar when there is only one tab</source>
-      <translation>Reisterleiste verbergen wenn nur ein Reiter offen ist</translation>
+      <translation>Reiterleiste verbergen wenn nur ein Reiter offen ist</translation>
     </message>
     <message>
       <location filename="../config.py" line="159" />
@@ -582,7 +582,7 @@ Do you want to create it?</source>
     <message>
       <location filename="../window.py" line="305" />
       <source>What's new</source>
-      <translation type="unfinished" />
+      <translation>Neuigkeiten</translation>
     </message>
     <message>
       <location filename="../window.py" line="306" />
@@ -805,14 +805,14 @@ verworfen werden)?</translation>
     <message>
       <location filename="../window.py" line="1268" />
       <source>Automatic saving has been temporarily disabled for this tab to prevent data loss. It will be re-enabled when you reload the file or save it manually.</source>
-      <translation>Automatisches Speichern für diesen Reiter wurde vorübergehend deaktiviert um Datenverlust zu verhindern. Es wird reaktiviert wenn Sie die Datei neu laden oder manuell speichern.</translation>
+      <translation>Automatisches Speichern für diesen Reiter wurde vorübergehend deaktiviert, um Datenverlust zu verhindern. Es wird reaktiviert, wenn Sie die Datei neu laden oder manuell speichern.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1293" />
       <source>The document has been modified.
 Do you want to save your changes?</source>
       <translation>Das Dokument wurde verändert.
-Möchten Sie Ihre Änderungen speichern ?</translation>
+Möchten Sie Ihre Änderungen speichern?</translation>
     </message>
     <message>
       <location filename="../window.py" line="1330" />
@@ -822,7 +822,7 @@ Möchten Sie Ihre Änderungen speichern ?</translation>
     <message>
       <location filename="../window.py" line="1341" />
       <source>Select one or several images to open</source>
-      <translation type="unfinished" />
+      <translation>Wählen Sie ein oder mehrere Bild/-er zum Öffnen.</translation>
     </message>
     <message>
       <location filename="../window.py" line="1362" />
@@ -832,7 +832,7 @@ Möchten Sie Ihre Änderungen speichern ?</translation>
     <message>
       <location filename="../window.py" line="1363" />
       <source>Simple but powerful editor for Markdown and reStructuredText</source>
-      <translation>Einfacher aber mächtiger Editor für Markdown and reStructuredText</translation>
+      <translation>Einfacher aber mächtiger Editor für Markdown und reStructuredText</translation>
     </message>
     <message>
       <location filename="../window.py" line="1365" />
