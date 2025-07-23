@@ -157,8 +157,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
     )
 
     def highlightBlock(self, text):
-    # If inside fenced code block (not the fence line)
-        if self.previousBlockState() == 1:
+        if self.docType == 'Markdown' and self.previousBlockState() == 1:
             # Check if this line closes fenced block
             if reFencedCodeEnd.match(text):
                 # Fence closes: highlight fence line in yellowgreen (codeSpans)
@@ -177,7 +176,7 @@ class ReTextHighlighter(QSyntaxHighlighter):
             return
 
         # If this line is a fence opening line (3+ backticks with optional lang)
-        if reFencedCodeStart.match(text):
+        if self.docType == 'Markdown' and reFencedCodeStart.match(text):
             fmt = QTextCharFormat()
             fmt.setForeground(getColor('codeSpans'))  # fence color yellowgreen
             fmt.setFontItalic(True)
