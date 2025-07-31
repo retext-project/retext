@@ -38,6 +38,8 @@ from ReText.tab import (
     ReTextWebEnginePreview,
 )
 from ReText.tabledialog import InsertTableDialog
+from ReText.editor import detectThemeVariant
+from ReText import retext_rc
 
 try:
     from ReText.fakevimeditor import FakeVimMode, ReTextFakeVimHandler
@@ -107,7 +109,7 @@ class ReTextWindow(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
         self.resize(950, 700)
-        qApp = QApplication.instance()
+
         screenRect = self.screen().geometry()
         if globalCache.windowGeometry:
             self.restoreGeometry(globalCache.windowGeometry)
@@ -144,14 +146,31 @@ class ReTextWindow(QMainWindow):
         self.setCentralWidget(self.splitter)
         self.tabWidget.currentChanged.connect(self.changeIndex)
         self.tabWidget.tabCloseRequested.connect(self.closeTab)
-        self.toolBar = QToolBar(self.tr('File toolbar'), self)
-        self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.toolBar)
-        self.editBar = QToolBar(self.tr('Edit toolbar'), self)
-        self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.editBar)
-        self.searchBar = QToolBar(self.tr('Search toolbar'), self)
-        self.addToolBar(Qt.ToolBarArea.BottomToolBarArea, self.searchBar)
-        self.toolBar.setVisible(not globalSettings.hideToolBar)
-        self.editBar.setVisible(not globalSettings.hideToolBar)
+
+        self._create_actions()
+        self._create_menus()
+        self._create_toolbars()
+
+        self.autoSaveTimer = QTimer(self)
+        self.autoSaveTimer.timeout.connect(self.saveAll)
+        if globalSettings.autoSave:
+            self.autoSaveTimer.start(60000)
+        self.ind = None
+        if enchant is not None:
+            self.spellCheckLanguages = globalSettings.spellCheckLocale
+            languages, errors = self.getSpellCheckDictionaries()
+            for error in errors:
+                warnings.warn(error, RuntimeWarning)
+            if not languages:
+                globalSettings.spellCheck = False
+            if globalSettings.spellCheck:
+                self.actionEnableSC.setChecked(True)
+        self.fileSystemWatcher = QFileSystemWatcher()
+        self.fileSystemWatcher.fileChanged.connect(self.fileChanged)
+
+        self.updateStyleSheet()
+
+    def _create_actions(self):
         self.actionNew = self.act(self.tr('New'), 'document-new',
             self.createNew, shct=QKeySequence.StandardKey.New)
         self.actionOpen = self.act(self.tr('Open'), 'document-open',
@@ -201,7 +220,7 @@ class ReTextWindow(QMainWindow):
             self.search, shct=QKeySequence.StandardKey.Find)
         self.actionGoToLine = self.act(self.tr('Go to line'),
             trig=self.goToLine, shct=Qt.Modifier.CTRL | Qt.Key.Key_G)
-        self.searchBar.visibilityChanged.connect(self.searchBarVisibilityChanged)
+
         self.actionPreview = self.act(self.tr('Preview'), shct=Qt.Modifier.CTRL | Qt.Key.Key_E,
             trigbool=self.preview)
         if QIcon.hasThemeIcon('document-preview'):
@@ -214,8 +233,7 @@ class ReTextWindow(QMainWindow):
             self.actionPreview.setIcon(QIcon(getBundledIcon('document-preview')))
         self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.Modifier.CTRL | Qt.Key.Key_L,
         trigbool=self.enableLivePreview)
-        menuPreview = QMenu()
-        menuPreview.addAction(self.actionLivePreview)
+
         self.actionInsertTable = self.act(self.tr('Insert table'),
             trig=lambda: self.insertFormatting('table'))
         self.actionTableMode = self.act(self.tr('Table editing mode'),
@@ -273,7 +291,7 @@ class ReTextWindow(QMainWindow):
         self.actionRedo.setEnabled(False)
         self.actionCopy.setEnabled(False)
         self.actionCut.setEnabled(False)
-        qApp.clipboard().dataChanged.connect(self.clipboardDataChanged)
+        QApplication.instance().clipboard().dataChanged.connect(self.clipboardDataChanged)
         self.clipboardDataChanged()
         self.actionEnableSC = self.act(self.tr('Enable'), trigbool=self.enableSpellCheck)
         self.actionSetLocale = self.act(self.tr('Set locale'), trig=self.changeLocale)
@@ -295,8 +313,7 @@ class ReTextWindow(QMainWindow):
         self.actionReplace = self.act(self.tr('Replace'), 'edit-find-replace',
             lambda: self.find(replace=True))
         self.actionReplaceAll = self.act(self.tr('Replace all'), trig=self.replaceAll)
-        menuReplace = QMenu()
-        menuReplace.addAction(self.actionReplaceAll)
+
         self.actionCloseSearch = self.act(self.tr('Close'), 'window-close',
             lambda: self.searchBar.setVisible(False),
             shct=QKeySequence.StandardKey.Cancel)
@@ -308,44 +325,146 @@ class ReTextWindow(QMainWindow):
         self.actionAbout.setMenuRole(QAction.MenuRole.AboutRole)
         self.actionAboutQt = self.act(self.tr('About Qt'))
         self.actionAboutQt.setMenuRole(QAction.MenuRole.AboutQtRole)
-        self.actionAboutQt.triggered.connect(qApp.aboutQt)
-        availableMarkups = markups.get_available_markups()
-        if not availableMarkups:
-            print('Warning: no markups are available!')
-        if len(availableMarkups) > 1:
-            self.chooseGroup = QActionGroup(self)
-            markupActions = []
-            for markup in availableMarkups:
-                markupAction = self.act(markup.name, trigbool=self.markupFunction(markup))
-                if markup.name == globalSettings.defaultMarkup:
-                    markupAction.setChecked(True)
-                self.chooseGroup.addAction(markupAction)
-                markupActions.append(markupAction)
+        self.actionAboutQt.triggered.connect(QApplication.instance().aboutQt)
+
         self.actionBold = self.act(self.tr('Bold'), shct=QKeySequence.StandardKey.Bold,
-            trig=lambda: self.insertFormatting('bold'))
+            trig=self._on_formatting_action)
         self.actionItalic = self.act(self.tr('Italic'), shct=QKeySequence.StandardKey.Italic,
-            trig=lambda: self.insertFormatting('italic'))
+            trig=self._on_formatting_action)
         self.actionUnderline = self.act(self.tr('Underline'), shct=QKeySequence.StandardKey.Underline,
-            trig=lambda: self.insertFormatting('underline'))
+            trig=self._on_formatting_action)
+
+    def _create_menus(self):
+        self._create_menu_file()
+        self._create_menu_edit()
+        self._create_menu_help()
+
+    def _create_toolbars(self):
+        self._create_toolbar_file()
+        self._create_toolbar_edit()
+        self._create_toolbar_search()
+        self._create_format_toolbar()
+
+        self.manage_toolbars_visibility()
+
+    def _create_toolbar_file(self):
+        self.toolBar = QToolBar(self.tr('File toolbar'), self)
+        self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.toolBar)
+
+        self.toolBar.addAction(self.actionNew)
+        self.toolBar.addSeparator()
+        self.toolBar.addAction(self.actionOpen)
+        self.toolBar.addAction(self.actionSave)
+        self.toolBar.addAction(self.actionPrint)
+        self.toolBar.addSeparator()
+        previewButton = QToolButton(self.toolBar)
+        previewButton.setDefaultAction(self.actionPreview)
+        previewButton.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        previewButton.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
+        menuPreview = QMenu()
+        menuPreview.addAction(self.actionLivePreview)
+        previewButton.setMenu(menuPreview)
+        self.toolBar.addWidget(previewButton)
+        self.toolBar.addAction(self.actionFullScreen)
+
+    def __populate_combo(self, parent, title, items, handler):
+        cb = QComboBox(parent)
+        cb.addItem(title)
+        cb.addItems(items)
+        cb.textActivated.connect(handler)
+
+        return cb
+
+    def _create_toolbar_edit(self):
+        self.editBar = QToolBar(self.tr('Edit toolbar'), self)
+        self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.editBar)
+
+        self.editBar.addAction(self.actionUndo)
+        self.editBar.addAction(self.actionRedo)
+        self.editBar.addSeparator()
+        self.editBar.addAction(self.actionCut)
+        self.editBar.addAction(self.actionCopy)
+        self.editBar.addAction(self.actionPaste)
+        self.editBar.addSeparator()
+
         self.usefulTags = ('header', 'italic', 'bold', 'underline', 'numbering',
-            'bullets', 'image', 'link', 'inline code', 'code block', 'blockquote',
-            'table')
+                           'bullets', 'image', 'link', 'inline code', 'code block', 'blockquote',
+                           'table')
+        self.formattingBox = self.__populate_combo(self.editBar, self.tr('Formatting'), self.usefulTags, self.insertFormatting)
+        self.formattingBoxAction = self.editBar.addWidget(self.formattingBox)
+
         self.usefulChars = ('deg', 'divide', 'euro', 'hellip', 'laquo', 'larr',
-            'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
-            'rarr', 'rsquo', 'times')
-        self.formattingBox = QComboBox(self.editBar)
-        self.formattingBox.addItem(self.tr('Formatting'))
-        self.formattingBox.addItems(self.usefulTags)
-        self.formattingBox.textActivated.connect(self.insertFormatting)
-        self.symbolBox = QComboBox(self.editBar)
-        self.symbolBox.addItem(self.tr('Symbols'))
-        self.symbolBox.addItems(self.usefulChars)
-        self.symbolBox.activated.connect(self.insertSymbol)
-        self.updateStyleSheet()
-        menubar = self.menuBar()
-        menuFile = menubar.addMenu(self.tr('&File'))
-        menuEdit = menubar.addMenu(self.tr('&Edit'))
-        menuHelp = menubar.addMenu(self.tr('&Help'))
+                            'lsquo', 'mdash', 'middot', 'minus', 'nbsp', 'ndash', 'raquo',
+                            'rarr', 'rsquo', 'times')
+        self.symbolBox = self.__populate_combo(self.editBar, self.tr('Symbols'), self.usefulChars, self.insertSymbol)
+        self.editBar.addWidget(self.symbolBox)
+
+    def _create_toolbar_search(self):
+        self.searchBar = QToolBar(self.tr('Search toolbar'), self)
+        self.addToolBar(Qt.ToolBarArea.BottomToolBarArea, self.searchBar)
+
+        self.searchBar.visibilityChanged.connect(self.searchBarVisibilityChanged)
+
+        self.searchEdit = QLineEdit(self.searchBar)
+        self.searchEdit.setPlaceholderText(self.tr('Search'))
+        self.searchEdit.returnPressed.connect(self.find)
+        self.replaceEdit = QLineEdit(self.searchBar)
+        self.replaceEdit.setPlaceholderText(self.tr('Replace with'))
+        self.replaceEdit.returnPressed.connect(self.find)
+        self.csBox = QCheckBox(self.tr('Case sensitively'), self.searchBar)
+        self.searchBar.addWidget(self.searchEdit)
+        self.searchBar.addWidget(self.replaceEdit)
+        self.searchBar.addSeparator()
+        self.searchBar.addWidget(self.csBox)
+        self.searchBar.addAction(self.actionFindPrev)
+        self.searchBar.addAction(self.actionFind)
+        replaceButton = QToolButton(self.searchBar)
+        replaceButton.setDefaultAction(self.actionReplace)
+        replaceButton.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        replaceButton.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
+
+        menuReplace = QMenu()
+        menuReplace.addAction(self.actionReplaceAll)
+        replaceButton.setMenu(menuReplace)
+        self.searchBar.addWidget(replaceButton)
+        self.searchBar.addAction(self.actionCloseSearch)
+        self.searchBar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        self.searchBar.setVisible(False)
+
+    def on_format_toolbar_toggled(self, checked):
+        globalSettings.showToolBarFormat = checked
+        self.manage_toolbars_visibility()
+
+    def _on_formatting_action(self):
+        act = self.sender()
+        if act:
+            self.insertFormatting(act.text().lower())
+
+    def _create_format_toolbar(self):
+        self.formatBar = QToolBar(self.tr('Format toolbar'), self)
+        self.addToolBar(Qt.ToolBarArea.BottomToolBarArea, self.formatBar)
+        self.formatBar.toggleViewAction().toggled.connect(self.on_format_toolbar_toggled)
+
+        existing_actions = {
+            self.actionBold.text(): self.actionBold,
+            self.actionItalic.text(): self.actionItalic,
+            self.actionUnderline.text(): self.actionUnderline,
+        }
+
+        for action in existing_actions.values():
+            action.triggered.disconnect(self._on_formatting_action)
+
+        theme_variant = detectThemeVariant()
+
+        for useful_tag in self.usefulTags:
+            action_name = useful_tag.capitalize()
+            action = existing_actions[action_name] if action_name in existing_actions else self.act(name=action_name)
+            action.triggered.connect(self._on_formatting_action)
+            action.setIcon(QIcon(f":/icn_format/icons/format/{theme_variant}/{useful_tag}.svg")) # TODO: support on-the-fly theming instead
+            self.formatBar.addAction(action)
+
+    def _create_menu_file(self):
+        menuFile = self.menuBar().addMenu(self.tr('&File'))
         menuFile.addAction(self.actionNew)
         menuFile.addAction(self.actionOpen)
         self.menuRecentFiles = menuFile.addMenu(
@@ -378,6 +497,9 @@ class ReTextWindow(QMainWindow):
         menuFile.addAction(self.actionPrintPreview)
         menuFile.addSeparator()
         menuFile.addAction(self.actionQuit)
+
+    def _create_menu_edit(self):
+        menuEdit = self.menuBar().addMenu(self.tr('&Edit'))
         menuEdit.addAction(self.actionUndo)
         menuEdit.addAction(self.actionRedo)
         menuEdit.addSeparator()
@@ -398,10 +520,22 @@ class ReTextWindow(QMainWindow):
         menuEdit.addAction(self.actionChangeEditorFont)
         menuEdit.addAction(self.actionChangePreviewFont)
         menuEdit.addSeparator()
+
+        availableMarkups = markups.get_available_markups()
+        if not availableMarkups:
+            print('Warning: no markups are available!')
         if len(availableMarkups) > 1:
             self.menuMode = menuEdit.addMenu(self.tr('Default markup'))
-            for markupAction in markupActions:
+            self.chooseGroup = QActionGroup(self)
+            markupActions = []
+            for markup in availableMarkups:
+                markupAction = self.act(markup.name, trigbool=self.markupFunction(markup))
+                if markup.name == globalSettings.defaultMarkup:
+                    markupAction.setChecked(True)
+                self.chooseGroup.addAction(markupAction)
+                markupActions.append(markupAction)
                 self.menuMode.addAction(markupAction)
+
         menuFormat = menuEdit.addMenu(self.tr('Formatting'))
         menuFormat.addAction(self.actionBold)
         menuFormat.addAction(self.actionItalic)
@@ -419,71 +553,15 @@ class ReTextWindow(QMainWindow):
         menuEdit.addSeparator()
         menuEdit.addAction(self.actionFullScreen)
         menuEdit.addAction(self.actionConfig)
+
+    def _create_menu_help(self):
+        menubar = self.menuBar()
+        menuHelp = menubar.addMenu(self.tr('&Help'))
         menuHelp.addAction(self.actionHelp)
         menuHelp.addAction(self.actionWhatsNew)
         menuHelp.addSeparator()
         menuHelp.addAction(self.actionAbout)
         menuHelp.addAction(self.actionAboutQt)
-        self.toolBar.addAction(self.actionNew)
-        self.toolBar.addSeparator()
-        self.toolBar.addAction(self.actionOpen)
-        self.toolBar.addAction(self.actionSave)
-        self.toolBar.addAction(self.actionPrint)
-        self.toolBar.addSeparator()
-        previewButton = QToolButton(self.toolBar)
-        previewButton.setDefaultAction(self.actionPreview)
-        previewButton.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
-        previewButton.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
-        previewButton.setMenu(menuPreview)
-        self.toolBar.addWidget(previewButton)
-        self.toolBar.addAction(self.actionFullScreen)
-        self.editBar.addAction(self.actionUndo)
-        self.editBar.addAction(self.actionRedo)
-        self.editBar.addSeparator()
-        self.editBar.addAction(self.actionCut)
-        self.editBar.addAction(self.actionCopy)
-        self.editBar.addAction(self.actionPaste)
-        self.editBar.addSeparator()
-        self.editBar.addWidget(self.formattingBox)
-        self.editBar.addWidget(self.symbolBox)
-        self.searchEdit = QLineEdit(self.searchBar)
-        self.searchEdit.setPlaceholderText(self.tr('Search'))
-        self.searchEdit.returnPressed.connect(self.find)
-        self.replaceEdit = QLineEdit(self.searchBar)
-        self.replaceEdit.setPlaceholderText(self.tr('Replace with'))
-        self.replaceEdit.returnPressed.connect(self.find)
-        self.csBox = QCheckBox(self.tr('Case sensitively'), self.searchBar)
-        self.searchBar.addWidget(self.searchEdit)
-        self.searchBar.addWidget(self.replaceEdit)
-        self.searchBar.addSeparator()
-        self.searchBar.addWidget(self.csBox)
-        self.searchBar.addAction(self.actionFindPrev)
-        self.searchBar.addAction(self.actionFind)
-        replaceButton = QToolButton(self.searchBar)
-        replaceButton.setDefaultAction(self.actionReplace)
-        replaceButton.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
-        replaceButton.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
-        replaceButton.setMenu(menuReplace)
-        self.searchBar.addWidget(replaceButton)
-        self.searchBar.addAction(self.actionCloseSearch)
-        self.searchBar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
-        self.searchBar.setVisible(False)
-        self.autoSaveTimer = QTimer(self)
-        self.autoSaveTimer.timeout.connect(self.saveAll)
-        if globalSettings.autoSave:
-            self.autoSaveTimer.start(60000)
-        self.ind = None
-        if enchant is not None:
-            self.spellCheckLanguages = globalSettings.spellCheckLocale
-            languages, errors = self.getSpellCheckDictionaries()
-            for error in errors:
-                warnings.warn(error, RuntimeWarning)
-            if not languages:
-                globalSettings.spellCheck = False
-            if globalSettings.spellCheck:
-                self.actionEnableSC.setChecked(True)
-        self.fileSystemWatcher = QFileSystemWatcher()
-        self.fileSystemWatcher.fileChanged.connect(self.fileChanged)
 
     def restoreLastOpenedFiles(self):
         for file in globalCache.lastFileList:
@@ -559,6 +637,11 @@ class ReTextWindow(QMainWindow):
             action.triggered[bool].connect(trigbool)
         if shct:
             action.setShortcut(shct)
+
+        shortcut_hint = action.shortcut().toString()
+        if shortcut_hint:
+            action.setToolTip(f"{action.text()} ({shortcut_hint})")
+
         return action
 
     def actIcon(self, name):
@@ -1377,3 +1460,11 @@ class ReTextWindow(QMainWindow):
         for tab in self.iterateTabs():
             if not tab.fileName:
                 tab.updateActiveMarkupClass()
+
+    def manage_toolbars_visibility(self):
+        shown = not globalSettings.hideToolBar
+
+        self.toolBar.setVisible(shown and globalSettings.showToolBarFile)
+        self.editBar.setVisible(shown and globalSettings.showToolBarEdit)
+        self.formatBar.setVisible(shown and globalSettings.showToolBarFormat)
+        self.formattingBoxAction.setVisible(shown and not globalSettings.showToolBarFormat)
