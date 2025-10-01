@@ -26,8 +26,6 @@ from socket import socketpair
 import markups
 from PyQt6.QtCore import QObject, QSocketNotifier, pyqtSignal
 
-from ReText import markdowncommand
-
 
 def recvall(sock, remaining):
     alldata = bytearray()
@@ -81,43 +79,24 @@ def _converter_process_func(conn_parent, conn_child):
         elif job['command'] == 'convert':
             try:
                 os.chdir(job['current_dir'])
-                markup_name = job['markup_name']
-                markdown_command = job.get('markdown_command')
+                if (not current_markup or
+                    current_markup.name != job['markup_name'] or
+                    current_markup.filename != job['filename']):
+                    markup_class = markups.find_markup_class_by_name(job['markup_name'])
+                    if not markup_class.available():
+                        raise MarkupNotAvailableError('The specified markup was not available')
 
-                if markdown_command and markup_name == markups.MarkdownMarkup.name:
-                    try:
-                        converted = markdowncommand.convert_with_system_markdown(
-                            job['text'], markdown_command
-                        )
-                        result = ('ok', converted)
-                    except markdowncommand.MarkdownCommandError as exc:
-                        result = (
-                            'conversionerror',
-                            f'External markdown command failed: {exc}',
-                        )
-                else:
-                    if (
-                        not current_markup
-                        or current_markup.name != markup_name
-                        or current_markup.filename != job['filename']
-                    ):
-                        markup_class = markups.find_markup_class_by_name(markup_name)
-                        if not markup_class.available():
-                            raise MarkupNotAvailableError('The specified markup was not available')
-
-                        current_markup = markup_class(job['filename'])
+                    current_markup = markup_class(job['filename'])
                     current_markup.requested_extensions = job['requested_extensions']
 
-                    converted = current_markup.convert(job['text'])
-                    result = ('ok', converted)
+                converted = current_markup.convert(job['text'])
+                result = ('ok', converted)
             except MarkupNotAvailableError as e:
                 result = ('markupnotavailableerror', e.args)
             except Exception:
-                result = (
-                    'conversionerror',
-                    'The background markup conversion process received this exception:\n'
-                    + _indent(traceback.format_exc(), '    '),
-                )
+                result = ('conversionerror',
+                          'The background markup conversion process received this exception:\n' +
+                          _indent(traceback.format_exc(), '    '))
 
             try:
                 sendObject(conn_child, result)
@@ -181,15 +160,7 @@ class ConverterProcess(QObject):
             self.conn.setblocking(True)
             self.conversionDone.emit()
 
-    def start_conversion(
-        self,
-        markup_name,
-        filename,
-        requested_extensions,
-        text,
-        current_dir,
-        markdown_command=None,
-    ):
+    def start_conversion(self, markup_name, filename, requested_extensions, text, current_dir):
         if self.busy:
             raise RuntimeError('Already converting')
 
@@ -198,8 +169,7 @@ class ConverterProcess(QObject):
                                'filename' : filename,
                                'current_dir': current_dir,
                                'requested_extensions' : requested_extensions,
-                               'text' : text,
-                               'markdown_command': markdown_command})
+                               'text' : text})
         self.busy = True
         self.notificationPending = True
 
@@ -221,3 +191,4 @@ class ConverterProcess(QObject):
     def stop(self):
         sendObject(self.conn, {'command': 'quit'})
         self.conn.close()
+

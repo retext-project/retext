@@ -23,9 +23,7 @@ option name                    | type      | description
 `highlightCurrentLine`         | string    | current line highlight mode: `disabled`, `cursor-line` or `wrapped-line` (default: `disabled`)
 `iconTheme`                    | string    | name of the system icon theme to use (see below)
 `lineNumbersEnabled`           | boolean   | whether to show column with line numbers in editor (default: false)
-`markdownCommand`              | string    | command (with optional flags) used for Markdown conversion when `preferSystemMarkdown` is true
 `markdownDefaultFileExtension` | string    | default file extension for Markdown files (default: `.mkd`)
-`preferSystemMarkdown`         | boolean   | prefer running the system `markdown` command for Markdown preview/export when available (default: false)
 `openFilesInExistingWindow`    | boolean   | whether to open new files in the existing window (default: true)
 `openLastFilesOnStartup`       | boolean   | whether to automatically open last documents on startup (default: false)
 `orderedListMode`              | string    | editor behavior for lists continuation: `increment` or `repeat` (default: `increment`)

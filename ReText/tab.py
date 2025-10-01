@@ -17,20 +17,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import locale
-import shlex
-import shutil
-import sys
 import time
 from os.path import exists, splitext
 
-from markups import MarkdownMarkup, find_markup_class_by_name, get_markup_for_file_name
+from markups import find_markup_class_by_name, get_markup_for_file_name
 from markups.common import MODULE_HOME_PAGE
 from PyQt6.QtCore import QDir, QFile, QFileInfo, QPoint, Qt, QTimer, QUrl, pyqtSignal
 from PyQt6.QtGui import QTextCursor, QTextDocument
 from PyQt6.QtWidgets import QMessageBox, QSplitter, QTextEdit
 
 from ReText import app_version, converterprocess, globalSettings
-from ReText import markdowncommand
 from ReText.editor import ReTextEdit
 from ReText.highlighter import ReTextHighlighter
 from ReText.preview import ReTextPreview
@@ -41,29 +37,6 @@ except ImportError:
     ReTextWebEnginePreview = None
 
 PreviewDisabled, PreviewLive, PreviewNormal = range(3)
-
-
-def resolve_markdown_command():
-    if not globalSettings.preferSystemMarkdown:
-        return None
-
-    command = (globalSettings.markdownCommand or '').strip() or 'markdown'
-    try:
-        args = shlex.split(command)
-    except ValueError:
-        return None
-
-    if not args:
-        return None
-
-    executable = args[0]
-    resolved = shutil.which(executable)
-    if resolved is None:
-        return None
-
-    args[0] = resolved
-    return args
-
 
 class ReTextTab(QSplitter):
 
@@ -230,21 +203,11 @@ class ReTextTab(QSplitter):
 
     def getDocumentForExport(self, includeStyleSheet=True, webenv=False):
         markupClass = self.getActiveMarkupClass()
-        text = self.editBox.toPlainText()
-
-        converted = None
         if markupClass and markupClass.available():
-            command_args = resolve_markdown_command() if markupClass is MarkdownMarkup else None
-            if command_args:
-                try:
-                    converted = markdowncommand.convert_with_system_markdown(text, command_args)
-                except markdowncommand.MarkdownCommandError as exc:
-                    print(f"External markdown command failed: {exc}", file=sys.stderr)
-                    converted = None
+            exportMarkup = markupClass(filename=self._fileName)
 
-            if converted is None:
-                exportMarkup = markupClass(filename=self._fileName)
-                converted = exportMarkup.convert(text)
+            text = self.editBox.toPlainText()
+            converted = exportMarkup.convert(text)
         else:
             converted = None
 
@@ -306,21 +269,11 @@ class ReTextTab(QSplitter):
         self.previewOutdated = False
 
         requested_extensions = ['ReText.mdx_posmap'] if globalSettings.syncScroll else []
-        markupClass = self.getActiveMarkupClass()
-        if not markupClass:
-            return
-        markdown_command = None
-        if markupClass is MarkdownMarkup and not requested_extensions:
-            markdown_command = resolve_markdown_command()
-
-        self.converterProcess.start_conversion(
-            markupClass.name,
-            self.fileName,
-            requested_extensions,
-            self.editBox.toPlainText(),
-            QDir.currentPath(),
-            markdown_command,
-        )
+        self.converterProcess.start_conversion(self.getActiveMarkupClass().name,
+                                               self.fileName,
+                                               requested_extensions,
+                                               self.editBox.toPlainText(),
+                                               QDir.currentPath())
 
     def updateBoxesVisibility(self):
         self.editBox.setVisible(self.previewState < PreviewNormal)
