@@ -87,7 +87,8 @@ def _converter_process_func(conn_parent, conn_child):
                         raise MarkupNotAvailableError('The specified markup was not available')
 
                     current_markup = markup_class(job['filename'])
-                    current_markup.requested_extensions = job['requested_extensions']
+
+                current_markup.requested_extensions = job['requested_extensions']
 
                 converted = current_markup.convert(job['text'])
                 result = ('ok', converted)
@@ -191,4 +192,3 @@ class ConverterProcess(QObject):
     def stop(self):
         sendObject(self.conn, {'command': 'quit'})
         self.conn.close()
-

@@ -20,7 +20,7 @@ import locale
 import time
 from os.path import exists, splitext
 
-from markups import find_markup_class_by_name, get_markup_for_file_name
+from markups import MarkdownMarkup, find_markup_class_by_name, get_markup_for_file_name
 from markups.common import MODULE_HOME_PAGE
 from PyQt6.QtCore import QDir, QFile, QFileInfo, QPoint, Qt, QTimer, QUrl, pyqtSignal
 from PyQt6.QtGui import QTextCursor, QTextDocument
@@ -37,6 +37,15 @@ except ImportError:
     ReTextWebEnginePreview = None
 
 PreviewDisabled, PreviewLive, PreviewNormal = range(3)
+
+MARKDOWN_TAB_LENGTH_EXTENSION = 'ReText.mdx_tablength'
+
+
+def get_markdown_requested_extensions(sync_scroll_enabled):
+    extensions = [MARKDOWN_TAB_LENGTH_EXTENSION]
+    if sync_scroll_enabled:
+        extensions.append('ReText.mdx_posmap')
+    return extensions
 
 class ReTextTab(QSplitter):
 
@@ -203,13 +212,18 @@ class ReTextTab(QSplitter):
 
     def getDocumentForExport(self, includeStyleSheet=True, webenv=False):
         markupClass = self.getActiveMarkupClass()
+        converted = None
         if markupClass and markupClass.available():
-            exportMarkup = markupClass(filename=self._fileName)
+            extensions = None
+            if markupClass is MarkdownMarkup:
+                extensions = get_markdown_requested_extensions(False)
+            exportMarkup = markupClass(
+                filename=self._fileName,
+                extensions=extensions,
+            )
 
             text = self.editBox.toPlainText()
             converted = exportMarkup.convert(text)
-        else:
-            converted = None
 
         return (self.getDocumentTitleFromConverted(converted),
                 self.getHtmlFromConverted(converted, includeStyleSheet=includeStyleSheet, webenv=webenv),
@@ -268,12 +282,21 @@ class ReTextTab(QSplitter):
     def startPendingConversion(self):
         self.previewOutdated = False
 
-        requested_extensions = ['ReText.mdx_posmap'] if globalSettings.syncScroll else []
-        self.converterProcess.start_conversion(self.getActiveMarkupClass().name,
-                                               self.fileName,
-                                               requested_extensions,
-                                               self.editBox.toPlainText(),
-                                               QDir.currentPath())
+        markupClass = self.getActiveMarkupClass()
+        if not markupClass:
+            return
+
+        requested_extensions = []
+        if markupClass is MarkdownMarkup:
+            requested_extensions = get_markdown_requested_extensions(globalSettings.syncScroll)
+
+        self.converterProcess.start_conversion(
+            markupClass.name,
+            self.fileName,
+            requested_extensions,
+            self.editBox.toPlainText(),
+            QDir.currentPath(),
+        )
 
     def updateBoxesVisibility(self):
         self.editBox.setVisible(self.previewState < PreviewNormal)
