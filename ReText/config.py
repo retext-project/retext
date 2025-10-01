@@ -137,6 +137,8 @@ class ConfigDialog(QDialog):
                 (self.tr('Open external links in ReText window'), 'handleWebLinks'),
                 (self.tr('Markdown syntax extensions (comma-separated)'), 'markdownExtensions'),
                 (self.tr('Enable synchronized scrolling for Markdown'), 'syncScroll'),
+                (self.tr("Use system 'markdown' command when available"), 'preferSystemMarkdown'),
+                (self.tr('System markdown command'), 'markdownCommand'),
             #    (self.tr('Default Markdown file extension'), 'markdownDefaultFileExtension'),
             #    (self.tr('Default reStructuredText file extension'), 'restDefaultFileExtension'),
             )),

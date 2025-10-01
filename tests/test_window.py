@@ -47,7 +47,7 @@ def handle_timer_event():
 class FakeConverterProcess(QObject):
     conversionDone = pyqtSignal()
 
-    def start_conversion(self, name, filename, extensions, text, current_dir):
+    def start_conversion(self, name, filename, extensions, text, current_dir, markdown_command=None):
         self.conversionDone.emit()
 
     def get_result(self):
