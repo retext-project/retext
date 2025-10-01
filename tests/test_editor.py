@@ -112,6 +112,17 @@ class TestClipboardHandling(unittest.TestCase):
         self.editor.insertFromMimeData(mimeData)
         self.assertTrue('pasted text' in self.editor.toPlainText())
 
+    def test_pasteHtmlConvertedToMarkdown(self):
+        mimeData = QMimeData()
+        mimeData.setText('plain text fallback')
+        mimeData.setHtml('<p>Hello <strong>world</strong></p>')
+        self.dummytab.markupClass = MarkdownMarkup
+
+        self.editor.insertFromMimeData(mimeData)
+
+        pasted = self.editor.toPlainText()
+        self.assertIn('Hello **world**', pasted)
+
     @patch.object(ReTextEdit, 'getImageFilename', return_value='/tmp/myimage.jpg')
     @patch.object(QImage, 'save')
     def test_pasteImage_Markdown(self, _mock_image, _mock_editor):

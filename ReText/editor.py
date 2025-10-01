@@ -48,6 +48,7 @@ from PyQt6.QtGui import (
     QTextCursor,
     QTextFormat,
     QTextOption,
+    QTextDocument,
     QWheelEvent,
 )
 from PyQt6.QtWidgets import QApplication, QFileDialog, QLabel, QTextEdit, QWidget
@@ -594,6 +595,17 @@ class ReTextEdit(QTextEdit):
         if event.preeditString() or event.commitString() or event.attributes():
             super().inputMethodEvent(event)
 
+    def _convertHtmlToMarkdown(self, html):
+        if not html:
+            return ''
+        document = QTextDocument()
+        document.setHtml(html)
+        to_markdown = getattr(document, 'toMarkdown', None)
+        if callable(to_markdown):
+            markdown = to_markdown()
+            return markdown.rstrip('\n')
+        return document.toPlainText()
+
     def insertFromMimeData(self, source):
         if source.hasUrls():
             url = source.urls()[0]
@@ -604,6 +616,13 @@ class ReTextEdit(QTextEdit):
                 imageText = self.getImageMarkup(url)
                 self.textCursor().insertText(imageText)
                 return
+        if source.hasHtml() and getattr(self, 'tab', None):
+            markupClass = self.tab.getActiveMarkupClass()
+            if markupClass == MarkdownMarkup:
+                markdown = self._convertHtmlToMarkdown(source.html())
+                if markdown:
+                    self.textCursor().insertText(markdown)
+                    return
         return super().insertFromMimeData(source)
 
 
