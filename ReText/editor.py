@@ -46,9 +46,9 @@ from PyQt6.QtGui import (
     QPainter,
     QPalette,
     QTextCursor,
+    QTextDocument,
     QTextFormat,
     QTextOption,
-    QTextDocument,
     QWheelEvent,
 )
 from PyQt6.QtWidgets import QApplication, QFileDialog, QLabel, QTextEdit, QWidget
@@ -405,10 +405,33 @@ class ReTextEdit(QTextEdit):
                     matchedText = matchedPrefix + str(nextNumber) + ". "
         else:
             matchedText = ''
+        # For Markdown, normalize nested list indentation to multiples of 4 spaces
+        # to comply with the Markdown specification for list indentation.
+        try:
+            markupClass = self.tab.getActiveMarkupClass()
+        except Exception:
+            markupClass = None
+        if matchedText and markupClass == MarkdownMarkup:
+            matchedText = self._normalize_list_indent(matchedText)
         # Reset the cursor
         cursor = self.textCursor()
         cursor.insertText('\n' + matchedText)
         self.ensureCursorVisible()
+
+    def _normalize_list_indent(self, prefix):
+        # Split prefix into indentation and the rest (e.g., "    - ", "  1. ")
+        i = 0
+        while i < len(prefix) and prefix[i] in (' ', '\t'):
+            i += 1
+        indent = prefix[:i]
+        rest = prefix[i:]
+        # Only normalize when the rest looks like a list marker
+        if re.match(r'(?:[-+*]|\d+\.)\s', rest):
+            indent_len = len(indent.expandtabs(4))
+            if indent_len and (indent_len < 4 or indent_len % 4 != 0):
+                new_len = max(4, ((indent_len + 3) // 4) * 4)
+                return (' ' * new_len) + rest
+        return prefix
 
     def moveLineUp(self):
         self.moveLine(QTextCursor.MoveOperation.PreviousBlock)
@@ -596,15 +619,36 @@ class ReTextEdit(QTextEdit):
             super().inputMethodEvent(event)
 
     def _convertHtmlToMarkdown(self, html):
-        if not html:
-            return ''
         document = QTextDocument()
         document.setHtml(html)
-        to_markdown = getattr(document, 'toMarkdown', None)
-        if callable(to_markdown):
-            markdown = to_markdown()
-            return markdown.rstrip('\n')
-        return document.toPlainText()
+        markdown = document.toMarkdown()
+        markdown = self._normalize_markdown_list_indentation_text(markdown)
+        return markdown.rstrip('\n')
+
+    def _normalize_markdown_list_indentation_text(self, text):
+        # Normalize nested list indentation in a multi-line Markdown string.
+        # Ensures sublists are indented by multiples of 4 spaces.
+        fence_re = re.compile(r'^\s*`{3,}.*$')
+        item_re = re.compile(r'^(?P<indent>[ \t]+)(?P<marker>(?:[-+*]|\d+\.))\s+')
+        in_fence = False
+        lines = text.splitlines(True)
+        out = []
+        for line in lines:
+            if fence_re.match(line):
+                in_fence = not in_fence
+                out.append(line)
+                continue
+            if not in_fence:
+                m = item_re.match(line)
+                if m:
+                    indent = m.group('indent')
+                    indent_len = len(indent.expandtabs(4))
+                    if indent_len and (indent_len < 4 or indent_len % 4 != 0):
+                        new_len = max(4, ((indent_len + 3) // 4) * 4)
+                        new_indent = ' ' * new_len
+                        line = new_indent + line[len(indent):]
+            out.append(line)
+        return ''.join(out)
 
     def insertFromMimeData(self, source):
         if source.hasUrls():
@@ -616,7 +660,7 @@ class ReTextEdit(QTextEdit):
                 imageText = self.getImageMarkup(url)
                 self.textCursor().insertText(imageText)
                 return
-        if source.hasHtml() and getattr(self, 'tab', None):
+        if source.hasHtml():
             markupClass = self.tab.getActiveMarkupClass()
             if markupClass == MarkdownMarkup:
                 markdown = self._convertHtmlToMarkdown(source.html())

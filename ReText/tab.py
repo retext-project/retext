@@ -38,11 +38,8 @@ except ImportError:
 
 PreviewDisabled, PreviewLive, PreviewNormal = range(3)
 
-MARKDOWN_TAB_LENGTH_EXTENSION = 'ReText.mdx_tablength'
-
-
 def get_markdown_requested_extensions(sync_scroll_enabled):
-    extensions = [MARKDOWN_TAB_LENGTH_EXTENSION]
+    extensions = []
     if sync_scroll_enabled:
         extensions.append('ReText.mdx_posmap')
     return extensions
