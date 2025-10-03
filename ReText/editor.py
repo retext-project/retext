@@ -407,18 +407,15 @@ class ReTextEdit(QTextEdit):
             matchedText = ''
         # For Markdown, normalize nested list indentation to multiples of 4 spaces
         # to comply with the Markdown specification for list indentation.
-        try:
-            markupClass = self.tab.getActiveMarkupClass()
-        except Exception:
-            markupClass = None
+        markupClass = self.tab.getActiveMarkupClass()
         if matchedText and markupClass == MarkdownMarkup:
-            matchedText = self._normalize_list_indent(matchedText)
+            matchedText = self._normalizeListIndent(matchedText)
         # Reset the cursor
         cursor = self.textCursor()
         cursor.insertText('\n' + matchedText)
         self.ensureCursorVisible()
 
-    def _normalize_list_indent(self, prefix):
+    def _normalizeListIndent(self, prefix):
         # Split prefix into indentation and the rest (e.g., "    - ", "  1. ")
         i = 0
         while i < len(prefix) and prefix[i] in (' ', '\t'):
@@ -622,10 +619,10 @@ class ReTextEdit(QTextEdit):
         document = QTextDocument()
         document.setHtml(html)
         markdown = document.toMarkdown()
-        markdown = self._normalize_markdown_list_indentation_text(markdown)
+        markdown = self._normalizeMarkdownListIndentation(markdown)
         return markdown.rstrip('\n')
 
-    def _normalize_markdown_list_indentation_text(self, text):
+    def _normalizeMarkdownListIndentation(self, text):
         # Normalize nested list indentation in a multi-line Markdown string.
         # Ensures sublists are indented by multiples of 4 spaces.
         fence_re = re.compile(r'^\s*`{3,}.*$')
