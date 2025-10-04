@@ -191,4 +191,3 @@ class ConverterProcess(QObject):
     def stop(self):
         sendObject(self.conn, {'command': 'quit'})
         self.conn.close()
-
