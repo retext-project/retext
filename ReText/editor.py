@@ -405,30 +405,10 @@ class ReTextEdit(QTextEdit):
                     matchedText = matchedPrefix + str(nextNumber) + ". "
         else:
             matchedText = ''
-        # For Markdown, normalize nested list indentation to multiples of 4 spaces
-        # to comply with the Markdown specification for list indentation.
-        markupClass = self.tab.getActiveMarkupClass()
-        if matchedText and markupClass == MarkdownMarkup:
-            matchedText = self._normalizeListIndent(matchedText)
         # Reset the cursor
         cursor = self.textCursor()
         cursor.insertText('\n' + matchedText)
         self.ensureCursorVisible()
-
-    def _normalizeListIndent(self, prefix):
-        # Split prefix into indentation and the rest (e.g., "    - ", "  1. ")
-        i = 0
-        while i < len(prefix) and prefix[i] in (' ', '\t'):
-            i += 1
-        indent = prefix[:i]
-        rest = prefix[i:]
-        # Only normalize when the rest looks like a list marker
-        if re.match(r'(?:[-+*]|\d+\.)\s', rest):
-            indent_len = len(indent.expandtabs(4))
-            if indent_len and (indent_len < 4 or indent_len % 4 != 0):
-                new_len = max(4, ((indent_len + 3) // 4) * 4)
-                return (' ' * new_len) + rest
-        return prefix
 
     def moveLineUp(self):
         self.moveLine(QTextCursor.MoveOperation.PreviousBlock)

@@ -302,15 +302,5 @@ class TestOrderedListMode(unittest.TestCase):
         QTest.keyClicks(editor, 'World')
         self.assertEqual(editor.document().toPlainText(), '1. Hello\n1. World')
 
-    def test_markdown_list_indentation_normalization(self):
-        editor = ReTextEdit(self)
-        editor.tab = self.DummyReTextTab()
-        editor.tab.markupClass = MarkdownMarkup
-        # Type a list item with two-space indent, then press Return.
-        QTest.keyClicks(editor, '  - Foo')
-        QTest.keyClick(editor, Qt.Key.Key_Return)
-        QTest.keyClicks(editor, 'Bar')
-        self.assertEqual(editor.document().toPlainText(), '  - Foo\n    - Bar')
-
 if __name__ == '__main__':
     unittest.main()
