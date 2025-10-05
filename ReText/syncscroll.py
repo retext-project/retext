@@ -119,7 +119,7 @@ class SyncScroll:
         min_index = 0
         max_index = len(posmap_lines) - 1
         while max_index - min_index > 1:
-            current_index = int((min_index + max_index) / 2)
+            current_index = int((min_index + max_index) // 2)
             if posmap_lines[current_index] > line_to_scroll_to:
                 max_index = current_index
             else:
@@ -185,7 +185,7 @@ class SyncScroll:
         min_index = 0
         max_index = len(posmap_lines) - 1
         while max_index - min_index > 1:
-            current_index = int((min_index + max_index) / 2)
+            current_index = int((min_index + max_index) // 2)
             current_line = posmap_lines[current_index]
             if self.posmap[current_line] > preview_y:
                 max_index = current_index

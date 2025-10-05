@@ -176,8 +176,7 @@ class ReTextWebEnginePreview(QWebEngineView):
         self.editBox.resized.connect(self._handleEditorResized)
 
         # When preview is scrolled, update the editor scroll accordingly
-        if hasattr(webPage, 'scrollPositionChanged'):
-            webPage.scrollPositionChanged.connect(self.syncscroll.handlePreviewScrolled)
+        webPage.scrollPositionChanged.connect(self.syncscroll.handlePreviewScrolled)
 
         # Scroll the preview when the mouse wheel is used to scroll
         # beyond the beginning/end of the editor
