@@ -46,6 +46,7 @@ from PyQt6.QtGui import (
     QPainter,
     QPalette,
     QTextCursor,
+    QTextDocument,
     QTextFormat,
     QTextOption,
     QWheelEvent,
@@ -594,6 +595,38 @@ class ReTextEdit(QTextEdit):
         if event.preeditString() or event.commitString() or event.attributes():
             super().inputMethodEvent(event)
 
+    def _convertHtmlToMarkdown(self, html):
+        document = QTextDocument()
+        document.setHtml(html)
+        markdown = document.toMarkdown()
+        markdown = self._normalizeMarkdownListIndentation(markdown)
+        return markdown.rstrip('\n')
+
+    def _normalizeMarkdownListIndentation(self, text):
+        # Normalize nested list indentation in a multi-line Markdown string.
+        # Ensures sublists are indented by multiples of 4 spaces.
+        fence_re = re.compile(r'^\s*`{3,}.*$')
+        item_re = re.compile(r'^(?P<indent>[ \t]+)(?P<marker>(?:[-+*]|\d+\.))\s+')
+        in_fence = False
+        lines = text.splitlines(True)
+        out = []
+        for line in lines:
+            if fence_re.match(line):
+                in_fence = not in_fence
+                out.append(line)
+                continue
+            if not in_fence:
+                m = item_re.match(line)
+                if m:
+                    indent = m.group('indent')
+                    indent_len = len(indent.expandtabs(4))
+                    if indent_len and (indent_len < 4 or indent_len % 4 != 0):
+                        new_len = max(4, ((indent_len + 3) // 4) * 4)
+                        new_indent = ' ' * new_len
+                        line = new_indent + line[len(indent):]
+            out.append(line)
+        return ''.join(out)
+
     def insertFromMimeData(self, source):
         if source.hasUrls():
             url = source.urls()[0]
@@ -604,6 +637,13 @@ class ReTextEdit(QTextEdit):
                 imageText = self.getImageMarkup(url)
                 self.textCursor().insertText(imageText)
                 return
+        if source.hasHtml():
+            markupClass = self.tab.getActiveMarkupClass()
+            if markupClass == MarkdownMarkup:
+                markdown = self._convertHtmlToMarkdown(source.html())
+                if markdown:
+                    self.textCursor().insertText(markdown)
+                    return
         return super().insertFromMimeData(source)
 
 
