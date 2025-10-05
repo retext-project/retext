@@ -117,11 +117,27 @@ class TestClipboardHandling(unittest.TestCase):
         mimeData.setText('plain text fallback')
         mimeData.setHtml('<p>Hello <strong>world</strong></p>')
         self.dummytab.markupClass = MarkdownMarkup
-
         self.editor.insertFromMimeData(mimeData)
-
         pasted = self.editor.toPlainText()
         self.assertIn('Hello **world**', pasted)
+
+    def test_pasteHtmlConvertedToMarkdown_lists(self):
+        mimeData = QMimeData()
+        mimeData.setHtml(
+            '<ul>'
+            '<li>Item 1</li>'
+            '<li><ul><li>Item 1.1</li></ul></li>'
+            '<li>Item 2</li>'
+            '</ul>'
+        )
+        self.dummytab.markupClass = MarkdownMarkup
+        self.editor.insertFromMimeData(mimeData)
+        self.assertEqual(
+            self.editor.toPlainText(),
+            '- Item 1\n'
+            '    - Item 1.1\n'
+            '- Item 2',
+        )
 
     @patch.object(ReTextEdit, 'getImageFilename', return_value='/tmp/myimage.jpg')
     @patch.object(QImage, 'save')
