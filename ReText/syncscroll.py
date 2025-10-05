@@ -21,11 +21,14 @@ class SyncScroll:
 
     def __init__(self, previewFrame,
                        editorPositionToSourceLineFunc,
-                       sourceLineToEditorPositionFunc):
+                       sourceLineToEditorPositionFunc,
+                       setEditorScrollValueFunc=None):
         self.posmap = {}
         self.frame = previewFrame
         self.editorPositionToSourceLine = editorPositionToSourceLineFunc
         self.sourceLineToEditorPosition = sourceLineToEditorPositionFunc
+        # Optional callback to set the editor vertical scroll value (in pixels)
+        self._setEditorScrollValue = setEditorScrollValueFunc
 
         self.previewPositionBeforeLoad = QPoint()
         self.contentIsLoading = False
@@ -33,6 +36,10 @@ class SyncScroll:
         self.editorViewportHeight = 0
         self.editorViewportOffset = 0
         self.editorCursorPosition = 0
+
+        # Guards to prevent recursive scroll feedback loops
+        self._updating_preview = False
+        self._updating_editor = False
 
         self.frame.contentsSizeChanged.connect(self._handlePreviewResized)
         self.frame.loadStarted.connect(self._handleLoadStarted)
@@ -46,6 +53,10 @@ class SyncScroll:
         self._updatePreviewScrollPosition()
 
     def handleEditorScrolled(self, editorViewportOffset):
+        # If we are programmatically updating the editor due to preview scroll,
+        # ignore this event to avoid feedback loops.
+        if self._updating_editor:
+            return
         self.editorViewportOffset = editorViewportOffset
         return self._updatePreviewScrollPosition()
 
@@ -137,9 +148,66 @@ class SyncScroll:
 
         pos = self.frame.scrollPosition()
         pos.setY(preview_scroll_offset)
-        self.frame.setScrollPosition(pos)
+        # Prevent preview→editor feedback while we adjust preview scroll
+        self._updating_preview = True
+        try:
+            self.frame.setScrollPosition(pos)
+        finally:
+            self._updating_preview = False
 
     def _setPositionMap(self, posmap):
         self.posmap = posmap
         if posmap:
             self.posmap[0] = 0
+
+    def handlePreviewScrolled(self, previewScrollPosition):
+        """
+        Update editor scroll position based on preview scroll position.
+
+        previewScrollPosition can be either a QPointF/QPoint or a numeric Y value.
+        """
+        if not self._setEditorScrollValue:
+            return
+        # Avoid reacting to our own preview updates
+        if self._updating_preview:
+            return
+        if not self.posmap:
+            return
+
+        # Extract Y coordinate
+        try:
+            preview_y = previewScrollPosition.y()
+        except AttributeError:
+            preview_y = float(previewScrollPosition)
+
+        # Binary search using line numbers to find nearest posmap values
+        posmap_lines = [0] + sorted(self.posmap.keys())
+        min_index = 0
+        max_index = len(posmap_lines) - 1
+        while max_index - min_index > 1:
+            current_index = int((min_index + max_index) / 2)
+            current_line = posmap_lines[current_index]
+            if self.posmap[current_line] > preview_y:
+                max_index = current_index
+            else:
+                min_index = current_index
+
+        min_line = posmap_lines[min_index]
+        max_line = posmap_lines[max_index]
+
+        min_preview_pos = self.posmap[min_line]
+        max_preview_pos = self.posmap[max_line]
+
+        min_textedit_pos = self.sourceLineToEditorPosition(min_line)
+        max_textedit_pos = self.sourceLineToEditorPosition(max_line)
+
+        editor_scroll_to = self._linearScale(preview_y,
+                                             min_preview_pos, max_preview_pos,
+                                             min_textedit_pos, max_textedit_pos)
+
+        # Apply editor scroll with guard to avoid triggering editor→preview update
+        self._updating_editor = True
+        try:
+            self._setEditorScrollValue(int(editor_scroll_to))
+        finally:
+            self._updating_editor = False
