@@ -150,10 +150,13 @@ class ReTextWebEnginePreview(QWebEngineView):
 
         self.setPage(webPage)
 
-        self.syncscroll = SyncScroll(webPage,
-                                     editorPositionToSourceLineFunc,
-                                     sourceLineToEditorPositionFunc)
         self.editBox = tab.editBox
+        self.syncscroll = SyncScroll(
+            webPage,
+            editorPositionToSourceLineFunc,
+            sourceLineToEditorPositionFunc,
+            setEditorScrollValueFunc=self.editBox.verticalScrollBar().setValue,
+        )
 
         settings = self.settings()
         settings.setDefaultTextEncoding('utf-8')
@@ -171,6 +174,9 @@ class ReTextWebEnginePreview(QWebEngineView):
         self.editBox.cursorPositionChanged.connect(self._handleCursorPositionChanged)
         self.editBox.verticalScrollBar().valueChanged.connect(self.syncscroll.handleEditorScrolled)
         self.editBox.resized.connect(self._handleEditorResized)
+
+        # When preview is scrolled, update the editor scroll accordingly
+        webPage.scrollPositionChanged.connect(self.syncscroll.handlePreviewScrolled)
 
         # Scroll the preview when the mouse wheel is used to scroll
         # beyond the beginning/end of the editor
@@ -225,6 +231,8 @@ class ReTextWebEnginePreview(QWebEngineView):
         self.editBox.resized.disconnect(self._handleEditorResized)
 
         self.editBox.scrollLimitReached.disconnect(self._handleWheelEvent)
+        # Disconnect preview scroll synchronization
+        self.page().scrollPositionChanged.disconnect(self.syncscroll.handlePreviewScrolled)
 
     def _handleCursorPositionChanged(self):
         editorCursorPosition = self.editBox.verticalScrollBar().value() + \
