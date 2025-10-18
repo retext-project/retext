@@ -232,8 +232,7 @@ class ReTextWebEnginePreview(QWebEngineView):
 
         self.editBox.scrollLimitReached.disconnect(self._handleWheelEvent)
         # Disconnect preview scroll synchronization
-        if hasattr(self.page(), 'scrollPositionChanged'):
-            self.page().scrollPositionChanged.disconnect(self.syncscroll.handlePreviewScrolled)
+        self.page().scrollPositionChanged.disconnect(self.syncscroll.handlePreviewScrolled)
 
     def _handleCursorPositionChanged(self):
         editorCursorPosition = self.editBox.verticalScrollBar().value() + \
