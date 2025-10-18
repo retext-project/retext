@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from bisect import bisect_left
+
 from PyQt6.QtCore import QPoint
 
 
@@ -40,6 +42,11 @@ class SyncScroll:
         # Guards to prevent recursive scroll feedback loops
         self._updating_preview = False
         self._updating_editor = False
+
+        # Cached orderings for mapping between preview positions and source lines
+        self._posmap_lines = []
+        self._preview_posmap = []
+        self._preview_positions = []
 
         self.frame.contentsSizeChanged.connect(self._handlePreviewResized)
         self.frame.loadStarted.connect(self._handleLoadStarted)
@@ -115,11 +122,11 @@ class SyncScroll:
         # Do a binary search through the posmap to find the nearest line above
         # and below the line to scroll to for which the rendered position is
         # known.
-        posmap_lines = [0] + sorted(self.posmap.keys())
+        posmap_lines = self._posmap_lines
         min_index = 0
         max_index = len(posmap_lines) - 1
         while max_index - min_index > 1:
-            current_index = int((min_index + max_index) // 2)
+            current_index = (min_index + max_index) // 2
             if posmap_lines[current_index] > line_to_scroll_to:
                 max_index = current_index
             else:
@@ -159,6 +166,15 @@ class SyncScroll:
         self.posmap = posmap
         if posmap:
             self.posmap[0] = 0
+        if self.posmap:
+            self._posmap_lines = sorted(self.posmap.keys())
+            preview_sorted = sorted(self.posmap.items(), key=lambda item: item[1])
+            self._preview_posmap = [(preview, line) for line, preview in preview_sorted]
+            self._preview_positions = [preview for preview, _ in self._preview_posmap]
+        else:
+            self._posmap_lines = []
+            self._preview_posmap = []
+            self._preview_positions = []
 
     def handlePreviewScrolled(self, previewScrollPosition):
         """
@@ -180,34 +196,40 @@ class SyncScroll:
         except AttributeError:
             preview_y = float(previewScrollPosition)
 
-        # Binary search using line numbers to find nearest posmap values
-        posmap_lines = [0] + sorted(self.posmap.keys())
-        min_index = 0
-        max_index = len(posmap_lines) - 1
-        while max_index - min_index > 1:
-            current_index = int((min_index + max_index) // 2)
-            current_line = posmap_lines[current_index]
-            if self.posmap[current_line] > preview_y:
-                max_index = current_index
+        if not self._preview_posmap:
+            return
+
+        if len(self._preview_posmap) == 1:
+            _, line = self._preview_posmap[0]
+            editor_scroll_to = self.sourceLineToEditorPosition(line)
+        else:
+            index = bisect_left(self._preview_positions, preview_y)
+            if index <= 0:
+                min_preview_pos, min_line = self._preview_posmap[0]
+                max_preview_pos, max_line = self._preview_posmap[1]
+            elif index >= len(self._preview_posmap):
+                min_preview_pos, min_line = self._preview_posmap[-2]
+                max_preview_pos, max_line = self._preview_posmap[-1]
             else:
-                min_index = current_index
+                min_preview_pos, min_line = self._preview_posmap[index - 1]
+                max_preview_pos, max_line = self._preview_posmap[index]
 
-        min_line = posmap_lines[min_index]
-        max_line = posmap_lines[max_index]
+            min_textedit_pos = self.sourceLineToEditorPosition(min_line)
+            max_textedit_pos = self.sourceLineToEditorPosition(max_line)
 
-        min_preview_pos = self.posmap[min_line]
-        max_preview_pos = self.posmap[max_line]
+            editor_scroll_to = self._linearScale(
+                preview_y,
+                min_preview_pos,
+                max_preview_pos,
+                min_textedit_pos,
+                max_textedit_pos,
+            )
 
-        min_textedit_pos = self.sourceLineToEditorPosition(min_line)
-        max_textedit_pos = self.sourceLineToEditorPosition(max_line)
-
-        editor_scroll_to = self._linearScale(preview_y,
-                                             min_preview_pos, max_preview_pos,
-                                             min_textedit_pos, max_textedit_pos)
+        editor_scroll_value = int(editor_scroll_to)
 
         # Apply editor scroll with guard to avoid triggering editor→preview update
         self._updating_editor = True
         try:
-            self._setEditorScrollValue(int(editor_scroll_to))
+            self._setEditorScrollValue(editor_scroll_value)
         finally:
             self._updating_editor = False
