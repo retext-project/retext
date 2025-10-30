@@ -37,6 +37,7 @@ from ReText.tab import (
     ReTextTab,
     ReTextWebEnginePreview,
 )
+from ReText.tabactiontypes import TabActionTypes
 from ReText.tabledialog import InsertTableDialog
 
 try:
@@ -521,6 +522,107 @@ class ReTextWindow(QMainWindow):
         self.tabWidget.dragEnterEvent = dragEnterEvent
         self.tabWidget.dropEvent = dropEvent
         self.tabWidget.setTabBarAutoHide(globalSettings.tabBarAutoHide)
+
+        self._init_tabs_context_menu()
+
+    def _init_tabs_context_menu(self):
+        tabBar = self.tabWidget.tabBar()
+        tabBar.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        tabBar.customContextMenuRequested.connect(self._on_tab_context_menu_requested)
+
+        self._tabs_ctx_menu = QMenu(self)
+        self._tabs_ctx_menu_actions = {}
+
+        for action_type in TabActionTypes:
+            if action_type is not TabActionTypes.Unknown:
+                self._tabs_ctx_menu_actions[action_type] = self._tabs_ctx_menu.addAction(action_type.value)
+            if action_type is TabActionTypes.CopyFilePath:
+                self._tabs_ctx_menu.addSeparator()
+
+    def _on_tab_context_menu_requested(self, p):
+
+        clicked_tab_index = self.tabWidget.tabBar().tabAt(p)
+        if -1 == clicked_tab_index:
+            raise RuntimeWarning(f"No tab found at [{p.x()};{p.y()}].")
+
+        clicked_tab = self.tabWidget.widget(clicked_tab_index)
+        if not clicked_tab:
+            raise RuntimeWarning(f"No tab found at index {clicked_tab_index}.")
+
+        self.tabWidget.setCurrentIndex(clicked_tab_index)
+
+        for action in self._tabs_ctx_menu_actions.values():
+            action.target_tab_pos = clicked_tab_index
+
+        total_tabs = self.tabWidget.count()
+
+        can_copy_file = clicked_tab and QFileInfo.exists(clicked_tab.fileName)
+        self._tabs_ctx_menu_actions[TabActionTypes.CopyFileName].setEnabled(can_copy_file)
+        self._tabs_ctx_menu_actions[TabActionTypes.CopyFilePath].setEnabled(can_copy_file)
+
+        self._tabs_ctx_menu_actions[TabActionTypes.CloseAll].setEnabled(total_tabs > 1)
+        self._tabs_ctx_menu_actions[TabActionTypes.CloseToLeft].setEnabled(clicked_tab_index > 0)
+        self._tabs_ctx_menu_actions[TabActionTypes.CloseToRight].setEnabled(clicked_tab_index < total_tabs-1)
+        self._tabs_ctx_menu_actions[TabActionTypes.CloseOther].setEnabled(total_tabs > 1)
+
+        has_unmodified = any(not self.tabWidget.widget(i).editBox.document().isModified()
+                             for i in range(self.tabWidget.count()))
+        self._tabs_ctx_menu_actions[TabActionTypes.CloseUnmodified].setEnabled(has_unmodified and total_tabs > 1)
+
+        chosen_action = self._tabs_ctx_menu.exec(p)
+        self._handle_tab_context_action(chosen_action)
+
+    def _handle_tab_context_action(self, action):
+        if not action or action.text() == TabActionTypes.Unknown.value:
+            return
+
+        action_type = TabActionTypes(action.text())
+        curr_tab = action.target_tab_pos
+
+        if action_type in [TabActionTypes.CopyFileName, TabActionTypes.CopyFilePath]:
+            return self._handle_tab_file_copy_action(curr_tab, action_type)
+
+        total_tabs = self.tabWidget.count()
+        last_tab = total_tabs - 1
+        indices_to_close = []
+
+        if action_type is TabActionTypes.Close:
+            indices_to_close = [curr_tab]
+        elif action_type is TabActionTypes.CloseAll:
+            indices_to_close = list(range(last_tab + 1))
+        elif action_type is TabActionTypes.CloseOther:
+            indices_to_close = [i for i in range(last_tab + 1) if i != curr_tab]
+        elif action_type is TabActionTypes.CloseUnmodified:
+            indices_to_close = [i for i in range(last_tab + 1)
+                                if i != curr_tab and not self.tabWidget.widget(i).editBox.document().isModified()]
+        elif action_type is TabActionTypes.CloseToLeft:
+            indices_to_close = list(range(curr_tab))
+        elif action_type is TabActionTypes.CloseToRight:
+            indices_to_close = list(range(curr_tab + 1, last_tab + 1))
+
+        indices_to_close.sort(reverse=True)
+        
+        for tab_num in indices_to_close:
+            self.closeTab(tab_num)
+
+    def _handle_tab_file_copy_action(self, tab_num, tab_act_type):
+        tab = self.tabWidget.widget(tab_num)
+        if not tab:
+            return
+
+        fi = QFileInfo(tab.fileName)
+        if not fi.exists():
+            return
+
+        text_to_copy = ''
+        if tab_act_type is TabActionTypes.CopyFileName:
+            text_to_copy = fi.fileName()
+        elif tab_act_type is TabActionTypes.CopyFilePath:
+            text_to_copy = fi.absoluteFilePath()
+
+        if text_to_copy:
+            clipboard = QApplication.instance().clipboard()
+            clipboard.setText(text_to_copy)
 
     def initDirectoryTree(self):
         path = globalSettings.directoryPath
