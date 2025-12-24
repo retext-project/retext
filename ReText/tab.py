@@ -329,6 +329,7 @@ class ReTextTab(QSplitter):
         try:
             text = data.decode(encoding or locale.getpreferredencoding(False))
         except (UnicodeDecodeError, LookupError) as ex:
+            self.forceDisableAutoSave = True
             QMessageBox.warning(self, '', str(ex))
             return
 
