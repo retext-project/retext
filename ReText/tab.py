@@ -331,6 +331,7 @@ class ReTextTab(QSplitter):
         except (UnicodeDecodeError, LookupError) as ex:
             self.forceDisableAutoSave = True
             QMessageBox.warning(self, '', str(ex))
+            self.fileNameChanged.emit()
             return
 
         if encoding:
