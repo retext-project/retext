@@ -255,6 +255,8 @@ class ReTextWindow(QMainWindow):
             lambda: self.currentTab.editBox.redo(), shct=QKeySequence.StandardKey.Redo)
         self.actionCopy = self.act(self.tr('Copy'), 'edit-copy',
             lambda: self.currentTab.editBox.copy(), shct=QKeySequence.StandardKey.Copy)
+        self.actionCopyFilePath = self.act(self.tr('Copy file path'), 'edit-copy',
+            self.copyFilePath)
         self.actionCut = self.act(self.tr('Cut'), 'edit-cut',
             lambda: self.currentTab.editBox.cut(), shct=QKeySequence.StandardKey.Cut)
         self.actionPaste = self.act(self.tr('Paste'), 'edit-paste',
@@ -272,6 +274,7 @@ class ReTextWindow(QMainWindow):
         self.actionUndo.setEnabled(False)
         self.actionRedo.setEnabled(False)
         self.actionCopy.setEnabled(False)
+        self.actionCopyFilePath.setEnabled(False)
         self.actionCut.setEnabled(False)
         qApp.clipboard().dataChanged.connect(self.clipboardDataChanged)
         self.clipboardDataChanged()
@@ -383,6 +386,7 @@ class ReTextWindow(QMainWindow):
         menuEdit.addSeparator()
         menuEdit.addAction(self.actionCut)
         menuEdit.addAction(self.actionCopy)
+        menuEdit.addAction(self.actionCopyFilePath)
         menuEdit.addAction(self.actionPaste)
         menuEdit.addAction(self.actionPasteImage)
         menuEdit.addSeparator()
@@ -596,6 +600,7 @@ class ReTextWindow(QMainWindow):
             canReload = bool(tab.fileName) and not tab.autoSaveActive()
             self.actionSetEncoding.setEnabled(canReload)
             self.actionReload.setEnabled(canReload)
+            self.actionCopyFilePath.setEnabled(bool(tab.fileName))
 
     def tabActiveMarkupChanged(self, tab):
         '''
@@ -722,6 +727,11 @@ class ReTextWindow(QMainWindow):
     def enableCopy(self, copymode):
         self.actionCopy.setEnabled(copymode)
         self.actionCut.setEnabled(copymode)
+
+    def copyFilePath(self):
+        if self.currentTab.fileName:
+            filePath = QDir.toNativeSeparators(self.currentTab.fileName)
+            QApplication.instance().clipboard().setText(filePath)
 
     def enableFullScreen(self, yes):
         if yes:

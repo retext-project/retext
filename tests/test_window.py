@@ -415,6 +415,23 @@ class TestWindow(unittest.TestCase):
         app.processEvents()
         self.check_widgets_disabled(self.window, ('actionReload','actionSetEncoding'))
 
+    @patch(
+        'ReText.window.QFileDialog.getOpenFileNames',
+        return_value=([os.path.join(path_to_testdata, 'existing_file.md')], None),
+    )
+    def test_copyFilePathCopiesActiveDocumentPath(self, getOpenFileNamesMock):
+        self.window = ReTextWindow()
+        self.window.createNew('')
+        app.processEvents()
+        self.assertFalse(self.window.actionCopyFilePath.isEnabled())
+
+        self.window.actionOpen.trigger()
+        app.processEvents()
+        self.assertTrue(self.window.actionCopyFilePath.isEnabled())
+
+        self.window.actionCopyFilePath.trigger()
+        self.assertEqual(app.clipboard().text(), self.window.currentTab.fileName)
+
     def test_doesNotTweakSpecialCharacters(self):
         fileName = tempfile.mkstemp(suffix='.mkd')[1]
         content = 'Non-breaking\u00a0space\n\nLine\u2028separator\n'
