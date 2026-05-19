@@ -162,6 +162,9 @@ class ReTextWindow(QMainWindow):
         self.actionReload = self.act(self.tr('Reload'), 'view-refresh',
             lambda: self.currentTab.readTextFromFile())
         self.actionReload.setEnabled(False)
+        self.actionCopyFilePath = self.act(self.tr('Copy file path'), 'edit-copy',
+            self.copyFilePath)
+        self.actionCopyFilePath.setEnabled(False)
         self.actionSave = self.act(self.tr('Save'), 'document-save',
             self.saveFile, shct=QKeySequence.StandardKey.Save)
         self.actionSave.setEnabled(False)
@@ -255,8 +258,6 @@ class ReTextWindow(QMainWindow):
             lambda: self.currentTab.editBox.redo(), shct=QKeySequence.StandardKey.Redo)
         self.actionCopy = self.act(self.tr('Copy'), 'edit-copy',
             lambda: self.currentTab.editBox.copy(), shct=QKeySequence.StandardKey.Copy)
-        self.actionCopyFilePath = self.act(self.tr('Copy file path'), 'edit-copy',
-            self.copyFilePath)
         self.actionCut = self.act(self.tr('Cut'), 'edit-cut',
             lambda: self.currentTab.editBox.cut(), shct=QKeySequence.StandardKey.Cut)
         self.actionPaste = self.act(self.tr('Paste'), 'edit-paste',
@@ -274,7 +275,6 @@ class ReTextWindow(QMainWindow):
         self.actionUndo.setEnabled(False)
         self.actionRedo.setEnabled(False)
         self.actionCopy.setEnabled(False)
-        self.actionCopyFilePath.setEnabled(False)
         self.actionCut.setEnabled(False)
         qApp.clipboard().dataChanged.connect(self.clipboardDataChanged)
         self.clipboardDataChanged()
