@@ -330,5 +330,71 @@ class TestOrderedListMode(unittest.TestCase):
         QTest.keyClicks(editor, 'World')
         self.assertEqual(editor.document().toPlainText(), '1. Hello\n1. World')
 
+class TestMoveLine(unittest.TestCase):
+    def setUp(self):
+        self.p = self
+        self.editor = ReTextEdit(self)
+
+    def test_moveLastLineUp(self):
+        for text, expected in (
+            ('one\ntwo', 'two\none'),
+            ('one\ntwo\nthree', 'one\nthree\ntwo'),
+            ('one\ntwo\n', 'one\n\ntwo'),
+            ('one\n\U0001f98atwo', '\U0001f98atwo\none'),
+        ):
+            with self.subTest(text=text):
+                self.editor.setPlainText(text)
+                cursor = self.editor.textCursor()
+                cursor.movePosition(QTextCursor.MoveOperation.End)
+                self.editor.setTextCursor(cursor)
+                self.editor.moveLineUp()
+                self.assertEqual(self.editor.toPlainText(), expected)
+                self.editor.undo()
+                self.assertEqual(self.editor.toPlainText(), text)
+
+    def test_moveLineDownToEnd(self):
+        for text, expected in (
+            ('one\ntwo', 'two\none'),
+            ('one\ntwo\nthree', 'one\nthree\ntwo'),
+            ('one\ntwo\n', 'one\n\ntwo'),
+            ('one\n\U0001f98atwo', '\U0001f98atwo\none'),
+        ):
+            with self.subTest(text=text):
+                self.editor.setPlainText(text)
+                cursor = self.editor.textCursor()
+                cursor.movePosition(QTextCursor.MoveOperation.End)
+                cursor.movePosition(QTextCursor.MoveOperation.PreviousBlock)
+                self.editor.setTextCursor(cursor)
+                self.editor.moveLineDown()
+                self.assertEqual(self.editor.toPlainText(), expected)
+                self.editor.undo()
+                self.assertEqual(self.editor.toPlainText(), text)
+
+    def test_moveInteriorLine(self):
+        for method, expected in (
+            (self.editor.moveLineUp, 'two\none\nthree\nfour'),
+            (self.editor.moveLineDown, 'one\nthree\ntwo\nfour'),
+        ):
+            with self.subTest(method=method):
+                self.editor.setPlainText('one\ntwo\nthree\nfour')
+                cursor = self.editor.textCursor()
+                cursor.setPosition(self.editor.document().findBlockByNumber(1).position())
+                self.editor.setTextCursor(cursor)
+                method()
+                self.assertEqual(self.editor.toPlainText(), expected)
+
+    def test_movePastDocumentBoundary(self):
+        for text in ('', 'one', 'one\ntwo'):
+            with self.subTest(text=text):
+                self.editor.setPlainText(text)
+                self.editor.moveLineUp()
+                self.assertEqual(self.editor.toPlainText(), text)
+                cursor = self.editor.textCursor()
+                cursor.movePosition(QTextCursor.MoveOperation.End)
+                self.editor.setTextCursor(cursor)
+                self.editor.moveLineDown()
+                self.assertEqual(self.editor.toPlainText(), text)
+
+
 if __name__ == '__main__':
     unittest.main()

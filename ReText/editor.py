@@ -440,19 +440,25 @@ class ReTextEdit(QTextEdit):
 
     def moveLine(self, direction):
         cursor = self.textCursor()
-        # Select the current block
-        cursor.movePosition(QTextCursor.MoveOperation.StartOfBlock, QTextCursor.MoveMode.MoveAnchor)
-        cursor.movePosition(QTextCursor.MoveOperation.NextBlock, QTextCursor.MoveMode.KeepAnchor)
-        text = cursor.selectedText()
-        # Remove it
-        cursor.removeSelectedText()
-        # Move to the wanted block
-        cursor.movePosition(direction, QTextCursor.MoveMode.MoveAnchor)
-        # Paste the line
+        block = cursor.block()
+        if direction == QTextCursor.MoveOperation.PreviousBlock:
+            first, second = block.previous(), block
+            if not first.isValid():
+                return
+            newPosition = first.position()
+        else:
+            first, second = block, block.next()
+            if not second.isValid():
+                return
+            newPosition = first.position() + second.length()
+
+        text = second.text() + '\n' + first.text()
+        cursor.beginEditBlock()
+        cursor.setPosition(first.position())
+        cursor.setPosition(second.position() + second.length() - 1, QTextCursor.MoveMode.KeepAnchor)
         cursor.insertText(text)
-        # Move to the pasted block
-        cursor.movePosition(QTextCursor.MoveOperation.PreviousBlock, QTextCursor.MoveMode.MoveAnchor)
-        # Update cursor
+        cursor.endEditBlock()
+        cursor.setPosition(newPosition)
         self.setTextCursor(cursor)
 
     def lineNumberAreaWidth(self):
