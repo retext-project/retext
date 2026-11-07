@@ -126,7 +126,9 @@ class ReTextTab(QSplitter):
                                              editorPositionToSourceLine,
                                              sourceLineToEditorPosition)
         else:
-            preview = ReTextPreview(self)
+            preview = ReTextPreview(self,
+                                    editorPositionToSourceLine,
+                                    sourceLineToEditorPosition)
 
         return preview
 
