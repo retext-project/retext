@@ -41,7 +41,7 @@ option name                    | type      | description
 `spellCheck`                   | boolean   | whether to enable spell checking
 `spellCheckLocale`             | string    | spell check locale to use, possibly comma-separated (examples: `pt_BR`, `ru,en_US`)
 `styleSheet`                   | file path | CSS file to use in preview area
-`syncScroll`                   | boolean   | whether to enable synchronized scrolling for Markdown (default: true)
+`syncScroll`                   | boolean   | whether to enable synchronized scrolling (default: true)
 `tabBarAutoHide`               | boolean   | whether to hide the tabs bar when only one tab is open (default: false)
 `tabInsertsSpaces`             | boolean   | whether Tab key should insert spaces instead of tabs (default: true)
 `tabWidth`                     | integer   | the width of tab character (default: 4)

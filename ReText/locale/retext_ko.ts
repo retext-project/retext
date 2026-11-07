@@ -50,8 +50,8 @@
     </message>
     <message>
       <location filename="../config.py" line="139" />
-      <source>Enable synchronized scrolling for Markdown</source>
-      <translation>Markdown에 동기화된 스크롤 사용</translation>
+      <source>Enable synchronized scrolling</source>
+      <translation>동기화된 스크롤 사용</translation>
     </message>
     <message>
       <location filename="../config.py" line="205" />

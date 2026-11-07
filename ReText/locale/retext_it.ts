@@ -50,8 +50,8 @@
     </message>
     <message>
       <location filename="../config.py" line="139" />
-      <source>Enable synchronized scrolling for Markdown</source>
-      <translation>Abilita scorrimento sincronizzato per Markdown</translation>
+      <source>Enable synchronized scrolling</source>
+      <translation>Abilita scorrimento sincronizzato</translation>
     </message>
     <message>
       <location filename="../config.py" line="205" />

@@ -50,8 +50,8 @@
     </message>
     <message>
       <location filename="../config.py" line="139" />
-      <source>Enable synchronized scrolling for Markdown</source>
-      <translation>Ota käyttöön synkronisoitu vieritys Markdownille</translation>
+      <source>Enable synchronized scrolling</source>
+      <translation>Ota käyttöön synkronisoitu vieritys</translation>
     </message>
     <message>
       <location filename="../config.py" line="205" />

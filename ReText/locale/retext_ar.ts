@@ -50,8 +50,8 @@
     </message>
     <message>
       <location filename="../config.py" line="139" />
-      <source>Enable synchronized scrolling for Markdown</source>
-      <translation>تفعيل التمرير المتزامن لمارك داون</translation>
+      <source>Enable synchronized scrolling</source>
+      <translation>تفعيل التمرير المتزامن</translation>
     </message>
     <message>
       <location filename="../config.py" line="205" />

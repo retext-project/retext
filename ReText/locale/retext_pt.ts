@@ -50,7 +50,7 @@
     </message>
     <message>
       <location filename="../config.py" line="139" />
-      <source>Enable synchronized scrolling for Markdown</source>
+      <source>Enable synchronized scrolling</source>
       <translation type="unfinished" />
     </message>
     <message>
