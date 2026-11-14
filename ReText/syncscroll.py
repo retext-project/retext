@@ -77,11 +77,11 @@ class SyncScroll:
         if self._updating_editor:
             return
         self.editorViewportOffset = editorViewportOffset
-        return self._updatePreviewScrollPosition()
+        self._updatePreviewScrollPosition()
 
     def handleCursorPositionChanged(self, editorCursorPosition):
         self.editorCursorPosition = editorCursorPosition
-        return self._updatePreviewScrollPosition()
+        self._updatePreviewScrollPosition()
 
     def _handleLoadStarted(self):
         # Store the current scroll position so it can be restored when the new
@@ -94,9 +94,9 @@ class SyncScroll:
         self.frame.setScrollPosition(self.previewPositionBeforeLoad / self.frame.zoomFactor())
 
     def _handleRenderingFinished(self):
-        self.frame.setScrollPosition(self.previewPositionBeforeLoad / self.frame.zoomFactor())
         self.contentIsLoading = False
         self.frame.getPositionMap(self._setPositionMap)
+        self._updatePreviewScrollPosition()
 
     def _handlePreviewResized(self):
         self.frame.getPositionMap(self._setPositionMap)
