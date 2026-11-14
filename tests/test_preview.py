@@ -241,7 +241,8 @@ class PreviewSyncScrollTest(unittest.TestCase):
         editorBar = self.editBox.verticalScrollBar()
         previewBar = preview.verticalScrollBar()
         # Let the settling logic triggered by the load finish
-        QTest.qWait(700)
+        # stabilityTimer (500) + _preview_scroll_pending_time (300) + margin
+        QTest.qWait(900)
         app.processEvents()
         previewBar.setValue(previewBar.maximum() // 2)
         self.assertGreater(editorBar.value(), 0)
