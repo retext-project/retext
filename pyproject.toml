@@ -21,7 +21,7 @@ requires-python = ">=3.9"
 dependencies = [
   "Markups[markdown,restructuredtext]>=4.0",
   "Pygments",
-  "PyQt6",
+  "PyQt6>=6.7",
 ]
 
 [project.gui-scripts]
