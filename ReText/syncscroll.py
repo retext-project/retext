@@ -91,7 +91,7 @@ class SyncScroll:
 
     def _handleLoadFinished(self):
         self.stabilityTimer.start(500)
-        self.frame.setScrollPosition(self.previewPositionBeforeLoad / self.frame.zoomFactor())
+        self._updatePreviewScrollPosition()
 
     def _handleRenderingFinished(self):
         self.contentIsLoading = False
@@ -117,12 +117,14 @@ class SyncScroll:
         self._preview_scroll_pending = None
         self._preview_scroll_pending_time = 0.0
         self._preview_scroll_pending_count = 0
-        if not self.posmap:
-            # Loading new content resets the scroll position to the top. If we
-            # don't have a posmap to calculate the new best position, then
+
+        if self.contentIsLoading:
+            # Loading new content resets the scroll position to the top
             # restore the position stored at the beginning of the load.
-            if self.contentIsLoading:
-                self.frame.setScrollPosition(self.previewPositionBeforeLoad / self.frame.zoomFactor())
+            self.frame.setScrollPosition(self.previewPositionBeforeLoad / self.frame.zoomFactor())
+            return
+
+        if not self.posmap:
             return
 
         textedit_pixel_to_scroll_to = self.editorCursorPosition
