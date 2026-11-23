@@ -119,7 +119,7 @@ class SyncScroll:
         self._preview_scroll_pending_count = 0
 
         if self.contentIsLoading:
-            # Loading new content resets the scroll position to the top
+            # Loading new content resets the scroll position to the top, so
             # restore the position stored at the beginning of the load.
             self.frame.setScrollPosition(self.previewPositionBeforeLoad / self.frame.zoomFactor())
             return
