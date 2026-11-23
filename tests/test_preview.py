@@ -213,6 +213,15 @@ class PreviewSyncScrollTest(unittest.TestCase):
             QTest.qWait(20)
         self.fail('position map was not collected')
 
+    def waitForLoading(self, preview):
+        # SyncScroll wait for the end of the loading before repositioning the scroll
+        for _ in range(100):
+            app.processEvents()
+            if not preview.syncscroll.contentIsLoading:
+                return
+            QTest.qWait(20)
+        self.fail('Loading did not end')
+
     def test_editorScrollMovesPreview(self):
         preview = self.createPreview()
         preview.setHtml(HTML)
@@ -223,6 +232,7 @@ class PreviewSyncScrollTest(unittest.TestCase):
         self.assertGreater(editorBar.maximum(), 0)
         self.assertGreater(previewBar.maximum(), 0)
 
+        self.waitForLoading(preview)
         editorBar.setValue(editorBar.maximum() // 2)
         middle = previewBar.value()
         self.assertGreater(middle, 0)
@@ -241,8 +251,9 @@ class PreviewSyncScrollTest(unittest.TestCase):
         editorBar = self.editBox.verticalScrollBar()
         previewBar = preview.verticalScrollBar()
         # Let the settling logic triggered by the load finish
-        # stabilityTimer (500) + _preview_scroll_pending_time (300) + margin
-        QTest.qWait(900)
+        # Loading + _preview_scroll_pending_time (300)
+        self.waitForLoading(preview)
+        QTest.qWait(300)
         app.processEvents()
         previewBar.setValue(previewBar.maximum() // 2)
         self.assertGreater(editorBar.value(), 0)
