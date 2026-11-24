@@ -29,6 +29,7 @@ from PyQt6.QtWidgets import QMessageBox, QSplitter, QTextEdit
 
 from ReText import app_version, converterprocess, globalSettings
 from ReText.editor import ReTextEdit
+from ReText.headingcollapse import buildHeaders
 from ReText.highlighter import ReTextHighlighter
 from ReText.preview import ReTextPreview
 
@@ -181,7 +182,8 @@ class ReTextTab(QSplitter):
             return (basename if basename else fileinfo.fileName())
         return self.tr("New document")
 
-    def getHtmlFromConverted(self, converted, includeStyleSheet=True, webenv=False, preview=False):
+    def getHtmlFromConverted(self, converted, includeStyleSheet=True, webenv=False, preview=False,
+                             isWebEnginePreview=False):
         if converted is None:
             markupClass = self.getActiveMarkupClass()
             errMsg = self.tr('Could not parse file contents, check if '
@@ -219,6 +221,11 @@ class ReTextTab(QSplitter):
                 }}, {{ passive: false }});
             </script>
             """
+        if preview and isWebEnginePreview and globalSettings.collapsibleHeadings:
+            headers += buildHeaders(
+                globalSettings.initialSectionState == 'collapsed',
+                self.previewBox.headingCollapseState,
+            )
         return converted.get_whole_html(
             custom_headers=headers, include_stylesheet=includeStyleSheet,
             fallback_title=baseName, webenv=webenv)
@@ -247,7 +254,8 @@ class ReTextTab(QSplitter):
         except converterprocess.ConversionError:
             return self.p.printError()
 
-        if isinstance(self.previewBox, QTextEdit):
+        isWebEnginePreview = not isinstance(self.previewBox, QTextEdit)
+        if not isWebEnginePreview:
             scrollbar = self.previewBox.verticalScrollBar()
             scrollbarValue = scrollbar.value()
             # If scrollbar was not on top, save its distance to bottom so that
@@ -257,7 +265,8 @@ class ReTextTab(QSplitter):
             else:
                 self.previewBox.distToBottom = None
         try:
-            html = self.getHtmlFromConverted(self.converted, preview=True)
+            html = self.getHtmlFromConverted(self.converted, preview=True,
+                                             isWebEnginePreview=isWebEnginePreview)
         except Exception:
             return self.p.printError()
         self.previewBox.setFont(globalSettings.getPreviewFont())
