@@ -49,6 +49,7 @@ def getBundledIcon(iconName):
 configOptions = {
     'appStyleSheet': '',
     'autoSave': False,
+    'collapsibleHeadings': False,
     'defaultCodec': '',
     'defaultMarkup': markups.MarkdownMarkup.name,
     'defaultPreviewState': 'editor',
@@ -61,6 +62,7 @@ configOptions = {
     'hideToolBar': False,
     'highlightCurrentLine': 'disabled',
     'iconTheme': '',
+    'initialSectionState': 'collapsed',
     'lineNumbersEnabled': False,
     'markdownDefaultFileExtension': '.mkd',
     'openFilesInExistingWindow': True,

@@ -133,6 +133,8 @@ class ConfigDialog(QDialog):
                 (self.tr('Open external links in ReText window'), 'handleWebLinks'),
                 (self.tr('Markdown syntax extensions (comma-separated)'), 'markdownExtensions'),
                 (self.tr('Enable synchronized scrolling'), 'syncScroll'),
+                (self.tr('Collapsible headings in preview (WebEngine only)'), 'collapsibleHeadings'),
+                (self.tr('Initial state of preview sections'), 'initialSectionState'),
             #    (self.tr('Default Markdown file extension'), 'markdownDefaultFileExtension'),
             #    (self.tr('Default reStructuredText file extension'), 'restDefaultFileExtension'),
             )),
@@ -214,6 +216,12 @@ class ConfigDialog(QDialog):
                 self.configurators[name] = QComboBox(self)
                 self.configurators[name].addItem(self.tr('Increment'), 'increment')
                 self.configurators[name].addItem(self.tr('Repeat'), 'repeat')
+                comboBoxIndex = self.configurators[name].findData(value)
+                self.configurators[name].setCurrentIndex(comboBoxIndex)
+            elif name == 'initialSectionState':
+                self.configurators[name] = QComboBox(self)
+                self.configurators[name].addItem(self.tr('Collapsed'), 'collapsed')
+                self.configurators[name].addItem(self.tr('Expanded'), 'expanded')
                 comboBoxIndex = self.configurators[name].findData(value)
                 self.configurators[name].setCurrentIndex(comboBoxIndex)
             elif name == 'directoryPath':
