@@ -28,17 +28,52 @@ from PyQt6.QtGui import (
 )
 from PyQt6.QtWebEngineCore import (
     QWebEnginePage,
+    QWebEngineProfile,
     QWebEngineSettings,
     QWebEngineUrlRequestInfo,
     QWebEngineUrlRequestInterceptor,
+    QWebEngineUrlRequestJob,
+    QWebEngineUrlScheme,
+    QWebEngineUrlSchemeHandler,
 )
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 from PyQt6.QtWidgets import QApplication, QLabel
 
 from ReText import globalCache, globalSettings
 from ReText.editor import getColor
-from ReText.headingcollapse import HeadingCollapseState, parseToggleUrl
+from ReText.headingcollapse import TOGGLE_URL_SCHEME, HeadingCollapseState, parseToggleUrl
 from ReText.syncscroll import SyncScroll
+
+# Must be registered before the QApplication/WebEngine context is created
+# (this module is imported early enough for that, via ReText.tab).
+_toggleScheme = QWebEngineUrlScheme(TOGGLE_URL_SCHEME.encode())
+_toggleScheme.setSyntax(QWebEngineUrlScheme.Syntax.Host)
+QWebEngineUrlScheme.registerScheme(_toggleScheme)
+
+_toggleSchemeHandlerInstalled = False
+
+
+class _ToggleUrlSchemeHandler(QWebEngineUrlSchemeHandler):
+    """
+    By the time any request would reach this handler,
+    ReTextWebEnginePage.acceptNavigationRequest() has already intercepted
+    and blocked the navigation, so this never actually runs. But without
+    *some* handler installed for the scheme, Chromium treats it as an
+    external protocol (like mailto:) and never calls
+    acceptNavigationRequest() for it in the first place.
+    """
+
+    def requestStarted(self, job):
+        job.fail(QWebEngineUrlRequestJob.Error.RequestDenied)
+
+
+def _ensureToggleSchemeHandlerInstalled():
+    global _toggleSchemeHandlerInstalled
+    if _toggleSchemeHandlerInstalled:
+        return
+    profile = QWebEngineProfile.defaultProfile()
+    profile.installUrlSchemeHandler(TOGGLE_URL_SCHEME.encode(), _ToggleUrlSchemeHandler(profile))
+    _toggleSchemeHandlerInstalled = True
 
 
 class ReTextWebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
@@ -133,7 +168,12 @@ class ReTextWebEnginePage(QWebEnginePage):
         toggled = parseToggleUrl(url)
         if toggled is not None:
             sectionId, collapsed = toggled
-            self.tab.previewBox.headingCollapseState.toggle(sectionId, collapsed)
+            # self.parent() is the ReTextWebEnginePreview that owns this
+            # page (set as its Qt parent below) -- using it directly,
+            # rather than tab.previewBox, keeps working correctly even if
+            # a stray request from an old page arrives after
+            # rebuildPreviewBox() has already replaced tab.previewBox.
+            self.parent().headingCollapseState.toggle(sectionId, collapsed)
             return False
         if not isMainFrame:
             return True
@@ -159,6 +199,7 @@ class ReTextWebEnginePreview(QWebEngineView):
                  sourceLineToEditorPositionFunc):
 
         QWebEngineView.__init__(self, parent=tab)
+        _ensureToggleSchemeHandlerInstalled()
         webPage = ReTextWebEnginePage(self, tab)
 
         handCursor = QCursor(Qt.CursorShape.PointingHandCursor)
