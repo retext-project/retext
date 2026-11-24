@@ -37,6 +37,7 @@ from PyQt6.QtWidgets import QApplication, QLabel
 
 from ReText import globalCache, globalSettings
 from ReText.editor import getColor
+from ReText.headingcollapse import HeadingCollapseState, parseToggleUrl
 from ReText.syncscroll import SyncScroll
 
 
@@ -110,6 +111,12 @@ class ReTextWebEnginePage(QWebEnginePage):
             var bodyTop = document.body.getBoundingClientRect().top;
             for (var i = 0; i < elements.length; ++i) {
                 var element = elements[i];
+                if (!element.getClientRects().length) {
+                    // Element is hidden (e.g. inside a collapsed preview
+                    // section): its rect would be all zeroes, which would
+                    // corrupt the position map used for sync scrolling.
+                    continue;
+                }
                 value = element.getAttribute('data-posmap');
                 bottom = element.getBoundingClientRect().bottom - bodyTop;
                 result[value] = bottom;
@@ -123,6 +130,11 @@ class ReTextWebEnginePage(QWebEnginePage):
         print(f"level={level!r} message={message!r} lineNumber={lineNumber!r} sourceId={sourceId!r}")
 
     def acceptNavigationRequest(self, url, type, isMainFrame):
+        toggled = parseToggleUrl(url)
+        if toggled is not None:
+            sectionId, collapsed = toggled
+            self.tab.previewBox.headingCollapseState.toggle(sectionId, collapsed)
+            return False
         if not isMainFrame:
             return True
         if url.scheme() == "data":
@@ -154,6 +166,9 @@ class ReTextWebEnginePreview(QWebEngineView):
         webPage.linkHovered.connect(lambda value: self.setCursor(handCursor if value else arrowCursor))
 
         self.setPage(webPage)
+
+        self.headingCollapseState = HeadingCollapseState()
+        tab.fileNameChanged.connect(self.headingCollapseState.clear)
 
         self.editBox = tab.editBox
         self.syncscroll = SyncScroll(
@@ -200,6 +215,47 @@ class ReTextWebEnginePreview(QWebEngineView):
         super().setHtml(html, baseUrl)
         self.setEnabled(True)
 
+    def setAllHeadingsCollapsed(self, collapsed):
+        # Python already knows the new state, so unlike an individual
+        # heading click, this does not need a round trip through
+        # acceptNavigationRequest() to persist it for the next reload.
+        self.headingCollapseState.setBulk(collapsed)
+        jsBool = 'true' if collapsed else 'false'
+        self.page().runJavaScript(
+            f"if (window.retextSetAllCollapsed) {{ retextSetAllCollapsed({jsBool}); }}")
+
+    def printCleanHtmlToPdf(self, fileName, layout, htmltext, baseUrl, callback):
+        """
+        Render htmltext (which, unlike this preview's current page, never
+        contains collapsible-headings markup or hidden sections) on a
+        throwaway offscreen page, and print that to PDF instead of the
+        live preview page.
+        """
+        page = QWebEnginePage(self.page().profile(), self)
+        self._pdfExportPage = page
+        font = globalSettings.getPreviewFont()
+        page.settings().setFontSize(QWebEngineSettings.FontSize.DefaultFontSize,
+                                    QFontInfo(font).pixelSize())
+        if self.settings().testAttribute(QWebEngineSettings.WebAttribute.ForceDarkMode):
+            page.settings().setAttribute(QWebEngineSettings.WebAttribute.ForceDarkMode, True)
+
+        def onLoadFinished(ok):
+            if not ok:
+                page.deleteLater()
+                del self._pdfExportPage
+                callback(False)
+                return
+            page.printToPdf(fileName, layout)
+
+        def onPdfPrintingFinished(path, ok):
+            page.deleteLater()
+            del self._pdfExportPage
+            callback(ok)
+
+        page.loadFinished.connect(onLoadFinished)
+        page.pdfPrintingFinished.connect(onPdfPrintingFinished)
+        page.setHtml(htmltext, baseUrl)
+
     def _handleWheelEvent(self, event):
         # Only pass wheelEvents on to the preview if syncscroll is
         # controlling the position of the preview
@@ -231,6 +287,7 @@ class ReTextWebEnginePreview(QWebEngineView):
         return True
 
     def disconnectExternalSignals(self):
+        self.page().tab.fileNameChanged.disconnect(self.headingCollapseState.clear)
         self.editBox.cursorPositionChanged.disconnect(self._handleCursorPositionChanged)
         self.editBox.verticalScrollBar().valueChanged.disconnect(self.syncscroll.handleEditorScrolled)
         self.editBox.resized.disconnect(self._handleEditorResized)
