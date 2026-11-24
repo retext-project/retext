@@ -300,6 +300,7 @@ class ConfigDialog(QDialog):
         self.parent.treeView.setRootIndex(self.parent.fileSystemModel.index(path))
         self.parent.actionShowDirectoryTree.setChecked(globalSettings.showDirectoryTree)
         self.parent.treeView.setVisible(globalSettings.showDirectoryTree)
+        self.parent.updateHeadingCollapseActionsEnabled()
         if globalSettings.autoSave:
             self.parent.autoSaveTimer.start(60000)
         else:
