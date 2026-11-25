@@ -126,5 +126,78 @@ class WebEnginePreviewSyncScrollTeardownTest(unittest.TestCase):
             QTest.qWait(10)
 
 
+@unittest.skipUnless(ReTextWebEnginePreview is not None and RUN_RENDERING_TESTS, SKIP_REASON)
+class GetPositionMapMissingBodyTest(unittest.TestCase):
+    '''
+    Regression test for getPositionMap()'s script throwing "Uncaught
+    TypeError: Cannot read properties of null (reading
+    'getBoundingClientRect')" when it runs while the page has no <body>.
+    This happens in practice because contentsSizeChanged (which triggers
+    a position map refresh, ungated by any loading-state check) can fire
+    very early during a navigation, before the new document's body has
+    been parsed -- a race between the renderer/compositor process and
+    the embedding Qt code that cannot be reliably forced by controlling
+    timing from the Python side (confirmed experimentally: hundreds of
+    attempts with varied delays, resizes, and show()/hide() cycles never
+    reproduced it on demand, even though it is reproducible about half
+    the time across a full run of the real test suite).
+
+    So instead of racing the real navigation, this test constructs the
+    *exact precondition* directly: load a normal page, then remove its
+    <body> with a script, leaving document.body == null the same way a
+    not-yet-parsed document would -- and verifies getPositionMap() does
+    not throw in that state. This exercises the same code path
+    deterministically, with no flakiness.
+    '''
+
+    def setUp(self):
+        warnings.simplefilter('ignore', Warning)
+        self.settings = MagicMock(handleWebLinks=False)
+        patch('ReText.webenginepreview.globalSettings', self.settings).start()
+        tab = FakeTab(None)
+        editBox = ReTextEdit(tab)
+        tab.editBox = editBox
+        self.editBox = editBox
+        self.preview = ReTextWebEnginePreview(tab, lambda pos: 0, lambda line: 0)
+        self.consoleMessages = []
+        self.preview.page().javaScriptConsoleMessage = (
+            lambda level, message, lineNumber, sourceId: self.consoleMessages.append(message))
+
+    def tearDown(self):
+        self.preview.disconnectExternalSignals()
+        self.preview.deleteLater()
+        self.editBox.deleteLater()
+        for _ in range(10):
+            app.processEvents()
+            QTest.qWait(10)
+        patch.stopall()
+
+    def evalJs(self, script):
+        result = []
+        self.preview.page().runJavaScript(script, lambda value: result.append((value,)))
+        for _ in range(100):
+            app.processEvents()
+            if result:
+                return result[0][0]
+            QTest.qWait(10)
+        self.fail('runJavaScript callback did not fire')
+
+    def test_getPositionMapWithoutBodyDoesNotThrow(self):
+        self.preview.setHtml('<p data-posmap="1">Hello</p>', QUrl.fromLocalFile('/tmp/'))
+        for _ in range(50):
+            app.processEvents()
+            QTest.qWait(10)
+        self.assertTrue(self.evalJs('!!document.body'))
+
+        self.evalJs('document.documentElement.removeChild(document.body); "removed"')
+        self.assertFalse(self.evalJs('!!document.body'))
+
+        self.preview.page().getPositionMap(lambda result: None)
+        for _ in range(30):
+            app.processEvents()
+            QTest.qWait(10)
+        self.assertEqual(self.consoleMessages, [])
+
+
 if __name__ == '__main__':
     unittest.main()
