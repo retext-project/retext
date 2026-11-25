@@ -243,6 +243,30 @@ class WebEngineHeadingCollapseTest(unittest.TestCase):
         self.loadSections(preview, initialCollapsed=False)
         self.assertFalse(self.isHidden(preview))
 
+    def test_disconnectStopsStabilityTimerToAvoidCrashAfterDeletion(self):
+        # Regression test: SyncScroll.stabilityTimer used to keep running
+        # after disconnectExternalSignals()+deleteLater(), and firing
+        # later (it is a 500ms QTimer) called back into the by-then-
+        # deleted page, raising "RuntimeError: wrapped C/C++ object of
+        # type ReTextWebEnginePage has been deleted" and aborting the
+        # whole process -- exactly what happens if a tab/preview is torn
+        # down shortly after a preview reload.
+        preview = self.createPreview()
+        self.loadSections(preview, initialCollapsed=True)
+        self.assertTrue(preview.syncscroll.stabilityTimer.isActive())
+
+        preview.disconnectExternalSignals()
+        self.assertFalse(preview.syncscroll.stabilityTimer.isActive())
+
+        # Already disconnected, so tearDown must not disconnect again.
+        self.previews.remove(preview)
+        preview.deleteLater()
+        # If the timer had not been stopped, it would fire about now and
+        # crash the whole process instead of just failing this assertion.
+        for _ in range(80):
+            app.processEvents()
+            QTest.qWait(10)
+
 
 if __name__ == '__main__':
     unittest.main()
