@@ -119,6 +119,9 @@ class ConfigDialog(QDialog):
         self.configurators['rightMargin'].valueChanged.connect(self.handleRightMarginSet)
         rightMarginWrap = self.configurators['rightMarginWrap']
         rightMarginWrap.checkStateChanged.connect(self.handleRightMarginWrapSet)
+        collapsibleHeadings = self.configurators['collapsibleHeadings']
+        collapsibleHeadings.checkStateChanged.connect(self.handleCollapsibleHeadingsSet)
+        self.handleCollapsibleHeadingsSet(collapsibleHeadings.checkState())
         self.layout.addWidget(buttonBox)
 
     def initConfigOptions(self):
@@ -259,6 +262,9 @@ class ConfigDialog(QDialog):
     def handleRightMarginWrapSet(self, state):
         if state == Qt.CheckState.Checked and self.configurators['rightMargin'].value() < 10:
             self.configurators['rightMargin'].setValue(80)
+
+    def handleCollapsibleHeadingsSet(self, state):
+        self.configurators['initialSectionState'].setEnabled(state == Qt.CheckState.Checked)
 
     def saveSettings(self):
         for name, configurator in self.configurators.items():
