@@ -713,7 +713,9 @@ class ReTextWindow(QMainWindow):
         tab = self.currentTab
         enabled = bool(
             globalSettings.collapsibleHeadings
-            and tab.previewState == PreviewLive
+            # Both PreviewLive and PreviewNormal show the same preview
+            # widget; only PreviewDisabled hides it entirely.
+            and tab.previewState != PreviewDisabled
             and ReTextWebEnginePreview is not None
             and isinstance(tab.previewBox, ReTextWebEnginePreview)
         )
