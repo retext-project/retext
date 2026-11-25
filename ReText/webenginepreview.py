@@ -233,6 +233,11 @@ class ReTextWebEnginePreview(QWebEngineView):
         self.editBox.scrollLimitReached.disconnect(self._handleWheelEvent)
         # Disconnect preview scroll synchronization
         self.page().scrollPositionChanged.disconnect(self.syncscroll.handlePreviewScrolled)
+        # If this timer is still pending when the page is actually deleted
+        # (a few event loop iterations after deleteLater()), it would fire
+        # later and call back into the now-deleted page, raising
+        # "RuntimeError: wrapped C/C++ object ... has been deleted".
+        self.syncscroll.stabilityTimer.stop()
 
     def _handleCursorPositionChanged(self):
         editorCursorPosition = self.editBox.verticalScrollBar().value() + \
