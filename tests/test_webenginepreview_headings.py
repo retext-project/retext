@@ -130,7 +130,10 @@ class WebEngineHeadingCollapseTest(unittest.TestCase):
                 return
         self.fail('preview did not finish loading the injected script')
 
-    def isHidden(self, preview, selector):
+    def isHidden(self, preview, selector='h2 + p'):
+        # Defaults to a paragraph inside a real (toggleable) section --
+        # "Intro paragraph" right after the document title is never
+        # hidden by anything, by design.
         return self.evalJs(preview, f'document.querySelector("{selector}").style.display === "none"')
 
     def clickToggle(self, preview, nth=0):
@@ -145,12 +148,12 @@ class WebEngineHeadingCollapseTest(unittest.TestCase):
     def test_initialStateCollapsedHidesAllSections(self):
         preview = self.createPreview()
         self.loadSections(preview, initialCollapsed=True)
-        self.assertTrue(self.isHidden(preview, 'p'))
+        self.assertTrue(self.isHidden(preview))
 
     def test_initialStateExpandedShowsEverything(self):
         preview = self.createPreview()
         self.loadSections(preview, initialCollapsed=False)
-        self.assertFalse(self.isHidden(preview, 'p'))
+        self.assertFalse(self.isHidden(preview))
 
     def test_newHeadingTakesInitialState(self):
         preview = self.createPreview()
@@ -159,17 +162,47 @@ class WebEngineHeadingCollapseTest(unittest.TestCase):
         # initial-state setting, not some leftover default.
         self.assertEqual(preview.headingCollapseState.overrides, {})
 
+    def test_documentTitleHasNoToggle(self):
+        preview = self.createPreview()
+        self.loadSections(preview, initialCollapsed=True)
+        # "Title 1" is the only h1: treated as the document title, not a
+        # collapsible section, so it must get no toggle symbol, and the
+        # intro paragraph right under it is never hidden by anything.
+        toggleCount = self.evalJs(preview, 'document.querySelectorAll(".retext-heading-toggle").length')
+        self.assertEqual(toggleCount, 3)  # the 3 h2 sections, not "Title 1"
+        self.assertFalse(self.isHidden(preview, 'h1 + p'))
+
+    def test_repeatedTopLevelHeadingKeepsItsToggle(self):
+        preview = self.createPreview()
+        twoH1Body = '<h1>Chapter 1</h1><p>Text 1.</p><h1>Chapter 2</h1><p>Text 2.</p>'
+        headers = buildHeaders(True, preview.headingCollapseState)
+        preview.setHtml(headers + twoH1Body, BASE_URL)
+        for _ in range(150):
+            app.processEvents()
+            QTest.qWait(20)
+            if self.evalJs(preview, 'typeof window.retextSetAllCollapsed') == 'function':
+                break
+        else:
+            self.fail('preview did not finish loading the injected script')
+        # With a second h1 elsewhere, the first one is a real section
+        # like any other, and gets a toggle too.
+        toggleCount = self.evalJs(preview, 'document.querySelectorAll(".retext-heading-toggle").length')
+        self.assertEqual(toggleCount, 2)
+        self.assertTrue(self.isHidden(preview, 'h1 + p'))
+
     def test_toggleTogglesStateAndPersistsAcrossRegeneration(self):
         preview = self.createPreview()
         self.loadSections(preview, initialCollapsed=False)
-        self.clickToggle(preview, 0)  # "Title 1" is the first heading
-        self.assertEqual(preview.headingCollapseState.overrides.get('Title 1'), True)
+        # "Title 1" is the document title and has no toggle of its own
+        # (see test_documentTitleHasNoToggle); index 0 is "Sub-title A".
+        self.clickToggle(preview, 0)
+        self.assertEqual(preview.headingCollapseState.overrides.get('Title 1 > Sub-title A'), True)
 
         # Simulate a regeneration: same headings, fresh page load, with
         # the state baked in from the (now-mutated) Python-side object.
         self.loadSections(preview, initialCollapsed=False)
-        self.assertTrue(self.isHidden(preview, 'p'))
-        self.assertEqual(preview.headingCollapseState.overrides.get('Title 1'), True)
+        self.assertTrue(self.isHidden(preview))
+        self.assertEqual(preview.headingCollapseState.overrides.get('Title 1 > Sub-title A'), True)
 
     def test_duplicateSiblingHeadingsAreIndependentlyToggleable(self):
         preview = self.createPreview()
@@ -184,19 +217,19 @@ class WebEngineHeadingCollapseTest(unittest.TestCase):
     def test_collapseAllUpdatesPythonStateAndPersistsAcrossRegeneration(self):
         preview = self.createPreview()
         self.loadSections(preview, initialCollapsed=False)
-        self.assertFalse(self.isHidden(preview, 'p'))
+        self.assertFalse(self.isHidden(preview))
 
         preview.setAllHeadingsCollapsed(True)
         self.assertIs(preview.headingCollapseState.bulkState, True)
         for _ in range(50):
             app.processEvents()
             QTest.qWait(10)
-        self.assertTrue(self.isHidden(preview, 'p'))
+        self.assertTrue(self.isHidden(preview))
 
         # A regeneration after "Collapse all" must keep everything
         # collapsed, even though no individual heading was ever clicked.
         self.loadSections(preview, initialCollapsed=False)
-        self.assertTrue(self.isHidden(preview, 'p'))
+        self.assertTrue(self.isHidden(preview))
         self.assertIs(preview.headingCollapseState.bulkState, True)
 
     def test_expandAllAfterCollapseAllOverridesIt(self):
@@ -208,7 +241,7 @@ class WebEngineHeadingCollapseTest(unittest.TestCase):
         self.assertEqual(preview.headingCollapseState.overrides, {})
 
         self.loadSections(preview, initialCollapsed=False)
-        self.assertFalse(self.isHidden(preview, 'p'))
+        self.assertFalse(self.isHidden(preview))
 
 
 if __name__ == '__main__':

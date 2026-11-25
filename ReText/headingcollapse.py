@@ -135,6 +135,19 @@ document.addEventListener("DOMContentLoaded", function() {
     var occurrences = {};
     var records = [];
 
+    // The very first heading is treated as the document's title, not a
+    // collapsible section, *unless* some other heading elsewhere in the
+    // document is of equal or greater importance (same or lower level) --
+    // in that case the first heading is a real section like any other
+    // (e.g. a document made of several top-level chapters, each an h1).
+    var firstIsDocumentTitle = false;
+    if (headings.length > 0) {
+        var firstLevel = levelOf(headings[0]);
+        firstIsDocumentTitle = !headings.slice(1).some(function(h) {
+            return levelOf(h) <= firstLevel;
+        });
+    }
+
     function applyVisibility() {
         records.forEach(function(record) {
             record.scope.forEach(function(node) {
@@ -144,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    headings.forEach(function(heading) {
+    headings.forEach(function(heading, index) {
         var level = levelOf(heading);
         while (ancestorStack.length && ancestorStack[ancestorStack.length - 1].level >= level) {
             ancestorStack.pop();
@@ -153,6 +166,14 @@ document.addEventListener("DOMContentLoaded", function() {
         // symbol below is inserted into the DOM, so it never depends on
         // the current collapsed/expanded state.
         var text = heading.textContent.trim();
+
+        if (index === 0 && firstIsDocumentTitle) {
+            // Still tracked on the ancestor stack, so descendant headings
+            // get a correct path/id, but it gets no toggle of its own.
+            ancestorStack.push({level: level, text: text});
+            return;
+        }
+
         var path = ancestorStack.map(function(a) { return a.text; }).concat([text]).join(" > ");
         var occurrenceCount = occurrences[path] || 0;
         occurrences[path] = occurrenceCount + 1;
