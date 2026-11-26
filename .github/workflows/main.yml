@@ -9,11 +9,11 @@ jobs:
         environment:
           - py39-pyqt67-ubuntu2204
           - py39-windows
-          - py311-pyqt68-ubuntu
+          - py311-pyqt68-webengine-ubuntu
           - py312-pyqt610-ubuntu
           - py313-pyqt611-ubuntu2404
           - py314-pyqt612-ubuntu
-          - py315-ubuntu
+          - py315-webengine-ubuntu
         include:
           - environment: py39-pyqt67-ubuntu2204
             python: 3.9
@@ -23,9 +23,9 @@ jobs:
             python: 3.9
             pyqt: PyQt6
             platform: windows-latest
-          - environment: py311-pyqt68-ubuntu
+          - environment: py311-pyqt68-webengine-ubuntu
             python: '3.11'
-            pyqt: PyQt6~=6.8.0 PyQt6-Qt6~=6.8.0
+            pyqt: PyQt6~=6.8.0 PyQt6-Qt6~=6.8.0 PyQt6-WebEngine~=6.8.0 PyQt6-WebEngine-Qt6~=6.8.0
             platform: ubuntu-latest
           - environment: py312-pyqt610-ubuntu
             python: '3.12'
@@ -39,9 +39,9 @@ jobs:
             python: '3.14'
             pyqt: PyQt6~=6.12.0 PyQt6-Qt6~=6.12.0
             platform: ubuntu-latest
-          - environment: py315-ubuntu
+          - environment: py315-webengine-ubuntu
             python: '3.15'
-            pyqt: PyQt6
+            pyqt: PyQt6 PyQt6-WebEngine
             platform: ubuntu-latest
     runs-on: ${{ matrix.platform }}
     steps:
