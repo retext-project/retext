@@ -8,7 +8,7 @@ jobs:
       matrix:
         environment:
           - py39-pyqt67-ubuntu2204
-          - py39-windows
+          - py313-windows
           - py311-pyqt68-ubuntu
           - py312-pyqt610-ubuntu
           - py313-pyqt611-ubuntu2404
@@ -19,8 +19,8 @@ jobs:
             python: 3.9
             pyqt: PyQt6~=6.7.0 PyQt6-Qt6~=6.7.0
             platform: ubuntu-22.04
-          - environment: py39-windows
-            python: 3.9
+          - environment: py313-windows
+            python: '3.13'
             pyqt: PyQt6
             platform: windows-latest
           - environment: py311-pyqt68-ubuntu
