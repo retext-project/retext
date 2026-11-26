@@ -28,16 +28,52 @@ from PyQt6.QtGui import (
 )
 from PyQt6.QtWebEngineCore import (
     QWebEnginePage,
+    QWebEngineProfile,
     QWebEngineSettings,
     QWebEngineUrlRequestInfo,
     QWebEngineUrlRequestInterceptor,
+    QWebEngineUrlRequestJob,
+    QWebEngineUrlScheme,
+    QWebEngineUrlSchemeHandler,
 )
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 from PyQt6.QtWidgets import QApplication, QLabel
 
 from ReText import globalCache, globalSettings
 from ReText.editor import getColor
+from ReText.headingcollapse import TOGGLE_URL_SCHEME, HeadingCollapseState, parseToggleUrl
 from ReText.syncscroll import SyncScroll
+
+# Must be registered before the QApplication/WebEngine context is created
+# (this module is imported early enough for that, via ReText.tab).
+_toggleScheme = QWebEngineUrlScheme(TOGGLE_URL_SCHEME.encode())
+_toggleScheme.setSyntax(QWebEngineUrlScheme.Syntax.Host)
+QWebEngineUrlScheme.registerScheme(_toggleScheme)
+
+_toggleSchemeHandlerInstalled = False
+
+
+class _ToggleUrlSchemeHandler(QWebEngineUrlSchemeHandler):
+    """
+    By the time any request would reach this handler,
+    ReTextWebEnginePage.acceptNavigationRequest() has already intercepted
+    and blocked the navigation, so this never actually runs. But without
+    *some* handler installed for the scheme, Chromium treats it as an
+    external protocol (like mailto:) and never calls
+    acceptNavigationRequest() for it in the first place.
+    """
+
+    def requestStarted(self, job):
+        job.fail(QWebEngineUrlRequestJob.Error.RequestDenied)
+
+
+def _ensureToggleSchemeHandlerInstalled():
+    global _toggleSchemeHandlerInstalled
+    if _toggleSchemeHandlerInstalled:
+        return
+    profile = QWebEngineProfile.defaultProfile()
+    profile.installUrlSchemeHandler(TOGGLE_URL_SCHEME.encode(), _ToggleUrlSchemeHandler(profile))
+    _toggleSchemeHandlerInstalled = True
 
 
 class ReTextWebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
@@ -101,14 +137,25 @@ class ReTextWebEnginePage(QWebEnginePage):
                 return callback({int(a): b for a, b in result.items()})
 
         script = """
-        var elements = document.querySelectorAll('[data-posmap]');
         var result = {};
-        var bodyTop = document.body.getBoundingClientRect().top;
-        for (var i = 0; i < elements.length; ++i) {
-            var element = elements[i];
-            value = element.getAttribute('data-posmap');
-            bottom = element.getBoundingClientRect().bottom - bodyTop;
-            result[value] = bottom;
+        if (document.body) {
+            // contentsSizeChanged can fire before the page has a <body>
+            // yet (e.g. right after a navigation starts); querying it
+            // too early would throw instead of just finding no elements.
+            var elements = document.querySelectorAll('[data-posmap]');
+            var bodyTop = document.body.getBoundingClientRect().top;
+            for (var i = 0; i < elements.length; ++i) {
+                var element = elements[i];
+                if (!element.getClientRects().length) {
+                    // Element is hidden (e.g. inside a collapsed preview
+                    // section): its rect would be all zeroes, which would
+                    // corrupt the position map used for sync scrolling.
+                    continue;
+                }
+                value = element.getAttribute('data-posmap');
+                bottom = element.getBoundingClientRect().bottom - bodyTop;
+                result[value] = bottom;
+            }
         }
         result;
         """
@@ -118,6 +165,16 @@ class ReTextWebEnginePage(QWebEnginePage):
         print(f"level={level!r} message={message!r} lineNumber={lineNumber!r} sourceId={sourceId!r}")
 
     def acceptNavigationRequest(self, url, type, isMainFrame):
+        toggled = parseToggleUrl(url)
+        if toggled is not None:
+            sectionId, collapsed = toggled
+            # self.parent() is the ReTextWebEnginePreview that owns this
+            # page (set as its Qt parent below) -- using it directly,
+            # rather than tab.previewBox, keeps working correctly even if
+            # a stray request from an old page arrives after
+            # rebuildPreviewBox() has already replaced tab.previewBox.
+            self.parent().headingCollapseState.toggle(sectionId, collapsed)
+            return False
         if not isMainFrame:
             return True
         if url.scheme() == "data":
@@ -142,6 +199,7 @@ class ReTextWebEnginePreview(QWebEngineView):
                  sourceLineToEditorPositionFunc):
 
         QWebEngineView.__init__(self, parent=tab)
+        _ensureToggleSchemeHandlerInstalled()
         webPage = ReTextWebEnginePage(self, tab)
 
         handCursor = QCursor(Qt.CursorShape.PointingHandCursor)
@@ -149,6 +207,9 @@ class ReTextWebEnginePreview(QWebEngineView):
         webPage.linkHovered.connect(lambda value: self.setCursor(handCursor if value else arrowCursor))
 
         self.setPage(webPage)
+
+        self.headingCollapseState = HeadingCollapseState()
+        tab.fileNameChanged.connect(self.headingCollapseState.clear)
 
         self.editBox = tab.editBox
         self.syncscroll = SyncScroll(
@@ -195,6 +256,47 @@ class ReTextWebEnginePreview(QWebEngineView):
         super().setHtml(html, baseUrl)
         self.setEnabled(True)
 
+    def setAllHeadingsCollapsed(self, collapsed):
+        # Python already knows the new state, so unlike an individual
+        # heading click, this does not need a round trip through
+        # acceptNavigationRequest() to persist it for the next reload.
+        self.headingCollapseState.setBulk(collapsed)
+        jsBool = 'true' if collapsed else 'false'
+        self.page().runJavaScript(
+            f"if (window.retextSetAllCollapsed) {{ retextSetAllCollapsed({jsBool}); }}")
+
+    def printCleanHtmlToPdf(self, fileName, layout, htmltext, baseUrl, callback):
+        """
+        Render htmltext (which, unlike this preview's current page, never
+        contains collapsible-headings markup or hidden sections) on a
+        throwaway offscreen page, and print that to PDF instead of the
+        live preview page.
+        """
+        page = QWebEnginePage(self.page().profile(), self)
+        self._pdfExportPage = page
+        font = globalSettings.getPreviewFont()
+        page.settings().setFontSize(QWebEngineSettings.FontSize.DefaultFontSize,
+                                    QFontInfo(font).pixelSize())
+        if self.settings().testAttribute(QWebEngineSettings.WebAttribute.ForceDarkMode):
+            page.settings().setAttribute(QWebEngineSettings.WebAttribute.ForceDarkMode, True)
+
+        def onLoadFinished(ok):
+            if not ok:
+                page.deleteLater()
+                del self._pdfExportPage
+                callback(False)
+                return
+            page.printToPdf(fileName, layout)
+
+        def onPdfPrintingFinished(path, ok):
+            page.deleteLater()
+            del self._pdfExportPage
+            callback(ok)
+
+        page.loadFinished.connect(onLoadFinished)
+        page.pdfPrintingFinished.connect(onPdfPrintingFinished)
+        page.setHtml(htmltext, baseUrl)
+
     def _handleWheelEvent(self, event):
         # Only pass wheelEvents on to the preview if syncscroll is
         # controlling the position of the preview
@@ -226,6 +328,7 @@ class ReTextWebEnginePreview(QWebEngineView):
         return True
 
     def disconnectExternalSignals(self):
+        self.page().tab.fileNameChanged.disconnect(self.headingCollapseState.clear)
         self.editBox.cursorPositionChanged.disconnect(self._handleCursorPositionChanged)
         self.editBox.verticalScrollBar().valueChanged.disconnect(self.syncscroll.handleEditorScrolled)
         self.editBox.resized.disconnect(self._handleEditorResized)
@@ -233,6 +336,11 @@ class ReTextWebEnginePreview(QWebEngineView):
         self.editBox.scrollLimitReached.disconnect(self._handleWheelEvent)
         # Disconnect preview scroll synchronization
         self.page().scrollPositionChanged.disconnect(self.syncscroll.handlePreviewScrolled)
+        # If this timer is still pending when the page is actually deleted
+        # (a few event loop iterations after deleteLater()), it would fire
+        # later and call back into the now-deleted page, raising
+        # "RuntimeError: wrapped C/C++ object ... has been deleted".
+        self.syncscroll.stabilityTimer.stop()
 
     def _handleCursorPositionChanged(self):
         editorCursorPosition = self.editBox.verticalScrollBar().value() + \

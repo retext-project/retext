@@ -223,8 +223,16 @@ class ReTextWindow(QMainWindow):
             self.actionPreview.setIcon(QIcon(getBundledIcon('document-preview')))
         self.actionLivePreview = self.act(self.tr('Live preview'), shct=Qt.Modifier.CTRL | Qt.Key.Key_L,
         trigbool=self.enableLivePreview)
+        self.actionCollapseAllHeadings = self.act(self.tr('Collapse all sections'),
+            trig=lambda: self.currentTab.previewBox.setAllHeadingsCollapsed(True))
+        self.actionExpandAllHeadings = self.act(self.tr('Expand all sections'),
+            trig=lambda: self.currentTab.previewBox.setAllHeadingsCollapsed(False))
+        self.actionCollapseAllHeadings.setEnabled(False)
+        self.actionExpandAllHeadings.setEnabled(False)
         menuPreview = QMenu()
         menuPreview.addAction(self.actionLivePreview)
+        menuPreview.addAction(self.actionCollapseAllHeadings)
+        menuPreview.addAction(self.actionExpandAllHeadings)
         self.actionInsertTable = self.act(self.tr('Insert table'),
             trig=lambda: self.insertFormatting('table'))
         self.actionTableMode = self.act(self.tr('Table editing mode'),
@@ -699,6 +707,20 @@ class ReTextWindow(QMainWindow):
         self.tabFileNameChanged(self.currentTab)
         self.tabModificationStateChanged(self.currentTab)
         self.tabActiveMarkupChanged(self.currentTab)
+        self.updateHeadingCollapseActionsEnabled()
+
+    def updateHeadingCollapseActionsEnabled(self):
+        tab = self.currentTab
+        enabled = bool(
+            globalSettings.collapsibleHeadings
+            # Both PreviewLive and PreviewNormal show the same preview
+            # widget; only PreviewDisabled hides it entirely.
+            and tab.previewState != PreviewDisabled
+            and ReTextWebEnginePreview is not None
+            and isinstance(tab.previewBox, ReTextWebEnginePreview)
+        )
+        self.actionCollapseAllHeadings.setEnabled(enabled)
+        self.actionExpandAllHeadings.setEnabled(enabled)
 
     def changeEditorFont(self):
         font, ok = QFontDialog.getFont(globalSettings.getEditorFont(), self)
@@ -739,6 +761,7 @@ class ReTextWindow(QMainWindow):
         self.editBar.setDisabled(viewmode)
         self.currentTab.updateBoxesVisibility()
         self.currentTab.triggerPreviewUpdate()
+        self.updateHeadingCollapseActionsEnabled()
 
     def enableLivePreview(self, livemode):
         self.currentTab.previewState = int(livemode)
@@ -746,11 +769,13 @@ class ReTextWindow(QMainWindow):
         self.editBar.setEnabled(True)
         self.currentTab.updateBoxesVisibility()
         self.currentTab.triggerPreviewUpdate()
+        self.updateHeadingCollapseActionsEnabled()
 
     def enableWebEngine(self, enable):
         globalSettings.useWebEngine = enable
         for tab in self.iterateTabs():
             tab.rebuildPreviewBox()
+        self.updateHeadingCollapseActionsEnabled()
 
     def enableCopy(self, copymode):
         self.actionCopy.setEnabled(copymode)
@@ -1162,7 +1187,17 @@ class ReTextWindow(QMainWindow):
                     margins,
                     QPageLayout.Unit.Millimeter,
                 )
-                preview.page().printToPdf(fileName, layout)
+                if globalSettings.collapsibleHeadings:
+                    # The live preview page may have hidden sections and
+                    # collapse indicators; print the already-clean
+                    # htmltext on a throwaway page instead.
+                    if self.currentTab.fileName:
+                        baseUrl = QUrl.fromLocalFile(self.currentTab.fileName)
+                    else:
+                        baseUrl = QUrl.fromLocalFile(QDir.currentPath())
+                    preview.printCleanHtmlToPdf(fileName, layout, htmltext, baseUrl, lambda ok: None)
+                else:
+                    preview.page().printToPdf(fileName, layout)
                 return
             printer = self.standardPrinter(title)
             printer.setOutputFormat(QPrinter.OutputFormat.PdfFormat)

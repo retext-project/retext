@@ -119,6 +119,9 @@ class ConfigDialog(QDialog):
         self.configurators['rightMargin'].valueChanged.connect(self.handleRightMarginSet)
         rightMarginWrap = self.configurators['rightMarginWrap']
         rightMarginWrap.checkStateChanged.connect(self.handleRightMarginWrapSet)
+        collapsibleHeadings = self.configurators['collapsibleHeadings']
+        collapsibleHeadings.checkStateChanged.connect(self.handleCollapsibleHeadingsSet)
+        self.handleCollapsibleHeadingsSet(collapsibleHeadings.checkState())
         self.layout.addWidget(buttonBox)
 
     def initConfigOptions(self):
@@ -133,6 +136,8 @@ class ConfigDialog(QDialog):
                 (self.tr('Open external links in ReText window'), 'handleWebLinks'),
                 (self.tr('Markdown syntax extensions (comma-separated)'), 'markdownExtensions'),
                 (self.tr('Enable synchronized scrolling'), 'syncScroll'),
+                (self.tr('Collapsible headings in preview (WebEngine only)'), 'collapsibleHeadings'),
+                (self.tr('Initial state of preview sections'), 'initialSectionState'),
             #    (self.tr('Default Markdown file extension'), 'markdownDefaultFileExtension'),
             #    (self.tr('Default reStructuredText file extension'), 'restDefaultFileExtension'),
             )),
@@ -216,6 +221,12 @@ class ConfigDialog(QDialog):
                 self.configurators[name].addItem(self.tr('Repeat'), 'repeat')
                 comboBoxIndex = self.configurators[name].findData(value)
                 self.configurators[name].setCurrentIndex(comboBoxIndex)
+            elif name == 'initialSectionState':
+                self.configurators[name] = QComboBox(self)
+                self.configurators[name].addItem(self.tr('Collapsed'), 'collapsed')
+                self.configurators[name].addItem(self.tr('Expanded'), 'expanded')
+                comboBoxIndex = self.configurators[name].findData(value)
+                self.configurators[name].setCurrentIndex(comboBoxIndex)
             elif name == 'directoryPath':
                 self.configurators[name] = DirectorySelectButton(self, value, fileLabel)
             elif isinstance(value, bool):
@@ -251,6 +262,9 @@ class ConfigDialog(QDialog):
     def handleRightMarginWrapSet(self, state):
         if state == Qt.CheckState.Checked and self.configurators['rightMargin'].value() < 10:
             self.configurators['rightMargin'].setValue(80)
+
+    def handleCollapsibleHeadingsSet(self, state):
+        self.configurators['initialSectionState'].setEnabled(state == Qt.CheckState.Checked)
 
     def saveSettings(self):
         for name, configurator in self.configurators.items():
@@ -292,6 +306,7 @@ class ConfigDialog(QDialog):
         self.parent.treeView.setRootIndex(self.parent.fileSystemModel.index(path))
         self.parent.actionShowDirectoryTree.setChecked(globalSettings.showDirectoryTree)
         self.parent.treeView.setVisible(globalSettings.showDirectoryTree)
+        self.parent.updateHeadingCollapseActionsEnabled()
         if globalSettings.autoSave:
             self.parent.autoSaveTimer.start(60000)
         else:
