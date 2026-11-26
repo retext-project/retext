@@ -22,11 +22,10 @@ which starts Chromium's renderer. In some sandboxed/headless environments
 (no GPU, no suitable seccomp/namespace permissions, missing shared memory,
 etc.) this can abort the whole Python process rather than raising a
 catchable exception -- which would take down the entire test suite, not
-just this one test file. To keep `python -m unittest discover -s tests`
-always safe to run, it is skipped unless explicitly requested:
+just this one test file. If that happens in your environment, these tests
+can be disabled by setting an environment variable:
 
-    RETEXT_TEST_WEBENGINE_RENDERING=1 QT_QPA_PLATFORM=offscreen \
-        python3 -m unittest tests.test_webenginepreview_syncscroll -v
+    RETEXT_SKIP_WEBENGINE_RENDERING_TESTS=1 python3 -m unittest discover -s tests
 '''
 
 import os
@@ -45,10 +44,7 @@ from ReText.tab import ReTextWebEnginePreview
 QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
 app = QApplication.instance() or QApplication(sys.argv)
 
-RUN_RENDERING_TESTS = os.environ.get('RETEXT_TEST_WEBENGINE_RENDERING') == '1'
-SKIP_REASON = ('set RETEXT_TEST_WEBENGINE_RENDERING=1 to run tests that render '
-              'real content in a QWebEngineView (can abort the whole test '
-              'process in some sandboxed/headless environments)')
+SKIP_RENDERING_TESTS = os.environ.get('RETEXT_SKIP_WEBENGINE_RENDERING_TESTS') == '1'
 
 
 class FakeTab(QWidget):
@@ -64,7 +60,8 @@ class FakeTab(QWidget):
         return False
 
 
-@unittest.skipUnless(ReTextWebEnginePreview is not None and RUN_RENDERING_TESTS, SKIP_REASON)
+@unittest.skipIf(ReTextWebEnginePreview is None, 'QtWebEngine is not available')
+@unittest.skipIf(SKIP_RENDERING_TESTS, 'disabled via RETEXT_SKIP_WEBENGINE_RENDERING_TESTS=1')
 class WebEnginePreviewSyncScrollTeardownTest(unittest.TestCase):
     '''
     Regression test for a crash where SyncScroll's stabilityTimer kept
@@ -126,7 +123,8 @@ class WebEnginePreviewSyncScrollTeardownTest(unittest.TestCase):
             QTest.qWait(10)
 
 
-@unittest.skipUnless(ReTextWebEnginePreview is not None and RUN_RENDERING_TESTS, SKIP_REASON)
+@unittest.skipIf(ReTextWebEnginePreview is None, 'QtWebEngine is not available')
+@unittest.skipIf(SKIP_RENDERING_TESTS, 'disabled via RETEXT_SKIP_WEBENGINE_RENDERING_TESTS=1')
 class GetPositionMapMissingBodyTest(unittest.TestCase):
     '''
     Regression test for getPositionMap()'s script throwing "Uncaught
